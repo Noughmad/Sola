@@ -1,0 +1,46 @@
+set terminal epslatex color solid
+set xrange [0:1]
+set yrange [0:2.5]
+set key horizontal
+
+set xlabel "$x$"
+set ylabel "$y$"
+
+f1(x,y0) = 3/2*(1-y0)*x*(2-x) + y0
+
+f2(x,y0) = 2*x*(1-y0) + y0
+
+f3(x,y0,m) = (1-y0)/( sinh(m)/m - cosh(m) )*(cosh(m*x-m) - cosh(m)) + y0
+
+f4(x,y0) = 6*(1-y0) * x * (1-x) + y0
+
+title(y) = sprintf("$y_0 = %.1f$", y)
+title_m(m) = sprintf("$\\xi = %g$", m)
+
+set output "brez.tex"
+plot for [i=0:8] f1(x, i/4.0) t title(i/4.0)
+
+set key top center
+
+set output "eksponent.tex"
+plot for [i=0:8] f2(x, i/4.0) t title(i/4.0)
+
+set output "hitrost-1.tex"
+plot for [i=0:8] f3(x, i/4.0, 0.1) t title(i/4.0)
+
+set output "hitrost-2.tex"
+plot for [i=0:8] f3(x, i/4.0, 1) t title(i/4.0)
+
+set output "hitrost-3.tex"
+plot for [i=0:8] f3(x, i/4.0, 10) t title(i/4.0)
+
+set key top right
+
+set output "hitrost-mu-1.tex"
+plot[][0.5:1.7] for [i=-1:3] f3(x, 1.5, 10**(0.5*i)) t title_m(10**i)
+
+set output "periodicno.tex"
+plot for [i=0:8] f4(x, i/4.0) t title(i/4.0)
+
+
+

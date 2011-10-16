@@ -1,0 +1,350 @@
+\documentclass[12pt]{article}
+
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{subfigure}
+
+\newcommand{\dd}{\mathrm{d}}
+
+\begin{document}
+
+\section{Brezdimenzijska oblika}
+
+I"s"cemo odvisnost hitrosti od "casa, pri kateri bodo izpolnjeni dolo"ceni pogoji. Za "cas "ze imamo naravno enoto, to je "cas $T$ do pri"ziga zelene lu"ci. Po drugi strani pa imamo za hitrost dve mo"zni izbiri: za"cetna hitrost $t_0$ ali pa povpre"cna hitrost $L/T$. Za "cim ve"cjo splo"snost sem dovolil mo"znost, da avto na za"cetku stoji, tako da je lahko $v_0=0$, in sem za mero hitrosti izbral drugo mo"znost. 
+
+\begin{align}
+x &= \frac{t}{T} \\
+y &= \frac{v T}{L} \\
+y' &= \frac{dy}{dx} = \frac{T^2 \, \dd v}{L \, \dd t} = \frac{1}{a_0} \cdot \dot v
+\end{align}
+
+Tu je $a_0 = \frac{L}{T^2}$ konstanta z enotami pospe"ska. 
+
+Zdaj lahko zapi"semo Lagran"zijan in vez z brezdimenzijskimi spremenljivkami. Ker "zelimo izraz minimizirati, multiplikatvne konstante ne vplivajo na rezultat, zato ga lahko precej poenostavimo. Prav tako lahko Lagrangeev multiplikator $\lambda$ mno"zimo s poljubno konstanto. 
+
+\begin{align}
+\int_0^1 y(x) \, \dd x &= \frac{T}{L} \frac{1}{T} \int_0^T v(t) \, \dd t = \frac{TL}{TL} = 1 \\
+\mathcal{S} &= \int_0^T y'(t)^2 \, \dd t \\
+1 &= \int_0^1 y(x) \, \dd x \\
+\mathcal{L} &= (y')^2 - \lambda y
+\end{align}
+
+Ta izraz za $\mathcal{L}$ lahko vstavimo v Euler-Lagrangeevo ena"cbo. 
+
+\section{Re"sitve brezdimenzijske ena"cbe}
+
+\begin{align}
+\frac{\partial \mathcal{L}}{\partial y} - \frac{\dd}{\dd t}\frac{\partial \mathcal L}{\partial y'} &= 0 \\
+-\lambda - 2y'' &= 0 \\
+y'' &= -\frac{\lambda}{2} = 2A \\
+y(x) &= Ax^2 + Bx + C \label{eq:izraz-vse-spremenljivke}
+\end{align}
+
+Konstante $A$, $B$, $C$ dolo"cimo iz vezi in dveh robnih pogojev. Poznamo za"cetno hitrost $v_0$, za"cetno vrednost spremenljivke $y$ lahko izrazimo kot $y_0 = y(0) = v T / L$. Ko to vstavimo v izraz za $y(x)$ takoj dobimo pogoj $C = y_0$. 
+
+Zvezo med $A$ in $B$ lahko dolo"cmo iz integralske vezi. 
+
+\begin{align}
+\int_0^1 y(x) dx &= \frac{A}{3} + \frac{B}{2} + C = 1 \\
+B &= 2 - 2C - \frac{2A}{3} \\
+y(x) &= A(x^2 - \frac{2}{3}x) + 2(1-y_0)x + y_0 \label{eq:ena-spremenljivka}
+\end{align}
+
+Ostane nam le "se en prost parameter ($A$), ki ga dolo"cimo iz robnega pogoja v kon"cni to"cki. 
+
+\subsection{Brez robnega pogoja}
+"Ce dopustimo poljubno kon"cno hitrost, variacijski ra"cun dolo"ca dinami"cni robni pogoj 
+
+\begin{align}
+\left.\frac{\dd \mathcal L}{\dd y'}\right|_{x=1} = 2\left.\frac{\dd y}{\dd x}\right|_{x=1} = 0 
+\end{align}
+
+Pospe"sek v kon"cni to"cki mora biti enak ni"c. "Ce izraz (\ref{eq:ena-spremenljivka}) odvajamo po $x$ in postavimo $x=1$, dobimo:
+
+\begin{align}
+\left.\frac{\dd y}{\dd x}\right|_{x=1} &= A(2 - \frac{2}{3}) + 2(1-y_0) = \frac{4}{3}A + 2(1-y_0) = 0 \\
+A &= -\frac{3}{2}(1-y_0) \\
+y(x) &=  -\frac{3}{2}(1-y_0)x^2 + 3(1-y_0)x + y_0 \\
+  &= \frac{3}{2}(1-y_0) x (2-x) + y_0 \label{eq:brez-robnega}
+\end{align}
+
+Re"sitev je kvadratna funkcija, ki je simetri"cna glede na kon"cno to"cko $x=1$. Edini ostali parameter problema je $y_0$, ki nam tudi dolo"ca dru"zino re"sitev. 
+
+\begin{figure}
+\input{brez}
+\label{fig:brez}
+\caption{Odvisnost hitrosti od "casa brez kon"cnega robnega pogoja}
+\end{figure}
+
+\section{Druga"cni Lagran"zijani}
+
+Na"sa mera za ekonomi"cnost vo"znje je seveda lahko tudi druga"cna. 
+
+\subsection{Vi"sje potence pospe"ska}
+Omejil se bom le na sode eksponente, zato da pospe"sevanje in zaviranje obravnavamo ekvivalentno. V tem primeru $\mathcal L$ zapisemo kot
+\begin{align}
+  \mathcal L &= (y')^\alpha - \lambda y
+\end{align}
+kjer je $\alpha$ sodo pozitivno celo "stevilo. Euler-Lagrangeeva ena"cba se glasi
+\begin{align}
+  -\lambda &= \frac{\dd}{\dd x}\alpha (y')^{\alpha-1} = \alpha (\alpha-1) (y')^{\alpha-2} y''
+\end{align}
+Z uvedbo substitucije $u=y'$ lahko ena"cbo prepi"semo v enostavno re"sljivo obliko
+\begin{align}
+  u' = \frac{\dd u}{\dd x}&= \frac{-\lambda}{\alpha(\alpha-1)}u^{2-\alpha} = Au^{2-\alpha}\\
+  u^{\alpha-2}\dd u &= A\dd x \\
+  \frac{u^{\alpha-1}}{\alpha-1} &= Ax + B \\
+  u(x) &= \sqrt[\alpha-1]{(\alpha-1)(Ax+B)} = y'(x) \\
+  y(x) = y_\alpha(x) &= \sqrt[\alpha-1]{\alpha-1} \frac{(\alpha-1)(Ax+B)}{\alpha A} \sqrt[\alpha-1]{Ax+B} + C \label{eq:izraz-poljuben-eksponent}
+\end{align}
+
+Zaradi omejitve, da je $\alpha$ sod, je stopnja korena liha, s "cimer se izognemo problemom, ker je izraz $Ax+B$ pod korenom lahko tudi negativen. 
+
+Proste konstante podobno kot v prej"snjem poglavju dolo"cimo iz vezi in dveh robnih pogojev. 
+
+\subsubsection{Preverjanje}
+
+"Ce v izraz vstavimo $\alpha=2$, bi morali dobiti izraz (\ref{eq:izraz-vse-spremenljivke}). 
+\begin{align}
+  y_2(x) &= \frac{Ax+B}{2A}(Ax+B) + C = \frac{A}{2}x^2 + Bx + \frac{B^2}{2A} + C
+\end{align}
+
+Koeficienti $A$, $B$ in $C$ tu niso enaki kot prej, ampak imamo spet polinom druge stopnje s tremi prostimi konstantami, tako da s primerno substitucijo lahko preidemo na izraz (\ref{eq:izraz-vse-spremenljivke}). 
+
+\subsection{Limita $\alpha\to\infty$ }
+
+Ve"canje eksponenta $\alpha$ proti neskon"cnosti pomeni, da k vrednosti funkcionala $\mathcal S$ prispeva le tista to"cka, kjer je absolutna vrednost pospe"ska najve"cja. Integral Lagran"zijana bi torej lahko nadomestili kar z maksimumom $|y'|$. Naivno bi zato pri"cakovali, da bo re"sitev tak"snega problema gibanje s konstantnim pospe"skom. 
+
+Seveda se problema lahko lotimo tudi bolj matemati"cno, tako da gledamo limito izraza (\ref{eq:izraz-poljuben-eksponent}) ko gre $\alpha$ proti neskon"cnosti. 
+
+Ko gre $\alpha$ proti $\infty$, gre $A = \frac{-\lambda}{\alpha(\alpha-1)}$ proti 0, tako da izraz pod zadnjim korenom konvergira. Izraz $y_\alpha(x) - C$ lahko razdelimo na produkt ve"cih faktorjev in gledamo limito vsakega posebej:
+
+\begin{align}
+  \lim_{\alpha\to\infty} \sqrt[\alpha-1]{\alpha-1} &= \lim_{x\to\infty} \sqrt[x]{x} = 1 \\
+  \lim_{\alpha\to\infty} \frac{(\alpha-1)^2 (\frac{-\lambda x}{\alpha(\alpha-1)} + B) }{-\lambda} &= x - \frac{(\alpha-1)^2B}{\lambda} 
+\end{align}
+
+Limite lahko nazaj zdru"zimo v kon"cni izraz
+
+\begin{align}
+  y_\infty(x) = \lim_{\alpha\to\infty} y_\alpha(x) &= \left(x - \frac{(\alpha-1)^2B}{\lambda}\right)\sqrt[\alpha-1]{\frac{-\lambda x}{\alpha(\alpha-1)} + B} + C
+\end{align}
+
+Zopet uporabimo substitucijo $A=-\lambda/\alpha(\alpha-1)$. Ker je $\alpha$ zelo velik, lahko tudi povsod $\alpha$ zamenjamo z $\beta = \alpha-1$, paziti moramo le da ne spremenimo parnosti eksponentov. 
+
+\begin{align}
+  y_\infty(x) &= \frac{1}{A}\left(Ax + B\right)^{1+1/\beta} + C
+\end{align}
+
+Najprej poglejmo primer, ko nas ne zanima hitrost, s katero prevozimo semafor. Spet uporabimo dinami"cni robni pogoj
+
+\begin{align}
+  y'(x) &= (1+1/\beta) (Ax+B)^{1/\beta} \\
+  y'(1) &= (1+1/\beta) (A+B)^{1/\beta} = 0 
+\end{align}
+
+Ker je $\beta$ dosti ve"cji od 1, levi oklepaj ne more biti ni"c, torej mora biti $B=-A$ in
+\begin{align}
+  y_\infty(x) &= \frac{1}{A}\left(A(x-1)\right)^{1+1/\beta} + C = A^{1/\beta} (x-1)^{1+1/\beta} + C
+\end{align}
+
+Konstanto $C$ lahko dolo"cimo iz za"cetne hitrosti. Paziti moramo, da je $\beta$ lih, torej je poteciranje na $(1+1/\beta)$ soda funkcija in je $(-1)^{1+1/\beta} = 1$.
+\begin{align}
+  y(0) &= A^{1/\beta} + C = y_0 \\
+  C &= -\sqrt[\beta]{A} + y_0 \\
+  y(x) &= \sqrt[\beta]{A} ( (x-1)^{1+1/\beta} - 1 ) + y_0
+\end{align}
+
+
+Dolo"citi moramo le "se $A$, za kar uporabimo vez:
+
+\begin{align}
+  \int_0^1 y(x) \dd x &= 1 \\
+  \left[A^{1/\beta} \left(\frac{(x-1)^{2+1/\beta}}{2+1/\beta} - x\right) + y_0 x\right]_0^1 &= 1 \\
+  \sqrt[\beta]{A}\left(\frac{1}{2+1/\beta}-1\right) + y_0 &= 1
+\end{align}
+
+\begin{align}
+  A &= \left( \frac{(2+1/\beta)(1-y_0)}{1+1/\beta} \right)^\beta \\
+  y(x) &= \left( \frac{(2+1/\beta)(1-y_0)}{1+1/\beta} \right) \left( (x-1)^{1+1/\beta} - 1 \right) + y_0
+\end{align}
+
+Ker smo privzeli, da je $\beta >> 1$, lahko v prvem oklepaju $1/\beta$ zanemarimo in izraz poenostavimo. Na na"sem intervalu je $0\leq x \leq 1$, zato je $(x-1)^{1+1/\beta} \to (1-x)$. 
+\begin{align}
+ y_\infty(x) &= 2x(1-y_0) + y_0 
+\end{align}
+
+\begin{figure}
+\input{eksponent}
+\caption{Odvisnost hitrosti od "casa v limiti, ko gre eksponent pospe"ska v Lagran"zijanu proti neskon"cno} 
+\label{fig:eksponent}
+\end{figure}
+
+
+Na"s naiven razmislek se je izkazal za pravilnega, saj je re"sitev res enakomerno pospe"seno gibanje, velikost pospe"ska pa je neposredno odvisna od za"cetne hitrosti. 
+
+\subsection{Hitrost v Lagran"zijanu}
+
+Na ekonomi"cnost vo"znje seveda vpliva tudi hitrost. Za "cim la"zji ra"cun upo"stevamo njen kvadrat, tako da Lagrangeeva funkcija izgleda 
+
+\begin{align}
+  \mathcal L &= (y')^2 + \xi y^2 - \lambda y
+\end{align}
+
+Tak"sna funkcija spominja na probleme iz klasi"cne mehanike, kjer imamo pogosto kvadratni "clen hitrosti (v kineti"cni energiji) in kvadratni "clen polo"zaja (v potencialni energiji). Ustrezna ena"cba je sedaj
+
+\begin{align}
+  \frac{\partial \mathcal{L}}{\partial y} - \frac{\dd}{\dd t}\frac{\partial \mathcal L}{\partial y'} &= 0 \\
+-\lambda + 2\xi y - 2y'' &= 0 \\
+y'' - \xi y &= -\frac{\lambda}{2}
+\end{align}
+
+Verjetno si "zelimo vo"znjo s "cim manj"so hitrostjo, zato je $\xi > 0$, kar pomeni da homogeni del dobljene ena"cbe predstavlja eksponentno nara"scanje ali padanje hitrosti s "casom. Ker je $\xi$ pozitiven, lahko uvedemo substitucijo $\xi = \mu^2$. 
+
+\begin{comment}
+
+% Resevanje enacbe
+% V resnici ne rabimo, ker se resitev da uganiti
+
+Ker je ena"cba nehomogena pa sta koeficienta pred obema re"sitvama lahko funkciji $x$, me"sanih odvodov pa se lahko znebimo, saj imamo na voljo eno prostostno stopnjo odve"c. 
+
+\begin{align}
+  y(x) &= A(x) e^ {\mu x} + B(x) e^{-\mu x} \\
+  y'(x) &= A'(x) e^{\mu x} + A(x)\mu e^{\mu x} + B'(x) e^{-\mu x} - B(x) \mu e^{-\mu x} \\
+  &= A(x)\mu  e^{\mu x} - B(x)\mu  e^{-\mu x} \\
+  y''(x) &= A'(x) \mu e^{\mu x} + A(x) \mu^2 e^{\mu x} - B'(x) \mu e^{-\mu x} + B(x) \mu^2 e^{-\mu x} \\
+  &= \mu(A'(x) e^{\mu x} - B'(x) e^{-\mu x}) + \xi y(x)
+\end{align}
+
+Funkciji $A$ in $B$ zado"s"cata sistemu dveh ena"cb
+
+
+\begin{align}
+  A'(x) e^{\mu x} + B'(x) e^{-\mu x} &= 0 \\
+  A'(x) e^{\mu x} - B'(x) e^{-\mu x} &= \frac{-\lambda}{2\mu}
+\end{align}
+
+z re"sitvama
+
+\begin{align}
+  A'(x) &= \frac{-\lambda}{4\mu} e^{-\mu x} & A(x) &= \frac{\lambda}{4\xi}e^{-\mu x} + C\\
+  B'(x) &= \frac{\lambda}{4\mu} e^{\mu x} & B(x) &= \frac{\lambda}{4\xi}e^{\mu x} + D
+\end{align}
+
+\end{comment}
+
+Ena"cba je sicer nehomogena, ampak je njen nehomogeni del dovolj enostaven, da re"sitev lahko uganemo
+
+\begin{align}
+  y(x) &= \frac{\lambda}{2\xi} + A e^{\mu x} + B e^{-\mu x}
+\end{align}
+
+"Ce substituiramo $C = \frac{\lambda}{2\xi}$ in nas ne zanima kon"cna hitrost, lahko dolo"cimo vrednost konstant. Iz dinami"cnega robnega pogoja spet sledi $y'(1) = 0$. 
+
+\begin{align}
+ y'(1) &= \mu ( Ae^\mu - Be^{-\mu} ) = 0 \\
+B &= Ae^{2\mu} \\
+y(x) &= A( e^{\mu x} + e^{\mu (2-x)} ) + C = 2 A e^{\mu} \cosh ( \mu(1-x) ) + C \\
+y(0) &= 2A e^{\mu} \cosh \mu + C = y_0 \rightarrow C = y_0 - 2Ae^\mu \cosh \mu \\
+y(x) &= 2Ae^\mu ( \cosh (\mu (1-x)) - \cosh \mu ) + y_0
+\end{align}
+
+Iz pogoja, da v "casu $T$ prevozimo ravno razdaljo $L$, lahko izra"cunamo "se vrednost $A$. 
+
+\begin{align}
+  \int_0^1 y(x)\dd x &= \left[2Ae^\mu \left( \frac{\sinh(\mu(x-1))}{\mu}  - x\cosh \mu\right) + y_0x\right]_{0}^{1} \\
+  &= 2Ae^\mu \left( \frac{\sinh \mu}{\mu} - \cosh \mu \right) + y_0 = 1 \\
+2Ae^{\mu} &= \frac{1-y_0}{\frac{\sinh\mu}{\mu} - \cosh \mu } \\
+y(x) &= \frac{1-y_0}{\frac{\sinh\mu}{\mu} - \cosh \mu } \cdot \left( \cosh(\mu x - \mu) - \cosh \mu \right) + y_0 \label{eq:hitrost-koncni}
+\end{align}
+
+Grafi $y(x)$ pri razli"cnih vrednostih $\xi$ in $y_0$ so na slikah \ref{fig:hitrosti-1}-\ref{fig:hitrosti-mu}. 
+
+\begin{figure}
+\input{hitrost-1}
+\caption{Odvisnost hitrosti od "casa pri $\xi = 0,01$}
+\label{fig:hitrosti-1}
+\end{figure}
+
+\begin{figure}
+\input{hitrost-2}
+\caption{Odvisnost hitrosti od "casa pri $\xi = 1$}
+\label{fig:hitrosti-2}
+\end{figure}
+
+\begin{figure}
+\input{hitrost-3}
+\caption{Odvisnost hitrosti od "casa pri $\xi = 100$}
+\label{fig:hitrosti-3}
+\end{figure}
+
+\begin{figure}
+\input{hitrost-mu-1}
+\caption{Odvisnost hitrosti od "casa pri razli"cnih vrednosti $\xi$ in $y_0 = 1,5$}
+\label{fig:hitrosti-mu}
+\end{figure}
+
+\subsubsection{Preverjanje}
+
+"Ce $\xi$ in s tem $\mu$ manj"samo proti $0$, bi morali dobiti enak rezultat, kot "ce hitrosti ne bi upo"stevali, torej izraz \ref{eq:brez-robnega}. 
+
+\begin{align}
+  \left[\cosh a\mu - \cosh \mu \right]_{\mu << 1} &= \frac{\mu^2}{2} (a^2-1) + \mathcal{O} (\mu^4) \\
+  \left[\frac{\sinh\mu}{\mu} - \cosh \mu \right]_{\mu << 1} &= -\frac{\mu^2}{3} + \mathcal{O} (\mu^4)
+\end{align}
+
+Ko oba izraza vsatvimo v (\ref{eq:hitrost-koncni}), vidimo, da je re"sitev za majhne $\xi$ res enako gibanje, kot "ce je $\xi=0$. 
+
+\begin{align}
+  y(x) &= \frac{3}{2} (1-y_0) x (2-x) + y_0
+\end{align}
+
+\subsubsection{Samo hitrost v $\mathcal{L}$}
+Zanimiva je tudi druga limita, ko v Lagran"zijanu nastopa samo hitrost. To re"sitev lahko iz zadnjega rezultata "ce limitiramo $\xi\to\infty$. V tem primeru lahko hiperboli"cna sinus in kosinus zamenjamo z eksponentno funkcijo in re"sitev postane
+
+\begin{align}
+  y(x) &= \frac{1-y_0}{e^\mu(\frac{1}{\mu} - 1)} (e^{\mu x} e^-\mu - e^\mu) + y_0\\
+  &= \frac{1-y_0}{1-\frac{1}{\mu}}(1-e^{\mu(x-2)}) + y_0
+\end{align}
+
+Izraz v eksponentu $x-2$ je na celotnem intervalu negativen, zato je $e^{\mu(x-2)} \approx 0$ za velike $\mu$. V tem izrazu lahko brez nev"se"cnosti postavimo $\mu$ na neskon"cno in dobimo kot re"sitev gibanje s konstantno hitrostjo $y(x) = 1$. "Ce ne upo"stevamo pospe"ska in nas zanima le vo"znja z najmanj"sim kvadratom hitrosti, je najugodneje takoj pospe"siti ali zavreti na hitrost $1$ in nato voziti z nespremenjeno hitrostjo do semaforja. 
+
+
+\section{Periodi"cna re"sitev}
+
+"Ce za drugi robni pogoj vzamemo y(1) = y(0), dobimo druga"cno re"sitev. Spet uporabimo izraz (\ref{eq:ena-spremenljivka}). 
+
+\begin{align}
+y(1) - y(0) &= A(1-\frac{2}{3}) + 2(1-y_0) = 0 \\
+A &= -6(1-y_0) \\
+y(x) &=  -6(1-y_0)x^2 + 4(1-y_0)x + 2(1-y_0) + y_0 \\
+&= 6(1-y_0)x(1-x) + y_0
+\end{align}
+
+\begin{figure}
+
+\input{periodicno}
+\label{fig:periodicno} 
+\caption{Odvisnost hitrosti od "casa pri periodi"cnem robnem pogoju}
+\end{figure}
+
+V tem primeru je re"sitev parabola, ki po pri"cakovanju v za"cetni in kon"cni to"cki dose"ze enako vrednost $y_0$.
+
+\section{Komentar}
+
+\subsection{Za"cetna hitrost}
+
+Skoraj povsod v odvisnosti hitrosti od "casa nastopa "clen $(1-y_0)$. Ta "clen ima vrednost 0 natanko tedaj, ko nas vo"znja z nespremenjeno hitrostjo pripelje skozi semafor ob ravno pravem "casu. "Ce je $y_0$ v na"sih brezdimenzijskih enotah ve"cji od 1, moramo zavirati, "ce pa je manj"si, moramo za dosego na"sega cilja najprej pospe"siti. 
+
+\subsection{``Vozli'' na grafih}
+
+Na vsakem grafu najdemo vsaj eno tak"sno to"cko $x_1$, da je $y(x_1) = 1$ neodvisno od $y_0$. Vse re"sitve, ki smo jih obravnavali pri tej nalogi, so namre"c oblike
+\begin{align}
+  y(x) &= (1-y_0)f(x) + y_0
+\end{align}
+
+kjer je funkcija $f(x)$ ni odvisna od $y_0$ in velja $f(0) = 0$ ter $f(x_1) = 1$. Funkcija $f$ in s tem polo"zaj to"cke $x_0$ sta odvisni od parametrov problema in robnih pogojev, pri problemu s periodi"cnim robnim pogojem dobimo celo dve taki vrednosti $x_1$. 
+
+\end{document}
