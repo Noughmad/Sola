@@ -5,6 +5,7 @@
 \usepackage{verbatim}
 \usepackage{graphicx}
 \usepackage{subfigure}
+\usepackage[top=2cm,bottom=2cm,right=3cm,left=3cm]{}
 
 \newcommand{\dd}{\mathrm{d}}
 
@@ -72,7 +73,7 @@ y(x) &=  -\frac{3}{2}(1-y_0)x^2 + 3(1-y_0)x + y_0 \\
 
 Re"sitev je kvadratna funkcija, ki je simetri"cna glede na kon"cno to"cko $x=1$. Edini ostali parameter problema je $y_0$, ki nam tudi dolo"ca dru"zino re"sitev. 
 
-\begin{figure}
+\begin{figure}[h!]
 \input{brez}
 \label{fig:brez}
 \caption{Odvisnost hitrosti od "casa brez kon"cnega robnega pogoja}
@@ -176,14 +177,32 @@ Ker smo privzeli, da je $\beta >> 1$, lahko v prvem oklepaju $1/\beta$ zanemarim
  y_\infty(x) &= 2x(1-y_0) + y_0 
 \end{align}
 
-\begin{figure}
+Na"s naiven razmislek se je izkazal za pravilnega, saj je re"sitev res enakomerno pospe"seno gibanje, velikost pospe"ska pa je neposredno odvisna od za"cetne hitrosti. 
+
+\begin{figure}[h!]
 \input{eksponent}
 \caption{Odvisnost hitrosti od "casa v limiti, ko gre eksponent pospe"ska v Lagran"zijanu proti neskon"cno} 
 \label{fig:eksponent}
 \end{figure}
 
+\clearpage
 
-Na"s naiven razmislek se je izkazal za pravilnega, saj je re"sitev res enakomerno pospe"seno gibanje, velikost pospe"ska pa je neposredno odvisna od za"cetne hitrosti. 
+\subsection{Poljuben sod $\alpha$}
+Na podoben na"cin in z istimi robnimi pogoji lahko izra"cunamo tudi optimalno re"sitev za poljuben sod eksponent $\alpha$. Z uporabo podobnih substitucij in trikov kot v prej"snjem poglavju pridemo do kon"cnega izraza
+
+\begin{align}
+  y(x) &= \frac{2\beta+1}{\beta+1}(1-y_0)\left[ 1 - (x-1)^{1+1/\beta} \right] + y_0 \\
+\end{align}
+
+\begin{figure}[h!]
+\input{poljuben-sod}
+\caption{Odvisnost hitrosti od "casa pri razli"cnih sodih vrednosti eksponenta pospe"ska v Lagran"zijanu $\alpha$} 
+\label{fig:poljuben-sod}
+\end{figure}
+
+Graf za $\alpha=2$ res izgleda enako kot na sliki \ref{fig:brez}, medtem ko se z ve"canjem potence $\alpha$ vse bolj pribli"zujemo ravni "crti, kot je na sliki \ref{fig:eksponent}. 
+
+\clearpage
 
 \subsection{Hitrost v Lagran"zijanu}
 
@@ -262,25 +281,25 @@ y(x) &= \frac{1-y_0}{\frac{\sinh\mu}{\mu} - \cosh \mu } \cdot \left( \cosh(\mu x
 
 Grafi $y(x)$ pri razli"cnih vrednostih $\xi$ in $y_0$ so na slikah \ref{fig:hitrosti-1}-\ref{fig:hitrosti-mu}. 
 
-\begin{figure}
+\begin{figure}[h!]
 \input{hitrost-1}
 \caption{Odvisnost hitrosti od "casa pri $\xi = 0,01$}
 \label{fig:hitrosti-1}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 \input{hitrost-2}
 \caption{Odvisnost hitrosti od "casa pri $\xi = 1$}
 \label{fig:hitrosti-2}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 \input{hitrost-3}
 \caption{Odvisnost hitrosti od "casa pri $\xi = 100$}
 \label{fig:hitrosti-3}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 \input{hitrost-mu-1}
 \caption{Odvisnost hitrosti od "casa pri razli"cnih vrednosti $\xi$ in $y_0 = 1,5$}
 \label{fig:hitrosti-mu}
@@ -323,7 +342,7 @@ y(x) &=  -6(1-y_0)x^2 + 4(1-y_0)x + 2(1-y_0) + y_0 \\
 &= 6(1-y_0)x(1-x) + y_0
 \end{align}
 
-\begin{figure}
+\begin{figure}[h!]
 
 \input{periodicno}
 \label{fig:periodicno} 

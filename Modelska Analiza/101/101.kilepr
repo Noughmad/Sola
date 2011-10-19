@@ -36,14 +36,14 @@ order=-1
 
 [item:Miha_Cancula_101.tex]
 archive=true
-column=13
+column=181
 encoding=UTF-8
 highlight=LaTeX
-line=318
+line=202
 mode=LaTeX
 open=true
 order=0
 
 [view-settings,view=0,item:Miha_Cancula_101.tex]
-CursorColumn=13
-CursorLine=318
+CursorColumn=181
+CursorLine=202

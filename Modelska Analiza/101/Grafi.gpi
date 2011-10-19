@@ -14,8 +14,11 @@ f3(x,y0,m) = (1-y0)/( sinh(m)/m - cosh(m) )*(cosh(m*x-m) - cosh(m)) + y0
 
 f4(x,y0) = 6*(1-y0) * x * (1-x) + y0
 
+f5(x,y0,b) = (2*b+1)/(b+1)*(1-y0)*(1-(1-x)**(1+1/b)) + y0
+
 title(y) = sprintf("$y_0 = %.1f$", y)
 title_m(m) = sprintf("$\\xi = %g$", m)
+title_b(a) = sprintf("$\\alpha = %d$", a)
 
 set output "brez.tex"
 plot for [i=0:8] f1(x, i/4.0) t title(i/4.0)
@@ -41,6 +44,11 @@ plot[][0.5:1.7] for [i=-1:3] f3(x, 1.5, 10**(0.5*i)) t title_m(10**i)
 
 set output "periodicno.tex"
 plot for [i=0:8] f4(x, i/4.0) t title(i/4.0)
+
+set key vertical top right
+
+set output "poljuben-sod.tex"
+plot for [i=1:4] f5(x, 1.5, 2*i-1.0) t title_b(2*i)
 
 
 
