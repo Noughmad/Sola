@@ -1,0 +1,47 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+\title{Nelinearna minimizacija}
+\author{Miha \v Can\v cula}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\theta}{\vartheta}
+
+\begin{document}
+
+\maketitle
+
+\section{Orodja}
+Nalogo sem re"seval s prostim programom \texttt{GNU Octave}, ki za nelinearno optimizacijo ponuja funkcijo \texttt{sqp}. 
+
+\section{Thompsonov problem}
+Polo"zaj diskretnih to"ckastih nabojev na krogli lahko opi"semo z dvema koordinatama, $\theta\in[0,\pi]$ in $\phi\in[0,2\pi]$. Potencialna energija takih nabojev je odvisna le od medsebojne razdalje, zato moramo najprej izraziti razdaljo med dvema nabojema z njunima koordinatama. Kot med dvema to"ckama izra"cunamo kot skalarni produkt med njunima krajevnima vektorjema in znasa
+\begin{align}
+  \cos \alpha_{ij} &= \cos (\phi_i-\phi_j) \sin \theta_i \sin \theta_j + \cos \theta_i \cos\theta_j
+\end{align}
+dejansko razdaljo med to"ckama pa po kosinusnem izreku
+\begin{align}
+  d_{ij} &= \sqrt{2R^2(1 - \cos\alpha_{ij})}
+\end{align}
+
+Skupna potencialna energija sistema je vsota potencialnih energij vseh parov nabitih delcev na krogli
+\begin{align}
+  E = E_0 \sum_{i<j} \frac{\sqrt{2R^2}}{d_{ij}} = E_0 \sum_{i<j} \left[ 1 - \cos (\phi_i-\phi_j) \sin \theta_i \sin \theta_j - \cos \theta_i \cos\theta_j \right]^{-1/2} 
+\end{align}
+
+Ker multiplikativna konstanta v energiji ne spremeni optimalne razporeditve nabojev po krogli, lahko izraz pretvorim v brezdimenzijske enote. Energija $E_0 = \frac{e^2}{4\pi\varepsilon_0 R}$ nas bo zanimala le, "ce bomo "zeleli izra"cunati vrednosti energije v minimumu, ne pa samega polo"zaja minimuma. 
+\begin{align}
+  y = \sum_{i<j} \left[ 1 - \cos (\phi_i-\phi_j) \sin \theta_i \sin \theta_j - \cos \theta_i \cos\theta_j\right]^{-1/2} 
+\end{align}
+
+Brez izgube splo"snosti lahko fiksiramo tri koordinate: $\theta_1 = 0$, $\phi_1 = 0$, $\phi_2 = 0$. Na ta na"cim prepre"cimo vrtenje okrog krogle med re"sevanje, hkrati pa pospe"simo re"sevanje, saj zmanj"samo "stevilo prostostnih stopenj. Za problem z $N$ naboji nam ostane $2N-3$ prostih koordinat. 
+
+\section{Voznja do semaforja}
+Na enak na"cin sem re"seval tudi problem iz prej"snje naloge. "Casovni interval sem razdelil na $N$ podintervalov, hitrost vo"znje sem omejil med 0 in $y_{max}$ in dodal omejitev, da je skupna pot enaka 1. 
+
+\end{document}
