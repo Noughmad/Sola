@@ -23,7 +23,7 @@ function y = phi_t(xx)
   endfor
 endfunction
 
-N = 20;
+N = 10;
 
 A = diag(ones(N+1,1)) - diag(ones(N,1),-1);
 A = A(2:N+1,1:N+1);
@@ -58,10 +58,11 @@ endfunction
 # Resitev za semafor
 Y0 = linspace(0,1,N)';
 Y = sqp(Y0, @semafor, @pot, [], 0, vmax);
-Y
 
 # Resitev za naboje
 x0 = linspace(0.2,pi-0.2,2*N-3)'; # Zagotovimo, da nobena dva nista na istem mestu
 final_x(x0)./pi*180
 X = sqp(x0, @phi_t, [], [], 0, pi);
-final_x(X)./pi*180
+R = final_x(X)./pi*180;
+R = [R(1:2:2*N) R(2:2:2*N)-90]
+save naboji_10.dat R

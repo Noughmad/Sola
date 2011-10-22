@@ -1,0 +1,21 @@
+set terminal epslatex color solid
+
+# Krogelne koordinate
+set angles degrees
+set ticslevel 0
+set view 0, 0, 1, 1
+set mapping spherical
+set parametric
+set samples 32
+set isosamples 9
+set urange [0:180]
+set vrange [0:360]
+
+set output "naboji-10.tex"
+
+splot sin(u)*cos(v),sin(u)*sin(v),cos(u) notitle, \
+'naboji_10.dat' with points pt 2 ps 3 notitle
+
+set output "naboji-10-stran.tex"
+set view 90,0,1,1
+replot
