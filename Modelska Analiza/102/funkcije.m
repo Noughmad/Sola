@@ -23,7 +23,7 @@ function y = phi_t(xx)
   endfor
 endfunction
 
-N = 10;
+N = 5;
 
 A = diag(ones(N+1,1)) - diag(ones(N,1),-1);
 A = A(2:N+1,1:N+1);
@@ -64,5 +64,5 @@ x0 = linspace(0.2,pi-0.2,2*N-3)'; # Zagotovimo, da nobena dva nista na istem mes
 final_x(x0)./pi*180
 X = sqp(x0, @phi_t, [], [], 0, pi);
 R = final_x(X)./pi*180;
-R = [R(1:2:2*N) R(2:2:2*N)-90]
-save naboji_10.dat R
+R = [2.*R(1:2:2*N) 90-R(2:2:2*N)]
+save(['naboji_' int2str(N) '.dat'], 'R')

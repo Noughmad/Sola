@@ -4,6 +4,7 @@
 \usepackage[slovene]{babel}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{subfigure}
 
 \title{Nelinearna minimizacija}
 \author{Miha \v Can\v cula}
@@ -11,6 +12,17 @@
 \renewcommand{\phi}{\varphi}
 \renewcommand{\epsilon}{\varepsilon}
 \renewcommand{\theta}{\vartheta}
+
+\newcommand{\naboji}[1]{
+  
+\begin{figure}
+  \subfigure{\input{naboji-#1-tloris}}
+  \subfigure{\input{naboji-#1-stran}}\\
+  \subfigure{\input{naboji-#1-pers1}}
+  \subfigure{\input{naboji-#1-pers2}}
+\end{figure}
+
+}
 
 \begin{document}
 
@@ -41,14 +53,8 @@ Ker multiplikativna konstanta v energiji ne spremeni optimalne razporeditve nabo
 
 Brez izgube splo"snosti lahko fiksiramo tri koordinate: $\theta_1 = 0$, $\phi_1 = 0$, $\phi_2 = 0$. Na ta na"cim prepre"cimo vrtenje okrog krogle med re"sevanje, hkrati pa pospe"simo re"sevanje, saj zmanj"samo "stevilo prostostnih stopenj. Za problem z $N$ naboji nam ostane $2N-3$ prostih koordinat. 
 
-\begin{figure}
-  \input{naboji-10}
-\end{figure}
-
-\begin{figure}
-  \input{naboji-10-stran}
-\end{figure}
-
+\naboji{10}
+\naboji{5}
 
 \section{Voznja do semaforja}
 Na enak na"cin sem re"seval tudi problem iz prej"snje naloge. "Casovni interval sem razdelil na $N$ podintervalov, hitrost vo"znje sem omejil med 0 in $y_{max}$ in dodal omejitev, da je skupna pot enaka 1. Upo"steval sem tudi asimetri"cno omejitev pospe"ska $a_{min} < a < a_{max}$, kjer je $a_{min}<0$ najve"cji pojemek pri zaviranju in $a_{max} > 0$ najve"cji pospe"sek pri pospe"sevanju. 

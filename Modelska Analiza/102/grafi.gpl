@@ -1,21 +1,50 @@
-set terminal epslatex color solid
+set terminal epslatex color solid size 2,2
 
 # Krogelne koordinate
+set size square
 set angles degrees
 set ticslevel 0
-set view 0, 0, 1, 1
+set view 0, 0
 set mapping spherical
 set parametric
 set samples 32
 set isosamples 9
 set urange [0:180]
 set vrange [0:360]
+unset tics
 
-set output "naboji-10.tex"
+set output "naboji-10-tloris.tex"
 
 splot sin(u)*cos(v),sin(u)*sin(v),cos(u) notitle, \
-'naboji_10.dat' with points pt 2 ps 3 notitle
+'naboji_10.dat' with points pt 6 ps 1 notitle
 
 set output "naboji-10-stran.tex"
-set view 90,0,1,1
+set view 90,0
 replot
+
+set output "naboji-10-pers1.tex"
+set view 60,25
+replot
+
+set output "naboji-10-pers2.tex"
+set view 37,25
+replot
+
+set output "naboji-5-tloris.tex"
+set view 0,0
+
+splot sin(u)*cos(v),sin(u)*sin(v),cos(u) notitle, \
+'naboji_5.dat' with points pt 6 ps 1 notitle
+
+set output "naboji-5-stran.tex"
+set view 90,0
+replot
+
+set output "naboji-5-pers1.tex"
+set view 60,25
+replot
+
+set output "naboji-5-pers2.tex"
+set view 37,25
+replot
+
