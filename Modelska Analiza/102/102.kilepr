@@ -26,14 +26,14 @@ ReadWrite=true
 
 [item:miha_cancula_102.tex]
 archive=true
-column=117
+column=144
 encoding=UTF-8
 highlight=LaTeX
-line=48
+line=92
 mode=LaTeX
 open=true
 order=0
 
 [view-settings,view=0,item:miha_cancula_102.tex]
-CursorColumn=117
-CursorLine=48
+CursorColumn=144
+CursorLine=92

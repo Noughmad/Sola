@@ -57,10 +57,39 @@ Brez izgube splo"snosti lahko fiksiramo tri koordinate: $\theta_1 = 0$, $\phi_1 
 \naboji{5}
 
 \section{Voznja do semaforja}
-Na enak na"cin sem re"seval tudi problem iz prej"snje naloge. "Casovni interval sem razdelil na $N$ podintervalov, hitrost vo"znje sem omejil med 0 in $y_{max}$ in dodal omejitev, da je skupna pot enaka 1. Upo"steval sem tudi asimetri"cno omejitev pospe"ska $a_{min} < a < a_{max}$, kjer je $a_{min}<0$ najve"cji pojemek pri zaviranju in $a_{max} > 0$ najve"cji pospe"sek pri pospe"sevanju. 
+Na enak na"cin sem re"seval tudi problem iz prej"snje naloge. "Casovni interval sem razdelil na $N$ podintervalov, hitrost vo"znje sem omejil med 0 in $y_{max}$ in dodal omejitev, da je skupna pot enaka 1. 
 
-Izbral sem metodo, ki je sama dolo"cila smer najugodnej"sega premikanja, brez da bi ji moral podati gradient akcije. Zato ni bilo potrebe po analiti"cnosti funkcije in sem lahko uporabil ostro omejitev tako da hitrost kot za pospe"sek. 
+Izbral sem metodo, ki je sama dolo"cila smer najugodnej"sega premikanja, brez da bi ji moral podati gradient akcije. Zato ni bilo potrebe po analiti"cnosti funkcije in sem lahko uporabil ostro omejitev tako da hitrost kot za pospe"sek. Izra"cun je bil dovolj hiter tudi za ve"cje "stevilo intervalov (nekaj 100), zato ni bilo potrebe po optimizaciji, saj se ve"cja natan"cnost ra"cunanja ne pozna na grafu. 
 
 V primerjavi s prej"snjo nalogo dodatne omejitve prinesejo kar nekaj novih parametrov, zato sem narisal ve"c grafov. 
+
+\subsection{Brez kon"cnega robnega pogoja}
+
+\input{semafor_0}
+\input{semafor_05}
+
+\subsection{Periodi"cna vo"znja}
+
+
+\input{semafor_p_0}
+\input{semafor_p_05}
+\input{semafor_p_hitro}
+
+\subsection{Omejitev pospe"ska}
+Upo"steval sem tudi asimetri"cno omejitev pospe"ska $a_{min} < a < a_{max}$, kjer je $a_{min}<0$ najve"cji pojemek pri zaviranju in $a_{max} > 0$ najve"cji pospe"sek pri pospe"sevanju. Obi"cajno so avtomobili sposobni hitrej"sega zaviranja kot pospe"sevanja. S to dodatno omejitvijo moramo biti bolj previdni pri izbiri robnih pogojev, saj moramo paziti, da re"sitev se vedno obstaja. 
+
+Poleg tega re"sitev postane manj zanimiva, saj avto ve"cino "casa pospe"suje ali pa zavira s polno mo"cjo. Zato sem raje upo"steval neenakost v "casu, tako da sem dopustil mo"znost, da avto v kri"zi"s"ce zapelje po tem ko se pri"zge zelena lu"c. Pri pogojih, ko je za"cetna hitrost prevelika, da bi avto uspel upo"casniti pred prihodom v kri"zi"s"ce, pa "se vedno ne moremo najti re"sitve. 
+
+"Ce bi dopustil poljuben "cas do kri"zi"s"ca, bi bila najugodnej"sa pot seveda s konstantno hitrostjo, saj bi bila v tem primeru akcija enaka 0. Zato sem moral upo"stevali "cas (oz prepotovano pot v fiksnem "casu) tudi v funkciji, ki jo "zelimo minimizirati. Ta funkcija je tako postala
+
+\begin{align}
+ S = \sum_{i=0}^{N} y_i - e^{\beta (1-s)}
+\end{align}
+
+Prehiter prihod do kri"zi"s"ca sem omejil z ostro mejo, medtem ko je prepozen prihod kaznovan le z eksponentno funkcijo. 
+
+\input{semafor_a_p_pocasi}
+
+Asimetri"cna omejitev pospe"ska pride do izraza pri majhnih za"cetnih in kon"cnih hitrostih, ko je treba najprej pospe"sevati in nato zavirati. 
 
 \end{document}
