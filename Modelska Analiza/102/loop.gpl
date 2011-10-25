@@ -1,0 +1,21 @@
+N = N + 1
+
+set output sprintf("naboji-%d-tloris.tex",N)
+set view 0,0
+
+splot sin(u)*cos(v),sin(u)*sin(v),cos(u) notitle, \
+sprintf("naboji_%d.dat",10) with points pt 6 ps 1 notitle
+
+set output sprintf("naboji-%d-stran.tex",N)
+set view 90,0
+replot
+
+set output sprintf("naboji-%d-pers1.tex",N)
+set view 60,25
+replot
+
+set output sprintf("naboji-%d-pers2.tex",N)
+set view 37,25
+replot
+
+if (N < 12) reread

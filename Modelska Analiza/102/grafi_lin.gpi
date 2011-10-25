@@ -1,0 +1,19 @@
+set terminal epslatex color solid
+
+set output "lin_utez.tex"
+set style data lines
+set key at 0.5,1.9
+
+plot "lin_0_1.dat" title "$y_0 = 0$", \
+"lin_5_1.dat" title "$y_0 = 0,5$", \
+"lin_9_1.dat" title "$y_0 = 0,9$", \
+"lin_15_1.dat" title "$y_0 = 1,5$", \
+"lin_20_1.dat" title "$y_0 = 2$"
+
+set output "lin_brez.tex"
+
+plot "lin_0_0.dat" title "$y_0 = 0$", \
+"lin_5_0.dat" title "$y_0 = 0,5$", \
+"lin_9_0.dat" title "$y_0 = 0,9$", \
+"lin_15_0.dat" title "$y_0 = 1,5$", \
+"lin_20_0.dat" title "$y_0 = 2$"
