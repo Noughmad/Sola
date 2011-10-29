@@ -1,0 +1,8 @@
+set terminal epslatex color solid
+set style data lines
+
+set output "laser_0_t.tex"
+plot "laser_0.dat" u 0:1 t "Atomi", "" u 0:2 t "Fotoni"
+
+set output "laser_0_p.tex"
+plot "laser_0.dat" u 1:2 notitle
