@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{subfigure}
+\usepackage{hyperref}
 
 \title{Populacijski modeli}
 \author{Miha \v Can\v cula}
@@ -13,7 +14,194 @@
 \renewcommand{\epsilon}{\varepsilon}
 \renewcommand{\theta}{\vartheta}
 
+\newcommand{\tgamma}{\texorpdfstring{$\gamma$}{gama}}
+\newcommand{\tmu}{\texorpdfstring{$\mu$}{mi}}
+
 \begin{document}
 \maketitle
+
+\section{Postopek re"sevanja}
+
+Za vsakega izmed treh problemov sem izbral nekaj za"cetnih pogojev, nato pa numeri"cno re"sil sistem diferencialnih ena"cb. Za samo re"sevanje sem uporabil metodo Runge-Kutta reda 4, implementirano v programu \texttt{Octave}, za prikaz na grafih pa program \texttt{Gnuplot}. 
+
+Za vsak problem sem prikazal "casovno odvisnost re"sitve pri nekaj razli"cnih za"cetnih vrednostih, nato pa "se medsebojno odvisnost spremenljivk. Fazni diagram sem narisal na dva na"cina: najprej smer odvoda v odvisnosti od vrednosti spremenljivk, nato pa se premikanje re"sitve po faznem prostoru v odvisnosti od "casa. 
+
+\section{Zajci in lisice}
+
+Spreminjanje populacij zajcev in lisic lahko preprosto opi"semo s sistemov dveh diferencialnih ena"cb. Za ve"cjo podobnost programskim jezikom sem "stevilo zajcev ozna"cil z $X_1$ in "stevilo lisic z $X_2$. 
+
+\begin{align}
+  \dot X_1 &= \alpha X_1 - \beta X_1 X_2 \\
+  \dot X_2 &= -\gamma X_2 + \delta X_1 X_2
+\end{align}
+
+"Stevilo konstant si lahko zmanj"samo, saj v ena"cbi nastopajo tri koli"cine, za katere nas ne zanima sama vrednost, ampak le njihovo relativno spreminanje. To sta velikosti obeh populacij in pa "cas. Problem ima netrivialno zastojno to"cko pri $X_1 = \gamma/\delta$ in $X_2 = \alpha/\beta$, zato si bomo ra"cunanje poenostavili, "ce velikosti populacij normiramo tako, da bo ta zastojna to"cka imela koordinate $(1,1)$, torej mora biti $\alpha=\beta$ in $\gamma=\delta$. 
+
+\begin{align}
+  \dot X_1 &= \alpha X_1 ( 1 - X_2) \\
+  \dot X_2 &= \gamma X_2 ( X_1 - 1)
+\end{align}
+
+"Ce nas ne zanima hitrost spreminanja populacij, lahko tudi "cas transformiramo tako, da bo ena izmed konstant $\alpha$ ali $\gamma$ enaka 1. Pri svojem ra"cunanju sem izbral $\alpha=1$, medtem ko sem za $\gamma$ izbiral razli"cne vrednosti in primerjal rezultate. 
+
+\begin{align}
+  \dot X_1 &= X_1 ( 1 - X_2 \\
+  \dot X_2 &= \gamma X_2 ( X_1 - 1 )
+\end{align}
+
+Parameter $\gamma$ nam sedaj pove, kako hitro se lisice razmno"zujejo v izobilju zajcev in kako hitro umirajo brez njih. 
+
+\subsection{\texorpdfstring{$\gamma$}{gama}=1}
+
+V primeru, "ce je tudi $\gamma=1$, se lisice mno"zijo in umirajo enako hitro kot zajci. S tem postane problem "se posebej simetri"cen, zato pri"cakujemo tudi simetri"cno re"sitev. Kot vidimo na sliki \ref{fig:z-f-1}, je to res, saj je graf simetri"cen glede na zamenjavo zajcev in lisic. 
+\begin{figure}[!h]
+  \input{zajlis_p_1}
+  \caption{Fazni diagram za $\gamma=1$}
+  \label{fig:z-f-1}
+\end{figure}
+\begin{figure}[!h]
+  \input{zajlis_t_12_1}
+  \caption{"Casovno spreminanje populacij zajcev in lisic pri $\gamma=1$}
+  \label{fig:z-t-1}
+\end{figure}
+
+\newpage
+\subsection{\texorpdfstring{$\gamma$}{gama}=1/5}
+
+Lahko pogledamo tudi, kaj se zgodi, "ce upo"stevamo pregovor in se lisice po"casneje hitreje kot zajci. V tem primeru ena izmed simetrij problema izgine, kar lahko vidimo tako na faznem diagramu (slika \ref{fig:z-f-2}) kot tudi na neenakomernem "casovnem spreminjanju (slika \ref{fig:z-t-2})
+
+\begin{figure}[!h]
+  \input{zajlis_p_2}
+  \caption{Fazni diagram za $\gamma=1/5$}
+  \label{fig:z-f-2}
+\end{figure}
+\begin{figure}[!h]
+  \input{zajlis_t_12_2}
+  \caption{"Casovno spreminanje populacij zajcev in lisic pri $\gamma=1/5$}
+  \label{fig:z-t-2}
+\end{figure}
+
+Pri $\gamma\neq 1$ je "casovni razvoj obeh populacij "se vedno periodi"cen, vendar ni ve"c podoben sinusni funkciji. Opazimo lahko kratka obdobja hitre rasti "stevila zajcev, ki pa spet hitro pomrejo takoj ko se namno"zijo tudi lisice. 
+
+
+\clearpage
+\section{Bolniki}
+
+Raz"sirjanje bolezni lahko opi"semo s podobnim modelom kot prej, tako da upo"stevamo "stevilo sre"canj med bolnimi in zdravimi osebami. Populacijo razdelimi na tri dele: zdrave in dovzetne, bolne prena"salce, in pa odporne. 
+
+\begin{align}
+  \dot X_1 &= -\mu X_1 X_2 \\
+  \dot X_2 &= \mu X_1 X_2 - \nu X_2 \\
+  \dot X_3 &= \nu X_2
+\end{align}
+
+Pri tem smo predpostavili, da je prehod iz belnega stanja v odporno povsem naklju"cen, enako kot razpad delcev. V praksi ponavadi ni tako, saj preidemo skozi razli"cne stadije bolezni, bolezni pa imajo obi"cajno neko povpre"cno trajanje, od katerega le malo odstopajo. Zato sem v mojih ena"cbah upo"steval $n$ stopenj bolezni, tako da je prehod iz vsake stopnje v nasljednjo naklju"cen, razporeditev skupnega trajanja bolezni pa se namesto eksponentni pribli"zuje Gaussovi. Tak"sna porazdelitev po trajanju je bolj v skladu z opa"zenim razvojem bolezni. 
+
+\begin{align}
+  \dot X_1 &= -\mu X_1 \sum_{i=2}^{n+1} X_i \\
+  \dot X_2 &= \mu X_1 \sum_{i=2}^{n+1} X_i - \frac{\nu}{n} X_2 \\
+  \dot X_i &= \frac{\nu}{n} ( X_{i-1} - X_i ) & i \in \{ 3\dots n+1 \} \\
+  \dot X_{n+2} &= \frac{\nu}{n} X_{n+1}
+\end{align}
+
+"Stevilo bolnikov je v tem primeru enako vsoti po vseh stopnjah bolezni, torej $B = \sum_{i=2}^{n+1} X_i$. Poleg "stevila stopenj bolezni v problemu nastopata "se dva parametra. Podobno kot prej lahko enaga odpravimo, "ce nas ne zanima "casovna skala. Zato sem postavil $\nu=1$, preostali parameter $\mu$ pa nam pove, kako hitro se bolezen "siri v primerjavi s tem, koliko "casa v povpre"cju traja. 
+
+Pri ra"cunanju se je izkazalo, da je vrednosti $\mu=1$ premajhna, da bi se bolezen prerasla v epidemijo, zato sem za prikaz na grafih izbral vrednosti $\mu=2$ in $\mu=5$. 
+
+\subsection{Zastojne to"cke in fazni diagram}
+Ta problem nima izoliranih zastojnih to"ck, saj je vsako stanje brez prena"salcev ($X_2=0$) ravnovesno. Zato nima smisla risati faznega diagrama kot pri ostalih dveh problemih. Bolj zanimivo je iskanje skupnega ali najve"cjega "stevila obolelih v odvisnosti od hitrosti "sirjena bolezni in za"cetnih pogojev. 
+
+\subsection{Ena stopnja bolezni}
+
+Najprej sem re"seval enostavnej"si sistem ena"cb, s samo enim razredom bolnikov. Izbral sem dolo"cen dele"z naravno imunih posameznikov in pa majhno "stevilo (1\%) bolnikov. Vidimo, da se "stevilo obolelih (zeleni pas) najprej pove"ca, nato pa za"cne zmanjkovati dovzetnih ljudi in rast bolezni upade. Na koncu vsi oboleli postanejo imuni. 
+
+Poleg za"cetnih pogojev je tu prost "se parameter $\mu$, torej hitrost "sirjenja bolezni. Z ve"canjem $\mu$, kot na primer na sliki \ref{fig:b-1-2}, je za"cetni porast "stevila bolnikov hitrej"si, ker pa je povpre"cno trajanje bolezni enako, kmalu postane ve"cina populacije imuna. Na tej sliki se tudi opazi, da na"sa bolezen nima ``spomina'', torej da verjetnost za ozdravitev ni odvisna od "casa, zato "sirina zelenega pasu ni enakomerna. 
+
+\begin{figure}[!h]
+  \input{bolniki_1_1}
+  \caption{Razvoj bolezni z eno stopnjo in $\mu=2$}
+  \label{fig:b-1-1}
+\end{figure}
+
+\begin{figure}[!h]
+  \input{bolniki_1_2}
+  \caption{Razvoj bolezni z eno stopnjo in $\mu=5$}
+  \label{fig:b-1-2}
+\end{figure}
+
+\clearpage
+
+\subsection{Ve"c stopenj bolezni}
+Obravnaval sem primer z $n=10$ stopnjami bolezni, tako da ima vsaka stopnja enako povpre"cno trajanje, povpre"cno trajanje celotne bolezni pa je enako kot prej. Konvolucija 10 eksponentnih porazdelitev je ze precej blizu Gaussovi porazdelitvi, ki jo pri"cakujemo za prehlad. 
+
+\begin{figure}[!h]
+  \input{bolniki_7_1}
+  \caption{Razvoj bolezni z 10 stopnjami in $\mu=2$}
+  \label{fig:b-7-1}
+\end{figure}
+
+\begin{figure}[!h]
+  \input{bolniki_7_2}
+  \caption{Razvoj bolezni z 10 stopnjami in $\mu=5$}
+  \label{fig:b-7-2}
+\end{figure}
+
+"Ce si na sliki \ref{fig:b-7-2} natan"cno ogledamo "sirino zelenega pasu, kar ustreza trajanju bolezni enega posameznika, vidimo, da je zelo enakomerna, dosti bolj kot pri bolezni z eno samo stopnjo na sliki \ref{fig:b-1-2}. To potrjuje, da obravnava bolezni z ve"c stopnjami res prispeva k bolj enakomernemu trajanju bolezni. 
+
+\newpage
+\subsection{"Stevilo obolelih}
+
+Za razli"cne za"cetne pogoje in dve razli"cni bolezni sem izra"cunal najve"cje "stevilo obolelih ob nekem "casu, pa tudi skupno "stevilo obolelih. Slednje sem izra"cunal kot razliko med "stevilom imunih ljudi na koncu in na za"cetku "sirjenja bolezni. Z grafov na slikah \ref{fig:b-max} in \ref{fig:b-total} lahko vidimo, da spreminjanje poteka bolezni ("stevilo stopenj) pri enakem povpre"cnem trajanju vidno zni"za maksimalno "stevilo bolnikov, medtem ko na skupno "stevilo obolelih nima skoraj nobenega vpliva. Na oba merilca ima ve"cji vpliv hitrost "sirjenja bolezni $\mu$. 
   
+Dele"z naravno imunih ali cepljenih ljudi na za"cetku "sirjenja bolezni pa po pri"cakovanju najve"cji najbolj vpliva na "stevilo obolelih, predvsem pri boleznih s hitrim "sirjenjem. Predvsem na sliki \ref{fig:b-max} opazimo, da je cepljenje najbolj u"cinkovito, "ce cepimo pribli"zno polovico populacije, medtem ko vi"sji odstotek imunosti le malo zmanj"sa "stevilo obolelih. 
+
+\begin{figure}[!h]
+  \input{bolni_max}
+  \caption{Najve"cje "stevilo obolelih}
+  \label{fig:b-max}
+\end{figure}
+
+\begin{figure}[!h]
+  \input{bolni_tot}
+  \caption{Skupno "stevilo obolelih}
+  \label{fig:b-total}
+\end{figure}
+
+\clearpage
+\section{Laser}
+
+V populacijskem modulu laserja nastopata dve spremenljivki: "stevilo (oz. dele"z) vzbujenih atomov, ki so sposobni stimulirane emisije fotona, in pa "stevilo fotonov v koherentnem curku. Obi"cajno atome vzbujamo z zunanjim "crpanjem, tako v "stevilu atomov kot fotonov pa imamo tudi izgube. 
+
+\begin{align}
+  \dot X_1 &= -\alpha X_1 X_2 - \beta X_1 + R \\
+  \dot X_2 &= \alpha X_1 X_2 - \gamma X_2
+\end{align}
+
+Podobno kot pri zajcih in lisicah lahko tudi tu dolo"cimo in normiramo zastojne to"cke. Ena je pri $X_2=0$ in $X_1 = \frac{R}{\beta}$, druga pa pri $X_1 = \frac{\gamma}{\alpha}$ in $X_2 = \frac{R}{\gamma} - \frac{\beta}{\alpha}$. Ker lahko normiramo "cas in dve spremenljivki, se lahko znebito treh parametrov. Bolj zanimiva je seveda druga zastojna to"cka, saj predstavlja stabilno delovanje laserja, medtem pri prvi ni koherentnih fotonov, ki bi tvorili izhodni curek, ampak imamo le ravnovesje med "crpanjem in izgubami. Zato raje fiksiramo drugo zastojno to"cko. To dose"zemo, "ce vzamemo $\alpha=\gamma$ (normiranje $X_1$), $\beta=\alpha$ (normiranje $X_2$) in $\alpha=1$ (normiranje "casa). 
+
+\begin{align}
+  \dot X_1 &= -X_1 X_2 - X_1 + R \\
+  \dot X_2 &= X_1 X_2 - X_2
+\end{align}
+
+Netrivialna zastojna to"cka je sedaj v $(1,R-1)$, iz "cesar lahko takoj preberemo pogoj za delovanje laserja: mo"c "crpanja $R$ mora biti ve"c od 1, v nasprotnem primeru bo "sla gostota fotonov proti ni"c in laser bo ugasnil. 
+
+Najbolj zanimivo je verjetno pri"ziganje laserja, saj se po dalj"sem "casu ustali v ravnovesni legi v zastojni to"cki. Zato sem na grafih prikazal predvsem tak"sne za"cetne pogoje, da na za"cetku ni vzbujenih atomov, ampak jih vzbudimo le s "crpanjem. "Ce bi podobno storil tudi za fotone, pa laser ne bi deloval, saj v ena"cbi nimamo nobenega "crpanja fotonov. Namesto tega sem si ogledal, kako zgleda fazni diagram za razli"cne za"cetne gostote fotonov. 
+
+\subsection{R = 2}
+
+Pri tej mo"ci "crpanja je zastojna to"cka laserja v (1,1), torej pri enaki gostoti vzbujenih atomov in fotonov, seveda v na"sih normiranih enotah. Takoj po vklju"citvi laserja vidimo kratko nihanje, ki pa se kmalu ustali v stabilni legi. 
+
+\input{laser_t_12_1}
+\input{laser_p_1}
+
+
+\subsection{R = 5}
+
+Pove"cevanje mo"ci "crpanja ne vpliva drasti"cno na sam potek delovanja laserja. Zaradi mo"cnej"sega "crpanja je v ravnovesni legi ve"c fotonov, vendar tako fazni diagram kot tudi graf "casovne odvisnosti izgledata podobno kot pri $R=2$. To je "se bolj razvidno, "ce primerjamo le za"cetna stanja z manj fotoni kot v ravnovesni legi. 
+
+\input{laser_t_12_2}
+\input{laser_p_2}
+
+
 \end{document}

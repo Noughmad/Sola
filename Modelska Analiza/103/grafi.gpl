@@ -1,8 +1,92 @@
 set terminal epslatex color solid
 set style data lines
 
-set output "laser_0_t.tex"
-plot "laser_0.dat" u 0:1 t "Atomi", "" u 0:2 t "Fotoni"
+unset tics
+unset colorbox
 
-set output "laser_0_p.tex"
-plot "laser_0.dat" u 1:2 notitle
+set output "laser_t_12_1.tex"
+plot "laser_12_1.dat" u 0:1 t "Atomi", "" u 0:2 t "Fotoni"
+set output "laser_t_12_2.tex"
+plot "laser_12_2.dat" u 0:1 t "Atomi", "" u 0:2 t "Fotoni"
+
+set output "zajlis_t_12_1.tex"
+plot[][-1:1] "zajlis_12_1.dat" u 0:1 t "Zajci", "" u 0:2 t "Lisice"
+
+set output "zajlis_t_12_2.tex"
+plot[][-1:2] "zajlis_12_2.dat" u 0:1 t "Zajci", "" u 0:2 t "Lisice"
+
+## Fazni diagrami
+
+set zeroaxis
+
+set output "zajlis_p_1.tex"
+set xlabel "Zajci"
+set ylabel "Lisice"
+plot for [i=1:20] sprintf("zajlis_%d_1.dat", i) u 1:2:(i) palette notitle
+
+set output "zajlis_p_2.tex"
+plot for [i=1:20] sprintf("zajlis_%d_2.dat", i) u 1:2:(i) palette notitle
+
+set output "laser_p_1.tex"
+set xlabel "Vzbujeni atomi"
+set ylabel "Fotoni"
+plot for [i=1:20] sprintf("laser_%d_1.dat", i) u ($1-1):($2-1):(i) palette notitle
+
+set output "laser_p_2.tex"
+plot for [i=1:20] sprintf("laser_%d_2.dat", i) u ($1-1):($2-4):(i) palette notitle
+
+set output "laser_f.tex"
+plot "laser_f.dat" with vectors notitle
+
+unset zeroaxis
+
+set style histogram columnstacked
+set style data filledcurves x1
+set style fill solid 0.2 noborder
+set yrange [0:1]
+set key under
+
+set xlabel "\"Cas"
+set ylabel "\"Stevilo"
+
+set output "bolniki_1_1.tex"
+plot "bolniki_1_1.dat" u 0:3 title "Imuni", \
+'' u 0:2 title "Bolni", \
+'' u 0:1 title "Zdravi"
+
+set output "bolniki_1_2.tex"
+plot "bolniki_1_2.dat" u 0:3 title "Imuni", \
+'' u 0:2 title "Bolni", \
+'' u 0:1 title "Zdravi"
+
+set output "bolniki_7_1.tex"
+plot "bolniki_7_1.dat" u 0:3 title "Imuni", \
+'' u 0:2 title "Bolni", \
+'' u 0:1 title "Zdravi"
+
+set output "bolniki_7_2.tex"
+plot "bolniki_7_2.dat" u 0:3 title "Imuni", \
+'' u 0:2 title "Bolni", \
+'' u 0:1 title "Zdravi"
+
+set autoscale
+set xlabel "Odstotek cepljenih"
+set ylabel "Najve\"cje \"stevilo bolnikov"
+# set logscale y
+set tics
+set style data lines
+set key inside top right vertical
+
+set output "bolni_max.tex"
+plot[][0.005:] "bolni_1_1.dat" title "Ena stopnja, $\\mu=5$", \
+"bolni_7_1.dat" title "10 stopenj, $\\mu=2$", \
+"bolni_1_2.dat" title "Ena stopnja, $\\mu=5$", \
+"bolni_7_2.dat" title "10 stopenj, $\\mu=5$"
+
+set ylabel "Skupno \"stevilo bolnikov"
+set output "bolni_tot.tex"
+plot "bolni_1_1.dat" u 1:3 title "Ena stopnja, $\\mu=2$", \
+"bolni_7_1.dat" u 1:3 title "10 stopenj, $\\mu=2$", \
+"bolni_1_2.dat" u 1:3 title "Ena stopnja, $\\mu=5$", \
+"bolni_7_2.dat" u 1:3 title "10 stopenj, $\\mu=5$"
+
