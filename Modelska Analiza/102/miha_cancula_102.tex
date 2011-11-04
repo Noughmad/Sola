@@ -16,10 +16,14 @@
 \newcommand{\naboji}[1]{
   
 \begin{figure}
-  \subfigure{\input{naboji-#1-tloris}}
-  \subfigure{\input{naboji-#1-stran}}\\
-  \subfigure{\input{naboji-#1-pers1}}
-  \subfigure{\input{naboji-#1-pers2}}
+  \begin{center}
+  \subfigure{\includegraphics{naboji-#1-tloris}}
+  \subfigure{\includegraphics{naboji-#1-stran}}\\
+  \subfigure{\includegraphics{naboji-#1-pers2}}
+  \subfigure{\includegraphics{naboji-#1-pers1}}
+  \end{center}
+  \caption{Optimalna razporeditev $N=#1$ nabojev po krogli}
+  \label{fig:naboji-#1}
 \end{figure}
 
 }
@@ -32,6 +36,7 @@
 Nalogo sem re"seval s prostim programom \texttt{GNU Octave}, ki za nelinearno optimizacijo ponuja funkcijo \texttt{sqp}. 
 
 \section{Thompsonov problem}
+\subsection{Izpeljava}
 Polo"zaj diskretnih to"ckastih nabojev na krogli lahko opi"semo z dvema koordinatama, $\theta\in[0,\pi]$ in $\phi\in[0,2\pi]$. Potencialna energija takih nabojev je odvisna le od medsebojne razdalje, zato moramo najprej izraziti razdaljo med dvema nabojema z njunima koordinatama. Kot med dvema to"ckama izra"cunamo kot skalarni produkt med njunima krajevnima vektorjema in znasa
 \begin{align}
   \cos \alpha_{ij} &= \cos (\phi_i-\phi_j) \sin \theta_i \sin \theta_j + \cos \theta_i \cos\theta_j
@@ -51,10 +56,30 @@ Ker multiplikativna konstanta v energiji ne spremeni optimalne razporeditve nabo
   y = \sum_{i<j} \left[ 1 - \cos (\phi_i-\phi_j) \sin \theta_i \sin \theta_j - \cos \theta_i \cos\theta_j\right]^{-1/2} 
 \end{align}
 
+\subsection{Re"sevanje}
+
 Brez izgube splo"snosti lahko fiksiramo tri koordinate: $\theta_1 = 0$, $\phi_1 = 0$, $\phi_2 = 0$. Na ta na"cim prepre"cimo vrtenje okrog krogle med re"sevanje, hkrati pa pospe"simo re"sevanje, saj zmanj"samo "stevilo prostostnih stopenj. Za problem z $N$ naboji nam ostane $2N-3$ prostih koordinat. 
 
-\naboji{10}
+Pri prvem poskusu re"sevanja sem pogosto naletel na lokalne minimume, ko se je program ustavil v ne-optimalnem polo"zaju. Zato sem uporabil preprost trik, da sem celoten ra"cun ponovil ve"ckrat, vsaki"c z naklju"cno za"cetno porazdelitvijo, in vsaki"c shranil le tisti rezultat, ki je dal najmanj"so vrednosti potencialne energije. Ker je rezultat zanimiv predvsem za majhno "stevilo delcev, je bil izra"cun hiter in sem si lahko privo"s"cil veliko "stevilo ponovitev, v mojem primeru sem jih uporabil 20. 
+
+\subsection{Rezultati}
+
+Porazdelitve sem izra"cunal za vse $N$ od 2 do 12, posebej pa "se za $N=20$, vendar sem v poro"cilo vklju"cil le tiste, za katere ne obstajajo platonska telesa s takim "stevilom ogli"s"c in jih ne znamo dolo"citi na pamet. Predvsem zanimiv se mi zdi rezultat pri $N=8$, saj optimalna porazdelitev ni niti malo podobna ogli"s"cem kocke. Za la"zjo predstave sem to"cke obarval glede na njihovo koordinato $z$, tako da so to"cke na zgornji polobli svetlej"se, na spodnji pa temnej"se. 
+
+Pri $N\in\{3,4,6,12,20\}$ se naboji razporedijo v ogli"s"ca ustreznega platonskega telesa. Ra"cun je mo"zen tudi z ve"cjim "stevilom nabojev, vendar jih je te"zko prikazati v dveh dimenzijah. 
+
+% \naboji{3}
+% \naboji{4}
 \naboji{5}
+% \naboji{6}
+\naboji{7}
+\naboji{8}
+\naboji{9}
+\naboji{11}
+% \naboji{12}
+% \naboji{20}
+
+\cleardoublepage
 
 \section{Voznja do semaforja}
 Na enak na"cin sem re"seval tudi problem iz prej"snje naloge. "Casovni interval sem razdelil na $N$ podintervalov, hitrost vo"znje sem omejil med 0 in $y_{max}$ in dodal omejitev, da je skupna pot enaka 1. 
@@ -91,5 +116,24 @@ Prehiter prihod do kri"zi"s"ca sem omejil z ostro mejo, medtem ko je prepozen pr
 \input{semafor_a_p_pocasi}
 
 Asimetri"cna omejitev pospe"ska pride do izraza pri majhnih za"cetnih in kon"cnih hitrostih, ko je treba najprej pospe"sevati in nato zavirati. 
+
+\section{Linearno programiranje}
+
+Problem vo"znje do semaforja sem obravnaval tudi z uporabo linearnega programiranje. V ta namen ima Octave vklju"ceno funkcijo \texttt{glpk}, ki najde optimalno re"sitev matri"cnega sistema enakosti in neenakosti. Lagran"zijan iz prej"snje naloge tu ne pride v po"stev, saj imamo na voljo le linearno operacije, zato kvadrata pope"ska ne moremo upo"stevati. Namesto tega sem iskal re"sitev, pri kateri semafor prevozimo s "cim ve"cjo hitrostjo, upo"steval pa sem naslednje linearne omejitve:
+
+\begin{itemize}
+  \item Prepotovana pot mora biti v brezdimenzijskih enotah enaka 1
+  \item Pospe"sek med dvema to"ckama ne sme prese"ci dolo"cene vrednosti $a_{max}$
+  \item Pospe"sek ne sme biti manj"si od $a_{min}$, $a_{min} < 0$
+  \item Hitrost v vsaki to"cki je med 0 in $y_{max}$
+\end{itemize}
+
+\input{lin_brez}
+
+Zaradi enostavnosti problema in omejitev je tudi re"sitev enostavna: Najprej mo"cno zaviranje da pridobimo "cas, nato pa pospe"sevanje do najve"cje hitrosti. V primeru, da bi lahko najve"cjo dovoljeno hitrost dosegli ze pred semaforjem, obstaja celo ve"c na"cinov vo"znje ki dajo isti rezultat. Ker nimamo nobene ute"zi, ki bi kaznovala pospe"sevanje in zaviranje, dobimo re"sitve, kjer se pospe"sevanje in zaviranja izmenjujeta. Tak"sna vo"znja ni preve"c udobna, zato sem v funkcijo cene dodal "clene, ki "zelijo "cimve"cjo hitrost ob vseh "casih, ne samo na koncu. Da sem ohranil na"so za"cetno "zeljo, da je hitrost ob prehodu skozi kri"zi"s"ce "cim ve"cja, so "casi proti kon"cu obte"zeni z ve"cjim koeficientom. 
+
+\input{lin_utez}
+
+Re"sitev se v omenjenih primerih spremeni, ampak spet ne opazimo ni"cesar nepri"cakovanega: Avto pospe"suje z najve"cjim mo"znim pospe"skom do omejitve, nato pa vozi enakomerno do semaforja. V primeru, da omejitve hitrosti ne dose"zemo, je rezultat enak kot na prej"snjem grafu. 
 
 \end{document}

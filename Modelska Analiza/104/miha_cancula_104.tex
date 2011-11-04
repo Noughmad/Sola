@@ -1,0 +1,98 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{verse}
+\usepackage{comment}
+
+\title{Modeli kemijskih reakcij}
+\author{Miha \v Can\v cula}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\theta}{\vartheta}
+
+\begin{document}
+ \section{Binarna reakcija}
+
+\begin{align}
+ A + A &\rightleftharpoons A + A^* \\
+ A^* &\rightarrow B + C
+\end{align}
+
+\begin{verse}
+\textit{Na"si reakciji vrli diferencialk par gre zraven.}  \\
+\textit{Tol'ko neznank v njem nastopa, kot 'mamo ena"cb mi na voljo.} \\
+\end{verse}
+
+\begin{comment}
+Reakciji ustreza sistem linearnih ena"cb prvega reda.
+\end{comment}
+
+Za dolo"citev hitrosti reakcije potrebujemo le koncentraciji $[A] = x_1$ in $[A^*] = x_2$, zato bo to sistem dveh ena"cb z dvema neznankama. 
+
+\begin{align}
+  \dot x_1 &= -p x_1^2 + q x_1 x_2 \label{eq:n1-sistem-1} \\
+  \dot x_2 &= p x_1^2 - q x_1 x_2 - r x_2
+\end{align}
+
+\subsection{Eksakten sistem}
+Vemo, da je za to reakcijo $p >> q$, zato bo $x_2 << x_1$. Dejanske koncentracije reagentov ne poznamo, za samo dinamiko reakcije pa niti ni pomembna, lahko postavimo za"cetni pogoj $x_1(0) = 1$ in $x_2(0) = 0$. Tak"sen sistem ena"cb z za"cetnim pogojem sedaj lahko numeri"cno integriramo. Zaradi velike razlike v absolutnih vrednosti $p$ in $q$ je ta problem tog, kar integratorju povzro"ca te"zave, saj mora ra"cunati z zelo majhnim korakov, "ceprav nas zanima le rezultat v dalj"sem "casovnem obdobju. 
+
+\subsection{Pribli"zek stacionarnega stanja}
+Koncentracija vzbujenih molekul $x_2$ se sicer hitro spreminja, vendar je vseskozi zelo majhna v primerjavi z $x_1$. Zato lahko te hitre in majhne spremembe zanemarimo in dodamo pogoj $\dot x_2 = 0$. To nam da pogoj
+
+\begin{align}
+ \dot x_2 &= p x_1^2 - q x_1 x_2 - r x_2 = 0\\
+ x_2 &= \frac{px_1^2}{qx_1 + r}
+\end{align}
+
+\begin{verse}
+\textit{Vstavi sedaj ta izraz v ena"cbo, tretjo povrsti. \\% enacba je \ref{eq:n1-sistem-1}
+Vse kar ostane je ena diferencialna ena"cba, \\
+eno ima le neznanko, in to integrator obvlada. }
+\end{verse}
+
+\begin{align}
+\dot x_1 &= -p x_1^2 \left( 1 - \frac{qx_1}{qx_1 + r} \right) = -px_1^2 \frac{r}{qx_1 + r}
+\end{align}
+
+\section{Reakcija z ve"c stopnjami}
+
+\begin{verse}
+\textit{Glej, "ze nas "caka naloga, kjer treba bo ve"c izra"cunat'.  \\
+Stopnje reakcija tri 'ma, in pet je neznank v njej neznanih. \\
+Pet pa je tudi ena"cb, re"sitev gotovo je mo"zna. \\
+A kje se v njej skriva hitrost z vodikom reakcije broma?  }
+\end{verse}
+
+\begin{align}
+ \dot{[\mathrm{Br_2}]} &= - k_1 [\mathrm{Br_2}] + k_2 [\mathrm{Br}]^2 - k_5 [\mathrm{H}] [\mathrm{Br_2}] \\
+ \dot{[\mathrm{Br}]} &= k_1 [\mathrm{Br_2}] - k_2 [\mathrm{Br}]^2 - k_3 [\mathrm{Br}] [\mathrm{H_2}] + k_4 [\mathrm{HBr}] [\mathrm{H}] + k_5 [\mathrm{H}] [\mathrm{Br_2}]\\
+ \dot{[\mathrm{H_2}]} &= - k_3 [\mathrm{Br}] [\mathrm{H_2}] + k_4 [\mathrm{HBr}] [\mathrm{H}] \\
+ \dot{[\mathrm{H}]} &= k_3 [\mathrm{Br}] [\mathrm{H_2}] - k_4 [\mathrm{HBr}] [\mathrm{H}] - k_5 [\mathrm{H}] [\mathrm{Br_2}]\\
+\dot{[\mathrm{HBr}]} &= k_3 [\mathrm{Br}] [\mathrm{H_2}] - k_4 [\mathrm{HBr}] [\mathrm{H}] + k_5 [\mathrm{H}] [\mathrm{Br_2}]
+\end{align}
+
+\begin{verse}
+\textit{A fizik "ze ve kaj storiti, kako naj ena"cb vseh se re"si, \\
+vraga stevil"cnega loti se najprej s pribli"zkom mirovnim. \\
+Hitro gredo radikali, al' nikdar jih v zmesi ni dosti. \\
+La"zji problem na"s postane, ak' njih fluktuacij ne vid'mo. 
+}
+\end{verse}
+
+\begin{align}
+ \dot{[\mathrm{Br}]} &= \dot{[\mathrm{H}]} = 0
+\end{align}
+
+
+\begin{align}
+ \dot{[\mathrm{Br}]} &= k_1 [\mathrm{Br_2}] - k_2 [\mathrm{Br}]^2 - k_3 [\mathrm{Br}] [\mathrm{H_2}] + k_4 [\mathrm{HBr}] [\mathrm{H}] + k_5 [\mathrm{H}] [\mathrm{Br_2}] &= 0 
+\end{align}
+
+
+\end{document}
