@@ -15,6 +15,12 @@
 \renewcommand{\epsilon}{\varepsilon}
 \renewcommand{\theta}{\vartheta}
 
+\renewcommand{\H}{\ensuremath{[\mathrm{H}]}}
+\newcommand{\Br}{\ensuremath{[\mathrm{Br}]}}
+\newcommand{\HH}{\ensuremath{[\mathrm{H_2}]}}
+\newcommand{\BBr}{\ensuremath{[\mathrm{Br_2}]}}
+\newcommand{\HBr}{\ensuremath{[\mathrm{HBr}]}}
+
 \begin{document}
  \section{Binarna reakcija}
 
@@ -60,6 +66,11 @@ eno ima le neznanko, in to integrator obvlada. }
 \dot x_1 &= -p x_1^2 \left( 1 - \frac{qx_1}{qx_1 + r} \right) = -px_1^2 \frac{r}{qx_1 + r}
 \end{align}
 
+\begin{figure}
+ \input{binarna}
+\end{figure}
+
+
 \section{Reakcija z ve"c stopnjami}
 
 \begin{verse}
@@ -89,10 +100,127 @@ La"zji problem na"s postane, ak' njih fluktuacij ne vid'mo.
  \dot{[\mathrm{Br}]} &= \dot{[\mathrm{H}]} = 0
 \end{align}
 
-
 \begin{align}
- \dot{[\mathrm{Br}]} &= k_1 [\mathrm{Br_2}] - k_2 [\mathrm{Br}]^2 - k_3 [\mathrm{Br}] [\mathrm{H_2}] + k_4 [\mathrm{HBr}] [\mathrm{H}] + k_5 [\mathrm{H}] [\mathrm{Br_2}] &= 0 
+ \dot{[\mathrm{Br}]} &= k_1 [\mathrm{Br_2}] - k_2 [\mathrm{Br}]^2 - k_3 [\mathrm{Br}] [\mathrm{H_2}] + k_4 [\mathrm{HBr}] [\mathrm{H}] + k_5 [\mathrm{H}] [\mathrm{Br_2}]  \\
+  &= k_1 [\mathrm{Br_2}] - k_2 [\mathrm{Br}]^2 - \dot{[\mathrm{H}]} = 0
 \end{align}
 
+\begin{verse}
+\textit{Dva smo pogoja imeli, oba koj v ena"cbo nesimo. \\
+Broma, vodika atomi, njih vsota se ni"c ne spreminja. }
+\end{verse}
+
+\begin{align}
+ ([\mathrm{Br}] + [\mathrm{H}])^\cdot &= k_1 [\mathrm{Br_2}] - k_2 [\mathrm{Br}]^2  = 0 \\
+ [\mathrm{Br}] &= \sqrt{\frac{k_1}{k_2}\BBr}
+\end{align}
+
+\begin{align}
+  \dot{[\mathrm{H}]} &= k_3 [\mathrm{Br}] [\mathrm{H_2}] - k_4 [\mathrm{HBr}] [\mathrm{H}] - k_5 [\mathrm{H}] [\mathrm{Br_2}] = 0\\
+  [\mathrm{H}] &= \frac{k_3 \HH \sqrt{\frac{k_1}{k_2}\BBr} }{k_4 \HBr + k_5 \BBr}
+\end{align}
+
+\begin{verse}
+ \textit{Zdaj smo sovraga "ze dva ugonobili, "se trije stojijo, \\
+Fizik se hrabri raduje, na boj se poslednji pripravlja. \\
+Vsi se nasprotniki skupaj dr"zijo, ko enega zru"sis, \\
+drugi postanejo "sibki, "se la"zje jih fizik premaga. \\
+Z dale"c pogleda reakcijo, brom in vodik gresta skupaj, \\
+kol'kor gre enega noter, se drugega tudi porabi, \\
+dvakrat ve"c pride ven skupkov, molekul bromida od vodika. 
+}
+\end{verse}
+
+\begin{align}
+ \dot{[\mathrm{H_2}]} &= \dot{[\mathrm{Br_2}]} = -2\dot{[\mathrm{HBr}]}
+\end{align}
+
+
+\begin{align}
+ \dot{[\mathrm{HBr}]} &= k_3 [\mathrm{Br}] [\mathrm{H_2}] - k_4 [\mathrm{HBr}] [\mathrm{H}] + k_5 [\mathrm{H}] [\mathrm{Br_2}] \\
+  &= k_3 \HH \sqrt{\frac{k_1}{k_2}\BBr} \left( 1 + \frac{k_5\BBr - k_4 \HBr}{k_5\BBr + k_4 \HBr} \right) \\
+  &= k_3 \sqrt{k_1/k_2} \HH\BBr^{1/2} \frac{2k_5/k_4}{k_5/k_4  + \HBr/\BBr} \\
+  &= \frac{k\HH\BBr^{1/2}}{m + \frac{\HBr}{\BBr}}
+\end{align}
+
+Dobili smo empiri"cni izraz, kjer je 
+
+\begin{align}
+ k &= 2\frac{k_3k_5}{k_4}\sqrt{\frac{k_1}{k_2}} \\
+ m &= k_5/k_4
+\end{align}
+
+Za izra"cun "casovnega poteka moramo seveda poznati tudi izraza za $\dot{\HH}$ in $\dot{\BBr}$. 
+
+\begin{figure}
+ \input{stopnje}
+\end{figure}
+
+\begin{figure}
+ \input{stopnje_hbr}
+\end{figure}
+
+\section{Vezava reagenta na receptorje}
+
+Zvezo med koncentracijo reagenta $x$ in njegovim u"cinkom $y$ lahko lineariziramo
+
+\begin{align}
+ y &= y_0\frac{x}{x+a} \\
+  y^{-1} &= y_0^{-1} \left( 1 + \frac{a}{x} \right) = k x^{-1} + n
+\end{align}
+
+Vidimo, da z uporabo spremenljivk $y^{-1}$ in $x^{-1}$ in s substitucijama $n = y_0^{-1}$ in $k = a/y_0$ izraz prevedemo na linearno zvezo. Koeficienta $k$ in $n$ zdaj lahko dolo"cimo iz podatkov. Ko problem lineariziramo in prera"cunamo tudi napake, naletimo na te"zavo, saj je absolutna napaka prvih dveh meritev dosti ve"cja od same izmerjene vrednosti. Ker se pri transformaciji $y\to y^{-1}$ ohranja relativna napaka, vrednosti $y^{-1}$ pa je zelo velika, bo absolutna napaka, ki raste z $y^{-2}$ tako velika, da prvi dve to"cki ne bosta prinesli skoraj nobene informacije. 
+
+Ko dolo"cimo $k$ in $n$, lahko iz njiju izra"cunamo tudi prvotna koeficienta $a$ in $y_0$. 
+
+\begin{align}
+ y_0 &= 1/n \\
+ a &= k/n
+\end{align}
+
+Koeficienta sem dolo"cil z re"sevanjem ute"zenega normalnega sistema (weighted linear least squares) in rezultate primerjal z izra"cunom programa Gnuplot. Dobljene vrednosti so se natanko ujemale na vsaj 8 mest natan"cno, "ceprav Gnuplot uporablja druga"cen (iterativni) algoritem. Za razliko od re"sevanja matri"cnega sistema s tak"snim algoritmom lahko ocenimo tudi napaki koeficientov $k$ in $n$ in koeficient korelacije med njimi $r_{kn}$. S pomo"cje teh podatkov lahko izra"cunamo tudi napaki $a$ in $y_0$. 
+
+\begin{align}
+  \frac{\delta y_0}{y} &= \frac{\delta n}{n} \\
+  \frac{\delta a}{a} &= \sqrt{ \left( \frac{\delta k}{k} \right)^2 + \left(\frac{\delta n}{n} \right)^2 + 2r_{kn} \frac{\delta k}{k}\frac{\delta n}{n}}
+\end{align}
+
+Za primerjavo sem uporabil "se Gnuplot-ov algoritem za prilagajanje parametrov neposredno na izrazu $y = \frac{y_0 x}{x+a}$, brez transformacije spremenljivk, tako da sem ohranil absolutno vrednost napake. V tem primeru algoritem upo"steva vse to"cke. 
+
+"Se ena te"zava je, ker moramo iz tako dobljenih vrednosti izra"cunati $a$ in $y_0$, kjer moramo biti spet pozorni na ra"cunanje z napakami. Na sre"co Gnuplot poleg napak posameznih spremenljivk izpi"se tudi korelacijo med njimi $r_{kn}$, tako da nam ni treba predpostavljati neodvisnosti spremenljivk (seveda nista neodvisni, korelacija med naklonom in za"cetno to"cko je negativna) in je ra"cun z napakami lahko to"cnej"si. 
+
+Dobljene vrednosti so navedene v tabeli \ref{tab:primerjava}, odvisnosti pa sta tudi prikazani na grafu \ref{fig:receptorji-log}. 
+
+\begin{table}
+\begin{tabular}{|l|l|l|l|}
+  \hline
+  & Linearizirano & Direktno \\
+  \hline
+  $a$ & 21,2 $\pm$ 1,6 & 24,7 $\pm$ 4,2\\
+  $y_0$ & 104,7 $\pm$ 2,5 & 106,3 $\pm$ 4,8\\
+  \hline
+\end{tabular}
+
+Vrednosti se vidno razlikujejo, kar lahko pripi"semo predvsem druga"cnim ute"zem. Razlika se pojavi predvsem pri majhnih $y$, ko je napaka meritve ve"cja od izmerjene vrednosti. Kljub temu pa je odstopanje obeh koeficientov znotraj meja napak. 
+
+ \label{tab:primerjava}
+\end{table}
+
+
+\begin{figure}
+ \input{receptorji}
+  \caption{Odvisnost odziva od koncentracije reagenta, logaritemski graf}
+  \label{fig:receptorji-log}
+\end{figure}
+
+
+\begin{figure}
+\input{receptorji_lin} 
+  \caption{Odvisnost odziva od koncentracije reagenta, lineariziran graf}
+  \label{fig:receptorji-lin}
+\end{figure}
+
+
+% Konec: Hrabri fizik se poroci z Lizo Ano iz Modele. 
 
 \end{document}
