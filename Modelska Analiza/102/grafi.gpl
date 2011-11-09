@@ -1,4 +1,4 @@
-set terminal epslatex color solid size 3,3
+set terminal epslatex color size 3,3
 
 # Krogelne koordinate
 set angles degrees
@@ -11,7 +11,13 @@ set isosamples 9
 set urange [0:180]
 set vrange [0:360]
 unset tics
+unset key
+unset colorbox
 
 N = 1
+
+load "loop.gpl"
+
+N = 19
 
 load "loop.gpl"

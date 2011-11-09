@@ -26,14 +26,23 @@ function y = phi_t(xx)
 endfunction
 
 function razporeditev(N)
-  x0 = rand(2*N-3,1) * pi;
-  X = sqp(x0, @phi_t, [], [], 0, pi);
-  R = final_x(X)./pi*180;
-  R = [2.*R(1:2:2*N) 90-R(2:2:2*N)];
+  bestE = inf;
+  for i = 1:5
+    [X, E] = sqp(rand(2*N-3,1) * pi, @phi_t, [], [], 0, pi);
+    if (E < bestE)
+      R = final_x(X)./pi*180;
+      R = [2.*R(1:2:2*N) 90-R(2:2:2*N)];
+      bestE = E;
+    endif
+  endfor
   saveTo = ['naboji_' int2str(N) '.dat']
   save(saveTo, 'R')
 endfunction
 
+%{
 for st = 2:12
   razporeditev(st)
 endfor
+%}
+
+razporeditev(20)

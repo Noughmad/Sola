@@ -1,5 +1,9 @@
-function semafor_lin(N, vmax, amax, amin, y0)
-  c = linspace(0,1,N)';
+function semafor_lin(N, vmax, amax, amin, y0, utez)
+  if utez == 1
+    c = linspace(0,1,N)';
+  else
+    c = [ zeros(N-1,1); 1];
+  endif
 
   O = ones(N,1);
 
@@ -33,12 +37,12 @@ function semafor_lin(N, vmax, amax, amin, y0)
 
   [X, F, status, extra] = glpk(c, A, b, zeros(100,1), vmax * ones(100,1), ctype, vartype, -1);
 
-  status
-  F
-  c' * X
-
-  saveTo = [ "lin_" int2str(10*y0) ".dat" ]
-  save(saveTo, "X");
+  saveTo = [ "lin_" int2str(10*y0) "_" int2str(utez) ".dat" ]
+  Y = [linspace(0,1,N+1)' [y0; X ] ];
+  save(saveTo, "Y");
 end
 
-semafor_lin(100, 2, 0.02, -0.05, 1.5)
+for y0 = [0 5 9 15 20]
+  semafor_lin(100, 2, 0.03, -0.05, y0/10, 1)
+  semafor_lin(100, 2, 0.03, -0.05, y0/10, 0)
+endfor
