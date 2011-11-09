@@ -36,14 +36,26 @@ order=-1
 
 [item:miha_cancula_104.tex]
 archive=true
+<<<<<<< HEAD
 column=525
 encoding=UTF-8
 highlight=LaTeX
 line=155
+=======
+column=244
+encoding=UTF-8
+highlight=LaTeX
+line=203
+>>>>>>> 8de5f828a4d3feed79092a668536258467420dbc
 mode=LaTeX
 open=true
 order=0
 
 [view-settings,view=0,item:miha_cancula_104.tex]
+<<<<<<< HEAD
 CursorColumn=525
 CursorLine=155
+=======
+CursorColumn=244
+CursorLine=203
+>>>>>>> 8de5f828a4d3feed79092a668536258467420dbc
