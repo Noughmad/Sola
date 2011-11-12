@@ -7,6 +7,10 @@
 \usepackage{subfigure}
 \usepackage{verse}
 \usepackage{comment}
+<<<<<<< HEAD
+\usepackage{hyperref}
+=======
+>>>>>>> 8de5f828a4d3feed79092a668536258467420dbc
 
 \title{Modeli kemijskih reakcij}
 \author{Miha \v Can\v cula}
@@ -22,6 +26,17 @@
 \newcommand{\HBr}{\ensuremath{[\mathrm{HBr}]}}
 
 \begin{document}
+\maketitle
+
+\section{Uvod}
+
+\begin{verse}
+\textit{Fizika te"zka je veda, lase nam "ze sive povzro"ca. \\ 
+Kemik se rad mu smeji, a njemu ni"c bolje ne ka"ze. \\
+Raje kot muke prestajat', ki cena so vsake u"cenosti, \\
+verze zapi"seta epske, ki njune slavijo junake.}
+\end{verse}
+
  \section{Binarna reakcija}
 
 \begin{align}
@@ -30,8 +45,8 @@
 \end{align}
 
 \begin{verse}
-\textit{Na"si reakciji vrli diferencialk par gre zraven.}  \\
-\textit{Tol'ko neznank v njem nastopa, kot 'mamo ena"cb mi na voljo.} \\
+\textit{Na"si reakciji mali d\'iferencjalk par gre zraven.}  \\
+\textit{Tol'ko neznank se pojavi, kot 'mamo ena"cb mi na voljo.} \\
 \end{verse}
 
 \begin{comment}
@@ -58,7 +73,7 @@ Koncentracija vzbujenih molekul $x_2$ se sicer hitro spreminja, vendar je vsesko
 
 \begin{verse}
 \textit{Vstavi sedaj ta izraz v ena"cbo, tretjo povrsti. \\% enacba je \ref{eq:n1-sistem-1}
-Vse kar ostane je ena diferencialna ena"cba, \\
+Vse kar ostane je ena d\'iferencialna ena"cba, \\
 eno ima le neznanko, in to integrator obvlada. }
 \end{verse}
 
@@ -68,16 +83,24 @@ eno ima le neznanko, in to integrator obvlada. }
 
 \begin{figure}
  \input{binarna}
+  \caption{Koncentracija spojine $A$ v odvisnosti od "casa pri razli"cnih vrednostih $r$}
+  \label{fig:binarna}
 \end{figure}
 
+Na sliki \ref{fig:binarna} ne vidimo nobene razlike med ra"cunanjem z eksaktno formulo in pribli"zkom stacionarnega stanja. Razlog za to je dovolj dober in hiter integrator (v obeh primerih sem uporabil \texttt{lsode}), kljub temu pa za ra"cun z upo"stevanjem pribli"zka porabimo veliko manj korakov. Za primerjavo sem dodajam graf razlike med obema pristopoma (slika \ref{fig:binarna-dif}). Na njem lahko vidimo, da je odstopanje ve"cje pri manj"sem $r$, ko reakcija poteka po"casneje. 
 
+\begin{figure}
+  \input{binarna_dif}
+  \caption{Relativna razlika med re"sitvijo eksaktnega problema in re"sitvijo z upo"stevanjem SSA}
+  \label{fig:binarna-dif}
+\end{figure}
 \section{Reakcija z ve"c stopnjami}
 
 \begin{verse}
 \textit{Glej, "ze nas "caka naloga, kjer treba bo ve"c izra"cunat'.  \\
 Stopnje reakcija tri 'ma, in pet je neznank v njej neznanih. \\
 Pet pa je tudi ena"cb, re"sitev gotovo je mo"zna. \\
-A kje se v njej skriva hitrost z vodikom reakcije broma?  }
+Kje se v njej skriva hitrost z vodikom reakcije broma?  }
 \end{verse}
 
 \begin{align}
@@ -89,7 +112,7 @@ A kje se v njej skriva hitrost z vodikom reakcije broma?  }
 \end{align}
 
 \begin{verse}
-\textit{A fizik "ze ve kaj storiti, kako naj ena"cb vseh se re"si, \\
+\textit{Fizik "ze ve kaj storiti, kako naj ena"cb vseh se re"si, \\
 vraga stevil"cnega loti se najprej s pribli"zkom mirovnim. \\
 Hitro gredo radikali, al' nikdar jih v zmesi ni dosti. \\
 La"zji problem na"s postane, ak' njih fluktuacij ne vid'mo. 
@@ -123,7 +146,7 @@ Broma, vodika atomi, njih vsota se ni"c ne spreminja. }
 \begin{verse}
  \textit{Zdaj smo sovraga "ze dva ugonobili, "se trije stojijo, \\
 Fizik se hrabri raduje, na boj se poslednji pripravlja. \\
-Vsi se nasprotniki skupaj dr"zijo, ko enega zru"sis, \\
+Vsi se nasprotniki skupaj dr"zijo, ko enega zru"si, \\
 drugi postanejo "sibki, "se la"zje jih fizik premaga. \\
 Z dale"c pogleda reakcijo, brom in vodik gresta skupaj, \\
 kol'kor gre enega noter, se drugega tudi porabi, \\
@@ -150,15 +173,21 @@ Dobili smo empiri"cni izraz, kjer je
  m &= k_5/k_4
 \end{align}
 
-Za izra"cun "casovnega poteka moramo seveda poznati tudi izraza za $\dot{\HH}$ in $\dot{\BBr}$. 
+Za izra"cun "casovnega poteka moramo seveda poznati tudi izraza za $\dot{\HH}$ in $\dot{\BBr}$. Re"sevati moramo sistem treh diferencialnih ena"cb prvega reda. Na slikah \ref{fig:stopnje} in \ref{fig:stopnje-hbr} je prikazana odvisnost $\HBr$ od "casa pri razli"cnih za"cetnih pogojih. Ker reakcija ni ravnovesna, ne moremo nikoli dolo"citi kon"cne koncentracije $\HBr$, zato sem graf normiral tako, da je koncentracija enega izmed reagentov $\HH$ ali $\BBr$ na za"cetku vedno 1, koncentracija drugega pa je lahko kve"cjemu ve"cja. 
 
 \begin{figure}
  \input{stopnje}
+  \caption{Spreminjanje koncentracija HBr s "casom, "ce je za"cetna koncentracija enaka 0. Zaradi izbire normiranja reakcija hitreje poteka pri neenakih razmerjih $\HH$ in $\BBr$, opazimo pa lahko tudi, da reakcije hitreje poteka ob vi"sji koncentraciji vodika (rde"ca in zelena "crta) kot broma (roza in svetlo modra "crta). }
+\label{fig:stopnje}
 \end{figure}
 
 \begin{figure}
  \input{stopnje_hbr}
+  \caption{Koncentracija proizvedenega HBr s "casom, "ce je velika koncentracija HBr prisotna "ze na za"cetku. V primerjavi s prej"snjim grafom je reakcija vidno po"casnej"sa, poleg tega pa na hitrost bolj vpliva koncentracija broma kot vodika, kar je v nasprotju s prej"sjim grafom.  }
+\label{fig:stopnje-hbr}
 \end{figure}
+
+\clearpage
 
 \section{Vezava reagenta na receptorje}
 
@@ -178,21 +207,22 @@ Ko dolo"cimo $k$ in $n$, lahko iz njiju izra"cunamo tudi prvotna koeficienta $a$
  a &= k/n
 \end{align}
 
-Koeficienta sem dolo"cil z re"sevanjem ute"zenega normalnega sistema (weighted linear least squares) in rezultate primerjal z izra"cunom programa Gnuplot. Dobljene vrednosti so se natanko ujemale na vsaj 8 mest natan"cno, "ceprav Gnuplot uporablja druga"cen (iterativni) algoritem. Za razliko od re"sevanja matri"cnega sistema s tak"snim algoritmom lahko ocenimo tudi napaki koeficientov $k$ in $n$ in koeficient korelacije med njimi $r_{kn}$. S pomo"cje teh podatkov lahko izra"cunamo tudi napaki $a$ in $y_0$. 
+Koeficienta sem dolo"cil z re"sevanjem ute"zenega normalnega sistema (weighted linear least squares) in rezultate primerjal z izra"cunom programa \texttt{Gnuplot}. Dobljene vrednosti so se natanko ujemale na vsaj 8 mest natan"cno, "ceprav \texttt{Gnuplot} uporablja druga"cen (iterativni) algoritem. Za razliko od re"sevanja matri"cnega sistema s tak"snim algoritmom lahko ocenimo tudi napaki koeficientov $k$ in $n$ in koeficient korelacije med njimi $r_{kn}$. S pomo"cje teh podatkov lahko izra"cunamo tudi napaki $a$ in $y_0$. 
 
 \begin{align}
   \frac{\delta y_0}{y} &= \frac{\delta n}{n} \\
   \frac{\delta a}{a} &= \sqrt{ \left( \frac{\delta k}{k} \right)^2 + \left(\frac{\delta n}{n} \right)^2 + 2r_{kn} \frac{\delta k}{k}\frac{\delta n}{n}}
 \end{align}
 
-Za primerjavo sem uporabil "se Gnuplot-ov algoritem za prilagajanje parametrov neposredno na izrazu $y = \frac{y_0 x}{x+a}$, brez transformacije spremenljivk, tako da sem ohranil absolutno vrednost napake. V tem primeru algoritem upo"steva vse to"cke. 
+Za primerjavo sem uporabil "se \texttt{Gnuplot}-ov algoritem za prilagajanje parametrov neposredno na izrazu $y = \frac{y_0 x}{x+a}$, brez transformacije spremenljivk, tako da sem ohranil absolutno vrednost napake. V tem primeru algoritem upo"steva vse to"cke. 
 
-"Se ena te"zava je, ker moramo iz tako dobljenih vrednosti izra"cunati $a$ in $y_0$, kjer moramo biti spet pozorni na ra"cunanje z napakami. Na sre"co Gnuplot poleg napak posameznih spremenljivk izpi"se tudi korelacijo med njimi $r_{kn}$, tako da nam ni treba predpostavljati neodvisnosti spremenljivk (seveda nista neodvisni, korelacija med naklonom in za"cetno to"cko je negativna) in je ra"cun z napakami lahko to"cnej"si. 
+"Se ena te"zava je, ker moramo iz tako dobljenih vrednosti izra"cunati $a$ in $y_0$, kjer moramo biti spet pozorni na ra"cunanje z napakami. Na sre"co \texttt{Gnuplot} poleg napak posameznih spremenljivk izpi"se tudi korelacijo med njimi $r_{kn}$, tako da nam ni treba predpostavljati neodvisnosti spremenljivk (seveda nista neodvisni, korelacija med naklonom in za"cetno to"cko je negativna) in je ra"cun z napakami lahko to"cnej"si. 
 
-Dobljene vrednosti so navedene v tabeli \ref{tab:primerjava}, odvisnosti pa sta tudi prikazani na grafu \ref{fig:receptorji-log}. 
+Dobljene vrednosti so navedene v tabeli \ref{tab:primerjava}, odvisnosti pa sta tudi prikazani na grafu \ref{fig:receptorji-log}. V tabeli pa se vidi ena izmed prednosti lineariziranega ra"cuna: postopek je eksakten, napaka koeficientov pride le iz napak meritev in dejstva, da to"cke ne le"zijo "cisto na premici. Po drugi strani moramo pri direktnem pristopu uporabiti numeri"cne metode za minimizacijo (v tem primeru iterativne), za katere smo "ze povedali, da so bolj natan"cne pri iskanju vrednosti minimuma kot njegovega polo"zaja. 
 
 \begin{table}
-\begin{tabular}{|l|l|l|l|}
+\begin{center}
+  \begin{tabular}{|l|l|l|l|}
   \hline
   & Linearizirano & Direktno \\
   \hline
@@ -201,11 +231,12 @@ Dobljene vrednosti so navedene v tabeli \ref{tab:primerjava}, odvisnosti pa sta 
   \hline
 \end{tabular}
 
-Vrednosti se vidno razlikujejo, kar lahko pripi"semo predvsem druga"cnim ute"zem. Razlika se pojavi predvsem pri majhnih $y$, ko je napaka meritve ve"cja od izmerjene vrednosti. Kljub temu pa je odstopanje obeh koeficientov znotraj meja napak. 
-
+\end{center}
  \label{tab:primerjava}
+\caption{Vrednosti in napake koeficientov, kot jih izpi"se \texttt{Gnuplot}}
 \end{table}
 
+Vrednosti se vidno razlikujejo, kar lahko pripi"semo predvsem druga"cnim ute"zem. Razlika se pojavi predvsem pri majhnih $y$, ko je napaka meritve ve"cja od izmerjene vrednosti. Kljub temu pa je odstopanje obeh koeficientov znotraj meja napak. 
 
 \begin{figure}
  \input{receptorji}
@@ -213,6 +244,7 @@ Vrednosti se vidno razlikujejo, kar lahko pripi"semo predvsem druga"cnim ute"zem
   \label{fig:receptorji-log}
 \end{figure}
 
+Graf linearizirane odvisnosti je bolj neroden, saj so v tem primeru merske to"cke manj enakomerno razporejene. "Se najbolj"se se vidi, "ce prika"zem le to"cke z velikim $y$ oz. majhnim $y^{-1}$. Te to"cke so tudi najbolj pomembne pri izra"cunu koeficientov, saj imajo v prostoru transformiranih spremenljivk manj"so napako. 
 
 \begin{figure}
 \input{receptorji_lin} 
@@ -220,7 +252,13 @@ Vrednosti se vidno razlikujejo, kar lahko pripi"semo predvsem druga"cnim ute"zem
   \label{fig:receptorji-lin}
 \end{figure}
 
+\newpage
 
-% Konec: Hrabri fizik se poroci z Lizo Ano iz Modele. 
+\begin{verse}
+  \textit{Vrli je fizik prebrodil te"zave, re"sil ena"cbe, \\
+  "cast si prislu"zil in slavo, za s\'e in svoj hram u"cenosti. \\
+  "Zenska bi 'mela ga vsaka, a njemu je mar le za eno, \\
+  ljubljeno Lizo in Ano, katera pri"sla je 'z Modele. }
+\end{verse}
 
 \end{document}
