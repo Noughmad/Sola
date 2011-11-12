@@ -1,0 +1,189 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8x]{inputenc}
+
+\usepackage{verse}
+\usepackage[slovene]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+%opening
+\title{Lu\v s\v cenje modelskih parametrov}
+\author{Miha \v Can\v cula}
+
+\begin{document}
+
+\maketitle
+
+\section{Farmakolo"ski model}
+\subsection{Parameter $p$}
+
+\begin{verse}
+V model iz naloge prej"snje parameter $p$ "se dodamo. \\ 
+Legla bo bolje k podatkom, izbolj"sana na"sa napoved. \\
+"Zal pa zgubili smo s tem linearnost, gr"si problem je. \\
+Levenberg-Marquardt edino je upanje k hitri re"sitvi.
+\end{verse}
+
+\subsection{Statisti"cna upravi"cenost}
+\begin{verse}
+ Smisla kaj dosti pa nima, da si problem bi zapletli, \\
+ ve"c spremenljivk pridodali, "ce n'bene od njih ni koristi. \\
+ Smiselnost nov'ga modela zato $\chi$-kvadrat bo ocenil. 
+\end{verse}
+
+\begin{align}
+ \chi^2 &= \sum_{i=1}^n \left(\frac{f(x_i, \mathbf{p}) - y_i}{\sigma_i}\right)^2 \\
+\end{align}
+
+\begin{verse}
+ $\sigma$ od $i$ je napaka, ki bla je z nalogo podana. \\
+ V na"sem primeru je fajn, saj prav vse so trojki enake. \\
+ $f$ pa je funkcija na"sa, odvisna od $x$ in parametrov. \\
+ Vrednosti njih optimalne podane so v prvi tabeli. \\ 
+\end{verse}
+
+\begin{verse}
+ ``Goodness of fit'', sem prebral, da s $\chi$ na kvadrat je izra"zen, \\
+Treba ga le "se deliti s "stevilom prostostnih je stopenj. \\
+Re"ce tedaj se tem\`u, da je $\chi^2$ reduciran. \\
+Fit je najbolj"si, ko blizu je vrednosti ena. \\
+\end{verse}
+
+\begin{align}
+ \chi^2_{red} &= \frac{\chi^2}{N-n}
+\end{align}
+
+\begin{verse}
+ Veliki $N$ v tem primeru "stevilo je na"sih meritev, \\
+ mali pa $n$ je "stevilo prostih parametrov fit-a. 
+\end{verse}
+
+\subsection{Rezultati}
+
+\begin{table}[h]
+ \centering
+\begin{tabular}{|c|c|c|c|c|c|}
+ \hline
+  Model & $y_0$ & $a$ & $p$ & $\chi^2_{red}$ \\
+\hline
+  Dva parametra & 106 $\pm$ 5 & 25 $\pm$ 4 & 1 & 3,67 \\
+\hline
+  Trije parametri & 100 $\pm$ 4 & 20 $\pm$ 2 & 1,4 $\pm$ 0,2 & 1,87 \\
+\hline
+\end{tabular}
+\caption{Primerjava med modeloma z dvema oz. tremi spremenljivkami. }
+\label{tab:farmacija}
+\end{table}
+
+\begin{verse}
+Vidi se z zgornje tabele, da nov parameter pomaga. \\
+Fit-a dobroto izbolj"sa, blizu enici jo pahne. \\
+Ampak pozoren pogled "se to pridobitev razkrije: \\
+bli"zje je $y_0$ zdaj pri"cakovani stotici. 
+\end{verse}
+
+\begin{figure}
+ \input{farma}
+  \caption{Primerjava med modeloma z dvema oz. tremi spremenljivkami. }
+  \label{fig:farmacija}
+\end{figure}
+
+\begin{verse}
+ La"zjo predstavo da graf, pod katerim enica se skriva. \\
+ Modra se "crta na videz "ze bolje ujema s podatki. \\
+ Prednost le-te pred zeleno je vidna predvsem pri robovih. 
+\end{verse}
+
+\subsection{Odvisnost od $p$}
+\begin{verse}
+ "Ce $p$-ja ne bi prilagajali, vrednost mu raje kar dali, \\
+ Gledal sem kaj bi godilo se, z mero za fita dobroto. 
+\end{verse}
+
+\begin{figure}
+ \input{farma_hi}
+\caption{Odvisnost $\chi^2_{red}$ od fiksnega parametra $p$ }
+\label{fig:farmacija-hi}
+\end{figure}
+
+\begin{figure}
+ \input{farma_hi_log}
+\caption{Odvisnost $\chi^2_{red}$ od fiksnega parametra $p$ -- logaritemski graf }
+\label{fig:farmacija-hi}
+\end{figure}
+
+\section{Ledvice}
+\begin{verse}
+ Isti postopek kot prej, "se tu bomo uporabili, \\
+ vse kar se res spremeni je funkcija testna modela. \\
+ Druge so tudi napake, razpade zdaj "stejemo jeder, \\
+ $\sigma$ je kar enostavna, koren je "stevila razpadov. \\
+ Vse je ostalo kot prej, kriterij dobrote obdr"zimo. 
+\end{verse}
+
+\subsection{Modeli}
+\begin{verse}
+ Trije so tak"sni modeli, ki sem jih v nalogi preverjal, \\
+ Dva sta razdel"cna, kjer kri v posode zapremo, \\
+ eden pa tak, da je ca"s v eksponentu celo pod korenom. 
+\end{verse}
+
+\begin{align}
+ f_1(t) &= A \exp(-\lambda t) \\
+ f_2(t) &= A \exp(-\lambda_1 t) + B \exp(-\lambda_2 t) \\
+ f_3(t) &= A \exp(-\lambda \sqrt{t-t_0})
+\end{align}
+
+\begin{verse}
+ Zadnji model je poseben, saj va"zen je "cas na za"cetku. \\
+ Kdaj smo meritve za"celi, poskusil sem s fitom dognati, \\
+ dal spremenljivko sem zraven, $t_0$, da ta "cas sem izlu"s"cil. 
+\end{verse}
+
+\subsection{Rezultati}
+
+\begin{verse}
+ Slika tadruga poka"ze, da najbolj"s model je tadrugi. \\
+ Tisti s krvjo v dveh posodah, ki 'mata razli"cne volumne. \\
+\end{verse}
+
+\begin{figure}
+ \input{ledvice}
+  \caption{Modeli "cistilnosti ledvic. }
+  \label{fig:ledvice}
+\end{figure}
+
+\begin{verse}
+ Koliko res pridobimo, ko drugo posodo dodamo? \\
+ ``Goodness'' se vidno izbolj"sa, kar petdesetkrat je zdaj manj"sa. \\
+ Tisti model, ki korene ima, po dobroti je v sredi. 
+\end{verse}
+
+\begin{table}[h]
+ \centering
+\begin{tabular}{|c|c|c|c|c|c|}
+ \hline
+  Model & $\chi^2_{red}$ \\
+\hline
+  En razdelek & 156,0 \\
+  Dva razdelka & 3,0 \\
+  Korenska odvisnost & 14,4 \\
+\hline
+\end{tabular}
+\caption{Statisti"cna upravi"cenost modelov "cistilnosti ledvic. }
+\label{tab:ledvice}
+\end{table}
+
+\begin{verse}
+ Dale"c najbolj"si model je tisti s prekatoma dvema. \\
+ Lambdi pri njem sta v razmerju, tako kot razdelkov volumna. \\
+ Vemo da "clovek v sebi pribli"zno pet litrov krvi 'ma. \\
+ Sklepamo torej lahko o volumnu ob"zilnih prostorov. 
+\end{verse}
+
+\section{Korozija}
+
+
+\end{document}

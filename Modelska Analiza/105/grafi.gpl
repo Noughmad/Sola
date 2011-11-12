@@ -1,0 +1,57 @@
+set terminal epslatex color solid
+
+set output "farma.tex"
+set xlabel "$x$"
+set ylabel "$y$"
+set logscale x
+
+farm1(x) = b * x / (x+a)
+farm2(x) = c * x**p / (x**p + d**p)
+
+fit farm1(x) "receptorji.dat" u 1:2:(3) via a,b
+fit farm2(x) "receptorji.dat" u 1:2:(3) via c,d,p
+ 
+plot "receptorji.dat" u 1:2:(3) w errorbars title "Meritve", \
+farm1(x) t "Dva parametra", \
+farm2(x) t "Trije parametri"
+
+set output "farma_hi.tex"
+set xlabel "$p$"
+set ylabel "$\\chi^2_{red}$"
+unset logscale
+
+plot "farma_hi.dat" w lines notitle
+
+set logscale xy
+set output "farma_hi_log.tex"
+replot
+
+set output "ledvice.tex"
+set xlabel "$t$"
+unset ylabel
+unset logscale
+
+A = 13753
+B = A/2
+C = A/2
+D = A
+
+L = 1.0/400
+L1 = L
+L2 = L1/10
+b = 1.0/40
+
+T = 30
+
+led1(x) = A*exp(-L*x)
+led2(x) = B*exp(-L1*x) + C*exp(-L2*x)
+ledk(x) = D*exp(-b*sqrt(abs(x+T)))
+
+fit led1(x) "ledvice.dat" u ($0*80):1:(sqrt($1)) via A,L
+fit led2(x) "ledvice.dat" u ($0*80):1:(sqrt($1)) via B,C,L1,L2
+fit ledk(x) "ledvice.dat" u ($0*80):1:(sqrt($1)) via D,b,T
+
+plot "ledvice.dat" u ($0*80):1:(sqrt($1)) w errorbars t "Meritve", \
+led1(x) t "En razdelek", \
+led2(x) t "Dva razdelka", \
+ledk(x) t "Korenska odvisnost"
