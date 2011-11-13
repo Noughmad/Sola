@@ -105,7 +105,11 @@ function korozija()
 
   [f,p,cvg,iter,corp,covp,covr,stdresid,Z,r2] = leasqr(U, I, [1e-3, 100, 100], "kor");
   parametri = [p, sqrt(diag(covp))]
-  chi2red = sumsq((f-I)*1e4)/(N-3)
+  chi2red = sumsq((f-I)*1e5)/(N-3)
+
+  [f,p,cvg,iter,corp,covp,covr,stdresid,Z,r2] = leasqr(U, I, [1e-3, 100, 100, 1], "kor_u");
+  parametri = [p, sqrt(diag(covp))]
+  chi2red = sumsq((f-I)*1e5)/(N-4)
 endfunction
 
 # farmacija()

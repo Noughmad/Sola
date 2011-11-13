@@ -55,3 +55,24 @@ plot "ledvice.dat" u ($0*80):1:(sqrt($1)) w errorbars t "Meritve", \
 led1(x) t "En razdelek", \
 led2(x) t "Dva razdelka", \
 ledk(x) t "Korenska odvisnost"
+
+set output "korozija.tex"
+set ylabel "$I$ [$\\mu$A]"
+set xlabel "$U$ [mV]"
+set zeroaxis
+
+f1(x) = I * ( exp(x/Ua) - exp(-x/Uc) );
+f2(x) = I2 * ( exp((x-U0)/Ua2) - exp(-(x-U0)/Uc2) );
+
+I = 1e-3
+I2 = 1e-3
+Ua = 100
+Uc = 100
+Ua2 = 100
+Uc2 = 100
+U0 = 1
+
+fit f1(x) "korozija.txt" via I,Ua,Uc
+fit f2(x) "korozija.txt" via I2,Ua2,Uc2,U0
+
+plot "korozija.txt" u 1:2:(1e-4) w errorbars t "Meritve", f1(x) t "Brez popravka", f2(x) t "S popravkom"

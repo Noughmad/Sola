@@ -16,6 +16,34 @@
 
 \maketitle
 
+\section{Splo"sno}
+\begin{verse}
+Nalog sem lotil se z Levenberg-Marquardtovim algoritmom. \\
+\texttt{Gnuplot} ima ga vgrajen'ga, prav tako tudi \texttt{Octave}. \\
+Za vsak primer sem oba uporabil, nato pa primerjal. \\
+Malo med njima razlike, drugi ima eno prednost: \\
+Ve"c argumentov mu damo, in ve"c informacij nam vrne. \\ 
+Kdaj konvergenco ustavi, lahko sem natan"cno nastavil, \\
+Malo izbolj"sal na ta na"cin prilagoditve dobroto. 
+\end{verse}
+
+\begin{verse}
+ ``Goodness of fit'', sem prebral, da s $\chi$ na kvadrat je izra"zen, \\
+Treba ga le "se deliti s "stevilom prostostnih je stopenj. \\
+Re"ce tedaj se tem\`u, da je $\chi^2$ reduciran. \\
+Fit je najbolj"si, ko blizu je vrednosti ena. \\
+\end{verse}
+
+\begin{align}
+ \chi^2 &= \sum_{i=1}^N \left(\frac{f(x_i, \mathbf{p}) - y_i}{\sigma_i}\right)^2 \\
+ \chi^2_{red} &= \frac{\chi^2}{N-n}
+\end{align}
+
+\begin{verse}
+ Veliki $N$ v tem primeru "stevilo je na"sih meritev, \\
+ mali pa $n$ je "stevilo prostih parametrov fit-a. 
+\end{verse}
+
 \section{Farmakolo"ski model}
 \subsection{Parameter $p$}
 
@@ -34,7 +62,6 @@ Levenberg-Marquardt edino je upanje k hitri re"sitvi.
 \end{verse}
 
 \begin{align}
- \chi^2 &= \sum_{i=1}^n \left(\frac{f(x_i, \mathbf{p}) - y_i}{\sigma_i}\right)^2 \\
 \end{align}
 
 \begin{verse}
@@ -44,21 +71,6 @@ Levenberg-Marquardt edino je upanje k hitri re"sitvi.
  Vrednosti njih optimalne podane so v prvi tabeli. \\ 
 \end{verse}
 
-\begin{verse}
- ``Goodness of fit'', sem prebral, da s $\chi$ na kvadrat je izra"zen, \\
-Treba ga le "se deliti s "stevilom prostostnih je stopenj. \\
-Re"ce tedaj se tem\`u, da je $\chi^2$ reduciran. \\
-Fit je najbolj"si, ko blizu je vrednosti ena. \\
-\end{verse}
-
-\begin{align}
- \chi^2_{red} &= \frac{\chi^2}{N-n}
-\end{align}
-
-\begin{verse}
- Veliki $N$ v tem primeru "stevilo je na"sih meritev, \\
- mali pa $n$ je "stevilo prostih parametrov fit-a. 
-\end{verse}
 
 \subsection{Rezultati}
 
@@ -184,6 +196,47 @@ bli"zje je $y_0$ zdaj pri"cakovani stotici.
 \end{verse}
 
 \section{Korozija}
+\begin{verse}
+ Tretji"c postopek spet isti na novih podatkih nar'dimo. \\
+ Trik pa je nov v tem primeru, da za"cetni pribli"zki so te"zji. \\
+ Ve"c sem poskusil jih, gledal kdaj $\chi^2$ je najmanj"si. \\
+\end{verse}
+
+\begin{verse}
+  Merske napake sedaj eksplicitno niso podane. \\
+  Vemo da so le v toku, in vse so med sabo enake. \\
+  Tok je izmerjen na pet decimalk, to oceni napako. \\
+  Dobra verjetno bo vrednosti, deset z minus peto potenco. \\
+  Same dobrote ne mor'mo podati, a z njun'ga razmerja, \\
+  vidimo ko'lko koristi napetost $U_0$ nam prinese. 
+\end{verse}
+
+\begin{table}[h]
+ \centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+Model & $I_0$ [nA] & $U_a$ [mV] & $U_c$ [mV] & $U_0$ [mV] & $\chi^2_{red}$ \\
+\hline
+Brez popravka & 2,6 $\pm$ 0,4 & 140 $\pm$ 25 & 74 $\pm$ 7 & 0 & 408 \\
+S popravkom & 3,2 $\pm$ 0,2 & 200 $\pm$ 24 & 77 $\pm$ 3 & -4,6 $\pm$ 0,4 & 68 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{verse}
+ Drugi model 'ma dobroto, ki dosti je bolj"sa od prve, \\
+ ampak "se vedno velika, dale"c od ciljne enice. \\
+ Merske napake ocena, je zgornja desetkrat premajhna. \\
+ "Ce bi napako z deset pomno"zili, dobrota bi s sto b'la deljena. \\
+ Na"s pa model bi meritve opisal skor' idealno. \\
+ Tako napako sem tudi narisal, na sliki naslednji. 
+\end{verse}
+
+\begin{figure}[h]
+ \input{korozija}
+ \caption{$U-I$ diagram med kovino in korozivnim elektrolitom}
+ \label{fig:korozija}
+\end{figure}
 
 
 \end{document}
