@@ -81,7 +81,6 @@ Levenberg-Marquardt edino je upanje k hitri re"sitvi.
   Model & $y_0$ & $a$ & $p$ & $\chi^2_{red}$ \\
 \hline
   Dva parametra & 106 $\pm$ 5 & 25 $\pm$ 4 & 1 & 3,67 \\
-\hline
   Trije parametri & 100 $\pm$ 4 & 20 $\pm$ 2 & 1,4 $\pm$ 0,2 & 1,87 \\
 \hline
 \end{tabular}
@@ -90,13 +89,13 @@ Levenberg-Marquardt edino je upanje k hitri re"sitvi.
 \end{table}
 
 \begin{verse}
-Vidi se z zgornje tabele, da nov parameter pomaga. \\
-Fit-a dobroto izbolj"sa, blizu enici jo pahne. \\
+Vidi se z zgornje tabele, da nov parameter pomaga, \\
+fit-a dobroto izbolj"sa, blizu enici jo pahne. \\
 Ampak pozoren pogled "se to pridobitev razkrije: \\
 bli"zje je $y_0$ zdaj pri"cakovani stotici. 
 \end{verse}
 
-\begin{figure}
+\begin{figure}[h]
  \input{farma}
   \caption{Primerjava med modeloma z dvema oz. tremi spremenljivkami. }
   \label{fig:farmacija}
@@ -108,19 +107,22 @@ bli"zje je $y_0$ zdaj pri"cakovani stotici.
  Prednost le-te pred zeleno je vidna predvsem pri robovih. 
 \end{verse}
 
+\newpage
 \subsection{Odvisnost od $p$}
 \begin{verse}
- Kaj pa "ce $p$-ja ne b\'i prilagajali, stalnega 'meli, \\
- vseeno pa ne bi prav vedno natan"cno enici enak bil?
- Dal sem mu vrednosti razne, od "cetrtine do "stiri,
- gledal sem kaj bi godilo se, z mero za fita dobroto. 
+ Kaj pa "ce $p$-ja ne b\'i prilagajali v na"sem ra"cunu, \\
+ vseeno pa ne bi prav vedno natan"cno enici enak bil? \\
+ Dal sem mu vrednosti razne, od "cetrtine do "stiri, \\
+ gledal sem kaj se godilo je z mero za fita dobroto. 
 \end{verse}
 
-\begin{figure}
+\begin{figure}[h]
  \input{farma_hi}
 \caption{Odvisnost $\chi^2_{red}$ od fiksnega parametra $p$ }
 \label{fig:farmacija-hi}
 \end{figure}
+
+\newpage
 
 \section{Ledvice}
 \begin{verse}
@@ -157,7 +159,7 @@ bli"zje je $y_0$ zdaj pri"cakovani stotici.
  Tisti s krvjo v dveh posodah, ki 'mata razli"cne volumne. \\
 \end{verse}
 
-\begin{figure}
+\begin{figure}[h]
  \input{ledvice}
   \caption{Modeli "cistilnosti ledvic. }
   \label{fig:ledvice}
@@ -241,5 +243,15 @@ S popravkom & 3,2 $\pm$ 0,2 & 200 $\pm$ 24 & 77 $\pm$ 3 & -4,6 $\pm$ 0,4 & 68 \\
  \caption{$U-I$ diagram med kovino in korozivnim elektrolitom}
  \label{fig:korozija}
 \end{figure}
+
+\newpage
+
+\begin{verse}
+ Tudi na sliki se vidi, da to"cke ne grejo skoz' ni"clo. \\
+ "Crta zelena pokriva meritve kar dobro na koncih,\\
+ blizu sredine pa njeno odstopanje res je mote"ce. \\
+ Ostri pogled na ta graf potrjuje koristnost popravka. 
+\end{verse}
+
 
 \end{document}
