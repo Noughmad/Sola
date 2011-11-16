@@ -22,16 +22,16 @@ Nalog sem lotil se z Levenberg-Marquardtovim algoritmom. \\
 \texttt{Gnuplot} ima ga vgrajen'ga, prav tako tudi \texttt{Octave}. \\
 Za vsak primer sem oba uporabil, nato pa primerjal. \\
 Malo med njima razlike, drugi ima eno prednost: \\
-Ve"c argumentov mu damo, in ve"c informacij nam vrne. \\ 
+ve"c argumentov mu damo, ve"c informacij nam vrne. \\ 
 Kdaj konvergenco ustavi, lahko sem natan"cno nastavil, \\
-Malo izbolj"sal na ta na"cin prilagoditve dobroto. 
+malo izbolj"sal na ta na"cin prilagoditve dobroto. 
 \end{verse}
 
 \begin{verse}
  ``Goodness of fit'', sem prebral, da s $\chi$ na kvadrat je izra"zen, \\
-Treba ga le "se deliti s "stevilom prostostnih je stopenj. \\
+treba ga le "se deliti s "stevilom prostostnih je stopenj. \\
 Re"ce tedaj se tem\`u, da je $\chi^2$ reduciran. \\
-Fit je najbolj"si, ko blizu je vrednosti ena. \\
+Fit je najbolj"si takrat, ko blizu je vrednosti ena. \\
 \end{verse}
 
 \begin{align}
@@ -41,16 +41,18 @@ Fit je najbolj"si, ko blizu je vrednosti ena. \\
 
 \begin{verse}
  Veliki $N$ v tem primeru "stevilo je na"sih meritev, \\
- mali pa $n$ je "stevilo prostih parametrov fit-a. 
+ mali pa $n$ je "stevilo prostih parametrov fit-a. \\
+ $\sigma$ od $i$ je napaka, ki bla je z nalogo podana, \\
+ $f$ pa je funkcija na"sa, odvisna od $x$ in parametrov. \\
 \end{verse}
 
 \section{Farmakolo"ski model}
 \subsection{Parameter $p$}
 
 \begin{verse}
-V model iz naloge prej"snje parameter $p$ "se dodamo. \\ 
+V model kar iz naloge prej"snje parameter $p$ "se dodamo. \\ 
 Legla bo bolje k podatkom, izbolj"sana na"sa napoved. \\
-"Zal pa zgubili smo s tem linearnost, gr"si problem je. \\
+"Zal pa zgubili smo s tem linearnost, gr"si problem je, \\
 Levenberg-Marquardt edino je upanje k hitri re"sitvi.
 \end{verse}
 
@@ -58,21 +60,19 @@ Levenberg-Marquardt edino je upanje k hitri re"sitvi.
 \begin{verse}
  Smisla kaj dosti pa nima, da si problem bi zapletli, \\
  ve"c spremenljivk pridodali, "ce n'bene od njih ni koristi. \\
- Smiselnost nov'ga modela zato $\chi$-kvadrat bo ocenil. 
+ Smiselnost nov'ga modela zato $\chi$-kvadrat bo ocenil. \\
+ Ker spremeni se "stevilo neznank, ga "se reduciram. 
 \end{verse}
-
-\begin{align}
-\end{align}
-
-\begin{verse}
- $\sigma$ od $i$ je napaka, ki bla je z nalogo podana. \\
- V na"sem primeru je fajn, saj prav vse so trojki enake. \\
- $f$ pa je funkcija na"sa, odvisna od $x$ in parametrov. \\
- Vrednosti njih optimalne podane so v prvi tabeli. \\ 
-\end{verse}
-
 
 \subsection{Rezultati}
+\begin{verse}
+ V prvem primeru je fajn, saj prav vse so napake enake, \\
+ formula za izra"cun dobrote je bolj enostavna. \\
+ Vse sem ra"cune po dvakrat naredil, saj dva 'mam modela, \\
+ eden je s fiksnim $p$, ena, a v drugem je $p$ spremenljivka. \\
+ Vsaki"c je na"s algoritem proste parametre vrnil, \\
+ vrednosti njih optimalne podane so v prvi tabeli. 
+\end{verse}
 
 \begin{table}[h]
  \centering
@@ -110,8 +110,10 @@ bli"zje je $y_0$ zdaj pri"cakovani stotici.
 
 \subsection{Odvisnost od $p$}
 \begin{verse}
- "Ce $p$-ja ne bi prilagajali, vrednost mu raje kar dali, \\
- Gledal sem kaj bi godilo se, z mero za fita dobroto. 
+ Kaj pa "ce $p$-ja ne b\'i prilagajali, stalnega 'meli, \\
+ vseeno pa ne bi prav vedno natan"cno enici enak bil?
+ Dal sem mu vrednosti razne, od "cetrtine do "stiri,
+ gledal sem kaj bi godilo se, z mero za fita dobroto. 
 \end{verse}
 
 \begin{figure}
@@ -120,18 +122,12 @@ bli"zje je $y_0$ zdaj pri"cakovani stotici.
 \label{fig:farmacija-hi}
 \end{figure}
 
-\begin{figure}
- \input{farma_hi_log}
-\caption{Odvisnost $\chi^2_{red}$ od fiksnega parametra $p$ -- logaritemski graf }
-\label{fig:farmacija-hi}
-\end{figure}
-
 \section{Ledvice}
 \begin{verse}
  Isti postopek kot prej, "se tu bomo uporabili, \\
  vse kar se res spremeni je funkcija testna modela. \\
  Druge so tudi napake, razpade zdaj "stejemo jeder, \\
- $\sigma$ je kar enostavna, koren je "stevila razpadov. \\
+ $\sigma$ je spet enostavna, koren je "stevila razpadov. \\
  Vse je ostalo kot prej, kriterij dobrote obdr"zimo. 
 \end{verse}
 
@@ -157,7 +153,7 @@ bli"zje je $y_0$ zdaj pri"cakovani stotici.
 \subsection{Rezultati}
 
 \begin{verse}
- Slika tadruga poka"ze, da najbolj"s model je tadrugi. \\
+ Slika slede"ca poka"ze, da najbolj"s' model je tadrugi. \\
  Tisti s krvjo v dveh posodah, ki 'mata razli"cne volumne. \\
 \end{verse}
 
@@ -170,7 +166,8 @@ bli"zje je $y_0$ zdaj pri"cakovani stotici.
 \begin{verse}
  Koliko res pridobimo, ko drugo posodo dodamo? \\
  ``Goodness'' se vidno izbolj"sa, kar petdesetkrat je zdaj manj"sa. \\
- Tisti model, ki korene ima, po dobroti je v sredi. 
+ Dale"c najbolj"si model je tisti s prekatoma dvema, \\
+ tisti model, ki korene ima, po dobroti je v sredi. 
 \end{verse}
 
 \begin{table}[h]
@@ -189,17 +186,22 @@ bli"zje je $y_0$ zdaj pri"cakovani stotici.
 \end{table}
 
 \begin{verse}
- Dale"c najbolj"si model je tisti s prekatoma dvema. \\
- Lambdi pri njem sta v razmerju, tako kot razdelkov volumna. \\
- Vemo da "clovek v sebi pribli"zno pet litrov krvi 'ma. \\
- Sklepamo torej lahko o volumnu ob"zilnih prostorov. 
+ V tretjem modelu nastopa "se "cas ob za"cetku meritve, \\
+ prva meritev v tabeli ob "casu $t_0$ je nar'jena. \\
+ Najbolj"si fit sem dobil, "ce blizu ni"cle ta "cas bil. \\
+ Ve"cja od njega bila je napaka, pribli"zno stotina. 
 \end{verse}
+
+\begin{align}
+ t_0 &= 1,5 \cdot 10^{-5} \pm 9 \cdot 10^{-3}
+\end{align}
+
 
 \section{Korozija}
 \begin{verse}
  Tretji"c postopek spet isti na novih podatkih nar'dimo. \\
  Trik pa je nov v tem primeru, da za"cetni pribli"zki so te"zji. \\
- Ve"c sem poskusil jih, gledal kdaj $\chi^2$ je najmanj"si. \\
+ Ve"c sem poskusil jih, gledal sem kdaj $\chi^2$ je najmanj"si. \\
 \end{verse}
 
 \begin{verse}
@@ -208,7 +210,7 @@ bli"zje je $y_0$ zdaj pri"cakovani stotici.
   Tok je izmerjen na pet decimalk, to oceni napako. \\
   Dobra verjetno bo vrednosti, deset z minus peto potenco. \\
   Same dobrote ne mor'mo podati, a z njun'ga razmerja, \\
-  vidimo ko'lko koristi napetost $U_0$ nam prinese. 
+  vidimo ko'lko koristi popravek $U_0$ nam prinese. 
 \end{verse}
 
 \begin{table}[h]
@@ -221,15 +223,17 @@ Brez popravka & 2,6 $\pm$ 0,4 & 140 $\pm$ 25 & 74 $\pm$ 7 & 0 & 408 \\
 S popravkom & 3,2 $\pm$ 0,2 & 200 $\pm$ 24 & 77 $\pm$ 3 & -4,6 $\pm$ 0,4 & 68 \\
 \hline
 \end{tabular}
+\caption{Optimalni parametri in dobrota prilagoditve za oba modela prevodnosti korozivnega stika}
 \end{table}
 
 \begin{verse}
  Drugi model 'ma dobroto, ki dosti je bolj"sa od prve, \\
  ampak "se vedno velika, dale"c od ciljne enice. \\
- Merske napake ocena, je zgornja desetkrat premajhna. \\
- "Ce bi napako z deset pomno"zili, dobrota bi s sto b'la deljena. \\
- Na"s pa model bi meritve opisal skor' idealno. \\
- Tako napako sem tudi narisal, na sliki naslednji. 
+ Merske napake ocena, je zgornja o"citno premajhna. \\
+ "Ce bi napako z deset pomno"zili, morda bi b'lo bolje. \\
+ s sto bi dobroto delil, kvadrat v njej napake nastopa. \\
+ Na"s pa model te meritve opisal bi skor' idealno. \\
+ Tako napako sem tudi narisal, na sliki poslednji. 
 \end{verse}
 
 \begin{figure}[h]
@@ -237,6 +241,5 @@ S popravkom & 3,2 $\pm$ 0,2 & 200 $\pm$ 24 & 77 $\pm$ 3 & -4,6 $\pm$ 0,4 & 68 \\
  \caption{$U-I$ diagram med kovino in korozivnim elektrolitom}
  \label{fig:korozija}
 \end{figure}
-
 
 \end{document}

@@ -27,7 +27,8 @@ set output "farma_hi_log.tex"
 replot
 
 set output "ledvice.tex"
-set xlabel "$t$"
+set xlabel "$t$ [s]"
+set ylabel "Aktivnost"
 unset ylabel
 unset logscale
 

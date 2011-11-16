@@ -92,7 +92,7 @@ function ledvice()
   parametri = [p, sqrt(diag(covp))]
   chi2red = sumsq((f-K)./dK)/(N-4)
 
-  [f,p,cvg,iter,corp,covp,covr,stdresid,Z,r2] = leasqr(T, K, [K(1), 1/30, 0], "ledvk", 0.00001, 20, wt);
+  [f,p,cvg,iter,corp,covp,covr,stdresid,Z,r2] = leasqr(T, K, [K(1), 1/30, -40], "ledvk", 0.00001, 20, wt);
   parametri = [p, sqrt(diag(covp))]
   chi2red = sumsq((f-K)./dK)/(N-3)
 endfunction
@@ -114,5 +114,5 @@ endfunction
 
 # farmacija()
 # farmacija_hi()
-korozija()
-# ledvice()
+# korozija()
+ledvice()
