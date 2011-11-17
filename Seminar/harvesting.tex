@@ -1,0 +1,67 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+
+\acrodef{WSN}{Wireless Sensor Network}
+\acrodef{EH}{Energy Harvesting}
+
+%opening
+\title{Energy Harvesting}
+\author{Author: Miha \v Can\v cula \\ Mentor: doc. dr. Du\v san Ponikvar}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\section{Introduction}
+
+Small electronic devices are increasingly present everywhere around us. With their ubiquity and ever decreasing size and power consumption, connecting each of them to the power grid becomes impractical. 
+
+The traditional solution is to use batteries, but they come with their own set of problems. Replacing them can be expensive, especially in hard-to-reach places. A much better option would be if the device had a power source of its own, removing its dependence on the power grid and drastically reducing the maintanace cost. 
+
+The method of drawing small amounts of electricity from the device's immediat surrounding is called \ac{EH}. 
+
+\section{Use-cases}
+
+\subsection{Sensors}
+
+The most common use for energy harvesting systems are nodes in \acp{WSN}. Such a network can contain a large number of independent nodes, so it would be difficult to connect each node to the power grid with wires. The sensors themselves usually consume very small amounts of power, so they are ideal applications for \acl{EH} methods. 
+
+% list is from wikipedia: https://en.wikipedia.org/wiki/Energy_harvesting
+The applications for \acp{WSN} include:
+\begin{itemize}
+  \item Weather stations
+  \item Air and water pollution measuring
+  \item Fire detection
+  \item Industrial machine health monitoring
+  \item Structural monitoring in buildings
+\end{itemize}
+
+Most of these applications require the nodes to be outside or in other areas where a direct connection to the grid would be difficult. On the other hand, they can still be close enough to the central node so they can transmit the measurements over a wireless connection with their own harvested power. 
+
+\subsection{Consumer electronics}
+
+Many popular electronic devices, including TV remote controls, digital watches, portable music players and mobile phones, have power consumption low enough to be powered or at least assisted by \ac{EH}. Though their batteries can last a very long time, they can run out unexpectedly and cause a severe inconvenience. 
+
+\section{Photovoltaic cells}
+
+The best known method of generating electricity from the environment on a small scale are photovoltaic cells. 
+
+\section{Thermoelectric generators}
+
+\section{Piezoelectric generators}
+
+\section{Energy management and storage}
+
+\section{Conclusion}
+
+\tableofcontents
+
+\end{document}
