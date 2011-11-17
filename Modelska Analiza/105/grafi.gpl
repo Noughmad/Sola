@@ -4,6 +4,7 @@ set output "farma.tex"
 set xlabel "$x$"
 set ylabel "$y$"
 set logscale x
+set key top left
 
 farm1(x) = b * x / (x+a)
 farm2(x) = c * x**p / (x**p + d**p)
@@ -19,6 +20,7 @@ set output "farma_hi.tex"
 set xlabel "$p$"
 set ylabel "$\\chi^2_{red}$"
 unset logscale
+set key top right
 
 plot "farma_hi.dat" w lines notitle
 
@@ -27,7 +29,8 @@ set output "farma_hi_log.tex"
 replot
 
 set output "ledvice.tex"
-set xlabel "$t$"
+set xlabel "$t$ [s]"
+set ylabel "Aktivnost"
 unset ylabel
 unset logscale
 
@@ -60,6 +63,7 @@ set output "korozija.tex"
 set ylabel "$I$ [$\\mu$A]"
 set xlabel "$U$ [mV]"
 set zeroaxis
+set key bottom right
 
 f1(x) = I * ( exp(x/Ua) - exp(-x/Uc) );
 f2(x) = I2 * ( exp((x-U0)/Ua2) - exp(-(x-U0)/Uc2) );
