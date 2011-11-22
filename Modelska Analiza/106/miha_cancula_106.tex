@@ -1,0 +1,69 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8x]{inputenc}
+
+\usepackage{verse}
+\usepackage[slovene]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+%opening
+\title{Var"cni modeli}
+\author{Miha \v Can\v cula}
+
+\begin{document}
+
+\maketitle
+
+\section{Splo"sno}
+
+\subsection{Naloga}
+
+Naloge sem re"seval z razcepom matrike $\mathbf{S}$ na singularne vrednosti, tako da sem minimiziral izraz 
+
+\begin{align}
+ \chi^2_{red} &= \frac{1}{m-k} \sum_{i=1}^m \left(\frac{(\mathbf{Sa})_i - \mathbf{y}_i}{\sigma_i}\right)^2 \\
+  &= \frac{1}{m-k} \left|\mathbf{CSa} - \mathbf{Cy}\right|^2
+\end{align}
+
+Tu je $\mathbf{a}$ vektor parametrov, $\mathbf{y}$ vektor meritev odvisne spremenljivke, $\mathbf{S}$ pa modelska matrika ki izmerjene vrednosti neodvisnih spremenljivk povezuje s parametri. $m$ je "stevilo meritev, $k$ pa "stevilo uporabljenih parametrov. Matrika $\mathbf{C}$ je matrika ute"zi, s katero dose"zemo, da imajo posamezne meritve razli"cen vpliv na optimalno vrednost parametrov. V na"sem primeru, ko nimamo korelacij med posameznimi meritvami, je ta matrika diagonalna in podana z $\mathbf{C}_{ii} = \sigma_i^{-1}$. 
+
+Da sem lahko singularne vrednosti matrike $\mathbf{S}$ primerjal med seboj, sem najprej vse spremenljivke normiral, tako da je bil razpon njihovih vrednosti med 0 in 1. Ta interval ima veliko prednost, da ima tudi vsaka potenca spremenljivke vrednosti na tem intervalu. V obeh primerih sem uporabljal le poten"cne funkcije. 
+
+\subsection{Re"sevanje}
+
+Na matriki $\mathbf{S}$ sem najprej uporabil razcep \texttt{SVD} na dve ortogonalni kvadratni matriki $\mathbf{U}$ in $\mathbf{V}$ ter pravokotno $\mathbf{W}$. 
+
+\begin{align}
+ \mathbf{S} &= \mathbf{U W V^T} \\
+ \mathbf{a} &= \mathbf{S}^{-1}\mathbf{y} = \mathbf{V W^{-1} U^T y}
+\end{align}
+
+Matriki $\mathbf{S}$ in $\mathbf{W}$ nista kvadratni, zato sem uporabil pravilo za izra"cun psevdoinverza. $\mathbf{W}$ je po definiciji razcepa diagonalna, zato jo najprej transponiramo, nato pa popravimo diagonalne elemente
+\begin{equation}
+ [\mathbf W^{-1}]_{ii} = \left\{ \begin{matrix}
+                         1/\mathbf{W_{ii}}, & \mathbf{W_{ii}} > \varepsilon \\
+			 0, & \mathrm{sicer}
+                        \end{matrix} \right.
+\end{equation}
+
+Med ra"cunanjem sem preizku"sal razli"cne vrednosti za $\varepsilon$ in na ta na"cin dobil razli"cno "stevilo uporabljenih parametrov $k$, da bo $\chi^2_{red}$ "cim bli"zje 1.  
+
+\subsection{Napake parametrov}
+
+Napake oz. kovarian"cno matriko koeficientov sem izra"cunal po predpisu in Numerical Recipes
+
+\begin{align}
+ \mathbf{Cov} &= \mathbf{V^T W^{-1} V}
+\end{align}
+
+"Se posebej so me zanimali diagonalni elementi kovarian"cne matrike, saj sem med seboj primerjal napake in s tem pomembnost parametrov. 
+
+\section{Toplotna prevodnosti}
+
+
+
+
+\end{document}
+
