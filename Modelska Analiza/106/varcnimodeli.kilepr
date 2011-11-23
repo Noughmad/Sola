@@ -26,10 +26,10 @@ ReadWrite=true
 
 [item:miha_cancula_106.tex]
 archive=true
-column=0
+column=13
 encoding=UTF-8
 highlight=LaTeX
-line=63
+line=35
 mode=LaTeX
 open=true
 order=0
@@ -45,5 +45,5 @@ open=false
 order=-1
 
 [view-settings,view=0,item:miha_cancula_106.tex]
-CursorColumn=0
-CursorLine=63
+CursorColumn=13
+CursorLine=35
