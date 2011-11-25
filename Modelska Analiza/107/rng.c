@@ -1,86 +1,67 @@
 
 #include <stdio.h>
-#include <gsl/gsl_rng.h>
-#include <gsl/gsl_cdf.h>
 #include <time.h>
 #include <math.h>
 #include <assert.h>
+#include "common.h"
+#include "gauss.h"
+#include "smer.h"
+#include <gsl/gsl_sf_erf.h>
+#include <gsl/gsl_statistics_double.h>
 
-#define N 1e7
-#define B 1e2
-#define AVG (N/B)
-#define AVG2 (N/B/B)
 
-int* zeros();
-double* create();
-double normalized(double x);
+double constant(double x)
+{
+  return AVG;
+}
 
-double chi1(int n, double* values);
-double chi2(int n, double* values);
-double ks(int n, double* values);
+double constant_c(double x)
+{
+  return AVG*x/B;
+}
 
-int* bin(int n, double* values);
+double chisq(gsl_histogram* values, gsl_histogram* expected);
+double chisq2d(gsl_histogram* values, gsl_histogram* expected);
+double kolsmir(gsl_histogram* values, gsl_histogram* expected);
+double korelacija(gsl_histogram* value, gsl_histogram* expected);
+
 double int2double(int i);
 
 double* builtin();
 double* kalkulator();
+double* from_file(const char* name);
 double* devrandom();
 double* devurandom();
 double* mersenne();
 
-int* bin(int n, double* values)
-{
-  int* a = zeros();
-  int b, j = 0;
-  for (j; j < N; ++j)
-  {
-    b = values[j] * B;
-    a[b]++;
-  }
-  free(values);
-  return a;
-}
 
-double chi1(int n, double* values)
+double chisq ( gsl_histogram* values, gsl_histogram* expected )
 {
-  int* b = bin(n, values);
+  gsl_histogram*t  = gsl_histogram_clone(values);
+  gsl_histogram_sub(t, expected);
+  int j;
   double chi = 0;
-  int i = 0;
-  for (i; i < B; ++i)
+  for (j=0; j<B; ++j)
   {
-    chi += pow( (b[i] - AVG)/sqrt(AVG), 2 );
+    chi += pow(gsl_histogram_get(t, j), 2)/gsl_histogram_get(expected, j);
   }
-  free(b);
+  
   return gsl_cdf_chisq_Q(chi, B-1);
 }
 
-double chi2(int n, double* values)
-{
-  int** b = malloc(B * sizeof(int*));
-  int i;
-  int k,l;
-  for (i=0; i<B; ++i)
+double kolsmir ( gsl_histogram* values, gsl_histogram* expected )
+{  
+  double D = 0;
+  double cv = 0, ce = 0;
+  int j;
+  for (j=0; j<B; ++j)
   {
-    b[i] = zeros();
+    cv += gsl_histogram_get(values, j);
+    ce += gsl_histogram_get(expected, j);
+    D = fmax(D, fabs(cv-ce));
   }
-  for (i=0; i<n; i+=2)
-  {
-    k = values[i] * B;
-    l = values[i+1] * B;
-    b[k][l]++;
-  }
-  
-  double chi;
-  
-  for(k=0;k<B;++i)
-  {
-    for(l=0;l<B;++l)
-    {
-      chi += pow( (b[k][l] - AVG2) / sqrt(AVG2), 2 );
-    }
-  }
-  
-  return gsl_cdf_chisq_Q(chi, B*B-1);
+  D /= B;
+  return D;
 }
 
 int* zeros()
@@ -133,15 +114,21 @@ double int2double(int i)
 
 double* devurandom()
 {
-  FILE *f = fopen("/dev/urandom", "rb");
+  return from_file("/dev/urandom");
+}
+
+double* from_file(const char* name)
+{
+  FILE *f = fopen(name, "rt");
   double* d = create();
   int i;
-  double t;
+  int t;
   for(i=0; i<N; ++i)
   {
-    fscanf(f, "%lf", &t);
-    d[i] = normalized(t);
+    fread(&t, sizeof(int), 1, f);
+    d[i] = int2double(abs(t));
   }
+  fclose(f);
   return d;
 }
 
@@ -166,9 +153,39 @@ double normalized(double x)
 
 int main(int argc, char** argv)
 {
-  printf("Vgrajen: %lf\n", chi1(N, builtin()));
-  printf("Kalkulator: %lf\n", chi1(N, kalkulator()));
-  printf("Mersenne: %lf\n", chi1(N, mersenne()));
- // printf("Urandom: %lf\n", chi1(N, devurandom()));
+  gen g_uni[] = {mersenne, kalkulator, devurandom, builtin, 0};
+  test t[] = {chisq, kolsmir, 0};
+  task* prob = task_new(0, g_uni, t, 0 );
+  
+  gsl_histogram* h = gsl_histogram_alloc(B);
+  gsl_histogram_set_ranges_uniform(h, 0, 1);
+  gsl_histogram_shift(h, AVG);
+  prob->density = h;
+  
+  prob->min = 0;
+  prob->max = 1;
+  task_perform(prob);
+  task_free(prob);
+  
+  gen g_gauss[] = {gauss, 0};
+  prob = task_new(2, g_gauss, t, 0);
+  prob->min = -5;
+  prob->max = 5;
+  
+  h = gsl_histogram_alloc(B);
+  gsl_histogram_set_ranges_uniform(h, -5, 5);
+  int j;
+  for (j=0; j<B; ++j)
+  {
+    double min, max;
+    gsl_histogram_get_range(h, j, &min, &max);
+    double x = (max + min)/2;
+    
+    gsl_histogram_accumulate(h, x, N*gsl_ran_ugaussian_pdf(x)/100*(prob->max-prob->min));
+  }
+  prob->density = h;
+  task_perform(prob);
+  task_free(prob);
+
   return 0;
 }
