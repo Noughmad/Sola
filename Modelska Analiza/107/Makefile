@@ -1,2 +1,2 @@
 default:
-	gcc -lm -lgsl -lgslcblas -O3 rng.c -o rng
+	gcc -lm -lgsl -lgslcblas -O1 -g rng.c -o rng

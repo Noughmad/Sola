@@ -4,9 +4,15 @@
 \usepackage{amsfonts}
 \usepackage{relsize}
 \usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{hyperref}
 
-\acrodef{WSN}{Wireless Sensor Network}
-\acrodef{EH}{Energy Harvesting}
+\acrodef{WSN}{Wireless sensor network}
+\acrodef{TEG}{Thermoelectric generator}
+\acrodef{EH}{Energy harvesting}
 
 %opening
 \title{Energy Harvesting}
@@ -20,31 +26,44 @@
 
 \end{abstract}
 
+\tableofcontents
+
 \section{Introduction}
 
 Small electronic devices are increasingly present everywhere around us. With their ubiquity and ever decreasing size and power consumption, connecting each of them to the power grid becomes impractical. 
 
-The traditional solution is to use batteries, but they come with their own set of problems. Replacing them can be expensive, especially in hard-to-reach places. A much better option would be if the device had a power source of its own, removing its dependence on the power grid and drastically reducing the maintanace cost. 
+The traditional solution is to use batteries, but they come with their own set of problems. Replacing them can be expensive, especially in hard-to-reach places. A much better option would be if the device had a power source of its own, removing its dependence on the power grid and drastically reducing the maintanace cost~\cite{Burgoine11}. 
 
-The method of drawing small amounts of electricity from the device's immediat surrounding is called \ac{EH}. 
+The method of drawing small amounts of electricity from the device's immediate surrounding is called \ac{EH}. 
 
 \section{Use-cases}
 
 \subsection{Sensors}
 
-The most common use for energy harvesting systems are nodes in \acp{WSN}. Such a network can contain a large number of independent nodes, so it would be difficult to connect each node to the power grid with wires. The sensors themselves usually consume very small amounts of power, so they are ideal applications for \acl{EH} methods. 
+A very common use for energy harvesting systems are nodes in \acp{WSN}~\cite{teg-wsn-ieee,cap-wsn-ieee}. Such a network can contain a large number of independent nodes, so it would be difficult to connect each node to the power grid with wires. The sensors themselves usually consume very small amounts of power, so they are ideal applications for \acl{EH} methods. 
 
 % list is from wikipedia: https://en.wikipedia.org/wiki/Energy_harvesting
-The applications for \acp{WSN} include:
+The applications for \acp{WSN} include~\cite{wiki:eh}:
 \begin{itemize}
   \item Weather stations
   \item Air and water pollution measuring
   \item Fire detection
   \item Industrial machine health monitoring
   \item Structural monitoring in buildings
+  \item Intelligent buildings~\cite{cap-wsn-ieee}
 \end{itemize}
 
 Most of these applications require the nodes to be outside or in other areas where a direct connection to the grid would be difficult. On the other hand, they can still be close enough to the central node so they can transmit the measurements over a wireless connection with their own harvested power. 
+
+Another important characteristic of sensor nodes is their power consumption profile. Often they will be idle for a long time (from minutes to days), and perform measurements in a relatively short time. The transmission of data can be even more infrequent, depending on whether the data has to be available immediately or not. In any case, sensor nodes consume very little current in the idle time period, with short bursts of consumption at regular intervals. An example of such consumption profile in is Figure~\ref{fig:wsn-consumption}. 
+
+\begin{figure}[h]
+\centering
+ \includegraphics[width=250pt]{./Slike/wsn-current-profile}
+ \caption{An example of a \ac{WSN} current consumption profile~\cite{cap-wsn-ieee}}
+\label{fig:wsn-consumption}
+\end{figure}
+
 
 \subsection{Consumer electronics}
 
@@ -54,14 +73,35 @@ Many popular electronic devices, including TV remote controls, digital watches, 
 
 The best known method of generating electricity from the environment on a small scale are photovoltaic cells. 
 
-\section{Thermoelectric generators}
+The downside of solar generators is the constant changing of their power output. Fortunately, there are several methods to work around this shortcoming. One way to is to use supercapacitors~\cite{cap-wsn-ieee} to store the produced energy. Even so, with variable weather conditions, the cell is not always operating with its peak efficiency. It is possible to offset this by using a system that dynamically adjusts the cell voltage to find the maximum power point~\cite{solar-mppt-ieee}. 
+
+\section{\acl{TEG}}
+
+Another source of energy in the environment is a temperature gradient. Using the Seebeck effect, it is possible to convert this difference in temperatures into electricity. This method has become very popular in the recent years, mostly due to their reliability and lower cost than photovoltaics. 
+
+\acp{TEG} are typically made from a series of alternating N-doped and P-doped semiconductors, sandwiched between two ceramic plates~\cite{salerno10}. A schematic of their design can be seen in Figure~\ref{fig:teg-schematic}
+
+\begin{figure}[h]
+\subfigure{\includegraphics[height=100pt]{./Slike/TEG-shema}}
+\subfigure{\includegraphics[height=100pt]{./Slike/TEG-slika}}
+\caption{A schematic (left) and a photo (right) of a \ac{TEG} element~\cite{salerno10,wiki:teg}}
+\label{fig:teg-schematic}
+\end{figure}
+
 
 \section{Piezoelectric generators}
 
+The third most common form of \ac{EH} is generating power from the energy of motion. Vibrations are present especially in the vicinity of working machinery, but energy can also be produced from human activities, such as walking~\cite{piezo-shoe-ieee}. 
+
+
+
 \section{Energy management and storage}
+
+As mentioned above, electrical power from \ac{EH} generators can be very sporadic, and so can be the required load. Therefore, managing and storing the produced energy is very important. 
 
 \section{Conclusion}
 
-\tableofcontents
+\bibliography{harvesting}
+\bibliographystyle{unsrt} 
 
 \end{document}

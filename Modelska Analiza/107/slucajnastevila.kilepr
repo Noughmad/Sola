@@ -26,12 +26,12 @@ ReadWrite=true
 
 [item:miha_cancula_107.tex]
 archive=true
-column=4
+column=438
 encoding=UTF-8
 highlight=LaTeX
-line=28
+line=87
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:slucajnastevila.kilepr]
@@ -45,5 +45,5 @@ open=false
 order=-1
 
 [view-settings,view=0,item:miha_cancula_107.tex]
-CursorColumn=4
-CursorLine=28
+CursorColumn=438
+CursorLine=87
