@@ -1,0 +1,208 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{hyperref}
+
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\phi}{\varphi}
+
+\newcommand{\dd}{\,\mathrm{d}}
+
+\title{Integracije z metodo Monte Carlo}
+\author{Miha \v Can\v cula}
+
+\begin{document}
+
+\maketitle
+
+\section{Masa in te"zi"s"ce "cudnega telesa}
+
+\subsection{Opis telesa}
+
+Telo je krogla, ki smo ji izrezali presek z valjem, tako da je radij valja polovica radija krogle, valj pa se ravno dotika sredi"s"ca krogle. To"cka $\vec r = (x,y,z)^T$ je v tem telesu, "ce:
+
+\begin{enumerate}
+ \item Je znotraj krogle: $r^2 < 1$
+ \item Je zunaj valja: $(x-\frac{1}{2})^2 + y^2 > \frac{1}{4}$
+\end{enumerate}
+
+Pri tem smo privzeli, da je os valja vzporedna osi $z$, nahaja pa se na koordinatah $x=1/2$ in $y=0$. Pri tako izbranem koordinatnem sistem je zaradi simetrije te"zi"s"ce vedno na osi $x$: $\vec r^* = (x^*,0,0)^T$. 
+
+Ker bomo ra"cunali v krogelnih koordinatah, sem drugi pogoj prepisal kota
+
+\begin{align}
+ \left(x-\frac{1}{2}\right)^2 + y^2 &= x^2 + y^2 - x + \frac{1}{4} > \frac{1}{4} \\
+  x^2 + y^2 &> x \\
+  r^2\sin^2\theta &> r\sin\theta\cos\phi \\
+  r\sin\theta &> \cos\phi
+\end{align}
+
+
+\subsection{Enakomerna gostota}
+Izra"cun mase telesa z enakomerno gostoto je enostaven: naklju"cno izberemo nekaj to"ck znotraj krogle in pre"stejemo, kolik"sen dele"z to"ck je znotraj na"sega telesa. Ta dele"z je enako razmerju prostornin telesa in krogle, ki je enako razmerju mas. 
+
+Za izra"cun te"zi"s"ca pa sem izbral drugo varianto metode Monte Carlo. Te"zi"s"ce je definirano kot $\vec r^* = \langle\vec r\rangle$, torej ga lahko izra"cunamo kot povpre"cje, tako se"stejemo polo"zaje vseh naklju"cno izbranih to"ck, ki le"zijo znotraj telesa, nato pa to delimo s "stevilom takih to"ck. Prednost tak"sne izbire metod je v tem, da lahko za oba izra"cuna uporabimo iste naklju"cno izbrane to"cke. 
+
+Naklju"cno to"cko znotraj krogle lahko generiramo s tremi enakomernimi naklju"cnimi "stevil:
+
+\begin{align}
+ \dd m = \rho_0 \dd V = \rho_0 r^2 \dd r \dd \phi \sin\theta \dd \theta = \frac{\rho_0}{3} \dd(r^3) \dd\phi \dd(\cos\theta)
+\end{align}
+
+Parametri $r^3$, $\phi$ in $\cos\theta$ morajo biti naklju"cna "stevila, porazdeljena enakomerno po primernem intervalu. "Ce so $\xi_i$ "stevila, naklju"cno porazdeljena med 0 in 1, lahko izrazimo $r$, $\phi$ in $\theta$ kot
+
+\begin{align}
+ r &= \sqrt[3]{\xi_1} \\
+ \phi &= 2\pi\xi_2 \\
+ \theta &= \arccos (2\xi_3 - 1)
+\end{align}
+
+Pri tem moramo paziti, da za $\xi_1$ in $\xi_3$ dovolimo obe mejni vrednosti, medtem ko mora biti za $\xi_2$ interval na eni strani odprt. 
+
+\subsection{Spremenljiva gostota}
+Tu je ra"cun podoben, le da moramo naklju"cne to"cke izbirati druga"ce. Enakomerna porazdelitev po masi ne pomeni ve"c tudi enakomerne porazdelitve po prostoru, ampak jo moramo prej primerno transformarati. 
+
+\begin{align}
+ \dd m = \rho_0 (r/R)^3 \dd V = \frac{\rho_0}{R^3} r^5 \dd r \dd \phi \sin\theta \dd \theta = \frac{\rho_0}{6R^3} \dd(r^6) \dd\phi \dd(\cos\theta)
+\end{align}
+
+Kotna porazdelitev je enako kot prej, le namesto $r^3$ mora biti sedaj enakomerno porazdeljen $r^6$. 
+
+\begin{align}
+ r &= \sqrt[6]{\xi_1} \\
+ \phi &= 2\pi\xi_2 \\
+ \theta &= \arccos (2\xi_3 - 1)
+\end{align}
+
+
+\section{Sevanje v krogli}
+
+Zaradi krogelne simetrije lahko vsak foton, ki nastane v krogli, opi"semo z dvema parametroma: razdaljo $r\leq1$ od sredi"s"ca krogle do mesta nastanka in kot $\theta$ med sredi"s"cem krogle, to"cko nastanka in smerjo fotona. S tema dvema podatkoma lahko izra"cunamo, kolik"sno pot mora preleteti foton, da pride iz krogle. Brez izgube splo"snosti smo privzeli, da je radij krogle enak 1, v nasprotnem primeru moramo $r$ in $l$ le pomno"ziti s tem radijem. 
+
+Sredi"s"ce krogle, to"cka nastanka fotona in to"cka, kjer foton izleti iz krogle tvorijo trikotnik, v katerem poznamo dve razdalji in kot, ki le"zi nasproti dalj"si stranici. Tretjo stranico lahko dolo"cimo po kosinusnem izreku. 
+
+\begin{align}
+ 1^2 &= r^2 + l^2 + 2rl\cos\theta \label{eq:kosinusni}
+\end{align}
+
+Plus pred zadnjim "clenom je zato, ker v trikotniku nastopa kot $\pi-\theta$. Ker je $r\leq1$, ima ena"cba eno samo pozitivno re"sitev
+
+\begin{align}
+ l &= -r\cos\theta + \sqrt{1 + r^2\cos^2\theta - r^2} = \sqrt{1 - r^2 +r^2u^2} - ru
+\end{align}
+
+Povsod nastopa le kosinus kota $\theta$, zato uvedemo substitucijo $u=\cos\theta$. 
+
+\subsection{Porazdelitev razdalje $l$}
+Najprej sem izra"cunal, kak"sna je verjetnostna porazdelitev po razdalji $l$, ki jo mora foton prepotovati, da uide. Da to dolo"cimo moramo integritati po vseh takih $r$ in $\theta$, ki nam data razdaljo $l$. 
+
+\subsubsection{Analiti"cni pristop}
+
+\begin{align}
+ w(l) &= \int_{l(r,u)=l} \dd V \dd \Omega = \int \delta(l(r,u)-l) \dd V \dd \Omega \\
+  &= 8\pi^2\iint \delta(l(r,u)-l) r^2 \dd r \dd u
+\end{align}
+
+V ta namen moramo iz ena"cbe (\ref{eq:kosinusni}) izraziti zvezo med $r$ in $\theta$ pri konstantnem $l$. V nasprotju s prej"snjim izra"cunom pa izraz za $r$ ni enoli"cen, saj je dol"zina $l$ lahko ve"cja od radija krogle in dobimo dve pozitivni re"sitvi za $r$. Zato sem raje izrazil parameter $u$. 
+
+\begin{align}
+ u(r,l) &= \frac{1 - r^2 - l^2}{2rl} \\
+ \frac{\partial u(r,l)}{\partial l} &=  \frac{ -4rl^2 + 2r(r^2+l^2-1) }{4r^2l^2} = \frac{r^2 - l^2 - 1}{2rl^2}\\
+\delta(l(r,u)-l) &= \delta(u(r,l) - u) \cdot \left|\frac{\partial u}{\partial l}\right| = \delta(u(r,l) - u)\cdot \left|\frac{r^2 - l^2 - 1}{2rl^2}\right| \\
+w(l) &= 8\pi^2 \iint \delta(u(r,l) - u)\cdot\frac{1 + l^2 - r^2}{2rl^2} \cdot r^2 \dd r \dd u
+\end{align}
+
+
+Izraz pod absolutno vrednostjo ni nikoli pozitiven, saj sta $r$ in $l$ nenegativni dol"zini, $r^2$ pa vedno manj"si ali enak 1. Zato lahko absolutno vrednosti izpustimo in namesto tega pi"semo nasprotno vrednost izraza. 
+
+
+Zgorji izrazi veljajo le, ko je $u\in[-1,1]$, saj je le takrat $\theta$ definirana. Zato integriramo le po tistih $r$, da bo $r+l\geq 1$, torej $r\in[r_0,1]$, kjer je $r_0 = \max(0,1-l)$. Obravnavamo torej dva lo"cena primera, ko je $l\leq 1$ in $l>1$. 
+
+\begin{align}
+ r^2 - l^2 - 1 &> 0 \\
+ r^2 - 1 
+\end{align}
+
+
+\begin{align}
+w(l>1) &= \frac{8\pi^2}{2l^2}\int_0^1 (1 + l^2 - r^2 ) r \dd r = \frac{8\pi^2}{2l^2} \left(\frac{1}{2} + \frac{l^2}{2} - \frac{1}{4}\right) \\
+ &= 2\pi^2 + \frac{\pi^2}{l^2} \\
+w(l\leq 1) &= \frac{8\pi^2}{2l^2}\int_{1-l}^1 (1 + l^2 - r^2 ) r \dd r = \frac{8\pi^2}{2l^2} \left.\left(\frac{r^2}{2} + \frac{l^2r^2}{2} - \frac{r^4}{4}\right)\right|_{1-l}^{1} \\
+&= \frac{8\pi^2}{2l^2} \left( - \frac{-2l+l^2}{2} - \frac{-2l^3+l^4}{2} + \frac{-4l+6l^2 - 4l^3 + l^4}{4}\right) \\
+&= \pi^2 \left( -l^2 + 4 \right)
+\end{align}
+
+Oba izraza za $w(l)$ moramo "se normirati, tako da delimo s skupno prostornino krogle in prostorskim kotom, v katerega lahko odlite foton. Dejanska verjetnost za dol"zino $l$ je 
+
+\begin{align}
+ p(l) &= \frac{\partial P}{\partial l} = \frac{\int_{l(r,u)=l} \dd V \dd \Omega}{\int \dd V \dd \Omega} = \frac{w(l)}{ V \cdot 4\pi } = \frac{3}{16\pi^2}w(l)\\
+ p(l) &= \left\{ \begin{matrix}
+                  \frac{3}{16}(4-8l-l^2), & l \leq 1 \\
+		  \frac{3}{16}(2 + l^{-2}), & l > 1
+                 \end{matrix}
+ \right.
+\end{align}
+
+\subsubsection{Numeri"cni pristop}
+Oceno za porazdelitev verjetnosti dol"zine $l$ lahko dolo"cimo tudi numeri"cno, tako da generiramo fotone z naklju"cnim polo"zajem in smerjo in izra"cunamo potrebno pot za pobeg iz krogle. Za izra"cun verjetnosti za pobeg si bomo nato "zeleli naklju"cna "stevila z enako porazdelitvijo. 
+
+Knji"znica \texttt{GSL} ponuja generacijo naklju"cnih "stevil s poljubno porazdelitvijo, "ce je ta porazdelitev podana v obliki histograma. Na ta na"cin lahko v naslednjem koraku zajemamo naklju"cne $l$ s pravo porazdelitvijo. 
+
+\subsection{Verjetnost pobega}
+Verjetnost, da foton prepotuje pot $l$ do roba krogle je sorazmerna z $e^{-\mu l}$. "Ce upo"stevamo "se porazdelitev dol"zine poti, dobimo izraz
+
+\begin{align}
+ \eta &= \int_0^2 p(l) e^{-\mu l} \dd l
+\end{align}
+ 
+Integral sem izra"cunal po ``pravem'' postopku Monte Carlo: Naklju"cno sem generiral pravilno porazdeljeno vrednost $l$ in enakomerno "stevilo $y$ med 0 in 1, na koncu pa pre"stel vse take pare $l,y$, kjer je $e^{-\mu l} > y$. Ra"cunal sem vzporedno za ve"c razli"cnih koeficientov $\mu$, tako da sem z istimi naklju"cnimi "stevili dobil celotno odvisnost $\eta(\mu)$. Postopek je mo"zno pospe"siti, "ce so $\mu$ urejeni po vrsti in ob vsakem koraku izra"cunamo najve"c kolik"sen je lahko $\mu$, da bo foton "se u"sel iz krogle. 
+
+\section{Nevtronski reflektor}
+
+\subsection{Porazdelitev po "stevilu odbojev}
+
+Verjetnost, da bo posamezen nevtron u"sel iz pregrade po to"cno $N$ odbojih lahko izra"cunamo z integralom po $2N$ spremenljivkah: ob vsakem odboju naklju"cno izberemo smer odboja in dol"zino, ki jo delec preleti do naslednjega odboja. Vse do zadnjega odboja mora biti ta dol"zina premajhna, da bi delec u"sel, po zadnjem odboju pa mora biti ve"cja od razdalje do. Dodatna omejitev je "se ta, da mora biti zadnje sipanje vedno naprej. 
+
+V primeru, izotropnega sipanja moramo ob vsakem odboju dodati "se en parameter, saj pot v smeri, pravokotni na steno, ni ve"c enaka poti, ki nastopa v izrazu za prosto pot $e^{-\mu s}$. 
+
+Za enostavnej"si zapis privzemimo, da je debelina plo"sce enaka 1, povpre"cna prosta pot nevtronov pa $1/\mu$. 
+
+\subsubsection{Sipanje naprej in nazaj}
+
+Najenostavnej"si izraz je za verjetnost, da gre delec skozi steno brez interakcije
+\begin{align}
+ P(0) &= e^{-\mu}
+\end{align}
+
+"Ce zahtevamo natan"cno en odboj, moramo integrirati po vseh mo"znih polo"zajih tega odboja. Verjetnost za odboj na mestu $x$ je eksponentna, torej je enaka z $\frac{1}{\mu}e^{-\mu x}$
+
+\begin{align}
+ P(1) &= \frac{1}{\mu} \int_0^1 e^{-\mu x} \cdot \frac{1}{2} \cdot e^{-\mu (1-x)} \dd x = \frac{1}{2\mu} \int_0^1 e^{-\mu} \dd x = \frac{e^{-\mu}}{2\mu}
+\end{align}
+
+Polovica v integralu predstavlja verjetnost, da se bo delec ob odboju sipal naprej. V verjetnosti za dva odboja moramo integrirati po polo"zajih obeh odbojev. Lo"cimo primera, ko se delec ob prvem odboju siplje naprej ali nazaj. 
+
+\begin{align}
+ P(2) = & {} \frac{1}{2\mu^2}\int_0^1 \dd x_1 e^{-\mu x_1} \left( \frac{1}{2}\int_0^{x_1} \dd x_2 e^{-\mu (1-x_2)} e^{-\mu(x_1-x_2)} \right.\\
+&+ \left. \frac{1}{2}\int_{x_1}^{1} \dd x_2 e^{-\mu (1-x_2)} e^{-\mu(x_2-x_1)} \right) \\
+= & {} \frac{1}{(2\mu)^2} \int_0^1\dd x_1 e^{-\mu x_1} \left( \int_0^{x_1} e^{-\mu(1 + x_1 - 2x_2)} + \int_{x_1}^1 e^{-\mu(1 - x_1)} \right) \\
+= & {} \frac{1}{(2\mu)^2} \
+\end{align}
+
+\subsection{Simulacija}
+
+Podobno kot pri drugi nalogi se da tudi tukaj porazdelitev po "stevilu sipanj dolo"citi numeri"cno. Za dovolj veliko "stevilo delcev spremljamo njihovo pot in si za vsak dele"c zapi"semo, kolikokrat se je sipal. 
+
+Odvisnost od debeline pregrade v tem primeru dolo"cimo tako, da si namesto ene pregrade z dolo"ceno debelino zamislimo serijo enakih pregrad, nato pa za vsako pregrado v seriji shranimo "stevilo sipanj, po katerem jo je delec prvi"c zapustil. Koeficient $\mu$ sem zaradi enostavnosti postavil na 1. Simulacijo za posemezen delec sem ustavil, ko je delec zapustil zadnjo pregrado ali se vrnil nazaj do prve pregrade. 
+
+
+
+\end{document}
