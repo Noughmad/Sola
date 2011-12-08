@@ -36,7 +36,7 @@ Telo je krogla, ki smo ji izrezali presek z valjem, tako da je radij valja polov
 
 Pri tem smo privzeli, da je os valja vzporedna osi $z$, nahaja pa se na koordinatah $x=1/2$ in $y=0$. Pri tako izbranem koordinatnem sistem je zaradi simetrije te"zi"s"ce vedno na osi $x$: $\vec r^* = (x^*,0,0)^T$. 
 
-Ker bomo ra"cunali v krogelnih koordinatah, sem drugi pogoj prepisal kota
+Ker bomo ra"cunali v krogelnih koordinatah, sem drugi pogoj prepisal kot
 
 \begin{align}
  \left(x-\frac{1}{2}\right)^2 + y^2 &= x^2 + y^2 - x + \frac{1}{4} > \frac{1}{4} \\
@@ -47,9 +47,9 @@ Ker bomo ra"cunali v krogelnih koordinatah, sem drugi pogoj prepisal kota
 
 
 \subsection{Enakomerna gostota}
-Izra"cun mase telesa z enakomerno gostoto je enostaven: naklju"cno izberemo nekaj to"ck znotraj krogle in pre"stejemo, kolik"sen dele"z to"ck je znotraj na"sega telesa. Ta dele"z je enako razmerju prostornin telesa in krogle, ki je enako razmerju mas. 
+Izra"cun mase telesa z enakomerno gostoto je enostaven: naklju"cno izberemo nekaj to"ck znotraj krogle in pre"stejemo, kolik"sen dele"z to"ck je znotraj na"sega telesa. Ta dele"z je enako razmerju prostornin telesa in krogle, ki je enako razmerju mas. Napako tega dele"za lahko izra"cunamo po formuli za binarno porazdelitev. 
 
-Za izra"cun te"zi"s"ca pa sem izbral drugo varianto metode Monte Carlo. Te"zi"s"ce je definirano kot $\vec r^* = \langle\vec r\rangle$, torej ga lahko izra"cunamo kot povpre"cje, tako se"stejemo polo"zaje vseh naklju"cno izbranih to"ck, ki le"zijo znotraj telesa, nato pa to delimo s "stevilom takih to"ck. Prednost tak"sne izbire metod je v tem, da lahko za oba izra"cuna uporabimo iste naklju"cno izbrane to"cke. 
+Za izra"cun te"zi"s"ca pa sem izbral drugo varianto metode Monte Carlo. Te"zi"s"ce je definirano kot $\vec r^* = \langle\vec r\rangle$, torej ga lahko izra"cunamo kot povpre"cje, tako se"stejemo polo"zaje vseh naklju"cno izbranih to"ck, ki le"zijo znotraj telesa, nato pa to delimo s "stevilom takih to"ck. Prednost tak"sne izbire metod je v tem, da lahko za oba izra"cuna uporabimo iste naklju"cno izbrane to"cke. Napako te"zi"s"ca sem ocenil kot standardno deviacijo meritev. 
 
 Naklju"cno to"cko znotraj krogle lahko generiramo s tremi enakomernimi naklju"cnimi "stevil:
 
@@ -82,6 +82,26 @@ Kotna porazdelitev je enako kot prej, le namesto $r^3$ mora biti sedaj enakomern
  \theta &= \arccos (2\xi_3 - 1)
 \end{align}
 
+Ker to"cke izbiramo iz krogle, moramo upo"stevati "se, da ima krogla s tak"sno gostoto ravno polovico mase krogle z enakomerno gostoto. 
+
+\subsection{Rezultati}
+
+V ra"cunih sem za poenostavite vzel vrednosti $\rho_0 = R = 1$, uporabil sem $10^8$ to"ck. Rezultati so v tabeli
+
+\begin{table}[h!]
+ \centering
+\begin{tabular}{|c|c|c|c|c|}
+ \hline
+Gostota & Masa $m$ & $\sigma_m$ & Te"zi"s"ce $x^*$ & $\sigma_{x^*}$ \\
+\hline
+Enakomerna & 2,9835 & 0,0002 & 0,24086 & 0,00005 \\
+Spremenljiva & 1,5689 & 0,0001 & 0,24081 & 0,00005 \\
+\hline
+\end{tabular}
+\caption{Masi in te"zi"s"ci teles z razli"cnima gostotama}
+\end{table}
+
+S tabele lahko vidimo, da imata telesi z danima odvisnostma gostote enaki te"zi"s"ci. 
 
 \section{Sevanje v krogli}
 
@@ -123,86 +143,111 @@ w(l) &= 8\pi^2 \iint \delta(u(r,l) - u)\cdot\frac{1 + l^2 - r^2}{2rl^2} \cdot r^
 
 Izraz pod absolutno vrednostjo ni nikoli pozitiven, saj sta $r$ in $l$ nenegativni dol"zini, $r^2$ pa vedno manj"si ali enak 1. Zato lahko absolutno vrednosti izpustimo in namesto tega pi"semo nasprotno vrednost izraza. 
 
-
-Zgorji izrazi veljajo le, ko je $u\in[-1,1]$, saj je le takrat $\theta$ definirana. Zato integriramo le po tistih $r$, da bo $r+l\geq 1$, torej $r\in[r_0,1]$, kjer je $r_0 = \max(0,1-l)$. Obravnavamo torej dva lo"cena primera, ko je $l\leq 1$ in $l>1$. 
-
+Zgornji izrazi veljajo le, ko je $u\in[-1,1]$, saj je le takrat kot $\theta$ definiran. Ob pogledu na geometrijo hitro vidimo, da so ob izbranem $r$, mo"zne le dol"zine med $1-r$ in $1+r$. Ker integriramo po $r$, ta pogoj obrnemo in zapi"semo kot $|l-1|\leq r \leq 1$. Absolutna vrednosti ni najlep"sa stvar v mejo integrala, ampak v tem primeru imamo sre"co, saj je integrand liha funkcija $r$, zato je integral med $-|1-l|$ in $|1-l|$ enak 0.
+ 
 \begin{align}
- r^2 - l^2 - 1 &> 0 \\
- r^2 - 1 
-\end{align}
-
-
-\begin{align}
-w(l>1) &= \frac{8\pi^2}{2l^2}\int_0^1 (1 + l^2 - r^2 ) r \dd r = \frac{8\pi^2}{2l^2} \left(\frac{1}{2} + \frac{l^2}{2} - \frac{1}{4}\right) \\
- &= 2\pi^2 + \frac{\pi^2}{l^2} \\
-w(l\leq 1) &= \frac{8\pi^2}{2l^2}\int_{1-l}^1 (1 + l^2 - r^2 ) r \dd r = \frac{8\pi^2}{2l^2} \left.\left(\frac{r^2}{2} + \frac{l^2r^2}{2} - \frac{r^4}{4}\right)\right|_{1-l}^{1} \\
+ w(l) &= \frac{8\pi^2}{2l^2}\int_{1-l}^1 (1 + l^2 - r^2 ) r \dd r = \frac{8\pi^2}{2l^2} \left.\left(\frac{r^2}{2} + \frac{l^2r^2}{2} - \frac{r^4}{4}\right)\right|_{1-l}^{1} \\
 &= \frac{8\pi^2}{2l^2} \left( - \frac{-2l+l^2}{2} - \frac{-2l^3+l^4}{2} + \frac{-4l+6l^2 - 4l^3 + l^4}{4}\right) \\
-&= \pi^2 \left( -l^2 + 4 \right)
+&= \pi^2(4 - l^2)
 \end{align}
 
-Oba izraza za $w(l)$ moramo "se normirati, tako da delimo s skupno prostornino krogle in prostorskim kotom, v katerega lahko odlite foton. Dejanska verjetnost za dol"zino $l$ je 
+Dobljeni izraz za $w(l)$ moramo "se normirati, tako da ga delimo s skupno prostornino krogle in prostorskim kotom, v katerega lahko odleti foton. Dejanska verjetnost za dol"zino $l$ je 
 
 \begin{align}
  p(l) &= \frac{\partial P}{\partial l} = \frac{\int_{l(r,u)=l} \dd V \dd \Omega}{\int \dd V \dd \Omega} = \frac{w(l)}{ V \cdot 4\pi } = \frac{3}{16\pi^2}w(l)\\
- p(l) &= \left\{ \begin{matrix}
-                  \frac{3}{16}(4-8l-l^2), & l \leq 1 \\
-		  \frac{3}{16}(2 + l^{-2}), & l > 1
-                 \end{matrix}
- \right.
+p(l) &= \frac{3}{16} (4-l^2)
 \end{align}
 
+Za izra"cun verjetnosti potrebujemo inverz kumulativne porazdelitve:
+
+\begin{align}
+ \dd P &= \frac{3}{16} (4-l^2) \dd l = \dd \left( \frac{1}{16}(12l - l^3) \right) \\
+  P(l) &= \frac{1}{16}(12l - l^3)
+\end{align}
+
+Da dobimo primerno porazdeljen $l$ iz enakomerno porazdeljenega naklju"cnega "stevila $\xi$, moramo re"siti polinom tretje stopnje. 
+
+\clearpage
+
 \subsubsection{Numeri"cni pristop}
-Oceno za porazdelitev verjetnosti dol"zine $l$ lahko dolo"cimo tudi numeri"cno, tako da generiramo fotone z naklju"cnim polo"zajem in smerjo in izra"cunamo potrebno pot za pobeg iz krogle. Za izra"cun verjetnosti za pobeg si bomo nato "zeleli naklju"cna "stevila z enako porazdelitvijo. 
+Oceno za porazdelitev verjetnosti dol"zine $l$ lahko dolo"cimo tudi numeri"cno, tako da generiramo fotone z naklju"cnim polo"zajem in smerjo in izra"cunamo potrebno pot za pobeg iz krogle. Za izra"cun verjetnosti za pobeg si bomo nato "zeleli naklju"cna "stevila z enako porazdelitvijo. Rezultat tak"snega izra"cuna z $10^8$ to"ckami in 100 predal"cki je na sliki \ref{fig:sevanje-num}
 
 Knji"znica \texttt{GSL} ponuja generacijo naklju"cnih "stevil s poljubno porazdelitvijo, "ce je ta porazdelitev podana v obliki histograma. Na ta na"cin lahko v naslednjem koraku zajemamo naklju"cne $l$ s pravo porazdelitvijo. 
 
+\begin{figure}[h!]
+\input{sevanje-porazdelitev}
+\caption{Primerjava verjetnostne gostote izra"cunane analiti"cno in z numeri"cno integracijo po metodi Monte Carlo} 
+\label{fig:sevanje-num}
+\end{figure}
+
+
 \subsection{Verjetnost pobega}
-Verjetnost, da foton prepotuje pot $l$ do roba krogle je sorazmerna z $e^{-\mu l}$. "Ce upo"stevamo "se porazdelitev dol"zine poti, dobimo izraz
+Verjetnost, da foton prepotuje pot $l$ do roba krogle je sorazmerna z $e^{-\mu l}$. "Ce upo"stevamo "se porazdelitev dol"zine poti, dobimo izraz za prepustnost oz. izkoristek krogle
 
 \begin{align}
  \eta &= \int_0^2 p(l) e^{-\mu l} \dd l
 \end{align}
  
-Integral sem izra"cunal po ``pravem'' postopku Monte Carlo: Naklju"cno sem generiral pravilno porazdeljeno vrednost $l$ in enakomerno "stevilo $y$ med 0 in 1, na koncu pa pre"stel vse take pare $l,y$, kjer je $e^{-\mu l} > y$. Ra"cunal sem vzporedno za ve"c razli"cnih koeficientov $\mu$, tako da sem z istimi naklju"cnimi "stevili dobil celotno odvisnost $\eta(\mu)$. Postopek je mo"zno pospe"siti, "ce so $\mu$ urejeni po vrsti in ob vsakem koraku izra"cunamo najve"c kolik"sen je lahko $\mu$, da bo foton "se u"sel iz krogle. 
+Integral sem izra"cunal po ``pravem'' postopku Monte Carlo: Naklju"cno sem generiral pravilno porazdeljeno vrednost $l$ in enakomerno "stevilo $y$ med 0 in 1, na koncu pa pre"stel vse take pare $l,y$, kjer je $e^{-\mu l} > y$. Ra"cunal sem vzporedno za ve"c razli"cnih koeficientov $\mu$, tako da sem z istimi naklju"cnimi "stevili dobil celotno odvisnost $\eta(\mu)$. Postopek je mo"zno pospe"siti, "ce so $\mu$ urejeni po vrsti in ob vsakem koraku izra"cunamo najve"c kolik"sen je lahko $\mu$, da bo foton "se u"sel iz krogle. Ker se odvisnosti na sliki \ref{fig:sevanje-num} tako dobro ujemata, sem za generacijo naklju"cnil dol"zin uporabil kar numeri"cno dobljen rezultat. 
+
+\begin{figure}[h!]
+\input{sevanje-prepustnost}
+\caption{Prepustnost krogle za fotone v odvisnosti od absorpcijskega koeficienta $\mu$ (inverzne povpre"cne proste poti)} 
+\label{fig:sevanje-prepustnost}
+\end{figure}
+
+\clearpage
+
 
 \section{Nevtronski reflektor}
 
-\subsection{Porazdelitev po "stevilu odbojev}
+Porazdelitev po "stevilu sipanj je v tem primeru najla"zje dolo"citi numeri"cno. Za dovolj veliko "stevilo delcev spremljamo njihovo pot in si za vsak dele"c zapi"semo, kolikokrat se je sipal. 
 
-Verjetnost, da bo posamezen nevtron u"sel iz pregrade po to"cno $N$ odbojih lahko izra"cunamo z integralom po $2N$ spremenljivkah: ob vsakem odboju naklju"cno izberemo smer odboja in dol"zino, ki jo delec preleti do naslednjega odboja. Vse do zadnjega odboja mora biti ta dol"zina premajhna, da bi delec u"sel, po zadnjem odboju pa mora biti ve"cja od razdalje do. Dodatna omejitev je "se ta, da mora biti zadnje sipanje vedno naprej. 
+Odvisnost od debeline pregrade v tem primeru dolo"cimo tako, da si namesto ene pregrade z dolo"ceno debelino zamislimo serijo enakih pregrad, nato pa za vsako pregrado v seriji shranimo "stevilo sipanj, po katerem jo je delec prvi"c zapustil. Koeficient $\mu$ sem zaradi enostavnosti postavil na 1, debelina pregrade pa je bila med 0.1 in 10. Simulacijo za posemezen delec sem ustavil, ko je delec zapustil zadnjo pregrado ali se vrnil nazaj na za"cetni polo"zaj. 
 
-V primeru, izotropnega sipanja moramo ob vsakem odboju dodati "se en parameter, saj pot v smeri, pravokotni na steno, ni ve"c enaka poti, ki nastopa v izrazu za prosto pot $e^{-\mu s}$. 
+\subsection{"Stevilo sipanj}
 
-Za enostavnej"si zapis privzemimo, da je debelina plo"sce enaka 1, povpre"cna prosta pot nevtronov pa $1/\mu$. 
+Pri prvem ra"cunu me ni zanimalo, v katere smer je na koncu odletel delec, ampak le kolikokrat se je sipal znotraj pregrade. Porazdelitev pri nekaj razli"cnih debelinah pregrade sem narisal na sliki \ref{fig:ref-sipanja}. 
 
-\subsubsection{Sipanje naprej in nazaj}
+\begin{figure}[h!]
+\input{ref-st-sipanj}
+\caption{Porazdelitev po "stevilu sipanj za oba modela} 
+\label{fig:ref-sipanja}
+\end{figure}
 
-Najenostavnej"si izraz je za verjetnost, da gre delec skozi steno brez interakcije
-\begin{align}
- P(0) &= e^{-\mu}
-\end{align}
+Z grafa je o"citno, da sta rezultata precej razli"cna. Verjetnost za prehod brez sipanja, $P(0)$, je po pri"cakovanju enaka, saj v tem primeru tem primeru med modeloma ni nobene razlike. Pri vseh ostalih $N\neq 0$ pa je razlika med obema modeloma velika. V modelu z izotropnim so bolj verjetna vi"sja "stevila sipanj, saj je pri isti hitrosti delcev projekcija te hitrosti na smer pobega manj"sa. 
 
-"Ce zahtevamo natan"cno en odboj, moramo integrirati po vseh mo"znih polo"zajih tega odboja. Verjetnost za odboj na mestu $x$ je eksponentna, torej je enaka z $\frac{1}{\mu}e^{-\mu x}$
+Ta razlika je bolje vidna, "ce nari"semo povpre"cno "stevilo sipanj za oba modela, na primer na sliki \ref{fig:ref-povp-sipanja}
 
-\begin{align}
- P(1) &= \frac{1}{\mu} \int_0^1 e^{-\mu x} \cdot \frac{1}{2} \cdot e^{-\mu (1-x)} \dd x = \frac{1}{2\mu} \int_0^1 e^{-\mu} \dd x = \frac{e^{-\mu}}{2\mu}
-\end{align}
+\begin{figure}[h!]
+\input{ref-povp-sipanj}
+\caption{Povpre"cno "stevilo sipanj $\langle N \rangle$} 
+\label{fig:ref-povp-sipanja}
+\end{figure}
 
-Polovica v integralu predstavlja verjetnost, da se bo delec ob odboju sipal naprej. V verjetnosti za dva odboja moramo integrirati po polo"zajih obeh odbojev. Lo"cimo primera, ko se delec ob prvem odboju siplje naprej ali nazaj. 
+Graf potrdi na"sa pri"cakovanja: povpre"cno "stevilo sipanj je pri izotropnem sipanju vedno ve"cje kot pri sipanju le naprej in nazaj. "Ce nas zanima "stevilo sipanj, potem model s sipanjem le v eni smeri ni dober pribli"zek. 
 
-\begin{align}
- P(2) = & {} \frac{1}{2\mu^2}\int_0^1 \dd x_1 e^{-\mu x_1} \left( \frac{1}{2}\int_0^{x_1} \dd x_2 e^{-\mu (1-x_2)} e^{-\mu(x_1-x_2)} \right.\\
-&+ \left. \frac{1}{2}\int_{x_1}^{1} \dd x_2 e^{-\mu (1-x_2)} e^{-\mu(x_2-x_1)} \right) \\
-= & {} \frac{1}{(2\mu)^2} \int_0^1\dd x_1 e^{-\mu x_1} \left( \int_0^{x_1} e^{-\mu(1 + x_1 - 2x_2)} + \int_{x_1}^1 e^{-\mu(1 - x_1)} \right) \\
-= & {} \frac{1}{(2\mu)^2} \
-\end{align}
+\subsection{Prepustnost pregrade}
 
-\subsection{Simulacija}
+Slika pa je druga"cna, ko izra"cunamo prepustnost tak"sne pregrade, brez ozira na "stevilo sipanj. Kot lahko vidimo na sliki \ref{fig:ref-prepustnost}, je prepustnost z upo"stevanjem enostavnej"sega modela ne glede na razdaljo zelo blizu rezultatu izotropnega modela. V primeru, da ne potrebujemo natan"cnega rezultata, ampak nas bolj omejuje generacija naklju"cnih "stevil, je tudi model s sipanjem naprej in nazaj primeren za opis prepustnosti pregrade. 
 
-Podobno kot pri drugi nalogi se da tudi tukaj porazdelitev po "stevilu sipanj dolo"citi numeri"cno. Za dovolj veliko "stevilo delcev spremljamo njihovo pot in si za vsak dele"c zapi"semo, kolikokrat se je sipal. 
-
-Odvisnost od debeline pregrade v tem primeru dolo"cimo tako, da si namesto ene pregrade z dolo"ceno debelino zamislimo serijo enakih pregrad, nato pa za vsako pregrado v seriji shranimo "stevilo sipanj, po katerem jo je delec prvi"c zapustil. Koeficient $\mu$ sem zaradi enostavnosti postavil na 1. Simulacijo za posemezen delec sem ustavil, ko je delec zapustil zadnjo pregrado ali se vrnil nazaj do prve pregrade. 
+\begin{figure}[h!]
+\input{ref-prepustnost}
+\caption{Prepustnost pregrade za oba modela} 
+\label{fig:ref-prepustnost}
+\end{figure}
 
 
+\subsection{Kotna porazdelitev fotonov}
+
+Vsako sipanje je izotropno, torej je tudi pri zadnjem sipanju verjetnost, da bo delec odletel v dolo"ceno smer, neodvisna od te smeri. "Ce spet vpeljemo substitucijo $u=\cos\theta$, je porazdelitev po $u$ enakomerna. Verjetnost, da bo dolo"ceno sipanje zadnje, pa je odvisna tudi od razdalje, ki jo "se mora prepotovati. Ve"cja kot je komponenta hitrost v smeri proti robu pregrade, la"zje jo bo nevtron zapustil, zato bo ve"cja verjetnost, da bo to sipanje zadnje. Po tak"snem razmisleku lahko zaklju"cimo, da bodo koti v bli"zini $\theta=0$ bolj verjetni. Za kotno porazdelitev odbitih nevtronov velja enaka odvisnost, le da bodo sedaj najbolj verjetni koti v bli"zini $\theta=\pi$. 
+
+\begin{figure}[h!]
+ \input{kot}
+\caption{Kotna porazdelitev odbitih in prepu"s"cenih nevtronov}
+\label{fig:ref-kot}
+\end{figure}
+
+No obeh straneh pregrade vidimo pribli"zno linearno odvisnost verjetnosti $\frac{\dd P}{\dd u} \propto u$, kljub temu pa je med obema jasno vidna asimetrija, ki je ne moremo pripisati statisti"cni napaki. Pri debelej"si pregradi se porazdelitev proti majhnim kotom, asimetrija med odbitimi in prepu"s"cenimi nevtroni pa ostane. 
 
 \end{document}

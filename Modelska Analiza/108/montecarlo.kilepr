@@ -26,12 +26,12 @@ ReadWrite=true
 
 [item:miha_cancula_108.tex]
 archive=true
-column=416
+column=328
 encoding=UTF-8
 highlight=LaTeX
-line=203
+line=250
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:montecarlo.kilepr]
@@ -45,5 +45,5 @@ open=false
 order=-1
 
 [view-settings,view=0,item:miha_cancula_108.tex]
-CursorColumn=416
-CursorLine=203
+CursorColumn=328
+CursorLine=250

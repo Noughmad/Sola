@@ -1,0 +1,74 @@
+%% Creator: Inkscape inkscape 0.48.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'Supercapacitors_chart.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{620bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.61935484)%
+    \put(0,0){\includegraphics[width=\unitlength]{./Slike/Supercapacitors_chart.pdf}}%
+    \put(0.05902984,0.35988659){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{Energy density (Wh/kg)}}}}%
+    \put(0.55153478,0.02655785){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Power density (W/kg)}}}%
+    \put(0.17697077,0.08798001){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{10}}}%
+    \put(0.42643314,0.08798001){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{100}}}%
+    \put(0.67589544,0.08798001){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{1000}}}%
+    \put(0.92535786,0.08798001){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{10000}}}%
+    \put(0.16302776,0.39182194){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{10}}}%
+    \put(0.16302776,0.47985186){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{100}}}%
+    \put(0.16302776,0.56788179){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{1000}}}%
+    \put(0.16793199,0.30357148){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{1}}}%
+    \put(0.16793199,0.21576207){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{0.1}}}%
+    \put(0.16793199,0.12773213){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{0.01}}}%
+    \put(0.26300452,0.33300779){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{10 hours}}}%
+    \put(0.56209402,0.42607219){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{1 hour}}}%
+    \put(0.77649327,0.42820123){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{1 second}}}%
+    \put(0.81667055,0.23993463){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{0.03 second}}}%
+    \put(0.26364415,0.53175277){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Fuel cells}}}%
+    \put(0.38558846,0.46962449){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Conventional batteries}}}%
+    \put(0.78607737,0.34107989){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Ultracapacitors}}}%
+    \put(0.83045111,0.19203755){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Conventional capacitors}}}%
+  \end{picture}%
+\endgroup%
