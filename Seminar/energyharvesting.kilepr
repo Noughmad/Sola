@@ -36,14 +36,14 @@ order=-1
 
 [item:harvesting.tex]
 archive=true
-column=293
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=50
+line=195
 mode=LaTeX
 open=true
 order=0
 
 [view-settings,view=0,item:harvesting.tex]
-CursorColumn=293
-CursorLine=50
+CursorColumn=0
+CursorLine=195
