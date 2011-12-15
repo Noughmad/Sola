@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2012/dev/Arch Linux) (format=pdflatex 2011.12.9)  10 DEC 2011 18:59
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2012/dev/Arch Linux) (format=pdflatex 2011.11.27)  15 DEC 2011 19:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -479,121 +479,143 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 
 Package acronym Info: Label `acro:EH' newly defined as it shall be overridden
 although it is yet undefined on input line 38.
+Package acronym Info: Label `acro:WSN' newly defined as it shall be overridden
+although it is yet undefined on input line 44.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Package acronym Info: Label `acro:WSN' newly defined as it shall be overridden
-although it is yet undefined on input line 46.
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 51.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 49.
 
 (/usr/share/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 51.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 49.
 
-<./Slike/wsn-current-profile.png, id=99, 286.06876pt x 144.54pt>
+<./Slike/EH-Block.png, id=140, 502.12593pt x 263.48438pt>
+File: ./Slike/EH-Block.png Graphic file (type png)
+
+<use ./Slike/EH-Block.png>
+Package pdftex.def Info: ./Slike/EH-Block.png used on input line 61.
+(pdftex.def)             Requested size: 384.1096pt x 201.5689pt.
+
+<./Slike/wsn-current-profile.png, id=143, 286.06876pt x 144.54pt>
 File: ./Slike/wsn-current-profile.png Graphic file (type png)
 
 <use ./Slike/wsn-current-profile.png>
-Package pdftex.def Info: ./Slike/wsn-current-profile.png used on input line 65.
+Package pdftex.def Info: ./Slike/wsn-current-profile.png used on input line 71.
 
 (pdftex.def)             Requested size: 250.0pt x 126.31778pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[2 <./Slike/wsn-current-profile.png>]
-<./Slike/PV-band-diagram.png, id=118, 614.295pt x 514.92375pt>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[2 <./Slike/EH-Block.png>]
+Package acronym Info: Label `acro:RTG' newly defined as it shall be overridden
+although it is yet undefined on input line 105.
+ [3 <./Slike/wsn-current-profile.png>]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 129.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 129.
+
+<./Slike/PV-band-diagram.png, id=171, 614.295pt x 514.92375pt>
 File: ./Slike/PV-band-diagram.png Graphic file (type png)
 
 <use ./Slike/PV-band-diagram.png>
-Package pdftex.def Info: ./Slike/PV-band-diagram.png used on input line 105.
+Package pdftex.def Info: ./Slike/PV-band-diagram.png used on input line 149.
 (pdftex.def)             Requested size: 298.75264pt x 250.42914pt.
- [3 <./Slike/PV-band-diagram.png>]
-<./Slike/PV-power-curve.png, id=131, 687.31781pt x 306.39468pt>
+ [4]
+<./Slike/PV-power-curve.png, id=185, 687.31781pt x 306.39468pt>
 File: ./Slike/PV-power-curve.png Graphic file (type png)
 
 <use ./Slike/PV-power-curve.png>
-Package pdftex.def Info: ./Slike/PV-power-curve.png used on input line 115.
+Package pdftex.def Info: ./Slike/PV-power-curve.png used on input line 163.
 (pdftex.def)             Requested size: 426.79135pt x 190.25728pt.
-Package acronym Info: Label `acro:TEG' newly defined as it shall be overridden
-although it is yet undefined on input line 128.
 
-<./Slike/TEG-shema.png, id=135, 345.54094pt x 185.19188pt>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[5 <./Slike/PV-band-diagram.png>]
+Package acronym Info: Label `acro:TEG' newly defined as it shall be overridden
+although it is yet undefined on input line 182.
+
+<./Slike/TEG-shema.png, id=198, 345.54094pt x 185.19188pt>
 File: ./Slike/TEG-shema.png Graphic file (type png)
 
 <use ./Slike/TEG-shema.png>
-Package pdftex.def Info: ./Slike/TEG-shema.png used on input line 131.
+Package pdftex.def Info: ./Slike/TEG-shema.png used on input line 185.
 (pdftex.def)             Requested size: 186.58405pt x 100.0pt.
 
-<./Slike/TEG-slika.jpg, id=136, 1378.14874pt x 767.86874pt>
+<./Slike/TEG-slika.jpg, id=199, 1378.14874pt x 767.86874pt>
 File: ./Slike/TEG-slika.jpg Graphic file (type jpg)
 
 <use ./Slike/TEG-slika.jpg>
-Package pdftex.def Info: ./Slike/TEG-slika.jpg used on input line 132.
+Package pdftex.def Info: ./Slike/TEG-slika.jpg used on input line 186.
 (pdftex.def)             Requested size: 179.46002pt x 100.0pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[4 <./Slike/PV-power-curve.png>]
+ [6 <./Slike/PV-power-curve.png> <./Slike/TEG-shema.png> <./Slike/TEG-slika.jpg
+>]
 Package acronym Info: Label `acro:PZT' newly defined as it shall be overridden
-although it is yet undefined on input line 163.
-LaTeX Info: Redefining \bond on input line 163.
-LaTeX Info: Redefining \dbond on input line 163.
-LaTeX Info: Redefining \tbond on input line 163.
+although it is yet undefined on input line 219.
+LaTeX Info: Redefining \bond on input line 219.
+LaTeX Info: Redefining \dbond on input line 219.
+LaTeX Info: Redefining \tbond on input line 219.
 
-<./Slike/Piezo-UI.png, id=153, 453.19313pt x 450.9347pt>
+<./Slike/Piezo-UI.png, id=216, 453.19313pt x 450.9347pt>
 File: ./Slike/Piezo-UI.png Graphic file (type png)
 
 <use ./Slike/Piezo-UI.png>
-Package pdftex.def Info: ./Slike/Piezo-UI.png used on input line 169.
+Package pdftex.def Info: ./Slike/Piezo-UI.png used on input line 225.
 (pdftex.def)             Requested size: 213.39568pt x 212.33153pt.
- [5 <./Slike/TEG-shema.png> <./Slike/TEG-slika.jpg> <./Slike/Piezo-UI.png>] (./
-Slike/Supercapacitors_chart.pdf_tex
-<./Slike/Supercapacitors_chart.pdf, id=173, 622.325pt x 385.44pt>
+ [7 <./Slike/Piezo-UI.png>]
+(./Slike/Supercapacitors_chart.pdf_tex
+<./Slike/Supercapacitors_chart.pdf, id=234, 622.325pt x 385.44pt>
 File: ./Slike/Supercapacitors_chart.pdf Graphic file (type pdf)
 
 <use ./Slike/Supercapacitors_chart.pdf>
 Package pdftex.def Info: ./Slike/Supercapacitors_chart.pdf used on input line 5
 2.
 (pdftex.def)             Requested size: 341.43437pt x 211.46921pt.
-) [6 <./Slike/Supercapacitors_chart.pdf>] (./harvesting.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 208.
- [7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 208.
+) [8 <./Slike/Supercapacitors_chart.pdf>] (./harvesting.bbl)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 269.
+ [9]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 269.
  (./harvesting.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 208.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 208.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 269.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 269.
 Package rerunfilecheck Info: File `harvesting.out' has not changed.
-(rerunfilecheck)             Checksum: F9C3F7F3ACE9CBCB5A41A528AF075516;806.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 208.
+(rerunfilecheck)             Checksum: 67B8F9857529AD5837BE24659CD83293;1379.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 269.
  ) 
 Here is how much of TeX's memory you used:
- 7343 strings out of 493633
- 107805 string characters out of 3148832
- 220166 words of memory out of 3000000
- 10466 multiletter control sequences out of 15000+200000
+ 7380 strings out of 493633
+ 108298 string characters out of 3148831
+ 222428 words of memory out of 3000000
+ 10488 multiletter control sequences out of 15000+200000
  12017 words of font info for 47 fonts, out of 3000000 for 9000
  831 hyphenation exceptions out of 8191
- 29i,13n,37p,664b,365s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 29i,13n,37p,680b,386s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/
-share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on harvesting.pdf (7 pages, 411305 bytes).
+c/amsfonts/cm/cmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
+/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
+usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on harvesting.pdf (9 pages, 456229 bytes).
 PDF statistics:
- 283 PDF objects out of 1000 (max. 8388607)
- 243 compressed objects within 3 object streams
- 49 named destinations out of 1000 (max. 500000)
- 148 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 352 PDF objects out of 1000 (max. 8388607)
+ 306 compressed objects within 4 object streams
+ 63 named destinations out of 1000 (max. 500000)
+ 225 words of extra memory for PDF output out of 10000 (max. 10000000)
 
