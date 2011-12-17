@@ -23,11 +23,15 @@
 \title{Energy Harvesting}
 \author{Author: Miha \v Can\v cula \\ Mentor: doc. dr. Du\v san Ponikvar}
 
+\renewcommand{\vec}{\mathbf}
+
 \begin{document}
 
 \maketitle
 
 \tableofcontents
+
+\newpage
 
 \section{Introduction}
 
@@ -63,7 +67,6 @@ Most of these applications require the nodes to be outside or in other areas whe
 \label{fig:block-sensor}
 \end{figure}
 
-
 Another important characteristic of sensor nodes is their power consumption profile. Often they will be idle for a long time (from minutes to days), and perform measurements in a relatively short time. The transmission of data can be even more infrequent, depending on whether the data has to be available immediately or not. In any case, sensor nodes consume very little current in the idle time period, with short bursts of consumption at regular intervals. An example of such consumption profile is in Figure~\ref{fig:wsn-consumption}. 
 
 \begin{figure}[h]
@@ -98,6 +101,15 @@ Many popular electronic devices, including TV remote controls, digital watches, 
 
 Solar cells on pocket calculators are very common and well-known, but so far their use has not spread to other electronic devices. There are, however, studies and working examples of remote controls for television and cars using a piezoelectric generator powered by the pressing force of our fingers, so this might change in the near future. 
 
+
+\begin{figure}[h]
+\centering
+ \subfigure{\includegraphics[height=200pt]{./Slike/casio-solar-calculator}}
+ \subfigure{\includegraphics[height=200pt]{./Slike/GPS-satellite}}
+\caption{A solar-powered calculator by Casio (left) and a GPS satellite with solar panels (right)}
+\end{figure}
+
+
 \subsection{Spacecraft}
 
 The impracticality of a grid connection or battery replacements is most evident in space. Satellites in orbit around Earth or travelling close to the Sun carry arrays of solar cells, harvesting energy from the Sun's radiation to power their systems. 
@@ -114,7 +126,7 @@ Most \ac{EH} devices are far from being an ideal power source. Therefore, we mus
 
 According to Thevenin's theorem, any combination of ideal voltage sources, current sources, and resistors with two terminals is electrically equivalent to a single voltage source in series with a single resistor. This simplified representation serves as a good model for most power supplies and batteries. The resistor represents the source resistance or internal resistance of the power source. 
 
-A source with internal resistance $R$ and current $I$ draws power equal to $I^2 R$. This power is wasted, reducing the already limited available energy, so we usually want power sources with small resistance. 
+A source with internal resistance $R$ and current $I$ draws power equal to $I^2 R$. This power is wasted, reducing the already limited available energy, so we usually want power sources with low source resistance. 
 
 Source resistance is also very important in power transfer. The most power is transferred when the source resistance is equal to the resistance of the load. The source resistance can be very different than the resistance of our load, and can even change with time. Fortunately, DC-DC converters exist which are able to increase or decrease both the voltage and resistance, providing matched resistances on both ends. 
 
@@ -218,6 +230,20 @@ The third most common form of \ac{EH} is generating power from the energy of mot
 
 Certain clystalline materials with asymmetric unit cells polarize themselves when an external force is applied. This phenomenon is called the Piezoelectric effect. The best-known material to exhibit piezoelectric behavior is \ac{PZT}, a ceramic with the formula \ce{Pb[Zr_xTi_{1-x}]O3}, $0\leq x \leq 1$.
 
+
+Like the thermoelectric effect, the piezoelectric effect also has a direct converse, where a voltage applied to the material causes it to deform. Because of this, the same elements can be used as actuators, capable of very precise positioning due to the high voltages required for small mechanical deformations. 
+
+In piezoelectric materials, the dielectric response $D = \varepsilon E$ and Hooke's law $S = sT$ are coupled~\cite{wiki:piezo}. 
+
+\begin{align}
+ \vec S &= s \vec T + d^t \vec E \\
+ \vec D &= d \vec T + \varepsilon \vec E
+\end{align}
+
+Strain $\vec S$ and stress $\vec T$ are rank-2 tensors, but because they are always symmetric, they have only six free parameters and can be written as vectors with 6 components. Compliance $s$, permitivity $\varepsilon$ and piezoelectric matrix $d$ can now be written as rank-2 tensors. The first equation describes the converse piezoelectric effect (mechanic deformation under applied voltage) while the second describes the direct piezoelectric effect (polarization under applied stress). 
+
+The values of $d$ are different for every material. For tetragonal and hexagonal crystals, only five out of 15 coefficients in the matrix are nonzero~\cite{wiki:piezo}. 
+
 \subsection{Characteristics}
 
 \begin{figure}[h!]
@@ -227,7 +253,7 @@ Certain clystalline materials with asymmetric unit cells polarize themselves whe
 \label{fig:piezo-load}
 \end{figure}
 
-Unlike other \ac{EH} methods, piezoelectric elements often produce relatively high voltages, so a converter is needed to decrease the voltage. Both open-circuit voltage and short-circuit current increase with the available vibration energy~\cite{LT-Piezo}. Figure~\ref{fig:piezo-load} shows load lines for Piezo Systems \texttt{T220-A4-503X} rated for voltages up to $\pm$180 V with a wholesale price of \$70 per piece. In typical vibration energy harvesting applications, the output voltage is much lower, but still high enough to require a specialized power supply. 
+Unlike other \ac{EH} methods, piezoelectric elements often produce relatively high voltages, so a converter is needed to decrease the voltage. Both open-circuit voltage and short-circuit current increase with the available vibration energy~\cite{LT-Piezo}. Figure~\ref{fig:piezo-load} shows load lines for Piezo Systems \texttt{T220-A4-503X} with a wholesale price of \$70 per piece. We can observe that the lines are close to hyperbolas, so power output does not depend on the voltage applied, only on the vibration energy present. This particular element can function both as an energy harvester or an actuator and is rated for voltages up to $\pm$180 V. In typical vibration energy harvesting applications, the output voltage is much lower, but still high enough to require a specialized power supply. 
 
 Using a smaller device, researchers were able to produce produce an average power of over 8 mW from a \ac{PZT}-based piezoelectric mounted inside a shoe. This was enough to continuously power a short range radio frequency emitter~\cite{piezo-shoe-ieee}. 
 
@@ -236,11 +262,11 @@ Using a smaller device, researchers were able to produce produce an average powe
 
 \section{Power management}
 
-As mentioned above, electrical power from \ac{EH} generators can be very sporadic, and so can be the required load. Therefore, managing and storing the produced energy is very important. 
+As mentioned above, electrical power from \ac{EH} generators can be very sporadic, and so can be the required load. Therefore, additional electronics are require to turn the energy source into a useful power supply. 
 
-The first step is to ensure the maximum power transfer between the source and load. Differences in output voltage and resistance force us to use DC-DC converters. These converters can easily reach efficiencies of over 95\%, se they do not cause an excessive power loss. 
+The first step is to ensure the maximum power transfer between the source and load. Differences in output voltage and resistance force us to use DC-DC converters. These converters can easily reach efficiencies of over 95\%, so they do not cause an excessive power loss. A major part of the power management system is also the storage and retrieval of energy in a separate container. Depending on the storage method, a suitable charging mechanism must be included. 
 
-A major part of the power management system is also the storage and retrieval of energy in a separate container. Depending on the storage method, a suitable charging mechanism must be included. 
+Converters for different energy sources, such as those made by Linear Technology, are available in bulk at \$3-\$4 per piece. Battery charge controllers are also widely available at low prices, around \$2 per piece. In total, the cost of the power management system is only a small part of the total cost of the power source, the majority being the energy harvester itself~\cite{lt:cenik}. 
 
 \section{Energy storage}
 
@@ -253,7 +279,33 @@ In most cases, energy is stored either in batteries or ultracapacitors. Ultracap
 \label{fig:storage-chart}
 \end{figure}
 
-Obviously, the choice of the energy storage method depends on the applications. For a solar-powered calculator, batteries have an advantage because of their lower leakage, and the device never requires a power output. It is also possible to use both, an ultracapacitor for sudden spikes and a battery for long-term energy storage. 
+Energy storage methods other than batteries and ultracapacitors are not widely used in energy harvesting. Fuel cells could be used in place of batteries, due to their high energy density and long life, but they are more complex and difficult to make in small sizes. They also require an external fuel source, negating the benefit of reduced size required to store the same amount of energy. Conventional capacitors, on the other hand, have very low energy densities and offer virtually no advantage over ultracapacitors. 
+
+Obviously, the choice of the energy storage method depends on the applications. For a solar-powered calculator, batteries have an advantage because of their lower leakage, and the device never requires a high power output. It is also possible to use both, an ultracapacitor for sudden spikes and a battery for long-term energy storage. 
+
+\section{Succesful implementations}
+
+\subsection{Building automation}
+
+The EnOcean Alliance is a consortium of companies providing a building automation system with an open, interoperable standard for energy harvesting~\cite{enocean}. Its members offer wireless sensors, switches and controllers, capable of managing a building's lighting, heat, ventilation and air conditioning systems. Wireless communication is done in the 315Mhz and 868MHz bands, thus requiring less power than 2,4GHz used by the \texttt{IEEE 802.11} standards, traditionally used for wireless computer networks. An example wireless network with \ac{EH}-powered sensors and grid-connected central nodes and routers is in Figure~\ref{fig:enocean-shema}. 
+
+\begin{figure}[h]
+\centering
+ \includegraphics[width=0.9\textwidth]{./Slike/EnOcean-shema}
+\caption{A wireless sensor network based on the EnOcean standard~\cite{enocean}}
+\label{fig:enocean-shema}
+\end{figure}
+
+A competing group of companies constitute the ZigBee Alliance. Aside from building automation, they also offer health care and remote control applications. However, they have only recently began adopting \ac{EH}, with the first batteryless wireless switch presented by Schneider Electric in 2009~\cite{schneider-zb}. As we can see in Figure~\ref{fig:enocean-shema}, the two standards are compatible and can be linked via a gateway device. 
+
+\subsection{Phone and laptop chargers}
+
+Several companies offer solar-powered chargers for phone and laptop batteries. In these cases, the goal is often not to power the devices solely through \ac{EH}, but mainly to extend battery life. 
+
+A typical modern laptop computer under light load consumes an average power of around 20 watts. This is far beyond the range of small energy harvesting solutions, so the solar cells have to be very large, making them both more expensive and less portable. Solar laptop charges, powerful enough to provide at least 10 watts in optimal conditions, thus require almost half a square meter of surface area and can cost over \$500. However, smaller and cheaper power sources can still provide a significant increase in battery life, especially for smaller, less power-consuming laptops~\cite{news:laptop-chargers}. 
+
+Mobile phones, on the other hand, require much less power. A phone spends most of the time in a sleeping state, in which it consumes less than 100 milliwatts. Hence the chargers can be the size of the phone itself and cost around \$30. Due to their small size, they cause no additional burden when being carried around, proving true energy harvesting devices~\cite{mysolarphonecharger}. 
+
 
 \section{Conclusion}
 
@@ -262,6 +314,8 @@ Obviously, the choice of the energy storage method depends on the applications. 
 We have seen three different methods for drawing power from the device surrounding, provided we have a source of light, heat or motion. The choice of a suitable method obviously depends on the device and the environment in which it is meant to be used. There are other possible approaches, but these three are the most popular at this time. 
 
 Because the energy source might not be present at all times, as is the case with photovoltaic placed outdoors, we also need to store the harvested energy. In this field, ultracapacitors are seeing rapid development and have become an alternative to more traditional batteries. Many wireless devices have a short duty cycle, during which the higher power output of capacitors is an important advantage, while their average power consumption is still very low. 
+
+\newpage
 
 \bibliography{harvesting}
 \bibliographystyle{unsrt} 
