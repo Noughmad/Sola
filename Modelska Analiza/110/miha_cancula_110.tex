@@ -1,0 +1,109 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{hyperref}
+
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\phi}{\varphi}
+\newcommand{\eps}{\varepsilon}
+
+\newcommand{\dd}{\,\mathrm{d}}
+
+%opening
+\title{Stohasti\v cni populacijski modeli}
+\author{Miha \v Can\v cula}
+
+\begin{document}
+
+\maketitle
+
+\newcommand{\poisson}[2]{
+  \frac{#2^{#1}}{#1!} e^{-#2}  
+}
+
+\newcommand{\poi}[1]{\poisson{#1}{\overline{#1}}}
+
+\section{Statistika "casov izumrtja}
+
+\section{Matrika prehodov}
+
+Verjetnost, da v dolo"cenem koraku umre $n$ osebkov izra"cunamo po Poissonovi porazdelitvi:
+
+\begin{align}
+\mathcal P(-n, \overline n) &= \poi{n}
+\end{align}
+
+"Ce imamo model, kjer se osebki rojevajo in umirajo, moramo upo"stevati oba "clena lo"ceno in se"steti po vseh kombinacijah, ki nam dajo enako spremembo populacije. 
+
+\begin{align}
+\mathcal P(n, \overline n) &= \sum_{n_r - n_s = n}\mathcal{P}(n_r, \overline{n_r})\mathcal{P}(n_s, \overline{n_s}) = \sum_{n_r - n_s = n}\poi{n_r}\poi{n_s}  
+\end{align}
+
+Povpre"cno "stevilo umrlih oz. rojenih osebkov $\overline{n_i}$ lahko izrazimo s parametrom $\beta$, velikostjo populacije in dol"zino "casovnega koraka
+
+\begin{align}
+  \overline{n_i} &= \beta_i N \Delta t
+\end{align}
+
+"Ce vzamemo dovolj majhnen korak $\Delta t$, bo $\overline{n}$ mnogo manj"si od 1 in bodo verjetnosti za velike spremembe "stevila populacije majhne. V tem primeru lahko upo"stevamo le "clene z $n=0$ in $n = \pm 1$. 
+
+\subsection{Paremetrizacija stanj}
+
+Stanje z velikostjo populacije $N$ lahko zapi"semo kot vektor $\vec v$ z $M+1$ komponentami, $M \geq N$, ki ima vse $N$-to komponento enako 1, ostale pa 0. Pri tem smo morali postaviti zgornjo mejo za velikost populacije $M$, vektor pa ima "se dodatno komponento za stanje s populacijo 0. Stanja, ki imajo le eno neni"celno komponento, so "cista stanja, zaradi stohasti"cnosti procesa pa po vsakem koraku dobimo me"sano stanje, ki pomeni, da je velikost populacije porazdeljena po neki verjetnostni porazdelitvi. 
+
+Vsak "casovni korak lahko predstavimo z opracijo, ki je linearna v $v$, torej jo lahko zapi"semo kot matriko dimenzije $M+1\times M+1$. Elementi te matrike so verjetnosti za prehod iz $j$-tega v $i$-to stanje
+
+\begin{align}
+W_{i,j} &= P(j\to i) = \mathcal P(j-i, \overline{n}(j))
+\end{align}
+
+\subsection{Eksponentni model}
+
+Pri tem modelu se osebki ne rojevajo, zato je velikost populacije monotono padajo"ca, torej bo matrika prehodov spodnje trikotna. Predpostavili smo, da je $\Delta t$ tako majhen, da je $\beta N \Delta t = \eps << 1$
+
+\begin{align}
+  W_{i,j} &= \mathcal{P}(j-i, \eps) = \poisson{(j-i)}{\eps}
+\end{align}
+
+Ker je $\eps$ majhen, lahko "clene z $\eps^2$ zanemarimo, tako da ostanejo le "se elementi na diagonali in tik pod njo
+
+\begin{equation}
+  W_{i,j} = \left\{ \begin{matrix} 
+		      1 - \beta j \Delta t, & i=j \\
+                      \beta j \Delta t, & i=j-1 \\
+		      0, & \mathrm{sicer}
+                    \end{matrix}\right.
+\end{equation}
+
+\subsection{Rojstva in smrti}
+
+Podobno kot prej zanemarimo verjetnosti, da se rodi ali umre ve"c kot en osebek v vsakem "casovnem koraku. Tudi v verjetnosti, da se en rodi in en umre, nastopa $\eps$ z drugo potenco, torej ga lahko zanemarimo. Ostanejo nam le tri mo"znosti: eno rojstvo, ena smrt, ali pa ohranitev istega stanja. V primerjavi s prej"sjim izrazom moramo matriki dodati le "se diagonalo nad glavno, ki dopu"s"ca rast populacije. 
+
+\begin{equation}
+  W_{i,j} = \left\{ \begin{matrix} 
+                      \beta_r j \Delta t, & i=j+1 \\
+		      1 - (\beta_r+\beta_s) j \Delta t, & i=j \\
+                      \beta_s j \Delta t, & i=j-1 \\
+		      0, & \mathrm{sicer}
+                    \end{matrix}\right.
+\end{equation}
+
+\subsection{Diferencialne ena"cbe}
+
+Ker matrika prehodov predstavlja en "casovni korak simulacije, lahko z limitiranjem "casovnega intervala pridemo do sistema linearnih diferencialnih ena"cb
+
+\begin{align}
+  \dot {\vec v} &= W \vec v
+\end{align}
+
+Tak"sen sistem znamo re"siti, tako da poi"s"cemo lastne vrednosti in lastne vektorje matrike $W$. 
+
+\end{document}

@@ -19,25 +19,45 @@
 \acrodef{EH}{Energy harvesting}
 \acrodef{PZT}{lead zirconate titanate}
 \acrodef{RTG}{Radioisotope Thermoelectric Generator}
+\acrodef{IBM}{IBM}
+
 %opening
 \title{Energy Harvesting}
 \author{Author: Miha \v Can\v cula \\ Mentor: doc. dr. Du\v san Ponikvar}
 
 \renewcommand{\vec}{\mathbf}
+\renewcommand{\refname}{\section{Sources}}
 
 \begin{document}
 
-\maketitle
+\begin{center}
+\includegraphics[width=6cm]{./logo_fmf_uni-lj_sl}\\[0.5cm]
+Oddelek za fiziko \\[2cm]
+{ \large Seminar -- 1. letnik, II. stopnja } \\[1cm]
+{ \huge \bf Energy Harvesting }\\[2cm]
+{\large Author: Miha \v Can\v cula}\\[0.6cm]
+{\large Mentor: doc. dr. Du\v san Ponikvar} \\[0.6cm]
+{\large Ljubljana, januar 2012}
+\end{center}
+\vfill
+\begin{abstract}
 
+Technological developments in the recent years has allowed smaller and smaller electronic devices with very low power consumption. On the other hand, power generation methods are improving as well, increasing their efficiency and lowering costs. Now we are at the point where the two ends meet, as it becomes possible and economically justifiable for each device to have its own power source. The benefits of this are apparent: the possibility of delivering electricity to remote locations, next to nonexistant maintenance, and often just convenience. 
+
+In this seminar, I will show where such devices are most commonly used and what power requirements they have, as well as present the three most popular methods for generating energy from the environment. With the low and irregular power output, proper power management and energy storing are important in ensuring the constant operation of the powered device, so I will focus on them as well. Finally, I will list some existing and succesful implementations of systems powered by harvested energy. 
+
+\end{abstract}
+
+
+\newpage
 \tableofcontents
 
 \newpage
-
 \section{Introduction}
 
 Small electronic devices are increasingly present everywhere around us. With their ubiquity and ever decreasing size and power consumption, connecting each of them to the power grid becomes impractical. 
 
-The traditional solution is to use batteries, but they come with their own set of problems. Replacing them can be expensive, especially in hard-to-reach places. A much better option would be if the device had a power source of its own, removing its dependence on the power grid and drastically reducing the maintanace cost~\cite{Burgoine11}. 
+The traditional solution is to use batteries, but they come with their own set of problems. Replacing them can be expensive, especially in hard-to-reach places. A much better option would be if the device had a power source of its own, removing its dependence on the power grid and drastically reducing the maintenance cost~\cite{Burgoine11}. 
 
 The practice of drawing small amounts of electricity from the device's immediate surrounding is called \ac{EH}. 
 
@@ -47,7 +67,13 @@ The practice of drawing small amounts of electricity from the device's immediate
 
 A very common use for energy harvesting systems are nodes in \acp{WSN}~\cite{teg-wsn-ieee,cap-wsn-ieee}. Such a network can contain a large number of independent nodes, so it would be difficult to connect each node to the power grid with wires. The sensors themselves usually consume very small amounts of power, so they are ideal applications for \acl{EH} methods. A block diagram of a generic sensor node can be seen in Figure~\ref{fig:block-sensor}. 
 
-% list is from wikipedia: https://en.wikipedia.org/wiki/Energy_harvesting
+\begin{figure}[!h]
+ \centering
+\includegraphics[width=.9\textwidth]{./Slike/EH-Block}
+\caption{Block diagram of an \ac{EH}-powered wireless sensor node~\cite{ti:eh}}
+\label{fig:block-sensor}
+\end{figure}
+
 The applications for \acp{WSN} include~\cite{wiki:eh}:
 \begin{itemize}
   \item Weather stations
@@ -60,23 +86,16 @@ The applications for \acp{WSN} include~\cite{wiki:eh}:
 
 Most of these applications require the nodes to be outside or in other areas where a direct connection to the grid would be difficult. On the other hand, they can still be close enough to the central node so they can transmit the measurements over a wireless connection with their own harvested power. 
 
-\begin{figure}[h]
- \centering
-\includegraphics[width=.9\textwidth]{./Slike/EH-Block}
-\caption{Block diagram of an \ac{EH}-powered wireless sensor node~\cite{ti:eh}}
-\label{fig:block-sensor}
-\end{figure}
-
 Another important characteristic of sensor nodes is their power consumption profile. Often they will be idle for a long time (from minutes to days), and perform measurements in a relatively short time. The transmission of data can be even more infrequent, depending on whether the data has to be available immediately or not. In any case, sensor nodes consume very little current in the idle time period, with short bursts of consumption at regular intervals. An example of such consumption profile is in Figure~\ref{fig:wsn-consumption}. 
 
 \begin{figure}[h]
 \centering
  \includegraphics[width=250pt]{./Slike/wsn-current-profile}
- \caption{An example of a \ac{WSN} current consumption profile~\cite{cap-wsn-ieee}}
+ \caption{A plot of current consumption versus time for a wireless sensor node~\cite{cap-wsn-ieee}}
 \label{fig:wsn-consumption}
 \end{figure}
 
-The average power consumption depends mostly on the duty cycle. If the measurement and especially the transmission of data does not have to be very frequent, the average consumption can be made very low. The consumption during the inactive time is often of the order of a few $\mu W$~\cite{Salerno10}. For example, electrical characteristic of an automatic radiator valve which take a measurement every hour are listed in Table~\ref{tab:zbarv}. This system draws an average power of 1 mW and would normally need it batteries changes at least once a year~\cite{teg-wsn-ieee}. 
+The average power consumption depends mostly on the duty cycle. If the measurement and especially the transmission of data does not have to be very frequent, the average consumption can be made very low. The consumption during the inactive time is often of the order of a few $\mu W$~\cite{Salerno10}. For example, electrical characteristic of an automatic radiator valve which take a measurement every hour are listed in Table~\ref{tab:zbarv}. This system draws an average power of 1 mW and would need its batteries changed at least once a year without any harvested energy~\cite{teg-wsn-ieee}. 
 
 \begin{table}[h]
   \centering
@@ -88,7 +107,7 @@ Supply Voltage & 2.7 - 3.3V \\
 Working current & 60 mA \\
 Sleeping current & 10 $\mu$A \\
 Working duration & 20 seconds/hour \\
-Working duration & 3579 seconds/hour \\
+Sleeping duration & 3579 seconds/hour \\
 \hline
   \end{tabular}
 \caption{Electrical characteristics of an automated radiator valve}
@@ -118,39 +137,48 @@ Deep-space probes, on the other hand, often fly too far from the Sun for solar e
 
 \section{Important properties}
 
-When choosing the \ac{EH} method to use in a project, the most important factor is the available types of energy in the device's surroundings. These types will be explained in more detail in the following chapters. However, we must also consider the electrical characteristics of the chosen product, as well as its cost and physical size. 
-
-Most \ac{EH} devices are far from being an ideal power source. Therefore, we must carefully consider their electric properties before connecting them to our load. 
+When choosing the \ac{EH} method to use in a project, the most important factor is the available types of energy in the device's surroundings. These types will be explained in more detail in the following chapters. Additionally, most \ac{EH} devices are far from being an ideal power source. Therefore, we must carefully consider their electric properties before connecting them to a load. 
 
 \subsection{Source resistance}
 
-According to Thevenin's theorem, any combination of ideal voltage sources, current sources, and resistors with two terminals is electrically equivalent to a single voltage source in series with a single resistor. This simplified representation serves as a good model for most power supplies and batteries. The resistor represents the source resistance or internal resistance of the power source. 
+According to Th\'evenin's theorem, any combination of ideal voltage sources, current sources, and resistors with two terminals is electrically equivalent to a single voltage source in series with a single resistor. The resistor represents the source resistance or internal resistance of the power source. This simplified representation, while not completely accurate for real-world sources, serves as a good model for most power supplies and batteries~\cite{wiki:thevenin}. 
 
-A source with internal resistance $R$ and current $I$ draws power equal to $I^2 R$. This power is wasted, reducing the already limited available energy, so we usually want power sources with low source resistance. 
+\begin{figure}[h]
+\centering
+  \includegraphics[width=150px]{./Slike/Thevenin_equivalent}
+  \caption{A ``black box'' circuit and its Th\'evenin equivalent~\cite{wiki:thevenin}}
+\label{fig:thevenin}
+\end{figure}
 
-Source resistance is also very important in power transfer. The most power is transferred when the source resistance is equal to the resistance of the load. The source resistance can be very different than the resistance of our load, and can even change with time. Fortunately, DC-DC converters exist which are able to increase or decrease both the voltage and resistance, providing matched resistances on both ends. 
+A source with internal resistance $R$ and current $I$ wastes power equal to $I^2 R$, reducing the already limited power output, so we usually want power sources with a low source resistance. 
+
+Source resistance is also important in power transfer. The most power is transferred when the source resistance is equal to the resistance of the load. This is often not the case with \ac{EH} sources where source resistance depends on environment conditions and can change with time. Fortunately, DC-DC converters exist which are able to increase or decrease both the voltage and resistance, providing matched resistances on both ends. 
+
+It is important to note that all power sources mentioned here are direct current sources. Because of this, the imaginary component of the source impedance has no effect and use of the term resistance is justified. 
 
 \subsection{Open-circuit voltage and short-circuit current}
 
-Open-circuit voltage ($V_{OC}$)is the voltage between both terminals of the power source when no current is running through it. This is equivalent to loading it with an infinite-resistance load. This is the maximum voltage the source can produce; if a nonzero current is running, the source resistance will cause a voltage drop inside the source, causing a drop in the output voltage. 
+Open-circuit voltage ($V_{oc}$) is the voltage between both terminals of the power source when no current is running through it. This is equivalent to loading it with an infinite-resistance load. This is the maximum voltage the source can produce; if a nonzero current is running, the source resistance will cause a voltage drop inside the source, resulting in a reduced output voltage. 
 
-Short-circuit current ($I_{SC}$) is the opposite to open-circuit voltage. It specifies how much current the source is capable of generating under a load with zero resistance. In this case, the whole voltage drop happens inside the source, driving the output voltage to zero. 
+Short-circuit current ($I_{sc}$), on the other hand, specifies how much current the source is capable of generating under a load with zero resistance. In this case, the whole voltage drop happens inside the source, driving the output voltage to zero. 
 
-In both of these extreme cases, the power output drops to zero. However, the characteristics are important because they are very easy to measure and compare. Sometimes these two pieces of information can be enough to make an informed choice of a power supply~\cite{Salerno10}. 
+In both of these extreme cases, the source produces no power. However, the characteristics are important because they are very easy to measure and compare. Sometimes these two pieces of information can be enough to make an informed choice of a power supply~\cite{Salerno10}. 
 
 \subsection{$I(V)$ curve and power curve}
 
-The current-voltage characteristic, also known as the $I(V)$ curve, shows how much current the generator can output at voltage $V$. Because all \ac{EH} sources have limited power, current will always drop if we put a load with nonzero resistance on the source. Similarily, a low-resistance load will increase the voltage drop inside the source, causing the output voltage to decrease. 
+The current-voltage characteristic, also known as the $I(V)$ curve, shows how much current the generator can output at voltage $V$. Because all \ac{EH} sources have limited power, current will always drop if we put a load with a high resistance resistance on the source. Similarily, a low-resistance load will increase the voltage drop inside the source, causing the output voltage to decrease. 
 
-A power curve is the relationshpi between the output power of the source and the load voltage. The electical power output is given by $P = V \cdot I$, so the current curve is simply the $I(V)$ curve multiplied by the voltage $V$. However, it is often the most important one as we wish to have the power source operate at its maximum power output. 
+A power curve is the relationship between the output power of the source and the load voltage. The electical power output is given by $P = V \cdot I$, so the current curve is simply the $I(V)$ curve multiplied by the voltage $V$. However, it is often the most important one as we wish to have the power source operate at its maximum power output. 
 
 \subsection{Efficiency}
 
-When the available power is low, it is important to convert as much of it to electricity as possible. The ratio of electrical energy produced versus the solar, mechanical or thermal energy consumed is given by the efficiency. Efficiencies of \ac{EH} sources vary greatly depending on their conversion method and size. In general, they provide lower efficiencies than larger power sources. 
+% TODO: Start it better
+
+The ratio of electrical energy produced versus the solar, mechanical or thermal energy consumed is given by the {\em efficiency} of a power generator. Efficiencies of \ac{EH} sources vary greatly depending on their conversion method and size, but in general, they provide lower efficiencies than larger power sources. 
 
 \section{Photovoltaic cells}
 
-The best known method of generating electricity from the environment on a small scale are photovoltaic cells. In most environments, they provide the highest power output of all \ac{EH} devices. 
+The best-known method of generating electricity from the environment on a small scale is using photovoltaic cells, also known as solar cells. In most environments, they provide the highest power output of all \ac{EH} devices. 
 
 \subsection{Theory}
 
@@ -167,13 +195,13 @@ The solar cells work by using the photovoltaic effect to create electron-hole pa
 
 Modern photovoltaic cells can reach efficiencies up to 30\%. However, it is possible to use mirrors or lenses to concentrate more sunlight onto the cell, effectively raising it efficiency up to 45\%. This is useful because the concentrating optics are usually cheaper than solar cells themselves. On the other hand, such concentrators often require a system for tracking the sun, resulting in a more complicated solution, and are better suited for large-scale operations than for energy harvesting devices. 
 
-Unlike other power sources, a photovoltaic cell can be modelled as an ideal current source connected in parallel with a diode. The open-circuit voltage is then equal to the diode's forward voltage, while the short-circuit current is the output of the model's source generator. A typical solar cell has a $V_{OC}$ of around half a volt. The short-circuit current and with it the power output is very dependant on the light conditions and cell size. Because of the voltage of a sigle photovoltaic cell, they are often connected in series. Alternatively, power can be drawn from a single larger cell with the help of a converter~\cite{Burgoine11}. 
+Unlike other power sources, a photovoltaic cell can be modelled as an ideal current source connected in parallel with a diode. The open-circuit voltage is then equal to the diode's forward voltage, while the short-circuit current is the output of the model's source generator. A typical solar cell has a $V_{oc}$ of around half a volt. The short-circuit current and the maximum power output are both dependant on the light conditions and cell size. Because of the low voltage of a sigle photovoltaic cell, they are often connected in series. Alternatively, power can be drawn from a single larger cell with the help of a converter, at the cost of lower efficiency~\cite{Burgoine11}. 
 
-The downside of solar generators is the constant changing of their power output. Fortunately, there are several methods to work around this shortcoming. One way to is to use supercapacitors~\cite{cap-wsn-ieee} to store the produced energy. Even so, with variable weather conditions, the cell is not always operating with its peak efficiency. The shift in its optimal power point can be seen in Figure~\ref{fig:pv-power-curve}. It is possible to offset this by using a system that dynamically adjusts the cell voltage to find the maximum power point~\cite{solar-mppt-ieee}. 
+The downside of solar generators is the constant changing of their power output, especially when used outdoors. An energy storage mechanism must be in place to provide power during the night and bad weather conditions. Even so, with variable weather conditions, the cell is not always operating with its peak efficiency. The shift in its optimal power point can be seen in Figure~\ref{fig:pv-power-curve}. It is possible to offset this by using a power management system that dynamically adjusts the cell voltage to find the maximum power point~\cite{solar-mppt-ieee}. 
 
 \begin{figure}[h!]
 \includegraphics[width=\textwidth]{./Slike/PV-power-curve}
- \caption{Typical $I(V)$ and power curve of a 2x1 inch (13 cm$^2$) polycrystalline cell~\cite{Burgoine11}}
+ \caption{Typical $I(V)$ and power curve of a 2x1 inch (13 cm$^2$) polycrystalline cell at two different irradiations~\cite{Burgoine11}}
 \label{fig:pv-power-curve}
 \end{figure}
 
@@ -181,17 +209,16 @@ The downside of solar generators is the constant changing of their power output.
 
 Ambient light conditions are very important in determining the power output of photovoltaic cells. Besides only producing power during the daylight hours, solar cells are severely hindered by bad weather. In places with long periods of low light, such as rainy seasons or high lattitudes, large batteries are needed for energy storage. 
 
-The situation is different if the cells are located inside a building. Indoors lighting is on average 400 less intense than the irradiation by the Sun, resulting in correspondingly lower power outputs. However, the energy input is much more constant, especially the low-light periods are shorter and predictible. Despite the lower peak intensity, solar cells are useful even in indoors environments. Because most such devices can be made with power cords instead, the benefits of \ac{EH} are smaller there, but may still be significant with small and/or mobile devices. 
+The situation is different if the cells are located inside a building. Indoors lighting is on average 400 times less intense than the irradiation by the Sun, resulting in correspondingly lower power outputs. However, the energy input is much more constant, especially the low-light periods are shorter and predictible. Despite the lower intensity, solar cells are useful even in indoors environments. Because most devices for indoor use can be made with power cords instead, the benefits of \ac{EH} are smaller there, but may still be significant with small and/or mobile devices. 
 
-\section{\acl{TEG}}
+\section{\aclp{TEG}}
 
-Another source of energy in the environment is a temperature gradient. This method has become very popular in the recent years, mostly due to their reliability and lower cost than photovoltaics.
+
+Another source of energy in the environment is a temperature gradient which can be converted into electricity using a \ac{TEG}. This method has become very popular in the recent years, mostly due to its reliability and lower cost than photovoltaics. Using the Seebeck effect, it is possible to convert the difference in temperatures into electricity.  The Seebeck effect is the converse of the better-known Peltier effect, so the same elements can be used for either thermoelectric cooling or power generation. Due to their simple design and the possibility to re-use existing Peltier coolers, \acp{TEG} can be much cheaper than other \ac{EH} devices. 
 
 \subsection{Theory}
 
-Using the Seebeck effect, it is possible to convert this difference in temperatures into electricity.  The Seebeck effect is the converse of the better-known Peltier effect, so the same elements can be used for either thermoelectric cooling or power generation. 
-
-\acp{TEG} are typically made from a series of alternating N-doped and P-doped semiconductors, sandwiched between two ceramic plates~\cite{Salerno10}. A schematic of their design can be seen in Figure~\ref{fig:teg-schematic}.
+\acp{TEG} are typically made from a series of \textit{thermocouples}, pairs of n-doped and p-doped semiconductor pellets, sandwiched between two ceramic plates~\cite{Salerno10}. A schematic of their design can be seen in Figure~\ref{fig:teg-schematic}. 
 
 \begin{figure}[h]
 \subfigure{\includegraphics[height=100pt]{./Slike/TEG-shema}}
@@ -200,7 +227,23 @@ Using the Seebeck effect, it is possible to convert this difference in temperatu
 \label{fig:teg-schematic}
 \end{figure}
 
-Due to their simple design and the possibility to re-use existing Peltier coolers, \ac{TEG} can be much cheaper than other \ac{EH} devices. 
+Figure~\ref{fig:teg-couple} shows a details view of a single thermocouple. Charge carriers on the hotter side move faster due to their higher thermal energy, so they diffuse towards the cold side. Bucause of the asymmetric diffusion, charge builds up on the colder side with the same sign as the charge carries in that semiconductor. By placing two opposite semiconductors side-by-side, we obtain a voltage between the electric leads~\cite{wiki:thermo}. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[height=150pt]{./Slike/TEG-couple}
+ \caption{Detailed view of a single thermocouple~\cite{wiki:thermo}}
+\label{fig:teg-couple}
+\end{figure}
+
+The voltage is directly proportional to the temperature difference between the two sides. 
+
+\begin{align}
+ V &= -S \Delta T
+\label{eq:seebeck}
+\end{align}
+
+Here $S$ is the Seebeck coefficient and is equal to the entropy per charge carrier of the material. Standard thermocouples made from a pair of metals have Seebeck coefficients of up to 100 $\mu$V/K, while semiconductors can reach values of almost 2000 $\mu$V/K~\cite{wiki:thermo,ec:seebeck}. 
 
 \subsection{Characteristics}
 
@@ -222,13 +265,22 @@ Device resistance & 3.78 $\Omega$ \\
 \label{tab:teg-radiator}
 \end{table}
 
+At a constant temperature difference, \acp{TEG} have a linear $V(I)$ curve, such as the one in Figure~\ref{fig:teg-curve}. The power curve is a parabola, with the maximum power point at exactly half the open-circuit voltage. 
+
+\begin{figure}[h]
+\centering
+ \includegraphics[height=150pt]{./Slike/TEG-curve}
+\caption{$V(I)$ and power curve of a \ac{TEG}~\cite{teg-curve}}
+\label{fig:teg-curve}
+\end{figure}
+
 \section{Piezoelectric generators}
 
 The third most common form of \ac{EH} is generating power from the energy of motion. Vibrations are present especially in the vicinity of working machinery, but energy can also be produced from human activities, such as walking~\cite{piezo-shoe-ieee}. 
 
 \subsection{Theory}
 
-Certain clystalline materials with asymmetric unit cells polarize themselves when an external force is applied. This phenomenon is called the Piezoelectric effect. The best-known material to exhibit piezoelectric behavior is \ac{PZT}, a ceramic with the formula \ce{Pb[Zr_xTi_{1-x}]O3}, $0\leq x \leq 1$.
+Certain crystalline materials with asymmetric unit cells polarize themselves when an external force is applied. This phenomenon is called the Piezoelectric effect. The best-known material to exhibit piezoelectric behavior is \ac{PZT}, a ceramic with the formula \ce{Pb[Zr_xTi_{1-x}]O3}, $0\leq x \leq 1$.
 
 
 Like the thermoelectric effect, the piezoelectric effect also has a direct converse, where a voltage applied to the material causes it to deform. Because of this, the same elements can be used as actuators, capable of very precise positioning due to the high voltages required for small mechanical deformations. 
@@ -248,14 +300,14 @@ The values of $d$ are different for every material. For tetragonal and hexagonal
 
 \begin{figure}[h!]
 \centering
-  \includegraphics[width=0.5\textwidth]{./Slike/Piezo-UI}
+  \includegraphics[width=0.45\textwidth]{./Slike/Piezo-UI}
 \caption{Typical piezoelectric load lines~\cite{LT-Piezo}}
 \label{fig:piezo-load}
 \end{figure}
 
 Unlike other \ac{EH} methods, piezoelectric elements often produce relatively high voltages, so a converter is needed to decrease the voltage. Both open-circuit voltage and short-circuit current increase with the available vibration energy~\cite{LT-Piezo}. Figure~\ref{fig:piezo-load} shows load lines for Piezo Systems \texttt{T220-A4-503X} with a wholesale price of \$70 per piece. We can observe that the lines are close to hyperbolas, so power output does not depend on the voltage applied, only on the vibration energy present. This particular element can function both as an energy harvester or an actuator and is rated for voltages up to $\pm$180 V. In typical vibration energy harvesting applications, the output voltage is much lower, but still high enough to require a specialized power supply. 
 
-Using a smaller device, researchers were able to produce produce an average power of over 8 mW from a \ac{PZT}-based piezoelectric mounted inside a shoe. This was enough to continuously power a short range radio frequency emitter~\cite{piezo-shoe-ieee}. 
+Using a smaller device, researchers were able to produce an average power of over 8 mW from a \ac{PZT}-based piezoelectric mounted inside a shoe. This was enough to continuously power a short range radio frequency emitter~\cite{piezo-shoe-ieee}. 
 
 % Ne vem ce je to fajn vkljucit, je uporabno ampak staro (2000)
 % According to research by Volvo Car Company, a piezo-element with dimensions of 67 x 25 x 1.45 mm requires the user to press a button with a force of 10 N to generate enough energy to send a signal to the car. 
@@ -264,26 +316,65 @@ Using a smaller device, researchers were able to produce produce an average powe
 
 As mentioned above, electrical power from \ac{EH} generators can be very sporadic, and so can be the required load. Therefore, additional electronics are require to turn the energy source into a useful power supply. 
 
-The first step is to ensure the maximum power transfer between the source and load. Differences in output voltage and resistance force us to use DC-DC converters. These converters can easily reach efficiencies of over 95\%, so they do not cause an excessive power loss. A major part of the power management system is also the storage and retrieval of energy in a separate container. Depending on the storage method, a suitable charging mechanism must be included. 
+\subsection{Voltage converters}
 
-Converters for different energy sources, such as those made by Linear Technology, are available in bulk at \$3-\$4 per piece. Battery charge controllers are also widely available at low prices, around \$2 per piece. In total, the cost of the power management system is only a small part of the total cost of the power source, the majority being the energy harvester itself~\cite{lt:cenik}. 
+The first step is to ensure the maximum power transfer between the source and load. Differences in output voltage and resistance force us to use DC-DC converters. These converters can reach efficiencies of over 95\%, so they do not cause an excessive power loss. In changing conditions it is often necessary to dynamically adjust the converter to ensure the energy harvester is operating at its maximum power point~\cite{solar-mppt-ieee}. 
+
+Depending on the output voltage of the power source, either step-up or step-down converters are used. Both are examples of switch-mode power supplies and function in a similar way, with an inductor for temporarily storing energy and two switches (a transistor and a diode) that control the inductor. A schematic of their design is shown in Figure~\ref{fig:converters}, however in most cases a capacitor is added in parallel with the load to reduce output voltage ripple~\cite{wiki:dcdc}. 
+
+\begin{figure}[h!]
+\centering
+  \subfigure{\includegraphics[height=72pt]{./Slike/Buck}}
+  \subfigure{\includegraphics[height=80pt]{./Slike/Boost}}
+\caption{Circuit diagrams of a step-down (left) and a step-up (right) DC converters. In both cases, the transistor is shown as an on-off switch~\cite{wiki:dcdc}.}
+\label{fig:converters}
+\end{figure}
+
+The transistor periodically changes its state at a rate of 300kHz to 10MHz. In the continuous operation mode, when the inductor is never completely discharged, the voltage gain is only affected by the part of the time the transistor is in the ``on'' state, also known as the duty cycle $D$. The duty cycle is always between 0 and 1 and can be controlled, allowing the output voltage to be modified at will. The output voltage of a step-down converter can be expressed as
+
+\begin{align}
+  V_o &= V_i \cdot D \\
+\intertext{while the equivalent expression for a step-up converter is}
+  V_o &= V_i \cdot \frac{1}{1-D}
+\end{align}
+
+
+\subsection{Storage element chargers}
+
+A major part of the power management system is the energy storage mechanism, responsible for the storage and retrieval of energy in a separate container. Due to the properties of the storage element, it is also responsible for limiting the current flow into the container to prevent overcharging. 
+
+\subsection{Price}
+
+Voltage and resistance converters for different energy sources, such as those made by Linear Technology and Texas Instruments, are available in bulk at \$1-\$4 per piece. Battery charge controllers are also widely available at low prices, around \$2 per piece. In total, the cost of the power management system is only a small part of the total cost of the power source, the majority being the energy harvester itself~\cite{lt:cenik, ti:eh}. 
 
 \section{Energy storage}
 
-In most cases, energy is stored either in batteries or ultracapacitors. Ultracapacitors, also known as Electric double-layer capacitors, are the newer technology, and are used where higher power density (as opposed to energy density) is required. En example of such a system is a wireless sensor node with its short spike of power consumption during transmission of data~\cite{cap-wsn-ieee}. Other advantages of supercapacitors include long life with no danger of overcharging or over-discharging and low internal resistance, while their main disadvantages are lower energy density and high self-discharge rate~\cite{wiki:edlc}. 
+The choice of the energy storage method depends on the application. For electronic devices such as phones or calculators, the most important characteristics are energy density and long life. On the other hand, wireless sensors require short bursts of power, calling for a storage element with high power density~\cite{cap-wsn-ieee}. Depending on the power source, the stored energy may have to power the device for long periods, favoring a storage element with a low self-discharge rate. 
+
+In most cases, harvested energy is stored either in rechargeable batteries or ultracapacitors. Rechargeable batteries, while widely used, suffer from degradation over a large number of charge-discharge cycles, limiting their useful life. Ultracapacitors, also known as supercapacitors or Electric double-layer capacitors, are the newer technology, and are used where higher power density (as opposed to energy density) is required. Unlike conventional capacitors with two metallic plates and an insulator between them, ultracapacitors are composed of two layers of a single material with a very thin separator. The lack of a wide insulator permits a larger plate surface area in a given volume, but also limits their maximum voltage. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.8\textwidth]{./Slike/Supercapacitor_diagram}
+  \caption{Comparison of construction diagrams of three capacitors. Left: ``normal'' capacitor, middle: electrolytic, right: electric double-layer capacitor~\cite{wiki:edlc}}
+  \label{fig:edlc-diagram}
+\end{figure}
+
+En example of such a system is a wireless sensor node with its short spike of power consumption during transmission of data. In cases where a single storage method cannot cover the needs of the powered device, a combination of a battery for long-term storage and an ultracapacitors for higher power output can also be used. 
+
+An important difference in the electrical characteristics of the two types of storage elements is their internal resistance, which is much lower in ultracapacitors. The lower resistance allows for higher charge and discharge rates, but it also causes higher leakage currents. Other advantages of ultracapacitors include long life with no danger of overcharging or over-discharging, while their main disadvantages are lower energy density and high self-discharge rate~\cite{wiki:edlc}. 
 
 \begin{figure}[!h]
+\centering
 \def\svgwidth{0.8\textwidth}
  \input{./Slike/Supercapacitors_chart.pdf_tex}
 \caption{Comparison of energy storage options~\cite{wiki:edlc}}
 \label{fig:storage-chart}
 \end{figure}
 
-Energy storage methods other than batteries and ultracapacitors are not widely used in energy harvesting. Fuel cells could be used in place of batteries, due to their high energy density and long life, but they are more complex and difficult to make in small sizes. They also require an external fuel source, negating the benefit of reduced size required to store the same amount of energy. Conventional capacitors, on the other hand, have very low energy densities and offer virtually no advantage over ultracapacitors. 
+Energy storage methods other than batteries and ultracapacitors are not widely used in energy harvesting. Fuel cells could be used in place of batteries, due to their high energy density and long life, but they are more complex and difficult to make in small sizes. They also require an external fuel source, negating the benefit of reduced size required to store the same amount of energy. Instead, they can used as an alternative to \ac{EH} as they don't need frequent refueling. Conventional capacitors, on the other hand, have very low energy densities and offer virtually no advantage over ultracapacitors. 
 
-Obviously, the choice of the energy storage method depends on the applications. For a solar-powered calculator, batteries have an advantage because of their lower leakage, and the device never requires a high power output. It is also possible to use both, an ultracapacitor for sudden spikes and a battery for long-term energy storage. 
-
-\section{Succesful implementations}
+\section{Successful implementations}
 
 \subsection{Building automation}
 
@@ -298,26 +389,27 @@ The EnOcean Alliance is a consortium of companies providing a building automatio
 
 A competing group of companies constitute the ZigBee Alliance. Aside from building automation, they also offer health care and remote control applications. However, they have only recently began adopting \ac{EH}, with the first batteryless wireless switch presented by Schneider Electric in 2009~\cite{schneider-zb}. As we can see in Figure~\ref{fig:enocean-shema}, the two standards are compatible and can be linked via a gateway device. 
 
+\newpage
 \subsection{Phone and laptop chargers}
 
 Several companies offer solar-powered chargers for phone and laptop batteries. In these cases, the goal is often not to power the devices solely through \ac{EH}, but mainly to extend battery life. 
 
 A typical modern laptop computer under light load consumes an average power of around 20 watts. This is far beyond the range of small energy harvesting solutions, so the solar cells have to be very large, making them both more expensive and less portable. Solar laptop charges, powerful enough to provide at least 10 watts in optimal conditions, thus require almost half a square meter of surface area and can cost over \$500. However, smaller and cheaper power sources can still provide a significant increase in battery life, especially for smaller, less power-consuming laptops~\cite{news:laptop-chargers}. 
 
-Mobile phones, on the other hand, require much less power. A phone spends most of the time in a sleeping state, in which it consumes less than 100 milliwatts. Hence the chargers can be the size of the phone itself and cost around \$30. Due to their small size, they cause no additional burden when being carried around, proving true energy harvesting devices~\cite{mysolarphonecharger}. 
+Mobile phones, on the other hand, require much less power. A phone spends most of the time in a sleeping state, in which it consumes less than 100 milliwatts. Hence the chargers can be the size of the phone itself and cost around \$30. With their small size, they cause no additional burden when being carried around, proving true energy harvesting devices~\cite{mysolarphonecharger}. 
 
 
 \section{Conclusion}
 
-\acf{EH} is becoming increasingly viable as a power source for small electronic devices. Because of their remote location or simply due to their small size and large numbers, it may become impractical or even impossible to connect such devices to the power grid or to supply them with batteries. Hence, an included small power source can drastically simplify the device installation and reduce its maintanace costs. 
+\acf{EH} is becoming increasingly viable as a power source for small electronic devices. Because of their remote location or simply due to their small size and large count, it may become impractical or even impossible to connect such devices to the power grid or to supply them with batteries. Hence, an included small power source can drastically simplify the device installation and reduce its maintenance costs. \acs{IBM}, one of the largest technology companies in the world, predicts energy from walking and other unconventional sources will become widespread in the next five years~\cite{ibm:5in5}. 
 
-We have seen three different methods for drawing power from the device surrounding, provided we have a source of light, heat or motion. The choice of a suitable method obviously depends on the device and the environment in which it is meant to be used. There are other possible approaches, but these three are the most popular at this time. 
+We have seen three different methods for drawing power from the device surrounding, provided we have a source of light, heat or motion. The choice of a suitable method obviously depends on the device's power requirements and the environment in which it is meant to be used. There are other possible approaches, but these three are the most popular at this time. 
 
 Because the energy source might not be present at all times, as is the case with photovoltaic placed outdoors, we also need to store the harvested energy. In this field, ultracapacitors are seeing rapid development and have become an alternative to more traditional batteries. Many wireless devices have a short duty cycle, during which the higher power output of capacitors is an important advantage, while their average power consumption is still very low. 
 
 \newpage
 
 \bibliography{harvesting}
-\bibliographystyle{unsrt} 
+\bibliographystyle{zumer} 
 
 \end{document}

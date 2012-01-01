@@ -31,69 +31,100 @@
  month = {April}
 }
  
-@Article{teg-wsn-ieee,
+@InProceedings{teg-wsn-ieee,
  author = {X. Lu and S.-H. Yang},
  title = {Thermal Energy Harvesting for \acp{WSN}},
- journal = {TODO, from IEEE}
+ booktitle = {IEEE International Conference on Systems Man and Cybernetics},
+ year = {2010},
+ pages = {3045-3052}
 }
 
-@Article{cap-wsn-ieee,
- author = {V. Naveen Kumar, S. S. Manjunath},
+@InProceedings{teg-curve,
+ author = {G. J. Snyder and A. Borshchevsky and A. Zoltan and T. Caillat and J.-P. Fleurial and B. Nesmith and J. Mondt and T. McBirney and D. Allen and J. C. Bass and S. Ghamaty and N. Elsner and L. Anatychuk},
+ title = {Testing of milliwatt power source components},
+ booktitle = {21st International Conference on Thermoelectrics},
+ year = {2002},
+ pages = {463-470},
+}
+
+@InProceedings{cap-wsn-ieee,
+ author = {V. Naveen Kumar and S. S. Manjunath},
  title = {A Reliable Ultracapacitor Based Solar Energy Harvesting system for Wireless Sensor Networks Enabled Intelligent Buildings},
- journal = {TODO, from IEEE}
+ booktitle = {2nd International Conference on Intelligent Agent and Multi-Agent Systems (IAMA)},
+ pages = {20-25},
+ year = {2011}
 }
 
 @Article{solar-mppt-ieee,
  author = {C. Alippi and C. Galperti},
  title = {An Adaptive System for Optimal Solar Energy Harvesting in Wireless Sensor Network Nodes},
- journal = {TODO, from IEEE}
+ journal = {IEEE Transactions on Circuits and Systems I: Regular Papers},
+ year = {2008},
+ month = {July},
+ pages = {1742-1750},
+ volume = {55},
+ number = {6}
 }
+
 @Article{piezo-shoe-ieee,
  author = {N. S. Shenck},
  title = {Energy Scavenging with Shoe-Mounted Piezoelectrics},
- journal = {TODO, from IEEE}
+ journal = {IEEE Micro},
+ year = {2001},
+ pages = {30-42},
+ volume = {21},
+ number = {3}
 }
 
 @Misc{ wiki:eh,
    author = "Wikipedia",
    title = "Energy harvesting --- Wikipedia{,} The Free Encyclopedia",
    year = "2011",
-   url = "\url{https://en.wikipedia.org/wiki/Energy_harvesting}",
-   note = "[Online; accessed 7-December-2011]"
+   url = "https://en.wikipedia.org/wiki/Energy_harvesting",
+   note = "7. 12. 2011"
  }
 
 @Misc{ wiki:piezo,
    author = "Wikipedia",
    title = "Piezoelectricity --- Wikipedia{,} The Free Encyclopedia",
    year = "2011",
-   url = "\url{https://en.wikipedia.org/wiki/Piezoelectricity}",
-   note = "[Online; accessed 7-December-2011]"
+   url = "https://en.wikipedia.org/wiki/Piezoelectricity",
+   note = "7. 12. 2011"
  }
 
 @Misc{ wiki:teg,
    author = "Wikipedia",
    title = "Thermoelectric generator --- Wikipedia{,} The Free Encyclopedia",
    year = "2011",
-   url = "\url{http://en.wikipedia.org/wiki/Thermoelectric_generator}",
-   note = "[Online; accessed 7-December-2011]"
+   url = "http://en.wikipedia.org/wiki/Thermoelectric_generator",
+   note = "7. 12. 2011"
  }
 
 @Misc{ wiki:edlc,
    author = "Wikipedia",
    title = "Electric double-layer capacitor --- Wikipedia{,} The Free Encyclopedia",
    year = "2011",
-   url = "\url{http://en.wikipedia.org/wiki/Electric_double-layer_capacitor}",
-   note = "[Online; accessed 7-December-2011]"
+   url = "http://en.wikipedia.org/wiki/Electric_double-layer_capacitor",
+   note = "7. 12. 2011"
  }
 
 @Misc{ wiki:solar-cells,
    author = "Wikipedia",
    title = "Theory of solar cells --- Wikipedia{,} The Free Encyclopedia",
    year = "2011",
-   url = "\url{http://en.wikipedia.org/wiki/Theory_of_solar_cells}",
-   note = "[Online; accessed 7-December-2011]"
+   url = "http://en.wikipedia.org/wiki/Theory_of_solar_cells",
+   note = "7. 12. 2011"
  }
 
+@Misc{ wiki:thermo,
+   url = "http://en.wikipedia.org/wiki/Thermoelectric_effect",
+   note = "7. 12. 2011"
+ }
+
+@Misc{ ec:seebeck,
+url = "http://www.electronics-cooling.com/2006/11/the-seebeck-coefficient/",
+note = "26. 12. 2011"
+ }
 
 @Article{Vib-fiber,
  author = {Y. Yang and L. Tang and H. Li},
@@ -108,22 +139,22 @@
    author = "Texas Instruments",
    title = "Energy Harvesting",
    year = "2011",
-   url = "\url{http://www.ti.com/ww/en/apps/energy-harvesting/index.shtml}",
-   note = "[Online; accessed 15-December-2011]"
+   url = "http://www.ti.com/ww/en/apps/energy-harvesting/index.shtml",
+   note = "15. 12. 2011"
  }
 
 @Misc{ news:laptop-chargers,
    author = "Jaymi Heimbuch",
    title = "7 Portable Solar Laptop Chargers Worth Considering",
    year = "2008",
-   url = "\url{http://www.treehugger.com/gadgets/7-portable-solar-laptop-chargers-worth-considering.html}",
-   note = "[Online; accessed 17-December-2011]"
+   url = "http://www.treehugger.com/gadgets/7-portable-solar-laptop-chargers-worth-considering.html",
+   note = "17. 12. 2011"
  }
 
 @Misc{ mysolarphonecharger,
    title = "Solar Phone Charger",
-   url = "\url{http://http://mysolarphonecharger.com/store-3}",
-   note = "[Online; accessed 17-December-2011]"
+   url = "http://http://mysolarphonecharger.com/store-3",
+   note = "17. 12. 2011"
  }
  
 @TechReport{ enocean,
@@ -136,14 +167,30 @@
 @TechReport{ schneider-zb,
  author = {},
  title = {A world technological first for Schneider Electric with the introduction of a ZigBee-based wireless, batteryless switch},
- institution = {Schneired Electric },
+ institution = {Schneider Electric },
  year = {2009},
 }
 
 @Misc{ lt:cenik,
   title = {Energy Harvesting},
   institution = {Linear Technology},
-  url = "\url{http://parametric.linear.com/energy_harvesting#!cols_2200,1032,1033,1031,1112,10002!s_0,0!gtd_}",
-  note = "[Online; accessed 17-December-2011]"
+  url = "http://parametric.linear.com/energy_harvesting#!cols_2200,1032,1033,1031,1112,10002!s_0,0!gtd_",
+  note = "17. 12. 2011"
+}
+
+@Misc{ ibm:5in5,
+  title = {The next 5 in 5},
+  url = "http://ibmresearchnews.blogspot.com/2011/12/ibm-5-in-5-creating-energy-from.html",
+  note = "24. 12. 2011"
+}
+
+@Misc {wiki:dcdc,
+  url = "https://en.wikipedia.org/wiki/DC-to-DC_converter",
+  note = "30. 12. 2011"
+}
+
+@Misc {wiki:thevenin, 
+  url = "https://en.wikipedia.org/wiki/Th%C3%A9venin%27s_theorem",
+  note = "30. 12. 2011"
 }
 
