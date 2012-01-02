@@ -13,13 +13,15 @@
 #include <numeric>
 #include <iterator>
 
+#include <cstring>
+
 #define forto(i, n) for(int i = 0; i < n; ++i)
 #define foreach(it, vector) for (auto it = vector.begin(); it != vector.end(); ++it)
 
-const double dt = 0.01;
-const double beta = 1.0;
+double dt = 0.01;
+double beta = 1.0;
 
-const double StStat = 1e3;
+double StStat = 1e3;
 
 typedef int (*korak)(int N, gsl_rng* r);
 typedef void (*korak_zl)(int *Z, int *L, gsl_rng* r);
@@ -70,7 +72,6 @@ double smrt(int N, korak k, gsl_rng* r)
         N = k(N,r);
         T += dt;
     }
-    std::cout << T << std::endl;
     return T;
 }
 
@@ -97,7 +98,7 @@ void korak_zajlis(int *Z, int *L, gsl_rng* r)
 
 data statistika(int N, korak k)
 {
-    std::vector<double> stat(StStat);
+    data stat(StStat);
     gsl_rng* r = gsl_rng_alloc(gsl_rng_default);
     gsl_rng_set(r, time(0));
     forto(i,StStat)
@@ -121,59 +122,83 @@ data stat_zl(int Z, int L, korak_zl k)
     return stat;
 }
 
-gsl_histogram* histogram(data d)
+gsl_histogram* histogram(data d, int max)
 {
-    int max = *(std::max_element(d.begin(), d.end()));
-    int min = *(std::min_element(d.begin(), d.end()));
-    gsl_histogram* h = gsl_histogram_alloc(max - min + 1);
-    gsl_histogram_set_ranges_uniform(h, min, max);
+    // double max = *(std::max_element(d.begin(), d.end()));
+    // double min = *(std::min_element(d.begin(), d.end()));
+		
+		int bins = max / dt;
+		
+		std::cout << "Making histogram with " << bins << " bins" << std::endl;
+		
+    gsl_histogram* h = gsl_histogram_alloc(bins);
+
+    gsl_histogram_set_ranges_uniform(h, dt/2, max+dt/2);
     
     foreach (it, d)
     {
         gsl_histogram_increment(h, *it);
     }
+    
+    gsl_histogram_scale(h, 1.0 / dt / StStat);
+    
     return h;
 }
 
-void zajlis(int Z, int L, korak_zl k)
+void zajlis(int Z, int L, korak_zl k, std::ostream& out)
 {
     data d = stat_zl(Z, L, k);
-    std::ofstream o;
-    char buffer[64];
-    sprintf(buffer, "../../zajlis-%d-%d.dat", Z, L);
-    o.open(buffer);
-    gsl_histogram* h = histogram(d);
+   gsl_histogram* h = histogram(d, 60);
     int B = gsl_histogram_bins(h);
     forto(i,B)
     {
         double min, max;
         gsl_histogram_get_range(h, i, &min, &max);
-        o << (min+max)/2 << '\t' << gsl_histogram_get(h,i) << std::endl;
+        out << (min+max)/2 << '\t' << gsl_histogram_get(h,i) << std::endl;
     }
-    o.close();
 }
 
-void izumrtje(int N, korak k, test* t)
+void izumrtje(int N, korak k, test* t, std::ostream& out)
 {
     data d = statistika(N, k);
-    std::ofstream o;
-    char buffer[64];
-    sprintf(buffer, "../../izumrtje-%d.dat", N);
-    o.open(buffer);
-    gsl_histogram* h = histogram(d);
+    gsl_histogram* h = histogram(d, 15);
     int B = gsl_histogram_bins(h);
     forto(i,B)
     {
         double min, max;
         gsl_histogram_get_range(h, i, &min, &max);
-        o << (min+max)/2 << '\t' << gsl_histogram_get(h,i) << std::endl;
+        out << (min+max)/2 << '\t' << gsl_histogram_get(h,i) << std::endl;
     }
-    o.close();
 }
 
 int main(int argc, char **argv) {
-    izumrtje(25, korak_exp, 0);
-    izumrtje(250, korak_exp, 0);
-    zajlis(200, 30, korak_zajlis);
+		
+		if (argc < 6)
+		{
+				std::cout << "Usage: populacije <outfile> <dt> <StStat> izumrtje <rs|exp> N" << std::endl;
+				std::cout << "Usage: populacije <outfile> <dt> <StStat> zajlis Z L" << std::endl;
+		}
+		
+		std::ofstream o;
+		o.open(argv[1]);
+		dt = atof(argv[2]);
+		StStat = atoi(argv[3]);
+		char* op = argv[4];
+		if (strcmp(op, "izumrtje") == 0)
+		{
+				if (strcmp(argv[5], "rs") == 0)
+				{
+						izumrtje(atoi(argv[6]), korak_rs, 0, o);
+				}
+				else
+				{
+						izumrtje(atoi(argv[6]), korak_exp, 0, o);
+				}
+		}
+		else if (strcmp(op, "zajlis") == 0)
+		{
+				zajlis(atoi(argv[5]), atoi(argv[6]), korak_zajlis, o);
+		}
+		o.close();
     return 0;
 }

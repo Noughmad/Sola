@@ -33,6 +33,40 @@
 
 \section{Statistika "casov izumrtja}
 
+Simuliral sem stohasti"cno izumiranje populacije z dvema razli"cnema modeloma
+\begin{enumerate}
+ \item Eksponentno-padajo"ci model
+ \item Model z rojstvi in umiranjem
+\end{enumerate}
+
+"Casovne konstante sem izbral tako, da je v povpre"cju sprememba populacije enaka pri obeh modelih. Pri generiranju "stevila smrti in rojstev sem uporabil funkcijo \texttt{gsl\_ran\_poisson()}, ki vrne naklju"cno "stevilo s Poissonovo verjetnostno porazdelitvijo. 
+
+Za vsak model sem izra"cunal verjetnostno porazdelitev "casov izumrtja. 
+
+\subsection{Eksponentno umiranje}
+
+Ta model najbolje opisuje radioaktivne razpade jeder ali pa relaksacijo iz vzbujenega stanja atomov. 
+
+\input{g_iz_exp_25}
+
+S slike razberemo, da velikost koraka vidno vpliva porazdelitev pri $\Delta t \geq 0,1$. Ko je korak dovolj majhen, da le zaneraljiv dele"z osebkov umre v vsakem koraku, z dodatnim manj"sanjem ne pridobimo ni"c ve"c na natan"cnosti. Podobno lahko zaklju"cimo tudi, "ce za"cnemo v ve"cjo populacijo.  Vrh populacije se po pri"cakovanju premakne k dalj"sim "casom, odvisnost od "casovnega koraka pa je podobna kot prej. 
+
+\input{g_iz_exp_250}
+
+Grafa sta si zelo podobna, spodnji je le premaknjena slika zgornjega. To je za pri"cakovati, saj zaradi eksponentnega upadanja pri"cakujemo logaritemsko odvisnost "zivljenjskega "casa od $N$. 
+
+Vidimo tudi, da pri zelo velikih korakih ($\Delta t \approx 1$) velikost populacije skoraj ni"c ne vpliva na "cas izumrtja. V obeh primerih s pribli"zno polovi"cno verjetnostjo pride do izumrtja "ze po prvem koraku, naprej pa verjetnost pada eksponentno. Pri kraj"sih korakih, "ze pri $\Delta t = 0,5$ pa opazimo vidno odvisnost od za"cetne velikosti populacije. 
+
+\section{Rojstva in smrti}
+
+\input{g_iz_rs_25}
+
+\input{g_iz_rs_250}
+
+Podobno kot prej lahko tudi tu pridemo do opa"zanja, da pri $\Delta t = 1$ velikost populacije ne vpliva mo"cno na "cas izumrtja, pri manj"sih korakih pa je statistika za ve"cjo populacijo le premaknjena v desno. 
+
+"Ce pa primerjamo zgorja grafa s tistimi iz prej"sjnega poglavja pa vidimo, da proces z umiranjem in rojevanjem v povpre"cju vodi do hitrej"sega izumtrja. 
+
 \section{Matrika prehodov}
 
 Verjetnost, da v dolo"cenem koraku umre $n$ osebkov izra"cunamo po Poissonovi porazdelitvi:
@@ -105,5 +139,20 @@ Ker matrika prehodov predstavlja en "casovni korak simulacije, lahko z limitiran
 \end{align}
 
 Tak"sen sistem znamo re"siti, tako da poi"s"cemo lastne vrednosti in lastne vektorje matrike $W$. 
+
+\section{Zajci in lisice}
+
+Z enakim pristopom kot eksponentnega izumiranja sem se lotil tudi problema zajcev in lisic. V teoreti"cnem zveznem primeru bi moral biti ta sistem obstojen, tako da do izumrtja ne bi pri"slo. "Ce pa upo"stevamo diskretno "stevilo osebkov in stohasti"cnost procesa, pa do izumrtja vsaj ene izmed vrst vedno pride. 
+
+"Ce najprej izumrejo zajci, bodo za njimi tudi lisice, saj jim primanjkuje hrane. "Ce pa najprej izumrejo lisice, pa so bodo zajci ekspronento namno"zili, saj njihove hrane nismo upo"stevali v ena"cbah. Da bi se izognil temu primeru sem simulacijo ustavil takoj, ko je izumrla vsaj ena izmed obeh vrst. 
+
+Tudi tu sem izra"cunal verjetnostno porazdelitev ca"sov izumrtja. 
+
+\input{g_zl_50}
+
+Ogledal sem si "se primer, ko za"cnemo v legi, ki tudi v zveznem primeru ni ravnovesna. V tem primeru pri"cakujemo hitrej"se izumrtje. 
+
+\input{g_zl_40}
+\input{g_zl_60}
 
 \end{document}

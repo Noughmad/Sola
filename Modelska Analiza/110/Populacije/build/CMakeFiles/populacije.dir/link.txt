@@ -1,0 +1,1 @@
+/usr/bin/c++   -Wall -O3 -std=c++0x -g    CMakeFiles/populacije.dir/main.cpp.o  -o populacije -rdynamic -lgsl -lgslcblas 

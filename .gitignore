@@ -1,1 +1,13 @@
 *~
+*.backup
+g_*
+.kdev4
+*.kdev4
+*.out
+*.aux
+*.log
+*.bbl
+*.nav
+*.toc
+*.blg
+*.snm

@@ -44,28 +44,28 @@ order=-1
 
 [item:harvesting.bib]
 archive=true
-column=1
+column=14
 encoding=UTF-8
 highlight=BibTeX
-line=194
+line=94
 mode=BibTeX
-open=true
+open=false
 order=1
 
 [item:harvesting.tex]
 archive=true
-column=50
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=38
+line=198
 mode=LaTeX
 open=true
 order=0
 
 [view-settings,view=0,item:harvesting.bib]
-CursorColumn=1
-CursorLine=194
+CursorColumn=14
+CursorLine=94
 
 [view-settings,view=0,item:harvesting.tex]
-CursorColumn=50
-CursorLine=38
+CursorColumn=0
+CursorLine=198

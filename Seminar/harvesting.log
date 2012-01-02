@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2012/dev/Arch Linux) (format=pdflatex 2011.12.24)  30 DEC 2011 12:35
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2012/dev/Arch Linux) (format=pdflatex 2012.1.1)  2 JAN 2012 13:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -525,20 +525,20 @@ Package pdftex.def Info: ./Slike/wsn-current-profile.png used on input line 93.
 
 (pdftex.def)             Requested size: 250.0pt x 126.31778pt.
 
-<./Slike/casio-solar-calculator.jpg, id=218, 301.125pt x 464.73625pt>
+<./Slike/casio-solar-calculator.jpg, id=218, 228.855pt x 361.35pt>
 File: ./Slike/casio-solar-calculator.jpg Graphic file (type jpg)
 
 <use ./Slike/casio-solar-calculator.jpg>
 Package pdftex.def Info: ./Slike/casio-solar-calculator.jpg used on input line 
 126.
-(pdftex.def)             Requested size: 129.5869pt x 200.0pt.
+(pdftex.def)             Requested size: 114.00117pt x 180.0pt.
 
-<./Slike/GPS-satellite.jpg, id=219, 180.1932pt x 144.2991pt>
-File: ./Slike/GPS-satellite.jpg Graphic file (type jpg)
+<./Slike/ISS-solar.jpg, id=219, 803.0pt x 532.99126pt>
+File: ./Slike/ISS-solar.jpg Graphic file (type jpg)
 
-<use ./Slike/GPS-satellite.jpg>
-Package pdftex.def Info: ./Slike/GPS-satellite.jpg used on input line 127.
-(pdftex.def)             Requested size: 249.75018pt x 200.0pt.
+<use ./Slike/ISS-solar.jpg>
+Package pdftex.def Info: ./Slike/ISS-solar.jpg used on input line 127.
+(pdftex.def)             Requested size: 271.17847pt x 180.0pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -546,15 +546,15 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 Package acronym Info: Label `acro:RTG' newly defined as it shall be overridden
 although it is yet undefined on input line 136.
 [4 <./Slike/wsn-current-profile.png>]
-<./Slike/Thevenin_equivalent.png, id=229, 315.54507pt x 140.46844pt>
+<./Slike/Thevenin_equivalent.png, id=230, 315.54507pt x 140.46844pt>
 File: ./Slike/Thevenin_equivalent.png Graphic file (type png)
 
 <use ./Slike/Thevenin_equivalent.png>
 Package pdftex.def Info: ./Slike/Thevenin_equivalent.png used on input line 148
 .
 (pdftex.def)             Requested size: 150.56305pt x 67.02756pt.
- [5 <./Slike/casio-solar-calculator.jpg> <./Slike/GPS-satellite.jpg> <./Slike/T
-hevenin_equivalent.png>]
+ [5 <./Slike/casio-solar-calculator.jpg> <./Slike/ISS-solar.jpg> <./Slike/Theve
+nin_equivalent.png>]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 167.
@@ -563,55 +563,55 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 167.
 
-<./Slike/PV-band-diagram.png, id=244, 614.295pt x 514.92375pt>
+<./Slike/PV-band-diagram.png, id=247, 614.295pt x 514.92375pt>
 File: ./Slike/PV-band-diagram.png Graphic file (type png)
 
 <use ./Slike/PV-band-diagram.png>
-Package pdftex.def Info: ./Slike/PV-band-diagram.png used on input line 189.
+Package pdftex.def Info: ./Slike/PV-band-diagram.png used on input line 187.
 (pdftex.def)             Requested size: 298.75264pt x 250.42914pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[6] <./Slike/PV-power-curve.png, id=259, 687.31781pt x 306.39468pt>
+[6] <./Slike/PV-power-curve.png, id=261, 687.31781pt x 306.39468pt>
 File: ./Slike/PV-power-curve.png Graphic file (type png)
 
 <use ./Slike/PV-power-curve.png>
-Package pdftex.def Info: ./Slike/PV-power-curve.png used on input line 203.
+Package pdftex.def Info: ./Slike/PV-power-curve.png used on input line 201.
 (pdftex.def)             Requested size: 426.79135pt x 190.25728pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 Package acronym Info: Label `acro:TEG' newly defined as it shall be overridden
-although it is yet undefined on input line 217.
+although it is yet undefined on input line 215.
 [7 <./Slike/PV-band-diagram.png>]
-<./Slike/TEG-shema.png, id=272, 345.54094pt x 185.19188pt>
+<./Slike/TEG-shema.png, id=274, 345.54094pt x 185.19188pt>
 File: ./Slike/TEG-shema.png Graphic file (type png)
 
 <use ./Slike/TEG-shema.png>
-Package pdftex.def Info: ./Slike/TEG-shema.png used on input line 224.
+Package pdftex.def Info: ./Slike/TEG-shema.png used on input line 222.
 (pdftex.def)             Requested size: 186.58405pt x 100.0pt.
 
-<./Slike/TEG-slika.jpg, id=273, 1378.14874pt x 767.86874pt>
+<./Slike/TEG-slika.jpg, id=275, 1378.14874pt x 767.86874pt>
 File: ./Slike/TEG-slika.jpg Graphic file (type jpg)
 
 <use ./Slike/TEG-slika.jpg>
-Package pdftex.def Info: ./Slike/TEG-slika.jpg used on input line 225.
+Package pdftex.def Info: ./Slike/TEG-slika.jpg used on input line 223.
 (pdftex.def)             Requested size: 179.46002pt x 100.0pt.
 
-<./Slike/TEG-couple.png, id=278, 278.03876pt x 290.08376pt>
+<./Slike/TEG-couple.png, id=280, 278.03876pt x 290.08376pt>
 File: ./Slike/TEG-couple.png Graphic file (type png)
 
 <use ./Slike/TEG-couple.png>
-Package pdftex.def Info: ./Slike/TEG-couple.png used on input line 234.
+Package pdftex.def Info: ./Slike/TEG-couple.png used on input line 232.
 (pdftex.def)             Requested size: 143.77066pt x 150.0pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [8 <./Slike/PV-power-curve.png> <./Slike/TEG-shema.png> <./Slike/TEG-slika.jpg>
-] <./Slike/TEG-curve.png, id=298, 682.80093pt x 422.32782pt>
+] <./Slike/TEG-curve.png, id=302, 682.80093pt x 422.32782pt>
 File: ./Slike/TEG-curve.png Graphic file (type png)
 
 <use ./Slike/TEG-curve.png>
@@ -627,35 +627,40 @@ LaTeX Info: Redefining \bond on input line 283.
 LaTeX Info: Redefining \dbond on input line 283.
 LaTeX Info: Redefining \tbond on input line 283.
 [9 <./Slike/TEG-couple.png>]
-<./Slike/Piezo-UI.png, id=316, 453.19313pt x 450.9347pt>
+<./Slike/Piezo-UI.png, id=320, 453.19313pt x 450.9347pt>
 File: ./Slike/Piezo-UI.png Graphic file (type png)
 
 <use ./Slike/Piezo-UI.png>
 Package pdftex.def Info: ./Slike/Piezo-UI.png used on input line 303.
 (pdftex.def)             Requested size: 192.0548pt x 191.09769pt.
- [10 <./Slike/TEG-curve.png> <./Slike/Piezo-UI.png>]
-<./Slike/Buck.png, id=334, 384.43625pt x 137.51375pt>
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[10 <./Slike/TEG-curve.png>]
+<./Slike/Buck.png, id=338, 384.43625pt x 137.51375pt>
 File: ./Slike/Buck.png Graphic file (type png)
  <use ./Slike/Buck.png>
 Package pdftex.def Info: ./Slike/Buck.png used on input line 327.
 (pdftex.def)             Requested size: 201.29237pt x 72.0pt.
 
-<./Slike/Boost.png, id=335, 396.48125pt x 154.5775pt>
+<./Slike/Boost.png, id=339, 396.48125pt x 154.5775pt>
 File: ./Slike/Boost.png Graphic file (type png)
  <use ./Slike/Boost.png>
 Package pdftex.def Info: ./Slike/Boost.png used on input line 328.
 (pdftex.def)             Requested size: 205.20346pt x 80.0pt.
 
-[11 <./Slike/Buck.png> <./Slike/Boost.png (PNG copy)>]
-<./Slike/Supercapacitor_diagram.pdf, id=352, 740.7675pt x 331.2375pt>
+[11 <./Slike/Piezo-UI.png> <./Slike/Buck.png> <./Slike/Boost.png (PNG copy)>]
+<./Slike/Supercapacitor_diagram.pdf, id=354, 740.7675pt x 331.2375pt>
 File: ./Slike/Supercapacitor_diagram.pdf Graphic file (type pdf)
 
 <use ./Slike/Supercapacitor_diagram.pdf>
 Package pdftex.def Info: ./Slike/Supercapacitor_diagram.pdf used on input line 
 358.
 (pdftex.def)             Requested size: 341.43437pt x 152.67435pt.
- (./Slike/Supercapacitors_chart.pdf_tex <./Slike/Supercapacitors_chart.pdf, id=
-356, 622.325pt x 385.44pt>
+ [12 <./Slike/Supercapacitor_diagram.pdf>] (./Slike/Supercapacitors_chart.pdf_t
+ex
+<./Slike/Supercapacitors_chart.pdf, id=391, 622.325pt x 385.44pt>
 File: ./Slike/Supercapacitors_chart.pdf Graphic file (type pdf)
 
 <use ./Slike/Supercapacitors_chart.pdf>
@@ -663,11 +668,7 @@ Package pdftex.def Info: ./Slike/Supercapacitors_chart.pdf used on input line 5
 2.
 (pdftex.def)             Requested size: 341.43437pt x 211.46921pt.
 )
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[12 <./Slike/Supercapacitor_diagram.pdf>]
-<./Slike/EnOcean-shema.png, id=391, 858.20625pt x 524.71031pt>
+<./Slike/EnOcean-shema.png, id=395, 858.20625pt x 524.71031pt>
 File: ./Slike/EnOcean-shema.png Graphic file (type png)
 
 <use ./Slike/EnOcean-shema.png>
@@ -714,8 +715,8 @@ Package rerunfilecheck Info: File `harvesting.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  7508 strings out of 493629
- 110412 string characters out of 3148777
- 226879 words of memory out of 3000000
+ 110392 string characters out of 3148779
+ 226880 words of memory out of 3000000
  10565 multiletter control sequences out of 15000+200000
  13550 words of font info for 52 fonts, out of 3000000 for 9000
  831 hyphenation exceptions out of 8191
@@ -727,15 +728,16 @@ ts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-dist/fonts/type1/public
 mmi12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
 /share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></us
-r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmtt10.pfb>
-Output written on harvesting.pdf (15 pages, 846313 bytes).
+public/amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></us
+r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmtt10.pfb>
+Output written on harvesting.pdf (15 pages, 912341 bytes).
 PDF statistics:
- 551 PDF objects out of 1000 (max. 8388607)
- 461 compressed objects within 5 object streams
+ 559 PDF objects out of 1000 (max. 8388607)
+ 467 compressed objects within 5 object streams
  104 named destinations out of 1000 (max. 500000)
  331 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,2 +1,83 @@
 set terminal epslatex color solid
+set style data boxes
+# set style fill transparent solid 0.5
+
+set xrange [0.5:15.5]
+
+set output "g_iz_exp_25.tex"
+
+set xlabel "\"Cas $t$"
+set ylabel "Verjetnost $p(t)$"
+
+plot "g_iz_exp_1_25.dat" t "$\\Delta t = 1$", \
+"g_iz_exp_0.5_25.dat" t "$\\Delta t = 0,5$", \
+"g_iz_exp_0.1_25.dat" w lines t "$\\Delta t = 0,1$", \
+"g_iz_exp_0.01_25.dat" w lines t "$\\Delta t = 0,01$"
+
+set output "g_iz_rs_25.tex"
+
+plot "g_iz_rs_1_25.dat" t "$\\Delta t = 1$", \
+"g_iz_rs_0.5_25.dat" t "$\\Delta t = 0,5$", \
+"g_iz_rs_0.1_25.dat" w lines t "$\\Delta t = 0,1$", \
+"g_iz_rs_0.01_25.dat" w lines t "$\\Delta t = 0,01$"
+
+
+set output "g_iz_exp_250.tex"
+
+plot "g_iz_exp_1_250.dat" t "$\\Delta t = 1$", \
+"g_iz_exp_0.5_250.dat" t "$\\Delta t = 0,5$", \
+"g_iz_exp_0.1_250.dat" w lines t "$\\Delta t = 0,1$", \
+"g_iz_exp_0.01_250.dat" w lines t "$\\Delta t = 0,01$"
+
+set output "g_iz_rs_250.tex"
+
+plot "g_iz_rs_1_250.dat" t "$\\Delta t = 1$", \
+"g_iz_rs_0.5_250.dat" t "$\\Delta t = 0,5$", \
+"g_iz_rs_0.1_250.dat" w lines t "$\\Delta t = 0,1$", \
+"g_iz_rs_0.01_250.dat" w lines t "$\\Delta t = 0,01$"
+
+set output "g_iz_exp_t1.tex"
+plot "g_iz_exp_1_25.dat" t "$N = 25$", "g_iz_exp_1_250.dat" t "$N = 250$"
+
+set output "g_iz_exp_t05.tex"
+plot "g_iz_exp_0.5_25.dat" t "$N = 25$", "g_iz_exp_0.5_250.dat" t "$N = 250$"
+
+set output "g_iz_exp_t01.tex"
+plot "g_iz_exp_0.1_25.dat" t "$N = 25$", "g_iz_exp_0.1_250.dat" t "$N = 250$"
+
+set output "g_iz_exp_t001.tex"
+plot "g_iz_exp_0.01_25.dat" t "$N = 25$", "g_iz_exp_0.01_250.dat" t "$N = 250$"
+
+set output "g_iz_rs_t1.tex"
+plot "g_iz_rs_1_25.dat" t "$N = 25$", "g_iz_rs_1_250.dat" t "$N = 250$"
+
+set output "g_iz_rs_t05.tex"
+plot "g_iz_rs_0.5_25.dat" t "$N = 25$", "g_iz_rs_0.5_250.dat" t "$N = 250$"
+
+set output "g_iz_rs_t01.tex"
+plot "g_iz_rs_0.1_25.dat" t "$N = 25$", "g_iz_rs_0.1_250.dat" t "$N = 250$"
+
+set output "g_iz_rs_t001.tex"
+plot "g_iz_rs_0.01_25.dat" t "$N = 25$", "g_iz_rs_0.01_250.dat" t "$N = 250$"
+
+set xrange [0.5:60.5]
+
+set output "g_zl_50.tex"
+plot "g_zl_1_200_50.dat" t "$\\Delta t = 1$", \
+"g_zl_0.5_200_50.dat" t "$\\Delta t = 0,5$", \
+"g_zl_0.1_200_50.dat" w lines t "$\\Delta t = 0,1$", \
+"g_zl_0.01_200_50.dat" w lines t "$\\Delta t = 0,01$"
+
+set output "g_zl_40.tex"
+plot "g_zl_1_200_40.dat" t "$\\Delta t = 1$", \
+"g_zl_0.5_200_40.dat" t "$\\Delta t = 0,5$", \
+"g_zl_0.1_200_40.dat" w lines t "$\\Delta t = 0,1$", \
+"g_zl_0.01_200_40.dat" w lines t "$\\Delta t = 0,01$"
+
+set output "g_zl_60.tex"
+plot "g_zl_1_200_60.dat" t "$\\Delta t = 1$", \
+"g_zl_0.5_200_60.dat" t "$\\Delta t = 0,5$", \
+"g_zl_0.1_200_60.dat" w lines t "$\\Delta t = 0,1$", \
+"g_zl_0.01_200_60.dat" w lines t "$\\Delta t = 0,01$"
+
 

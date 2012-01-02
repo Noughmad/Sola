@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/miha/Sola/Modelska Analiza/110/Populacije/main.cpp
+iostream
+-
+gsl/gsl_statistics_double.h
+-
+gsl/gsl_rng.h
+-
+gsl/gsl_randist.h
+-
+gsl/gsl_histogram.h
+-
+gsl/gsl_sort.h
+-
+math.h
+-
+vector
+-
+fstream
+-
+algorithm
+-
+numeric
+-
+iterator
+-
+cstring
+-
+

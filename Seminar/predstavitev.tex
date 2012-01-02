@@ -11,6 +11,11 @@
 \institute{Faculty of Mathematics and Physics \\ University of Ljubljana}
 \date{January 4, 2012}
 
+\newenvironment{colframe}[1]{\begin{frame}\frametitle{#1}\begin{columns}}{\end{columns}\end{frame}}
+\newenvironment{itemblock}[1]{\begin{block}{#1}\begin{itemize}}{\end{itemize}\end{block}}
+
+\renewcommand{\smash}{\footnotesize}
+
 \begin{document}
 
 \frame{\titlepage}
@@ -43,7 +48,26 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Requirements}
+  \frametitle{Wireless sensor networks}
+
+\begin{columns}
+ \begin{column}{.5\textwidth}
+  \begin{itemize}
+   \item Low power consumption
+   \item Most time in ``sleep'' mode
+   \item Most power needed for transmission
+  \end{itemize}
+ \end{column}
+
+ \begin{column}{.5\textwidth}
+  \includegraphics[width=\textwidth]{./Slike/wsn-current-profile}
+ \end{column}
+\end{columns}
+
+\begin{center}
+ \includegraphics[height=130pt]{./Slike/EH-Block}
+\end{center}
+
 \end{frame}
 
 \begin{frame}
@@ -69,15 +93,25 @@
 
 \section{Photovoltaics}
 
-\begin{frame}
-  \frametitle{Photovoltaic cells}
-\begin{itemize}
-  \item Most used today
-  \item Produce the most power
-  \item Variable output
-\end{itemize}
+\begin{frame}{Photovoltaic cells}
+ \begin{columns}
+  
+
+  \begin{column}{.5\textwidth}
+    \begin{itemize}
+      \item Most used today
+      \item Produce the most power
+      \item Variable output
+    \end{itemize}
+    \includegraphics[width=\textwidth]{./Slike/Solar_cell}
+  \end{column}
+  \begin{column}{.4\textwidth}
+    \includegraphics[width=\textwidth]{./Slike/casio-solar-calculator}
+  \end{column}
+ \end{columns}
 
 \end{frame}
+
 
 \begin{frame}
   \frametitle{Theory}
@@ -113,6 +147,10 @@
 
 \begin{frame}
   \frametitle{Thermoelectric generators}
+\begin{columns}
+ 
+
+\begin{column}{.6\textwidth}
 \begin{block}{Operation}
 \begin{itemize}
   \item Electricity from tempareture gradient
@@ -129,6 +167,13 @@
   \end{itemize}
 \end{block}
 
+\end{column}
+\begin{column}{.35\textwidth}
+ \includegraphics[width=\textwidth]{./Slike/TEG-shema} \\
+ \includegraphics[width=\textwidth]{./Slike/TEG-slika}
+\end{column}
+
+\end{columns}
 
 \end{frame}
 
@@ -176,6 +221,37 @@
 
 \begin{frame}
   \frametitle{Piezoelectric generators}
+
+\begin{columns}
+ \begin{column}{.5\textwidth}
+  
+\begin{block}{Operation}
+\begin{itemize}
+ \item Converts mechanical stress to electricity
+ \item Harvest energy of vibration
+\end{itemize}
+\end{block}
+
+\begin{block}{Vibration sources}
+  \begin{itemize}
+  \item Machines
+  \item Human movement
+  \item Buttons in remote controls
+\end{itemize}
+\end{block}
+
+ \end{column}
+\begin{column}{.4\textwidth}
+  
+\includegraphics[width=\textwidth]{./Slike/Piezo-shoe} \\
+\includegraphics[width=\textwidth]{./Slike/Piezo-remote}
+
+ \end{column}
+
+
+\end{columns}
+
+
 \end{frame}
 
 \begin{frame}
@@ -199,6 +275,7 @@
 \begin{frame}
   \frametitle{Characteristics}
 \begin{itemize}
+  \item Low power output $\sim$ 1mW
   \item High voltage $V_{oc}$
   \item Constant power curve
 \end{itemize}
@@ -212,21 +289,103 @@
 \section{Management and storage}
 
 \begin{frame}
-  \frametitle{Power management}
+  \frametitle{Voltage convertes}
+
+\begin{columns}
+ \begin{column}{.5\textwidth}
+ \begin{itemize}
+  \item Switched-mode
+  \item Step-up or step-down
+  \item Store energy in an inductor
+  \item Switch frequency $\sim$ 1MHz
+  \item Voltage gain depends only on duty cycle
+  \item Efficiency over 90\%
+  \item Dynamically adjustable
+ \end{itemize}
+\end{column}
+
+\begin{column}{.45\textwidth}
+\begin{center}
+ \includegraphics[width=\textwidth]{./Slike/Buck} \\
+  Step-down (buck) converter \\
+ \includegraphics[width=\textwidth]{./Slike/Boost} \\
+  Step-up (boost) converter
+\end{center}
+\end{column}
+
+\end{columns}
+
 \end{frame}
+
+
 
 \begin{frame}
   \frametitle{Energy storage}
+
+\begin{columns}
+\begin{column}{.45\textwidth}
+
+\begin{block}{Storage elements}
+\begin{itemize}
+ \item Batteries
+ \item Electric double-layer capacitors
+\end{itemize}
+\end{block}
+
+
+
+\end{column}
+
+\begin{column}{.5\textwidth}
+
+\begin{block}{Chargers}
+ \begin{itemize}
+  \item Prevent overcharging and over-discharging
+  \item Limit input and output current
+ \end{itemize}
+\end{block}
+\end{column}
+
+\end{columns}
+\begin{center}
+\def\svgwidth{.7\textwidth}
+{\footnotesize \input{./Slike/Supercapacitors_chart.pdf_tex} }
+\end{center}
+
+
 \end{frame}
 
 \section{Succesful implementations}
 
 \begin{frame}
   \frametitle{Building automation}
+
+   \begin{itemize}
+    \item Wireless sensors and switches, grid-powered central nodes
+    \item Various energy sources
+    \item Standards: EnOcean, ZigBee
+   \end{itemize}
+
+\begin{center}
+\includegraphics[height=150pt]{./Slike/EnOcean-shema} 
+\end{center}
+
 \end{frame}
 
 \begin{frame}
   \frametitle{Phone chargers}
+
+\begin{itemize}
+ \item Extend battery life
+ \item Photovoltaic cells
+ \item \$30 for phone charger, \$500 for laptop charger
+\end{itemize}
+
+\begin{center}
+\includegraphics[height=120pt]{./Slike/phone-charger}
+\includegraphics[height=120pt]{./Slike/solar-backpack}
+\end{center}
+
 \end{frame}
 
 \section{Conclusion}
@@ -238,7 +397,7 @@
         \begin{itemize}
           \item Wireless sensors
 	  \item Batteryless electronics
-	  \item Hard-to-reach places
+	  \item Remote locations
         \end{itemize}
       \end{block}
       \begin{block}{Benefits}
@@ -250,7 +409,7 @@
       \end{block}
     \end{column}
     \begin{column}{0.5\textwidth}
-      \begin{block}{Methods}
+      \begin{block}{Conversion methods}
         \begin{itemize}
           \item Photovoltaic cells
 	  \item Thermoelectric generators

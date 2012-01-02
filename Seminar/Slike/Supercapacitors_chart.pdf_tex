@@ -50,25 +50,25 @@
   \makeatother%
   \begin{picture}(1,0.61935484)%
     \put(0,0){\includegraphics[width=\unitlength]{./Slike/Supercapacitors_chart.pdf}}%
-    \put(0.05902984,0.35988659){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{Energy density (Wh/kg)}}}}%
-    \put(0.55153478,0.02655785){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Power density (W/kg)}}}%
-    \put(0.17697077,0.08798001){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{10}}}%
-    \put(0.42643314,0.08798001){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{100}}}%
-    \put(0.67589544,0.08798001){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{1000}}}%
-    \put(0.92535786,0.08798001){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{10000}}}%
-    \put(0.16302776,0.39182194){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{10}}}%
-    \put(0.16302776,0.47985186){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{100}}}%
-    \put(0.16302776,0.56788179){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{1000}}}%
-    \put(0.16793199,0.30357148){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{1}}}%
-    \put(0.16793199,0.21576207){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{0.1}}}%
-    \put(0.16793199,0.12773213){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{0.01}}}%
-    \put(0.26300452,0.33300779){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{10 hours}}}%
-    \put(0.56209402,0.42607219){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{1 hour}}}%
-    \put(0.77649327,0.42820123){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{1 second}}}%
-    \put(0.81667055,0.23993463){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{0.03 second}}}%
-    \put(0.26364415,0.53175277){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Fuel cells}}}%
-    \put(0.38558846,0.46962449){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Conventional batteries}}}%
-    \put(0.78607737,0.34107989){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Ultracapacitors}}}%
-    \put(0.83045111,0.19203755){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Conventional capacitors}}}%
+    \put(0.05902984,0.35988659){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{{\tiny Energy density (Wh/kg)}}}}%
+    \put(0.55153478,0.02655785){\color[rgb]{0,0,0}\makebox(0,0)[b]{{\tiny Power density (W/kg)}}}%
+    \put(0.17697077,0.08798001){\color[rgb]{0,0,0}\makebox(0,0)[b]{{\tiny 10}}}%
+    \put(0.42643314,0.08798001){\color[rgb]{0,0,0}\makebox(0,0)[b]{{\tiny 100}}}%
+    \put(0.67589544,0.08798001){\color[rgb]{0,0,0}\makebox(0,0)[b]{{\tiny 1000}}}%
+    \put(0.92535786,0.08798001){\color[rgb]{0,0,0}\makebox(0,0)[b]{{\tiny 10000}}}%
+    \put(0.16302776,0.39182194){\color[rgb]{0,0,0}\makebox(0,0)[rb]{{\tiny 10}}}%
+    \put(0.16302776,0.47985186){\color[rgb]{0,0,0}\makebox(0,0)[rb]{{\tiny 100}}}%
+    \put(0.16302776,0.56788179){\color[rgb]{0,0,0}\makebox(0,0)[rb]{{\tiny 1000}}}%
+    \put(0.16793199,0.30357148){\color[rgb]{0,0,0}\makebox(0,0)[rb]{{\tiny 1}}}%
+    \put(0.16793199,0.21576207){\color[rgb]{0,0,0}\makebox(0,0)[rb]{{\tiny 0.1}}}%
+    \put(0.16793199,0.12773213){\color[rgb]{0,0,0}\makebox(0,0)[rb]{{\tiny 0.01}}}%
+    \put(0.26300452,0.33300779){\color[rgb]{0,0,0}\makebox(0,0)[b]{{\tiny 10 hours}}}%
+    \put(0.56209402,0.42607219){\color[rgb]{0,0,0}\makebox(0,0)[b]{{\tiny 1 hour}}}%
+    \put(0.77649327,0.42820123){\color[rgb]{0,0,0}\makebox(0,0)[b]{{\tiny 1 second}}}%
+    \put(0.81667055,0.23993463){\color[rgb]{0,0,0}\makebox(0,0)[b]{{\tiny 0.03 second}}}%
+    \put(0.26364415,0.53175277){\color[rgb]{0,0,0}\makebox(0,0)[b]{{\tiny Fuel cells}}}%
+    \put(0.38558846,0.46962449){\color[rgb]{0,0,0}\makebox(0,0)[b]{{\tiny Conventional batteries}}}%
+    \put(0.78607737,0.34107989){\color[rgb]{0,0,0}\makebox(0,0)[b]{{\tiny Ultracapacitors}}}%
+    \put(0.83045111,0.19203755){\color[rgb]{0,0,0}\makebox(0,0)[b]{{\tiny Conventional capacitors}}}%
   \end{picture}%
 \endgroup%
