@@ -119,7 +119,7 @@ Ker je $\eps$ majhen, lahko "clene z $\eps^2$ zanemarimo, tako da ostanejo le "s
 
 \subsection{Rojstva in smrti}
 
-Podobno kot prej zanemarimo verjetnosti, da se rodi ali umre ve"c kot en osebek v vsakem "casovnem koraku. Tudi v verjetnosti, da se en rodi in en umre, nastopa $\eps$ z drugo potenco, torej ga lahko zanemarimo. Ostanejo nam le tri mo"znosti: eno rojstvo, ena smrt, ali pa ohranitev istega stanja. V primerjavi s prej"sjim izrazom moramo matriki dodati le "se diagonalo nad glavno, ki dopu"s"ca rast populacije. 
+Podobno kot prej zanemarimo verjetnosti, da se rodi ali umre ve"c kot en osebek v vsakem "casovnem koraku. Tudi v verjetnosti, da se en rodi in en umre, nastopa $\eps$ z drugo potenco, torej ga lahko zanemarimo. Ostanejo nam le tri mo"znosti: eno rojstvo, ena smrt, ali pa ohranitev istega stanja. V primerjavi s prej"snjim izrazom moramo matriki dodati le "se diagonalo nad glavno, ki dopu"s"ca rast populacije. 
 
 \begin{equation}
   W_{i,j} = \left\{ \begin{matrix} 
@@ -139,6 +139,12 @@ Ker matrika prehodov predstavlja en "casovni korak simulacije, lahko z limitiran
 \end{align}
 
 Tak"sen sistem znamo re"siti, tako da poi"s"cemo lastne vrednosti in lastne vektorje matrike $W$. 
+
+\subsection{"Cas izumrtja}
+
+Za preprost ekspronentni model lahko matriko zapi"semo brez te"zav, saj je vsaka sprememba velikosti populacije mo"zna le na en na"cin, torej da neko "stevilo osebkov umre. 
+
+Pri modeliranju procesa z rojstvi in smrtmi pa se stvar zaplete, saj dolo"ceno spremembo populacije $\Delta N$ lahko dobimo na ve"c na"cinov. 
 
 \section{Zajci in lisice}
 
