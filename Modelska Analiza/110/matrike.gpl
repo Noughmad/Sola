@@ -1,0 +1,15 @@
+set terminal epslatex color
+set ytics
+set autoscale
+set xrange [0:15]
+set logscale y
+
+set output "g_m_povprecje.tex"
+set ylabel "$\\frac{\\langle N \\rangle}{N_0}$"
+set style data lines
+plot "g_matrike_exp_25.dat" u 1:3 t "$N=25$", "g_matrike_exp_250.dat" u 1:3 t "$N=250$"
+
+set output "g_m_stdev.tex"
+set ylabel "$\\frac{\\sigma_N}{\\sqrt{N_0}}$"
+unset logscale
+plot "g_matrike_exp_25.dat" u 1:4 t "$N=25$", "g_matrike_exp_250.dat" u 1:4 t "$N=250$"
