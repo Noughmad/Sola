@@ -11,8 +11,9 @@
 \usepackage{hyperref}
 \usepackage{color}
 \usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
 
-\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
 
 \acrodef{WSN}{Wireless sensor network}
 \acrodef{TEG}{Thermoelectric generator}
@@ -143,12 +144,12 @@ When choosing the \ac{EH} method to use in a project, the most important factor 
 
 According to Th\'evenin's theorem, any combination of ideal voltage sources, current sources, and resistors with two terminals is electrically equivalent to a single voltage source in series with a single resistor. The resistor represents the source resistance or internal resistance of the power source. This simplified representation, while not completely accurate for real-world sources, serves as a good model for most power supplies and batteries~\cite{wiki:thevenin}. 
 
-\begin{figure}[h]
+\begin{wrapfigure}{r}{.4\textwidth}
 \centering
   \includegraphics[width=150px]{./Slike/Thevenin_equivalent}
   \caption{A ``black box'' circuit and its Th\'evenin equivalent~\cite{wiki:thevenin}}
 \label{fig:thevenin}
-\end{figure}
+\end{wrapfigure}
 
 A source with internal resistance $R$ and current $I$ wastes power equal to $I^2 R$, reducing the already limited power output, so we usually want power sources with a low source resistance. 
 
@@ -193,6 +194,8 @@ The solar cells work by using the photovoltaic effect to create electron-hole pa
 
 For photovoltaic cells, efficiency is the ratio between the electrical power output and the irradiation received by the cell and can reach up to 30\% in modern cells. However, it is possible to use mirrors or lenses to concentrate more sunlight onto the cell, effectively raising it efficiency up to 45\%. This is useful because the concentrating optics are usually cheaper than solar cells themselves. On the other hand, such concentrators often require a system for tracking the sun, resulting in a more complicated solution, and are better suited for large-scale operations than for energy harvesting devices. 
 
+The maximum efficiency of photovoltaic cells is limited because a cell can only harvest photons with energy equal to the width of the semiconductor's bandgap. With the spectrum of sunlight, the highest possible efficiency is 37\%, also known as the Shockley–Queisser limit. This limitation can also be worked around by stacking several cells with different bandgaps in layers. This way, the theoretical limit can be raised up to 86\%~\cite{wiki:solar-cells}. 
+
 Unlike other power sources, a photovoltaic cell can be modelled as an ideal current source connected in parallel with a diode. The open-circuit voltage is then equal to the diode's forward voltage, while the short-circuit current is the output of the model's source generator. A typical solar cell has a $V_{oc}$ of around half a volt. The short-circuit current and the maximum power output are both dependant on the light conditions and cell size. Because of the low voltage of a sigle photovoltaic cell, they are often connected in series. Alternatively, power can be drawn from a single larger cell with the help of a converter, at the cost of lower efficiency~\cite{Burgoine11}. 
 
 The downside of solar generators is the constant changing of their power output, especially when used outdoors. An energy storage mechanism must be in place to provide power during the night and bad weather conditions. Even so, with variable weather conditions, the cell is not always operating with its peak efficiency. The shift in its optimal power point can be seen in Figure~\ref{fig:pv-power-curve}. It is possible to offset this by using a power management system that dynamically adjusts the cell voltage to find the maximum power point~\cite{solar-mppt-ieee}. 
@@ -225,14 +228,16 @@ Another source of energy in the environment is a temperature gradient which can 
 \label{fig:teg-schematic}
 \end{figure}
 
-Figure~\ref{fig:teg-couple} shows a details view of a single thermocouple. Charge carriers on the hotter side move faster due to their higher thermal energy, so they diffuse towards the cold side. Bucause of the asymmetric diffusion, charge builds up on the colder side with the same sign as the charge carries in that semiconductor. By placing two opposite semiconductors side-by-side, we obtain a voltage between the electric leads~\cite{wiki:thermo}. 
 
-\begin{figure}[h]
+\begin{wrapfigure}{l}{.33\textwidth}
 \centering
-\includegraphics[height=150pt]{./Slike/TEG-couple}
+\includegraphics[height=135pt]{./Slike/TEG-couple}
  \caption{Detailed view of a single thermocouple~\cite{wiki:thermo}}
 \label{fig:teg-couple}
-\end{figure}
+\end{wrapfigure}
+
+Figure~\ref{fig:teg-couple} shows a details view of a single thermocouple. Charge carriers on the hotter side move faster due to their higher thermal energy, so they diffuse towards the cold side. Bucause of the asymmetric diffusion, charge builds up on the colder side with the same sign as the charge carries in that semiconductor. By placing two opposite semiconductors side-by-side, we obtain a voltage between the electric leads~\cite{wiki:thermo}. 
+
 
 The voltage is directly proportional to the temperature difference between the two sides. 
 
@@ -282,6 +287,17 @@ The third most common form of \ac{EH} is generating power from the energy of mot
 
 Certain crystalline materials with asymmetric unit cells polarize themselves when an external force is applied. This phenomenon is called the Piezoelectric effect. The best-known material to exhibit piezoelectric behavior is \ac{PZT}, a ceramic with the formula \ce{Pb[Zr_xTi_{1-x}]O3}, $0\leq x \leq 1$.
 
+\begin{figure}[!h]
+  \centering
+
+\subfigure{\includegraphics[width=150pt]{./Slike/Piezo-theory-normal}}\hspace{1cm}
+\subfigure{\includegraphics[width=150pt]{./Slike/Piezo-theory-polarized}}
+\subfigure{\includegraphics[width=40pt]{./Slike/Piezo-theory-legend}}
+\caption{The change in charge distribution when a mechanical stress is applied to the crystal~\cite{cottone}}
+\label{fig:piezo-theory}
+\end{figure}
+
+External pressure causes the ions in the lattice to rearrange. Due to their asymmetry, positive titanium and zirconium ions in the centre of every unit cell have a preferred direction of movement. A schematic of positions of ions in a single unit cell is shown in Figure~\ref{fig:piezo-theory}. Each unit cell consequently polarizes with positive charge building up on the same side, causing an observable crystal-wide polarization~\cite{cottone}. 
 
 Like the thermoelectric effect, the piezoelectric effect also has a direct converse, where a voltage applied to the material causes it to deform. Because of this, the same elements can be used as actuators, capable of very precise positioning due to the high voltages required for small mechanical deformations. 
 
@@ -298,12 +314,12 @@ The values of $d$ are different for every material. For tetragonal and hexagonal
 
 \subsection{Characteristics}
 
-\begin{figure}[h!]
+\begin{wrapfigure}{r}{.47\textwidth}
 \centering
   \includegraphics[width=0.45\textwidth]{./Slike/Piezo-UI}
 \caption{Typical piezoelectric load lines~\cite{LT-Piezo}}
 \label{fig:piezo-load}
-\end{figure}
+\end{wrapfigure}
 
 Unlike other \ac{EH} methods, piezoelectric elements often produce relatively high voltages, so a converter is needed to decrease the voltage. Both open-circuit voltage and short-circuit current increase with the available vibration energy~\cite{LT-Piezo}. Figure~\ref{fig:piezo-load} shows load lines for Piezo Systems \texttt{T220-A4-503X} with a wholesale price of \$70 per piece. We can observe that the lines are close to hyperbolas, so power output does not depend on the voltage applied, only on the vibration energy present. This particular element can function both as an energy harvester or an actuator and is rated for voltages up to $\pm$180 V. In typical vibration energy harvesting applications, the output voltage is much lower, but still high enough to require a specialized power supply. 
 

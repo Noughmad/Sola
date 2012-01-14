@@ -645,14 +645,27 @@ FUNCTION {incollection}
 FUNCTION {inproceedings}
 { output.bibitem
   format.authors "," * "author" output.check
-  crossref missing$
-    { 
-      booktitle "," * "booktitle" output.check
-      format.pages output
-    }
-    { format.incoll.inproc.crossref output.nonnull
-      format.pages output
-    }
+  pages empty$
+  {
+    crossref missing$
+      { 
+	booktitle "booktitle" output.check
+      }
+      { format.incoll.inproc.crossref output.nonnull
+      }
+    if$
+  }
+  {
+    crossref missing$
+      { 
+	booktitle "," * "booktitle" output.check
+	format.pages output
+      }
+      { format.incoll.inproc.crossref output.nonnull
+	format.pages output
+      }
+    if$
+  }
   if$
   format.date "year" output.check
   fin.entry
