@@ -8,11 +8,14 @@ set output "g_iz_exp_25.tex"
 
 set xlabel "\"Cas $t$"
 set ylabel "Verjetnost $p(t)$"
+unset ytics
+set yrange [0:10]
 
 plot "g_iz_exp_1_25.dat" t "$\\Delta t = 1$", \
 "g_iz_exp_0.5_25.dat" t "$\\Delta t = 0,5$", \
 "g_iz_exp_0.1_25.dat" w lines t "$\\Delta t = 0,1$", \
-"g_iz_exp_0.01_25.dat" w lines t "$\\Delta t = 0,01$"
+"g_iz_exp_0.01_25.dat" w lines t "$\\Delta t = 0,01$", \
+"g_matrike_exp_25.dat" u 1:(100*$2) w lines t "Matrika"
 
 set output "g_iz_rs_25.tex"
 
@@ -27,7 +30,8 @@ set output "g_iz_exp_250.tex"
 plot "g_iz_exp_1_250.dat" t "$\\Delta t = 1$", \
 "g_iz_exp_0.5_250.dat" t "$\\Delta t = 0,5$", \
 "g_iz_exp_0.1_250.dat" w lines t "$\\Delta t = 0,1$", \
-"g_iz_exp_0.01_250.dat" w lines t "$\\Delta t = 0,01$"
+"g_iz_exp_0.01_250.dat" w lines t "$\\Delta t = 0,01$", \
+"g_matrike_exp_250.dat" u 1:(100*$2) w lines t "Matrika"
 
 set output "g_iz_rs_250.tex"
 
@@ -60,7 +64,11 @@ plot "g_iz_rs_0.1_25.dat" t "$N = 25$", "g_iz_rs_0.1_250.dat" t "$N = 250$"
 set output "g_iz_rs_t001.tex"
 plot "g_iz_rs_0.01_25.dat" t "$N = 25$", "g_iz_rs_0.01_250.dat" t "$N = 250$"
 
+set output "g_matrike_exp.tex"
+plot "g_matrike_exp_25.dat" u 1:($2*100) w lines t "$N=25$", "g_matrike_exp_250.dat" u 1:($2*100) w lines t "$N=250$"
+
 set xrange [0.5:60.5]
+set yrange [0:0.3]
 
 set output "g_zl_50.tex"
 plot "g_zl_1_200_50.dat" t "$\\Delta t = 1$", \
@@ -79,5 +87,6 @@ plot "g_zl_1_200_60.dat" t "$\\Delta t = 1$", \
 "g_zl_0.5_200_60.dat" t "$\\Delta t = 0,5$", \
 "g_zl_0.1_200_60.dat" w lines t "$\\Delta t = 0,1$", \
 "g_zl_0.01_200_60.dat" w lines t "$\\Delta t = 0,01$"
+
 
 

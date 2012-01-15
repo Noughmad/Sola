@@ -11,6 +11,8 @@
 \usepackage{url}
 \usepackage{hyperref}
 
+\usepackage{multirow}
+
 \renewcommand{\theta}{\vartheta}
 \renewcommand{\phi}{\varphi}
 \newcommand{\eps}{\varepsilon}
@@ -41,31 +43,81 @@ Simuliral sem stohasti"cno izumiranje populacije z dvema razli"cnema modeloma
 
 "Casovne konstante sem izbral tako, da je v povpre"cju sprememba populacije enaka pri obeh modelih. Pri generiranju "stevila smrti in rojstev sem uporabil funkcijo \texttt{gsl\_ran\_poisson()}, ki vrne naklju"cno "stevilo s Poissonovo verjetnostno porazdelitvijo. 
 
-Za vsak model sem izra"cunal verjetnostno porazdelitev "casov izumrtja. 
+Za vsak model sem izra"cunal verjetnostno porazdelitev "casov izumrtja z razli"cnimi "casovnimi koraki, pri eksponentnem modelu pa sem za primerjavo dodal se rezultat ra"cuna s prehodno matriko. Vsaki"c sem naredil $10^6$ ponovitev simulacije in iz dobljenih podatkov napravil statistiko. 
 
 \subsection{Eksponentno umiranje}
 
 Ta model najbolje opisuje radioaktivne razpade jeder ali pa relaksacijo iz vzbujenega stanja atomov. 
 
+\begin{figure}
 \input{g_iz_exp_25}
+\caption{Eksponentni model, $N=25$}
+\end{figure}
 
 S slike razberemo, da velikost koraka vidno vpliva porazdelitev pri $\Delta t \geq 0,1$. Ko je korak dovolj majhen, da le zaneraljiv dele"z osebkov umre v vsakem koraku, z dodatnim manj"sanjem ne pridobimo ni"c ve"c na natan"cnosti. Podobno lahko zaklju"cimo tudi, "ce za"cnemo v ve"cjo populacijo.  Vrh populacije se po pri"cakovanju premakne k dalj"sim "casom, odvisnost od "casovnega koraka pa je podobna kot prej. 
 
+\begin{figure}
 \input{g_iz_exp_250}
+\caption{Eksponentni model, $N=250$}
+\end{figure}
 
 Grafa sta si zelo podobna, spodnji je le premaknjena slika zgornjega. To je za pri"cakovati, saj zaradi eksponentnega upadanja pri"cakujemo logaritemsko odvisnost "zivljenjskega "casa od $N$. 
 
 Vidimo tudi, da pri zelo velikih korakih ($\Delta t \approx 1$) velikost populacije skoraj ni"c ne vpliva na "cas izumrtja. V obeh primerih s pribli"zno polovi"cno verjetnostjo pride do izumrtja "ze po prvem koraku, naprej pa verjetnost pada eksponentno. Pri kraj"sih korakih, "ze pri $\Delta t = 0,5$ pa opazimo vidno odvisnost od za"cetne velikosti populacije. 
 
-\section{Rojstva in smrti}
+\subsection{Rojstva in smrti}
 
+\begin{figure}[h!]
 \input{g_iz_rs_25}
+\caption{Rojstva in smrti, $N=25$}
+\label{fig:rs-25}
+\end{figure}
 
+\begin{figure}[h!]
 \input{g_iz_rs_250}
+\caption{Rojstva in smrti, $N=250$}
+\label{fig:rs-250}
+\end{figure}
 
 Podobno kot prej lahko tudi tu pridemo do opa"zanja, da pri $\Delta t = 1$ velikost populacije ne vpliva mo"cno na "cas izumrtja, pri manj"sih korakih pa je statistika za ve"cjo populacijo le premaknjena v desno. 
 
 "Ce pa primerjamo zgorja grafa s tistimi iz prej"sjnega poglavja pa vidimo, da proces z umiranjem in rojevanjem v povpre"cju vodi do hitrej"sega izumtrja. 
+
+\subsection{Statistika}
+
+S podatkov na zgornjih slikah sem izra"cunal povpre"cen "cas izumrtja in njegovo standardno deviacijo. Dobljene vrednosti so v tabeli~\ref{tab:stat-iz}
+
+\begin{table}[!h]
+\centering
+ \begin{tabular}{|c|c|c|c|c|}
+  \hline 
+Model & $N$ & $\Delta t$ & $\langle \tau \rangle$ & $\sigma_\tau$ \\
+\hline
+\multirow{8}{*}{Eksponentni} & \multirow{4}{*}{25} & 1 & 1.7977 & 1.09922 \\
+& & 0.5 & 3.01617 & 1.26343 \\
+& & 0.1 & 3.67288 & 1.26503 \\
+& & 0.01 & 3.80141 & 1.26712 \\
+\cline{2-5}
+& \multirow{4}{*}{250} & 1 & 1.85825 & 1.1505 \\
+& & 0.5 & 4.65363 & 1.27941\\
+& & 0.1 & 5.83871 & 1.27863 \\
+& & 0.01 & 6.07588 & 1.28129 \\
+\hline
+\multirow{8}{*}{Rojstva in smrti} & \multirow{4}{*}{25} & 1 & 1.92274 & 1.30541 \\
+& & 0.5 & 2.02552 & 1.32143 \\
+& & 0.1 & 2.23531 & 1.1838 \\
+& & 0.01 & 2.32887 & 1.17102 \\
+\cline{2-5}
+& \multirow{4}{*}{250} & 1 & 1.95215 & 1.32993 \\
+& & 0.5 & 3.46507 & 1.4197 \\
+& & 0.1 & 4.27771 & 1.2814 \\
+& & 0.01 & 4.48119 & 1.26931 \\
+\hline
+ \end{tabular}
+\caption{Povre"cna vrednosti in standardna deviacija "zivljenjskega "casa sistema z razli"cnimi modeli}
+\label{tab:stat-iz}
+\end{table}
+
 
 \section{Matrika prehodov}
 
@@ -142,9 +194,42 @@ Tak"sen sistem znamo re"siti, tako da poi"s"cemo lastne vrednosti in lastne vekt
 
 \subsection{"Cas izumrtja}
 
-Za preprost ekspronentni model lahko matriko zapi"semo brez te"zav, saj je vsaka sprememba velikosti populacije mo"zna le na en na"cin, torej da neko "stevilo osebkov umre. 
+Za preprost ekspronentni model lahko matriko zapi"semo brez te"zav, saj je vsaka sprememba velikosti populacije mo"zna le na en na"cin, torej da neko "stevilo osebkov umre. Za statistiko "casov izumrtja sem najprej izra"cunal matriko za nek majhen "cas $\Delta t$, nato pa z njo mno"zil trenutni vektor stanja iz ob vsakem koraku izra"cunal, za koliko se je pove"cala komponenta stanja s populacijo 0. Ta postopek je mnogo hitrej"si od simulacije, saj lahko naprovimo statistiko le z eno ponovitvijo. Ker je treba matriko izra"cunati le enkrat, sem najprej izra"cunal matriko za majhen korak $\Delta t$, nato pa nadaljnje ra"cune opravljal z neko potenco te matrike. Na ta na"cin sem se lahko izognil prehitremu izumrtju, ki ga opazimo pri simulaciji s kratkim "casovnim korakok, brez da bi moral "zrtvovati hitrost ra"cunanja. 
 
-Pri modeliranju procesa z rojstvi in smrtmi pa se stvar zaplete, saj dolo"ceno spremembo populacije $\Delta N$ lahko dobimo na ve"c na"cinov. 
+Rezultati matri"cnega ra"cuna za populaciji s 25 in 250 osebki so na sliki~\ref{fig:matrike-exp}. 
+
+\begin{figure}
+ \input{g_matrike_exp}
+  \caption{Statistika "casov izumrtja, dobljena z matriko prehodov. Primerjava z rezultati simulacije je na slikah v prvem poglavju. }
+  \label{fig:matrike-exp}
+\end{figure}
+
+Pri modeliranju procesa z rojstvi in smrtmi pa se stvar zaplete zaradi dveh dejavnikov:
+
+\begin{enumerate}
+ \item Mo"zna so stanja, kjer populacija prese"ze za"cetno velikost
+ \item Dolo"ceno spremembo velikosti populacije $\Delta N$ lahko dose"zemo na ve"c na"cinov
+\end{enumerate}
+
+\section{Povpre"cje in odmik porazdelitve}
+
+Z matri"cnim pristopom je enostavno izra"cunati tudi spreminjanje povpre"cno vrednost in standardno deviacijo velikosti populacije v odvisnosti od "casa. Slika~\ref{fig:m-povprecje} potrdi na"se pri"cakovanje, da populacija v povpre"cju eksponentno pada. 
+
+\begin{figure}[!h]
+ \input{g_m_povprecje}
+\caption{Spreminjanje povpre"cja porazdelitve s "casom}
+\label{fig:m-povprecje}
+\end{figure}
+
+Na grafu~\ref{fig:m-dev} pa vidimo, da po za"cetnem nara"scanju tudi "sirina porazdelitve eksponentno pada. 
+
+\begin{figure}[!h]
+ \input{g_m_stdev}
+\caption{Spreminjanje standardne deviacije porazdelitve s "casom}
+\label{fig:m-dev}
+\end{figure}
+
+Z obeh grafov je jasno razvidno, da velikost populacije nima nobenega vpliva na "casovni potek njenega spreminjanja, le z ustreznimi konstantami moramo normirati grafa. 
 
 \section{Zajci in lisice}
 
@@ -154,11 +239,21 @@ Z enakim pristopom kot eksponentnega izumiranja sem se lotil tudi problema zajce
 
 Tudi tu sem izra"cunal verjetnostno porazdelitev ca"sov izumrtja. 
 
+\begin{figure}[!h]
 \input{g_zl_50}
+\caption{Zajlci in lisice, $Z=200$, $L=50$}
+\end{figure}
 
 Ogledal sem si "se primer, ko za"cnemo v legi, ki tudi v zveznem primeru ni ravnovesna. V tem primeru pri"cakujemo hitrej"se izumrtje. 
 
+\begin{figure}[!h]
 \input{g_zl_40}
-\input{g_zl_60}
+\caption{Zajlci in lisice, $Z=200$, $L=40$}
+\end{figure}
+
+\begin{figure}[!h]
+\input{g_zl_40}
+\caption{Zajlci in lisice, $Z=200$, $L=60$}
+\end{figure}
 
 \end{document}

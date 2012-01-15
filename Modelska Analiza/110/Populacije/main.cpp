@@ -18,10 +18,13 @@
 #define forto(i, n) for(int i = 0; i < n; ++i)
 #define foreach(it, vector) for (auto it = vector.begin(); it != vector.end(); ++it)
 
+#define G_OUTPUT 0
+#define G_STAT 1
+
 double dt = 0.01;
 double beta = 1.0;
 
-double StStat = 1e3;
+double StStat = 1e4;
 
 typedef int (*korak)(int N, gsl_rng* r);
 typedef void (*korak_zl)(int *Z, int *L, gsl_rng* r);
@@ -148,7 +151,8 @@ gsl_histogram* histogram(data d, int max)
 void zajlis(int Z, int L, korak_zl k, std::ostream& out)
 {
     data d = stat_zl(Z, L, k);
-   gsl_histogram* h = histogram(d, 60);
+#if G_OUTPUT
+    gsl_histogram* h = histogram(d, 60);
     int B = gsl_histogram_bins(h);
     forto(i,B)
     {
@@ -156,11 +160,17 @@ void zajlis(int Z, int L, korak_zl k, std::ostream& out)
         gsl_histogram_get_range(h, i, &min, &max);
         out << (min+max)/2 << '\t' << gsl_histogram_get(h,i) << std::endl;
     }
+#endif
+
+#if G_STAT    
+    std::cout << "Rezultat:\t" << gsl_stats_mean(d.data(), 1, StStat) << " & " << gsl_stats_sd(d.data(), 1, StStat) << std::endl;
+#endif
 }
 
 void izumrtje(int N, korak k, test* t, std::ostream& out)
 {
     data d = statistika(N, k);
+#if G_OUTPUT
     gsl_histogram* h = histogram(d, 15);
     int B = gsl_histogram_bins(h);
     forto(i,B)
@@ -169,6 +179,11 @@ void izumrtje(int N, korak k, test* t, std::ostream& out)
         gsl_histogram_get_range(h, i, &min, &max);
         out << (min+max)/2 << '\t' << gsl_histogram_get(h,i) << std::endl;
     }
+#endif
+
+#if G_STAT
+		std::cout << "Rezultat:\t" << gsl_stats_mean(d.data(), 1, StStat) << " & " << gsl_stats_sd(d.data(), 1, StStat) << std::endl;
+#endif
 }
 
 int main(int argc, char **argv) {
@@ -176,11 +191,18 @@ int main(int argc, char **argv) {
 		if (argc < 6)
 		{
 				std::cout << "Usage: populacije <outfile> <dt> <StStat> izumrtje <rs|exp> N" << std::endl;
-				std::cout << "Usage: populacije <outfile> <dt> <StStat> zajlis Z L" << std::endl;
+				std::cout << "   or: populacije <outfile> <dt> <StStat> zajlis Z L" << std::endl;
+				return 0;
 		}
 		
+		forto(i,7)
+				std::cout << argv[i] << " ";
+		std::cout << std::endl;
+		
 		std::ofstream o;
+#if G_OUTPUT
 		o.open(argv[1]);
+#endif
 		dt = atof(argv[2]);
 		StStat = atoi(argv[3]);
 		char* op = argv[4];
