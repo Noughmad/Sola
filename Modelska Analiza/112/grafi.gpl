@@ -1,0 +1,15 @@
+set terminal epslatex color solid
+
+
+set xlabel "$n$"
+set ylabel "\"Cas ra\"cunanja"
+
+n2(x) = C*x**2
+nlogn(x) = D*x*log(x,2)
+
+fit n2(x) "g_konvolucija_hitrost.dat" u 1:6 via C
+fit nlogn(x) "g_konvolucija_hitrost.dat" u 1:3 via D
+
+plot "g_konvolucija_hitrost.dat" u 1:6 t "Po definiciji", n2(x) t "$Cx^2$",
+"" u 1:3 t "FFT", nlogn(x) t "Cn\log"
+
