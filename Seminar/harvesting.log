@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2012/dev/Arch Linux) (format=pdflatex 2011.12.24)  14 JAN 2012 14:08
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2012/dev/Arch Linux) (format=pdflatex 2011.12.24)  15 JAN 2012 11:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -630,7 +630,7 @@ LaTeX Info: Redefining \tbond on input line 288.
 File: ./Slike/Piezo-theory-normal.png Graphic file (type png)
 
 <use ./Slike/Piezo-theory-normal.png>
-Package pdftex.def Info: ./Slike/Piezo-theory-normal.png used on input line 293
+Package pdftex.def Info: ./Slike/Piezo-theory-normal.png used on input line 295
 .
 (pdftex.def)             Requested size: 150.0pt x 95.53036pt.
 
@@ -639,14 +639,14 @@ File: ./Slike/Piezo-theory-polarized.jpeg Graphic file (type jpg)
 
 <use ./Slike/Piezo-theory-polarized.jpeg>
 Package pdftex.def Info: ./Slike/Piezo-theory-polarized.jpeg used on input line
- 294.
+ 296.
 (pdftex.def)             Requested size: 150.0pt x 98.86497pt.
 
 <./Slike/Piezo-theory-legend.png, id=315, 109.91063pt x 161.85469pt>
 File: ./Slike/Piezo-theory-legend.png Graphic file (type png)
 
 <use ./Slike/Piezo-theory-legend.png>
-Package pdftex.def Info: ./Slike/Piezo-theory-legend.png used on input line 295
+Package pdftex.def Info: ./Slike/Piezo-theory-legend.png used on input line 297
 .
 (pdftex.def)             Requested size: 40.0pt x 58.90234pt.
  [9 <./Slike/TEG-curve.png> <./Slike/Piezo-theory-normal.png> <./Slike/Piezo-th
@@ -657,19 +657,20 @@ File: ./Slike/Piezo-UI.png Graphic file (type png)
 <use ./Slike/Piezo-UI.png>
 Package pdftex.def Info: ./Slike/Piezo-UI.png used on input line 319.
 (pdftex.def)             Requested size: 204.85846pt x 203.83386pt.
- [10 <./Slike/Piezo-UI.png>]
-<./Slike/Buck.png, id=352, 384.43625pt x 137.51375pt>
+
+<./Slike/Buck.png, id=343, 384.43625pt x 137.51375pt>
 File: ./Slike/Buck.png Graphic file (type png)
  <use ./Slike/Buck.png>
 Package pdftex.def Info: ./Slike/Buck.png used on input line 343.
 (pdftex.def)             Requested size: 201.29237pt x 72.0pt.
 
-<./Slike/Boost.png, id=353, 396.48125pt x 154.5775pt>
+<./Slike/Boost.png, id=344, 396.48125pt x 154.5775pt>
 File: ./Slike/Boost.png Graphic file (type png)
  <use ./Slike/Boost.png>
 Package pdftex.def Info: ./Slike/Boost.png used on input line 344.
 (pdftex.def)             Requested size: 205.20346pt x 80.0pt.
 
+[10 <./Slike/Piezo-UI.png>]
 <./Slike/Supercapacitor_diagram.pdf, id=359, 740.7675pt x 331.2375pt>
 File: ./Slike/Supercapacitor_diagram.pdf Graphic file (type pdf)
 
@@ -748,7 +749,7 @@ r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
 ts/cm/cmtt10.pfb>
-Output written on harvesting.pdf (15 pages, 996595 bytes).
+Output written on harvesting.pdf (15 pages, 996627 bytes).
 PDF statistics:
  574 PDF objects out of 1000 (max. 8388607)
  477 compressed objects within 5 object streams
