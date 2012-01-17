@@ -14,7 +14,7 @@ endfunction
 R = [];
 N = 1
 
-for i = 1:20
+for i = 1:17
   N = 2*N;
   a = 2/N;
   data = a * ( 1 - linspace(1, 0, N));
