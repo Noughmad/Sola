@@ -169,7 +169,7 @@ Nazadnje sem uporabil se Blackmanovo funkcijo, ki ima na robovih tako vrednost k
 Ogledal sem si tudi, kaj se zgodi, "ce obravnavamo le manj"se "stevilo to"ck. Iste izra"cune kot prej sem ponovil za celoten signal (512 to"ck) in za kraj"se podintervale (64, 128 in 256 to"ck). Tokrat sem prikazal le originalen signal in pa signal, dobljen s Hammingovo okensko funkcijo. Spektri so na slikah~\ref{fig:val-dolzina} in~\ref{fig:val-dolzina-hamm}. 
 
 \begin{figure}[h]
- \subfigure[$M = 64$]{\input{g_val_64}} 
+ \subfigure[$M = 64$]{\input{g_val_64}\label{fig:val-dolzina-64}} 
  \subfigure[$M = 128$]{\input{g_val_128}}
  \subfigure[$M = 256$]{\input{g_val_256}}
  \subfigure[$M = 512$]{\input{g_val_512}}
@@ -177,8 +177,10 @@ Ogledal sem si tudi, kaj se zgodi, "ce obravnavamo le manj"se "stevilo to"ck. Is
 \label{fig:val-dolzina}
 \end{figure}
 
+Okenska funkcija "ze pri manj"sem "stevilu to"ck poskrbi, da so vrhovi bolje razlo"cni tudi na logaritemski sliki, poleg tega pa so tudi po obliki bolj podobni med seboj. Njen vpliv dobro viden pri $M=64$, na sliki~\ref{fig:val-dolzina-64} sta vrhova modre funkcije vidno razli"cno "siroka, medtem ko sta njuni "sirin na sliki~\ref{fig:val-dolzina-hamm-64}a pribli"zno enaki. 
+
 \begin{figure}[h]
- \subfigure[$M = 64$]{\input{g_val_hamm_64}} 
+ \subfigure[$M = 64$]{\input{g_val_hamm_64}\label{fig:val-dolzina-hamm-64}} 
  \subfigure[$M = 128$]{\input{g_val_hamm_128}}
  \subfigure[$M = 256$]{\input{g_val_hamm_256}}
  \subfigure[$M = 512$]{\input{g_val_hamm_512}}
