@@ -1,0 +1,500 @@
+1 	Wal-Mart Stores 	408214 	14335
+2 	Royal Dutch Shell 	285129 	12518
+3 	Exxon Mobil 	284650 	19280
+4 	BP 	246138 	16578
+5 	Toyota Motor 	204106 	2256
+6 	Japan Post Holdings 	202196 	4849
+7 	Sinopec 	187518 	5756
+8 	State Grid 	184496 	-343
+9 	AXA 	175257 	5012
+10 	China National Petroleum 	165496 	10272
+11 	Chevron 	163527 	10483
+12 	ING Group 	163204 	-1300
+13 	General Electric 	156779 	11025
+14 	Total 	155887 	11741
+15 	Bank of America Corp. 	150450 	6276
+16 	Volkswagen 	146205 	1334
+17 	ConocoPhillips 	139515 	4858
+18 	BNP Paribas 	130708 	8106
+19 	Assicurazioni Generali 	126012 	1820
+20 	Allianz 	125999 	5973
+21 	AT&T 	123018 	12535
+22 	Carrefour 	121452 	454
+23 	Ford Motor 	118308 	2717
+24 	ENI 	117235 	6070
+25 	J.P. Morgan Chase & Co. 	115632 	11728
+26 	Hewlett-Packard 	114552 	7660
+27 	E.ON 	113849 	11670
+28 	Berkshire Hathaway 	112493 	8055
+29 	GDF Suez 	111069 	6223
+30 	Daimler 	109700 	-3670
+31 	Nippon Telegraph & Telephone 	109656 	5302
+32 	Samsung Electronics 	108927 	7562
+33 	Citigroup 	108785 	-1606
+34 	McKesson 	108702 	1263
+35 	Verizon Communications 	107808 	3651
+36 	Crédit Agricole 	106538 	1564
+37 	Banco Santander 	106345 	12430
+38 	General Motors 	104589 	--
+39 	HSBC Holdings 	103736 	5834
+40 	Siemens 	103605 	3097
+41 	American International Group 	103189 	-10949
+42 	Lloyds Banking Group 	102967 	4409
+43 	Cardinal Health 	99613 	1152
+44 	Nestlé 	99114 	9604
+45 	CVS Caremark 	98729 	3696
+46 	Wells Fargo 	98636 	12275
+47 	Hitachi 	96593 	-1152
+48 	International Business Machines 	95758 	13425
+49 	Dexia Group 	95144 	1404
+50 	Gazprom 	94472 	24556
+51 	Honda Motor 	92400 	2891
+52 	Électricité de France 	92204 	5428
+53 	Aviva 	92140 	1692
+54 	Petrobras 	91869 	15504
+55 	Royal Bank of Scotland 	91767 	-4167
+56 	PDVSA 	91182 	1608
+57 	Metro 	91152 	532
+58 	Tesco 	90234 	3690
+59 	Deutsche Telekom 	89794 	491
+60 	Enel 	89329 	7499
+61 	UnitedHealth Group 	87138 	3822
+62 	Société Générale 	84157 	942
+63 	Nissan Motor 	80963 	456
+64 	Pemex 	80722 	-7011
+65 	Panasonic 	79893 	-1114
+66 	Procter & Gamble 	79697 	13436
+67 	LG 	78892 	1206
+68 	Telefónica 	78853 	10808
+69 	Sony 	77696 	-439
+70 	Kroger 	76733 	70
+71 	Groupe BPCE 	76464 	746
+72 	Prudential 	75010 	1054
+73 	Munich Re Group 	74764 	3504
+74 	Statoil 	74000 	2912
+75 	Nippon Life Insurance 	72051 	2624
+76 	AmerisourceBergen 	71789 	503
+77 	China Mobile Communications 	71749 	11656
+78 	Hyundai Motor 	71678 	2330
+79 	Costco Wholesale 	71422 	1086
+80 	Vodafone 	70899 	13782
+81 	BASF 	70461 	1960
+82 	BMW 	70444 	284
+83 	Zurich Financial Services 	70272 	3215
+84 	Valero Energy 	70035 	-1982
+85 	Fiat 	69639 	-1165
+86 	Deutsche Post 	69427 	895
+87 	Industrial & Commercial Bank of China 	69295 	18832
+88 	Archer Daniels Midland 	69207 	1707
+89 	Toshiba 	68731 	-213
+90 	Legal & General Group 	68290 	1346
+91 	Boeing 	68281 	1312
+92 	U.S. Postal Service 	68090 	-3794
+93 	Lukoil 	68025 	7011
+94 	Peugeot 	67297 	-1614
+95 	CNP Assurances 	66556 	1396
+96 	Barclays 	66533 	14648
+97 	Home Depot 	66176 	2661
+98 	Target 	65357 	2488
+99 	ArcelorMittal 	65110 	118
+100 	WellPoint 	65028 	4746
+101 	RWE 	64795 	4964
+102 	UniCredit Group 	64709 	2366
+103 	Aegon 	64506 	284
+104 	SK Holdings 	64396 	211
+105 	France Télécom 	63860 	4166
+106 	Walgreen 	63335 	2006
+107 	Petronas 	62577 	11649
+108 	Johnson & Johnson 	61897 	12266
+109 	State Farm Insurance Cos. 	61480 	767
+110 	Medco Health Solutions 	59804 	1280
+111 	EADS 	59520 	-1060
+112 	Hon Hai Precision Industry 	59324 	2292
+113 	Deutsche Bank 	58998 	6912
+114 	Repsol YPF 	58571 	2167
+115 	Microsoft 	58437 	14569
+116 	China Construction Bank 	58361 	15628
+117 	Itaúsa-Investimentos Itaú 	57859 	1966
+118 	China Life Insurance 	57019 	3125
+119 	Dai-ichi Life Insurance 	57018 	600
+120 	Nokia 	56966 	1238
+121 	Unilever 	55352 	4684
+122 	Groupe Auchan 	55141 	919
+123 	ThyssenKrupp 	54816 	-2510
+124 	Seven & I Holdings 	54701 	480
+125 	Indian Oil 	54288 	2258
+126 	Mitsubishi UFJ Financial Group 	54285 	4187
+127 	AEON 	54092 	333
+128 	Tokyo Electric Power 	54026 	1441
+129 	Robert Bosch 	53060 	-1751
+130 	United Technologies 	52920 	3829
+131 	Dell 	52902 	1433
+132 	Saint-Gobain 	52521 	281
+133 	China Railway Construction 	52044 	960
+134 	Goldman Sachs Group 	51673 	13385
+135 	Banco Bradesco 	51608 	4007
+136 	JX Holdings 	51405 	466
+137 	China Railway Group 	50704 	1008
+138 	Fujitsu 	50399 	1002
+139 	BHP Billiton 	50211 	5877
+140 	Pfizer 	50009 	8635
+141 	Agricultural Bank of China 	49742 	9514
+142 	Best Buy 	49694 	1317
+143 	Bank of China 	49682 	11868
+144 	Marathon Oil 	49403 	1463
+145 	Veolia Environnement 	49142 	812
+146 	Mitsubishi 	48913 	2942
+147 	A.P. Mřller-Mćrsk Group 	48824 	-1312
+148 	Banco do Brasil 	48122 	5075
+149 	Banco Bilbao Vizcaya Argentaria 	48074 	5852
+150 	Credit Suisse 	47658 	6193
+151 	Intesa Sanpaolo 	47282 	3899
+152 	Lowe's 	47220 	1783
+153 	Roche Group 	47109 	7169
+154 	Renault 	46858 	-4344
+155 	PTT 	46220 	1735
+156 	China Southern Power Grid 	45735 	250
+157 	United Parcel Service 	45297 	2152
+158 	Meiji Yasuda Life Insurance 	45262 	1538
+159 	Lockheed Martin 	45189 	3024
+160 	Novartis 	45103 	8400
+161 	Dow Chemical 	44945 	648
+162 	Vinci 	44378 	2218
+163 	GlaxoSmithKline 	44240 	8626
+164 	Mitsui 	44120 	1612
+165 	Sears Holdings 	44043 	235
+166 	Sumitomo Life Insurance 	43780 	1205
+167 	International Assets Holding 	43604 	28
+168 	Bouygues 	43579 	1833
+169 	Sanofi-Aventis 	43405 	7318
+170 	Bayer 	43322 	1889
+171 	PepsiCo 	43232 	5946
+172 	Bunge 	41926 	361
+173 	Rio Tinto Group 	41825 	4872
+174 	MetLife 	41098 	-2246
+175 	Reliance Industries 	41085 	3422
+176 	Safeway 	40851 	-1098
+177 	Deutsche Bahn 	40774 	1141
+178 	Supervalu 	40597 	393
+179 	Kraft Foods 	40386 	3021
+180 	Foncičre Euris 	40385 	58
+181 	Telecom Italia 	39764 	2198
+182 	Dongfeng Motor 	39402 	720
+183 	UBS 	39356 	-2520
+184 	Royal Ahold 	38814 	1243
+185 	NEC 	38591 	123
+186 	Tokio Marine Holdings 	38458 	1383
+187 	China State Construction Engineering 	38117 	839
+188 	Centrica 	37927 	1316
+189 	Vivendi 	37712 	1154
+190 	Freddie Mac 	37614 	-21553
+191 	Nippon Steel 	37563 	-124
+192 	Wesfarmers 	37466 	1128
+193 	KDDI 	37073 	2292
+194 	Sysco 	36853 	1056
+195 	Itochu 	36798 	1380
+196 	Anheuser-Busch InBev 	36758 	4613
+197 	Apple 	36537 	5704
+198 	Woolworths 	36523 	1349
+199 	Walt Disney 	36149 	3307
+200 	Cisco Systems 	36117 	6134
+201 	Mitsubishi Electric 	36116 	305
+202 	Comcast 	35756 	3638
+203 	Sinochem Group 	35577 	659
+204 	China Telecommunications 	35557 	581
+205 	FedEx 	35497 	98
+206 	Marubeni 	35326 	1026
+207 	Northrop Grumman 	35291 	1686
+208 	Manulife Financial 	35144 	1228
+209 	Intel 	35127 	4369
+210 	Aetna 	34764 	1276
+211 	Rosneft Oil 	34695 	6514
+212 	DZ Bank 	34633 	186
+213 	Commerzbank 	34611 	-6306
+214 	SNCF 	34585 	-1362
+215 	Scottish & Southern Energy 	34357 	1969
+216 	Canon 	34292 	1407
+217 	Iberdrola 	34136 	3926
+218 	Sumitomo Mitsui Financial Group 	34104 	2925
+219 	Franz Haniel 	34087 	8
+220 	Old Mutual 	34072 	-530
+221 	New York Life Insurance 	34014 	683
+222 	BT Group 	33860 	1639
+223 	Shanghai Automotive 	33629 	1070
+224 	China Communications Construction 	33465 	704
+225 	Rabobank 	33396 	3029
+226 	AstraZeneca 	32804 	7521
+227 	Prudential Financial 	32688 	3124
+228 	Royal Bank of Canada 	32610 	3298
+229 	Caterpillar 	32396 	895
+230 	Sprint Nextel 	32260 	-2436
+231 	Royal Philips Electronics 	32232 	570
+232 	Denso 	32060 	791
+233 	Allstate 	32013 	854
+234 	General Dynamics 	31981 	2394
+235 	Danske Bank Group 	31851 	322
+236 	J. Sainsbury 	31828 	933
+237 	ABB 	31797 	2901
+238 	BAE Systems 	31773 	-104
+239 	Mitsubishi Heavy Industries 	31674 	152
+240 	Morgan Stanley 	31515 	1346
+241 	Nippon Mining Holdings 	31512 	321
+242 	Noble Group 	31183 	556
+243 	Liberty Mutual Insurance Group 	31094 	1023
+244 	Sumitomo 	31063 	1672
+245 	Coca-Cola 	30990 	6824
+246 	Lufthansa Group 	30972 	-156
+247 	Humana 	30960 	1040
+248 	Honeywell International 	30908 	2153
+249 	LyondellBasell Industries 	30829 	-2865
+250 	Abbott Laboratories 	30765 	5746
+251 	Swiss Reinsurance 	30745 	466
+252 	China National Offshore Oil 	30680 	3634
+253 	JFE Holdings 	30634 	492
+254 	Citic Group 	30605 	2766
+255 	News Corp. 	30423 	-3378
+256 	Sberbank 	30394 	768
+257 	Mizuho Financial Group 	30346 	2578
+258 	China FAW Group 	30237 	1382
+259 	Landesbank Baden-Württemberg 	30062 	-2061
+260 	HCA 	30052 	1054
+261 	Edeka Zentrale 	29976 	262
+262 	Alliance Boots 	29848 	969
+263 	Softbank 	29762 	1042
+264 	Sharp 	29682 	47
+265 	Air France-KLM Group 	29644 	-2201
+266 	Sunoco 	29630 	-329
+267 	Hess 	29569 	740
+268 	Ingram Micro 	29515 	202
+269 	América Móvil 	29233 	5696
+270 	Fannie Mae 	29065 	-71969
+271 	Power Corp. of Canada 	29050 	598
+272 	POSCO 	28883 	2522
+273 	Koç Holding 	28845 	920
+274 	Time Warner 	28842 	2468
+275 	China South Industries Group 	28757 	274
+276 	Baosteel Group 	28591 	1448
+277 	Idemitsu Kosan 	28560 	64
+278 	Volvo 	28551 	-1924
+279 	La Poste 	28532 	738
+280 	Johnson Controls 	28497 	-338
+281 	Cathay Life Insurance 	28315 	81
+282 	State Bank of India 	28213 	2473
+283 	Kansai Electric Power 	28074 	1370
+284 	Delta Air Lines 	28063 	-1237
+285 	George Weston 	28009 	907
+286 	Poste Italiane 	27935 	1256
+287 	Continental 	27932 	-2292
+288 	Standard Life 	27803 	332
+289 	Bridgestone 	27750 	11
+290 	Alstom 	27739 	1718
+291 	Delhaize Group 	27732 	714
+292 	East Japan Railway 	27720 	1295
+293 	Sabic 	27481 	2420
+294 	Merck 	27428 	12901
+295 	Medipal Holdings 	27421 	21
+296 	DuPont 	27328 	1755
+297 	Tyson Foods 	27165 	-537
+298 	Commonwealth Bank of Australia 	27162 	3471
+299 	Mitsubishi Chemical Holdings 	27088 	138
+300 	GS Holdings 	27066 	383
+301 	L.M. Ericsson 	26997 	480
+302 	Hutchison Whampoa 	26938 	1828
+303 	Vattenfall 	26857 	1686
+304 	American Express 	26730 	2130
+305 	National Australia Bank 	26708 	1879
+306 	Korea Electric Power 	26640 	-76
+307 	Bharat Petroleum 	26596 	344
+308 	Suzuki Motor 	26592 	311
+309 	PPR 	26534 	1368
+310 	Finmeccanica 	26335 	909
+311 	TIAA-CREF 	26278 	-459
+312 	COFCO 	26098 	629
+313 	China Huaneng Group 	26019 	39
+314 	Hebei Iron & Steel Group 	25924 	135
+315 	China Metallurgical Group 	25868 	412
+316 	Samsung Life Insurance 	25805 	750
+317 	CHS 	25730 	381
+318 	TNK-BP Holding 	25696 	5175
+319 	Rite Aid 	25669 	-507
+320 	Westpac Banking 	25623 	2501
+321 	KFW Bankengruppe 	25582 	1566
+322 	Hochtief 	25563 	271
+323 	Groupama 	25539 	917
+324 	Cepsa 	25526 	521
+325 	Enterprise GP Holdings 	25511 	204
+326 	GasTerra 	25449 	50
+327 	Quanta Computer 	25429 	676
+328 	Massachusetts Mutual Life Insurance 	25424 	-115
+329 	T&D Holdings 	25299 	262
+330 	Aviation Industry Corp. of China 	25189 	767
+331 	Philip Morris International 	25035 	6342
+332 	China Minmetals 	24956 	299
+333 	OMV Group 	24904 	795
+334 	Raytheon 	24881 	1935
+335 	Express Scripts 	24749 	828
+336 	Hartford Financial Services 	24701 	-887
+337 	Travelers Cos. 	24680 	3622
+338 	Christian Dior 	24665 	966
+339 	Publix Super Markets 	24515 	1161
+340 	Amazon.com 	24509 	902
+341 	Wolseley 	24461 	-1842
+342 	L'Oréal 	24286 	2491
+343 	Staples 	24276 	739
+344 	William Morrison Supermarkets 	24263 	942
+345 	Bayerische Landesbank 	24255 	-3640
+346 	ACS 	24245 	2712
+347 	Sun Life Financial 	24160 	537
+348 	China North Industries Group 	24150 	456
+349 	CRH 	24148 	823
+350 	Flextronics International 	24111 	19
+351 	Chubu Electric Power 	24110 	1169
+352 	Sinosteel 	24014 	42
+353 	Wilmar International 	23885 	1882
+354 	Hindustan Petroleum 	23881 	311
+355 	Google 	23651 	6520
+356 	Shenhua Group 	23605 	3278
+357 	Mapfre Group 	23526 	1288
+358 	Hanwha 	23521 	439
+359 	Fujifilm Holdings 	23497 	-414
+360 	Macy's 	23489 	350
+361 	KBC Group 	23376 	-3428
+362 	International Paper 	23366 	663
+363 	Vale 	23311 	5349
+364 	Mazda Motor 	23306 	-70
+365 	Ageas 	23254 	1657
+366 	Oracle 	23252 	5593
+367 	Norddeutsche Landesbank 	23201 	-211
+368 	China United Network Communications 	23183 	459
+369 	Accenture 	23171 	1590
+370 	3M 	23123 	3193
+371 	People's Insurance Co. of China 	23116 	150
+372 	Deere 	23112 	874
+373 	Cosmo Oil 	23068 	-116
+374 	Migros 	22976 	908
+375 	Hyundai Heavy Industries 	22926 	1678
+376 	Maruhan 	22843 	295
+377 	Imperial Tobacco Group 	22760 	1023
+378 	McDonald's 	22745 	4551
+379 	Xstrata 	22732 	661
+380 	Schlumberger 	22702 	3134
+381 	Heraeus Holding 	22545 	162
+382 	Jardine Matheson 	22501 	1604
+383 	Ping An Insurance 	22374 	2032
+384 	National Grid 	22331 	2210
+385 	Suncor Energy 	22327 	1004
+386 	Alfresa Holdings 	22179 	113
+387 	British American Tobacco 	22157 	4231
+388 	Aisin Seiki 	22127 	179
+389 	Tech Data 	22100 	180
+390 	Lafarge 	22078 	1023
+391 	Motorola 	22063 	-51
+392 	Bertelsmann 	22036 	-114
+393 	Fluor 	21990 	685
+394 	Schneider Electric 	21952 	1184
+395 	China Resources National 	21902 	995
+396 	Eli Lilly 	21836 	4329
+397 	Huawei Technologies 	21821 	2672
+398 	PKN Orlen Group 	21797 	420
+399 	Australia & New Zealand Banking 	21778 	2136
+400 	Onex 	21758 	98
+401 	Toronto-Dominion Bank 	21733 	2667
+402 	Ricoh 	21716 	300
+403 	Yamada Denki 	21714 	603
+404 	Coca-Cola Enterprises 	21645 	731
+405 	Bristol-Myers Squibb 	21634 	10612
+406 	Energie Baden-Württemberg 	21634 	1068
+407 	Showa Shell Sekiyu 	21612 	-616
+408 	Northwestern Mutual 	21603 	321
+409 	Nordea Bank 	21600 	3216
+410 	Tata Steel 	21582 	-424
+411 	DIRECTV 	21565 	942
+412 	China Datang Group 	21460 	-282
+413 	Oil & Natural Gas 	21448 	4090
+414 	Bank of Nova Scotia 	21428 	3032
+415 	Jiangsu Shagang Group 	21419 	377
+416 	Japan Tobacco 	21335 	1491
+417 	MS & AD Insurance Group Holdings 	21139 	405
+418 	Alcatel-Lucent 	21068 	-728
+419 	Standard Chartered Group 	20941 	3380
+420 	Emerson Electric 	20915 	1724
+421 	Anglo American 	20858 	2425
+422 	Danone 	20824 	1892
+423 	Nationwide 	20751 	716
+424 	Compass Group 	20747 	904
+425 	Gas Natural Fenosa 	20681 	1661
+426 	Michelin 	20581 	147
+427 	Adecco 	20567 	11
+428 	Wuhan Iron & Steel 	20543 	174
+429 	Kirin Holdings 	20503 	525
+430 	Heineken Holding 	20491 	709
+431 	Compal Electronics 	20448 	582
+432 	Premafin Finanziaria 	20424 	-187
+433 	TJX 	20288 	1214
+434 	CPC 	20253 	1140
+435 	AMR 	19917 	-1468
+436 	Aluminum Corp. of China 	19851 	-622
+437 	Sodexo 	19818 	530
+438 	Sumitomo Electric Industries 	19778 	309
+439 	Fresenius 	19687 	687
+440 	Bank of Communications 	19568 	4409
+441 	AREVA 	19548 	767
+442 	Tata Motors 	19501 	542
+443 	U.S. Bancorp 	19490 	2205
+444 	Co-operative Group 	19477 	627
+445 	NKSJ Holdings 	19470 	424
+446 	Holcim 	19462 	1355
+447 	GMAC 	19403 	-10298
+448 	Bombardier 	19366 	698
+449 	TUI 	19344 	463
+450 	Akzo Nobel 	19311 	396
+451 	PNC Financial Services Group 	19231 	2447
+452 	Formosa Petrochemical 	19204 	1187
+453 	Nike 	19176 	1487
+454 	Murphy Oil 	19138 	838
+455 	Kimberly-Clark 	19115 	1884
+456 	Eiffage 	18958 	264
+457 	Henkel 	18866 	837
+458 	Telstra 	18824 	2993
+459 	Royal KPN 	18777 	3027
+460 	Sistema 	18750 	1643
+461 	Alcoa 	18745 	-1151
+462 	Suzuken 	18692 	150
+463 	Boehringer Ingelheim 	18630 	2445
+464 	Plains All American Pipeline 	18520 	579
+465 	Asustek Computer 	18474 	378
+466 	Erste Group Bank 	18468 	1256
+467 	Cigna 	18414 	1302
+468 	Nippon Yusen 	18281 	-188
+469 	Aflac 	18254 	1497
+470 	Evonik Industries 	18175 	334
+471 	Ultrapar Holdings 	18064 	233
+472 	Gruppo Mediolanum 	18057 	302
+473 	Kobe Steel 	17997 	68
+474 	Tohoku Electric Power 	17915 	278
+475 	Thales Group 	17905 	-280
+476 	Skanska 	17887 	474
+477 	China Guodian 	17871 	32
+478 	Time Warner Cable 	17868 	1070
+479 	Sanyo Electric 	17850 	-526
+480 	Fomento de Construcciones 	17652 	427
+481 	Kajima 	17635 	142
+482 	Cie Nationale ŕ Portefeuille 	17571 	412
+483 	United Services Automobile Association 	17558 	3020
+484 	J.C. Penney 	17556 	251
+485 	Sumitomo Chemical 	17458 	159
+486 	Strabag 	17447 	224
+487 	Acer 	17380 	344
+488 	Magna International 	17367 	-493
+489 	Daiwa House Industry 	17339 	206
+490 	MAN Group 	17320 	-375
+491 	Exelon 	17318 	2707
+492 	Tyco International 	17240 	-1798
+493 	Coop 	17238 	396
+494 	Randstad Holding 	17235 	95
+495 	Kohl's 	17178 	991
+496 	JBS 	17161 	64
+497 	Shimizu 	17117 	-74
+498 	Whirlpool 	17099 	328
+499 	Suez Environnement 	17091 	560
+500 	Dai Nippon Printing 	17053 	251

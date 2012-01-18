@@ -12,3 +12,4 @@ g_*
 *.blg
 *.snm
 *.kilepr
+*.pyc

@@ -1,0 +1,97 @@
+set terminal epslatex color solid
+set fit errorvariables
+set style data lines
+
+set output "g_svet_200.tex"
+
+set xlabel "Dele\\v z naklju\\v cnih povezav $\\eta$"
+set ylabel "Reducirana povpre\\v cna razdalja $r$"
+set ytics nomirror
+set y2label "Gru\\v cavost"
+set y2tics
+
+plot "g_svet_200.dat" u 1:2 t "$r$", \
+"" u 1:3 axis x1y2 t "Gru\\v cavost"
+
+set output "g_svet_razdalja.tex"
+
+unset y2tics
+unset y2label
+unset logscale
+set logscale xy
+set style data points
+set pointsize 0.3
+
+B = 0.5
+p = -3
+A = 0.01
+f(x) = A*x**p + B
+
+fit[0.01:1] f(x) "< cat g_svet_*.dat" u 1:2 via A,p,B
+
+plot "g_svet_200.dat" t "$N=200$, meritve", \
+"g_svet_500.dat" t "$N=500$, meritve", \
+"g_svet_1000.dat" t "$N=1000$, meritve", \
+"g_svet_2000.dat" t "$N=2000$, meritve", \
+"g_svet_5000.dat" t "$N=5000$, meritve", \
+f(x) t "Fit"
+
+unset logscale
+set logscale y
+set ylabel "Gru\\v cavost $c$"
+set output "g_svet_grucavost.tex"
+
+A = 1
+b = 10
+
+f(x) = A*exp(-b*x)
+
+fit f(x) "< cat g_svet_*.dat" u 1:3 via A,b
+
+plot "g_svet_200.dat" u 1:3 t "$N=200$, meritve", \
+"g_svet_500.dat" u 1:3 t "$N=500$, meritve", \
+"g_svet_1000.dat" u 1:3 t "$N=1000$, meritve", \
+"g_svet_2000.dat" u 1:3 t "$N=2000$, meritve", \
+"g_svet_5000.dat" u 1:3 t "$N=5000$, meritve", \
+f(x) t "Fit"
+
+## Sirjenje informacije po grafu
+
+set xlabel "\"Cas $t$"
+set ylabel "Dele\"z oseb z informacijo $n$"
+set output "g_sirjenje_2000.tex"
+unset logscale
+set key bottom right
+
+plot for [i in "0 25 50 75 100"] sprintf("g_sirjenje_2000_%s.dat", i) t sprintf("$\\eta = %s\\%$", i)
+
+l1(x) = 1/(1+exp(-a*(x-t)))
+fit l1(x) "< cat g_sirjenje_2000_{25,50,75,100}.dat" via a,t
+
+set output "g_sirjenje_2000_r.tex"
+plot for [i in "25 50 75 100"] sprintf("g_sirjenje_2000_%s.dat", i) t sprintf("$\\eta = %s\\%$", i), l1(x) t "Logisti\"cna funkcija"
+
+set xlabel "Dele\"z naklju\"cnih povezav $\\eta$"
+set ylabel "\"Cas $T$"
+
+set output "g_hitrost_200.tex"
+set key top right
+plot "g_hitrost_200.dat" u 1:2 t "$n = 1/2$", "" u 1:3 t "$n = 1$"
+
+set output "g_hitrost_large.tex"
+plot for [i in "2000 4000"] sprintf("g_hitrost_%s.dat",i) u 1:2 t sprintf("$N=%s$, $n = 1/2$",i), \
+for [i in "2000 4000"] sprintf("g_hitrost_%s.dat",i) u 1:3 t sprintf("$N=%s$, $n = 1$",i)
+
+set xlabel "$\\ln r$"
+set ylabel "$\\ln \\tau$"
+set logscale xy
+set key top left
+set output "g_cas_razdalja.tex"
+set pointsize 1
+
+A = 1
+b = 1
+h(x) = C*x+n
+fit h(x) "< cat g_svet_{200,500,1000}.dat" u (log($2)+0.5):(log($5)) via C,n
+plot[0.04:4][0.5:5] for [i in "200 500 1000"] sprintf("g_svet_%s.dat",i) u (log($2)+0.5):(log($5)) t sprintf("$N=%s$", i), \
+h(x) title "Odvisnost $\\ln\\tau = A\\ln r + n$"

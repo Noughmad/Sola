@@ -1,0 +1,113 @@
+set terminal epslatex color solid
+set pointsize 0.3
+
+# pi = 3.14159265
+a = -1
+T1 = 2025
+C = 2e5
+
+K = 67000
+T0 = -4.41e6
+T2 = 2008
+tau = 42
+t(x) = (x-T0)/tau
+set angles radians
+
+set ylabel "Svetovna populacija $N$"
+set xlabel "$x$"
+
+pot(x) = C*(T1-x)**a
+s(x) = sqrt(x*x+1)
+
+kapica(x) = K*K*(atan2(tan((x-T2)/tau/K + pi/2),K) + ((x < T2) ? 0 : pi))*1e-6
+
+poz(x) = 2202-x
+leto(x) = 2202-x
+
+set output "g_zgodovina.tex"
+set logscale xy
+
+fit[:2000] pot(x) "historical.dat" via C,T1,a
+fit[:2000] kapica(x) "historical.dat" via K,tau,T2
+
+plot[][0.01:] "historical.dat" u (poz($1)):2 t "US Census", "zgodovina.dat" u (poz($1)):2 t "\\texttt{zgodovina.dat}", \
+pot(leto(x)) t "Poten\"cni model", kapica(leto(x)) t "Kapica"
+
+set output "g_zgodovina_zoom.tex"
+set xlabel "Leto"
+
+unset logscale x
+
+plot[1900:2050] "historical.dat" t "US Census", "zgodovina.dat" t "\\texttt{zgodovina.dat}", \
+pot(x) t "Poten\"cni model", kapica(x) t "Kapica"
+
+as = 1
+aa = 1
+af = 1
+ad = 1
+
+us(x) = Us * log(Us) / (as*x + log(Us))
+ua(x) = Ua * log(Ua) / (aa*x + log(Ua))
+uf(x) = Uf * log(Uf) / (af*x + log(Uf))
+ud(x) = Ud * log(Ud) / (ad*x + log(Ud))
+
+sp1(x) = U1 * a1 / (x+a1)
+sp2(x) = U2 * a2 / (x+a2)
+sp3(x) = U3 * a3 / (x+a3)
+
+Us = 3e5
+Ua = 8e6
+Uf = 4e5
+Ud = 1.6e6
+
+U1 = Us
+a1 = log(Us)
+
+set autoscale
+
+
+TM = "Osnovni model"
+TP = "Posplo\"sitev"
+
+fit us(x) "mestaSLO.dat" using 1:2:(sqrt($2)) via Us
+fit ua(x) "mestaZDA.dat" using 7:3:(sqrt($3)) via Ua
+fit sp1(x) "mestaSLO.dat" using 1:2:(sqrt($2)) via U1, a1
+
+set xlabel "$R$"
+set ylabel "$U$"
+set output "g_mesta.tex"
+plot "mestaZDA.dat" u 7:3 t "Mesta v ZDA", ua(x) t "Model", \
+"mestaSLO.dat" u 1:2 t "Slovenska mesta", us(x) t TM, sp1(x) t TP
+
+U1 = Uf
+a1 = log(Uf)
+fit uf(x) "fortune.dat" using 1:3:(sqrt($3)) via Uf
+fit sp1(x) "fortune.dat" using 1:3:(sqrt($3)) via U1, a1
+fit ud(x) "domene.dat" using 1:3:(sqrt($3)) via Ud
+
+set output "g_podjetja.tex"
+plot "fortune.dat" using 1:3 t "Fortune Global 500", uf(x) t TM, \
+sp1(x) t "Posplo\"sitev"
+
+set output "g_domene.tex"
+plot "domene.dat" using 1:3 t "SEOMoz", ud(x) t TM
+
+u(x) = U * log(U) / (x + log(U))
+
+set output "g_jezera.tex"
+fit u(x) "lakes-world.dat" u ($0+1):3:(sqrt($3)) via U
+fit ud(x) "lakes-eu.dat" u ($0+1):2:(sqrt($2)) via Ud
+
+fit sp1(x) "lakes-world.dat" u ($0+1):3:(sqrt($3)) via U1, a1
+fit sp2(x) "lakes-eu.dat" u ($0+1):2:(sqrt($2)) via U2,a2
+
+plot "lakes-world.dat" u ($0+1):3 t "Svet",  u(x) t TM, sp1(x) t TP, \
+"lakes-eu.dat" u ($0+1):2 t "Evropa",  ud(x) t TM, sp2(x) t TP
+
+
+set output "g_supercomp.tex"
+fit u(x) "TOP500_201111.csv" u 1:2:(sqrt($2)) via U
+
+fit sp1(x) "TOP500_201111.csv" u 1:2:(sqrt($2)) via U1, a1
+
+plot "TOP500_201111.csv" u 1:2 t "Podatki",  u(x) t TM, sp1(x) t TP

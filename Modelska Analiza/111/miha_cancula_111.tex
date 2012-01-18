@@ -1,0 +1,334 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{comment}
+\usepackage{hyperref}
+
+%opening
+\title{Izbolj\v sani populacijski modeli}
+\author{Miha \v Can\v cula}
+
+\newcommand{\dd}{\ensuremath{\, \mathrm{d}}}
+
+\begin{document}
+
+\maketitle
+
+\section{Model mali svet}
+
+\subsection{Postopek}
+
+Ustvaril sem seznam $N$ elementov, ki so med seboj povezani sosedsko in cikli"cno, tako da je element $i$ povezana z elementi $\{(i+d) \mod N;\;|d| \leq k\}$. Povezanost $k$ sem za primere simulacije postavil na 3. Shranil sem seznam vseh prvotnih povezav. 
+
+Ob vsakem koraku sem eno izmed za"cetnih povezav nadomestil s povezavo med dvema naklju"cnima elementoma. Poskrbel sem, da ta povezave prej ni obstajala, in da noben element ni povezan s samim seboj. Dodatno sem uvedel pogoj, da mora graf vseskozi ostati povezan, torej da obstaja povezava med poljubnima dvema to"ckama. Le za tak"sne grafe je namre"c definirana povpre"cna razdalja, in le po njih se lahko "sirijo informacije oz. bolezni. 
+
+Ker sta izra"cuna povpre"cne razdalje med to"ckami in gru"cavosti grafa dolgotrajna postopka, ju nisem izvedel na vsakem koraku, ampak tako, da sta bila izvedena le po 100-krat. 
+
+\input{g_svet_200}
+
+Z grafa vidimo, da povpre"cna razdalja "ze pri majhnem "stevilu dolgih povezav mo"cno pade, nato pa se ustali pri neki konstantni vrednosti. Po drugi strani pa gru"cavost pada po"casneje, na prvi pogled eksponentno. 
+
+\begin{figure}[!h]
+ \centering
+ \input{g_svet_razdalja}
+\caption{Reducirana povpre"cna razdalja}
+\label{fig:svet-razdalja}
+\end{figure}
+
+\begin{figure}[!h]
+ \centering
+ \input{g_svet_grucavost}
+\caption{Gru"cavost}
+\label{fig:svet-grucavost}
+\end{figure}
+
+Gru"cavost, definirana kot v navodilih, je brezdimenzijska koli"cina med 0 in 1 in ni odvisna od velikosti grafa. To potrjuje graf na sliki~\ref{fig:svet-grucavost}. 
+
+V naklju"cnem grafu je povpre"cna razdalja med to"ckami sorazmerna z $\log N / \log k$, kjer je $k$ povpre"cna stopnja to"cke~\cite{graf}. Za bolj"so primerjavo sem torej namesto povpre"cne razdalje $\overline d$ ra"cunal z reducirano koli"cino $r = \overline d\log k /\log N$. Ujemanje med krivuljami na grafu potrjuje to logaritemsko odvisnost. 
+
+Z grafov~\ref{fig:svet-razdalja} in~\ref{fig:svet-grucavost} se vidi, da reducirana povpre"cna razdalja in gru"cavost grafa nista odvisni od velikosti grafa, ampak le od razmerja med sosedskimi in naklju"cnimi povezavami. 
+
+\section{"Sirjenje informacije}
+
+Pri razli"cnih dele"zih naklju"cnih povezav $\eta$ sem simuliral "sirjenje informacije po grafu. Za"cel sem z enim osebkom, ki ima to informacijo, in jo v vsakem koraku z verjetnostjo $p$ raz"siri vsem sosedom, ki je "se poznajo. Ta verjetnost je seveda sorazmerna z dol"zino "casovnega koraka $p \propto \Delta t$, zato sem ju v svojih brezdimenzijskih enotah kar izena"cil. 
+
+\begin{figure}[!h]
+ \input{g_sirjenje_2000}
+  \caption{"Sirjenje informacije po grafu, $N=2000$}
+\label{fig:sirjenje-2000}
+\end{figure}
+
+Pri povsem sosedsko povezanem grafu je "sirjenje informacij linearen pojav. To lahko predpostavimo zaradi topologije grafa, informacija se "siri po kro"znici, ob vsakem koraku pa jo izvejo najve"c trije sosedje na vsaki strani. "Ze majhen prispevek naklju"cnih povezav pa to dinamiko spremeni, in namesto linearne "casovne odvisnosti dobimo znano logisti"cno ena"cbo. Oblika in polo"zaj krivulje se z nadaljnjim ve"canje $\eta$ le malo spreminja, zato sem lahko vse "stiri primere pribli"zal z eno samo krivuljo
+
+\begin{align}
+ n(t) &= \frac{1}{1+e^{-a(t-t_0)}} \\
+ t_0 &= 2,07 \pm 0,01 \\
+ a &= 3,5 \pm 0,1
+\end{align}
+
+
+\begin{figure}[!h]
+ \input{g_sirjenje_2000_r}
+  \caption{"Sirjenje informacije po grafu, $N=2000$}
+\label{fig:sirjenje-2000-r}
+\end{figure}
+
+Ogledal sem si, kako hitro dose"zemo, da polovica osebkov pozna informacijo ($n = 1/2$) pri razli"cnih dele"zih naklju"cnih povezav. 
+
+\begin{figure}[!h]
+ \input{g_hitrost_200}
+  \caption{Hitrost "sirjenja informacije po grafu, $N=200$}
+\label{fig:hitrost-200}
+\end{figure}
+
+V vseh primerih je "cas od polovi"cne do polne informiranosti skoraj enak, zato je dovolj "ce obravnavamo le enega. "Ze pri uvedbi majhnega "stevila (manj kot 10\%) naklju"cnih povezav dolgega dosega "cas raz"sirjanja mo"cno pade, pri $\eta=20\%$ pa se ustali in nadaljnja odstopanja lahko pripi"semo statisti"cnemu "sumu. Najzanimivej"sa je odvisnost pri majhnih $\eta$, zato sem se temu podro"cju posvetil bolj podrobno z ve"cjimi grafi. 
+
+
+\begin{figure}[!h]
+ \input{g_hitrost_large}
+  \caption{"Cas "sirjenja informacije po grafu z ve"cjim "stevilom to"ck}
+\label{fig:hitrost-large}
+\end{figure}
+
+Za ve"cje grafe se "cas "sirjenja informacije ustali "ze prej, pri okrog $1\%$ nakjlu"cnih povezav. To pomeni, da potrebujemo le majhno "stevilo povezav dolgega dosega, da zagotovimo hitro "sirjenje informaci.
+
+\newpage
+
+\subsection{Odvisnost od povpre"cne razdalje}
+
+"Cas "sirjenja informacije ima na prvi pogled podobno odvisnost od $\eta$ kot povpre"cna razdalja med to"ckami, zato sem ju primerjal med seboj. Ker obe koli"cini zelo hitro padeta proti neki kon"cni vrednosti, sem vsako izmed njih dvakrat logaritmirav. 
+
+
+\begin{figure}[!h]
+ \input{g_cas_razdalja}
+  \caption{Odvisnost med povpre"cno razdaljo in "casom, potrebnim za polovi"cno raz"siritev informacije. Na obeh oseh sta logaritma koli"cin, pa tudi sam graf je v logaritemskem merilu, tako da je to dvojno-logaritemski graf za obe koli"cini. }
+\label{fig:hitrost-large}
+\end{figure}
+
+Odvisnost dokaj dobro popi"se izraz
+\begin{comment}
+\begin{align}
+ \ln \tau &= A r^b \\
+ \tau &= \exp\left(Ar^b\right) = \left(e^A\right)^{r^b} = C^{r^b}
+\end{align}
+\end{comment}
+
+\begin{align}
+ \ln \tau &= k\ln r + n = \ln \left(r^k\right) + n \\
+ \tau &= \exp\left(\ln r^k + n\right) = e^n \cdot r^k = Cr^k
+\end{align}
+
+\section{Populacijski modeli}
+
+Ker imamo velikost populacije dosti bolj natan"cno podano v letih okrog 2000, meritve oz. ocene pa segajo do pred nekaj milijoni let, sem moral uporabiti logaritemsko "casovno skalo. Za to borajo biti vse vrednosti pozitivne, najbolje pa je, "ce je vrednost 0 v bli"zini leta 2000, kjer imamo najve"c meritev. Zato sem "casovno skalo kalibriral z brezdimenzijsko spremenljivko 
+
+\begin{align}
+ x(t) = 2202 - \frac{t}{\mathrm{1\; leto}}
+\end{align}
+
+Konstanto 2202 sem izbral, ker je zgornja meja za meritve, ocene in predvidevanja v tabeli. Podatki segajo do leta 2200, z izbiro vrednosti 2202 sem zagotovil, da obstaja tudi drugi logaritem, torej da je $\ln(x) > 0$. 
+
+\subsection{Model Kapice}
+
+Diferencialno ena"cbo Kapice 
+\begin{align}
+ \dot n &= K \sin^2 \frac{n}{K} + \frac{1}{K}
+\end{align}
+
+lahko integriramo in dobimo~\cite{seminar}
+
+\begin{align}
+n(t) &= K \arctan\left[\frac{\tan\left(\frac{(t-t_1)\sqrt{K^2+1}}{K^2}\right)}{\sqrt{K^2+1}}\right] \approx K\arctan\left[ \frac{\tan \frac{t-t_1}{K}}{K} \right] \\
+N(T) &= K^2 \arctan\left[ \frac{\tan \frac{T-T_0}{\tau K}}{K}\right]
+\end{align}
+
+To velja ob predpostavki, da $N(T_0) = 0$, torej za $T_0$ postavimo za"cetek "clove"stva, $T_0\approx -4,4\cdot10^6$ let. Konstanti $K$ in $\tau$ ocenimo iz podatkov, primerni vrednosti sta $K=67000$ in $\tau = 42$ let. Obe imata tudi prakti"cen pomen, $K$ je minimalna velikost stabilne in samozadostne civilizacije, $\tau$ pa je blizu povpre"cnega "zivljenjskega "casa enega "cloveka.
+
+Paziti moramo tudi, za bo funkcija zvezna in vedno pozitivna, tudi ko ima tangens pol. Takrat je tudi rast populacije najhitrej"sa. "Cas, ob katerem se to zgodi, ozna"cimo s $T_2$. 
+
+\begin{align}
+ \frac{T_2-T_0}{\tau K} &= \frac{\pi}{2} \\
+ T_2 &= T_0 + \frac{\tau K \pi}{2} \approx 0
+\end{align}
+
+Oba "clena na desni imata podoben velikostni red, torej do prehoda pride nekje v bli"zini na"sega stetja. V modelu, ki ga prilagajam podatkov, namesto "casa $T_0$ raje uporabil $T_2$, saj je bli"zje zanimivemu delu odvisnosti, pa tudi ve"cini meritev. 
+
+Inverzni tangens v ena"cbi uspe"sno odpravi neskon"cnost v polu, zaradi predznaka in zveznosti krivulje pa moramo izrazu pri $T>T_2$ pri"steti "se $\pi K^2$. 
+
+\begin{align}
+N(T) &= K^2 \left( \arctan\left[ \frac{\tan \left(\frac{T-T_1}{\tau K} + \frac{\pi}{2}\right)}{K}\right] + \pi \Theta(T-T_1) \right)
+\end{align}
+
+\subsection{Podatki}
+
+Uporabil sem dva nabora podatkov:
+
+\begin{enumerate}
+ \item Datoteka \texttt{zgodovina.dat}, dobljena s strani predmeta
+ \item Podatke US Census Bureau~\cite{census}. 
+\end{enumerate}
+
+Vsi podatki so seveda zgolj ocene, tisti iz prihodnosti pa napovedi. Ker so napovedi narejene pa podlagi istih modelov, kot jih trenutno posku"sam prilagoditi, sem pri fitanju uporabil le podatka izpred leta 2000. 
+
+
+\input{g_zgodovina}
+\input{g_zgodovina_zoom}
+
+Prilagoditvi obeh modelov podatkov ameri"skega urada nam data podatke v tabelah~\ref{tab:parametri-potencni} in~\ref{tab:parametri-kapica}. 
+
+
+\begin{table}[h]
+ \centering
+\begin{tabular}{|c|c|}
+ \hline
+Parameter & Vrednost  \\
+\hline
+$C$ & $(2,0 \pm 0,5) \cdot 10^{11}$ \\
+$\alpha$ & $-0,96 \pm 0,05$ \\
+$T_1$ & $2035 \pm 4$ \\
+\hline
+$\chi^2_{red}$ & 24000 \\
+\hline
+\end{tabular}
+\caption{Optimalni parametri za poten"cni model}
+\label{tab:parametri-potencni}
+\end{table}
+
+
+\begin{table}[h]
+ \centering
+\begin{tabular}{|c|c|}
+ \hline
+Parameter & Vrednost \\
+\hline
+$K$ & $(62 \pm 1) \cdot 10^3$  \\
+$\tau$ & $40,3 \pm 0,5$ \\
+$T_2$ & $1998 \pm 2$ \\
+\hline
+$\chi^2_{red}$ & 6200 \\
+\hline
+\end{tabular}
+\caption{Optimalni parametri za model Kapice}
+\label{tab:parametri-kapica}
+\end{table}
+
+\section{Velikosti in vrsti red}
+
+\subsection{Izpeljava}
+Izraz
+\begin{align}
+ \frac{U(R)}{U_0} &= \frac{\ln U_0}{R + \ln U_0} \label{eq:model-velikost} \\
+\end{align}
+lahko obrnemo tako, da izrazimo $R(U)$
+\begin{align}
+ \frac{\ln U_0}{R + \ln U_0} &= \frac{U(R)}{U_0} \\
+ \frac{R + \ln U_0}{\ln U_0} &= \frac{U_0}{U(R)} \\
+ R(U) &= \left(\frac{U_0}{U} - 1\right) \ln U_0
+\end{align}
+
+"Ce "zelimo porazdelitev mest po velikosti, moramo izraz odvajati. "Stevilo mest z velikostjo med $U_1$ in $U_2$ je nare"c kar enako $R(U_1) - R(U_2)$. Z limitiranjem $U_2\to U_1$ dobimo izraz za diferencialno verjetnostno gostoto
+
+\begin{align}
+ p(U) = \left|\frac{\partial R}{\partial U}\right|_U &= \frac{U_0 \ln U_0}{U^2} \propto U^{-2} \label{eq:distrib}
+\end{align}
+
+Tak"sna odvisnost torej popi"se primere, kjer pogostost pojavljanja pada z drugo potenco velikosti. 
+
+Iz izraza (\ref{eq:model-velikost}) pa lahko izra"cunamo tudi skupno "stevilo prebivalcev v mestih:
+
+\begin{align}
+ N &= \sum_{R=1}^M U(R) \approx \int_1^\infty U(R) \dd R = U_0\ln U_0 \int_1^M \frac{\dd R}{R+\ln U_0}\\
+   &=  U_0 \ln U_0 \left[ \ln (R+\ln U_0)\right]_1^M = U_0 \ln U_0 \ln \left(\frac{M + \ln U_0}{1 + \ln U_0}\right)
+\end{align}
+
+"Stevilo mest $M$ lahko ocenimo tako, da postavimo spodnjo mejo za njihovo velikost $U_m$. Tedaj je "stevilo mest kar enako rangu najmanj"sega mesta $R(U_m)$ in je odvisno le od $U_0$. V sistemu, ki ga opisuje tak"sen model, torej obstaja direktna povezava med skupnim "stevilo prebivalcev mest $N$ in velikostjo najve"cjega mesta $U(1)$, saj sta oba odvisna le od enega parametra $U_0$. 
+
+V primerih, ko ta model ni zadovoljivo opisal dejanskega stanja, sem uporabil bolj splo"sen izraz 
+\begin{align}
+ U(R) = U_0 \frac{a}{x + a}
+\end{align}
+
+Tak model opi"se verjetnostno porazdelitev po velikosti
+
+\begin{align}
+ R(U) &= a \left(\frac{U_0}{U} - 1\right) \\
+ \frac{\partial R}{\partial U} &= \frac{a U_0}{U^2}
+\end{align}
+
+Verjetnostna gostota tudi sedaj pada s kvadratom velikosti, v modelu pa nastopata dva prosta parametra. Zato sta lahko skupno "stevilo prebivalcev in velikost najve"cjega mesta izberemo poljubno. Tak model dobro opi"se tudi nekatere odvisnosti, ki jih prvi ne. 
+
+\subsection{Ocena napake}
+
+Napako velikosti vsakega mesta sem ocenil na $\sqrt{U}$, kjer je $U$ "stevilo prebivalcev. Ta napaka ne pride nujno iz meritev, saj so "stetja prebivalstva tako v Sloveniji kot v Ameriki pogosta in to"cna, ampak iz stalnega preseljevanja prebivalcev in nejasnih meja mest. Ker sem vse rezultate predstavljal z logaritemskimi grafih, je na ta na"cin vizualno ujemanje na grafu bolj"se kot pri konstanti napaki. 
+
+\subsection{Mesta}
+
+Model sem posku"sal prilagoditi podatkom za mesta v Sloveniji in v Zdru"zenih dr"zavah Amerike. Rezultati so prikazani na sliki~\ref{fig:mesta}. 
+
+\begin{figure}[!h]
+\input{g_mesta}
+\caption{Velikosti mest v ZDA in v Sloveniji} 
+\label{fig:mesta}
+\end{figure}
+
+Model res dobro opi"se velikosti mest v ZDA. Odstopanja so vidna le pri treh najve"cjih mestih, ki so ve"cja kot bi pri"cakovali. 
+
+Za slovenska mesta pa model ni primeren, saj velikost mest pada dosti hitreje kot pri"cakovano, in to po celotni lestvici. Bolj"se ujemanje pa dobimo s posplo"senim modelom, z mo"cno zmanj"sanim $a$. Optimalna vrednost za $a$ je namprec le 0.01, $U_0$ pa primerno velik, torej se sistem obna"sa pribli"zno kot $U(R) \propto 1/R$. 
+
+
+\subsection{Podjetja in internetne strani}
+
+Isti model sem preizkusil tudi na nekaterih drugih naborih podatkov. Izka"ze se, da prihodki velikih podjetij~\cite{fortune} ne sledijo zgoraj porazdelitvi v izrazu~(\ref{eq:distrib}). V nasprotju s Slovenskimi mesti pa je odstopanje tu v drugo smer: Najve"cja podjetja imajo manj"se prihodke, kot bi pri"cakovali. Optimalna vrednost za parameter $a$ je tu ve"cja od $\ln U_0$. 
+
+\begin{figure}[!h]
+\input{g_podjetja}
+\caption{Letni prihodki najve"cjih svetovnih podjetij}
+\label{fig:fortune}
+\end{figure}
+
+Dosti bolje se izka"zejo popularne spletne strani. Podatki o "stevilu povezav na posamezne domene, ki jih objavlja podjetje SEOMoz~\cite{seomoz}, se dobro ujemajo z na"sim modelom. 
+
+\begin{figure}[!h]
+\input{g_domene}
+\caption{"Stevilo zunanjih povezav na najve"cje svetovne spletne strani} 
+\end{figure}
+
+Preveril sem tudi, ali je opisana odvisnost zna"cilna le za povezovanje ljudi v skupine, ali se pojavlja tudi v ne"zivi naravi. V ta namen sem obravnaval velikosti najve"cjih svetovnih in evropskih jezer~\cite{jezera-svet,jezera-eu}. Podatki in pribli"zek z obema modeloma so na sliki~\ref{fig:jezera}
+
+\begin{figure}[!h]
+\input{g_jezera}
+\caption{Povr"sine najve"cjih svetovnih jezer} 
+\label{fig:jezera}
+\end{figure}
+
+Osnovni model z enim parametrom tu ni primeren, s posplo"sitvijo pa dobro opi"se realno stanje. Tako kot pri mestih v Sloveniji tu velikost prehitro pada z vrstnim "stevilom, zato moramo parameter $a$ zmanj"sati. Namesto pri"cakovane vrednosti okrog 12 je optimalen $a$ med 0,1 in 0,4. 
+
+Kot pravi ra"cunalni"ski fizik sem si ogledal tudi svoja najljub"sa orodja: superra"cunalnike. Narisal in obravnaval sem "stevilo operacij z realnimi, ki jih je ra"cunalnik zmo"zen opraviti na sekundo, tako imenovane FLOPS. Kot vidimo na sliki~\ref{fig:comp}, "ze osnovni model dokaj dobro opi"se njihovo porazdelitev, posplo"sitev z dodatnim parametrom pa ne prinese skoraj nobene koristi. 
+
+\begin{figure}[!h]
+ \input{g_supercomp}
+\caption{Hitrost 500 najmo"cnej"sih superra"cunalnikov}
+\label{fig:comp}
+\end{figure}
+
+
+\newpage
+\begin{thebibliography}{}
+ \bibitem{graf} Fan Chung and Linyuan Lu, The average distances in random graphs with given expected degrees, 
+Proceedings of the National Academy of Sciences of the United States of America, 2002.
+
+ \bibitem{seminar} Denis Brojan, Populacijska dinamika "clovestva, seminar, 2009.
+
+  \bibitem{census} U. S. Census Bureau, \url{http://www.census.gov/population/international/data/idb/worldhis.php}, \url{http://www.census.gov/population/international/data/idb/worldpoptotal.php}. 
+
+  \bibitem{fortune} Fortune Global 500, \url{http://money.cnn.com/magazines/fortune/global500/2010/full_list/index.html}. 
+
+  \bibitem{seomoz} SEOMoz, \url{http://www.seomoz.org/top500}. 
+
+  \bibitem{jezera-svet} \url{http://www.factmonster.com/ipka/A0001777.html}
+
+  \bibitem{jezera-eu} \url{http://en.wikipedia.org/wiki/List_of_largest_lakes_of_Europe}
+\end{thebibliography}
+\end{document}
