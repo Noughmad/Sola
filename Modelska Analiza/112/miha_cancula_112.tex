@@ -63,6 +63,8 @@ Tokrat je bila naloga obratna, poiskati izviren signal ob poznavanju izhodnega s
 
 \begin{figure}[h]
  \input{g_decon_3d}
+ \caption{Izra"cunani izvirni signal z upo"stevanjem razli"cnih eksponentov $\beta$}
+\label{fig:decon-3d}
 \end{figure}
 
 
@@ -103,5 +105,82 @@ Za primerjavo sem iskal tudi signal z najmanj"so amplitudo. "Ce privzamemo, da j
 \end{align}
 
 Odvod $\dot s$ lahko pribli"zamo s kon"cno diferenco, frekven"co $\omega$ pa kot po absolutni vrednosti najve"cjo komponentno Fourierove transformiranke. Seveda na"s signal ni povsem sinusen, zato se amplituda spreminja s "casom, $A = A(t)$. Podobno kot v prvem primeru sem na koncu minimiziral povpre"cen kvadrat amplitude. 
+
+\section{Filtriranje}
+
+\subsection{Celoten interval}
+
+Iz frekven"cnega spektra originalnih signalov na sliki~\ref{fig:val-fft} lahko vidimo, da sta oba vrhova v spektru signala iz datoteke \texttt{val2.dat} ostra, medtem ko so vrhovi v spektru \texttt{val3.dat} raz"sirjeni. Iz tega lahko sklepamo, da smo pri merjenju prvega signala ujeli celo "stevilo period, pri merjenju drugega pa ne. 
+
+\begin{figure}[h]
+ \input{g_val_fft}
+\caption{Frekven"cni spekter obeh signalov}
+\label{fig:val-fft}
+\end{figure}
+
+Oba spektra lahko pribli"zamo z uporabo okenske funkcije. Najprej sem poskusil z enostavno sinusno funkcijo
+
+\begin{align}
+ w(n) &= \sin(\frac{n\pi}{N-1})
+\end{align}
+
+Ta funkcija se na robovih dotakne 0, ima pa neni"celen odvod. Frekven"cni spekter obeh signalov, pomno"zenih s tak"snim oknom, je na sliki~\ref{fig:val-cos}. 
+
+\begin{figure}[h]
+ \input{g_val_cos}
+\caption{Frekven"cni spekter obeh signalov, pomno"zenih s sinusno okensko funkcijo}
+\label{fig:val-cos}
+\end{figure}
+
+Hitro vidimo, da so se vrhovi prej ostrega signala ra"zsirili, vrhovi signala s "sirokimi vrhovi pa zo"zili. Med signaloma je "se vedno jasna razlika, vrhovi so po "sirini sedaj bolj podobni kot prej, ne pa "se enaki. 
+
+Nato sem preizkusil Hammingovo okensko funkcijo. Za razliko od prej"snje ta niti na robovih ne pade "cisto na 0, ima pa tam odvod enak 0, zato bo tako obdelan signal lahko zvezen in periodi"cen. Koeficiente okna dobimo s formulo
+
+\begin{align}
+ w(n) &= 0.54 - 0.46 \cos \left(\frac{2\pi n}{N-1}\right)
+\end{align}
+
+"Ce okensko funkcijo uporabimo v Fourierovem prostoru, je predznak drugega "clena odvisen od izbire intervala za $n$. V tem primeru pa smo jo uporabili v "casovnem prostoru, tako da $n \in [0,N-1]$ in je drugi "clen s pozitivnim predznakom. "Zelimo namre"c, da je vrednost okna na robovih intervala enaka 0, na sredini pa 1.  Rezultat uporabe zgornje funkcije je na sliki~\ref{fig:val-hamm}. 
+
+\begin{figure}[h]
+ \input{g_val_hamm}
+\caption{Frekven"cni spekter obeh signalov, pomno"zenih s Hammingovo okensko funkcijo}
+\label{fig:val-hamm}
+\end{figure}
+
+"Sirini vrhov pa sta skoraj enaki. Na sliki je sicer vidna razlike med njimi, ampak le v podro"cju med vrhovi, kjer je spekter sedaj mnogo ni"zji kot pri izvirnem signalu. Opazimo lahko tudi, da v signalu \texttt{val3.dat} tik ob najvi"sjih vrhovih sedaj dobimo skoke (angl. side-lobes), "ceprav je Hammingova funkcija optimizirana tako, da "cimbolj zmanj"sa vi"sino prvega skoka. 
+
+Nazadnje sem uporabil se Blackmanovo funkcijo, ki ima na robovih tako vrednost kot odvod enaka 0. Rezultati so na sliki~\ref{fig:val-black}. 
+
+\begin{figure}[h]
+ \input{g_val_black}
+\caption{Frekven"cni spekter obeh signalov, pomno"zenih z Blackmanovo okensko funkcijo}
+\label{fig:val-black}
+\end{figure}
+
+\cleardoublepage
+\subsection{Kraj"si intervali}
+
+Ogledal sem si tudi, kaj se zgodi, "ce obravnavamo le manj"se "stevilo to"ck. Iste izra"cune kot prej sem ponovil za celoten signal (512 to"ck) in za kraj"se podintervale (64, 128 in 256 to"ck). Tokrat sem prikazal le originalen signal in pa signal, dobljen s Hammingovo okensko funkcijo. Spektri so na slikah~\ref{fig:val-dolzina} in~\ref{fig:val-dolzina-hamm}. 
+
+\begin{figure}[h]
+ \subfigure[$M = 64$]{\input{g_val_64}} 
+ \subfigure[$M = 128$]{\input{g_val_128}}
+ \subfigure[$M = 256$]{\input{g_val_256}}
+ \subfigure[$M = 512$]{\input{g_val_512}}
+\caption{Frekve"cni spektri originalnih signalov pri razli"cnih dol"zinah analiziranega intervala}
+\label{fig:val-dolzina}
+\end{figure}
+
+\begin{figure}[h]
+ \subfigure[$M = 64$]{\input{g_val_hamm_64}} 
+ \subfigure[$M = 128$]{\input{g_val_hamm_128}}
+ \subfigure[$M = 256$]{\input{g_val_hamm_256}}
+ \subfigure[$M = 512$]{\input{g_val_hamm_512}}
+\caption{Frekve"cni spektri signalov, pomno"zenih s Hammingovo okensko funkcijo, pri razli"cnih dol"zinah analiziranega intervala}
+\label{fig:val-dolzina-hamm}
+\end{figure}
+
+
 
 \end{document}
