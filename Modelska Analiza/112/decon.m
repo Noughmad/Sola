@@ -18,6 +18,10 @@ function x = slabost(data)
     size(x)
 endfunction
 
+function x = frekvenca(data)
+    x = sumsq(abs(data));
+endfunction
+
 function x = sprem(data)
     global n
     d = ifft(data);
@@ -65,11 +69,15 @@ function S = sprem_beta(beta)
     S = sprem(ftsignal(beta));
 endfunction
 
+function S = frek_beta(beta)    
+    S = frekvenca(ftsignal(beta));
+endfunction
+
 Beta1 = fsolve("sl_beta", beta)
 Beta2 = fsolve("sprem_beta", beta)
 Beta3 = fsolve("am_beta", beta)
 
-x = linspace(0,1,n);
+x = linspace(-1,1,n);
 plot(x, R/10, x, ifft(ftsignal(Beta1)), x, ifft(ftsignal(Beta2)), x, ifft(ftsignal(Beta3)))
 xlabel ("$t$");
 ylabel ("Signal");
@@ -78,15 +86,15 @@ orient landscape
 print -depslatex g_decon_signal "-S640,480"
 
 
-B = linspace(0,300);
+B = linspace(0,5);
 Z = [];
 for b = B
-    Z = [Z abs(ifft(ftsignal(b)))];
+    Z = [Z real(ifft(ftsignal(exp(b))))];
 endfor
 [xx, bb] = meshgrid(x, B);
 mesh(xx,bb,Z')
 
 xlabel ("$t$")
-ylabel ("$\\beta$")
+ylabel ("$\\log \\beta$")
 zlabel ("Signal")
 print -depslatex g_decon_3d "-S800,600"

@@ -47,21 +47,23 @@ Na grafu sta narisani "se ujemanju s krivuljo, ki nara"s"ca kot $\cal O(n^2)$ in
 
 \subsection{Natan"cnost}
 
-Preveril sem tudi, kako natan"cna je metoda s Fourierovo transformacijo. Tako direktna kot FFT metoda ne delata nobenih pribli"zkov, edini vir napake je kon"cna natan"cnost ra"cunalni"skega zapisa, na katerege pa sta lahko metodi razli"cno ob"cutljivi. Kot mero za napako metode sem izbral
+Preveril sem tudi, kako natan"cna je metoda s Fourierovo transformacijo. Tako direktna kot FFT metoda ne delata nobenih pribli"zkov, edini vir napake je kon"cna natan"cnost ra"cunalni"skega zapisa, na katerega pa sta lahko metodi razli"cno ob"cutljivi. Kot mero za napako metode sem izbral
 
 \begin{align}
- \sigma^2 &= \sum_{i=0}^{kN-1} (f_i^F - f_i^D)^2
+ \sigma^2 &= \frac{\sum_{i=0}^{kN-1} \left(f_i^F-f_i^D\right)^2}{\sum_{i=0}^{kN-1} \left(f_i^D\right)^2 }
 \end{align}
 
-kjer so $f_i^F$ in $f_i^D$ koeficienti, izra"cunani s Fourierovo oz. direktno metodo. "Ce sem za"cel z diskretizacijo na $N$ to"ck in izra"cunal konvolucijo $k$-tih enakih funkcij, ima kon"cni izraz $kN$ koeficientov. 
-
+kjer so $f_i^F$ in $f_i^D$ koeficienti, izra"cunani s Fourierovo oz. direktno metodo. Imenovalec je normalizacija, saj je velikost "clenov odvisna od $N$. "Ce sem za"cel z diskretizacijo na $N$ to"ck in izra"cunal konvolucijo $k$-tih enakih funkcij, ima kon"cni izraz $kN$ koeficientov. 
 
 \begin{figure}[h]
  \centering
 \input{g_konv_napaka}
-\caption{Napaka izra"cuna s Fourierovo transformacijo}
+\caption{Napaka izra"cuna s Fourierovo transformacijo. Napaka je bila vseskozi majhna, v mejah strojne natan"cnosti, torej lahko zaklju"cimo, da je Fourierova metodi kljub hitrosti dovolj natan"cna. }
 \end{figure}
 
+
+
+\newpage
 \section{Dekonvolucija signala}
 
 Tokrat je bila naloga obratna, poiskati izviren signal ob poznavanju izhodnega signala in prehodne funkcije. Prehodna funkcija $G(t)$ pa je imela en neznani parameter $\beta$, ki sem ga dolocil tako, da je bil izvirni signal "cim lep"si. Lepoto signala pa sem definiral na razli"cne na"cine. 
@@ -72,6 +74,7 @@ Tokrat je bila naloga obratna, poiskati izviren signal ob poznavanju izhodnega s
 \label{fig:decon-3d}
 \end{figure}
 
+V prenosni funkciji vedno nastopa produkt $\beta t$, zato nam razli"cne "casovne skale dajo razli"cne vrednosti parametra $\beta$. V svojem ra"cunanju sem povsod uporabil "casovni interval [-1,1], torej skupne dol"zine 2. 
 
 \subsection{"Cim manj"se spremembe}
 
@@ -85,7 +88,7 @@ Ena mo"zna izbira je, da i"s"cemo signal, ki se "cim po"casneje spreminja. Narav
 
 \begin{figure}[h]
  \input{g_decon_signal}
-\caption{Vhodni in izhodni signal pri $\beta = 34.852$}
+\caption{Vhodni in izhodni signal pri razli"cnih kriterijih iskanja}
 \label{fig:dekon-signal}
 \end{figure}
 
@@ -111,6 +114,24 @@ Za primerjavo sem iskal tudi signal z najmanj"so amplitudo. "Ce privzamemo, da j
 
 Odvod $\dot s$ lahko pribli"zamo s kon"cno diferenco, frekven"co $\omega$ pa kot po absolutni vrednosti najve"cjo komponentno Fourierove transformiranke. Seveda na"s signal ni povsem sinusen, zato se amplituda spreminja s "casom, $A = A(t)$. Podobno kot v prvem primeru sem na koncu minimiziral povpre"cen kvadrat amplitude. 
 
+Enak rezultat sem dobil, "ce sem minimiziral vsoto kvadratov absolutne vrednosti spektra, torej izraz
+
+\begin{align}
+ \sum_{i=-N/2}^{N/2-1} |S_i|^2
+\end{align}
+
+"Ce privzamemo, da je signal elektri"cni, je ta izraz enak integralu mo"cnostnega spektra, torej skupna mo"c, ki jo signal nosi. 
+
+Iz te enakosti lahko sklepamo, da sem obravnaval le dva kvalitativno razli"cna kriterija:
+\begin{itemize}
+ \item Iskanje "cim ni"zjih frekvenc, ki se v "casovnem prostoru ka"ze kot minimizacija spreminjanja signala
+ \item Iskanje "cim manj"se skupne mo"ci, ki se v frekven"cnem prostoru ka"ze kot absolutni kvadrat transformiranke, v "casovnem pa kot amplituda signala
+\end{itemize}
+
+Najni"zje frekvence dobimo pri $\beta \approx 35$, najni"zjo mo"c pa pri $\beta \approx 15$. 
+
+
+\newpage
 \section{Filtriranje}
 
 \subsection{Celoten interval}

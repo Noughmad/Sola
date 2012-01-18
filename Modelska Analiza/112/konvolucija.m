@@ -16,7 +16,7 @@ N = 1
 
 for i = 1:18
   N = 2*N;
-  a = 2/N;
+  a = 2/N^(2/3);
   data = a * ( 1 - linspace(1, 0, N));
 
   [t,u,s] = cputime;
@@ -33,8 +33,9 @@ for i = 1:18
   T1 = [t u s];
   Tnorm = T1 - T;
   
-  R = [R; N Tfft Tnorm sumsq(D-C)];
+  R = [R; N Tfft Tnorm sumsq(C-D)];
   disp(["Solved for " int2str(N)]);
+  disp(sumsq(D)/N)
 endfor
 
 save g_konvolucija_hitrost.dat R
