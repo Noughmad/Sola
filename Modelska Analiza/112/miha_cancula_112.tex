@@ -34,11 +34,16 @@ Linearno padajo"co funkcijo $f(x) = 1-x$ sem izvrednostil v $N$ diskretnih to"ck
 
 \subsection{Hitrost}
 
+Z grafa na sliki~\ref{fig:konv-cas}, se vidi, da je Fourierova transformacija mnogo hitrej"sa od direktnega ra"cuna konvolucije, ta razlika pa se vidi predvsem pri velikem "stevilu to"ck $N$. 
+
 \begin{figure}[h]
  \centering
 \input{g_konv_cas}
 \caption{"Cas, potreben za izra"cun konvolucije treh linearno padajo"cih funkcij po obeh algoritmih}
+\label{fig:konv-cas}
 \end{figure}
+
+Na grafu sta narisani "se ujemanju s krivuljo, ki nara"s"ca kot $\cal O(n^2)$ in krivuljo $\cal O(n\log n)$. V obeh primerih sem funkcijama dodal konstanto, saj "ze sam program \texttt{Octave} potrebuje nekaj "casa za zagon. Ujemanje je dobro za obe napovedi, predvsem pri ve"cjih $N$, ko lahko zanemarimo prispevke ni"zjih redov. 
 
 \subsection{Natan"cnost}
 
