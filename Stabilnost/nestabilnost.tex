@@ -43,6 +43,10 @@ Oddelek za fiziko \\[2cm]
 
 \end{abstract}
 
+\newpage
+
+\tableofcontents
+
 \section{Uvod}
 
 \section{Stabilnost}
@@ -55,8 +59,6 @@ Primer nestabilnega pojava je svin"cnik, postavljen na konico. Ena"cba, ki opisu
 
 \section{Hidrodinamika}
 
-Na nestabilnosti pogosto naletimo pri "studiju curkov teko"cin~\cite{eggers}. 
-
 \subsection{Navier-Stokesova ena"cba}
 
 Tok nestisljive teko"cine z gostoto $\rho$ in viskoznostjo $\mu$ se podreja Navier-Stokesovi ena"cbi in ohranitvi mase
@@ -67,7 +69,7 @@ Tok nestisljive teko"cine z gostoto $\rho$ in viskoznostjo $\mu$ se podreja Navi
 \nabla \vec u &= 0
 \end{align}
 
-Kot obi"cajno pri re"sevanju ena"cb si jo najprej poenostavimo tako, da preidemo na brezdimenzijske spremenljivke in "cimbolj minimiziramo "stevilo parametrov. Izberimo si meri za dol"zino $x_0$ in hitrost $v_0$. "Ce uvedemo "se brezdimenzijsko Reynoldsovo "stevilo $R=v_0 x_0 / \mu$, lahko ena"cbo za"pi"semo za brezdimenzijski spremenljivki $U$ in $P$. 
+Kot obi"cajno pri re"sevanju ena"cb si jo najprej poenostavimo tako, da preidemo na brezdimenzijske spremenljivke in "cimbolj minimiziramo "stevilo parametrov. Izberimo si meri za dol"zino $x_0$ in hitrost $v_0$. "Ce uvedemo "se brezdimenzijsko Reynoldsovo "stevilo $R=v_0 x_0 / \mu$, lahko ena"cbo zapi"semo za brezdimenzijski spremenljivki $U$ in $P$. 
 
 \begin{align}
  \label{eq:ns-brezdim}
@@ -85,11 +87,11 @@ Stabilnost sistema pomeni, da vse motnje, ki so na za"cetku majhne, ostanejo maj
 
 Tok je \emph{stabilen}, "ce za vsak $\eps > 0$ obstaja $\delta(\eps) > 0$, tako da za 
 \begin{equation}
- || u'(\vec r, 0) ||, \; || p'(\vec r, 0) || < \delta
+ \norm{ u'(\vec r, 0) }, \; \norm{ p'(\vec r, 0) } < \delta
 \end{equation}
 velja
 \begin{equation}
- || u'\rt ||, \; || p'\rt || < \eps \;\;\;\; \forall t > 0
+ \norm{ u'\rt }, \; \norm{ p'\rt } < \eps \;\;\;\; \forall t > 0
 \end{equation}
 
 "Ce je tok stabilen in velja
@@ -104,7 +106,7 @@ Ker nas zanimajo le majhne motnje, lahko v ena"cbi zanemarimo vse "clene kjer mo
  \label{eq:ns-linearna}
 \frac{\partial \vec u'}{\partial t} + \vec U \cdot \nabla \vec u' + \vec u' \cdot \nabla \vec U &= -\nabla p' + R^{-1}\Delta u' \\
 \label{eq:nestisljivost-linearna}
-\nabla \cdot \vec u &= 0
+\nabla \cdot \vec u' &= 0
 \end{align}
 
 "Ce je osnovni tok stacionaren, so koeficienti v linearnem sistemu ena"cb konstantni, zato lo"cimo spremenljivki $\vec r$ in $t$, splo"sno re"sitev pa zapi"semo kot linearno kombinacijo normalnih na"cinov 
@@ -153,6 +155,14 @@ Ker obravnavamo tanke filme, lahko privzamemo, da je debelina $h$ manj"sa od kat
 
 \subsection{Nestabilnost}
 
+\begin{figure}[h]
+\centering
+ \includegraphics[width=.9\textwidth]{./Slike/film-slika}
+\caption{Polzenje tanke plasti teko"cine po nagnjeni povr"sini. Majhne motnje v obliki fronte (levo) hitro prerastejo v vzorec, ki ni niti pribli"zno enakomeren (desno). Vir: \cite{kondic}}
+\label{fig:film-neenakomernost}
+\end{figure}
+
+
 \section{Milni mehur"cki}
 
 Milni mehur"cki so stabilni na majhne motnje zaradi povr"sinske napetosti teko"cine. "Ce pa mehur"cek predremo v eni to"cki, ustvarimo rob, kjer povr"sinska napetost ni uravnote"zena, zato se rob za"cne umikati. Ker je opna obi"cajno zelo tanka, 
@@ -162,6 +172,7 @@ je ukrivljenost na robu velika, zato fronta napreduje zelo hitro~\cite{diploma}.
  \centering
 \includegraphics[width=.8\textwidth]{./Slike/bubble-3}
 \caption{Razpad milnega mehir"cka~\cite{slike-mehurcek}. Kapljice na desni strani niso posejane enakomerno, ampak so vidni pasovi ve"cje in manj"se gostote. }
+\label{fig:mehurcek-3}
 \end{figure}
 
 \subsection{Ena"cbe}
@@ -169,6 +180,10 @@ je ukrivljenost na robu velika, zato fronta napreduje zelo hitro~\cite{diploma}.
 Podobno kot pri tankem filmu lahko tudi za opno predpostavimo, da je tanka, njeno debelino pa ozna"cimo s $h = h(x,t)$. Opna ima translacijsko simetrijo v smeri $y$, zato na za"cetku predpostavimo, da imajo tak"sno simetrijo tudi $h$ ter gostota in tlak teko"cine. 
 
 \subsection{Nestabilnost}
+
+\section{Curki}
+
+Na nestabilnosti pogosto naletimo tudi pri "studiju curkov teko"cin~\cite{eggers}. 
 
 
 \section{Zaklju"cek}
