@@ -19,6 +19,13 @@
 \title{Hidrodinamske nestabilnosti}
 
 \renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+
+\newcommand{\rt}{(\vec r, t)}
 
 \begin{document}
 \begin{center}
@@ -49,6 +56,65 @@ Primer nestabilnega pojava je svin"cnik, postavljen na konico. Ena"cba, ki opisu
 \section{Hidrodinamika}
 
 Na nestabilnosti pogosto naletimo pri "studiju curkov teko"cin~\cite{eggers}. 
+
+\subsection{Navier-Stokesova ena"cba}
+
+Tok nestisljive teko"cine z gostoto $\rho$ in viskoznostjo $\mu$ se podreja Navier-Stokesovi ena"cbi in ohranitvi mase
+
+\begin{align}
+ \label{eq:ns-enacba}
+\frac{\partial \vec u}{\partial t} + \vec u \cdot \nabla \vec u &= -\frac{1}{\rho}\nabla p + \mu \Delta \vec u \\
+\nabla \vec u &= 0
+\end{align}
+
+Kot obi"cajno pri re"sevanju ena"cb si jo najprej poenostavimo tako, da preidemo na brezdimenzijske spremenljivke in "cimbolj minimiziramo "stevilo parametrov. Izberimo si meri za dol"zino $x_0$ in hitrost $v_0$. "Ce uvedemo "se brezdimenzijsko Reynoldsovo "stevilo $R=v_0 x_0 / \mu$, lahko ena"cbo za"pi"semo za brezdimenzijski spremenljivki $U$ in $P$. 
+
+\begin{align}
+ \label{eq:ns-brezdim}
+\frac{\partial \vec U}{\partial t} + \vec U \cdot \nabla \vec U &= -\nabla P + R^{-1} \Delta \vec U \\
+\nabla \vec U &= 0
+\end{align}
+
+\subsection{Lineariziran problem}
+
+Stabilnost hidrodinamskega sistema lahko "studiramo tako, da najprej najdemo osnovno re"sitev, ki ji v hidrodinamiki re"cemo \emph{osnovni tok}. Ta re"sitev je lahko podana analiti"cno ali numeri"cno, vsekakor pa se podreja Navier-Stokesovi ena"cbi. Podamo jo kot polje hitrosti $\vec U(\vec r, t)$ in tlaka $P(\vec x, t)$. 
+
+Nato osnovnem toku dodamo motnjo, tako da dobimo \emph{skupni tok}, zopet podan s hitrostjo $\vec u = \vec U + \vec u'$ in tlakom $p = P + p'$. Tudi za skupni tok mora veljati N-S ena"cba, iz "cesar lahko izpeljemo ena"cbo za motnjo $u'$ in $p'$. 
+
+Stabilnost sistema pomeni, da vse motnje, ki so na za"cetku majhne, ostanejo majhne tudi ob poljubnem "casu. Nasprotno, sistem je nestabilen, "ce vsaj ena motnja po nekem "casu preneha biti majhna. Za matemati"cni opis moramo to difincijo formalizirati in dolo"citi mero za velikost motnje. 
+
+Tok je \emph{stabilen}, "ce za vsak $\eps > 0$ obstaja $\delta(\eps) > 0$, tako da za 
+\begin{equation}
+ || u'(\vec r, 0) ||, \; || p'(\vec r, 0) || < \delta
+\end{equation}
+velja
+\begin{equation}
+ || u'\rt ||, \; || p'\rt || < \eps \;\;\;\; \forall t > 0
+\end{equation}
+
+"Ce je tok stabilen in velja
+\begin{equation}
+ \norm{u'\rt}, \; \norm{p'\rt} \xrightarrow[t\to\infty]{} 0
+\end{equation}
+torej se motnja s "casom manj"sa, je tok \emph{asimptoti"cno stabilen}. V teoriji dinami"cnih sistemov asimptoti"cno stabilni re"sitvi re"cemo tudi atraktor. 
+
+Ker nas zanimajo le majhne motnje, lahko v ena"cbi zanemarimo vse "clene kjer motnja nastopa v drugem ali vi"sjih redih. Na ta na"cin sistem zreduciramo na linearno diferecialno ena"cbo 
+
+\begin{align}
+ \label{eq:ns-linearna}
+\frac{\partial \vec u'}{\partial t} + \vec U \cdot \nabla \vec u' + \vec u' \cdot \nabla \vec U &= -\nabla p' + R^{-1}\Delta u' \\
+\label{eq:nestisljivost-linearna}
+\nabla \cdot \vec u &= 0
+\end{align}
+
+"Ce je osnovni tok stacionaren, so koeficienti v linearnem sistemu ena"cb konstantni, zato lo"cimo spremenljivki $\vec r$ in $t$, splo"sno re"sitev pa zapi"semo kot linearno kombinacijo normalnih na"cinov 
+
+\begin{align}
+ \vec u'\rt &= \sum e^{s_i t} \vec u_i(\vec r) \\
+ p'\rt &= \sum e^{s_i t} p_i(\vec r)
+\end{align}
+
+Hitro lahko vidimo, da bo tok nestabilen, "ce ima vsaj ena lastna vrednosti $s_i$ realni del ve"cji od 1, v nasprotnem primeru pa bo stabilen. Problem stabilnosti sistema lahko torej prevedemo na iskanje lastnih vrednosti matrike. 
 
 \section{Tanki filmi}
 
@@ -102,12 +168,8 @@ je ukrivljenost na robu velika, zato fronta napreduje zelo hitro~\cite{diploma}.
 
 Podobno kot pri tankem filmu lahko tudi za opno predpostavimo, da je tanka, njeno debelino pa ozna"cimo s $h = h(x,t)$. Opna ima translacijsko simetrijo v smeri $y$, zato na za"cetku predpostavimo, da imajo tak"sno simetrijo tudi $h$ ter gostota in tlak teko"cine. 
 
-
-
 \subsection{Nestabilnost}
 
-
-\section{Razpad toka v kapljice}
 
 \section{Zaklju"cek}
 
