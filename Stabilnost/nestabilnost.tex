@@ -14,6 +14,7 @@
 \usepackage{color}
 \usepackage[version=3]{mhchem}
 \usepackage{wrapfig}
+\usepackage{comment}
 
 %opening
 \title{Hidrodinamske nestabilnosti}
@@ -22,6 +23,8 @@
 \newcommand{\eps}{\varepsilon}
 \renewcommand{\phi}{\varphi}
 \renewcommand{\theta}{\vartheta}
+
+\newcommand{\odv}[1]{\frac{\partial #1}{\partial t}}
 
 \newcommand{\norm}[1]{\lVert #1 \rVert}
 
@@ -118,15 +121,18 @@ Ker nas zanimajo le majhne motnje, lahko v ena"cbi zanemarimo vse "clene kjer mo
 
 Hitro lahko vidimo, da bo tok nestabilen, "ce ima vsaj ena lastna vrednosti $s_i$ realni del ve"cji od 1, v nasprotnem primeru pa bo stabilen. Problem stabilnosti sistema lahko torej prevedemo na iskanje lastnih vrednosti matrike. 
 
+V tem seminarju se bomo posvetili predvsem primerom, ko osnovni tok ni stacionaren. Zato moramo najprej re"siti ena"cbo za $\vec U$, nato pa "se "casovni razvoj motnje $\vec u'$. V razli"cnih geometrijah so te ena"cbe lahko zelo zapletene, zato jih re"sujemo numeri"cno. 
+
 \section{Tanki filmi}
 
 Hidrodinamsko nestabilnost lahko opazujemo pri polzenju teko"cine po klan"cini~\cite{kondic}. 
 
+
 \begin{figure}[h]
 \centering
- \includegraphics[width=.8\textwidth]{./Slike/film-skica}
-\caption{Skica teko"cine v dveh dimenzijah. Viden je greben tik za fronto teko"cine in pa zo"zitev dale"c za fronto, ki je pri ra"cunih ne bomo upo"stevali}
-\label{fig:film-skica}
+ \includegraphics[width=.9\textwidth]{./Slike/film-slika}
+\caption{Polzenje tanke plasti teko"cine po nagnjeni povr"sini. Majhne motnje v obliki fronte (levo) hitro prerastejo v vzorec, ki ni niti pribli"zno enakomeren, je pa periodi"cen (desno). Vir: \cite{kondic}}
+\label{fig:film-neenakomernost}
 \end{figure}
 
 \subsection{Ena"cbe}
@@ -153,15 +159,30 @@ Ker obravnavamo tanke filme, lahko privzamemo, da je debelina $h$ manj"sa od kat
 
 \subsubsection{Brezdimenzijska oblika}
 
-\subsection{Nestabilnost}
-
 \begin{figure}[h]
 \centering
- \includegraphics[width=.9\textwidth]{./Slike/film-slika}
-\caption{Polzenje tanke plasti teko"cine po nagnjeni povr"sini. Majhne motnje v obliki fronte (levo) hitro prerastejo v vzorec, ki ni niti pribli"zno enakomeren (desno). Vir: \cite{kondic}}
-\label{fig:film-neenakomernost}
+ \includegraphics[width=.8\textwidth]{./Slike/film-skica}
+\caption{Skica teko"cine v dveh dimenzijah. Viden je greben tik za fronto teko"cine in pa zo"zitev dale"c za fronto, ki je pri ra"cunih ne bomo upo"stevali}
+\label{fig:film-skica}
 \end{figure}
 
+\subsection{Nestabilnost}
+
+Osnovna re"sitev $h_0(x, t)$ je sicer odvisna od "casa, vendar lahko predpostavimo, da rob teko"cine polzi s konstantno hitrostjo $U$. "Casovno odvisnost koeficientov $h_0$ bomo torej odpravili, "ce se postavimo v koordinatni sistem, ki se giblje s to hitrostjo. V tem primeru uvedemo spremenljivko $\xi = x - Ut$ in $\nabla = (\partial_\xi, \partial_y)$, splo"sno re"sitev pa lahko zapi"semo v obliki
+
+\begin{equation}
+ h(\xi, y, t) = h_0(\xi) + \eps h_1(\xi, y, t)
+\end{equation}
+
+V tej se $h_0$ ne spreminja s "casom, torej smo dobili linearno diferencialno ena"cbo s konstantnimi koeficienti. 
+
+Na sliki~\ref{fig:film-neenakomernost} vidimo, da je oblika fronte periodi"cna, zato $h_1(\xi, y, t)$ raje nadomestimo s Fourierovo transformiranko po koordinati $y$, $g(\xi, q, t)$, za katero velja
+
+\begin{align}
+ \odv{g} = -\mathcal{L}g
+\end{align}
+
+kjer je $\mathcal{L}$ linearni diferecialni operator s konstantimi koeficienti. Zanimajo nas lastne vrednosti tega operatorja, zlasti tista z najve"cjim realnim delom. Lastne vrednosti so odvisne od valovnega "stevila $q$ oz valovne dol"zine $\lambda = 2\pi/q$; pri"cakujemo, da bo valovna do"lzina, pri kateri je lastna vrednost $s(q)$ najve"cja, enaka razdalji med posameznimi pasovi na sliki~\ref{fig:film-neenakomernost}, saj bo motnja s tak"sno valovno dol"zino najhitreje nara"s"cala. 
 
 \section{Milni mehur"cki}
 
@@ -171,7 +192,7 @@ je ukrivljenost na robu velika, zato fronta napreduje zelo hitro~\cite{diploma}.
 \begin{figure}[h]
  \centering
 \includegraphics[width=.8\textwidth]{./Slike/bubble-3}
-\caption{Razpad milnega mehir"cka~\cite{slike-mehurcek}. Kapljice na desni strani niso posejane enakomerno, ampak so vidni pasovi ve"cje in manj"se gostote. }
+\caption{Razpad milnega mehir"cka~\cite{slike-mehurcek}. }
 \label{fig:mehurcek-3}
 \end{figure}
 
@@ -179,11 +200,61 @@ je ukrivljenost na robu velika, zato fronta napreduje zelo hitro~\cite{diploma}.
 
 Podobno kot pri tankem filmu lahko tudi za opno predpostavimo, da je tanka, njeno debelino pa ozna"cimo s $h = h(x,t)$. Opna ima translacijsko simetrijo v smeri $y$, zato na za"cetku predpostavimo, da imajo tak"sno simetrijo tudi $h$ ter gostota in tlak teko"cine. 
 
-\subsection{Nestabilnost}
+\begin{figure}
+ \centering
+\includegraphics[width=.8\textwidth]{./Slike/mehurcek-skica}
+\caption{Profil opne s translacijsko simetrijo vzdol"z roba in zrcalno simetrijo v navpi"cni smeri. Ker je opna tanka, lahko privzamemo, da se tlak in hitrost ne spreminjata po debelini~\cite{diploma}. }
+\label{mehurcek-skica}
+\end{figure}
+
+\subsubsection{Gibalna ena"cba}
+
+Tok neviskozne in nestisljive teko"cine opisuje Eulerjeva ena"cba
+
+\begin{equation}
+\label{eq:meh-euler}
+ \odv{\vec v} + (\vec v \cdot \nabla)\vec v = - \nabla p
+\end{equation}
+
+Hkrati pa za opno velja tudi ohranitev prostornine, ki jo v brezdimenzijski obliki zapi"semo kot
+
+\begin{equation}
+\label{eq:meh-ohranitev}
+ \odv{h} + \nabla (h\vec v) = 0
+\end{equation}
+
+\begin{comment}
+
+\subsubsection{Ohranitev energije}
+Vemo, da opna za fronto razpade v kapljice. Njihovo "stevilo in velikost lahko dolo"cimo iz ohraniev energije in skupne prostornine. Pred razpadom je edini prispevek k energiji povr"sinska napetost opne, po razpadu pa nastane $N$ enako velikih kapljic z radijem $r$ in hitrostjo $v$. Ohranitev energije ob razpadu odseka opne s povr"sino $S$ da enakost
+
+\begin{equation}
+ \sigma N 4 \pi r^2 + 2 S h_0 \rho \frac{v^2}{2} = 2S\sigma
+\end{equation}
+
+kjer je prvi "clen energija povr"sinske napetosti kapljic, drugi kineti"cna energija kapljic, na desni pa energija opne pred razpadom. Zvezo med povr"sino opne $S$ in "stevilom kapljic $N$ dobimo iz ohranitve volumna, tako da se ohranitev energije v brezdimenzijski obliki, kjer je $r$ v enotah $h_0$, $v$ pa v enotah $v_0 = \sqrt{\frac{\sigma}{\rho h_0}}$, glasi
+
+\begin{equation}
+ \frac{3}{r} + \frac{v^2}{2} = 1
+\end{equation}
+
+\subsubsection{Potujo"ci valovi}
+
+Drugo zvezo med velikostjo in hitrostjo kapljic pa dobimo ob predpostavki, da fronta s "casom ohranja svojo obliko, torej jo lahko zapi"semo kot potujo"ci val. Ker se premika le v eni smeri, uporabimo valovno ena"cbo prvega reda
+
+\begin{equation}
+ \frac{\partial v}{\partial t} + c \nabla v = 0
+\end{equation}
+
+"Ce bi bila hitrost valovanja $c$ manj"sa od hitrosti teko"cine na robu $v$, bi bilo gibanje teko"cine nadzvo"cno in bi nastajali udarni valovi. "Ce pa bi bila motnja hitrej"sa od teko"cine, bi opna razpadala "ze pred fronto. Edina smiselna mo"znost je torej, da je $c=v$. 
+
+\end{comment}
+
+\subsection{Numeri"cno re"sevanje}
 
 \section{Curki}
 
-Na nestabilnosti pogosto naletimo tudi pri "studiju curkov teko"cin~\cite{eggers}. 
+Na nestabilnosti pogosto naletimo tudi pri "studiju razpada curkov teko"cin~\cite{eggers}. 
 
 
 \section{Zaklju"cek}
