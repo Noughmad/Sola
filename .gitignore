@@ -13,3 +13,4 @@ g_*
 *.snm
 *.kilepr
 *.pyc
+octave-core
