@@ -1,0 +1,43 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
+\usepackage{comment}
+
+%opening
+\title{Filtriranje \v suma}
+\author{Miha \v Can\v cula}
+
+\renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+
+\newcommand{\odv}[1]{\frac{\partial #1}{\partial t}}
+
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+
+\newcommand{\rt}{(\vec r, t)}
+
+\begin{document}
+
+\maketitle
+
+\section{Dekonvolucija signalov}
+
+\input{g_fft_c} \\
+\input{g_signal}
+
+\end{document}
