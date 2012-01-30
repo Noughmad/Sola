@@ -121,8 +121,6 @@ Ker nas zanimajo le majhne motnje, lahko v ena"cbi zanemarimo vse "clene kjer mo
 
 Hitro lahko vidimo, da bo tok nestabilen, "ce ima vsaj ena lastna vrednosti $s_i$ realni del ve"cji od 1, v nasprotnem primeru pa bo stabilen. Problem stabilnosti sistema lahko torej prevedemo na iskanje lastnih vrednosti matrike. 
 
-V tem seminarju se bomo posvetili predvsem primerom, ko osnovni tok ni stacionaren. Zato moramo najprej re"siti ena"cbo za $\vec U$, nato pa "se "casovni razvoj motnje $\vec u'$. V razli"cnih geometrijah so te ena"cbe lahko zelo zapletene, zato jih re"sujemo numeri"cno. 
-
 \section{Tanki filmi}
 
 Hidrodinamsko nestabilnost lahko opazujemo pri polzenju teko"cine po klan"cini~\cite{kondic}. 
@@ -174,15 +172,15 @@ Osnovna re"sitev $h_0(x, t)$ je sicer odvisna od "casa, vendar lahko predpostavi
  h(\xi, y, t) = h_0(\xi) + \eps h_1(\xi, y, t)
 \end{equation}
 
-V tej se $h_0$ ne spreminja s "casom, torej smo dobili linearno diferencialno ena"cbo s konstantnimi koeficienti. 
+V tej sliki se $h_0$ ne spreminja s "casom, torej smo dobili linearno diferencialno ena"cbo s konstantnimi koeficienti. 
 
-Na sliki~\ref{fig:film-neenakomernost} vidimo, da je oblika fronte periodi"cna, zato $h_1(\xi, y, t)$ raje nadomestimo s Fourierovo transformiranko po koordinati $y$, $g(\xi, q, t)$, za katero velja
+Na sliki~\ref{fig:film-neenakomernost} vidimo, da je oblika fronte periodi"cna, zato $h_1(\xi, y, t)$ raje zapi"semo kot linearno kombinacijo normalnih valovnih na"cinov. V ena"cbi bo tako nastopala Fourierova transformiranka po koordinati $y$, ki jo ozna"cimo z $g(\xi, q, t)$, za katero velja
 
 \begin{align}
  \odv{g} = -\mathcal{L}g
 \end{align}
 
-kjer je $\mathcal{L}$ linearni diferecialni operator s konstantimi koeficienti. Zanimajo nas lastne vrednosti tega operatorja, zlasti tista z najve"cjim realnim delom. Lastne vrednosti so odvisne od valovnega "stevila $q$ oz valovne dol"zine $\lambda = 2\pi/q$; pri"cakujemo, da bo valovna do"lzina, pri kateri je lastna vrednost $s(q)$ najve"cja, enaka razdalji med posameznimi pasovi na sliki~\ref{fig:film-neenakomernost}, saj bo motnja s tak"sno valovno dol"zino najhitreje nara"s"cala. 
+Tu je $\mathcal{L}$ linearni diferecialni operator s konstantimi koeficienti. Zanimajo nas lastne vrednosti tega operatorja, zlasti tista z najve"cjim realnim delom. Lastne vrednosti so odvisne od valovnega "stevila $q$ oz valovne dol"zine $\lambda = 2\pi/q$; pri"cakujemo, da bo valovna dol"zina, pri kateri je lastna vrednost $s(q)$ najve"cja, enaka razdalji med posameznimi pasovi na sliki~\ref{fig:film-neenakomernost}, saj bo motnja s tak"sno valovno dol"zino najhitreje nara"s"cala. 
 
 \section{Milni mehur"cki}
 
@@ -252,7 +250,7 @@ Drugo zvezo med velikostjo in hitrostjo kapljic pa dobimo ob predpostavki, da fr
 
 \subsection{Numeri"cno re"sevanje}
 
-\section{Curki}
+\section{Razpad curka}
 
 Na nestabilnosti pogosto naletimo tudi pri "studiju razpada curkov teko"cin~\cite{eggers}. 
 
