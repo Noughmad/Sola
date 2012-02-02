@@ -1,6 +1,6 @@
 \documentclass[a4paper,10pt]{article}
 
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[slovene]{babel}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -10,11 +10,12 @@
 \usepackage{subfigure}
 \usepackage{cite}
 \usepackage{url}
-\usepackage{hyperref}
+\usepackage[unicode=true]{hyperref}
 \usepackage{color}
 \usepackage[version=3]{mhchem}
 \usepackage{wrapfig}
 \usepackage{comment}
+
 
 %opening
 \title{Hidrodinamske nestabilnosti}
@@ -52,25 +53,34 @@ Oddelek za fiziko \\[2cm]
 
 \section{Uvod}
 
-\section{Stabilnost}
+\section{Stabilnost in zlom simetrije}
 
 O nestabilnosti govorimo, ko infinitezimalno majhna sprememba trenutnega stanja lahko povzro"ci ve"cjo, merljivo razliko po nekem kon"cnem "casu~\cite{drazin}. 
 
-Tak"sna definicija je precej splo"sna, zato jo za potrebe seminarja raje definiramo o"zje in bolj eksaktno: Imejmo sistem, katerega "casovno spreminjanje lahko z eno ali ve"c diferencialnimi ena"cbami, ki imajo dolo"ceno simetrijo. Z nastavkom, ki upo"steva to simetrijo, lahko dobimo re"sitev ena"cb. Stabilnost se poka"ze, ko temu nastavku dodamo majhno motnjo, ki ne upo"steva simetrije. Stabilni sistem se bo vrnil v simetri"cno stanje, medtem ko pri nestabilnem pride do zloma simetrije. 
+Tak"sna definicija je precej splo"sna, zato jo za potrebe seminarja raje definiramo o"zje in bolj eksaktno. Stabilnost sistema pomeni, da vse motnje, ki so na za"cetku majhne, ostanejo majhne tudi ob poljubnem "casu. Nasprotno, sistem je nestabilen, "ce vsaj ena motnja po nekem "casu preneha biti majhna. Obi"cajno to pomeni, da "ce je motnja ob za"cetnem "casu omejena z neko zgornjo mejo, obstaja neka druga zgornja meja, ki je motnja nikoli ne prese"ze. 
+
+"Ce se poleg stabilnosti motnja s "casom manj"sa, je tok \emph{asimptoti"cno stabilen}. V teoriji dinami"cnih sistemov asimptoti"cno stabilni re"sitvi re"cemo tudi atraktor. 
+
+Stabilnost oz. nestabilnost sistema je tesno povezana z zlomom simetrije. Predstavljajmo si sistem, katerega "casovno spreminjanje lahko opi"semo z eno ali ve"c diferencialnimi ena"cbami, ki imajo dolo"ceno simetrijo. Z nastavkom, ki upo"steva to simetrijo, dobimo re"sitev ena"cb. Stabilnost se poka"ze, ko temu nastavku dodamo majhno motnjo, ki ne upo"steva simetrije. Stabilni sistem se bo vrnil v simetri"cno stanje, medtem ko pri nestabilnem pride do zloma simetrije. 
 
 Primer nestabilnega pojava je svin"cnik, postavljen na konico. Ena"cba, ki opisuje njegovo gibanje, je simetri"cna glede na rotacijo okrog osi svin"cnika. Zato lahko najdemo re"sitev z enako simetrijo, to je pokon"cna lega. "Ce pa svin"cnih le malo izmaknemo iz simetri"cne lege, bo padel in kon"cal v stanju brez rotacijske simetrije. 
+
+Po drugi strani pa je te"zno nihalo stabilen sistem. "Ce tak"sno nihalo zmotimo, bo motnja vseskozi ostajala pribli"zno majhna velika, zaradi trenja in zra"cnega upora se bo s "casom celo manj"sala. Po dolgem "caso bo sistem spet v simetri"cnem stanju. 
+
 
 \section{Hidrodinamika}
 
 \subsection{Navier-Stokesova ena"cba}
 
-Tok nestisljive teko"cine z gostoto $\rho$ in viskoznostjo $\mu$ se podreja Navier-Stokesovi ena"cbi in ohranitvi mase
+Tok nestisljive teko"cine z gostoto $\rho$ in viskoznostjo $\mu$ se podreja Navier-Stokesovi ena"cbi in ohranitvi mase. Ena"cbi za hitrost $\vec u\rt$ in tlak $p\rt$ se glasita
 
 \begin{align}
  \label{eq:ns-enacba}
 \frac{\partial \vec u}{\partial t} + \vec u \cdot \nabla \vec u &= -\frac{1}{\rho}\nabla p + \mu \Delta \vec u \\
 \nabla \vec u &= 0
 \end{align}
+
+kjer je $\rho$ gostota teko"cine, $\mu$ pa njena viskoznost. 
 
 Kot obi"cajno pri re"sevanju ena"cb si jo najprej poenostavimo tako, da preidemo na brezdimenzijske spremenljivke in "cimbolj minimiziramo "stevilo parametrov. Izberimo si meri za dol"zino $x_0$ in hitrost $v_0$. "Ce uvedemo "se brezdimenzijsko Reynoldsovo "stevilo $R=v_0 x_0 / \mu$, lahko ena"cbo zapi"semo za brezdimenzijski spremenljivki $U$ in $P$. 
 
@@ -82,26 +92,9 @@ Kot obi"cajno pri re"sevanju ena"cb si jo najprej poenostavimo tako, da preidemo
 
 \subsection{Lineariziran problem}
 
-Stabilnost hidrodinamskega sistema lahko "studiramo tako, da najprej najdemo osnovno re"sitev, ki ji v hidrodinamiki re"cemo \emph{osnovni tok}. Ta re"sitev je lahko podana analiti"cno ali numeri"cno, vsekakor pa se podreja Navier-Stokesovi ena"cbi. Podamo jo kot polje hitrosti $\vec U(\vec r, t)$ in tlaka $P(\vec x, t)$. 
+Stabilnost hidrodinamskega sistema lahko "studiramo tako, da najprej najdemo osnovno re"sitev, ki ji v hidrodinamiki re"cemo \emph{osnovni tok}. Ta re"sitev je lahko podana analiti"cno ali numeri"cno, vsekakor pa se podreja Navier-Stokesovi ena"cbi. 
 
 Nato osnovnem toku dodamo motnjo, tako da dobimo \emph{skupni tok}, zopet podan s hitrostjo $\vec u = \vec U + \vec u'$ in tlakom $p = P + p'$. Tudi za skupni tok mora veljati N-S ena"cba, iz "cesar lahko izpeljemo ena"cbo za motnjo $u'$ in $p'$. 
-
-Stabilnost sistema pomeni, da vse motnje, ki so na za"cetku majhne, ostanejo majhne tudi ob poljubnem "casu. Nasprotno, sistem je nestabilen, "ce vsaj ena motnja po nekem "casu preneha biti majhna. Za matemati"cni opis moramo to difincijo formalizirati in dolo"citi mero za velikost motnje. 
-
-Tok je \emph{stabilen}, "ce za vsak $\eps > 0$ obstaja $\delta(\eps) > 0$, tako da za 
-\begin{equation}
- \norm{ u'(\vec r, 0) }, \; \norm{ p'(\vec r, 0) } < \delta
-\end{equation}
-velja
-\begin{equation}
- \norm{ u'\rt }, \; \norm{ p'\rt } < \eps \;\;\;\; \forall t > 0
-\end{equation}
-
-"Ce je tok stabilen in velja
-\begin{equation}
- \norm{u'\rt}, \; \norm{p'\rt} \xrightarrow[t\to\infty]{} 0
-\end{equation}
-torej se motnja s "casom manj"sa, je tok \emph{asimptoti"cno stabilen}. V teoriji dinami"cnih sistemov asimptoti"cno stabilni re"sitvi re"cemo tudi atraktor. 
 
 Ker nas zanimajo le majhne motnje, lahko v ena"cbi zanemarimo vse "clene kjer motnja nastopa v drugem ali vi"sjih redih. Na ta na"cin sistem zreduciramo na linearno diferecialno ena"cbo 
 
@@ -112,19 +105,18 @@ Ker nas zanimajo le majhne motnje, lahko v ena"cbi zanemarimo vse "clene kjer mo
 \nabla \cdot \vec u' &= 0
 \end{align}
 
-"Ce je osnovni tok stacionaren, so koeficienti v linearnem sistemu ena"cb konstantni, zato lo"cimo spremenljivki $\vec r$ in $t$, splo"sno re"sitev pa zapi"semo kot linearno kombinacijo normalnih na"cinov 
+"Ce je osnovni tok stacionaren, so koeficienti v linearnem sistemu ena"cb konstantni, torej tak"sno ena"cba znamo re"siti. Lo"cimo lahko spremenljivki $\vec r$ in $t$, splo"sno re"sitev pa zapi"semo kot linearno kombinacijo sinusnih motenj
 
 \begin{align}
  \vec u'\rt &= \sum e^{s_i t} \vec u_i(\vec r) \\
  p'\rt &= \sum e^{s_i t} p_i(\vec r)
 \end{align}
 
-Hitro lahko vidimo, da bo tok nestabilen, "ce ima vsaj ena lastna vrednosti $s_i$ realni del ve"cji od 1, v nasprotnem primeru pa bo stabilen. Problem stabilnosti sistema lahko torej prevedemo na iskanje lastnih vrednosti matrike. 
+Hitro lahko vidimo, da bo tok nestabilen, "ce ima vsaj ena lastna vrednosti $s_i$ realni del ve"cji od 0, v nasprotnem primeru pa bo stabilen. Problem stabilnosti sistema lahko torej prevedemo na iskanje lastnih vrednosti matrike. Sedaj tudi vidimo, da matemati"cno natan"cni definiciji mere za velikost motnje in kriterija za stabilnosti nimata velikega pomena, saj motnje v obliki normalnih valovnih na"cinov le eksponentno nara"s"cajo ali padajo, njihova oblika pa ostaja enaka. 
 
 \section{Tanki filmi}
 
-Hidrodinamsko nestabilnost lahko opazujemo pri polzenju teko"cine po klan"cini~\cite{kondic}. 
-
+Hidrodinamsko nestabilnost lahko opazujemo pri polzenju teko"cine po klan"cini~\cite{kondic}. Ta pojav je vsem dobro znan, saj ga lahko vidimo na avtomobilskih steklih v de"zju, enostavno pa je tudi pripraviti poskus doma. "Ceprav je samo re"sevanje zahteven postopek, pa lahko rezultat preverimo z eksperimentom. 
 
 \begin{figure}[h]
 \centering
@@ -133,9 +125,13 @@ Hidrodinamsko nestabilnost lahko opazujemo pri polzenju teko"cine po klan"cini~\
 \label{fig:film-neenakomernost}
 \end{figure}
 
+Vzorec na sliki~\ref{fig:film-neenakomernost} lahko pojasnimo s kratkim razmislekom. Po klan"cini navzdol vodo poganja sila te"ze, zadr"zujeta pa jo viskoznost in povr"sinska napetost, ki pa imata velik vpliv le na tanke plasti. "Ce majhna motnja ob nekem trenutku povzro"ci, da je na nekem mestu plast voda debelej"sa, imata tako viskoznost kot povr"sinska napetost manj"si vpliv na gibanje vode kot sila te"ze, zato bo na tistem mestu steklo ve"c vode kot drugod, kar bo le okrepilo za"cetno motnjo, tako da bo na tistem mestu voda vedno la"zje tekla. 
+
+Le z razmislekom pa ne znamo napovedati niti kon"cne oblike fronte niti povpre"cne razdalje med mesti z ve"cjim pretokom. "Ce nas to zanima, moramo tudi kaj izra"cunati. 
+
 \subsection{Ena"cbe}
 
-"Ce privzamemo nestisljivost teko"cine $\nabla \cdot \vec u = 0$, se Navier-Stokesova ena"cba poenostavi v 
+"Ce privzamemo nestisljivost teko"cine $\nabla \cdot \vec u = 0$, se Navier-Stokesova ena"cba za teko"cino na klan"cu poenostavi v 
 
 \begin{align}
  \label{eq:ns-film}
@@ -152,10 +148,9 @@ kjer je $\vec u$ hitrost teko"cine, $\rho$ njena gostota in $\mu$ viskoznost. "C
 Ker obravnavamo tanke filme, lahko privzamemo, da je debelina $h$ manj"sa od katerekoli dol"zinske skale v ravnini. S tem privzetkom lahko ena"cbo (\ref{eq:ns-film}) poenostavimo v ena"cbo za $h$. 
 
 \begin{align}
+\label{eq:ns-film-h}
  \frac{\partial h}{\partial t} = -\frac{1}{3\mu}\nabla \cdot \left[ \gamma h^3 \nabla \nabla^2 h - \rho g h^3 \nabla h \cos \alpha + \rho g h^2 \sin \alpha \vec i \right]
 \end{align}
-
-\subsubsection{Brezdimenzijska oblika}
 
 \begin{figure}[h]
 \centering
@@ -163,6 +158,10 @@ Ker obravnavamo tanke filme, lahko privzamemo, da je debelina $h$ manj"sa od kat
 \caption{Skica teko"cine v dveh dimenzijah. Viden je greben tik za fronto teko"cine in pa zo"zitev dale"c za fronto, ki je pri ra"cunih ne bomo upo"stevali}
 \label{fig:film-skica}
 \end{figure}
+
+\subsection{Re"sevanje}
+
+Zgornja ena"cba je "se vedno prezahtevna, da bi jo re"sevali analiti"cno, zato pose"zemo po numeri"cnih metodah. 
 
 \subsection{Nestabilnost}
 
@@ -172,9 +171,9 @@ Osnovna re"sitev $h_0(x, t)$ je sicer odvisna od "casa, vendar lahko predpostavi
  h(\xi, y, t) = h_0(\xi) + \eps h_1(\xi, y, t)
 \end{equation}
 
-V tej sliki se $h_0$ ne spreminja s "casom, torej smo dobili linearno diferencialno ena"cbo s konstantnimi koeficienti. 
+V tej sliki se $h_0$ ne spreminja s "casom, torej smo dobili linearno diferencialno ena"cbo s konstantnimi koeficienti. Ker "zelimo, da je motnja res majhna, predpostavimo, da sta $h_0$ in $h_1$ podobnega velikostnega reda, $\eps$ pa zelo majhen, dosti manj"si od 1. Zgornji izraz vstavimo v ena"cbo (\ref{eq:ns-film-h}) in zanemarimo vse "clene z drugi in vi"sjimi potencami $\eps$. 
 
-Na sliki~\ref{fig:film-neenakomernost} vidimo, da je oblika fronte periodi"cna, zato $h_1(\xi, y, t)$ raje zapi"semo kot linearno kombinacijo normalnih valovnih na"cinov. V ena"cbi bo tako nastopala Fourierova transformiranka po koordinati $y$, ki jo ozna"cimo z $g(\xi, q, t)$, za katero velja
+Na sliki~\ref{fig:film-neenakomernost} vidimo, da je oblika fronte pribli"zno periodi"cna, zato $h_1(\xi, y, t)$ raje zapi"semo kot linearno kombinacijo normalnih valovnih na"cinov. V ena"cbi bo tako nastopala Fourierova transformiranka po koordinati $y$, ki jo ozna"cimo z $g(\xi, q, t)$, za katero velja
 
 \begin{align}
  \odv{g} = -\mathcal{L}g
@@ -182,21 +181,31 @@ Na sliki~\ref{fig:film-neenakomernost} vidimo, da je oblika fronte periodi"cna, 
 
 Tu je $\mathcal{L}$ linearni diferecialni operator s konstantimi koeficienti. Zanimajo nas lastne vrednosti tega operatorja, zlasti tista z najve"cjim realnim delom. Lastne vrednosti so odvisne od valovnega "stevila $q$ oz valovne dol"zine $\lambda = 2\pi/q$; pri"cakujemo, da bo valovna dol"zina, pri kateri je lastna vrednost $s(q)$ najve"cja, enaka razdalji med posameznimi pasovi na sliki~\ref{fig:film-neenakomernost}, saj bo motnja s tak"sno valovno dol"zino najhitreje nara"s"cala. 
 
-\section{Milni mehur"cki}
+Ker smo osnovno re"sitev $h_0$ izra"cunali numeri"cno, tudi matri"cne elemente operatorja $\mathcal{L}$ poznamo le numer"cno. 
+
+\section{Podobni pojavi}
+
+Polzenje teko"cine po klancu seveda ni edini hidrodinamski pojav, kjer lahko opazimo nestabilnosti. Ker je to zelo "siroko podro"cje, tu omenjam predvsem tak"sne pojave, ki so neposredno povezani s tokom tankih plasti teko"cin. 
+
+\subsection{Milni mehur"cki}
+
+\begin{figure}[h]
+ \centering
+\subfigure{\includegraphics[height=.45\textwidth]{./Slike/bubble-3}}
+\subfigure{\includegraphics[height=.45\textwidth]{./Slike/bubble-4}}
+\caption{Razpad milnega mehur"cka~\cite{slike-mehurcek}. }
+\label{fig:mehurcek-3}
+\end{figure}
 
 Milni mehur"cki so stabilni na majhne motnje zaradi povr"sinske napetosti teko"cine. "Ce pa mehur"cek predremo v eni to"cki, ustvarimo rob, kjer povr"sinska napetost ni uravnote"zena, zato se rob za"cne umikati. Ker je opna obi"cajno zelo tanka, 
 je ukrivljenost na robu velika, zato fronta napreduje zelo hitro~\cite{diploma}. To napredovanje je pri mehur"ckih tako hitro, da s prostim o"cesom fronte sploh ne opazimo, ampak se nam zdi, da celoten mehur"cek razpade naenkrat. 
  
-\begin{figure}[h]
- \centering
-\includegraphics[width=.8\textwidth]{./Slike/bubble-3}
-\caption{Razpad milnega mehir"cka~\cite{slike-mehurcek}. }
-\label{fig:mehurcek-3}
-\end{figure}
 
-\subsection{Ena"cbe}
+Podobno kot pri tankem filmu tudi tu obravnavamo tanko plast teko"cine pod vplivom povr"sinske napetosti. Pojava pa se mo"cno razlikujeta pri viru nestabilnosti. Pri razpadu milnega mehur"cka namre"ce ne opazimo nestabilnosti v obliki fronte, ampak v dejstvu, da opna razpade v kapljice. 
 
-Podobno kot pri tankem filmu lahko tudi za opno predpostavimo, da je tanka, njeno debelino pa ozna"cimo s $h = h(x,t)$. Opna ima translacijsko simetrijo v smeri $y$, zato na za"cetku predpostavimo, da imajo tak"sno simetrijo tudi $h$ ter gostota in tlak teko"cine. 
+\begin{comment}
+
+lahko tudi za opno predpostavimo, da je tanka, njeno debelino pa ozna"cimo s $h = h(x,t)$. Opna ima translacijsko simetrijo v smeri $y$, zato na za"cetku predpostavimo, da imajo tak"sno simetrijo tudi $h$ ter gostota in tlak teko"cine. 
 
 \begin{figure}
  \centering
@@ -220,8 +229,6 @@ Hkrati pa za opno velja tudi ohranitev prostornine, ki jo v brezdimenzijski obli
 \label{eq:meh-ohranitev}
  \odv{h} + \nabla (h\vec v) = 0
 \end{equation}
-
-\begin{comment}
 
 \subsubsection{Ohranitev energije}
 Vemo, da opna za fronto razpade v kapljice. Njihovo "stevilo in velikost lahko dolo"cimo iz ohraniev energije in skupne prostornine. Pred razpadom je edini prispevek k energiji povr"sinska napetost opne, po razpadu pa nastane $N$ enako velikih kapljic z radijem $r$ in hitrostjo $v$. Ohranitev energije ob razpadu odseka opne s povr"sino $S$ da enakost
@@ -248,12 +255,25 @@ Drugo zvezo med velikostjo in hitrostjo kapljic pa dobimo ob predpostavki, da fr
 
 \end{comment}
 
-\subsection{Numeri"cno re"sevanje}
+\subsection{Kra"ski "zlebi"ci}
 
-\section{Razpad curka}
+% TODO: Citat, dobi diplomo od Kodreta
+
+\begin{figure}[h]
+\centering
+ \includegraphics[width=.8\textwidth]{./Slike/Zlebici}
+ \caption{"Zlebi"ci na slovenskem Krasu pri Nabre"zini~\cite{wiki:zlebic} }
+ \label{fig:zlebici-slika}
+\end{figure}
+
+S slike~\ref{fig:zlebici-slika} lahko vidimo, da "zlebi"ci tvorijo podobno periodi"cno strukturo kot teko"cina na sliki~\ref{fig:film-neenakomernost}. Tudi po izvoru sta pojava sorodna: Na tistih mestih, kjer "cez "zlebi"c ste"ce ve"c vode, se tudi raztopi ve"c apnenca, torej postane kanal "se globlji in skozenj te"ce "se ve"c vode. 
+
+Plast teko"cine tu seveda ni tako tanka, da bi povr"sinka nepotest igrala veliko vlogo, je pa "se vedno debelina toka $h$ dosti manj"sa od velikosti pobo"cja, na katerem se tvorijo "zlebi"ci. 
+
+
+\subsection{Razpad curka}
 
 Na nestabilnosti pogosto naletimo tudi pri "studiju razpada curkov teko"cin~\cite{eggers}. 
-
 
 \section{Zaklju"cek}
 
@@ -263,6 +283,7 @@ Na nestabilnosti pogosto naletimo tudi pri "studiju razpada curkov teko"cin~\cit
   \bibitem{eggers} J. Eggers in E. Villermaux, Rep. Prog. Phys. \textbf{71}, 036601 (2008)
   \bibitem{drazin} P. G. Drazin, \textit{Introduction to hydrodynamic stability}, Cambridge University Press (2002)
   \bibitem{slike-mehurcek} \url{http://www.dailymail.co.uk/sciencetech/article-1199149/Super-slow-motion-pictures-soap-bubble-bursting-stunning-detail.html} (23. 1. 2012)
+  \bibitem{wiki:zlebic} \href{http://sl.wikipedia.org/wiki/\%C5\%BDlebi\%C4\%8Di}{http://sl.wikipedia.org/wiki/\v Zlebič} (2. 2. 2012)
 \end{thebibliography}
 
 
