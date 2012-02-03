@@ -159,9 +159,28 @@ Ker obravnavamo tanke filme, lahko privzamemo, da je debelina $h$ manj"sa od kat
 \label{fig:film-skica}
 \end{figure}
 
+Da najdemo osnovno re"sitev, najprej privzamemo, da ima re"sitev enako simetrijo kot sama ena"cba. Postavimo se v koordinatni sistem kot na sliki~\ref{fig:film-skica}. Klanec, po katerem te"ce teko"cina, ima translacijsko simetrijo v smeri $y$, zato za osnovno re"sitev velja $h_y = 0$. "Za la"zje re"sevanje preidemo "se na brezdimenzijske koli"cine. V ena"cbi ostane le "se en parameter $D(\alpha)$, ki podaja razmerje med vplivom viskoznostji in povr"sinske napetosti, brezdimenzijsko dol"zino klanca v smeri $x$ pa ozna"cimo z $L$. Ena"cba za brezdimenzijske koli"cine, ki predpostavlja simetrijo in zato opisuje osnovno re"sitev problema, se glasi
+
+%% TODO: Mogoce bi vseeno napisal kaksna je substitucija v brezdimenzijske?
+
+\begin{align}
+  \label{eq:ns-film-sim}
+ \odv{h} &= - \left[h^3 h_{xxx}\right]_x + D(\alpha) \left[h^3 h_x\right]_x - \left(h^3\right)_x
+\end{align}
+
+Pred za"cetkom re"sevanja moramo dolo"citi tudi za"cetne in robne pogoje. Ena"cba je "cetrtega reda v $x$, zato potrebujemo "stiri robne pogoje. "Ce za"cnemo s podobnim profilom kot na sliki~\ref{fig:film-skica}, le da se rep nadaljuje do zgornjega roba klan"cine, velja $h(0, t) = 1$ po definiciji brezdimenzijse debeline, pred fronto pa je plast mnogo tanj"sa, $h(L, t) = b \ll 1$. Oba enakosti ne veljata le na robu obmo"cja, ampak tudi v njegovi bli"zini, zato za ostala dva robna pogoja vzamemo $h_x(0,t) = h_x(L,t) = 0$. Potrebujemo "se za"cetni pogoj, ki je kar profil teko"cine ob "casu $t=0$. Naravna izbira je krivulja, ki povezuje dva ravna odseka z gladkim vmesnim delom. 
+
 \subsection{Re"sevanje}
 
-Zgornja ena"cba je "se vedno prezahtevna, da bi jo re"sevali analiti"cno, zato pose"zemo po numeri"cnih metodah. 
+Zgornja ena"cba je "se vedno prezahtevna, da bi jo re"sevali analiti"cno, zato pose"zemo po numeri"cnih metodah. Re"sitev ena"cbe (\ref{eq:ns-film-sim}) lahko dobimo z uporabo metode na osnovi kon"cnih diferenc. Ena"cba je prvega reda v "casu in "cetrtega reda v koordinati $x$, zato je najbolj pomembna izbira diskretizacije za $x$. Najve"c pozornosti moramo posvetiti diskretizaciji najvi"sjega "clena v ena"cbi, ki je v na"sem primeru "cetrtega reda. 
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[width=.8\textwidth]{./Slike/film-osnovna-resitev}
+ \caption{Profil teko"cine pri razli"cnih vrednostih parametra $D$. V obeh primerih se hitro oblikuje greben tik za fronto. Profili so prikazani v intervalih $\delta t = 2$, pri izbranih vrednostih $L = 40$ in $b=0,1$. Koordinata $x$ je diskretizirana s korako $\Delta x = 0,05$~\cite{kondic}. }
+ \label{fig:film-osnovna}
+\end{figure}
+
 
 \subsection{Nestabilnost}
 
@@ -182,6 +201,13 @@ Na sliki~\ref{fig:film-neenakomernost} vidimo, da je oblika fronte pribli"zno pe
 Tu je $\mathcal{L}$ linearni diferecialni operator s konstantimi koeficienti. Zanimajo nas lastne vrednosti tega operatorja, zlasti tista z najve"cjim realnim delom. Lastne vrednosti so odvisne od valovnega "stevila $q$ oz valovne dol"zine $\lambda = 2\pi/q$; pri"cakujemo, da bo valovna dol"zina, pri kateri je lastna vrednost $s(q)$ najve"cja, enaka razdalji med posameznimi pasovi na sliki~\ref{fig:film-neenakomernost}, saj bo motnja s tak"sno valovno dol"zino najhitreje nara"s"cala. 
 
 Ker smo osnovno re"sitev $h_0$ izra"cunali numeri"cno, tudi matri"cne elemente operatorja $\mathcal{L}$ poznamo le numer"cno. 
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[width=.8\textwidth]{./Slike/film-stabilnost}
+ \caption{Hitrost rasti $\sigma$ majhne motnje z valovnim "stevilom $q=2\pi/\lambda$. Na"cin z najhitrej"so rastjo $q_m$ ustreza pri"cakovani razdalji med vzorci.~\cite{kondic}. }
+ \label{fig:film-osnovna}
+\end{figure}
 
 \section{Podobni pojavi}
 
@@ -276,12 +302,12 @@ Na nestabilnosti pogosto naletimo tudi pri "studiju razpada curkov teko"cin~\cit
 \section{Zaklju"cek}
 
 \begin{thebibliography}{3}
-  \bibitem{diploma} S. "Copar, Numeri"cna analiza nestabilnosti na robu teko"cinske opne, Diplomsko delo (2009)
-  \bibitem{kondic} L. Kondic, SIAM Review \textbf{45}, 95 (2003)
-  \bibitem{eggers} J. Eggers in E. Villermaux, Rep. Prog. Phys. \textbf{71}, 036601 (2008)
   \bibitem{drazin} P. G. Drazin, \textit{Introduction to hydrodynamic stability}, Cambridge University Press (2002)
+  \bibitem{kondic} L. Kondic, SIAM Review \textbf{45}, 95 (2003)
   \bibitem{slike-mehurcek} \url{http://www.dailymail.co.uk/sciencetech/article-1199149/Super-slow-motion-pictures-soap-bubble-bursting-stunning-detail.html} (23. 1. 2012)
+  \bibitem{diploma} S. "Copar, Numeri"cna analiza nestabilnosti na robu teko"cinske opne, Diplomsko delo (2009)
   \bibitem{wiki:zlebic} \href{http://sl.wikipedia.org/wiki/\%C5\%BDlebi\%C4\%8Di}{http://sl.wikipedia.org/wiki/\v Zlebič} (2. 2. 2012)
+  \bibitem{eggers} J. Eggers in E. Villermaux, Rep. Prog. Phys. \textbf{71}, 036601 (2008)
 \end{thebibliography}
 
 
