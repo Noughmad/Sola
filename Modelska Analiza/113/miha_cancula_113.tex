@@ -37,11 +37,74 @@
 
 \section{Dekonvolucija signalov}
 
-\input{g_fft_c} \\
-\input{g_signal}
+Najprej sem si ogledal spekter izhodnega signala $C(f)$. Ta signal je z dodatki razli"cnih "sumov podan na sliki~\ref{fig:signal-fft}. 
+
+\begin{figure}
+\input{g_signal_fft}
+\caption{Spektri izhodni signalov $C(f)$}
+\label{fig:signal-fft}
+\end{figure}
+
+\subsection{Izbira filtra $\Phi(f)$}
+
+Prvi signal nima dodanega "suma, zato lahko pri njem dekonvolucijo izvedemo neposredno. Ostale signale pa bomo morali najprej pomno"ziti z ustrezno funkcijo, da bomo minimizirali vpliv "suma na kon"cni rezultat. 
+
+V na"sem primeru lahko malo posleparimo, saj "ze poznamo pravo vrednost $S(f)$, zato lahko $N(f)$ in $\Phi(f)$ dolo"cimo po Wienerjevi formuli. Tako definiran filter je prikazan na sliki~\ref{fig:signal-filter}, na ta na"cin rekonstruiran signal pa na sliki~\ref{fig:signal-rekonstruiran}. 
+
+\begin{figure}
+\input{g_filter}
+\caption{Wienerjev filter $\Phi(f)$}
+\label{fig:signal-filter}
+\end{figure}
+
+\begin{figure}
+\input{g_rezultat}
+\caption{Rekonstruiran signal $S(f)$}
+\label{fig:signal-rekonstruiran}
+\end{figure}
+
+V realnih primerih pa ne signala $S$ ne poznamo, zato ga ne moremo vstaviti v izraz za $\Phi$. V tew primeru moramo signal $S(f)$ oceniti s slike~\ref{fig:signal-fft}. Pri vseh "stirih signalih spekter najprej eksponentno pada s frekvenco, nato pa se ustali pri pribli"zno konstantni vrednosti. Spekter torej najprej razdelimo na dva dela, pri nizkih frekvencah prevladuje signal, pri visokih pa "sum. Mejno frekvenco ozna"cimo z $f_c$, ta je seveda odvisna od signala, ki ga obdelujemo, ocenimo pa je z grafa kot tista frekvenca, pri kateri spekter preide iz eksponentnega padanja v re"zim belega "suma. 
+
+V predelu visokih frekvenc lahko privzamemo, da je kar celoten $C(f)$ posledica "suma, tako da je $S(f>f_c) = 0$. "Ce je "sum res naklju"cen, potem bodo njegove Fourierove komponente pri nizkih frekvencah podobne kot pri visokih. Njegovega spektra pa ne moremo poznati, ocenimo lahko ne povpre"cno vrednost, zato na tem obmo"cju izberemo konstanten spekter "suma $|N(f < f_c)|^2 = \overline{|N(f>f_c)|^2} = \overline{|C(f>f_c)|^2}$. 
+
+S temi predpostavkami sem po svojih najbolj"sih mo"ceh dolo"cil vrednost $f_c$ za vse tri serije za"sumljenih vhodnih podatkov. 
+
+\begin{figure}[h]
+\input{g_rezultat_splosno}
+\caption{Rekonstruiran signal $S(f)$}
+\label{fig:signal-rekonstruiran}
+\end{figure}
 
 \section{Lincoln}
 
-\input{g_fft_lincoln}
+\subsection{Brez filtra}
+Najprej sem preveril, kaj se zgodi, "ce podane slike neposredno dekonvoluiramo, brez uporabe filtra. Rezultati dekonvolucije za "stiri datoteke s podatki so na sliki~\ref{fig:lincoln-direkt}. Vidimo, da "ze majhne dodatek "suma v podatkih mo"cno popa"ci dobljeno sliko. 
+
+\begin{figure}[h]
+ \centering
+\subfigure[N00]{\includegraphics[width=.45\textwidth]{g_lincoln_0.png}}
+\subfigure[N10]{\includegraphics[width=.45\textwidth]{g_lincoln_1.png}}
+\subfigure[N20]{\includegraphics[width=.45\textwidth]{g_lincoln_2.png}}
+\subfigure[N40]{\includegraphics[width=.45\textwidth]{g_lincoln_4.png}}
+\caption{Rezultati direktne dekonvolucije}
+\label{fig:lincoln-direkt}
+\end{figure}
+
+Prva slika je jasna, na drugi "se lahko razlo"cimo, da je na sliki obraz, zadnji dve sliki pa sta povsem nerazpoznavni. "Ce bomo "zeleli dobiti uporabne rezultate kljub prisotnosti "suma, bomo morali uporabiti filter. 
+
+\subsection{Filter}
+
+\begin{figure}[h]
+ \centering
+\subfigure[N00]{\includegraphics[width=.45\textwidth]{g_lincoln_0.png}}
+\subfigure[N10]{\includegraphics[width=.45\textwidth]{g_lincoln_popravljen_1.png}}
+\subfigure[N20]{\includegraphics[width=.45\textwidth]{g_lincoln_popravljen_2.png}}
+\subfigure[N40]{\includegraphics[width=.45\textwidth]{g_lincoln_popravljen_4.png}}
+\caption{Rezultati dekonvolucije z Wienerjevim filtrom}
+\label{fig:lincoln-filter}
+\end{figure}
+
+Kljub temu da slike niso ostre, osebo na sliki lahko prepoznamo. 
+
 
 \end{document}

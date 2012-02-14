@@ -1,0 +1,24 @@
+set terminal epslatex color solid
+set style data lines
+set xrange [0:511]
+
+set logscale y
+
+set output "g_signal_fft.tex"
+set xlabel "$f$"
+set ylabel "$|C(f)|^2$"
+plot for [i=1:4] "g_wiener_input.dat" u 0:i title sprintf("signal%d",i)
+
+set output "g_filter.tex"
+set ylabel "Optimalni $\\Phi(f)$"
+plot for [i=1:4] "g_wiener_phi.dat" u 0:i title sprintf("signal%d",i)
+
+unset logscale
+
+set output "g_rezultat.tex"
+set ylabel "Rekonstruirani $u(t)$"
+plot for [i=1:4] "g_wiener_rezultat.dat" u 0:i title sprintf("signal%d",i)
+
+set output "g_rezultat_splosno.tex"
+set ylabel "Rekonstruirani $u(t)$"
+plot for [i=1:3] "g_wiener_splosno.dat" u 0:i title sprintf("signal%d",i)
