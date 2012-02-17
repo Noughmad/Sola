@@ -39,7 +39,7 @@
 
 Najprej sem si ogledal spekter izhodnega signala $C(f)$. Ta signal je z dodatki razli"cnih "sumov podan na sliki~\ref{fig:signal-fft}. 
 
-\begin{figure}
+\begin{figure}[h]
 \input{g_signal_fft}
 \caption{Spektri izhodni signalov $C(f)$}
 \label{fig:signal-fft}
@@ -51,13 +51,13 @@ Prvi signal nima dodanega "suma, zato lahko pri njem dekonvolucijo izvedemo nepo
 
 V na"sem primeru lahko malo posleparimo, saj "ze poznamo pravo vrednost $S(f)$, zato lahko $N(f)$ in $\Phi(f)$ dolo"cimo po Wienerjevi formuli. Tako definiran filter je prikazan na sliki~\ref{fig:signal-filter}, na ta na"cin rekonstruiran signal pa na sliki~\ref{fig:signal-rekonstruiran}. 
 
-\begin{figure}
+\begin{figure}[h]
 \input{g_filter}
 \caption{Wienerjev filter $\Phi(f)$}
 \label{fig:signal-filter}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
 \input{g_rezultat}
 \caption{Rekonstruiran signal $S(f)$}
 \label{fig:signal-rekonstruiran}
@@ -67,14 +67,17 @@ V realnih primerih pa ne signala $S$ ne poznamo, zato ga ne moremo vstaviti v iz
 
 V predelu visokih frekvenc lahko privzamemo, da je kar celoten $C(f)$ posledica "suma, tako da je $S(f>f_c) = 0$. "Ce je "sum res naklju"cen, potem bodo njegove Fourierove komponente pri nizkih frekvencah podobne kot pri visokih. Njegovega spektra pa ne moremo poznati, ocenimo lahko ne povpre"cno vrednost, zato na tem obmo"cju izberemo konstanten spekter "suma $|N(f < f_c)|^2 = \overline{|N(f>f_c)|^2} = \overline{|C(f>f_c)|^2}$. 
 
-S temi predpostavkami sem po svojih najbolj"sih mo"ceh dolo"cil vrednost $f_c$ za vse tri serije za"sumljenih vhodnih podatkov. 
+S temi predpostavkami sem po svojih najbolj"sih mo"ceh dolo"cil vrednost $f_c$ za vse tri serije za"sumljenih vhodnih podatkov. Kljub ve"cim poskusom prilagajanju spektra mi brez upo"stevanja originalnega signala ni uspelo rekonstruirati prepoznavnega signala. 
 
 \begin{figure}[h]
 \input{g_rezultat_splosno}
-\caption{Rekonstruiran signal $S(f)$}
-\label{fig:signal-rekonstruiran}
+\caption{Rekonstruiran signal $S(f)$ brez uporabe originalnega signala}
+\label{fig:signal-rekonstruiran-slabo}
 \end{figure}
 
+Na sliki~\ref{fig:signal-rekonstruiran-slabo} "ze pri podatkih iz datoteke \texttt{signal1.dat} le z veliko te"zavo prepoznamo ostanek izvirnega vzorca. Rezultati obdelave podatkov iz datotek z ve"c "suma so "se slab"si. To potrjuje, da je Wienerjev filter uporaben le takrat, ko dobro poznamo pri"cakovan spekter vhodnega signala. Tak primer so digitalne fotografije, "se posebej "ce vemo ali je na sliki pokrajina ali portrer. Brez informacij o vhodnem signalu pa ta pristop te deluje. 
+
+\clearpage
 \section{Lincoln}
 
 \subsection{Brez filtra}
