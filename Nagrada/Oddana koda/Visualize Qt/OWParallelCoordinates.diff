@@ -1,0 +1,61 @@
+2c2
+< <name>Parallel Coordinates (Qt)</name>
+---
+> <name>Parallel Coordinates</name>
+6c6
+< <priority>170</priority>
+---
+> <priority>3200</priority>
+13c13
+< from OWParallelGraphQt import *
+---
+> from OWParallelGraph import *
+20c20
+< class OWParallelCoordinatesQt(OWVisWidget):
+---
+> class OWParallelCoordinates(OWVisWidget):
+22,23c22,23
+<                     "graph.showAttrValues",
+<                     "graph.useSplines", "graph.alphaValue", "graph.alphaValue2", "graph.show_legend", "autoSendSelection",
+---
+>                     "graph.showAttrValues", "graph.useAntialiasing",
+>                     "graph.useSplines", "graph.alphaValue", "graph.alphaValue2", "graph.enabledLegend", "autoSendSelection",
+29c29
+<         OWWidget.__init__(self, parent, signalManager, "Parallel Coordinates (Qt)", TRUE)
+---
+>         OWWidget.__init__(self, parent, signalManager, "Parallel Coordinates", TRUE)
+59c59
+<         self.graph.show_legend = 1
+---
+>         self.graph.enabledLegend = 1
+93a94
+>         OWGUI.checkBox(box, self, 'graph.useAntialiasing', 'Use antialiasing', callback = self.updateGraph)
+95,96c96
+<         
+<         self.graph.gui.show_legend_check_box(box)
+---
+>         OWGUI.checkBox(box, self, 'graph.enabledLegend', 'Show legend', callback = self.updateGraph)
+144c144,145
+< 	m, M = self.graph.bounds_for_axis(xBottom)
+---
+>         m = self.graph.axisScaleDiv(QwtPlot.xBottom).interval().minValue()
+>         M = self.graph.axisScaleDiv(QwtPlot.xBottom).interval().maxValue()
+147c148
+<         self.graph.setAxisScale(xBottom, m, M - (M-m)/10., 1)
+---
+>         self.graph.setAxisScale(QwtPlot.xBottom, m, M - (M-m)/10., 1)
+151,152c152,154
+< 	m, M = self.graph.bounds_for_axis(xBottom)
+< 	if (M-m) == 0:
+---
+>         m = self.graph.axisScaleDiv(QwtPlot.xBottom).interval().minValue()
+>         M = self.graph.axisScaleDiv(QwtPlot.xBottom).interval().maxValue()
+>         if (M-m) == 0:
+155c157
+<         self.graph.setAxisScale(xBottom, m, min(len(self.graph.visualizedAttributes)-1, M + (M-m)/10.), 1)
+---
+>         self.graph.setAxisScale(QwtPlot.xBottom, m, min(len(self.graph.visualizedAttributes)-1, M + (M-m)/10.), 1)
+263c265
+<         c.createColorButton(box, "Canvas", "Canvas color", self.graph.color(OWPalette.Canvas))
+---
+>         c.createColorButton(box, "Canvas", "Canvas color", QColor(Qt.white))

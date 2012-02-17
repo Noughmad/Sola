@@ -1,0 +1,26 @@
+2c2
+< <name>Polyviz (Qt)</name>
+---
+> <name>Polyviz</name>
+6c6
+< <priority>160</priority>
+---
+> <priority>3150</priority>
+12,13c12,13
+< from OWLinProjQt import *
+< from OWPolyvizGraphQt import *
+---
+> from OWLinProj import *
+> from OWPolyvizGraph import *
+19c19
+< class OWPolyvizQt(OWLinProjQt):
+---
+> class OWPolyviz(OWLinProj):
+26c26
+<         OWLinProjQt.__init__(self, parent, signalManager, "Polyviz (qt)", graphClass = OWPolyvizGraphQt)
+---
+>         OWLinProj.__init__(self, parent, signalManager, "Polyviz", graphClass = OWPolyvizGraph)
+41c41
+<     ow=OWPolyvizQt()
+---
+>     ow=OWPolyviz()

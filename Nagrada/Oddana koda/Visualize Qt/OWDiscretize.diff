@@ -1,0 +1,171 @@
+2c2
+< <name>Discretize (Qt)</name>
+---
+> <name>Discretize</name>
+10,12c10
+< from plot.owplot import *
+< from plot.owcurve import *
+< from plot.owtools import UnconnectedLinesCurve
+---
+> from OWGraph import *
+14d11
+< import math
+20c17
+< class DiscGraph(OWPlot):
+---
+> class DiscGraph(OWGraph):
+22c19
+<         OWPlot.__init__(self, *args, widget=master)
+---
+>         OWGraph.__init__(self, *args)
+31,34d27
+<         
+<         self.add_axis(xBottom, arrows=0)
+<         self.add_axis(yLeft, title_above=1)
+<         self.add_axis(yRight)
+36c29
+<         self.setAxisScale(yRight, 0.0, 1.0, 0.0)
+---
+>         self.setAxisScale(QwtPlot.yRight, 0.0, 1.0, 0.0)
+42a36,37
+>         self.enableYLaxis(1)
+>         self.enableYRaxis(1)
+44a40,41
+>         #self.setCursor(Qt.ArrowCursor)
+>         #self.canvas().setCursor(Qt.ArrowCursor)
+49,50d45
+<         
+<         self.mouseCurrentlyPressed = 0
+80c75,98
+<         self.clear()
+---
+>         for rug in self.rugKeys:
+>             rug.detach()
+>         self.rugKeys = []
+> 
+>         if self.baseCurveKey:
+>             self.baseCurveKey.detach()
+>             self.baseCurveKey = None
+> 
+>         if self.lookaheadCurveKey:
+>             self.lookaheadCurveKey.detach()
+>             self.lookaheadCurveKey = None
+> 
+>         if self.probCurveKey:
+>             self.probCurveKey.detach()
+>             self.probCurveKey = None
+> 
+>         for c in self.cutLineKeys:
+>             c.detach()
+>         self.cutLineKeys = []
+> 
+>         for m in self.cutMarkerKeys:
+>             m.detach()
+>         self.cutMarkerKeys = []
+> 
+157,165c175,184
+<             
+<             xData = sum(([val, val] for val, freq in freqhigh), []) + sum(([val, val] for val, freq in freqlow), [])
+<             yData = sum(([1.0, 1.0 - max(0.02, freqfac * freq)] for val, freq in freqhigh), []) + sum(([0.04, 0.04 + max(.02, freqfac * freq)] for val, freq in freqlow), [])
+<             
+<             c = UnconnectedLinesCurve('rug', xData = xData, yData = yData)
+<             c.set_auto_scale(True)
+<             c.set_y_axis(yRight)
+<             self.add_custom_curve(c)
+<             self.rugKeys.append(c)
+---
+> 
+>             for val, freq in freqhigh:
+>                 c = self.addCurve("", Qt.gray, Qt.gray, 1, style = QwtPlotCurve.Lines, symbol = QwtSymbol.NoSymbol, xData = [val, val], yData = [1.0, 1.0 - max(.02, freqfac * freq)], autoScale = 1)
+>                 c.setYAxis(QwtPlot.yRight)
+>                 self.rugKeys.append(c)
+> 
+>             for val, freq in freqlow:
+>                 c = self.addCurve("", Qt.gray, Qt.gray, 1, style = QwtPlotCurve.Lines, symbol = QwtSymbol.NoSymbol, xData = [val, val], yData = [0.04, 0.04 + max(.02, freqfac * freq)], autoScale = 1)
+>                 c.setYAxis(QwtPlot.yRight)
+>                 self.rugKeys.append(c)
+179,180c198,203
+<             
+<             self.baseCurveKey = self.addCurve("", Qt.black, Qt.black, 1, style = Qt.SolidLine, symbol = OWPoint.NoSymbol, xData = self.baseCurveX, yData = self.baseCurveY, lineWidth = 2, autoScale = 1, y_axis_key = yLeft)
+---
+> 
+>             #self.setAxisOptions(QwtPlot.yLeft, self.master.measure == 3 and QwtAutoScale.Inverted or QwtAutoScale.None)
+>             self.axisScaleEngine(QwtPlot.yLeft).setAttributes(self.master.measure == 3 and QwtScaleEngine.Inverted or QwtScaleEngine.NoAttribute)
+>             #self.axisScaleEngine(QwtPlot.yLeft).setAttribute(QwtScaleEngine.Inverted, self.master.measure == 3)
+>             self.baseCurveKey = self.addCurve("", Qt.black, Qt.black, 1, style = QwtPlotCurve.Lines, symbol = QwtSymbol.NoSymbol, xData = self.baseCurveX, yData = self.baseCurveY, lineWidth = 2, autoScale = 1)
+>             self.baseCurveKey.setYAxis(QwtPlot.yLeft)
+192c215,219
+<             self.lookaheadCurveKey = self.addCurve("", Qt.black, Qt.black, 1, style = OWCurve.Lines, symbol = OWPoint.NoSymbol, xData = self.lookaheadCurveX, yData = self.lookaheadCurveY, lineWidth = 1, autoScale = 1, y_axis_key=yLeft)
+---
+>             #self.setAxisOptions(QwtPlot.yLeft, self.master.measure == 3 and QwtAutoScale.Inverted or QwtAutoScale.None)
+>             self.axisScaleEngine(QwtPlot.yLeft).setAttributes(self.master.measure == 3 and QwtScaleEngine.Inverted or QwtScaleEngine.NoAttribute)
+>             self.lookaheadCurveKey = self.addCurve("", Qt.black, Qt.black, 1, style = QwtPlotCurve.Lines, symbol = QwtSymbol.NoSymbol, xData = self.lookaheadCurveX, yData = self.lookaheadCurveY, lineWidth = 1, autoScale = 1)
+>             self.lookaheadCurveKey.setYAxis(QwtPlot.yLeft)
+>             #self.lookaheadCurveKey.setVisible(1)
+205c232,233
+<             self.probCurveKey = self.addCurve("", Qt.gray, Qt.gray, 1, style = Qt.SolidLine, symbol = OWPoint.NoSymbol, xData = xData, yData = [self.condProb(x)[self.master.targetClass] for x in xData], lineWidth = 2, autoScale = 1, y_axis_key = yRight)
+---
+>             self.probCurveKey = self.addCurve("", Qt.gray, Qt.gray, 1, style = QwtPlotCurve.Lines, symbol = QwtSymbol.NoSymbol, xData = xData, yData = [self.condProb(x)[self.master.targetClass] for x in xData], lineWidth = 2, autoScale = 1)
+>             self.probCurveKey.setYAxis(QwtPlot.yRight)
+217c245,247
+<         self.clear_markers()
+---
+>         for m in self.cutMarkerKeys:
+>             m.detach()
+>         self.cutMarkerKeys = []
+220c250,251
+<             c = self.addCurve("", Qt.blue, Qt.blue, 1, style = OWCurve.Lines, symbol = OWPoint.NoSymbol, xData = [cut, cut], yData = [.9, 0.1], autoScale = 1, y_axis_key = yRight)
+---
+>             c = self.addCurve("", Qt.blue, Qt.blue, 1, style = QwtPlotCurve.Steps, symbol = QwtSymbol.NoSymbol, xData = [cut, cut], yData = [.9, 0.1], autoScale = 1)
+>             c.setYAxis(QwtPlot.yRight)
+223c254,255
+<             m = self.addMarker(str(attr(cut)), cut, .9, Qt.AlignCenter | Qt.AlignTop, bold=1, y_axis_key=yRight)
+---
+>             m = self.addMarker(str(attr(cut)), cut, .9, Qt.AlignCenter | Qt.AlignTop, bold=1)
+>             m.setYAxis(QwtPlot.yRight)
+229c261
+<         ccc = self.transform(xBottom, cut)
+---
+>         ccc = self.transform(QwtPlot.xBottom, cut)
+231c263
+<             cc = self.transform(xBottom, c)
+---
+>             cc = self.transform(QwtPlot.xBottom, c)
+249c281,282
+<         c = self.addCurve("", Qt.blue, Qt.blue, 1, style = OWCurve.Lines, lineWidth = 2, xData = [cut, cut], yData = [0.1, 0.9], autoScale = 1, y_axis_key = yRight)
+---
+>         c = self.addCurve("", Qt.blue, Qt.blue, 1, style = QwtPlotCurve.Steps, symbol = QwtSymbol.NoSymbol, xData = [cut, cut], yData = [1.0, 0.015], autoScale = 1)
+>         c.setYAxis(QwtPlot.yRight)
+261,262c294,295
+<         canvasPos = self.map_from_widget(e.pos())
+<         cut = self.invTransform(xBottom, canvasPos.x())
+---
+>         canvasPos = self.canvas().mapFrom(self, e.pos())
+>         cut = self.invTransform(QwtPlot.xBottom, canvasPos.x())
+288c321
+<         canvasPos = self.map_from_widget(e.pos())
+---
+>         canvasPos = self.canvas().mapFrom(self, e.pos())
+292c325,326
+<                 pos = self.invTransform(xBottom, canvasPos.x())
+---
+>                 canvasPos = self.canvas().mapFrom(self, e.pos())
+>                 pos = self.invTransform(QwtPlot.xBottom, canvasPos.x())
+315,316c349,350
+<         elif self.getCutCurve(self.invTransform(xBottom, canvasPos.x())):
+<             self.setCursor(Qt.SizeHorCursor)
+---
+>         elif self.getCutCurve(self.invTransform(QwtPlot.xBottom, canvasPos.x())):
+>             self.canvas().setCursor(Qt.SizeHorCursor)
+318c352
+<             self.setCursor(Qt.ArrowCursor)
+---
+>             self.canvas().setCursor(Qt.ArrowCursor)
+362c396
+< class OWDiscretizeQt(OWWidget):
+---
+> class OWDiscretize(OWWidget):
+1098c1132
+<     w=OWDiscretizeQt()
+---
+>     w=OWDiscretize()

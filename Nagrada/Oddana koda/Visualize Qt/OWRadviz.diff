@@ -1,0 +1,29 @@
+2c2
+< <name>Radviz (Qt)</name>
+---
+> <name>Radviz</name>
+6c6
+< <priority>150</priority>
+---
+> <priority>3100</priority>
+13,14c13
+< from OWLinProjQt import *
+< #
+---
+> from OWLinProj import *
+16c15
+< class OWRadvizQt(OWLinProjQt):
+---
+> class OWRadviz(OWLinProj):
+24c23
+<         OWLinProjQt.__init__(self, parent, signalManager, "Radviz (Qt)")
+---
+>         OWLinProj.__init__(self, parent, signalManager, "Radviz")
+34c33
+<     ow=OWRadvizQt()
+---
+>     ow=OWRadviz()
+37c36
+<     data = orange.ExampleTable('../../doc/datasets/iris')
+---
+>     data = orange.ExampleTable(r"e:\Development\Orange Datasets\UCI\iris.tab")

@@ -1,0 +1,141 @@
+1c1
+< from plot.owplot import *
+---
+> from OWGraph import *
+7c7
+< from plot.owtools import UnconnectedLinesCurve
+---
+> from OWGraphTools import UnconnectedLinesCurve
+70c70
+< class OWPolyvizGraphQt(OWPlot, orngScalePolyvizData):
+---
+> class OWPolyvizGraph(OWGraph, orngScalePolyvizData):
+73c73
+<         OWPlot.__init__(self, parent, name, axes = [], widget=polyvizWidget)
+---
+>         OWGraph.__init__(self, parent, name)
+102,103c102,105
+<         self.setAxisScale(xBottom, -1.20, 1.20, 1)
+<         self.setAxisScale(yLeft, -1.20, 1.20, 1)
+---
+>         self.enableXaxis(0)
+>         self.enableYLaxis(0)
+>         self.setAxisScale(QwtPlot.xBottom, -1.20, 1.20, 1)
+>         self.setAxisScale(QwtPlot.yLeft, -1.20, 1.20, 1)
+115c117
+<         OWPlot.setData(self, data)
+---
+>         OWGraph.setData(self, data)
+122c124,126
+<         self.clear()
+---
+>         #self.removeCurves()
+>         self.removeDrawingCurves()  # my function, that doesn't delete selection curves
+>         self.removeMarkers()
+146c150
+<         self.setAxisScale(xBottom, -1.20, 1.20, 1)
+---
+>         self.setAxisScale(QwtPlot.xBottom, -1.20, 1.20 + 0.05 * self.showLegend, 1)
+243,247c247,251
+<                 if not xPointsToAdd.has_key((fillColor, edgeColor, OWPoint.Ellipse, 1)):
+<                     xPointsToAdd[(fillColor, edgeColor, OWPoint.Ellipse, 1)] = []
+<                     yPointsToAdd[(fillColor, edgeColor, OWPoint.Ellipse, 1)] = []
+<                 xPointsToAdd[(fillColor, edgeColor, OWPoint.Ellipse, 1)].append(table[i][0].value)
+<                 yPointsToAdd[(fillColor, edgeColor, OWPoint.Ellipse, 1)].append(table[i][1].value)
+---
+>                 if not xPointsToAdd.has_key((fillColor, edgeColor, QwtSymbol.Ellipse, 1)):
+>                     xPointsToAdd[(fillColor, edgeColor, QwtSymbol.Ellipse, 1)] = []
+>                     yPointsToAdd[(fillColor, edgeColor, QwtSymbol.Ellipse, 1)] = []
+>                 xPointsToAdd[(fillColor, edgeColor, QwtSymbol.Ellipse, 1)].append(table[i][0].value)
+>                 yPointsToAdd[(fillColor, edgeColor, QwtSymbol.Ellipse, 1)].append(table[i][1].value)
+254,257c258,259
+<                 if useDifferentColors:  
+<                     newColor = self.contPalette[self.noJitteringScaledData[self.dataClassIndex][i]]
+<                 else:
+<                     newColor = self.color(OWPalette.Data)
+---
+>                 if useDifferentColors:  newColor = self.contPalette[self.noJitteringScaledData[self.dataClassIndex][i]]
+>                 else:                   newColor = QColor(0,0,0)
+264c266
+<             color = self.color(OWPalette.Data).getRgb()
+---
+>             color = (0,0,0)
+293,294c295
+<         polygon_color = self.color(OWPalette.Axis)
+<         self.addCurve("polygon", polygon_color, polygon_color, 0, OWCurve.Lines, symbol = OWPoint.NoSymbol, xData = list(self.XAnchor) + [self.XAnchor[0]], yData = list(self.YAnchor) + [self.YAnchor[0]], lineWidth = 2)
+---
+>         self.addCurve("polygon", QColor(0,0,0), QColor(0,0,0), 0, QwtPlotCurve.Lines, symbol = QwtSymbol.NoSymbol, xData = list(self.XAnchor) + [self.XAnchor[0]], yData = list(self.YAnchor) + [self.YAnchor[0]], lineWidth = 2)
+298,315c299,330
+<         if self.dataHasDiscreteClass:
+<             category = self.dataDomain.classVar.name
+<             for index, value in enumerate(getVariableValuesSorted(self.dataDomain.classVar)):
+<                 if useDifferentColors: 
+<                     color = self.discPalette[index]
+<                 else:
+<                     color = self.color(OWPalette.Data)
+<                 
+<                 if self.useDifferentSymbols:  
+<                     curveSymbol = self.curveSymbols[index]
+<                 else:                             
+<                     curveSymbol = self.curveSymbols[0]
+<                     
+<                 self.legend().add_item(category, str(value), OWPoint(curveSymbol, color, self.point_width))
+< 
+<         # show legend for continuous class
+<         elif self.dataHasContinuousClass:
+<             self.legend().add_color_gradient(self.dataDomain.classVar.name, [("%%.%df" % self.dataDomain.classVar.numberOfDecimals % v) for v in self.attrValues[self.dataDomain.classVar.name]])
+---
+>         if self.showLegend and self.dataHasClass:
+>             # show legend for discrete class
+>             if self.dataHasDiscreteClass:
+>                 self.addMarker(self.dataDomain.classVar.name, 0.87, 1.06, Qt.AlignLeft)
+> 
+>                 classVariableValues = getVariableValuesSorted(self.dataDomain.classVar)
+>                 for index in range(len(classVariableValues)):
+>                     if useDifferentColors: color = self.discPalette[index]
+>                     else:                       color = QColor(0,0,0)
+>                     y = 1.0 - index * 0.05
+> 
+>                     if not self.useDifferentSymbols:  curveSymbol = self.curveSymbols[0]
+>                     else:                             curveSymbol = self.curveSymbols[index]
+> 
+>                     self.addCurve(str(index), color, color, self.pointWidth, symbol = curveSymbol, xData = [0.95, 0.95], yData = [y, y])
+>                     self.addMarker(classVariableValues[index], 0.90, y, Qt.AlignLeft | Qt.AlignVCenter)
+> 
+>             # show legend for continuous class
+>             elif self.dataHasContinuousClass:
+>                 xs = [1.15, 1.20, 1.20, 1.15]
+>                 count = 200
+>                 height = 2 / float(count)
+>                 for i in range(count):
+>                     y = -1.0 + i*2.0/float(count)
+>                     col = self.contPalette[i/float(count)]
+>                     c = PolygonCurve(QPen(col), QBrush(col), xs, [y,y, y+height, y+height])
+>                     c.attach(self)
+> 
+>                 # add markers for min and max value of color attribute
+>                 [minVal, maxVal] = self.attrValues[self.dataDomain.classVar.name]
+>                 self.addMarker("%s = %%.%df" % (self.dataDomain.classVar.name, self.dataDomain.classVar.numberOfDecimals) % (minVal), xs[0] - 0.02, -1.0 + 0.04, Qt.AlignLeft)
+>                 self.addMarker("%s = %%.%df" % (self.dataDomain.classVar.name, self.dataDomain.classVar.numberOfDecimals) % (maxVal), xs[0] - 0.02, +1.0 - 0.04, Qt.AlignLeft)
+365c380
+<             OWPlot.onMouseMoved(self, e)
+---
+>             OWGraph.onMouseMoved(self, e)
+369,370c384,385
+<         xFloat = self.invTransform(xBottom, e.x())
+<         yFloat = self.invTransform(yLeft, e.y())
+---
+>         xFloat = self.invTransform(QwtPlot.xBottom, e.x())
+>         yFloat = self.invTransform(QwtPlot.yLeft, e.y())
+387c402
+<                     key = self.addCurve("Tooltip curve", color, color, 1, style = OWCurve.Lines, symbol = OWPoint.NoSymbol, xData = [x_i, xAnchors[i]], yData = [y_i, yAnchors[i]])
+---
+>                     key = self.addCurve("Tooltip curve", color, color, 1, style = QwtPlotCurve.Lines, symbol = QwtSymbol.NoSymbol, xData = [x_i, xAnchors[i]], yData = [y_i, yAnchors[i]])
+406c421
+<                 self.showTip(self.transform(xBottom, x_i), self.transform(yLeft, y_i), text)
+---
+>                 self.showTip(self.transform(QwtPlot.xBottom, x_i), self.transform(QwtPlot.yLeft, y_i), text)
+408c423
+<         OWPlot.onMouseMoved(self, e)
+---
+>         OWGraph.onMouseMoved(self, e)

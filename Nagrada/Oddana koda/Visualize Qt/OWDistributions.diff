@@ -1,0 +1,309 @@
+2c2
+< <name>Distributions (Qt)</name>
+---
+> <name>Distributions</name>
+6c6
+< <priority>110</priority>
+---
+> <priority>100</priority>
+16c16
+< from plot.owplot import *
+---
+> from OWGraph import *
+21,25c21
+< from plot.owcurve import *
+< from plot.owtools import *
+< 
+< class distribErrorBarCurve(OWCurve):
+<     DistributionCurve = OWCurve.UserCurve + 15
+---
+> class distribErrorBarQwtPlotCurve(QwtPlotCurve):
+27,56c23
+<         OWCurve.__init__(self)
+<         self._item = QGraphicsPathItem(self)
+<         self.set_style(OWCurve.Lines)
+<         self.set_point_size(7)
+<         
+<     def update_properties(self):
+<         OWCurve.update_properties(self)
+<     
+<         if self.style() == self.DistributionCurve:
+<             d = self.data()
+<             n = len(d)/3
+<             p = QPainterPath()
+<             for i in range(n):
+<                 px, py1 = d[3*i]
+<                 _, py2 = d[3*i+1]
+<                 _, py3 = d[3*i+2]
+<                 pxl = px - 0.1
+<                 pxr = px + 0.1
+<                 p.moveTo(px, py1)
+<                 p.lineTo(px, py3)
+<                 p.moveTo(pxl, py1)
+<                 p.lineTo(pxr, py1)
+<                 p.moveTo(pxl, py3)
+<                 p.lineTo(pxr, py3)
+<             self._item.setPath(self.graph_transform().map(p))
+<             self._item.setPen(self.pen())
+<             self._item.show()
+<         else:
+<             self._item.hide()
+<         self.set_updated(OWCurve.UpdateAll)
+---
+>         QwtPlotCurve.__init__(self, text)
+57a25,45
+>     def drawCurve(self, p, style, xMap, yMap, f, t):
+>         self.setPen(self.symbol().pen())
+>         p.setPen(self.symbol().pen())
+>         if self.style() == QwtPlotCurve.UserCurve:
+>             p.setBackgroundMode(Qt.OpaqueMode)
+>             if t < 0: t = self.dataSize() - 1
+>             if divmod(f, 3)[1] != 0: f -= f % 3
+>             if divmod(t, 3)[1] == 0:  t += 1
+>             for i in range(f, t+1, 3):
+>                 px = xMap.transform(self.x(i))
+>                 pxl = xMap.transform(self.x(i) - 0.1)
+>                 pxr = xMap.transform(self.x(i) + 0.1)
+>                 py1 = yMap.transform(self.y(i + 0))
+>                 py2 = yMap.transform(self.y(i + 1))
+>                 py3 = yMap.transform(self.y(i + 2))
+>                 p.drawLine(px, py1, px, py3)
+>                 p.drawLine(pxl, py1, pxr, py1)
+>                 p.drawLine(pxl, py3, pxr, py3)
+>                 self.symbol().draw(p, px, py2)
+>         else:
+>             QwtPlotCurve.drawCurve(self, p, style, xMap, yMap, f, t)
+59c47
+< class OWDistributionGraphQt(OWPlot):
+---
+> class OWDistributionGraph(OWGraph):
+61c49
+<         OWPlot.__init__(self, parent, name, axes = [xBottom, yLeft, yRight])
+---
+>         OWGraph.__init__(self, parent, name)
+84,91c72,80
+<         self.probCurveKey = self.addCurve(xBottom, yRight, 0)
+<         self.probCurveUpperCIKey = self.addCurve(xBottom, yRight, 0)
+<         self.probCurveLowerCIKey = self.addCurve(xBottom, yRight, 0)
+<         
+<         self.axes[xBottom].arrows = 0
+< 
+<     def addCurve(self, xAxis = xBottom, yAxis = yLeft, visible = 1):
+<         curve = distribErrorBarCurve('')
+---
+>         self.probCurveKey = self.addCurve(QwtPlot.xBottom, QwtPlot.yRight, 0)
+>         self.probCurveUpperCIKey = self.addCurve(QwtPlot.xBottom, QwtPlot.yRight, 0)
+>         self.probCurveLowerCIKey = self.addCurve(QwtPlot.xBottom, QwtPlot.yRight, 0)
+> 
+>         self.tooltipManager = TooltipManager(self)
+> 
+>     def addCurve(self, xAxis = QwtPlot.xBottom, yAxis = QwtPlot.yLeft, visible = 1):
+>         curve = distribErrorBarQwtPlotCurve('')
+>         curve.attach(self)
+93,95c82,87
+<         curve.set_axes(xAxis, yAxis)
+<         curve.set_color(self.color(OWPalette.Data))
+<         return OWPlot.add_custom_curve(self, curve, enableLegend=0)
+---
+>         curve.setXAxis(xAxis)
+>         curve.setYAxis(yAxis)
+>         curve.setItemAttribute(QwtPlotItem.Legend, 0)
+>         curve.setRenderHint(QwtPlotItem.RenderAntialiased, self.useAntialiasing)
+>         return curve
+> 
+136c128
+<             self.set_axis_labels(xBottom, None)
+---
+>             self.setXlabels(None)
+139,140c131,133
+<             self.set_axis_labels(xBottom, labels)
+<             
+---
+>             self.setXlabels(labels)
+>             self.setAxisScale(QwtPlot.xBottom, -0.5, len(labels) - 0.5, 1)
+> 
+143a137
+> 
+241c235
+<             ckey = PolygonCurve(pen=self.color(OWPalette.Data), brush=QBrush(self.color(OWPalette.Grid)))
+---
+>             ckey = PolygonCurve(pen=QPen(Qt.black), brush=QBrush(Qt.gray))
+242a237
+>             ckey.setRenderHint(QwtPlotItem.RenderAntialiased, self.useAntialiasing)
+247c242
+<                 text = text % (Qt.escape(str(self.attributeName)), key, key+self.subIntervalStep, self.hdata[key])
+---
+>                 text = text%(str(self.attributeName), key, key+self.subIntervalStep, self.hdata[key])
+253c248
+<                 text = "N(%s=%s)=<b>%i</b>"%(Qt.escape(str(self.attributeName)), Qt.escape(str(key)), self.hdata[key])
+---
+>                 text = "N(%s=%s)=<b>%i</b>"%(str(self.attributeName), str(key), self.hdata[key])
+259c254
+< #            self.setAxisAutoScale(yRight)
+---
+>             self.setAxisAutoScale(QwtPlot.yRight)
+271c266
+<             key = self.addCurve(xBottom, yRight)
+---
+>             key = self.addCurve(QwtPlot.xBottom, QwtPlot.yRight)
+273,276c268,272
+<             key.set_color(self.color(OWPalette.Data))
+<             if not self.variableContinuous:
+<                 key.set_symbol(OWPoint.Diamond)
+<                 key.set_point_size(7)
+---
+>             if self.variableContinuous:
+>                 key.setPen(QPen(Qt.black))
+>             else:
+>                 key.setStyle(QwtPlotCurve.Dots)
+>                 key.setSymbol(QwtSymbol(QwtSymbol.Diamond, QBrush(Qt.color0), QPen(Qt.black, 2), QSize(7,7)))
+279c275
+<             self.setAxisScale(yRight, -0.05, 1.05, 0.1)
+---
+>             self.setAxisScale(QwtPlot.yRight, 0.0, 1.0, 0.1)
+281,283c277,279
+<         self.probCurveKey = self.addCurve(xBottom, yRight)
+<         self.probCurveUpperCIKey = self.addCurve(xBottom, yRight)
+<         self.probCurveLowerCIKey = self.addCurve(xBottom, yRight)
+---
+>         self.probCurveKey = self.addCurve(QwtPlot.xBottom, QwtPlot.yRight)
+>         self.probCurveUpperCIKey = self.addCurve(QwtPlot.xBottom, QwtPlot.yRight)
+>         self.probCurveLowerCIKey = self.addCurve(QwtPlot.xBottom, QwtPlot.yRight)
+294c290
+<         self.setAxisScale(yRight, -0.05, 1.05, 0.1)
+---
+>         self.setAxisScale(QwtPlot.yRight, 0.0, 1.0, 0.1)
+311a308
+>                     ckey.setRenderHint(QwtPlotItem.RenderAntialiased, self.useAntialiasing)
+316,326c313,314
+<                         text = text % (
+<                                     Qt.escape(str(self.data.domain.classVar.name)),          
+<                                     Qt.escape(str(self.data.domain.classVar[oi])), 
+<                                     Qt.escape(str(self.attributeName)), 
+<                                     key, key+self.subIntervalStep, subBarHeight,
+<                                     Qt.escape(str(self.data.domain.classVar.name)), 
+<                                     Qt.escape(str(self.data.domain.classVar[oi])), 
+<                                     Qt.escape(str(self.attributeName)), 
+<                                     key, key+self.subIntervalStep, float(subBarHeight/sum(self.hdata[key]))
+<                                     ) 
+<                                     #self.probGraphValues[cn][1][oi])
+---
+>                         text = text%(str(self.data.domain.classVar.name), str(self.data.domain.classVar[oi]), str(self.attributeName), key, key+self.subIntervalStep, subBarHeight,
+>                                      str(self.data.domain.classVar.name), str(self.data.domain.classVar[oi]), str(self.attributeName), key, key+self.subIntervalStep, float(subBarHeight/sum(self.hdata[key]))) #self.probGraphValues[cn][1][oi])
+333,341c321,322
+<                         text = text % (
+<                                     Qt.escape(str(self.data.domain.classVar.name)), 
+<                                     Qt.escape(str(self.data.domain.classVar[oi])), 
+<                                     Qt.escape(str(self.attributeName)), 
+<                                     Qt.escape(str(key)), subBarHeight,
+<                                     Qt.escape(str(self.data.domain.classVar.name)), 
+<                                     Qt.escape(str(self.data.domain.classVar[oi])), 
+<                                     Qt.escape(str(self.attributeName)), 
+<                                     Qt.escape(str(key)), float(subBarHeight/sum(self.hdata[key])))
+---
+>                         text = text%(str(self.data.domain.classVar.name), str(self.data.domain.classVar[oi]), str(self.attributeName), str(key), subBarHeight,
+>                                      str(self.data.domain.classVar.name), str(self.data.domain.classVar[oi]), str(self.attributeName), str(key), float(subBarHeight/sum(self.hdata[key])))
+345,347c326,328
+<         self.probCurveKey = self.addCurve(xBottom, yRight)
+<         self.probCurveUpperCIKey = self.addCurve(xBottom, yRight)
+<         self.probCurveLowerCIKey = self.addCurve(xBottom, yRight)
+---
+>         self.probCurveKey = self.addCurve(QwtPlot.xBottom, QwtPlot.yRight)
+>         self.probCurveUpperCIKey = self.addCurve(QwtPlot.xBottom, QwtPlot.yRight)
+>         self.probCurveLowerCIKey = self.addCurve(QwtPlot.xBottom, QwtPlot.yRight)
+354,357c335,336
+<             if self.variableContinuous:
+<                 self.set_axis_scale(xBottom, self.probGraphValues[0][0], self.probGraphValues[-1][0])
+<           #  self.setShowYRaxisTitle(self.showYRaxisTitle)
+<           #  self.setYRaxisTitle(self.YRaxisTitle)
+---
+>             self.setShowYRaxisTitle(self.showYRaxisTitle)
+>             self.setYRaxisTitle(self.YRaxisTitle)
+370,372d348
+<                     ## We make 3x as many points in both cases. 
+<                     ## This way animations look better when switching the ConfidenceIntervals on and off
+<                     xs.extend([cn] * 3)
+373a350
+>                         xs.append(cn)
+375c352,357
+<                         mps.append(ps[self.targetValue] + 0.0)
+---
+> 
+>                     xs.append(cn)
+>                     mps.append(ps[self.targetValue] + 0.0)
+> 
+>                     if self.showConfidenceIntervals:
+>                         xs.append(cn)
+377,378d358
+<                     else:
+<                         mps.extend([ps[self.targetValue]] * 3)
+383c363
+<                 newSymbol = OWPoint.NoSymbol
+---
+>                 newSymbol = QwtSymbol(QwtSymbol.NoSymbol, QBrush(Qt.color0), QPen(Qt.black, 2), QSize(0,0))
+385,388c365,368
+<                 newSymbol = OWPoint.Diamond
+<                 
+<             self.probCurveKey.set_data(xs, mps)
+<             self.probCurveKey.set_symbol(newSymbol)
+---
+>                 newSymbol = QwtSymbol(QwtSymbol.Diamond, QBrush(Qt.color0), QPen(Qt.black, 2), QSize(7, 7))
+> 
+>             self.probCurveKey.setData(xs, mps)
+>             self.probCurveKey.setSymbol(newSymbol)
+391c371
+<                 self.probCurveKey.set_style(OWCurve.Lines)
+---
+>                 self.probCurveKey.setStyle(QwtPlotCurve.Lines)
+394d373
+<                     self.probCurveUpperCIKey.set_style(OWCurve.Dots)
+396d374
+<                     self.probCurveLowerCIKey.set_style(OWCurve.Dots)
+399c377
+<                     self.probCurveKey.set_style(distribErrorBarCurve.DistributionCurve)
+---
+>                     self.probCurveKey.setStyle(QwtPlotCurve.UserCurve)
+401c379
+<                     self.probCurveKey.set_style(OWCurve.Points)
+---
+>                     self.probCurveKey.setStyle(QwtPlotCurve.Dots)
+405,408c383,391
+<         
+<         self.probCurveKey.setVisible(self.showProbabilities)
+<         self.probCurveUpperCIKey.setVisible(self.showConfidenceIntervals and self.showProbabilities)
+<         self.probCurveLowerCIKey.setVisible(self.showConfidenceIntervals and self.showProbabilities)
+---
+> 
+>         def enableIfExists(curve, en):
+>             if curve:
+>                 curve.setVisible(en)
+>                 curve.itemChanged()
+> 
+>         enableIfExists(self.probCurveKey, self.showProbabilities)
+>         enableIfExists(self.probCurveUpperCIKey, self.showConfidenceIntervals and self.showProbabilities)
+>         enableIfExists(self.probCurveLowerCIKey, self.showConfidenceIntervals and self.showProbabilities)
+411c394
+< class OWDistributionsQt(OWWidget):
+---
+> class OWDistributions(OWWidget):
+417c400
+<         OWWidget.__init__(self, parent, signalManager, "Distributions (Qt)", TRUE)
+---
+>         OWWidget.__init__(self, parent, signalManager, "&Distributions", TRUE)
+448c431
+<         self.graph = OWDistributionGraphQt(self, self.mainArea)
+---
+>         self.graph = OWDistributionGraph(self, self.mainArea)
+450c433,434
+<         self.graph.setAxisScale(yRight, -0.05, 1.05, 0.1)
+---
+>         self.graph.setYRlabels(None)
+>         self.graph.setAxisScale(QwtPlot.yRight, 0.0, 1.0, 0.1)
+454,456d437
+<         self.setShowXaxisTitle()
+<         self.setShowYaxisTitle()
+<         self.setShowYPaxisTitle()
+711c692
+<     owd = OWDistributionsQt()
+---
+>     owd = OWDistributions()

@@ -1,0 +1,354 @@
+5c5
+< from plot import *
+---
+> from OWGraph import *
+10,11d9
+< from PyQt4.QtGui import QGraphicsPathItem
+< 
+16c14
+< class OWParallelGraph(OWPlot, orngScaleData):
+---
+> class OWParallelGraph(OWGraph, orngScaleData):
+18c16
+<         OWPlot.__init__(self, parent, name, axes = [], widget=parallelDlg)
+---
+>         OWGraph.__init__(self, parent, name)
+20,21d17
+<         
+<         self.update_antialiasing(False)
+29c25
+<         self.show_legend = 0
+---
+>         self.enabledLegend = 0
+43a40,44
+>         self.axisScaleDraw(QwtPlot.xBottom).enableComponent(QwtScaleDraw.Backbone, 0)
+>         self.axisScaleDraw(QwtPlot.xBottom).enableComponent(QwtScaleDraw.Ticks, 0)
+>         self.axisScaleDraw(QwtPlot.yLeft).enableComponent(QwtScaleDraw.Backbone, 0)
+>         self.axisScaleDraw(QwtPlot.yLeft).enableComponent(QwtScaleDraw.Ticks, 0)
+> 
+45c46
+<         OWPlot.setData(self, data)
+---
+>         OWGraph.setData(self, data)
+47a49,50
+>         
+> 
+50a54
+>         self.removeDrawingCurves(removeLegendItems = 0, removeMarkers = 1)  # don't delete legend items
+53,54d56
+<             
+<         self.clear()
+73a76,95
+>         if updateAxisScale:
+>             if self.showAttrValues: self.setAxisScale(QwtPlot.yLeft, -0.04, 1.04, 1)
+>             else:                   self.setAxisScale(QwtPlot.yLeft, -0.02, 1.02, 1)
+> 
+>             if self.autoUpdateAxes:
+>                 if attributes and isinstance(self.dataDomain[attributes[-1]], orange.EnumVariable):
+>                     self.setAxisScale(QwtPlot.xBottom, -0.1, len(attributes) - 0.4, 1)
+>                 else:
+>                     self.setAxisScale(QwtPlot.xBottom, -0.1, len(attributes) - 0.9, 1)
+>             else:
+>                 m = self.axisScaleDiv(QwtPlot.xBottom).interval().minValue()
+>                 M = self.axisScaleDiv(QwtPlot.xBottom).interval().maxValue()
+>                 if m < 0 or M > len(attributes) - 2:
+>                     self.setAxisScale(QwtPlot.xBottom, 0, len(attributes)-1, 1)
+> 
+>         self.setAxisScaleDraw(QwtPlot.xBottom, DiscreteAxisScaleDraw([self.getAttributeLabel(attr) for attr in attributes]))
+>         #self.setAxisScaleDraw(QwtPlot.yLeft, HiddenScaleDraw())
+>         self.setAxisMaxMajor(QwtPlot.xBottom, len(attributes))
+>         self.setAxisMaxMinor(QwtPlot.xBottom, 0)
+> 
+161c183,187
+<             curve.fitted = self.useSplines
+---
+>             if self.useAntialiasing:  
+>                 curve.setRenderHint(QwtPlotItem.RenderAntialiased)
+>             if self.useSplines:
+>                 curve.setCurveAttribute(QwtPlotCurve.Fitted)
+> #                curve.setCurveFitter(QwtSplineCurveFitter())
+169c195,198
+<             curve.fitted = self.useSplines
+---
+>             if self.useAntialiasing: 
+>                 curve.setRenderHint(QwtPlotItem.RenderAntialiased)
+>             if self.useSplines:      
+>                 curve.setCurveAttribute(QwtPlotCurve.Fitted)
+181d209
+<         self.remove_all_axes()
+183,191c211
+<             id = UserAxis + i
+< 	    a = self.add_axis(id, line = QLineF(i, 0, i, 1), arrows = AxisStart | AxisEnd, zoomable = True)
+< 	    a.always_horizontal_text = True
+< 	    a.max_text_width = 100
+< 	    a.title_margin = -10
+< 	    a.text_margin = 0
+< 	    a.setZValue(5)
+< 	    self.set_axis_title(id, self.dataDomain[attributes[i]].name)
+< 	    self.set_show_axis_title(id, self.showAttrValues)
+---
+>             self.addCurve("", lineWidth = 2, style = QwtPlotCurve.Lines, symbol = QwtSymbol.NoSymbol, xData = [i,i], yData = [0,1])
+195c215,221
+< 		    self.set_axis_scale(id, self.attrValues[attr.name][0], self.attrValues[attr.name][1])
+---
+>                     strVal1 = "%%.%df" % (attr.numberOfDecimals) % (self.attrValues[attr.name][0])
+>                     strVal2 = "%%.%df" % (attr.numberOfDecimals) % (self.attrValues[attr.name][1])
+>                     align1 = i == 0 and Qt.AlignRight | Qt.AlignBottom or i == len(attributes)-1 and Qt.AlignLeft | Qt.AlignBottom or Qt.AlignHCenter | Qt.AlignBottom
+>                     align2 = i == 0 and Qt.AlignRight | Qt.AlignTop or i == len(attributes)-1 and Qt.AlignLeft | Qt.AlignTop or Qt.AlignHCenter | Qt.AlignTop
+>                     self.addMarker(strVal1, i, 0.0-0.01, alignment = align1)
+>                     self.addMarker(strVal2, i, 1.0+0.01, alignment = align2)
+> 
+197,198c223,227
+< 		    attrVals = getVariableValuesSorted(self.dataDomain[attributes[i]])
+< 		    self.set_axis_labels(id, attrVals)
+---
+>                     attrVals = getVariableValuesSorted(self.dataDomain[attributes[i]])
+>                     valsLen = len(attrVals)
+>                     for pos in range(len(attrVals)):
+>                         # show a rectangle behind the marker
+>                         self.addMarker(attrVals[pos], i+0.01, float(1+2*pos)/float(2*valsLen), alignment = Qt.AlignRight | Qt.AlignVCenter, bold = 1, brushColor = Qt.white)
+248,251c277,280
+<                     self.addCurve("", col, col, 3, OWCurve.Lines, OWPoint.NoSymbol, xData = [x,x,x], yData = [data[i][c][0], data[i][c][1], data[i][c][2]], lineWidth = 4)
+<                     self.addCurve("", col, col, 1, OWCurve.Lines, OWPoint.NoSymbol, xData = [x-0.03, x+0.03], yData = [data[i][c][0], data[i][c][0]], lineWidth = 4)
+<                     self.addCurve("", col, col, 1, OWCurve.Lines, OWPoint.NoSymbol, xData = [x-0.03, x+0.03], yData = [data[i][c][1], data[i][c][1]], lineWidth = 4)
+<                     self.addCurve("", col, col, 1, OWCurve.Lines, OWPoint.NoSymbol, xData = [x-0.03, x+0.03], yData = [data[i][c][2], data[i][c][2]], lineWidth = 4)
+---
+>                     self.addCurve("", col, col, 3, QwtPlotCurve.Lines, QwtSymbol.NoSymbol, xData = [x,x,x], yData = [data[i][c][0], data[i][c][1], data[i][c][2]], lineWidth = 4)
+>                     self.addCurve("", col, col, 1, QwtPlotCurve.Lines, QwtSymbol.NoSymbol, xData = [x-0.03, x+0.03], yData = [data[i][c][0], data[i][c][0]], lineWidth = 4)
+>                     self.addCurve("", col, col, 1, QwtPlotCurve.Lines, QwtSymbol.NoSymbol, xData = [x-0.03, x+0.03], yData = [data[i][c][1], data[i][c][1]], lineWidth = 4)
+>                     self.addCurve("", col, col, 1, QwtPlotCurve.Lines, QwtSymbol.NoSymbol, xData = [x-0.03, x+0.03], yData = [data[i][c][2], data[i][c][2]], lineWidth = 4)
+268c297
+<                             self.addCurve("", col, col, 1, OWCurve.Lines, OWPoint.NoSymbol, xData = xs, yData = ys, lineWidth = 4)
+---
+>                             self.addCurve("", col, col, 1, QwtPlotCurve.Lines, QwtSymbol.NoSymbol, xData = xs, yData = ys, lineWidth = 4)
+272c301
+<                 self.addCurve("", col, col, 1, OWCurve.Lines, OWPoint.NoSymbol, xData = xs, yData = ys, lineWidth = 4)
+---
+>                 self.addCurve("", col, col, 1, QwtPlotCurve.Lines, QwtSymbol.NoSymbol, xData = xs, yData = ys, lineWidth = 4)
+282c311
+<         if self.dataHasClass:
+---
+>         if self.enabledLegend == 1 and self.dataHasDiscreteClass:
+284c313
+<                 self.legend().clear()
+---
+>                 legendKeys = []
+285a315
+>                 #self.addCurve("<b>" + self.dataDomain.classVar.name + ":</b>", QColor(0,0,0), QColor(0,0,0), 0, symbol = QwtSymbol.NoSymbol, enableLegend = 1)
+287c317,324
+<                     self.legend().add_item(self.dataDomain.classVar.name, varValues[ind], OWPoint(OWPoint.Rect, self.discPalette[ind], self.point_width))
+---
+>                     #self.addCurve(varValues[ind], self.discPalette[ind], self.discPalette[ind], 15, symbol = QwtSymbol.Rect, enableLegend = 1)
+>                     legendKeys.append((varValues[ind], self.discPalette[ind]))
+>                 if legendKeys != self.oldLegendKeys:
+>                     self.oldLegendKeys = legendKeys
+>                     self.legend().clear()
+>                     self.addCurve("<b>" + self.dataDomain.classVar.name + ":</b>", QColor(0,0,0), QColor(0,0,0), 0, symbol = QwtSymbol.NoSymbol, enableLegend = 1)
+>                     for (name, color) in legendKeys:
+>                         self.addCurve(name, color, color, 15, symbol = QwtSymbol.Rect, enableLegend = 1)
+289c326,336
+<                 values = self.attrValues[self.dataDomain.classVar.name]
+---
+>                 l = len(attributes)-1
+>                 xs = [l*1.15, l*1.20, l*1.20, l*1.15]
+>                 count = 200; height = 1/200.
+>                 for i in range(count):
+>                     y = i/float(count)
+>                     col = self.contPalette[y]
+>                     curve = PolygonCurve(QPen(col), QBrush(col), xData = xs, yData = [y,y, y+height, y+height])
+>                     curve.attach(self)
+> 
+>                 # add markers for min and max value of color attribute
+>                 [minVal, maxVal] = self.attrValues[self.dataDomain.classVar.name]
+291c338,339
+<                 self.legend().add_color_gradient(self.dataDomain.classVar.name, ["%%.%df" % decimals % v for v in values])
+---
+>                 self.addMarker("%%.%df" % (decimals) % (minVal), xs[0] - l*0.02, 0.04, Qt.AlignLeft)
+>                 self.addMarker("%%.%df" % (decimals) % (maxVal), xs[0] - l*0.02, 1.0 - 0.04, Qt.AlignLeft)
+359c407
+<                     curve = PolygonCurve(QPen(newColor), QBrush(newColor), xData = [graphAttrIndex, graphAttrIndex + width, graphAttrIndex + width, graphAttrIndex], yData = [yLowBott, yLowBott, yLowBott - height, yLowBott - height], tooltip = self.dataDomain[index].name)
+---
+>                     curve = PolygonCurve(QPen(newColor), QBrush(newColor), xData = [graphAttrIndex, graphAttrIndex + width, graphAttrIndex + width, graphAttrIndex], yData = [yLowBott, yLowBott, yLowBott - height, yLowBott - height], tooltip = (self.dataDomain[index].name, variableValueSorted[j], len(self.rawData), [(clsVal, attrValCont[clsVal]) for clsVal in classValueSorted]))
+366,367c414,415
+<             x = self.invTransform(xBottom, ev.pos().x())
+<             y = self.invTransform(yLeft, ev.pos().y())
+---
+>             x = self.invTransform(QwtPlot.xBottom, ev.pos().x())
+>             y = self.invTransform(QwtPlot.yLeft, ev.pos().y())
+369,370c417,418
+<             canvasPos = self.mapToScene(ev.pos())
+<             xFloat = self.invTransform(xBottom, canvasPos.x())
+---
+>             canvasPos = self.canvas().mapFrom(self, ev.pos())
+>             xFloat = self.invTransform(QwtPlot.xBottom, canvasPos.x())
+393c441
+<         return OWPlot.event(self, ev)
+---
+>         return OWGraph.event(self, ev)
+400,401c448,449
+<             intX = self.transform(xBottom, index)
+<             bottom = self.transform(yLeft, self.selectionConditions.get(self.visualizedAttributes[index], [0,1])[0])
+---
+>             intX = self.transform(QwtPlot.xBottom, index)
+>             bottom = self.transform(QwtPlot.yLeft, self.selectionConditions.get(self.visualizedAttributes[index], [0,1])[0])
+404c452
+<             top = self.transform(yLeft, self.selectionConditions.get(self.visualizedAttributes[index], [0,1])[1])
+---
+>             top = self.transform(QwtPlot.yLeft, self.selectionConditions.get(self.visualizedAttributes[index], [0,1])[1])
+410,411c458,459
+<         canvasPos = self.mapToScene(e.pos())
+<         xFloat = self.invTransform(xBottom, canvasPos.x())
+---
+>         canvasPos = self.canvas().mapFrom(self, e.pos())
+>         xFloat = self.invTransform(QwtPlot.xBottom, canvasPos.x())
+416,417c464,465
+<         else:
+<             OWPlot.mousePressEvent(self, e)
+---
+>         elif self.state in [ZOOMING, PANNING]:
+>             OWGraph.mousePressEvent(self, e)
+422,423c470,471
+<             canvasPos = self.mapToScene(e.pos())
+<             yFloat = min(1, max(0, self.invTransform(yLeft, canvasPos.y())))
+---
+>             canvasPos = self.canvas().mapFrom(self, e.pos())
+>             yFloat = min(1, max(0, self.invTransform(QwtPlot.yLeft, canvasPos.y())))
+438,439c486,487
+<         else:
+<             OWPlot.mouseMoveEvent(self, e)
+---
+>         elif self.state in [ZOOMING, PANNING]:
+>             OWGraph.mouseMoveEvent(self, e)
+446,447c494,495
+<         else:
+<             OWPlot.mouseReleaseEvent(self, e)
+---
+>         elif self.state in [ZOOMING, PANNING]:
+>             OWGraph.mouseReleaseEvent(self, e)
+454,462c502,510
+<             canvasPos = self.mapToScene(e.pos())
+<             x = self.invTransform(xBottom, canvasPos.x())
+<             y = self.invTransform(yLeft, canvasPos.y())
+<             diffX = (self.axisScaleDiv(xBottom).interval().maxValue() -  self.axisScaleDiv(xBottom).interval().minValue()) / 2.
+< 
+<             xmin = x - (diffX/2.) * (x - self.axisScaleDiv(xBottom).interval().minValue()) / diffX
+<             xmax = x + (diffX/2.) * (self.axisScaleDiv(xBottom).interval().maxValue() - x) / diffX
+<             ymin = self.axisScaleDiv(yLeft).interval().maxValue()
+<             ymax = self.axisScaleDiv(yLeft).interval().minValue()
+---
+>             canvasPos = self.canvas().mapFrom(self, e.pos())
+>             x = self.invTransform(QwtPlot.xBottom, canvasPos.x())
+>             y = self.invTransform(QwtPlot.yLeft, canvasPos.y())
+>             diffX = (self.axisScaleDiv(QwtPlot.xBottom).interval().maxValue() -  self.axisScaleDiv(QwtPlot.xBottom).interval().minValue()) / 2.
+> 
+>             xmin = x - (diffX/2.) * (x - self.axisScaleDiv(QwtPlot.xBottom).interval().minValue()) / diffX
+>             xmax = x + (diffX/2.) * (self.axisScaleDiv(QwtPlot.xBottom).interval().maxValue() - x) / diffX
+>             ymin = self.axisScaleDiv(QwtPlot.yLeft).interval().maxValue()
+>             ymax = self.axisScaleDiv(QwtPlot.yLeft).interval().minValue()
+464c512
+<             self.zoomStack.append((self.axisScaleDiv(xBottom).interval().minValue(), self.axisScaleDiv(xBottom).interval().maxValue(), self.axisScaleDiv(yLeft).interval().minValue(), self.axisScaleDiv(yLeft).interval().maxValue()))
+---
+>             self.zoomStack.append((self.axisScaleDiv(QwtPlot.xBottom).interval().minValue(), self.axisScaleDiv(QwtPlot.xBottom).interval().maxValue(), self.axisScaleDiv(QwtPlot.yLeft).interval().minValue(), self.axisScaleDiv(QwtPlot.yLeft).interval().maxValue()))
+470,471c518,519
+<             x1 = int(self.invTransform(xBottom, e.x()))
+<             axis = self.axisScaleDraw(xBottom)
+---
+>             x1 = int(self.invTransform(QwtPlot.xBottom, e.x()))
+>             axis = self.axisScaleDraw(QwtPlot.xBottom)
+483,484c531,532
+<         OWPlot.drawCanvas(self, painter)
+<         for i in range(int(max(0, math.floor(self.axisScaleDiv(xBottom).interval().minValue()))), int(min(len(self.visualizedAttributes), math.ceil(self.axisScaleDiv(xBottom).interval().maxValue())+1))):
+---
+>         OWGraph.drawCanvas(self, painter)
+>         for i in range(int(max(0, math.floor(self.axisScaleDiv(QwtPlot.xBottom).interval().minValue()))), int(min(len(self.visualizedAttributes), math.ceil(self.axisScaleDiv(QwtPlot.xBottom).interval().maxValue())+1))):
+486,487c534,535
+<             painter.drawPixmap(self.transform(xBottom, i)-self.bottomPixmap.width()/2, self.transform(yLeft, bottom), self.bottomPixmap)
+<             painter.drawPixmap(self.transform(xBottom, i)-self.topPixmap.width()/2, self.transform(yLeft, top)-self.topPixmap.height(), self.topPixmap)
+---
+>             painter.drawPixmap(self.transform(QwtPlot.xBottom, i)-self.bottomPixmap.width()/2, self.transform(QwtPlot.yLeft, bottom), self.bottomPixmap)
+>             painter.drawPixmap(self.transform(QwtPlot.xBottom, i)-self.topPixmap.width()/2, self.transform(QwtPlot.yLeft, top)-self.topPixmap.height(), self.topPixmap)
+506c554
+< class ParallelCoordinatesCurve(OWCurve):
+---
+> class ParallelCoordinatesCurve(QwtPlotCurve):
+508,511c556,558
+<         OWCurve.__init__(self, tooltip=name)
+< 	self._item = QGraphicsPathItem(self)
+<         self.fitted = False
+<         self.set_style(OWCurve.Lines)
+---
+>         QwtPlotCurve.__init__(self, name)
+>         self.setStyle(QwtPlotCurve.Lines)
+>         self.setItemAttribute(QwtPlotItem.Legend, 0)
+515c562,567
+< 
+---
+>         self.xData = range(attrCount) * lineCount
+>         self.yData = yData
+>         
+> #        self._cubic = self.cubicPath(None, None)
+>         
+>         self.setData(QPolygonF(map(lambda t:QPointF(*t), zip(self.xData, self.yData))))
+517c569
+<             self.set_pen(QPen(QColor(*color)))
+---
+>             self.setPen(QPen(QColor(*color)))
+519,521c571,572
+<             self.set_pen(QPen(QColor(color)))
+<             
+< 	self.set_data(range(attrCount) * lineCount, yData)
+---
+>             self.setPen(QPen(QColor(color)))
+> 
+523,533c574,590
+<     def update_properties(self):
+< 	if self.fitted:
+< 	    path = self.cubicPath()
+< 	else:
+< 	    path = QPainterPath()
+< 	    for x, y in self.data():
+< 		path.lineTo(x, y)
+<         self._item.setPath(self.graph_transform().map(path))
+<         self._item.setPen(self.pen())
+< 	
+<     def cubicPath(self):
+---
+>     def drawCurve(self, painter, style, xMap, yMap, iFrom, iTo):
+>         low = max(0, int(math.floor(xMap.s1())))
+>         high = min(self.attrCount-1, int(math.ceil(xMap.s2())))
+>         painter.setPen(self.pen())
+>         if not self.testCurveAttribute(QwtPlotCurve.Fitted):
+>             for i in range(self.dataSize() / self.attrCount):
+>                 start = self.attrCount * i + low
+>                 end = self.attrCount * i + high 
+>                 self.drawLines(painter, xMap, yMap, start, end)
+>         else:
+>             painter.save()
+> #            painter.scale(xMap.transform(1.0), yMap.transform(1.0))
+>             painter.strokePath(self.cubicPath(xMap, yMap), self.pen())
+> #            painter.strokePath(self._cubic, self.pen())
+>             painter.restore()
+> 
+>     def cubicPath(self, xMap, yMap):
+535,536c592,596
+<         data = self.data()
+<         for i in range(len(data) / self.attrCount):
+---
+>         transform = lambda x, y: QPointF(xMap.transform(x), yMap.transform(y))
+> #        transform = lambda x, y: QPointF(x, y)
+> #        data = [QPointF(transform(x, y)) for x, y in zip(self.xData, self.yData)]
+>         data = [(x, y) for x, y in zip(self.xData, self.yData)]
+>         for i in range(self.dataSize() / self.attrCount):
+541,543c601,607
+<                 path.moveTo(x1, y1)
+<                 path.cubicTo(QPointF(x1 + 0.5, y1), QPointF(x2 - 0.5, y2), QPointF(x2, y2))
+<         return path
+\ No newline at end of file
+---
+>                 path.moveTo(transform(x1, y1))
+>                 path.cubicTo(transform(x1 + 0.5, y1), transform(x2 - 0.5, y2), transform(x2, y2))
+>         return path        
+>                 
+>                 
+>             
+> 

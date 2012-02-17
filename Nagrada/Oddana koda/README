@@ -1,0 +1,30 @@
+== Qt-based plot framework for Orange ==
+
+My project is divided into four major parts:
+ - Part of the framework written in C++ (folder 'orangeqt')
+ - Part of the framework written in Python (folder 'plot')
+ - Changing a number of existing visualizations to use the new framework (folder 'Visualize Qt')
+ - Documentation and examples (folder 'doc')
+
+The third part (visualizations) only includes changes made by me, because most of the non-plotting logic was written by other authors. 
+The rest were written almost entirely by me, so they are included as whole files. 
+
+Additionally, I made some small changes to other code files, to remove Qwt dependency or to ensure compatibility with my new modules. 
+The most important changes are included in the 'other' folder. 
+
+= Getting the update code =
+
+I plan to continue working for Orange after the end of this program, so it is likely that the final result will be different from the submitted code. 
+The current development version can be downloaded from the subversion repository with:
+
+svn up http://orange.biolab.si/svn/orange/trunk
+
+The folders with my contributions in trunk are:
+ - source/orangeqt/
+ - orange/OrangeWidget/plot/
+ - orange/OrangeWidget/Visualize Qt/
+ - orange/doc/widgets/
+ - orange/doc/Orange/rst/
+
+Note that somebody else (Matej Drame) worked on a similar project (3D plots) during the summer. Most of the folders mentioned above contain his code as 
+well. 

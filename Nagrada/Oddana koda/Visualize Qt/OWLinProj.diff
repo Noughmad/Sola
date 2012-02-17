@@ -1,0 +1,239 @@
+2c2
+< <name>Linear Projection (Qt)</name>
+---
+> <name>Linear Projection</name>
+6c6
+< <priority>140</priority>
+---
+> <priority>2000</priority>
+13c13
+< from OWLinProjGraphQt import *
+---
+> from OWLinProjGraph import *
+19,34d18
+< from plot.owtheme import PlotTheme
+< 
+< class LinProjTheme(PlotTheme):
+<     def __init__(self):
+<         super(LinProjTheme, self).__init__()
+< 
+< class LightTheme(LinProjTheme):
+<     pass
+< 
+< class DarkTheme(LinProjTheme):
+<     def __init__(self):
+<         super(DarkTheme, self).__init__()
+<         self.labels_color = QColor(230, 230, 230, 255)
+<         self.axis_values_color = QColor(170, 170, 170, 255)
+<         self.axis_color = QColor(230, 230, 230, 255)
+<         self.background_color = QColor(0, 0, 0, 255)
+39,41c23,24
+< class OWLinProjQt(OWVisWidget):
+<     settingsList = ["graph." + s for s in OWPlot.point_settings + OWPlot.appearance_settings] + [
+<                     "graph.jitterSize", "graph.showFilledSymbols", "graph.scaleFactor",
+---
+> class OWLinProj(OWVisWidget):
+>     settingsList = ["graph.pointWidth", "graph.jitterSize", "graph.showFilledSymbols", "graph.scaleFactor",
+43c26
+<                     "graph.tooltipKind", "graph.tooltipValue", "toolbarSelection",
+---
+>                     "graph.tooltipKind", "graph.tooltipValue", "toolbarSelection", "graph.alphaValue",
+50c33
+<     def __init__(self,parent=None, signalManager = None, name = "Linear Projection (qt)", graphClass = None):
+---
+>     def __init__(self,parent=None, signalManager = None, name = "Linear Projection", graphClass = None):
+61,62d43
+<         name_lower = name.lower()
+< 
+85c66
+<         
+---
+> 
+111c92
+<         if "radviz" in name_lower:
+---
+>         if name.lower() == "radviz":
+114c95
+<         elif "polyviz" in name_lower:
+---
+>         elif name.lower() == "polyviz":
+117,122d97
+<         elif "sphereviz" in name_lower:
+<             self.vizrank = OWVizRank(self, self.signalManager, self.graph, orngVizRank.SPHEREVIZ3D, name)
+<             self.connect(self.graphButton, SIGNAL("clicked()"), self.graph.saveToFile)
+<         elif "3d" in name_lower:
+<             self.vizrank = OWVizRank(self, self.signalManager, self.graph, orngVizRank.LINEAR_PROJECTION3D, name)
+<             self.connect(self.graphButton, SIGNAL("clicked()"), self.graph.saveToFile)
+129,130c104
+<         # ignore settings!! if we have radviz then normalize, otherwise not.
+<         self.graph.normalizeExamples = ("radviz" in name_lower or "sphereviz" in name_lower)
+---
+>         self.graph.normalizeExamples = (name.lower() == "radviz")       # ignore settings!! if we have radviz then normalize, otherwise not.
+138,140c112
+<         if not "3d" in name_lower:
+<             self.PerformanceTab = OWGUI.createTabPage(self.tabs, "Performance")
+<         
+---
+> 
+149c121
+<         if "radviz" in name_lower or "linear projection" in name_lower or "sphereviz" in name_lower:
+---
+>         if name.lower() in ["linear projection", "radviz"]:
+153c125
+<             if "linear projection" in name_lower:
+---
+>             if name.lower() == "linear projection":
+156,161d127
+<             if "3d" in name_lower:
+<                 # Patch a method in Freeviz
+<                 get_shown_attribute_list = lambda: [anchor[3] for anchor in self.graph.anchorData]
+<                 self.freeVizDlg.get_shown_attribute_list = get_shown_attribute_list
+<                 self.freeVizDlg.getShownAttributeList = get_shown_attribute_list
+<                 self.freeVizDlg._use_3D = True
+170,198c136,138
+<         g = self.graph.gui
+< 
+<         if "3d" in name_lower:
+<             toolbar_buttons = [
+<                 OWPlotGUI.StateButtonsBegin,
+<                     OWPlotGUI.Select,
+<                 OWPlotGUI.StateButtonsEnd,
+<                 OWPlotGUI.Spacing,
+<                 OWPlotGUI.StateButtonsBegin,
+<                     OWPlotGUI.SelectionOne,
+<                     OWPlotGUI.SelectionAdd, 
+<                     OWPlotGUI.SelectionRemove,
+<                 OWPlotGUI.StateButtonsEnd,
+<                 OWPlotGUI.Spacing,
+<                 OWPlotGUI.SendSelection,
+<                 OWPlotGUI.ClearSelection
+<             ]
+< 
+<             self.zoomSelectToolbar = g.zoom_select_toolbar(self.GeneralTab, buttons=toolbar_buttons)
+<             gui = g
+<             self.connect(self.zoomSelectToolbar.buttons[gui.SelectionOne], SIGNAL("clicked()"), self._set_behavior_replace)
+<             self.connect(self.zoomSelectToolbar.buttons[gui.SelectionAdd], SIGNAL("clicked()"), self._set_behavior_add)
+<             self.connect(self.zoomSelectToolbar.buttons[gui.SelectionRemove], SIGNAL("clicked()"), self._set_behavior_remove)
+<             self.connect(self.zoomSelectToolbar.buttons[gui.ClearSelection], SIGNAL("clicked()"), self.graph.unselect_all_points)
+<             self._set_behavior_replace()
+<         else:
+<             # zooming / selection
+<             self.zoomSelectToolbar = g.zoom_select_toolbar(self.GeneralTab, buttons = g.default_zoom_select_buttons + [g.Spacing, g.ShufflePoints])
+<             self.connect(self.zoomSelectToolbar.buttons[g.SendSelection], SIGNAL("clicked()"), self.sendSelections)
+---
+>         self.zoomSelectToolbar = OWToolbars.ZoomSelectToolbar(self, self.GeneralTab, self.graph, self.autoSendSelection)
+>         self.graph.autoSendSelectionCallback = self.selectionChanged
+>         self.connect(self.zoomSelectToolbar.buttonSendSelections, SIGNAL("clicked()"), self.sendSelections)
+205,206c145,148
+<         
+<         self.graph.gui.point_properties_box(self.SettingsTab)
+---
+> 
+>         box = OWGUI.widgetBox(self.SettingsTab, "Point Properties")
+>         OWGUI.hSlider(box, self, 'graph.pointWidth', label = "Size: ", minValue=1, maxValue=20, step=1, callback = self.updateGraph)
+>         OWGUI.hSlider(box, self, 'graph.alphaValue', label = "Transparency: ", minValue=0, maxValue=255, step=10, callback = self.updateGraph)
+212,214c154,155
+<         if not "3d" in name_lower:
+<             box = OWGUI.widgetBox(self.SettingsTab, "Scaling Options")
+<             OWGUI.qwtHSlider(box, self, "graph.scaleFactor", label = 'Inflate points by: ', minValue=1.0, maxValue= 10.0, step=0.1, callback = self.updateGraph, tooltip="If points lie too much together you can expand their position to improve perception", maxWidth = 90)
+---
+>         box = OWGUI.widgetBox(self.SettingsTab, "Scaling Options")
+>         OWGUI.qwtHSlider(box, self, "graph.scaleFactor", label = 'Inflate points by: ', minValue=1.0, maxValue= 10.0, step=0.1, callback = self.updateGraph, tooltip="If points lie too much together you can expand their position to improve perception", maxWidth = 90)
+218c159
+<         self.graph.gui.show_legend_check_box(box)
+---
+>         OWGUI.checkBox(box, self, 'graph.showLegend', 'Show legend', callback = self.updateGraph)
+220,225c161,162
+<         if "3d" in name_lower:
+<             OWGUI.checkBox(bbox, self, 'graph.showValueLines', 'Show value lines  ', callback = self.graph.update)
+<             OWGUI.qwtHSlider(bbox, self, 'graph.valueLineLength', minValue=1, maxValue=10, step=1, callback = self.graph.update, showValueLabel = 0)
+<         else:
+<             OWGUI.checkBox(bbox, self, 'graph.showValueLines', 'Show value lines  ', callback = self.updateGraph)
+<             OWGUI.qwtHSlider(bbox, self, 'graph.valueLineLength', minValue=1, maxValue=10, step=1, callback = self.updateGraph, showValueLabel = 0)
+---
+>         OWGUI.checkBox(bbox, self, 'graph.showValueLines', 'Show value lines  ', callback = self.updateGraph)
+>         OWGUI.qwtHSlider(bbox, self, 'graph.valueLineLength', minValue=1, maxValue=10, step=1, callback = self.updateGraph, showValueLabel = 0)
+228,246c165,170
+< 
+<         if "3d" in name_lower:
+<             self.dark_theme = False
+<             OWGUI.checkBox(box, self, 'dark_theme', 'Dark theme', callback=self.on_theme_change)
+<             OWGUI.checkBox(box, self, 'graph.camera_in_center', 'Camera in center', callback = self.updateGraph, tooltip = "Look at the data from the center")
+<             OWGUI.checkBox(box, self, 'graph.use_2d_symbols', '2D symbols', callback = self.updateGraph, tooltip = "Use 2D symbols")
+<         else:
+<             self.graph.gui.filled_symbols_check_box(box)
+<             wbox = OWGUI.widgetBox(box, orientation = "horizontal")
+<             OWGUI.checkBox(wbox, self, 'graph.showProbabilities', 'Show probabilities'+'  ', callback = self.updateGraph, tooltip = "Show a background image with class probabilities")
+<             smallWidget = OWGUI.SmallWidgetLabel(wbox, pixmap = 1, box = "Advanced settings", tooltip = "Show advanced settings")
+<             OWGUI.rubber(wbox)
+< 
+<             box = OWGUI.widgetBox(smallWidget.widget, orientation = "horizontal")
+<             OWGUI.widgetLabel(box, "Granularity:  ")
+<             OWGUI.hSlider(box, self, 'graph.squareGranularity', minValue=1, maxValue=10, step=1, callback = self.updateGraph)
+< 
+<             box = OWGUI.widgetBox(smallWidget.widget, orientation = "horizontal")
+<             OWGUI.checkBox(box, self, 'graph.spaceBetweenCells', 'Show space between cells', callback = self.updateGraph)
+---
+>         OWGUI.checkBox(box, self, 'graph.showFilledSymbols', 'Show filled symbols', callback = self.updateGraph)
+>         OWGUI.checkBox(box, self, 'graph.useAntialiasing', 'Use antialiasing', callback = self.updateGraph)
+>         wbox = OWGUI.widgetBox(box, orientation = "horizontal")
+>         OWGUI.checkBox(wbox, self, 'graph.showProbabilities', 'Show probabilities'+'  ', callback = self.updateGraph, tooltip = "Show a background image with class probabilities")
+>         smallWidget = OWGUI.SmallWidgetLabel(wbox, pixmap = 1, box = "Advanced settings", tooltip = "Show advanced settings")
+>         OWGUI.rubber(wbox)
+252,254c176,177
+<         callback = self.graph.update if "3d" in name_lower else self.updateGraph
+<         OWGUI.comboBox(box, self, "graph.tooltipKind", items = ["Show line tooltips", "Show visible attributes", "Show all attributes"], callback = callback)
+<         OWGUI.comboBox(box, self, "graph.tooltipValue", items = ["Tooltips show data values", "Tooltips show spring values"], callback = callback, tooltip = "Do you wish that tooltips would show you original values of visualized attributes or the 'spring' values (values between 0 and 1). \nSpring values are scaled values that are used for determining the position of shown points. Observing these values will therefore enable you to \nunderstand why the points are placed where they are.")
+---
+>         OWGUI.comboBox(box, self, "graph.tooltipKind", items = ["Show line tooltips", "Show visible attributes", "Show all attributes"], callback = self.updateGraph)
+>         OWGUI.comboBox(box, self, "graph.tooltipValue", items = ["Tooltips show data values", "Tooltips show spring values"], callback = self.updateGraph, tooltip = "Do you wish that tooltips would show you original values of visualized attributes or the 'spring' values (values between 0 and 1). \nSpring values are scaled values that are used for determining the position of shown points. Observing these values will therefore enable you to \nunderstand why the points are placed where they are.")
+261a185,191
+>         box = OWGUI.widgetBox(smallWidget.widget, orientation = "horizontal")
+>         OWGUI.widgetLabel(box, "Granularity:  ")
+>         OWGUI.hSlider(box, self, 'graph.squareGranularity', minValue=1, maxValue=10, step=1, callback = self.updateGraph)
+> 
+>         box = OWGUI.widgetBox(smallWidget.widget, orientation = "horizontal")
+>         OWGUI.checkBox(box, self, 'graph.spaceBetweenCells', 'Show space between cells', callback = self.updateGraph)
+> 
+263,266d192
+<         
+<         if not "3d" in name_lower:
+<             self.graph.gui.effects_box(self.PerformanceTab, )
+<             self.PerformanceTab.layout().addStretch(100)
+274,277c200,202
+<         
+<         p = self.graph.palette()
+<         p.setColor(OWPalette.Canvas, dlg.getColor("Canvas"))
+<         self.graph.set_palette(p)
+---
+>         self.graph.setCanvasBackground(dlg.getColor("Canvas"))
+> 
+>         apply([self.zoomSelectToolbar.actionZooming, self.zoomSelectToolbar.actionRectangleSelection, self.zoomSelectToolbar.actionPolygonSelection][self.toolbarSelection], [])
+283,291d207
+<     def _set_behavior_add(self):
+<         self.graph.set_selection_behavior(OWPlot.AddSelection)
+< 
+<     def _set_behavior_replace(self):
+<         self.graph.set_selection_behavior(OWPlot.ReplaceSelection)
+< 
+<     def _set_behavior_remove(self):
+<         self.graph.set_selection_behavior(OWPlot.RemoveSelection)
+< 
+414c330
+<         self.zoomSelectToolbar.buttons[OWPlotGUI.SendSelection].setEnabled(not self.autoSendSelection)
+---
+>         self.zoomSelectToolbar.buttonSendSelections.setEnabled(not self.autoSendSelection)
+433c349
+<         c.createColorButton(box, "Canvas", "Canvas color", self.graph.color(OWPalette.Canvas))
+---
+>         c.createColorButton(box, "Canvas", "Canvas color", QColor(Qt.white))
+448a365
+> 
+451,457d367
+< 
+<     def on_theme_change(self):
+<         if self.dark_theme:
+<             self.graph.theme = DarkTheme()
+<         else:
+<             self.graph.theme = LightTheme()
+< 

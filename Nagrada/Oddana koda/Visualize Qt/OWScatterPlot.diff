@@ -1,0 +1,143 @@
+2c2
+< <name>Scatterplot (Qt)</name>
+---
+> <name>Scatterplot</name>
+6c6
+< <priority>130</priority>
+---
+> <priority>1000</priority>
+8c8
+< # ScatterPlotQt.py
+---
+> # ScatterPlot.py
+13c13
+< from OWScatterPlotGraphQt import *
+---
+> from OWScatterPlotGraph import *
+18c18,19
+< from plot.owcurve import *
+---
+> from OWGraph import OWGraph
+> 
+23,25c24,25
+< class OWScatterPlotQt(OWWidget):
+<     settingsList = ["graph." + s for s in OWPlot.point_settings + OWPlot.appearance_settings] + [
+<                     "graph.showXaxisTitle", "graph.showYLaxisTitle", "showGridlines",
+---
+> class OWScatterPlot(OWWidget):
+>     settingsList = ["graph.pointWidth", "graph.showXaxisTitle", "graph.showYLaxisTitle", "showGridlines", "graph.showAxisScale", "graph.useAntialiasing",
+27c27
+<                     "graph.showDistributions", "autoSendSelection", "toolbarSelection", "graph.sendSelectionOnUpdate",
+---
+>                     "graph.alphaValue", "graph.showDistributions", "autoSendSelection", "toolbarSelection", "graph.sendSelectionOnUpdate",
+36c36
+<         OWWidget.__init__(self, parent, signalManager, "Scatterplot (Qt)", TRUE)
+---
+>         OWWidget.__init__(self, parent, signalManager, "Scatter Plot", TRUE)
+41,42c41,42
+<         self.graph = OWScatterPlotGraphQt(self, self.mainArea, "ScatterPlotQt")
+<         self.vizrank = OWVizRank(self, self.signalManager, self.graph, orngVizRank.SCATTERPLOT, "ScatterPlotQt")
+---
+>         self.graph = OWScatterPlotGraph(self, self.mainArea, "ScatterPlot")
+>         self.vizrank = OWVizRank(self, self.signalManager, self.graph, orngVizRank.SCATTERPLOT, "ScatterPlot")
+61,62d60
+<         self.graph.setShowXaxisTitle()
+<         self.graph.setShowYLaxisTitle()
+102,103d99
+<         g = self.graph.gui
+< 
+105,106c101,102
+<         self.zoomSelectToolbar = g.zoom_select_toolbar(self.GeneralTab, buttons = g.default_zoom_select_buttons + [g.Spacing, g.ShufflePoints])
+<         self.connect(self.zoomSelectToolbar.buttons[g.SendSelection], SIGNAL("clicked()"), self.sendSelections)
+---
+>         self.zoomSelectToolbar = OWToolbars.ZoomSelectToolbar(self, self.GeneralTab, self.graph, self.autoSendSelection)
+>         self.connect(self.zoomSelectToolbar.buttonSendSelections, SIGNAL("clicked()"), self.sendSelections)
+111c107,109
+<         g.point_properties_box(self.SettingsTab)
+---
+>         pointBox = OWGUI.widgetBox(self.SettingsTab, "Point Properties")
+>         OWGUI.hSlider(pointBox, self, 'graph.pointWidth', label = "Symbol size:   ", minValue=1, maxValue=20, step=1, callback = self.pointSizeChange)
+>         OWGUI.hSlider(pointBox, self, 'graph.alphaValue', label = "Transparency: ", minValue=0, maxValue=255, step=10, callback = self.alphaChange)
+123,125c121,126
+<         
+<         g.add_widgets([g.ShowLegend, g.ShowFilledSymbols, g.ShowGridLines], box4)
+<         
+---
+>         OWGUI.checkBox(box4, self, 'graph.showAxisScale', 'Show axis scale', callback = self.updateGraph)
+>         OWGUI.checkBox(box4, self, 'graph.showLegend', 'Show legend', callback = self.updateGraph)
+>         OWGUI.checkBox(box4, self, 'graph.showFilledSymbols', 'Show filled symbols', callback = self.updateGraph)
+>         OWGUI.checkBox(box4, self, 'showGridlines', 'Show gridlines', callback = self.setShowGridlines)
+>         OWGUI.checkBox(box4, self, 'graph.useAntialiasing', 'Use antialiasing', callback = self.updateGraph)
+> 
+148,152c149
+<         self.graph.selection_changed.connect(self.selectionChanged)
+<         
+<         self.EffectsTab = OWGUI.createTabPage(self.tabs, "Appearance")
+<         g.effects_box(self.EffectsTab)
+<         g.theme_combo_box(self.EffectsTab)
+---
+>         self.graph.autoSendSelectionCallback = self.selectionChanged
+156d152
+<         self.EffectsTab.layout().addStretch(100)
+165,169c161,162
+<         
+<         p = self.graph.palette()
+<         p.setColor(OWPalette.Canvas, dlg.getColor("Canvas"))
+<         p.setColor(OWPalette.Grid, dlg.getColor("Grid"))
+<         self.graph.set_palette(p)
+---
+>         self.graph.setCanvasBackground(dlg.getColor("Canvas"))
+>         self.graph.gridCurve.setPen(QPen(dlg.getColor("Grid")))
+173a167
+>         apply([self.zoomSelectToolbar.actionZooming, self.zoomSelectToolbar.actionRectangleSelection, self.zoomSelectToolbar.actionPolygonSelection][self.toolbarSelection], [])
+360c354,385
+<         
+---
+> 
+>     def alphaChange(self):
+>         for curve in self.graph.itemList():
+>             if isinstance(curve, QwtPlotCurve):
+>                 brushColor = curve.symbol().brush().color()
+>                 penColor = curve.symbol().pen().color()
+>                 brushColor.setAlpha(self.graph.alphaValue)
+>                 brush = QBrush(curve.symbol().brush())
+>                 brush.setColor(brushColor)
+>                 penColor.setAlpha(self.graph.alphaValue)
+>                 symbol = curve.symbol()
+>                 symbol.setBrush(brush)
+>                 symbol.setPen(QPen(penColor))
+>                 if QWT_VERSION_STR >= "5.2" and not curve.testItemAttribute(QwtPlotItem.Legend): # if curve has a legend it is duplicated for all symbols
+>                     curve.setSymbol(symbol)
+> #                curve.symbol().setBrush(brush)
+> #                curve.symbol().setPen(QPen(penColor))
+>         self.graph.replot()
+> 
+>     def pointSizeChange(self):
+>         if self.attrSize:
+>             self.updateGraph()
+>         else:
+>             for curve in self.graph.itemList():
+>                 if isinstance(curve, QwtPlotCurve):
+>                     symbol = curve.symbol()
+>                     symbol.setSize(self.graph.pointWidth)
+>                     if QWT_VERSION_STR >= "5.2" and not curve.testItemAttribute(QwtPlotItem.Legend):
+>                         curve.setSymbol(symbol)
+>                         
+>             self.graph.replot()
+> 
+366c391
+<         self.zoomSelectToolbar.buttons[OWPlotGUI.SendSelection].setEnabled(not self.autoSendSelection)
+---
+>         self.zoomSelectToolbar.buttonSendSelections.setEnabled(not self.autoSendSelection)
+386c411
+<         c.createColorButton(box, "Canvas", "Canvas color", self.graph.color(OWPalette.Canvas))
+---
+>         c.createColorButton(box, "Canvas", "Canvas color", Qt.white)
+388c413
+<         c.createColorButton(box, "Grid", "Grid color", self.graph.color(OWPalette.Grid))
+---
+>         c.createColorButton(box, "Grid", "Grid color", QColor(215,215,215))
+418c443
+<     ow=OWScatterPlotQt()
+---
+>     ow=OWScatterPlot()
