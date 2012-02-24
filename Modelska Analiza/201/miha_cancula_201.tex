@@ -1,0 +1,84 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[unicode=true]{hyperref}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
+\usepackage{comment}
+
+\renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+
+\title{Metoda maksimalne entropije}
+\author{Miha \v Can\v cula}
+\begin{document}
+
+\maketitle
+
+\section{Uvod}
+
+Spekter mo"ci vhodnega signala smo pribli"zali z izrazom, ki ima v imenovalcu polinom stopnje $m$ spremenljivke $z = exp(-2
+\pi i \frac{1}{N})$. 
+
+\begin{align}
+ |S(f)|^2 = \frac{C}{1 - b_1 z - b_2 z^2 - \cdots}
+\end{align}
+
+"Ce koeficiente izberemo tako, da vsi razen konstante nastopajo z minusom, so $b_i$ enaki avtoregresijskim (AR) koeficientom izvirnega signala.
+
+\begin{align}
+ y_n = b_1 y_{n-1} + b_2 y_{n-2} + \cdots = \sum_{i=1}^m y_{n-1} b_i
+\end{align}
+
+Avtoregresija ima "sirso uporabo v obdelavi signalov, zato obstaja kar nekaj orodij, ki znajo izra"cunati te koeficiente. Uporabil sem paket za analizo "casovnih zaporedji (Time-Series analysis - TSA) programa Octave. Koeficinte $b_i$ izra"cuna z uporabo avtokovariance in Durbin-Levinsove rekurzije. 
+
+\section{Frekven"cni spekter}
+
+Najprej sem za vse na"stete datoteke s podatki pribli"zal spekter signalov. V vseh primerih sem uporabil najve"c $m=25$ koeficientov. 
+
+\begin{figure}[h]
+ \input{g_val2_psd}
+ \caption{Spekter signala \texttt{val2.dat}}
+ \label{fig:psd-val2}
+\end{figure}
+
+\begin{figure}[h]
+ \input{g_val3_psd}
+ \caption{Spekter signala \texttt{val3.dat}}
+ \label{fig:psd-val3}
+\end{figure}
+
+\begin{figure}[h]
+ \input{g_co2_psd}
+ \caption{Spekter signala \texttt{co2.dat}}
+ \label{fig:psd-co2}
+\end{figure}
+
+
+\subsection{Polo"zaj polov}
+
+\begin{figure}[h]
+ \input{g_co2_roots}
+ \caption{Poli preslikave za signal \texttt{co2.dat}}
+ \label{fig:roots-co2}
+\end{figure}
+
+
+\section{Lo"cljivost}
+
+\section{Napovedi}
+
+ 
+\end{document}
