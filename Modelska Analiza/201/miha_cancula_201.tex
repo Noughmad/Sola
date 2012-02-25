@@ -33,6 +33,7 @@ Spekter mo"ci vhodnega signala smo pribli"zali z izrazom, ki ima v imenovalcu po
 \pi i \frac{1}{N})$. 
 
 \begin{align}
+  \label{eq:polinom}
  |S(f)|^2 = \frac{C}{1 - b_1 z - b_2 z^2 - \cdots}
 \end{align}
 
@@ -42,7 +43,22 @@ Spekter mo"ci vhodnega signala smo pribli"zali z izrazom, ki ima v imenovalcu po
  y_n = b_1 y_{n-1} + b_2 y_{n-2} + \cdots = \sum_{i=1}^m y_{n-1} b_i
 \end{align}
 
-Avtoregresija ima "sirso uporabo v obdelavi signalov, zato obstaja kar nekaj orodij, ki znajo izra"cunati te koeficiente. Uporabil sem paket za analizo "casovnih zaporedji (Time-Series analysis - TSA) programa Octave. Koeficinte $b_i$ izra"cuna z uporabo avtokovariance in Durbin-Levinsove rekurzije. 
+Signal torej pribli"zamo z re"sitvijo diferen"cne ena"cbe s karakteristi"cnim polinomom
+
+\begin{align}
+ Q(z) &= 1 - b_1 z - b_2 z^2 - \cdots
+\end{align}
+
+Re"sitev tak"sne ena"cbe je linearna kombinacija eksponentnih funkcij, ki ima $m$ prostih konstant, v eksponentu pa nastopajo koreni polinoma $Q(x)$. Polinom ima vedno $m$ korenov, ki jih ozna"cimo z $r_i$, $i=1\ldots m$ "ce so vsi koeficinti realni pa ti koreni nastopajo v konjugiranih parih.  
+
+\begin{align}
+\label{eq:dif-exp}
+ y_n = \sum_{i=1}^{m} c_i e^{r_i n}
+\end{align}
+
+Konstante $c_i$ lahko izra"cunamo, "ce poznamo vrednost signala $y$ v vsaj $m$ to"ckah. V na"sem primeru imamo to"ck vedno ve"c kot $m$, zato je napoved za $y$ dobro dolo"cena. Pri svojem ra"cunu nisem uporabil formule (\ref{eq:dif-exp}), saj je nabor podatkov dovolj majhen, da sem vrednosti izra"cunal direktno z rekurzijo. 
+
+Avtoregresija ima "sirso uporabo v obdelavi signalov, zato obstaja kar nekaj orodij, ki znajo izra"cunati te koeficiente. Uporabil sem paket za analizo "casovnih zaporedji (Time-Series analysis - TSA) programa Octave. Koeficiente $b_i$ izra"cuna z uporabo avtokovariance in Durbin-Levinsove rekurzije. 
 
 \section{Frekven"cni spekter}
 
@@ -80,6 +96,7 @@ Najprej sem za vse na"stete datoteke s podatki pribli"zal spekter signalov. V vs
 
 \section{Napovedi}
 
+"Ce poznamo koeficiente avtoregresije, lahko iz dosedanjih podatkov napovemo prihodnje. Za preverjanje te napovedi sem koeficiente izra"cunal na podlagi polovice meritev, nato pa napovedi primerjal z drugi polovico meritev. 
 
 \begin{figure}[h]
  \input{g_val2_napoved}
@@ -93,6 +110,7 @@ Najprej sem za vse na"stete datoteke s podatki pribli"zal spekter signalov. V vs
  \label{fig:napoved-val3}
 \end{figure}
 
+Vidimo, da napoved ni stabilna, saj se njena amplituda spreminja, kljub temu da je amplituda izvirnega signala pribli"zno konstantna. Pri obeh datotekah z valovi metoda napove eksponentno pojemanje signala. Eksponentno odvisnost pri"cakujemo po ena"cbi (\ref{eq:dif-exp}). 
 
 \begin{figure}[h]
  \input{g_co2_napoved}
