@@ -1,10 +1,10 @@
 pkg load tsa
 
-function S = mem(Podatki, K, F)
+function [S,P] = mem(Podatki, K, F)
     N = max(size(Podatki));
     [AR,RC,PE] = durlev(acovf(Podatki, K));
+
     P = ar2poly(AR);
-    R = roots(P);
 
     x = 1:N;
     z = exp(-2*pi*i*x/N);
@@ -12,19 +12,24 @@ function S = mem(Podatki, K, F)
     
     S = S .* mean(F ./ S, "h");
 	S = S(1:N/2);
+    P = ar2poly(AR);
+
 endfunction
 
-function naredi(Ime)
-    D = dlmread([Ime ".dat"])';
-
-	n = max(size(D));
-	m = min(size(D));
-
+function [D,n] = podatki(P)
+	n = max(size(P));
+	m = min(size(P));
+	D = P;
 	if (m > 1)
 		D = D(m,:);
 		co = polyfit(1:n, D, 1);
 		D = D - polyval(co, 1:n);
 	endif
+endfunction
+
+function naredi(Ime)
+	[D, n] = podatki(dlmread([Ime ".dat"])');
+
     F = abs(fft(D)).^2;
 	
 	x = 1:n/2;
@@ -35,21 +40,11 @@ function naredi(Ime)
 endfunction
 
 function plotroots(Ime)
-	D = dlmread([Ime ".dat"])';
+	[D, n] = podatki(dlmread([Ime ".dat"])');
 	K = 20;
 
-	n = max(size(D));
-	m = min(size(D));
-
-	if (m > 1)
-		D = D(m,:);
-		co = polyfit(1:n, D, 1);
-		D = D - polyval(co, 1:n);
-	endif
-
-    [AR,RC,PE] = durlev(acovf(D, K));
-    P = ar2poly(AR);
-    R = roots(P);
+	[S,P] = mem(D, K, abs(fft(D).^2));
+	R = roots(P);
 
     x = 1:n;
     z = exp(-2*pi*i*x/n);
@@ -59,8 +54,42 @@ function plotroots(Ime)
     print("-depslatex", "-S640,480", ["g_" Ime "_roots.tex"])
 endfunction
 
+function napoved(Ime)
+	D = dlmread([Ime ".dat"])';
+	n = max(size(D));
+	h = floor(n/2)
+	hD = D(1:h);
+	m = min(size(D));
+	F = abs(fft(hD).^2);
+	K = [30 20 10];
+	
+	Napoved = [];
+	for k = K
+		[S,P] = mem(hD, k, F);
+		P = poly2ar(P);
+		N = D;
+		for i = 1:h
+			N(h+i) = N(h+i-1:-1:h+i-k) * P';
+		endfor
+		Napoved = [Napoved; N(h+1:n)];
+	endfor
+
+	
+	M = n;
+	x = h+1:M;
+	I = 1:M-h;
+
+	plot(1:M, D(1:M), x, Napoved(1,I), x, Napoved(2,I), x, Napoved(3,I));
+    legend("Podatki", "$m=30$", "$m=20$", "$m=10$");
+    print("-depslatex", "-S640,480", ["g_" Ime "_napoved.tex"])
+endfunction
+
 naredi("val2");
 naredi("val3");
 naredi("co2");
 
 plotroots("co2");
+
+napoved("val2");
+napoved("val3");
+napoved("co2");
