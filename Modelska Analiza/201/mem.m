@@ -39,6 +39,24 @@ function naredi(Ime)
     print("-depslatex", "-S640,480", ["g_" Ime "_psd.tex"])
 endfunction
 
+function L = loci(Frekvence, m)
+	n = 512;
+	x = 1:n;
+	y = sum(sin(Frekvence' * x), 1);
+	for f = Frekvence
+		y = y + sin(f * x);
+	endfor
+	F = abs(fft(y)).^2;
+	[S,P] = mem(y,m,F);
+	E = [];
+	for i = 2:255
+		if ( (S(i-1) > S(i)) == (S(i+1) > S(i)) && S(i) > 10)
+			E = [E S(i)];
+		endif
+	endfor
+	L = (size(E,2) > 2);
+endfunction
+
 function plotroots(Ime)
 	[D, n] = podatki(dlmread([Ime ".dat"])');
 	K = 20;
@@ -55,8 +73,7 @@ function plotroots(Ime)
 endfunction
 
 function napoved(Ime)
-	D = dlmread([Ime ".dat"])';
-	n = max(size(D));
+	[D,n] = podatki(dlmread([Ime ".dat"])');
 	h = floor(n/2)
 	hD = D(1:h);
 	m = min(size(D));
@@ -84,12 +101,36 @@ function napoved(Ime)
     print("-depslatex", "-S640,480", ["g_" Ime "_napoved.tex"])
 endfunction
 
-naredi("val2");
-naredi("val3");
-naredi("co2");
+function prva()
+	naredi("val2");
+	naredi("val3");
+	naredi("co2");
+	plotroots("co2");
+endfunction
 
-plotroots("co2");
+function napovedi()
+	napoved("val2");
+	napoved("val3");
+	napoved("co2");
+endfunction
 
-napoved("val2");
-napoved("val3");
-napoved("co2");
+function L = locljivosti()
+	L = zeros(1,50);
+	f1 = 0.2;
+	for m = 5:50
+		for f2 = linspace(f1, f1 + 0.6, 200)
+			if (loci([f1, f2], m))
+				L(m) = f2 - f1;
+				break;
+			endif
+		endfor
+	endfor
+
+	x = 5:50;
+	plot(x, L(x));
+	xlabel("\"Stevilo polov");
+	ylabel("Najmanj\"sa $\\Delta\\nu$")
+    print("-depslatex", "-S640,480", ["g_loc.tex"]);
+endfunction
+
+locljivosti();

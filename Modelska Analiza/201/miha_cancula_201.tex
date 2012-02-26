@@ -94,6 +94,16 @@ Najprej sem za vse na"stete datoteke s podatki pribli"zal spekter signalov. V vs
 
 \section{Lo"cljivost}
 
+Lo"cljivost metode sem definiral kot najmanj"so razliko frekvenc $\Delta\nu$, pri kateri ima spekter signala $y(t) = \sin(\nu t) + \sin((\nu + \Delta \nu)t)$ dva vidna vrhova. Generiral sem tak"sen signal z osnovno frekvenco $\nu = 0.2$ in opazoval, pri kateri vrednosti $\Delta\nu$ bo imel spekter vsaj dva vrhova. To mejno frekvenca je seveda odvisna od "stevila dovoljenih polov, ta odvisnost je prikazana na sliki~\ref{fig:loc}. 
+
+\begin{figure}[h]
+ \input{g_loc}
+ \caption{Lo"cljivost metode pri razli"cnem "stevilu polov}
+ \label{fig:loc}
+\end{figure}
+
+Vi"sja lo"cljivost seveda pomeni manj"si $\Delta \nu$, torej je po pri"cakovanju metoda natan"cnejsa ob uporabi vi"sjega "stevila polov oz. vi"sje stopnje polinoma. Okrog $m=30$, kjer sem opravljal ve"cino izra"cunov, se lo"cljivost le malo spreminja in ostaja okrog vrednosti $\nu_1 = 0.05$. Tudi pove"canje "stevila polov lo"cljivosti ne izbolj"sa bistveno, medtem ko jo zmanj"sanje "stevila pod 15 znatno poslab"sa. 
+
 \section{Napovedi}
 
 "Ce poznamo koeficiente avtoregresije, lahko iz dosedanjih podatkov napovemo prihodnje. Za preverjanje te napovedi sem koeficiente izra"cunal na podlagi polovice meritev, nato pa napovedi primerjal z drugi polovico meritev. 
