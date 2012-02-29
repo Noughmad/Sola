@@ -231,14 +231,25 @@ Milni mehur"cki so stabilni na majhne motnje zaradi povr"sinske napetosti teko"c
 
 Podobno kot pri tankem filmu tudi tu obravnavamo tanko plast teko"cine pod vplivom povr"sinske napetosti. Pojava pa se mo"cno razlikujeta pri viru nestabilnosti. Pri razpadu milnega mehur"cka namre"ce ne opazimo nestabilnosti v obliki fronte, ampak v dejstvu, da opna razpade v kapljice. Pravzaprav gre za zloma dveh simetrij, ene v smeri premikanja fronte in druge v pravokotni smeri. Re"sevanje problema je mnogo la"zje ob predpostavki, da se translacijska simetrija vzdol"z roba ohranja, torej se osredoto"cimo le na prvi zlom simetrije. Kljub temu pa so ena"cbe "se vedno prezapletene za analiti"cno re"sevanje, zato pose"zemo po numeri"cnih metodah. 
 
+S pomo"cjo simulacije lahko napovemo velikost in hitrost kapljic, ki se odcepijo od opne. Rezultat simulacije, ki jo je za diplomsko nalogo izvedel Simon "Copar, je na sliki~\ref{fig:mehurcek-rez-1}. 
+
 \begin{figure}[h]
   \centering
 \includegraphics[width=.8\textwidth]{./Slike/mehurcek-rezultat-1}
-\caption{"Casovno spreminjanje roba opne med razpadom milnega mehur"cka. Vidno je premikanje fronte in tvorba kapljic s polmerom, ki je dosti ve"cji od debeline opne. }
+\caption{"Casovno spreminjanje roba opne med razpadom milnega mehur"cka. Vidno je premikanje fronte in tvorba kapljic s polmerom, ki je dosti ve"cji od debeline opne.~\cite{diploma} }
 \label{fig:mehurcek-rez-1}
 \end{figure}
 
-S pomo"cjo simulacije lahko napovemo velikost in hitrost kapljic, ki se odcepijo od opne. 
+\begin{figure}[h]
+  \centering
+\includegraphics[height=200pt]{./Slike/scat-rezultat-1}
+\caption{Spreminjanje roba opne, ki je dovolj viskozna, da prepre"ci razpad v kapljice.~\cite{scat} }
+\label{fig:mehurcek-rez-1}
+\end{figure}
+
+Dobljena parametra lahko preverimo, saj se morata ohranjati tako skupna energija kot tudi celotna prostornina. Skupena prostornina opne in vseh kapljic je izra"cunana na sliki~\ref{fig:mehurcek-rez-1}, med tekom simulacije pa se spremeni za manj kot en promil. Podoben izra"cun lahko naredimo tudi za skupno energijo kapljic in opne, le da moramo tu se"steti ve"c prispevkov. Energija je lahko v obliki povr"sinske napetosti, kineti"cne energije ali nihanja kapljic. 
+
+Primerjava s posnetki razpadov resni"cnih milnih mehur"ckov ni povsem primerna, saj ne moremo narediti mehur"cka iz neviskozne teko"cine. 
 
 \begin{comment}
 
@@ -303,10 +314,13 @@ Drugo zvezo med velikostjo in hitrostjo kapljic pa dobimo ob predpostavki, da fr
  \label{fig:zlebici-slika}
 \end{figure}
 
-S slike~\ref{fig:zlebici-slika} lahko vidimo, da "zlebi"ci tvorijo podobno periodi"cno strukturo kot teko"cina na sliki~\ref{fig:film-neenakomernost}. Tudi po izvoru sta pojava sorodna: Na tistih mestih, kjer "cez "zlebi"c ste"ce ve"c vode, se tudi raztopi ve"c apnenca, torej postane kanal "se globlji in skozenj te"ce "se ve"c vode. 
+S slike~\ref{fig:zlebici-slika} lahko vidimo, da "zlebi"ci tvorijo podobno periodi"cno strukturo kot teko"cina na sliki~\ref{fig:film-neenakomernost}. Tudi po izvoru sta pojava sorodna: Na tistih mestih, kjer "cez "zlebi"c ste"ce ve"c vode, se tudi raztopi ve"c apnenca, torej postane kanal "se globlji in skozenj te"ce "se ve"c vode. Plast teko"cine tu seveda ni tako tanka, da bi povr"sinka nepotest igrala veliko vlogo, je pa "se vedno debelina toka $h$ dosti manj"sa od velikosti pobo"cja, na katerem se tvorijo "zlebi"ci. 
 
-Plast teko"cine tu seveda ni tako tanka, da bi povr"sinka nepotest igrala veliko vlogo, je pa "se vedno debelina toka $h$ dosti manj"sa od velikosti pobo"cja, na katerem se tvorijo "zlebi"ci. 
+Proces tvorbe "zlebi"cev je dosti bolj zapleten kot zgoraj obravnavani primeri. Namesto znane kon"cne koli"cine vode imamo sedaj neenakomeren de"z, pa tudi pobo"cje ni nujno ravno in homogeno. Kakr"snekoli ra"cune "se posebej ote"zi raztapljanje apnenca v vodi, zapleten kemijski proces ki "se vedno ni natan"cno pojasnjen. Znane Navier-Stokesove ena"cba so zato sklopljene z ena"cbami za raztapljanje, ki so znane le empiri"cno. Vse kra"ske kamnine so zelo slabo topne v vodi, zato so tak"sni procesi prepo"casni, da bi lahko z njimi izvajali fizikalne eksperimente, pomagamo si lahko le s "stevilnimi primeri "zlebi"cev najdenih v naravi.
 
+Zaradi teh omejitev lahko nastanek in razvoj "zlebi"cev modeliramo le s simulacijo. Pri tem moramo narediti kar nekaj poenostavitev, upo"stevamo pa lahko opa"zanja iz narave. 
+
+Nastanek "zlebi"cev na nekem skalnatem pobo"cju je neposredna posledica nestabilnosti. V simulaciji torej opazujemo, kaj se dogaja z majhno motnjo. V ta namen za"cnemo z "zlebi"cem, katerega globina je majhna v primerjavi s "sirino in dol"zino. "Ce se tak "zlebi"c s "casom poglobi, lahko zaklju"cimo, da je povr"sina pobo"cja nestabilna, saj se majhne motnje s "casom ve"cajo. 
 
 \subsection{Razpad curka}
 
@@ -321,6 +335,7 @@ Na nestabilnosti pogosto naletimo tudi pri "studiju razpada curkov teko"cin~\cit
   \bibitem{diploma} S. "Copar, Numeri"cna analiza nestabilnosti na robu teko"cinske opne, Diplomsko delo (2009)
   \bibitem{wiki:zlebic} \href{http://sl.wikipedia.org/wiki/\%C5\%BDlebi\%C4\%8Di}{http://sl.wikipedia.org/wiki/\v Zlebič} (2. 2. 2012)
   \bibitem{eggers} J. Eggers in E. Villermaux, Rep. Prog. Phys. \textbf{71}, 036601 (2008)
+  \bibitem{scat} L. J. Gordillo Zavaleta, Self-similar and travelling wave solutions in surface tension-driven thin planar films, Scientific Computing Advanced Training (2007)
 \end{thebibliography}
 
 
