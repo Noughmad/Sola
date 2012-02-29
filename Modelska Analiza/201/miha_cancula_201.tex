@@ -15,6 +15,8 @@
 \usepackage[version=3]{mhchem}
 \usepackage{wrapfig}
 \usepackage{comment}
+\usepackage{float}
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
 
 \renewcommand{\vec}{\mathbf}
 \newcommand{\eps}{\varepsilon}
@@ -33,6 +35,7 @@ Spekter mo"ci vhodnega signala smo pribli"zali z izrazom, ki ima v imenovalcu po
 \pi i \frac{1}{N})$. 
 
 \begin{align}
+  \label{eq:polinom}
  |S(f)|^2 = \frac{C}{1 - b_1 z - b_2 z^2 - \cdots}
 \end{align}
 
@@ -42,35 +45,70 @@ Spekter mo"ci vhodnega signala smo pribli"zali z izrazom, ki ima v imenovalcu po
  y_n = b_1 y_{n-1} + b_2 y_{n-2} + \cdots = \sum_{i=1}^m y_{n-1} b_i
 \end{align}
 
-Avtoregresija ima "sirso uporabo v obdelavi signalov, zato obstaja kar nekaj orodij, ki znajo izra"cunati te koeficiente. Uporabil sem paket za analizo "casovnih zaporedji (Time-Series analysis - TSA) programa Octave. Koeficinte $b_i$ izra"cuna z uporabo avtokovariance in Durbin-Levinsove rekurzije. 
+Signal torej pribli"zamo z re"sitvijo diferen"cne ena"cbe s karakteristi"cnim polinomom
+
+\begin{align}
+ Q(z) &= 1 - b_1 z - b_2 z^2 - \cdots
+\end{align}
+
+Re"sitev tak"sne ena"cbe je linearna kombinacija eksponentnih funkcij, ki ima $m$ prostih konstant, v eksponentu pa nastopajo koreni polinoma $Q(x)$. Polinom ima vedno $m$ korenov, ki jih ozna"cimo z $r_i$, $i=1\ldots m$ "ce so vsi koeficinti realni pa ti koreni nastopajo v konjugiranih parih.  
+
+\begin{align}
+\label{eq:dif-exp}
+ y_n = \sum_{i=1}^{m} c_i e^{r_i n}
+\end{align}
+
+Konstante $c_i$ lahko izra"cunamo, "ce poznamo vrednost signala $y$ v vsaj $m$ to"ckah. V na"sem primeru imamo to"ck vedno ve"c kot $m$, zato je napoved za $y$ dobro dolo"cena. Pri svojem ra"cunu nisem uporabil formule (\ref{eq:dif-exp}), saj je nabor podatkov dovolj majhen, da sem vrednosti izra"cunal direktno z rekurzijo. 
+
+Avtoregresija ima "sirso uporabo v obdelavi signalov, zato obstaja kar nekaj orodij, ki znajo izra"cunati te koeficiente. Uporabil sem paket za analizo "casovnih zaporedji (Time-Series analysis - TSA) programa Octave. Koeficiente $b_i$ izra"cuna z uporabo avtokovariance in Durbin-Levinsove rekurzije. 
 
 \section{Frekven"cni spekter}
 
 Najprej sem za vse na"stete datoteke s podatki pribli"zal spekter signalov. V vseh primerih sem uporabil najve"c $m=25$ koeficientov. 
 
-\begin{figure}[h]
- \input{g_val2_psd}
+Konstanta $C$, ki nastopa v "stevcu ulomka v ena"cbi (\ref{eq:polinom}), nima nekega fizikalnega pomena. Za prikaz na grafih sem jo dolo"cil tako, da se originalni in pribli"zen spekter "cim bolje ujemata. 
+
+\begin{figure}[H]
+ \centering\input{g_val2_psd}
  \caption{Spekter signala \texttt{val2.dat}}
  \label{fig:psd-val2}
 \end{figure}
 
-\begin{figure}[h]
- \input{g_val3_psd}
+Na sliki~\ref{fig:psd-val2} se vidi, da je pribli"zek spektra s polinomom v nekem smislu filtriranje signala. "Sum spektra je mo"cno zmanj"san, medtem ko sta oba glavna vrhova v veliki meri ohranjena. 
+
+\begin{figure}[H]
+ \centering\input{g_val3_psd}
  \caption{Spekter signala \texttt{val3.dat}}
  \label{fig:psd-val3}
 \end{figure}
 
-\begin{figure}[h]
- \input{g_co2_psd}
+Signal na sliki~\ref{fig:psd-val3} izgleda, kot da bi v zajemanem intervalu nastopalo necelo "stevilo period. Vrhovi so "siroki, vmesna podro"cja zaobljena, enakomernega "suma tudi ne opazimo. V tem primeru s polinomskim pribli"zkom zelo dobro opi"semo obliko spektra. "Ceprav ujemanje ni to"cno, samo s pogledom zelo te"zko lo"cimo pravi signal od pribli"zanega. 
+
+\begin{figure}[H]
+ \centering\input{g_co2_psd}
  \caption{Spekter signala \texttt{co2.dat}}
  \label{fig:psd-co2}
 \end{figure}
 
 
+
+
 \subsection{Polo"zaj polov}
 
-\begin{figure}[h]
- \input{g_co2_roots}
+Preveril sem tudi, ali so res vsi poli preslikave znotraj enotske kro"znice. Preizkus sem naredil za vse datoteke s podatki, izkazalo se je, da je to res za vse obravnavane podatke. Metoda \texttt{durlev}, ki izra"cuna koeficiente polinoma ni najbolje dokumentirana, tako da je mo"zno, da "ze sama poskrbi za pole. 
+
+Polo"zaj polov preslikave za datoteto \texttt{co2.dat} z 20 poli je prikazan na sliki~\ref{fig:roots-co2}. Takoj lahko opazimo dvoje:
+
+\begin{enumerate}
+ \item Ve"cina polov je v bli"zini enotske kro"znice.
+ \item Kompleksni poli nastopajo v konjugiranih parih
+\end{enumerate}
+
+Drugi lastnost je pri"cakovana, saj je le v tem primeru izraz v ena"cbi (\ref{eq:dif-exp}) realen. Prva lastnost pa le pomeni, da izbrano "stevilo polov ni preveliko. Poli, ki so bolj oddaljeni od kro"znice, imajo na spekter manj"si vpliv. 
+
+
+\begin{figure}[H]
+ \centering\input{g_co2_roots}
  \caption{Poli preslikave za signal \texttt{co2.dat}}
  \label{fig:roots-co2}
 \end{figure}
@@ -78,7 +116,78 @@ Najprej sem za vse na"stete datoteke s podatki pribli"zal spekter signalov. V vs
 
 \section{Lo"cljivost}
 
+Lo"cljivost metode sem definiral kot najmanj"so razliko frekvenc $\Delta\nu$, pri kateri ima spekter signala $y(t) = \sin(\nu t) + \sin((\nu + \Delta \nu)t)$ dva vidna vrhova. Generiral sem tak"sen signal z osnovno frekvenco $\nu = 0.2$ in opazoval, pri kateri vrednosti $\Delta\nu$ bo imel spekter vsaj dva vrhova. To mejno frekvenca je seveda odvisna od "stevila dovoljenih polov, ta odvisnost je prikazana na sliki~\ref{fig:loc}. 
+
+\begin{figure}[H]
+ \centering\input{g_loc}
+ \caption{Lo"cljivost metode pri razli"cnem "stevilu polov}
+ \label{fig:loc}
+\end{figure}
+
+Vi"sja lo"cljivost seveda pomeni manj"si $\Delta \nu$, torej je po pri"cakovanju metoda natan"cnej"sa ob uporabi vi"sjega "stevila polov oz. vi"sje stopnje polinoma. Okrog $m=30$, kjer sem opravljal ve"cino izra"cunov, se lo"cljivost le malo spreminja in ostaja okrog vrednosti $\nu_1 = 0.05$. Tudi pove"canje "stevila polov lo"cljivosti ne izbolj"sa bistveno, medtem ko jo zmanj"sanje "stevila pod 15 znatno poslab"sa. 
+
 \section{Napovedi}
 
+"Ce poznamo koeficiente avtoregresije, lahko iz dosedanjih podatkov napovemo prihodnje. Za preverjanje te napovedi sem koeficiente izra"cunal na podlagi polovice meritev, nato pa napovedi primerjal z drugi polovico meritev. 
+
+Za"cel sem z zadnjimi $m$ to"ckami prve polovice signala, nato pa z rekurzivno formulo napovedal nadaljnje podatke. 
+
+\begin{figure}[H]
+ \centering\input{g_val2_napoved}
+ \caption{Napoved signala \texttt{val2.dat} z avtoregresijo}
+ \label{fig:napoved-val2}
+\end{figure}
+
+\begin{figure}[H]
+ \centering\input{g_val2_napoved_zoom}
+ \caption{Napoved signala \texttt{val2.dat} z avtoregresijo -- pove"can pogled}
+ \label{fig:napoved-val2-zoom}
+\end{figure}
+
+\begin{figure}[H]
+ \centering\input{g_val3_napoved}
+ \caption{Napoved signala \texttt{val3.dat} z avtoregresijo}
+ \label{fig:napoved-val3}
+\end{figure}
+
+Vidimo, da napoved ni stabilna, saj se njena amplituda spreminja, kljub temu da je amplituda izvirnega signala pribli"zno konstantna. Na pove"cavi (slika~\ref{fig:napoved-val2-zoom}) se vidi, da se "ze zelo kmalu pojavi odstopanje pri vrhovih, medtem ko je na vmesnem delu ujemanje dosti bolj"se. Pri obeh datotekah z valovi metoda napove eksponentno pojemanje signala. Eksponentno odvisnost pri"cakujemo po ena"cbi (\ref{eq:dif-exp}). 
+
+Kljub temu da amplutuda izmerjenega signala znatno odstopa od napovedi, pa je ujemanje faze signala dosti bolj"se. Amplituda je torej bolj ob"cutljiva na "sum in numeri"cne napake. 
+
+\begin{figure}[H]
+ \centering\input{g_co2_napoved}
+ \caption{Napoved signala \texttt{co2.dat} z avtoregresijo}
+ \label{fig:napoved-co2}
+\end{figure}
+
+\begin{figure}[H]
+ \centering\input{g_luna_napoved}
+ \caption{Napoved signala \texttt{luna.dat} z avtoregresijo}
+ \label{fig:napoved-luna}
+\end{figure}
+
+Pri napovedi podatkov o CO$_2$ in luninih efemeridah opazimo isti pojav, namre"c da amplituda napovedanega signal pada proti 0, frekvenca in faza pa se tudi na dalj"si rok ujemata z izmerjenim signalom. Na obeh grafih se jasno vidi, da amplituda pada hitreje, "ce smo uporabili manj"se "stevili polov. Tudi s tem lahko utemeljimo, da je preslikava z ve"cjim "stevilom polov natan"cnej"sa. 
+
+\begin{figure}[H]
+ \centering\input{g_borza_napoved}
+ \caption{Napoved signala \texttt{borza.dat} z avtoregresijo}
+ \label{fig:napoved-borza}
+\end{figure}
+
+Pri podatkih z borze pa naletimo na bolj resne te"zave. Niti frekvenca niti amplituda napovedi se s podatki ne ujemata niti za kratke "case. To seveda lahko pojasnimo, saj je gibanje borznih indeksov naklju"cen proces, ki ni periodi"cen.
+
+\begin{figure}[H]
+ \centering\input{g_borza_psd}
+ \caption{Spekter signala \texttt{borza.dat}}
+ \label{fig:psd-borza}
+\end{figure}
+
+Spekter nima nobenega o"citnega vrha, ki bi ga lahko pribli"zali s polom preslikave blizu enotske kro"znice. To pomeni, da polo"zaj polov ni natan"cno dolo"cen, kar zagotovo pripomore k manj"si natan"cnosti metode. "Ce si napoved ogledamo v bli"zini za"cetne to"cke, lahko vidimo, da signal od nje odstopa "ze takoj, neodvisno od izbranega "stevila polov. Ta metoda torej ni dobra za napovedovanje gibanja na borzi. 
+
+\begin{figure}[H]
+ \centering\input{g_borza_napoved_zoom}
+ \caption{Napoved signala \texttt{borza.dat} z avtoregresijo -- pove"can pogled}
+ \label{fig:napoved-borza-zoom}
+\end{figure}
  
 \end{document}
