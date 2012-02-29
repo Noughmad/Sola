@@ -10,25 +10,32 @@ function [S,P] = mem(Podatki, K, F)
     z = exp(-2*pi*i*x/N);
     S = 1 ./ abs(polyval(P,z)).^2;
     
-    S = S .* mean(F ./ S, "h");
+    S = S .* mean(F ./ S, "a");
 	S = S(1:N/2);
     P = ar2poly(AR);
 
+	assert(abs(roots(P)) < 1);
+
 endfunction
 
-function [D,n] = podatki(P)
+function [D,n] = podatki(P, trend)
 	n = max(size(P));
 	m = min(size(P));
 	D = P;
 	if (m > 1)
 		D = D(m,:);
+	endif
+	if trend
+		D = D(D > 0);
+		n = max(size(D));
 		co = polyfit(1:n, D, 1);
 		D = D - polyval(co, 1:n);
+		save g_co2_popravljen.dat D
 	endif
 endfunction
 
 function naredi(Ime)
-	[D, n] = podatki(dlmread([Ime ".dat"])');
+	[D, n] = podatki(dlmread([Ime ".dat"])', strcmp(Ime,"co2") || strcmp(Ime,"borza"));
 
     F = abs(fft(D)).^2;
 	
@@ -58,7 +65,7 @@ function L = loci(Frekvence, m)
 endfunction
 
 function plotroots(Ime)
-	[D, n] = podatki(dlmread([Ime ".dat"])');
+	[D, n] = podatki(dlmread([Ime ".dat"])', strcmp(Ime,"co2") || strcmp(Ime,"borza"));
 	K = 20;
 
 	[S,P] = mem(D, K, abs(fft(D).^2));
@@ -73,7 +80,7 @@ function plotroots(Ime)
 endfunction
 
 function napoved(Ime)
-	[D,n] = podatki(dlmread([Ime ".dat"])');
+	[D, n] = podatki(dlmread([Ime ".dat"])', strcmp(Ime,"co2") || strcmp(Ime,"borza"));
 	h = floor(n/2)
 	hD = D(1:h);
 	m = min(size(D));
@@ -99,6 +106,13 @@ function napoved(Ime)
 	plot(1:M, D(1:M), x, Napoved(1,I), x, Napoved(2,I), x, Napoved(3,I));
     legend("Podatki", "$m=30$", "$m=20$", "$m=10$");
     print("-depslatex", "-S640,480", ["g_" Ime "_napoved.tex"])
+
+	x = h-9:h+40;
+	px = h+1:h+40;
+	I = 1:40;
+	plot(x, D(x), px, Napoved(1,I), px, Napoved(2,I), px, Napoved(3,I));
+    legend("Podatki", "$m=30$", "$m=20$", "$m=10$");
+    print("-depslatex", "-S640,480", ["g_" Ime "_napoved_zoom.tex"])
 endfunction
 
 function prva()
@@ -112,6 +126,8 @@ function napovedi()
 	napoved("val2");
 	napoved("val3");
 	napoved("co2");
+	napoved("luna");
+	napoved("borza");
 endfunction
 
 function L = locljivosti()
@@ -133,4 +149,6 @@ function L = locljivosti()
     print("-depslatex", "-S640,480", ["g_loc.tex"]);
 endfunction
 
-locljivosti();
+prva()
+napovedi()
+naredi("borza")
