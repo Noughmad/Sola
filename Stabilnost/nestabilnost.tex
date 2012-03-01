@@ -15,10 +15,11 @@
 \usepackage[version=3]{mhchem}
 \usepackage{wrapfig}
 \usepackage{comment}
+\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
 
 
 %opening
-\title{Hidrodinamske nestabilnosti}
+\title{Hidrodinamske nestabilnosti v tankih plasteh}
 
 \renewcommand{\vec}{\mathbf}
 \newcommand{\eps}{\varepsilon}
@@ -36,7 +37,7 @@
 \includegraphics[width=6cm]{../logo_fmf_uni-lj_sl}\\[0.5cm]
 Oddelek za fiziko \\[2cm]
 { \large Seminar -- 1. letnik, II. stopnja } \\[1cm]
-{ \huge \bf Hidrodinamske nestabilnosti}\\[2cm]
+{ \huge \bf Hidrodinamske nestabilnosti \\ v tankih plasteh}\\[2cm]
 {\large Avtor: Miha \v Can\v cula}\\[0.6cm]
 {\large Mentor: prof. dr. Alojz Kodre} \\[0.6cm]
 {\large Ljubljana, marec 2012}
@@ -213,11 +214,7 @@ Ker smo osnovno re"sitev $h_0$ izra"cunali numeri"cno, tudi matri"cne elemente o
  \label{fig:film-osnovna}
 \end{figure}
 
-\section{Podobni pojavi}
-
-Polzenje teko"cine po klancu seveda ni edini hidrodinamski pojav, kjer lahko opazimo nestabilnosti. Ker je to zelo "siroko podro"cje, tu omenjam predvsem tak"sne pojave, ki so neposredno povezani s tokom tankih plasti teko"cin. 
-
-\subsection{Milni mehur"cki}
+\section{Milni mehur"cki}
 
 \begin{figure}[h]
  \centering
@@ -229,7 +226,15 @@ Polzenje teko"cine po klancu seveda ni edini hidrodinamski pojav, kjer lahko opa
 
 Milni mehur"cki so stabilni na majhne motnje zaradi povr"sinske napetosti teko"cine. "Ce pa mehur"cek predremo v eni to"cki, ustvarimo rob, kjer povr"sinska napetost ni uravnote"zena, zato se rob za"cne umikati. Ker je opna obi"cajno zelo tanka, je ukrivljenost na robu velika, zato fronta napreduje zelo hitro~\cite{diploma}. To napredovanje je pri mehur"ckih tako hitro, da s prostim o"cesom fronte sploh ne opazimo, ampak se nam zdi, da celoten mehur"cek razpade naenkrat. Pri opazovanju si lahko pomagamo s hitrimi kamerami, kot vidimo na sliki~\ref{fig:mehurcek-3}. 
 
-Podobno kot pri tankem filmu tudi tu obravnavamo tanko plast teko"cine pod vplivom povr"sinske napetosti. Pojava pa se mo"cno razlikujeta pri viru nestabilnosti. Pri razpadu milnega mehur"cka namre"ce ne opazimo nestabilnosti v obliki fronte, ampak v dejstvu, da opna razpade v kapljice. Pravzaprav gre za zloma dveh simetrij, ene v smeri premikanja fronte in druge v pravokotni smeri. Re"sevanje problema je mnogo la"zje ob predpostavki, da se translacijska simetrija vzdol"z roba ohranja, torej se osredoto"cimo le na prvi zlom simetrije. Kljub temu pa so ena"cbe "se vedno prezapletene za analiti"cno re"sevanje, zato pose"zemo po numeri"cnih metodah. 
+Podobno kot pri tankem filmu tudi tu obravnavamo tanko plast teko"cine pod vplivom povr"sinske napetosti. Skica roba opne z ozna"cenimi spremenljivkami in koordinatnimi osmi je na sliki~\ref{fig:mehurcek-skica}. 
+\begin{figure}[h]
+ \centering
+\includegraphics[width=.8\textwidth]{./Slike/mehurcek-skica}
+\caption{Profil opne s translacijsko simetrijo vzdol"z roba in zrcalno simetrijo v navpi"cni smeri. Ker je opna tanka, lahko privzamemo, da se tlak in hitrost ne spreminjata po debelini~\cite{diploma}. }
+\label{fig:mehurcek-skica}
+\end{figure}
+
+Pojava pa se mo"cno razlikujeta v viru nestabilnosti. Pri razpadu milnega mehur"cka namre"ce ne opazimo nestabilnosti v obliki fronte, ampak v dejstvu, da opna razpade v kapljice. Pravzaprav gre za zloma dveh simetrij, ene v smeri premikanja fronte in druge v pravokotni smeri. Re"sevanje problema je mnogo la"zje ob predpostavki, da se translacijska simetrija vzdol"z roba ohranja, torej se osredoto"cimo le na prvi zlom simetrije. Kljub temu pa so ena"cbe "se vedno prezapletene za analiti"cno re"sevanje, zato pose"zemo po numeri"cnih metodah. 
 
 S pomo"cjo simulacije lahko napovemo velikost in hitrost kapljic, ki se odcepijo od opne. Rezultat simulacije, ki jo je za diplomsko nalogo izvedel Simon "Copar, je na sliki~\ref{fig:mehurcek-rez-1}. 
 
@@ -249,20 +254,6 @@ S pomo"cjo simulacije lahko napovemo velikost in hitrost kapljic, ki se odcepijo
 
 Dobljena parametra lahko preverimo, saj se morata ohranjati tako skupna energija kot tudi celotna prostornina. Skupena prostornina opne in vseh kapljic je izra"cunana na sliki~\ref{fig:mehurcek-rez-1}, med tekom simulacije pa se spremeni za manj kot en promil. Podoben izra"cun lahko naredimo tudi za skupno energijo kapljic in opne, le da moramo tu se"steti ve"c prispevkov. Energija je lahko v obliki povr"sinske napetosti, kineti"cne energije ali nihanja kapljic. 
 
-Primerjava s posnetki razpadov resni"cnih milnih mehur"ckov ni povsem primerna, saj ne moremo narediti mehur"cka iz neviskozne teko"cine. 
-
-\begin{comment}
-
-lahko tudi za opno predpostavimo, da je tanka, njeno debelino pa ozna"cimo s $h = h(x,t)$. Opna ima translacijsko simetrijo v smeri $y$, zato na za"cetku predpostavimo, da imajo tak"sno simetrijo tudi $h$ ter gostota in tlak teko"cine. 
-
-\begin{figure}
- \centering
-\includegraphics[width=.8\textwidth]{./Slike/mehurcek-skica}
-\caption{Profil opne s translacijsko simetrijo vzdol"z roba in zrcalno simetrijo v navpi"cni smeri. Ker je opna tanka, lahko privzamemo, da se tlak in hitrost ne spreminjata po debelini~\cite{diploma}. }
-\label{mehurcek-skica}
-\end{figure}
-
-\subsubsection{Gibalna ena"cba}
 
 Tok neviskozne in nestisljive teko"cine opisuje Eulerjeva ena"cba
 
@@ -278,7 +269,6 @@ Hkrati pa za opno velja tudi ohranitev prostornine, ki jo v brezdimenzijski obli
  \odv{h} + \nabla (h\vec v) = 0
 \end{equation}
 
-\subsubsection{Ohranitev energije}
 Vemo, da opna za fronto razpade v kapljice. Njihovo "stevilo in velikost lahko dolo"cimo iz ohraniev energije in skupne prostornine. Pred razpadom je edini prispevek k energiji povr"sinska napetost opne, po razpadu pa nastane $N$ enako velikih kapljic z radijem $r$ in hitrostjo $v$. Ohranitev energije ob razpadu odseka opne s povr"sino $S$ da enakost
 
 \begin{equation}
@@ -291,8 +281,6 @@ kjer je prvi "clen energija povr"sinske napetosti kapljic, drugi kineti"cna ener
  \frac{3}{r} + \frac{v^2}{2} = 1
 \end{equation}
 
-\subsubsection{Potujo"ci valovi}
-
 Drugo zvezo med velikostjo in hitrostjo kapljic pa dobimo ob predpostavki, da fronta s "casom ohranja svojo obliko, torej jo lahko zapi"semo kot potujo"ci val. Ker se premika le v eni smeri, uporabimo valovno ena"cbo prvega reda
 
 \begin{equation}
@@ -301,9 +289,9 @@ Drugo zvezo med velikostjo in hitrostjo kapljic pa dobimo ob predpostavki, da fr
 
 "Ce bi bila hitrost valovanja $c$ manj"sa od hitrosti teko"cine na robu $v$, bi bilo gibanje teko"cine nadzvo"cno in bi nastajali udarni valovi. "Ce pa bi bila motnja hitrej"sa od teko"cine, bi opna razpadala "ze pred fronto. Edina smiselna mo"znost je torej, da je $c=v$. 
 
-\end{comment}
+Primerjava s posnetki razpadov resni"cnih milnih mehur"ckov ni povsem primerna, saj ne moremo narediti mehur"cka iz neviskozne teko"cine. 
 
-\subsection{Kra"ski "zlebi"ci}
+\section{Kra"ski "zlebi"ci}
 
 % TODO: Citat, dobi diplomo od Kodreta
 
