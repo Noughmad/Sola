@@ -29,3 +29,7 @@ class GslIntegrator : public Integrator
 double radius(const State& state);
 double energy(const State& state);
 double momentum(const State& state);
+
+double z(double t);
+void saveToFile(const QString& filename, const Solution& solution, bool zvezda = false);
+void saveFrame(const QString& filename, double t, const State& state, const Interval& xrange, const Interval& yrange, bool zvezda = false);

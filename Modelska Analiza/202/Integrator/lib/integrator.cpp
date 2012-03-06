@@ -7,6 +7,15 @@
 #include <gsl/gsl_odeiv2.h>
 #include <gsl/gsl_errno.h>
 
+#include <QtCore/QFile>
+#include <QtCore/QTextStream>
+#include <QtCore/QDebug>
+#include <qdir.h>
+#include <QtGui/QImage>
+#include <QtGui/QPainter>
+
+const double FrameInterval = 0.1;
+
 State createState(double x, double y, double u, double v)
 {
   State s(4);
@@ -17,6 +26,10 @@ State createState(double x, double y, double u, double v)
   return s;
 }
 
+double z(double t)
+{
+  return 2*t - 20; 
+}
 
 Integrator::~Integrator()
 {
@@ -34,7 +47,7 @@ Solution GslIntegrator::integrate(YDot dot, const State& initialState, const Int
 
   gsl_odeiv2_system sys = {dot, 0, dim, 0};
 
-  double t = 0.0, t1 = 30.0;
+  double t = 0.0, t1 = 40.0;
   double h = 1e-6;
   double* y = (double*)malloc(sizeof(double) * initialState.size());
   for (int i = 0; i < initialState.size(); ++i)
@@ -87,5 +100,99 @@ double momentum(const State& state)
   return 0;
 }
 
+void saveToFile(const QString& filename, const Solution& solution, bool zvezda)
+{
+  const QString dataName = "g_" + filename + ".dat";
+  const QString folderName = filename;
+  const QString frameName = folderName + "/g_frame_%1.png";
+  QDir::current().mkdir(folderName);
+  
+  int frame = 0;
+  double t = 0;
+  double nextT = FrameInterval;
+  QFile dataFile(dataName);
+  dataFile.open(QIODevice::WriteOnly);
+  QTextStream dataStream(&dataFile);
+  
+  Solution::const_iterator it = solution.constBegin();
+  const Solution::const_iterator end = solution.constEnd();
+  
+  Interval xrange = qMakePair(0.0, 0.0);
+  Interval yrange = qMakePair(0.0, 0.0);
+  
+  if (zvezda)
+  {
+    xrange.first = -3;
+    xrange.second = 3;
+    yrange.first = -1.6;
+  }
+  
+  for (; it != end; ++it)
+  {
+    dataStream << it.key() << it.value()[0] << it.value()[1] << it.value()[2] << it.value()[3];
+    if (zvezda)
+    {
+      dataStream << z(it.key());
+    }
+    dataStream << endl;
+    xrange.first = qMin(xrange.first, it.value()[0]);
+    xrange.second = qMax(xrange.second, it.value()[0]);
+    yrange.first = qMin(yrange.first, it.value()[1]);
+    yrange.second = qMax(yrange.second, it.value()[1]);
+  }
+  
+  xrange.first = qMax(xrange.first, -5.0);
+  xrange.second = qMin(xrange.second, 5.0);
+  yrange.first = qMax(yrange.first, -3.0);
+  yrange.second = qMin(yrange.second, 3.0);
+  
+  dataFile.close();
+  
+//  qDebug() << xrange << yrange;
+  it = solution.constBegin();
+  while (it != end)
+  {
+    saveFrame(frameName.arg(frame, 3, 10, QChar('0')), it.key(), it.value(), xrange, yrange, zvezda);
+    
+    ++frame;
+    t += FrameInterval;
+    it = solution.upperBound(t);
+  }
+}
 
+void saveFrame(const QString& filename, double t, const State& state, const Interval& xrange, const Interval& yrange, bool zvezda)
+{
+  const int w = zvezda ? 400 : 200;
+  const int h = 200;
+  QImage image(w, h, QImage::Format_ARGB32);
+  image.fill(Qt::black);
+  QPainter painter(&image);
+  painter.setPen(Qt::NoPen);
+  double x,y;
+  const double dx = w / (xrange.second - xrange.first);
+  const double dy = h / (yrange.second - yrange.first);
+  
+  // Draw the Sun
+  painter.setBrush(QBrush(Qt::yellow));
+  x = (- xrange.first) * dx;
+  y = (- yrange.first) * dy;
+  painter.drawEllipse(QPointF(x, y), 5.0, 5.0);
+  
+  // Draw the planet
+  painter.setBrush(QBrush(Qt::green));
+  x = (state[0] - xrange.first) * dx;
+  y = (state[1] - yrange.first) * dy;
+  painter.drawEllipse(QPointF(x, y), 3.0, 3.0);
+  
+  // Draw the passing star
+  if (zvezda)
+  {
+    painter.setBrush(QBrush(Qt::red));
+    x = (z(t) - xrange.first) * dx;
+    y = (-1.5 - yrange.first) * dy;
+    painter.drawEllipse(QPointF(x, y), 5.0, 5.0);
+  }
+  
+  image.save(filename);
+}
 
