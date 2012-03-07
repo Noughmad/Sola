@@ -18,17 +18,22 @@ class Integrator
 public:
   virtual ~Integrator();
   
-  virtual Solution integrate(YDot dot, const State& initialState, const Interval& interval) = 0;
+  virtual Solution integrate(YDot dot, const State& initialState, const Interval& interval, double eps) = 0;
 };
 
 class GslIntegrator : public Integrator
 {
-  virtual Solution integrate(YDot dot, const State& initialState, const Interval& interval);
+  virtual Solution integrate(YDot dot, const State& initialState, const Interval& interval, double eps);
 };
 
 double radius(const State& state);
 double energy(const State& state);
 double momentum(const State& state);
+
+double odstopanje(const Solution& solution, double (*fun)(const State&)); 
+
+double obhodni_cas(const Solution& solution);
+double povratek(const Solution& solution);
 
 double z(double t);
 void saveToFile(const QString& filename, const Solution& solution, bool zvezda = false);

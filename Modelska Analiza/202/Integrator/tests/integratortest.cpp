@@ -25,7 +25,7 @@ int func(double t, const double y[], double f[], void* params)
 
 void IntegratorTest::benchmark(const State& state)
 {
-  QBENCHMARK(integrator->integrate(func, state, interval));
+  QBENCHMARK(integrator->integrate(func, state, interval, 1e-12));
 }
 
 
@@ -68,7 +68,7 @@ void IntegratorTest::benchmarkHyperbola()
 void IntegratorTest::testCircle()
 {
   State state = createState(1.0, 0.0, 0.0, 1.0);
-  Solution solution = integrator->integrate(func, state, interval);
+  Solution solution = integrator->integrate(func, state, interval, 1e-12);
   int i = 0;
   int n = solution.size() / 100;
   if (n == 0)
@@ -94,7 +94,7 @@ void IntegratorTest::testCircle()
 void IntegratorTest::testConservation()
 {
   State state = createState(1.0, 0.0, 0.0, 0.1);
-  Solution solution = integrator->integrate(func, state, interval);
+  Solution solution = integrator->integrate(func, state, interval, 1e-12);
   int i = 0;
   int n = solution.size() / 100;
   if (n == 0)

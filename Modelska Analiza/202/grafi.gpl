@@ -1,0 +1,55 @@
+set terminal epslatex color solid
+
+set logscale xy
+set xrange [1e-6:1e-14] reverse
+
+f(x) = a*x**b
+
+set output "g_test_napake.tex"
+set xlabel "$\\varepsilon$"
+set ylabel "Relativna napaka koli\"cine"
+set key top right
+
+fit f(x) "napake-krog.dat" u 1:2 via a,b
+plot "napake-krog.dat" u 1:2 t "Energija -- krog", '' u 1:3 t "Vrtilna koli\"cina -- krog", \
+"napake-elipsa.dat" u 1:2 t "Energija -- elipsa", '' u 1:3 t "Vrtilna koli\"cina -- elipsa", f(x) t sprintf("$\\mu = %.2g$", b)
+
+set output "g_test_cas.tex"
+set ylabel "Relativna napaka obhodnega \"casa"
+a = 100
+b = 0.5
+fit f(x) "napake-krog.dat" u 1:4 via a,b
+plot "napake-krog.dat" u 1:4 t "Simulacija", f(x) t sprintf("$\\mu = %.2g$", b)
+
+set output "g_test_povratek.tex"
+set ylabel "Napaka polo\zaja ekstrema"
+fit f(x) "napake-elipsa.dat" u 1:5 via a,b
+plot "napake-elipsa.dat" u 1:5 t "Simulacija", f(x) t sprintf("$\\mu = %.2g$", b)
+
+g(x) = c*x**d
+
+set output "g_test_hitrost.tex"
+set ylabel "\"Stevilo korakov"
+
+a = 10000
+b = -1
+
+c = 10000
+d = -1
+
+fit f(x) "napake-krog.dat" u 1:6 via a,b
+fit g(x) "napake-elipsa.dat" u 1:6 via c,d
+
+set key top left
+
+plot "napake-krog.dat" u 1:6 t "Krog", f(x) t sprintf("$\\mu = %.2g$", b), \
+"napake-elipsa.dat" u 1:6 t "Elipsa", g(x) t sprintf("$\\mu = %.2g$", d)
+
+unset logscale
+set xrange [0:360] noreverse
+set style data lines
+set output "g_energije.tex"
+set xzeroaxis
+set xlabel "$\\varphi$ [$^\\circ$]"
+set ylabel "$\\arctan(E)$"
+plot "energije.dat" u (180*$1/3.141592):(atan($2)) t "Sonce", "energije.dat" u (180*$1/3.141592):(atan($3)) t "Zvezda"

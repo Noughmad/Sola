@@ -20,6 +20,17 @@ int func(double t, const double y[], double f[], void* params)
     return GSL_SUCCESS;
 }
 
+double energija2(double t, const State& state)
+{
+  Q_ASSERT(state.size() == 4);
+  State s(4);
+  s[0] = state[0] - z(t);
+  s[1] = state[1] + 1.5;
+  s[2] = state[2] - 2;
+  s[3] = state[3];
+  return energy(s);
+}
+
 int zvezda(double t, const double y[], double f[], void* params)
 {
   const double r = sqrt(y[0] * y[0] + y[1] * y[1]);
@@ -53,18 +64,36 @@ State zacetni(double phi, double v)
   return y;
 }
 
+
 int main(int argc, char **argv) {
     Integrator* integrator = new GslIntegrator();
-    Interval i = qMakePair(0.0, 30.0);
-    Solution sol = integrator->integrate(func, zacetni(0.0, 1.0), i);
+    Interval i = qMakePair(0.0, 50.0);
     
-    saveToFile("test", sol, false);
+    /*
+    double eps[] = {1e-6, 1e-7, 1e-8, 1e-9, 1e-10, 1e-11, 1e-12, 1e-13, 1e-14, 1e-15, 1e-16 };
+    State s(4);
+    s[0] = 1.0;
+    s[1] = 0.0;
+    s[2] = 0.0;
+    s[3] = 0.1;
+    for (int j = 0; j < 11; ++j)
+    {
+      Solution sol = integrator->integrate(func, s, i, eps[j]);
+      qDebug() << eps[j] << " " << odstopanje(sol, energy) << " " << odstopanje(sol, momentum)
+	<< " " << obhodni_cas(sol) << " " << povratek(sol) << " " << sol.size();
+     // saveToFile(QString("test-%1").arg(j+6), sol, false);
+    }
+    
+    return 0;
+    
     qDebug() << "Naredil primer brez zvezde";
     
-    for (double phi = 0; phi < 2*M_PI; phi += 0.1)
+    */
+    
+    for (double phi = 0; phi < 2*M_PI; phi += 0.02)
     {
-      saveToFile(QString("zvezda_%1").arg(10*phi), integrator->integrate(zvezda, zacetni(phi, 1.0), i), true);
-      qDebug() << "Naredil primer z zvezda za Phi = " << phi;
+      const State state = (integrator->integrate(zvezda, zacetni(phi, 1.0), i, 1e-14).constEnd()-1).value();
+      qDebug() << phi << " " << energy(state) << " "<< energija2(i.second, state);
       
       // Testing only
       // break;

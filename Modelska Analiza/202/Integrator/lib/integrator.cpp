@@ -36,18 +36,18 @@ Integrator::~Integrator()
 
 }
 
-Solution GslIntegrator::integrate(YDot dot, const State& initialState, const Interval& interval)
+Solution GslIntegrator::integrate(YDot dot, const State& initialState, const Interval& interval, double eps)
 {
   const gsl_odeiv2_step_type * T = gsl_odeiv2_step_rk4;
   const size_t dim = initialState.size();
 
   gsl_odeiv2_step * s = gsl_odeiv2_step_alloc (T, dim);
-  gsl_odeiv2_control * c = gsl_odeiv2_control_y_new (0.0, 1e-14);
+  gsl_odeiv2_control * c = gsl_odeiv2_control_y_new (0.0, eps);
   gsl_odeiv2_evolve * e = gsl_odeiv2_evolve_alloc (dim);
 
   gsl_odeiv2_system sys = {dot, 0, dim, 0};
 
-  double t = 0.0, t1 = 40.0;
+  double t = interval.first, t1 = interval.second;
   double h = 1e-6;
   double* y = (double*)malloc(sizeof(double) * initialState.size());
   for (int i = 0; i < initialState.size(); ++i)
@@ -96,8 +96,64 @@ double energy(const State& state)
 
 double momentum(const State& state)
 {
-  // TODO: Calculate
-  return 0;
+  return state[0] * state[3] - state[1] * state[2];
+}
+
+double odstopanje(const Solution& solution, double (*fun)(const State&) )
+{
+  double o = 0;
+  double v = fun(solution.value(0.0));
+  for (Solution::const_iterator it = solution.constBegin(); it != solution.constEnd(); ++it)
+  {
+    o = qMax(o, fabs(fun(it.value()) - v));
+  }
+  return o;
+}
+
+double povratek(const Solution& solution)
+{
+  double lastY = 0;
+  double T = M_PI;
+  double err = 0;
+  
+  int n = solution.size();
+  
+  
+  Solution::const_iterator it = solution.constBegin() + 1;
+  Solution::const_iterator end = solution.constEnd() - 1;
+  
+  for (; it != end; ++it)
+  {
+    double rp = radius((it-1).value());
+    double r = radius(it.value());
+    double rn = radius((it+1).value());
+    if ( (r - rp) * (r - rn) > 0 )
+    {
+      err = qMax(err, it.value()[1]);
+    }
+  }
+  return err;
+}
+
+double obhodni_cas(const Solution& solution)
+{
+  double lastY = 0;
+  double T = M_PI;
+  double err = 0;
+  Solution::const_iterator it = solution.constBegin();
+  Solution::const_iterator end = solution.constEnd();
+  
+  for (; it != end; ++it)
+  {
+    const double y = it.value()[1];
+    if (y != 0 && lastY * y < 0)
+    {
+      err = qMax(err, fabs(it.key() - T));
+      T += M_PI;
+    }
+    lastY = y;
+  }
+  return err;
 }
 
 void saveToFile(const QString& filename, const Solution& solution, bool zvezda)
@@ -113,6 +169,9 @@ void saveToFile(const QString& filename, const Solution& solution, bool zvezda)
   QFile dataFile(dataName);
   dataFile.open(QIODevice::WriteOnly);
   QTextStream dataStream(&dataFile);
+  dataStream.setFieldAlignment(QTextStream::AlignRight);
+  dataStream.setFieldWidth(12);
+  dataStream.setPadChar(' ');
   
   Solution::const_iterator it = solution.constBegin();
   const Solution::const_iterator end = solution.constEnd();
@@ -141,29 +200,28 @@ void saveToFile(const QString& filename, const Solution& solution, bool zvezda)
     yrange.second = qMax(yrange.second, it.value()[1]);
   }
   
-  xrange.first = qMax(xrange.first, -5.0);
-  xrange.second = qMin(xrange.second, 5.0);
-  yrange.first = qMax(yrange.first, -3.0);
-  yrange.second = qMin(yrange.second, 3.0);
-  
   dataFile.close();
   
 //  qDebug() << xrange << yrange;
-  it = solution.constBegin();
-  while (it != end)
+  bool animations = false;
+  if (animations)
   {
-    saveFrame(frameName.arg(frame, 3, 10, QChar('0')), it.key(), it.value(), xrange, yrange, zvezda);
-    
-    ++frame;
-    t += FrameInterval;
-    it = solution.upperBound(t);
+    it = solution.constBegin();
+    while (it != end)
+    {
+      saveFrame(frameName.arg(frame, 3, 10, QChar('0')), it.key(), it.value(), xrange, yrange, zvezda);
+      
+      ++frame;
+      t += FrameInterval;
+      it = solution.upperBound(t);
+    }
   }
 }
 
 void saveFrame(const QString& filename, double t, const State& state, const Interval& xrange, const Interval& yrange, bool zvezda)
 {
-  const int w = zvezda ? 400 : 200;
-  const int h = 200;
+  const int w = zvezda ? 800 : 400;
+  const int h = 400;
   QImage image(w, h, QImage::Format_ARGB32);
   image.fill(Qt::black);
   QPainter painter(&image);
