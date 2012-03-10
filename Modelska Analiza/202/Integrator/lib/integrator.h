@@ -18,12 +18,13 @@ class Integrator
 public:
   virtual ~Integrator();
   
-  virtual Solution integrate(YDot dot, const State& initialState, const Interval& interval, double eps) = 0;
+  virtual Solution integrate(YDot dot, const State& initialState, const Interval& interval, double eps, void* param = 0) = 0;
 };
 
 class GslIntegrator : public Integrator
 {
-  virtual Solution integrate(YDot dot, const State& initialState, const Interval& interval, double eps);
+public:
+  virtual Solution integrate(YDot dot, const State& initialState, const Interval& interval, double eps, void* param = 0);
 };
 
 double radius(const State& state);
