@@ -36,7 +36,7 @@ Integrator::~Integrator()
 
 }
 
-Solution GslIntegrator::integrate(YDot dot, const State& initialState, const Interval& interval, double eps)
+Solution GslIntegrator::integrate(YDot dot, const State& initialState, const Interval& interval, double eps, void* param)
 {
   const gsl_odeiv2_step_type * T = gsl_odeiv2_step_rk4;
   const size_t dim = initialState.size();
@@ -45,7 +45,7 @@ Solution GslIntegrator::integrate(YDot dot, const State& initialState, const Int
   gsl_odeiv2_control * c = gsl_odeiv2_control_y_new (0.0, eps);
   gsl_odeiv2_evolve * e = gsl_odeiv2_evolve_alloc (dim);
 
-  gsl_odeiv2_system sys = {dot, 0, dim, 0};
+  gsl_odeiv2_system sys = {dot, 0, dim, param};
 
   double t = interval.first, t1 = interval.second;
   double h = 1e-6;
