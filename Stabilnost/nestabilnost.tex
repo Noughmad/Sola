@@ -23,8 +23,9 @@
 
 \renewcommand{\vec}{\mathbf}
 \newcommand{\eps}{\varepsilon}
-\renewcommand{\phi}{\varphi}
+% \renewcommand{\phi}{\varphi}
 \renewcommand{\theta}{\vartheta}
+\newcommand{\dd}{\,\mathrm{d}}
 
 \newcommand{\odv}[1]{\frac{\partial #1}{\partial t}}
 
@@ -62,15 +63,15 @@ Hidrodinamika je zelo "siroko podro"cje, ena"cbe, ki opisujejo gibanje teko"cin 
 
 O nestabilnosti govorimo, ko infinitezimalno majhna sprememba trenutnega stanja lahko povzro"ci ve"cjo, merljivo razliko po nekem kon"cnem "casu~\cite{drazin}. 
 
-Tak"sna definicija je precej splo"sna, zato jo za potrebe seminarja raje definiramo o"zje in bolj eksaktno. Stabilnost sistema pomeni, da vse motnje, ki so na za"cetku majhne, ostanejo majhne tudi ob poljubnem "casu. Nasprotno, sistem je nestabilen, "ce vsaj ena motnja po nekem "casu preneha biti majhna. Obi"cajno to pomeni, da "ce je motnja ob za"cetnem "casu omejena z neko zgornjo mejo, obstaja neka druga zgornja meja, ki je motnja nikoli ne prese"ze. 
+Tak"sna definicija je precej splo"sna, zato jo za potrebe seminarja raje definiramo o"zje in bolj eksaktno. Stabilnost sistema pomeni, da vse motnje, ki so na za"cetku majhne, ostanejo majhne tudi ob poljubnem "casu. Nasprotno, sistem je nestabilen, "ce vsaj ena motnja po nekem "casu preneha biti majhna. Obi"cajno to pomeni, da za vsako motnjo, ki je ob za"cetnem "casu omejena z neko zgornjo mejo, obstaja neka druga zgornja meja, ki je motnja nikoli ne prese"ze. 
 
 "Ce se poleg stabilnosti motnja s "casom manj"sa, je tok \emph{asimptoti"cno stabilen}. V teoriji dinami"cnih sistemov asimptoti"cno stabilni re"sitvi re"cemo tudi atraktor. 
 
 Stabilnost oz. nestabilnost sistema je tesno povezana z zlomom simetrije. Predstavljajmo si sistem, katerega "casovno spreminjanje lahko opi"semo z eno ali ve"c diferencialnimi ena"cbami, ki imajo dolo"ceno simetrijo. Z nastavkom, ki upo"steva to simetrijo, dobimo re"sitev ena"cb. Stabilnost se poka"ze, ko temu nastavku dodamo majhno motnjo, ki ne upo"steva simetrije. Stabilni sistem se bo vrnil v simetri"cno stanje, medtem ko pri nestabilnem pride do zloma simetrije. 
 
-Primer nestabilnega pojava je svin"cnik, postavljen na konico. Ena"cba, ki opisuje njegovo gibanje, je simetri"cna glede na rotacijo okrog osi svin"cnika. Zato lahko najdemo re"sitev z enako simetrijo, to je pokon"cna lega. "Ce pa svin"cnih le malo izmaknemo iz simetri"cne lege, bo padel in kon"cal v stanju brez rotacijske simetrije. 
+Primer nestabilnega pojava je svin"cnik, postavljen na konico. Ena"cba, ki opisuje njegovo gibanje, je simetri"cna glede na rotacijo okrog osi svin"cnika. Zato lahko najdemo re"sitev z enako simetrijo, to je pokon"cna lega. "Ce pa svin"cnih le malo izmaknemo iz simetri"cne lege, bo padel v dolo"ceno smer in kon"cal v stanju brez rotacijske simetrije. 
 
-Po drugi strani pa je te"zno nihalo stabilen sistem. "Ce tak"sno nihalo zmotimo, bo motnja vseskozi ostajala pribli"zno majhna velika, zaradi trenja in zra"cnega upora se bo s "casom celo manj"sala. Po dolgem "caso bo sistem spet v simetri"cnem stanju. 
+Po drugi strani pa je te"zno nihalo stabilen sistem. "Ce tak"sno nihalo zmotimo, bo motnja vseskozi ostajala pribli"zno enake velikosti, zaradi trenja in zra"cnega upora se bo s "casom celo manj"sala. Po dolgem "casu bo sistem spet v simetri"cnem stanju. 
 
 
 \section{Hidrodinamika}
@@ -81,21 +82,21 @@ Tok nestisljive teko"cine z gostoto $\rho$ in viskoznostjo $\mu$ se podreja Navi
 
 \begin{align}
  \label{eq:ns-enacba}
-\frac{\partial \vec u}{\partial t} + \vec u \cdot \nabla \vec u &= -\frac{1}{\rho}\nabla p + \mu \Delta \vec u \\
+\frac{\partial \vec u}{\partial t} + (\vec u \cdot) \nabla \vec u &= -\frac{1}{\rho}\nabla p + \mu \Delta \vec u \\
 \nabla \vec u &= 0
 \end{align}
 
 kjer je $\rho$ gostota teko"cine, $\mu$ pa njena viskoznost. 
 
-Kot obi"cajno pri re"sevanju ena"cb si jo najprej poenostavimo tako, da preidemo na brezdimenzijske spremenljivke in "cimbolj minimiziramo "stevilo parametrov. Izberimo si meri za dol"zino $x_0$ in hitrost $v_0$. "Ce uvedemo "se brezdimenzijsko Reynoldsovo "stevilo $R=v_0 x_0 / \mu$, lahko ena"cbo zapi"semo za brezdimenzijski spremenljivki $U$ in $P$. 
+Ena"cbo lahko poenostavimo s prehodom na brezdimenzijske spremenljivke, pri tem pa lahko tudi zmanj"samo "stevilo parametrov. Izberimo si meri za dol"zino $x_0$ in hitrost $v_0$. "Ce uvedemo "se brezdimenzijsko Reynoldsovo "stevilo $R=v_0 x_0 / \mu$, lahko ena"cbo zapi"semo za brezdimenzijski spremenljivki $U$ in $P$ kot
 
 \begin{align}
  \label{eq:ns-brezdim}
-\frac{\partial \vec U}{\partial t} + \vec U \cdot \nabla \vec U &= -\nabla P + R^{-1} \Delta \vec U \\
+\frac{\partial \vec U}{\partial t} + (\vec U \cdot \nabla) \vec U &= -\nabla P + R^{-1} \Delta \vec U \\
 \nabla \vec U &= 0
 \end{align}
 
-V sistemu ena"cb nastopa le en prost parameter. Seveda pa moramo za re"sitev diferencialni ena"cb poznati tudi za"cetne in robne pogoje. Za"cetni so obi"cajno enostavni, saj ve"ckrat poznamo za"cetni profil hitrosti in tlaka, ali pa ga lahko izmerimo s poskusom. Po drugi strani pa so robni pogoji v razli"cnih geometrijah lahko zelo zapleteni in nam mo"cno ote"zijo ra"cunanje. 
+V sistemu ena"cb nastopa le en prost parameter. Poleg tega parametra je re"sitev ena"cbe odvisna "se od za"cetnih in robnih pogojev. Obi"cajno poznamo za"cetni profil hitrosti in tlaka, saj si ju lahko izberemo ali izmerimo s poskusom. Robni pogoji v razli"cnih geometrijah pa so lahko zelo zapleteni in mo"cno ote"zijo ra"cunanje. 
 
 \subsection{Lineariziran problem}
 
@@ -103,11 +104,11 @@ Stabilnost hidrodinamskega sistema lahko "studiramo tako, da najprej najdemo osn
 
 Nato osnovnem toku dodamo motnjo, tako da dobimo \emph{skupni tok}, zopet podan s hitrostjo $\vec u = \vec U + \vec u'$ in tlakom $p = P + p'$. Tudi za skupni tok mora veljati N-S ena"cba, iz "cesar lahko izpeljemo ena"cbo za motnjo $u'$ in $p'$. 
 
-Ker nas zanimajo le majhne motnje, lahko v ena"cbi zanemarimo vse "clene kjer motnja nastopa v drugem ali vi"sjih redih. Na ta na"cin sistem zreduciramo na linearno diferecialno ena"cbo 
+Ker nas zanimajo le majhne motnje, lahko v ena"cbi zanemarimo vse "clene, kjer motnja nastopa v drugem ali vi"sjih redih. Na ta na"cin sistem zreduciramo na sistem linearnih diferecialnih ena"cb 
 
 \begin{align}
  \label{eq:ns-linearna}
-\frac{\partial \vec u'}{\partial t} + \vec U \cdot \nabla \vec u' + \vec u' \cdot \nabla \vec U &= -\nabla p' + R^{-1}\Delta u' \\
+\frac{\partial \vec u'}{\partial t} + (\vec U \cdot \nabla) \vec u' + \vec u' \cdot \nabla \vec U &= -\nabla p' + R^{-1}\Delta u' \\
 \label{eq:nestisljivost-linearna}
 \nabla \cdot \vec u' &= 0
 \end{align}
@@ -119,11 +120,36 @@ Ker nas zanimajo le majhne motnje, lahko v ena"cbi zanemarimo vse "clene kjer mo
  p'\rt &= \sum e^{s_i t} p_i(\vec r)
 \end{align}
 
-Hitro lahko vidimo, da bo tok nestabilen, "ce ima vsaj ena lastna vrednosti $s_i$ realni del ve"cji od 0, v nasprotnem primeru pa bo stabilen. Problem stabilnosti sistema lahko torej prevedemo na iskanje lastnih vrednosti matrike. Sedaj tudi vidimo, da matemati"cno natan"cni definiciji mere za velikost motnje in kriterija za stabilnosti nimata velikega pomena, saj motnje v obliki normalnih valovnih na"cinov le eksponentno nara"s"cajo ali padajo, njihova oblika pa ostaja enaka. 
+Hitro vidimo, da bo tok nestabilen, "ce ima vsaj ena lastna vrednosti $s_i$ realni del ve"cji od 0, v nasprotnem primeru pa bo stabilen. Problem stabilnosti sistema lahko torej prevedemo na iskanje lastnih vrednosti matrike. Sedaj tudi vidimo, da matemati"cno natan"cni definiciji mere za velikost motnje in kriterija za stabilnosti nimata velikega pomena, saj motnje v obliki normalnih valovnih na"cinov le eksponentno nara"s"cajo ali padajo, njihova oblika pa ostaja enaka. 
+
+\subsection{Lubrikacijski pribli"zek}
+
+V geometrijah, kjer je ena izmed dimenzij mnogo manj"sa od ostalih, si lahko gibalne ena"cbe poenostavimo z lubrikacijskim pribli"zkom (angl. lubrication approximation). Odvisnost od te koordinate lahko izlo"cimo in s tem zmanj"samo "stevilo spremenljvk v Navier-Stokesovi ena"cbi. 
+
+Na tanki plasti teko"cine obstajata dve ra"zlicni dol"zinski skali, od katerih so odvisni velikostni redi nekaterih spremenljivk. Poljubna sprememba koordinate $z$ bo vedno dosti manj"sa od primerljive spremembe v ravnini, iz "cesar lahko zaklju"cimo 
+
+\begin{enumerate}
+  \item Komponenta hitrosti v smeri $z$ je dosti manj"sa od komponent v smereh $x$ in $y$. 
+  \item Odvod poljubne spremenljivke po $z$ je dosti ve"cji od odvoda v ravnini. 
+\end{enumerate}
+
+"Ce nas odvisnost hitrosti od vi"sine $z$ ne zanima, lahko hitrost povpre"cimo po debelini filma
+
+\begin{align}
+ \vec u(x,y) &=  \frac{1}{h}\int_0^h \vec u(x,y,z)\dd z
+\end{align}
+
+kjer je $h = h(x,y)$ debelina plasti na mestu $(x,y)$. Ohranitev mase da ena"cbo za $h$
+
+\begin{align}
+  \frac{\partial h}{\partial t} + \nabla\cdot(h\vec u) = 0
+\end{align}
+
+
 
 \section{Teko"cina na klancu}
 
-Hidrodinamsko nestabilnost lahko opazujemo pri polzenju teko"cine po klan"cini~\cite{kondic}. Ta pojav je vsem dobro znan, saj ga lahko vidimo na avtomobilskih steklih v de"zju, enostavno pa je tudi pripraviti poskus doma. "Ceprav je samo re"sevanje zahteven postopek, pa lahko rezultat preverimo z eksperimentom. 
+Hidrodinamsko nestabilnost lahko opazujemo pri polzenju teko"cine po klan"cini~\cite{kondic}. Ta pojav je vsem dobro znan, saj ga lahko vidimo na avtomobilskih steklih v de"zju, enostavno pa je tudi pripraviti poskus doma. "Ceprav je re"sevanje ena"cb zahteveno, lahko rezultat preverimo z eksperimentom. 
 
 \begin{figure}[h]
 \centering
@@ -138,7 +164,7 @@ Le z razmislekom pa ne znamo napovedati niti kon"cne oblike fronte niti povpre"c
 
 \subsection{Ena"cbe}
 
-"Ce privzamemo nestisljivost teko"cine $\nabla \cdot \vec u = 0$, se Navier-Stokesova ena"cba za teko"cino na klan"cu poenostavi v 
+"Ce privzamemo nestisljivost teko"cine $\nabla \cdot \vec u = 0$, se Navier-Stokesova ena"cba za teko"cino na klancu glasi 
 
 \begin{align}
  \label{eq:ns-film}
@@ -149,14 +175,14 @@ kjer je $\vec u$ hitrost teko"cine, $\rho$ njena gostota in $\mu$ viskoznost. "C
 
 \begin{itemize}
  \item Na meji med teko"cino in klancem teko"cina ne drsi, torej je tam $\vec u = 0$. 
- \item Na meji med teko"cino in zrakom ima tlak nezveznost, ki jo sorazmerja povr"sinski napetosti in ukrivljenosti meje $\kappa$. 
+ \item Na meji med teko"cino in zrakom ima tlak nezveznost, ki je sorazmerno s povr"sinsko napetostjo in ukrivljenostjo meje $\kappa$. 
 \end{itemize}
 
-Ker obravnavamo tanke filme, lahko privzamemo, da je debelina $h$ manj"sa od katerekoli dol"zinske skale v ravnini. S tem privzetkom lahko ena"cbo (\ref{eq:ns-film}) poenostavimo v ena"cbo za $h$. 
+Ker obravnavamo tanke filme, lahko privzamemo, da je debelina $h$ manj"sa od katerekoli dol"zinske skale v ravnini. Uporabimo lubrikacijski pribli"zek, ukrivljenost meje med teko"cino in zrakom po ocenimo s $\kappa \approx \nabla^2 h$. S tem privzetkom lahko ena"cbo (\ref{eq:ns-film}) poenostavimo v ena"cbo za $h$. 
 
 \begin{align}
 \label{eq:ns-film-h}
- \frac{\partial h}{\partial t} = -\frac{1}{3\mu}\nabla \cdot \left[ \gamma h^3 \nabla \nabla^2 h - \rho g h^3 \nabla h \cos \alpha + \rho g h^2 \sin \alpha \vec i \right]
+ \frac{\partial h}{\partial t} = -\frac{1}{3\mu}\nabla \cdot \left[ \gamma h^3 \nabla \nabla^2 h - \rho g h^3 \nabla h \cos \alpha + \rho g h^3 \sin \alpha \vec i \right]
 \end{align}
 
 \begin{figure}[h]
@@ -166,48 +192,46 @@ Ker obravnavamo tanke filme, lahko privzamemo, da je debelina $h$ manj"sa od kat
 \label{fig:film-skica}
 \end{figure}
 
-Da najdemo osnovno re"sitev, najprej privzamemo, da ima re"sitev enako simetrijo kot sama ena"cba. Postavimo se v koordinatni sistem kot na sliki~\ref{fig:film-skica}. Klanec, po katerem te"ce teko"cina, ima translacijsko simetrijo v smeri $y$, zato za osnovno re"sitev velja $h_y = 0$. "Za la"zje re"sevanje preidemo "se na brezdimenzijske koli"cine. V ena"cbi ostane le "se en parameter $D(\alpha)$, ki podaja razmerje med vplivom viskoznostji in povr"sinske napetosti, brezdimenzijsko dol"zino klanca v smeri $x$ pa ozna"cimo z $L$. Ena"cba za brezdimenzijske koli"cine, ki predpostavlja simetrijo in zato opisuje osnovno re"sitev problema, se glasi
+Zgornja ena"cba je simetri"cna glede na poljuben premik v kraju in "casu, saj te koli"cine v njej ne nastopajo eksplicitno. Za"cetno stanje, kot je prikazano na sliki~\ref{fig:film-skica} pa podaja odvisnosti od $x$ in $z$. Iz postavitve problema sklepamo, da se bo "celo teko"cine s "casom premikalo po klancu navzdol, torej bo profil odvisen od "casa. Edina simetrija, ki ji zado"s"cata tako za"cetno stanje kot gibalna ena"cba je torej translacijska v smeri $y$. 
 
-%% TODO: Mogoce bi vseeno napisal kaksna je substitucija v brezdimenzijske?
+Da najdemo osnovno re"sitev, najprej privzamemo, da ima re"sitev enako simetrijo kot sama ena"cba. Postavimo se v koordinatni sistem kot na sliki~\ref{fig:film-skica}. Klanec, po katerem te"ce teko"cina, ima translacijsko simetrijo v smeri $y$, zato za osnovno re"sitev velja $h_y = 0$. "Za la"zje re"sevanje preidemo "se na brezdimenzijske koli"cine. V ena"cbi ostane le "se en parameter $D(\alpha)$, ki podaja razmerje med vplivom viskoznostji in povr"sinske napetosti, brezdimenzijsko dol"zino klanca v smeri $x$ pa ozna"cimo z $L$. Ena"cba za brezdimenzijske koli"cine, ki predpostavlja simetrijo in zato opisuje osnovno re"sitev problema, se glasi
 
 \begin{align}
   \label{eq:ns-film-sim}
  \odv{h} &= - \left[h^3 h_{xxx}\right]_x + D(\alpha) \left[h^3 h_x\right]_x - \left(h^3\right)_x
 \end{align}
 
-Pred za"cetkom re"sevanja moramo dolo"citi tudi za"cetne in robne pogoje. Ena"cba je "cetrtega reda v $x$, zato potrebujemo "stiri robne pogoje. "Ce za"cnemo s podobnim profilom kot na sliki~\ref{fig:film-skica}, le da se rep nadaljuje do zgornjega roba klan"cine, velja $h(0, t) = 1$ po definiciji brezdimenzijse debeline, pred fronto pa je plast mnogo tanj"sa, $h(L, t) = b \ll 1$. Oba enakosti ne veljata le na robu obmo"cja, ampak tudi v njegovi bli"zini, zato za ostala dva robna pogoja vzamemo $h_x(0,t) = h_x(L,t) = 0$. Potrebujemo "se za"cetni pogoj, ki je kar profil teko"cine ob "casu $t=0$. Naravna izbira je krivulja, ki povezuje dva ravna odseka z gladkim vmesnim delom. 
+Pred za"cetkom re"sevanja moramo dolo"citi tudi za"cetne in robne pogoje. Ena"cba je "cetrtega reda v $x$, zato potrebujemo "stiri robne pogoje. "Ce za"cnemo s podobnim profilom kot na sliki~\ref{fig:film-skica}, le da se rep nadaljuje do zgornjega roba klan"cine, velja $h(0, t) = 1$ po definiciji brezdimenzijske debeline, pred fronto pa je plast mnogo tanj"sa, $h(L, t) = b \ll 1$. Oba enakosti ne veljata le na robu obmo"cja, ampak tudi v njegovi bli"zini, zato za ostala dva robna pogoja vzamemo $h_x(0,t) = h_x(L,t) = 0$. Potrebujemo "se za"cetni pogoj, ki je kar profil teko"cine ob "casu $t=0$. Naravna izbira je krivulja, ki povezuje dva ravna odseka z gladkim vmesnim delom. 
 
-\subsection{Re"sevanje}
-
-Zgornja ena"cba je "se vedno prezahtevna, da bi jo re"sevali analiti"cno, zato pose"zemo po numeri"cnih metodah. Re"sitev ena"cbe (\ref{eq:ns-film-sim}) lahko dobimo z uporabo metode na osnovi kon"cnih diferenc. Ena"cba je prvega reda v "casu in "cetrtega reda v koordinati $x$, zato je najbolj pomembna izbira diskretizacije za $x$. Najve"c pozornosti moramo posvetiti diskretizaciji najvi"sjega "clena v ena"cbi, ki je v na"sem primeru "cetrtega reda. 
+Zgornja ena"cba je "se vedno prezahtevna, da bi jo re"sevali analiti"cno, zato pose"zemo po numeri"cnih metodah. Re"sitev ena"cbe (\ref{eq:ns-film-sim}) lahko dobimo z uporabo metode na osnovi kon"cnih diferenc. 
 
 \begin{figure}[h]
  \centering
  \includegraphics[width=.8\textwidth]{./Slike/film-osnovna-resitev}
- \caption{Profil teko"cine pri razli"cnih vrednostih parametra $D$. V obeh primerih se hitro oblikuje greben tik za fronto. Profili so prikazani v intervalih $\delta t = 2$, pri izbranih vrednostih $L = 40$ in $b=0,1$. Koordinata $x$ je diskretizirana s korako $\Delta x = 0,05$~\cite{kondic}. }
+ \caption{Profil teko"cine pri razli"cnih vrednostih parametra $D$. V obeh primerih se hitro oblikuje greben tik za fronto. Profili so prikazani v intervalih $\delta t = 2$, pri izbranih vrednostih $L = 40$ in $b=0,1$. Koordinata $x$ je diskretizirana s korakom $\Delta x = 0,05$~\cite{kondic}. }
  \label{fig:film-osnovna}
 \end{figure}
 
 
 \subsection{Nestabilnost}
 
-Osnovna re"sitev $h_0(x, t)$ je sicer odvisna od "casa, vendar lahko predpostavimo, da rob teko"cine polzi s konstantno hitrostjo $U$. "Casovno odvisnost koeficientov $h_0$ bomo torej odpravili, "ce se postavimo v koordinatni sistem, ki se giblje s to hitrostjo. V tem primeru uvedemo spremenljivko $\xi = x - Ut$ in $\nabla = (\partial_\xi, \partial_y)$, splo"sno re"sitev pa lahko zapi"semo v obliki
+Osnovna re"sitev $h_0(x, t)$ je sicer odvisna od "casa, vendar lahko predpostavimo, da "celo teko"cine polzi s konstantno hitrostjo $U$. "Casovno odvisnost koeficientov $h_0$ bomo torej odpravili, "ce se postavimo v koordinatni sistem, ki se giblje s to hitrostjo. V tem primeru uvedemo spremenljivko $\xi = x - Ut$ in $\nabla = (\partial_\xi, \partial_y)$, splo"sno re"sitev pa lahko zapi"semo v obliki
 
 \begin{equation}
  h(\xi, y, t) = h_0(\xi) + \eps h_1(\xi, y, t)
 \end{equation}
 
-V tej sliki se $h_0$ ne spreminja s "casom, torej smo dobili linearno diferencialno ena"cbo s konstantnimi koeficienti. Ker "zelimo, da je motnja res majhna, predpostavimo, da sta $h_0$ in $h_1$ podobnega velikostnega reda, $\eps$ pa zelo majhen, dosti manj"si od 1. Zgornji izraz vstavimo v ena"cbo (\ref{eq:ns-film-h}) in zanemarimo vse "clene z drugi in vi"sjimi potencami $\eps$. 
+V tej sliki se $h_0$ ne spreminja s "casom, torej smo dobili linearno diferencialno ena"cbo s konstantnimi koeficienti. Ker "zelimo, da je motnja res majhna, predpostavimo, da sta $h_0$ in $h_1$ podobnega velikostnega reda, $\eps$ pa zelo majhen, mnogo manj"si od 1. Zgornji izraz vstavimo v ena"cbo (\ref{eq:ns-film-h}) in zanemarimo vse "clene z drugo in vi"sjimi potencami $\eps$. 
 
-Motnjo $h_1$ izberemo tak"sno, da zanjo ne dr"zi translacijska simetrija v smeri $y$. Na sliki~\ref{fig:film-neenakomernost} vidimo, da je oblika fronte pribli"zno periodi"cna, zato $h_1(\xi, y, t)$ raje zapi"semo kot linearno kombinacijo normalnih valovnih na"cinov. V ena"cbi bo tako nastopala Fourierova transformiranka po koordinati $y$, ki jo ozna"cimo z $g(\xi, q, t)$, za katero velja
+Motnjo $h_1$ izberemo tak"sno, da zanjo ne dr"zi translacijska simetrija v smeri $y$. Na sliki~\ref{fig:film-neenakomernost} vidimo, da je oblika fronte pribli"zno periodi"cna, zato poskusimo s harmoni"cno motnjo oblike $h_1(\xi, y, t) = g(\xi, t) \exp (i q y)$. Ker motnja zado"s"ca linearni ena"cbi, je njena "casovna odvisnost eksponentna
 
 \begin{align}
- \odv{g} = -\mathcal{L}g
+  h_1(\xi, y, t) &= \phi(\xi) e^{iqy} e^{\sigma t}
 \end{align}
 
-Tu je $\mathcal{L}$ linearni diferecialni operator s konstantimi koeficienti. Zanimajo nas lastne vrednosti tega operatorja, zlasti tista z najve"cjim realnim delom. Lastne vrednosti so odvisne od valovnega "stevila $q$ oz valovne dol"zine $\lambda = 2\pi/q$; pri"cakujemo, da bo valovna dol"zina, pri kateri je lastna vrednost $s(q)$ najve"cja, enaka razdalji med posameznimi pasovi na sliki~\ref{fig:film-neenakomernost}, saj bo motnja s tak"sno valovno dol"zino najhitreje nara"s"cala. 
+Tako $\phi$ kot $\sigma$ sta lahko odvisni od valovnega "stevila $q$. "Ce je $\sigma$ pozitivna, bo majhna motnja eksponentno nara"s"cala in povzro"cila zlom simetrije. Pri"cakujemo, da bo valovna dol"zina, pri kateri je vrednost $\sigma$ najve"cja, enaka razdalji med posameznimi pasovi na sliki~\ref{fig:film-neenakomernost}, saj bo motnja s tak"sno valovno dol"zino najhitreje nara"s"cala. Odvisnost $\sigma(q)$, izra"cunana numeri"cno, je prikazana na sliki~\ref{fig:film-rast}. Valovna dol"zina najhitrej"se rasti je odvisna od parametra $D$, prav tako pa tudi hitrost rasti in z njo karakteristi"cni "cas, po katerem motnja postane vidna. 
 
-Ker smo osnovno re"sitev $h_0$ izra"cunali numeri"cno, tudi matri"cne elemente operatorja $\mathcal{L}$ poznamo le numer"cno. Realni del njegove lastne vrednosti pri valovnem "stevilu $q$, ki dolo"ca hitrost rasti ali upadanja motnje z ustrezno valovno dol"zino, je prikazan na sliki~\ref{fig:film-rast}. Valovna dol"zina najhitrej"se rasti je odvisna od parametra $D$, prav tako pa tudi hitrost rasti in z nje karakteristi"cni "cas, po katerem motnja postane vidna. 
+% TODO: Vec poudarka, zakljucek poglavja
 
 \begin{figure}[h]
  \centering
@@ -227,7 +251,7 @@ Ker smo osnovno re"sitev $h_0$ izra"cunali numeri"cno, tudi matri"cne elemente o
 \label{fig:mehurcek-3}
 \end{figure}
 
-Milni mehur"cki so stabilni na majhne motnje zaradi povr"sinske napetosti teko"cine. "Ce pa mehur"cek predremo v eni to"cki, ustvarimo rob, kjer povr"sinska napetost ni uravnote"zena, zato se rob za"cne umikati. Ker je opna obi"cajno zelo tanka, je ukrivljenost na robu velika, zato fronta napreduje zelo hitro~\cite{diploma}. To napredovanje je pri mehur"ckih tako hitro, da s prostim o"cesom fronte sploh ne opazimo, ampak se nam zdi, da celoten mehur"cek razpade naenkrat. Pri opazovanju si lahko pomagamo s hitrimi kamerami, kot vidimo na sliki~\ref{fig:mehurcek-3}. 
+Milni mehur"cki so stabilni, saj majhne motnje v opni zadu"si povr"sinska napetost teko"cine. "Ce pa mehur"cek predremo v eni to"cki, ustvarimo rob, kjer povr"sinska napetost ni uravnote"zena, zato se rob za"cne umikati. Ker je opna zelo tanka, je ukrivljenost na robu velika, zato fronta napreduje zelo hitro~\cite{diploma}. To napredovanje je pri mehur"ckih tako hitro, da s prostim o"cesom fronte sploh ne opazimo, ampak se nam zdi, da celoten mehur"cek razpade naenkrat. Pri opazovanju si lahko pomagamo s hitrimi kamerami, kot vidimo na sliki~\ref{fig:mehurcek-3}. 
 
 Podobno kot pri tankem filmu tudi tu obravnavamo tanko plast teko"cine pod vplivom povr"sinske napetosti. Skica roba opne z ozna"cenimi spremenljivkami in koordinatnimi osmi je na sliki~\ref{fig:mehurcek-skica}. 
 \begin{figure}[h]
@@ -237,9 +261,9 @@ Podobno kot pri tankem filmu tudi tu obravnavamo tanko plast teko"cine pod vpliv
 \label{fig:mehurcek-skica}
 \end{figure}
 
-Pojava se od drsenja teko"cine po klancu bistveno razlikuje v viru nestabilnosti. Pri razpadu milnega mehur"cka namre"ce ne opazimo nestabilnosti v obliki fronte, ampak v dejstvu, da opna razpade v kapljice. Pravzaprav gre za zloma dveh simetrij, ene v smeri premikanja fronte in druge v pravokotni smeri. Re"sevanje problema je mnogo la"zje ob predpostavki, da se translacijska simetrija vzdol"z roba ohranja, torej se osredoto"cimo le na prvi zlom simetrije. Kljub temu pa so ena"cbe "se vedno prezapletene za analiti"cno re"sevanje, zato pose"zemo po numeri"cnih metodah. 
+Pojav se od drsenja teko"cine po klancu bistveno razlikuje v viru nestabilnosti. Pri razpadu milnega mehur"cka namre"c ne opazimo nestabilnosti v obliki fronte, ampak v dejstvu, da opna razpade v kapljice. Pravzaprav gre za zloma dveh simetrij, ene v smeri premikanja fronte in druge v pravokotni smeri. Re"sevanje problema je mnogo la"zje ob predpostavki, da se translacijska simetrija vzdol"z roba ohranja, torej se osredoto"cimo le na prvi zlom simetrije. Kljub temu pa so ena"cbe "se vedno prezapletene za analiti"cno re"sevanje, zato pose"zemo po numeri"cnih metodah. 
 
-Tako z eksperimenti kot tudi z ra"cunam lahko vidimo, da klju"cno vlogo pri razpadu opne igra njena viskoznost. Viskozne in neviskozne teko"cine se obna"sajo tako razli"cno, da najla"zje obravnavamo vsako posebej. 
+Tako z eksperimenti kot tudi z ra"cunom lahko vidimo, da klju"cno vlogo pri razpadu opne igra njena viskoznost. Viskozne in neviskozne teko"cine se obna"sajo tako razli"cno, da najla"zje obravnavamo vsako posebej. 
 
 \subsection{Neviskozna opna}
 
@@ -287,7 +311,7 @@ Neviskozne opne je v svojem diplomskem delu obravnaval Simon "Copar. Rezultat si
 \label{fig:mehurcek-rez-1}
 \end{figure}
 
-Dobljeno histrost in velikost kapljic lahko preverimo, saj se morata ohranjati tako skupna energija kot tudi celotna prostornina. Skupena prostornina opne in vseh kapljic je izra"cunana na sliki~\ref{fig:mehurcek-rez-1}, med tekom simulacije pa se spremeni za manj kot en promil. Podoben izra"cun lahko naredimo tudi za skupno energijo kapljic in opne, le da moramo tu se"steti ve"c prispevkov. Energija je lahko v obliki povr"sinske napetosti, kineti"cne energije ali nihanja kapljic. 
+Dobljeno hitrost in velikost kapljic lahko preverimo, saj se morata ohranjati tako skupna energija kot tudi celotna prostornina. Skupna prostornina opne in vseh kapljic je izra"cunana na sliki~\ref{fig:mehurcek-rez-1}, med tekom simulacije pa se spremeni za manj kot en promil. Podoben izra"cun lahko naredimo tudi za skupno energijo kapljic in opne.
 
 \newpage
 \subsection{Viskozna opna}
@@ -319,7 +343,7 @@ Leva slika prikazulje razvoj roba pri $Z=0,0045$, desna pa pri $Z=4,5$. }
 \clearpage
 \section{Kra"ski "zlebi"ci}
 
-"Zlebi"ci so kra"ska tvorba, ki nastane na kamnitih pobo"cjih pod vplivom de"zja. Izgledajo kot vzporedni "zlebovi v smeri najve"cje strmine. Nastanejo zaradi kislih primesi v de"zevnici, ki po"casi razjedajo kamnino. 
+"Zlebi"ci so kra"ska tvorba, ki nastane na ravnih povr"sinah apnen"castih skal pod vplivom de"zja. So vzporedni "zlebovi v smeri najve"cje strmine. Nastanejo zaradi kislih primesi v de"zevnici, ki po"casi topijo kamnino. 
 
 \begin{figure}[h]
 \centering
@@ -332,7 +356,7 @@ S slike~\ref{fig:zlebici-slika} lahko vidimo, da "zlebi"ci tvorijo podobno perio
 
 Proces tvorbe "zlebi"cev je dosti bolj zapleten kot zgoraj obravnavani primeri. Namesto znane kon"cne koli"cine vode imamo sedaj neenakomeren de"z, pa tudi pobo"cje ni nujno ravno in homogeno. Kakr"snekoli ra"cune "se posebej ote"zi raztapljanje apnenca v vodi, zapleten kemijski proces ki "se vedno ni natan"cno pojasnjen. Znane Navier-Stokesove ena"cba so zato sklopljene z ena"cbami za raztapljanje, ki so znane le empiri"cno. 
 
-Vse kra"ske kamnine so zelo slabo topne v vodi, zato so tak"sni procesi prepo"casni, da bi lahko z njimi izvajali fizikalne eksperimente. Kljub temu pa se da proces pospe"siti, tako da pove"camo koncentracijo kisline v vodi, namesto kamnine pa uporabimo bolje topni mavec. Pomagamo si lahko tudi s "stevilnimi primeri "zlebi"cev najdenih v naravi. Izvedeni poskusi ka"zejo, da pri enakomernem de"zju v obliki vodnih kapljic na kamnitem pobo"cju nastanejo de"zni "zlebi"c. 
+Vse kra"ske kamnine so zelo slabo topne v vodi, zato so tak"sni procesi prepo"casni, da bi lahko z njimi izvajali fizikalne eksperimente. Kljub temu pa se da proces pospe"siti, tako da pove"camo koncentracijo kisline v vodi, namesto kamnine pa uporabimo bolje topni mavec. Pomagamo si lahko tudi s "stevilnimi primeri "zlebi"cev najdenih v naravi. Izvedeni poskusi ka"zejo, da pri enakomernem de"zju v obliki vodnih kapljic na kamnitem pobo"cju nastanejo de"zni "zlebi"ci. 
 
 Modeliranje tvorbe "zlebi"cev pa je izjemno zahtevno. Poleg re"sevanja Navier-Stokesove ena"cbe moramo upo"stevati tudi raztapljanje kamnine, ki v primeru apnenca "se ni povsem raziskano, zato moramo uporabiti empiri"cne pribli"zke. Ena"cbe so tako zapletene, da si moramo pomagati s pribli"zki tudi pri opisu vodnega toka, saj ne znamo dobro opisati vpliva padajo"cih de"znih kapljic. 
 
