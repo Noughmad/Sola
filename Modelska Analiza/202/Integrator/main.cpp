@@ -111,14 +111,15 @@ void planetek()
     }  
 }
 
-double omeji(double q)
+void omeji(double* q, double *p)
 {
-  double r = fmod(fabs(q), 2);
+  double r = fmod(fabs(*q), 2);
   if (r > 1)
   {
     r = 2 - r;
+    *p = - *p;
   }
-  return r;
+  *q = r;
 }
 
 void portret(double k, const QString& fileName)
@@ -157,8 +158,14 @@ void portret(double k, const QString& fileName)
           qDebug() << t << gsl_strerror(status);
           break;
         }
-        const double qq = omeji(y[0]);
-        image.scanLine( qBound<int>(0, qq * 800.0, 799) )[ qBound<int>(0, (5+y[1]) * 80.0, 799) ] -= 1;
+        double qq = y[0];
+        double pp = y[1];
+        omeji(&qq, &pp);
+        uchar& pix = image.scanLine( qBound<int>(0, (5+pp) * 80.0, 799) )[ qBound<int>(0, qq * 800.0, 799) ];
+        if (pix > 0)
+        {
+          --pix;
+        }
       }
     }
   }
@@ -179,7 +186,9 @@ void sled(double k, double q, double p, const QString& fileName)
   while (t < 20.0)
   {
     int c = fmod(t, 2) > 1 ? 1 : 0;
-    stream << t << " " << omeji(y[0]) << " " << y[1] << " " << c << endl;
+    double q = y[0], p = y[1];
+    omeji(&q, &p);
+    stream << t << " " << q << " " << p << " " << c << endl;
 
     int status = gsl_odeiv2_driver_apply_fixed_step(driver, &t, 1e-4, 1, y);
     if (status != GSL_SUCCESS)
@@ -195,10 +204,10 @@ void sled(double k, double q, double p, const QString& fileName)
 int main(int argc, char **argv) {
     portret(0.1, "g_potrtret_1.png");
     portret(1.0, "g_potrtret_10.png");
+    portret(3.0, "g_potrtret_30.png");
     portret(10.0, "g_potrtret_100.png");
+    portret(30.0, "g_potrtret_300.png");
     portret(100.0, "g_potrtret_1000.png");
-    
-    /*
   
     sled(1.0, 0.5, 1.0, "g_sled_10_5_10.dat");
     sled(1.0, 0.5, 0.5, "g_sled_10_5_5.dat");
@@ -211,8 +220,9 @@ int main(int argc, char **argv) {
     sled(0.5, 0.5, -1.0, "g_sled_5_5_-10.dat");
     sled(0.5, 0.5, -0.5, "g_sled_5_5_-5.dat");
     sled(1.0, 0.5, -1.0, "g_sled_10_5_-10.dat");
+    
+    sled(10.0, 0.5, 0.0, "g_sled_100_5_0.dat");
+    sled(10.0, 0.5, 2.0, "g_sled_100_5_20.dat");
 
-    */
-  
     return 0;
 }

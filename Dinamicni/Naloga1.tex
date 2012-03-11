@@ -1,0 +1,41 @@
+\documentclass[a4paper,10pt,landscape]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{graphicx}
+\usepackage[left=1cm,right=1cm,top=0cm,bottom=0cm]{geometry}
+\usepackage{subfloat}
+\usepackage{subfigure}
+
+%opening
+\title{}
+\author{}
+
+\newcommand{\sliki}[1]{
+  \input{g_sled_#1}
+  \input{g_faz_#1} \\
+}
+
+\newcommand{\portret}[1]{
+  \includegraphics[height=.4\textheight]{g_potrtret_#1}
+}
+
+\begin{document}
+\.\\
+\begin{center}
+\sliki{1}
+\sliki{2}
+\sliki{3}
+\sliki{4}
+\end{center}
+
+\.\\
+\begin{figure}[!h]
+ \centering
+ \subfigure[$k = 0.1$]{\includegraphics[height=.4\textheight]{g_potrtret_1}} \quad
+ \subfigure[$k = 1$]{\includegraphics[height=.4\textheight]{g_potrtret_10}} \quad
+ \subfigure[$k = 3$]{\includegraphics[height=.4\textheight]{g_potrtret_30}} \\
+ \subfigure[$k = 10$]{\includegraphics[height=.4\textheight]{g_potrtret_100}} \quad
+ \subfigure[$k = 30$]{\includegraphics[height=.4\textheight]{g_potrtret_300}} \quad
+ \subfigure[$k = 100$]{\includegraphics[height=.4\textheight]{g_potrtret_1000}}
+\end{figure}
+
+\end{document}
