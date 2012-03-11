@@ -1,4 +1,5 @@
 set terminal epslatex color solid
+set palette defined ('gray0' 'blue', 'gray100' 'red')
 
 set xlabel "$t$"
 set ylabel "$q$"
@@ -13,9 +14,9 @@ set title "$k = 0.5, q_0 = 0.5, p_0 = 0.5$"
 set output "g_sled_2.tex"
 plot "g_sled_5_5_5.dat" u 1:2:4 with lines palette notitle
 
-set title "$k = 1, q_0 = 0.5, p_0 = 0$"
+set title "$k = 0.5, q_0 = 0.5, p_0 = 0$"
 set output "g_sled_3.tex"
-plot "g_sled_10_5_0.dat" u 1:2:4 with lines palette notitle
+plot "g_sled_5_5_0.dat" u 1:2:4 with lines palette notitle
 
 set title "$k = 10, q_0 = 0.5, p_0 = 0$"
 set output "g_sled_4.tex"
@@ -32,9 +33,9 @@ set title "$k = 0.5, q_0 = 0.5, p_0 = 0.5$"
 set output "g_faz_2.tex"
 plot "g_sled_5_5_5.dat" u 2:3:4 with lines palette notitle
 
-set title "$k = 1, q_0 = 0.5, p_0 = 0$"
+set title "$k = 0.5, q_0 = 0.5, p_0 = 0$"
 set output "g_faz_3.tex"
-plot "g_sled_10_5_0.dat" u 2:3:4 with lines palette notitle
+plot "g_sled_5_5_0.dat" u 2:3:4 with lines palette notitle
 
 set title "$k = 10, q_0 = 0.5, p_0 = 0$"
 set output "g_faz_4.tex"

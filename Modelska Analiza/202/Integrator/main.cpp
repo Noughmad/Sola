@@ -203,11 +203,11 @@ void sled(double k, double q, double p, const QString& fileName)
 
 int main(int argc, char **argv) {
     portret(0.1, "g_potrtret_1.png");
+    portret(0.5, "g_potrtret_5.png");
     portret(1.0, "g_potrtret_10.png");
-    portret(3.0, "g_potrtret_30.png");
+    portret(5.0, "g_potrtret_50.png");
     portret(10.0, "g_potrtret_100.png");
     portret(30.0, "g_potrtret_300.png");
-    portret(100.0, "g_potrtret_1000.png");
   
     sled(1.0, 0.5, 1.0, "g_sled_10_5_10.dat");
     sled(1.0, 0.5, 0.5, "g_sled_10_5_5.dat");
