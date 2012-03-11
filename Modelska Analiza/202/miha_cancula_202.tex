@@ -1,0 +1,163 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[unicode=true]{hyperref}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage{float}
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+
+\title{Navadne diferencialne ena\v cbe: \\ Za\v cetni problem}
+\author{Miha \v Can\v cula}
+\begin{document}
+
+\maketitle
+
+\section{Struktura programa}
+
+Orodje za re"sevanje poljubnega sistema navadnih diferencialnih ena"cb sem napisal kot programsko knji"znico v jeziku \texttt{C++}. Podobno strukturo, kot smo jo omenjali na predavanjih, "ze vsebuje knji"znica \texttt{GSL}, zato sem uporabil njene element. Za re"sevanje sistema ena"cb potrebujemo:
+
+\begin{itemize}
+ \item Sistem ena"cb v obliki funkcije, ki iz trenutnega stanja izra"cuna odvod
+ \item Metodo, ki izvede en korak (\texttt{gsl\_odeiv2\_evolve})
+ \item Algoritem, ki dinami"cno prilagaja velikost koraka (\texttt{gsl\_odeiv2\_control})
+ \item Uporabni"ski vmesnik, ki dejansko izra"cuna re"sitev (\texttt{gsl\_odeiv2\_evolve\_apply})
+\end{itemize}
+
+Za izvajanje korakov sem uporabil vgrajeno funkcijo, ki uporablja metodo Runge-Kutta 4, sistem ena"cb in prilagajanje velikosti koraka pa sem implementiral sam. 
+
+Nadzorni mehanizem je deloval tako, da "ce je bila razlika med enim korakom dol"zine $h$ in dvema korakoma dol"zine $h/2$ ve"cja od $\eps$, sem korak prepolovil in preizkus ponovil z manj"sim korakom. Po drugi strani pa sem korak podvojil, "ce je bila razlika med dvema korakoma dol"zine $h$ in enim dol"zine $2h$ manj"sa od $\eps$. To razliko sem dolo"cil kot najve"cje relativno odstopanje ene izmed "stirih komponent re"sitve. 
+
+Primerjal sem tako hitrost kot natan"cnost ra"cunanja za razli"cne vrednosti $\eps$. 
+
+\section{Preverjanje}
+
+Za preverjanje delovanja programa sem izra"cunal gibanje planeta po tirnici okrog sonca. To je znan problem, za katerega vemo, da se energija in vrtilna koli"cina planeta ohranjata, poleg tega pa poznamo celo analiti"cno re"sitev za poljubne za"cetne pogoje. 
+
+Poljubno stanje sistem sem zapisal s "stirim brezdimenzijskimi spremenljivkami ($x$ in $y$ kot komponenti polo"zaja in $u$ in $v$ kot komponenti hitrosti) in "casom. Ena"cbo gibanja sem za te spremenljivke zapisal kot
+
+\begin{align}
+ \dot x &= u \\
+ \dot y &= v \\
+ \dot u &= -x / (\sqrt{x^2 + y^2})^3 \\
+ \dot v &= -y / (\sqrt{x^2 + y^2})^3 \\
+\end{align}
+
+Energija in vrtilna koli"cina planeta se v tem zapisu glasita
+
+\begin{align}
+ E &= \frac{u^2 + v^2}{2} + \frac{1}{\sqrt{x^2 + y^2}} \\
+ \Gamma &= xv - yu
+\end{align}
+
+Simulacijo sem vedno za"cel z za"cetnimi pogoji $x=1$, $y=0$, $u=0$. Preostali za"cetni pogoj, ki pove hitrost planeta v smeri $y$, pa sem spreminjal, saj je od njega odvisna oblika orbite. Ra"cun sem vsakih izvedel za interval $t\in[0,200]$, kar ustreza pribli"zno 30 revolucijam planeta. 
+
+Rezultati ka"zejo, da je napaka metode $\sigma$ poten"cno odvisna od merila za natan"cnost koraka $\eps$
+
+\begin{align}
+ \sigma &= A \cdot \eps^\mu
+\end{align}
+
+Konstanti $A$ in $\mu$ sta seveda odvisni od tega, kako definiramo $\sigma$, torej napako katere koli"cine merimo. Metodo sem preveril s "stirimi kriteriji in za vsakega izra"cunal koeficient $\mu$. 
+
+\subsection{Energija in vrtilna koli"cina}
+
+Najprej sem za vsako simulacijo izra"cunal najve"cje odstopanje od za"cetnih vrednosti. Preizkus sem izvedel z razli"cnimi za"cetnimi pogoji, ampak najbolj zanimiv je tisti, kjer planet prileti v neposredno bli"zino sonca, torej pri nizki za"cetni hitrosti. Rezultati prezkusa z $u(0) = 0,1$ so na sliki~\ref{fig:test-napake}. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_test_napake}
+ \caption{Odstopanja izra"cunanih koli"cin, ki bi se morale ohranjati}
+ \label{fig:test-napake}
+\end{figure}
+
+Vidimo, da je relativna napaka obeh koli"cin pribli"zno linearno odvisna od najve"cje dovoljene napake spremenljivk $\eps$, saj je $\mu$ blizu 1. "Ce torej zahtevamo manj"so napako posameznega koraka, bomo dosegli za enak faktor manj"so napako obeh konstant gibanja. 
+
+\subsection{Obhodni "cas in natan"cnost povratka}
+
+Pri kro"znem tiru, ki ga dobimo pri pogoju $u(0) = 1$, lahko primerjamo dobljeni obhodni "cas. Analiti"cen ra"cun z izbranimi brezdimenzijskimi spremenljivkami napove obhodni "cas $2\pi$. 
+
+
+\begin{figure}[H]
+ \centering
+ \input{g_test_cas}
+ \caption{Odstopanje obhodnega "casa od napovedi}
+ \label{fig:test-cas}
+\end{figure}
+
+Za tir v obliki male elipse pa lahko napovemo, da bodo vsi ekstremi oddaljenosti od sonca $r$ na osi $x$. Napako povratka lahko vrednotimo kar kot najve"cjo absolutno vrednost koordinate $y$ 
+
+\begin{figure}[H]
+ \centering
+ \input{g_test_povratek}
+ \caption{Odstopanje $y$ koordinate ekstremov radija}
+ \label{fig:test-povratek}
+\end{figure}
+
+V obeh primeri je $\mu$ ob"cutno manj"si od 1, nekje med "cetrtino in petino. "Ce "zelimo razpoloviti napako obhodnega "casa ali polo"zaja perihelija, moramo $\eps$ zmanj"sati za faktor 20. 
+
+\subsection{Hitrost}
+
+Odvisnost napak od koli"cine $\eps$ nam samo po sebi ne pove dosti o uporabnosti algoritma, "ce ne poznamo tudi njegove "casovne zahtevnosti. Neposredne odvisnost med "casom ra"cunanja in $\eps$ ne poznamo, lahko pa pre"stejemo "stevilo korakov, potrebnih za doseg dolo"cene natan"cnosti. "Ce uporabimo prevzetek, da je "cas ra"cunanja pogojen predvsem s "stevilom evaluacij funkcije, ta pa je sorazmerna s "stevilom korakov, je dobro merilo za hitrost algoritma kar "stevilo narejenih korakov. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_test_hitrost}
+ \caption{Odvisnost "stevila korakov od zahtevane natan"cnosti}
+ \label{fig:test-hitrost}
+\end{figure}
+
+Po pri"cakovanju ra"cun elipti"cne orbite pri isti natan"cnosti zahteva ve"c korakov, saj zaradi bli"zini sonca postane sila na planet ve"cja. Odvisnost "stevila korakov od $\eps$ pa je v obeh primerih enaka $\mu = 0,2$. 
+
+Pomemben podatek je, da "stevilo korakov nara"s"ca po"casneje kot padajo vse merjene ra"cunske napake. Podvojitev "stevila korakov (in s tem "casa ra"cunanja) nam torej prinese ve"c kot dvakratno izbolj"sanje natan"cnosti vseh "stirih merjenih koli"cin. 
+
+\newpage
+\section{Mimolet zvezde}
+
+Z istim algoritmom sem obravnaval tudi trk planetarnega sistema z zunanjo zvezdo. Vrtenje planeta sem usmeril tako, da se ujema s smerjo prihajajo"ce zvezde. 
+
+Sre"canje sem simuliral dlje "casa kot pi"se v navodili, saj sem na ta na"cin la"zje preveril, ali druga zvezda ujame planet ali planet odleti stran od obeh zvezd. Na za"cetku je bila zvezda od sonca oddaljena 20 astronomskih enot, na koncu pa 40. Relativno natan"cnost koraka $\eps$ sem postavil na $10^{-14}$, tako da je simulacijo "se vedna trajala manj kot minuto. 
+
+Kon"cni rezultat tak"snega sre"canja je ena izmed naslednjih mo"znosti:
+
+\begin{enumerate}
+ \item Planet se naprej kro"zi okrog sonca, le da je sedaj njegova orbita druga"cna. To je najbolj pogost pojav. 
+ \item Planet prileti tako blizu druge zvezde, da ga odnese v daljavo. 
+ \item Druga zvezda ujame planet, tako da sedaj kro"zi okrog nje. 
+\end{enumerate}
+
+Drugi in tretji primer so zgodita, "ce je ob mimoletu druge zvezde planet na isti strani, tako da je sila med njima najmo"cnej"sa. V koordinatnem sistemu, kot smo ga vpeljali pri predavanjih, je to takrat, ko je kot $\varphi$ blizu 0. 
+
+Kon"cno stanje lahko obravnavamo tudi bolj kvantitativno. Za razli"cne $\varphi$ sem izra"cunal kak"sno energijo ima planet na koncu glede na obe zvezdi. "Ce je kak"sna izmed teh dveh energij negativna, je planet ujet v njeno gravitacijsko polje. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_energije}
+ \caption{Skupna energija planeta po trku}
+ \label{fig:energije}
+\end{figure}
+
+V nekaterih primerih je energija zelo velika, dopu"s"cati pa moramo tudi mo"znost, da je negativno, zato sem za prikaz narisal njen inverzni tangens. Vidimo, da planet ostane v orbiti svojega sonca, "ce je $\phi$ med 70 in 200 stopinjami, v ostalih primerih pa pobegne v vesolje. Mo"znost, da kon"ca v orbiti druge zvezde je zelo majhna, to se zgodi le na ozkem intervalu, ko je $\phi$ okrog 50 stopinjami. 
+
+Predvsem v energiji glede na drugo zvezdo opazimo mo"cna nihanja tudi pri majhni spremembi kota, kar lahko pripi"semo numeri"cnim napakam algoritma. Pri majhnih kotih planet prileti zelo blizu zvezde, kar je najverjetneje razlog za zelo visoke izhodne energije v tistem delu. Vseeno pa se dobro vidi interval, kjer se planet ujame v zvezdino gravitacijsko polje. 
+
+Za razli"cne kote $\varphi$ sem naredil animacijo, ki prikazuje gibanje vseh treh teles. Poro"cilu prilagam po eno animacijo vsakega izmed treh primerov. Tri datoteke (\texttt{odleti}, \texttt{ujame} in \texttt{nic}) pripadajo po vrsti kotom 40, 51 in 115$^\circ$. Ker sem "zelel prikazati "cim dalj"se obdobje, razmerje med vi"sino in "sirino slike ni pravo, zato orbite izgledajo pokvarjene. Pri predstavi pomaga podatek, da se planet na za"cetku giblje po kro"znici. 
+
+ 
+\end{document}
