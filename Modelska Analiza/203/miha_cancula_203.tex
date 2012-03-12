@@ -1,0 +1,63 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[unicode=true]{hyperref}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage{float}
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\newcommand{\dd}{\mathrm{d}}
+
+\newcommand{\parcialno}[2]{
+  \frac{\partial #1}{\partial #2}
+}
+\newcommand{\parcdva}[2]{
+  \frac{\partial^2 #1}{\partial #2 ^2}
+}
+\newcommand{\lag}{\mathcal{L}}
+
+\title{Navadne diferencialne ena\v cbe: \\ Robni problem}
+\author{Miha \v Can\v cula}
+\begin{document}
+
+\maketitle
+
+\section{Napeta vrv}
+
+\section{Kristal}
+
+\subsection{Gibalna ena"cba}
+
+Ker imam podan potencial $U(x,y)$, lahko zapi"semo Lagran"zijan problema kot
+
+\begin{align}
+ \lag(x,y,u,v) &= \frac{1}{2} \left( u^2 + v^2 \right) - \frac{1}{2}\ln \left( \sin^2 \pi x + \sin^2 \pi y\right)
+\end{align}
+
+Spremenljivki $u$ in $v$ sta brezdimenzijska impulza v smereh $x$ in $y$, ki sta "ze reskalirana z maso in nabojem delca. "Casovna odvoda koordinat $x$ in $x$ sta kar impulza, "casovna odvoda impulzov pa izrazimo iz Euler-Lagrangevih ena"cb za $\lag$. 
+\begin{align}
+ \dot{x} &= u \\
+ \dot{y} &= v \\
+ \dot{u} &= \pi \frac{\sin \pi x \cos \pi x}{\sin^2 \pi x + \sin^2 \pi y} \\
+ \dot{v} &= \pi \frac{\sin \pi y \cos \pi y}{\sin^2 \pi x + \sin^2 \pi y} 
+\end{align}
+
+
+ 
+\end{document}
