@@ -150,9 +150,9 @@ void portret(double k, const QString& fileName)
       y[1] = p;
       t = 0.0;
       double y[] = {q, p};
-      while (t < 10.0)
+      while (t < 100.0)
       {
-        int status = gsl_odeiv2_driver_apply_fixed_step(driver, &t, 1e-3, 1, y);
+        int status = gsl_odeiv2_driver_apply_fixed_step(driver, &t, 1e-3, 1000, y);
         if (status != GSL_SUCCESS)
         {
           qDebug() << t << gsl_strerror(status);
@@ -162,9 +162,9 @@ void portret(double k, const QString& fileName)
         double pp = y[1];
         omeji(&qq, &pp);
         uchar& pix = image.scanLine( qBound<int>(0, (5+pp) * 80.0, 799) )[ qBound<int>(0, qq * 800.0, 799) ];
-        if (pix > 0)
+        if (pix > 100)
         {
-          --pix;
+          pix -= 100;
         }
       }
     }

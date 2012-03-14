@@ -1,4 +1,4 @@
-\documentclass[a4paper,10pt]{article}
+\documentclass[a4paper,12pt]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[slovene]{babel}
@@ -15,7 +15,7 @@
 \usepackage[version=3]{mhchem}
 \usepackage{wrapfig}
 \usepackage{comment}
-\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
 
 
 %opening
@@ -46,6 +46,9 @@ Oddelek za fiziko \\[2cm]
 \vfill
 
 \begin{abstract}
+
+V hidrodinamiki lahko najdemo razli"cne pojave, kjer je tok teko"cine nestabilen. Nekateri izmed teh pojavov nastopajo pri gibanju teko"cine v tanki plasti, kjer lahko za poenostavitev ena"cb uporabimo lubrikacijski pribli"zek. Primere lahko najdemo v vsakdanjem "zivljenju, na primer tok teko"cine po nagnjeni povr"sini ali razpad opne milni"cnega mehur"cka. Z uporabo primernih ra"cunskim modelov lahko napovemo stabilnost tak"snih sistemov. 
+
 
 \end{abstract}
 
@@ -135,7 +138,9 @@ Na tanki plasti teko"cine obstajata dve razlicni dol"zinski skali, od katerih so
   \item Odvod poljubne spremenljivke po $z$ je dosti ve"cji od odvoda v ravnini. 
 \end{enumerate}
 
-"Ce nas odvisnost hitrosti od vi"sine $z$ ne zanima, lahko hitrost povpre"cimo po debelini filma
+Pri ra"cunih lahko nekatere izmed "clenov v Navier-Stokesovih ena"cbah zanemarimo. Ker pa imamo sedaj smer, v kateri se teko"cina obna"sa druga"ce kot v ostalih, imamo namesto ene vektor"ske ena"cbe razli"cni ena"cbi v smereh $z$ in $xy$. 
+
+Poleg izpu"s"canja "clenov v ena"cbi pa nam tanka plast teko"cine omogo"ca "se eno spremembo. "Ce nas odvisnost hitrosti od vi"sine $z$ ne zanima, lahko hitrost povpre"cimo po debelini filma
 
 \begin{align}
  \vec u(x,y) &=  \frac{1}{h}\int_0^h \vec u(x,y,z)\dd z
@@ -147,7 +152,7 @@ kjer je $h = h(x,y)$ debelina plasti na mestu $(x,y)$. Ohranitev mase da zvezo m
   \frac{\partial h}{\partial t} + \nabla\cdot(h\vec u) = 0
 \end{align}
 
-Namesto "stirih skalarnih koli"cin $\vec u$ in $p$ v poenostavljeni ena"cbi nastopa le ena koli"cina $h$. Za ugotavljanje stabilnosti tanke plasti teko"cine je dovolj re"sevati ena"cbo z eno samo skalarno spremenljivko. 
+s "cimer lahko Navier-Stokesove ena"cbe zapi"semo za spremenljivko $h(x,y,t)$. Namesto "stirih skalarnih koli"cin $\vec u$ in $p$ v poenostavljeni ena"cbi nastopa le ena koli"cina, kar olaj"sa re"sevanje. S tem korakom seveda izgubimo del informacije o re"sitvi, saj iz re"sitve za $h$ ne moremo rekonstruirati hitrostnega profila v smeri $z$. Za ugotavljanje stabilnosti tanke plasti teko"cine pa je dovolj re"sevati ena"cbo z eno samo skalarno spremenljivko. 
 
 \section{Teko"cina na klancu}
 
@@ -190,11 +195,19 @@ Ker obravnavamo tanke filme, lahko privzamemo, da je debelina $h$ manj"sa od kat
 \begin{figure}[h]
 \centering
  \includegraphics[width=.8\textwidth]{./Slike/film-skica}
-\caption{Skica teko"cine v dveh dimenzijah. Viden je greben tik za fronto teko"cine in pa zo"zitev dale"c za fronto, ki je pri ra"cunih ne bomo upo"stevali}
+\caption{Skica teko"cine na klancu v dveh dimenzijah. Viden je greben tik za fronto teko"cine in pa zo"zitev dale"c za fronto. Pri ra"cunih raje privzamemo, da teko"cina sproti priteka z zgornjega roba klan"cine, tako da zo"zitve ni treba upo"stevati}
 \label{fig:film-skica}
 \end{figure}
 
-Zgornja ena"cba je simetri"cna glede na poljuben premik v kraju in "casu, saj te koli"cine v njej ne nastopajo eksplicitno. Za"cetno stanje, kot je prikazano na sliki~\ref{fig:film-skica} pa podaja odvisnosti od $x$ in $z$. Iz postavitve problema sklepamo, da se bo "celo teko"cine s "casom premikalo po klancu navzdol, torej bo profil odvisen od "casa. Edina simetrija, ki ji zado"s"cata tako za"cetno stanje kot gibalna ena"cba je torej translacijska v smeri $y$. 
+Zgornja ena"cba je simetri"cna glede na poljuben premik v kraju in "casu, saj te koli"cine v njej ne nastopajo eksplicitno. Za"cetno stanje, kot je prikazano na sliki~\ref{fig:film-skica} pa podaja odvisnost debeline plasti od $x$ in $z$. Iz postavitve problema sklepamo, da se bo "celo teko"cine s "casom premikalo po klancu navzdol, torej bo profil odvisen od "casa. Edina simetrija, ki ji zado"s"cata tako za"cetno stanje kot gibalna ena"cba je torej translacijska v smeri $y$. 
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[width=.5\textwidth]{./Slike/film-zacetni}
+ \caption{Za"cetni pogoj za dolo"canje toka teko"cine po klancu. }
+ \label{fig:film-zacetni}
+\end{figure}
+
 
 Da najdemo osnovno re"sitev, najprej privzamemo, da ima re"sitev enako simetrijo kot sama ena"cba. Postavimo se v koordinatni sistem kot na sliki~\ref{fig:film-skica}. Klanec, po katerem te"ce teko"cina, ima translacijsko simetrijo v smeri $y$, zato za osnovno re"sitev velja $h_y = 0$. Za la"zje re"sevanje preidemo "se na brezdimenzijske koli"cine. V ena"cbi ostane le "se en parameter $D(\alpha)$, ki podaja razmerje med vplivom viskoznosti in povr"sinske napetosti, brezdimenzijsko dol"zino klanca v smeri $x$ pa ozna"cimo z $L$. Ena"cba za brezdimenzijske koli"cine, ki predpostavlja simetrijo in zato opisuje osnovno re"sitev problema, se glasi
 
@@ -203,7 +216,7 @@ Da najdemo osnovno re"sitev, najprej privzamemo, da ima re"sitev enako simetrijo
  \odv{h} &= - \left[h^3 h_{xxx}\right]_x + D(\alpha) \left[h^3 h_x\right]_x - \left(h^3\right)_x
 \end{align}
 
-Pred za"cetkom re"sevanja moramo dolo"citi tudi za"cetne in robne pogoje. Ena"cba je "cetrtega reda v $x$, zato potrebujemo "stiri robne pogoje. "Ce za"cnemo s podobnim profilom kot na sliki~\ref{fig:film-skica}, le da se rep nadaljuje do zgornjega roba klan"cine, velja $h(0, t) = 1$ po definiciji brezdimenzijske debeline, pred fronto pa je plast mnogo tanj"sa, $h(L, t) = b \ll 1$. Obe enakosti ne veljata le na robu obmo"cja, ampak tudi v njegovi bli"zini, zato za ostala dva robna pogoja vzamemo $h_x(0,t) = h_x(L,t) = 0$. Potrebujemo "se za"cetni pogoj, ki je kar profil teko"cine ob "casu $t=0$. Naravna izbira je krivulja, ki povezuje dva ravna odseka z gladkim vmesnim delom. 
+Pred za"cetkom re"sevanja moramo dolo"citi tudi za"cetne in robne pogoje. Ena"cba je "cetrtega reda v $x$, zato potrebujemo "stiri robne pogoje in profil teko"cine ob "casu $t=0$. Za za"cetno stanje si izberimo profil, kot je na sliki~\ref{fig:film-zacetni}. Pri tak"sni izbiri velja $h(0, t) = 1$ po definiciji brezdimenzijske debeline, pred fronto pa je plast mnogo tanj"sa, $h(L, t) = b \ll 1$. Velikost domene $L$ mora biti ve"cja od razdalje, ki jo bo prepotovalo "celo teko"cine. Oba robna pogoja ne veljata le na robu obmo"cja, ampak tudi v njegovi bli"zini, zato za ostala dva robna pogoja vzamemo $h_x(0,t) = h_x(L,t) = 0$. 
 
 Zgornja ena"cba je "se vedno prezahtevna, da bi jo re"sevali analiti"cno, zato pose"zemo po numeri"cnih metodah. Re"sitev ena"cbe (\ref{eq:ns-film-sim}) lahko dobimo z uporabo metode na osnovi kon"cnih diferenc. 
 
@@ -315,7 +328,6 @@ Na tej sliki je prikazan le zlom simetrije v smeri potovanja opne. Prikaz je dvo
 
 Dobljeno hitrost in velikost kapljic lahko preverimo, saj se morata ohranjati tako skupna energija kot tudi celotna prostornina. Skupna prostornina opne in vseh kapljic je izra"cunana na sliki~\ref{fig:mehurcek-rez-1}, med tekom simulacije pa se spremeni za manj kot en promil. Podoben izra"cun lahko naredimo tudi za skupno energijo kapljic in opne.
 
-\newpage
 \subsection{Viskozna opna}
 \begin{figure}[h]
   \centering
@@ -360,13 +372,23 @@ S slike~\ref{fig:zlebici-slika} lahko vidimo, da "zlebi"ci tvorijo podobno perio
 
 Proces tvorbe "zlebi"cev je bolj zapleten kot zgoraj obravnavani primeri. Namesto znane koli"cine vode imamo sedaj neenakomeren de"z, pa tudi pobo"cje ni nujno ravno in homogeno. Ra"cune ote"zi raztapljanje apnenca v vodi, ki je precej razvejan kemijski proces. Navier-Stokesove ena"cbe so zato sklopljene s kemijskimi ena"cbami za raztapljanje. De"z pada v obliki kapljic, ki na mesto padca prinesejo vodo brez raztopljenega apnenca, hkrati pa zmotijo tok teko"cine in na skalno podlago delujejo z neko silo. Vpliva de"znih kapljic ne znamo natan"cno opisati, zato moramo uporabiti poenostavitve. Modeliranje nastanka de"znih "zlebi"cev je zato zelo zahtevno. 
 
+\begin{figure}[h]
+ \centering
+ \subfigure{\includegraphics[height=.7\textwidth]{./Slike/zlebici-profil}}
+ \subfigure{\includegraphics[height=.7\textwidth]{./Slike/zlebici-slika}}
+ \caption{Zabele"zeni pre"cni profili "zlebi"cev(levo, \cite{gams}) in pobo"cje, prekrito z "zlebi"ci (desno, \cite{perne})}
+\end{figure}
+
+
 Apnenec je slabo topen v vodi, zato je naravni proces nastajanja "zlebi"cev prepo"casen, da bi lahko z njimi izvajali fizikalne eksperimente. Kljub temu pa se ga da pospe"siti, "ce pove"camo koncentracijo kisline v vodi, namesto kamnine pa uporabimo bolje topni mavec. Pomagamo si lahko tudi s "stevilnimi primeri "zlebi"cev najdenih v naravi. Izvedeni poskusi ka"zejo, da "zlebi"ci nastanejo na nagnjeni kamniti povr"sini pri enakomernem de"zju v obliki vodnih kapljic.
 
 Nastajanje "zlebi"cev je neposredna posledica nestabilnosti, le da je motnja v obliki povr"sine, ne pa v profilu toka. "Ce je pobo"cje na za"cetku ravno in se bo majhna motnja s "casom poglabljala, potem bodo s"casoma nastali globlji "zlebi"ci. Matija Perne je v svojem diplomskem delu izvedel simulacijo, s katero je posku"sal pojasniti to nestabilnost. Upo"steval je, da je tok vode po pobo"cju stacionaren, saj je "casovna skala raztapljanja povr"sja mnogo dalj"sa od "casovne skale pojavov v vodnem toku. Zanemaril je tudi vpliv padajo"cih de"znih kapljic po celotnem pobo"cju. Pri teh predpostavkah simulacija da rezultat, pri katerem je pobo"cje stabilno, torej "zlebi"ci s "casom postanejo vedno bolj plitvi. Tak"sen rezultat nasprotuje tako opa"zanjem iz narave kot tudi ekperimentom in je verjetno posledica poenostavitve, kjer zanemarimo vpliv padajo"cega de"zja na raztapljanje kamnine~\cite{perne}. 
 
 \section{Zaklju"cek}
 
-Spoznali smo nekaj primerov hidrodinamskih pojavov iz vsakdanjega "zivljenja, kjer lahko opazimo nestabilnosti. Na za"cetku imamo ravno tanko plast teko"cine, ki je sama po sebi re"sitev ena"cbe gibanja in bi brez motenj s "casom ostala nespremenjena. Stabilnost sistema pa ovrednotimo tako, da opazujemo reakcijo na majhne motnje. V seminarju so opisani trije primeri hidrodinamskih sistemov, v katerih poljubno majhna motnja s "casom nara"s"ca, tako da opazimo makroskopsko odstopanje od stacionarnega stanja. Vsi ti sistemi torej ka"zejo neko nestabilnost. 
+Spoznali smo nekaj primerov pojavov iz vsakdanjega "zivljenja, kjer lahko v toku teko"cine v tanki plasti opazimo nestabilnosti. V seminarju so opisani trije primeri hidrodinamskih sistemov, v katerih poljubno majhna motnja s "casom nara"s"ca, tako da opazimo makroskopsko odstopanje od stacionarnega stanja. Vsi ti sistemi torej ka"zejo neko nestabilnost. 
+
+Pri opisu naravnih pojavov s fizikalnim modelom naletimo na te"zave, saj ne moremo upo"stevati vseh podrobnosti. Nekaterih sploh ne poznamo, druge pa na"crtno zanemarimo, da bo na"s model splo"snej"si in enostavnej"si za re"sevanje. Uporabiti moramo pribli"zke in poenostavitve, kot je na primer lubrikacijski pribli"zek. Zaradi teh poenostavitev izgubimo del informacije o re"sitvi, "se vedno pa lahko napovedujemo stabilnost ali nestabilnost sistema. V nekaterih primerih, kot je tvorba de"znih "zlebi"cih na kra"skem povr"sju, niti ne poznamo vseh detajlov, ki povzro"cijo nestabilnost povr"sja. 
 
 \begin{thebibliography}{3}
   \bibitem{drazin} P. G. Drazin, \textit{Introduction to hydrodynamic stability}, Cambridge University Press (2002)
