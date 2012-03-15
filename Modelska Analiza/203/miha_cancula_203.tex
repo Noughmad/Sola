@@ -40,7 +40,51 @@
 
 \section{Napeta vrv}
 
+Re"sevani sistem ima dva prosta parametra: $\beta$, ki podaja razmerje med kotno hitrostjo in te"zo vrvi, in razdaljo med pritrjenima to"ckama $y_0$. 
+
+Fizikalna predstava nam pove, da ima vrv, ki jo pritrdimo na obeh koncih na vrte"co se os vsaj eno stabilno obliko. Ena izmed mo"znih re"sitev je trivialna, kjer vrv visi navpi"cno ob palici in ne "cuti centrifugalne sile. Ta re"sitev je mo"zna in stacionarna pri vseh vrednostih $\beta$ in $y_0$, ni pa vedno stabilna. V izbranem koordinatnem sistem to ustreza $\alpha(0) = \pi/2$, zato sem opazoval kam konvergira metoda, "ce za"cnemo z malo manj"sim kotom. Stabilnost v tem primeru dolo"ca le konvergenco izbrane metode, ne pa fizikalne stabilnosti, saj metoda razen v ravnovesju nikakor ne upo"steva sile na vrv oz. njene energije. 
+
+Vse mo"zne re"sitve sem na"sel s strelsko metodo. Prosta parametra, katerih vrednosti i"s"cemo, sta napetost in naklon vrvi v za"cetni to"cki. 
+
+\subsection{Rezultati}
+
+Najprej sem preizkusil stabilnost prostega visenja vrvi. Intuitivno sem domneval, da je pri majhnih $\beta$ vise"ca lega edina mo"zna re"sitev, pri dovolj hitrem vrtenju pa se pojavi tudi stabilna lega, ko je vrv napeta v obliki "crke D. To napoved sem preveril, tako da sem za za"cetno vrednost kota $\alpha$ najprej vzel $\alpha=-\pi/2$, kar ustreza navpi"cni legi vrvi. 
+
+"Ce za"cnemo s to"cno vrednostjo $\alpha = -\pi/2$, potem metoda vedno obstane v vise"ci re"sitvi. Bolj zanimivo je bilo opazovati, kaj se zgodi, "ce za"cnemo blizu tega kota. Na sliki~\ref{fig:vrv-visenje-05} so prikazane najdene re"sitve pri $\alpha(0) = -\pi/2 + 0.2$. Bli"zje navpi"cnega kota tudi pri velikih $\beta$ dobimo le vise"co re"sitev. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_vrv_visenje_05}
+ \caption{Stabilnost navpi"cnega visenja}
+ \label{fig:vrv-visenje-05}
+\end{figure}
+
+Vidimo, da je celotna slika odvisna od parametra $\beta$. Dobimo dve pri"cakovani sliki, vise"co in napeto v obliki "crke D.  Pri hitrej"sem vrtenju pa se pojavi tudi nepri"cakovana re"sitev, kjer vrv visi na obe strani. 
+
+Nazadnje sem uporabil se za"cetni pogoj $\alpha(0)=0$, torej sem pri"cakoval, da bo vrv v spodnjem pritrdi"s"cu pribli"zno vodoravna. S tem sem "zelel najti napeto re"sitev, "ce ta pri dolo"cenih $\beta$ in $y_0$ sploh obstaja. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_vrv_05}
+ \caption{Netrivialna re"sitev, "ce za"cnemo v vodoravni legi}
+ \label{fig:vrv-vodoravna-05}
+\end{figure}
+
+V tem primeru je meja, ko se vrv vrne v navpi"cno stanje, nekje med 2 in 3. Obstajajo torej dolo"cene hitrosti vrtenja, ko imamo dve stabilni stanji. 
+
+Opazimo tudi nefizikalno re"sitev pri $\beta=2$ (zelena "crta), ko se vrv povzpne nad drugo pritrdi"s"ce. 
+
 \section{Kristal}
+
+Opazujemo gibanje delca, ujetega v potencialu, kot je na sliki \ref{fig:potencial}
+
+\begin{figure}[h]
+ \centering
+ \input{g_potencial}
+ \caption{Potencial v eni osnovni celici}
+ \label{fig:potencial}
+\end{figure}
+
 
 \subsection{Gibalna ena"cba}
 
@@ -54,10 +98,97 @@ Spremenljivki $u$ in $v$ sta brezdimenzijska impulza v smereh $x$ in $y$, ki sta
 \begin{align}
  \dot{x} &= u \\
  \dot{y} &= v \\
- \dot{u} &= \pi \frac{\sin \pi x \cos \pi x}{\sin^2 \pi x + \sin^2 \pi y} \\
- \dot{v} &= \pi \frac{\sin \pi y \cos \pi y}{\sin^2 \pi x + \sin^2 \pi y} 
+ \dot{u} &= -\pi \frac{\sin \pi x \cos \pi x}{\sin^2 \pi x + \sin^2 \pi y} \\
+ \dot{v} &= -\pi \frac{\sin \pi y \cos \pi y}{\sin^2 \pi x + \sin^2 \pi y} 
 \end{align}
 
+\subsection{Minimizacija in strelska metoda}
 
+Iskali smo sklenjene orbite za delec, ki se giblje v tak"snem potencialu. Knji"znica \texttt{GSL} ima specializirane metode za iskanje korenov ena"cbe z enakim "stevilom neznank kot ena"cb, zato sem uporabil te. Sklenjena orbita pomeni enakost "stirih skalarnih koli"cin, zato sem dovolil spreminjanje "stirih vhodne parametri so bili "stirje. Trije izmed teh so dolo"cali za"cetni pogoj za integracijo (ker za"cnemo na diagonali ostanejo prosti parametri le trije), "cetrti pa je dolo"cal periodo orbite oz. zgornjo mejo integracije. 
+
+\begin{equation}
+ \vec S\left(\begin{matrix}\tau \\ x_0 \\ u_0 \\ v_0\end{matrix}\right) = \int_0^\tau \vec F(x,y,u,v) \dd t 
+\end{equation}
+
+Zaradi velikega "stevila prostostnih stopenj sem moral funkciji cenilki $\vec S$ dodati nekaj omejitev. 
+
+\begin{enumerate}
+ \item "Ce v integral vstavimo "cas $\tau=0$, bomo o"citno kon"cali v isti to"cki kot smo za"celi, "ceprav temu ne moremo re"ci orbita. Zato sem v primerih s $\tau < 1$ presko"cil integracijo in namesto nje re"sitvi priredil veliko odstopanje. 
+ \item V te"zave zaidemo tudi, "ce sta $u_0$ in $v_0$ obrnjena v isto smer. Tedaj se namre"c orbita delca pribli"za singularnost potenciala, kar povzro"ci nenatan"cnosti v ra"cunanju. Temu sem se izognil na podoben na"cin, tako da sem primerom z $u_0 \cdot v_0 > 0$ priredil veliko odstopanje od iskane vrednosti. 
+ \item Pri dovolj veliki oddaljenosti od sre"di"s"ca potenciala ali dovolj veliki hitrosti se zgodi, da delec odleti iz osnovne celice. V tem primeru sem integracijo prekinil, cenilki pa spet dodal neko dodatno vrednost. 
+\end{enumerate}
+
+Ker metoda pri iskanju re"sitve uporablja diskretno aproksimacijo za Jacobijevo matriko, sem poskrbel, da so bili pribitki tako izbrani, da je ve"cje odstopanje od iskanega intervala pomenilo ve"cjo napako. 
+
+Ra"cun sem izvedel pri razli"cnih vrednosti $x_0$, $u_0$ in $v_0$ med 0 in $\frac{1}{2}$. Pri vsaki kombinaciji vhodnih podatkov sem opazoval, h kateri to"cki konvergira metoda. 
+
+\subsection{Rezultati}
+
+Program sem pognal z naborom ra"zli"cnih za"cetnih pogojev, tako da sem iskal re"sitev s spreminjanem $x_0$, $u_0$ in $v_0$. Za"cetni "cas integracije orbite sem vzel majhno, da bi na"sel predvsem orbite s kratkimi periodami. Na dalj"sih periodah se napake integracije bolj izrazijo, zlasti ker grejo tak"sne ve"ckrat v bli"zino singularnosti potenciala.
+
+Uporabil sem pribli"zno 1000 razli"cnih kombinacij za"cetnih pogojev, program je na"sel stabilno orbito v 300 primerih, pri tem pa se ve"cina orbit ponavlja. Prvih 20 najdenih orbit, ki ustrezajo za"cetom v bli"zini sredi"s"ca osnovne celice (majhnim $x_0$), je prikazanih na sliki~\ref{fig:orbite-ena}.
+
+\begin{figure}[H]
+ \centering
+ \input{g_orbita_ena}
+ \caption{Prvih 20 najdenih sklenjenih orbit}
+ \label{fig:orbite-ena}
+\end{figure}
+
+V vseh primerih je $x_0 \approx 0.02$. Pri tej vrednosti dobimo mno"zico orbit, ki so med seboj le malo zasukane in raztegnjene. Razlike med njimi so morda tudi posledica numeri"cnih napak med integracijo. V neposredni bli"zini singularnosti torej najdemo predvsem triperesne orbite. 
+
+"Ce se bolj oddaljimo od sredi"s"ca se pojavijo tudi stabilne kro"zne orbite. Na sliki \ref{fig:orbite-dva} je prvih 80 najdenih orbit. Na sliki sta "se vedno le dve obliki orbit, kro"zne in triperesne. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_orbita_dva}
+ \caption{Prvih 80 najdenih sklenjenih orbite}
+ \label{fig:orbite-dva}
+\end{figure}
+
+Na ve"cji oddaljenosti pol v potencialu nima tak"snega vpliva, zato dobimo ve"cinoma kro"zne orbite. Predvsem pri tistih z veliko oddaljenostjo od "sredi"s"ca pa "ze lahko opazimo odstopanje od okrogle oblike. Tam potencial ni ve"c sredi"s"cno simetri"cen, ampak se pozna kvadratna oblika osnovne celice. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_orbita_tri}
+ \caption{Sklenjene orbite na srednji oddaljenosti}
+ \label{fig:orbite-tri}
+\end{figure}
+
+Ko za"cetno oddaljenost od sredi"s"ca ve"camo, pridemo do orbit na sliki \ref{fig:orbite-stiri}. Zunanje orbite ne ka"zejo ve"c zrcalne simetrije glede na osi $x$ in $y$. Pri teh orbitah je odstopanje potenciala od krogelno simetri"cnega najve"cje, kar se izrazi tudi na obliki orbit. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_orbita_stiri}
+ \caption{Sklenjene orbite z najve"cjim radijem}
+ \label{fig:orbite-stiri}
+\end{figure}
+
+Nazadnje sem pogledal "se orbite s periodo, dalj"so od enega obhoda. V ta namen sem le pove"cal za"cetno vrednost za "cas integracije, ostali parametri so bili enaki. S tak"snim postopkom kot re"sitve dobimo tudi ve"ckratne obhode kraj"sih orbit, ki sem jih na grafu vklju"cil za primerjavo. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_orbite_dolge}
+ \caption{Sklenjene orbite z dolgo periodo in majhnim radijem}
+ \label{fig:orbite-dolge}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \input{g_orbite_dolge_dva}
+ \caption{Sklenjene orbite z dolgo periodo in srednjim radijem}
+ \label{fig:orbite-dolge-dva}
+\end{figure}
+
+Pri majhnih in srednjih radijih se pojavijo orbite v obliki ``ro"zic'', ki imajo najve"ckrat po 10 listov. Ta ve"ckratnih je najverjetneje posledica izbranega za"cetnega "casa integracije. Pri zelo majhnih radijih (slika \ref{fig:orbite-dolge}) pa najdemo tudi orbite z ve"cjim "stevilom ``listov'' (ali perihelijev). Te orbite imajo maksimalno oddaljenost od sredi"s"ca okrog 0.01, kar je manj od tistih s kraj"simi periodami (slika \ref{fig:orbite-ena}). 
+
+\begin{figure}[H]
+ \centering
+ \input{g_orbite_dolge_tri}
+ \caption{Sklenjene orbite z dolgo periodo in velikim radijem}
+ \label{fig:orbite-dolge-tri}
+\end{figure}
+
+Pri najve"cjih radijih dobimo orbite, ki so podobne oblike kot pri kraj"sih periodah, nekje med kro"znicami in kvadrati. Nesimetri"cnost sedaj pride "se bolj do izraza, saj je orbita sestavljena iz dveh ali ve"c neenakih obletov sredi"s"ca. 
  
 \end{document}

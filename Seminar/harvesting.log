@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2012/dev/Arch Linux) (format=pdflatex 2012.1.1)  22 JAN 2012 10:27
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2012/dev/Arch Linux) (format=pdflatex 2012.2.9)  14 MAR 2012 17:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**harvesting.tex
+**harvesting
 (./harvesting.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
@@ -442,6 +442,8 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 32.
 LaTeX Info: Redefining \pageref on input line 32.
 LaTeX Info: Redefining \nameref on input line 32.
+
+(./harvesting.out) (./harvesting.out)
 \@outlinefile=\write3
 \openout3 = `harvesting.out'.
 
@@ -480,7 +482,7 @@ LaTeX Info: Redefining \nameref on input line 32.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<../logo_fmf_uni-lj_sl.pdf, id=4, 220.32242pt x 141.12093pt>
+<../logo_fmf_uni-lj_sl.pdf, id=120, 220.32242pt x 141.12093pt>
 File: ../logo_fmf_uni-lj_sl.pdf Graphic file (type pdf)
 
 <use ../logo_fmf_uni-lj_sl.pdf>
@@ -489,48 +491,76 @@ Package pdftex.def Info: ../logo_fmf_uni-lj_sl.pdf used on input line 35.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <../logo_fmf_uni-lj_sl.pdf>
-]
-No file harvesting.toc.
+] (./harvesting.toc
+LaTeX Font Info:    Try loading font information for U+msa on input line 3.
+
+(/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 3.
+
+(/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+))
 \tf@toc=\write4
 \openout4 = `harvesting.toc'.
 
-[2]
+ [2]
+
+LaTeX Warning: Citation `Burgoine11' on page 3 undefined on input line 61.
+
 Package acronym Info: Label `acro:EH' newly defined as it shall be overridden
 although it is yet undefined on input line 63.
 Package acronym Info: Label `acro:WSN' newly defined as it shall be overridden
 although it is yet undefined on input line 69.
- <./Slike/EH-Block.png, id=41, 502.12593pt x 263.48438pt>
+
+LaTeX Warning: Citation `teg-wsn-ieee' on page 3 undefined on input line 69.
+
+
+LaTeX Warning: Citation `cap-wsn-ieee' on page 3 undefined on input line 69.
+
+<./Slike/EH-Block.png, id=186, 502.12593pt x 263.48438pt>
 File: ./Slike/EH-Block.png Graphic file (type png)
 
 <use ./Slike/EH-Block.png>
 Package pdftex.def Info: ./Slike/EH-Block.png used on input line 73.
 (pdftex.def)             Requested size: 409.71692pt x 215.00522pt.
+
+
+LaTeX Warning: Citation `ti:eh' on page 3 undefined on input line 74.
+
+
+LaTeX Warning: Citation `wiki:eh' on page 3 undefined on input line 78.
+
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 80.
- (/usr/share/texmf-dist/tex/latex/base/omscmr.fd
+(/usr/share/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 80.
 
+
+LaTeX Warning: Citation `cap-wsn-ieee' on page 3 undefined on input line 85.
+
 [3 <./Slike/EH-Block.png>]
-<./Slike/wsn-current-profile.png, id=63, 286.06876pt x 144.54pt>
+<./Slike/wsn-current-profile.png, id=197, 286.06876pt x 144.54pt>
 File: ./Slike/wsn-current-profile.png Graphic file (type png)
 
 <use ./Slike/wsn-current-profile.png>
 Package pdftex.def Info: ./Slike/wsn-current-profile.png used on input line 94.
 
 (pdftex.def)             Requested size: 250.0pt x 126.31778pt.
-LaTeX Font Info:    Try loading font information for U+msa on input line 99.
 
-(/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2009/06/22 v3.00 AMS symbols A
-)
-LaTeX Font Info:    Try loading font information for U+msb on input line 99.
 
-(/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2009/06/22 v3.00 AMS symbols B
-)
-<./Slike/casio-solar-calculator.jpg, id=68, 228.855pt x 361.35pt>
+LaTeX Warning: Citation `cap-wsn-ieee' on page 4 undefined on input line 95.
+
+
+LaTeX Warning: Citation `Salerno10' on page 4 undefined on input line 99.
+
+
+LaTeX Warning: Citation `teg-wsn-ieee' on page 4 undefined on input line 99.
+
+<./Slike/casio-solar-calculator.jpg, id=199, 228.855pt x 361.35pt>
 File: ./Slike/casio-solar-calculator.jpg Graphic file (type jpg)
 
 <use ./Slike/casio-solar-calculator.jpg>
@@ -538,7 +568,7 @@ Package pdftex.def Info: ./Slike/casio-solar-calculator.jpg used on input line
 127.
 (pdftex.def)             Requested size: 114.00117pt x 180.0pt.
 
-<./Slike/ISS-solar.jpg, id=69, 803.0pt x 532.99126pt>
+<./Slike/ISS-solar.jpg, id=200, 803.0pt x 532.99126pt>
 File: ./Slike/ISS-solar.jpg Graphic file (type jpg)
 
 <use ./Slike/ISS-solar.jpg>
@@ -546,20 +576,41 @@ Package pdftex.def Info: ./Slike/ISS-solar.jpg used on input line 128.
 (pdftex.def)             Requested size: 271.17847pt x 180.0pt.
 
 
+LaTeX Warning: Citation `wiki:solar-cells' on page 4 undefined on input line 12
+9.
+
+
+LaTeX Warning: Citation `wiki:solar-cells' on page 4 undefined on input line 12
+9.
+
+
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 Package acronym Info: Label `acro:RTG' newly defined as it shall be overridden
 although it is yet undefined on input line 137.
 [4 <./Slike/wsn-current-profile.png>]
-<./Slike/Thevenin_equivalent.png, id=84, 315.54507pt x 140.46844pt>
+
+LaTeX Warning: Citation `wiki:thevenin' on page 5 undefined on input line 145.
+
+<./Slike/Thevenin_equivalent.png, id=208, 315.54507pt x 140.46844pt>
 File: ./Slike/Thevenin_equivalent.png Graphic file (type png)
 
 <use ./Slike/Thevenin_equivalent.png>
 Package pdftex.def Info: ./Slike/Thevenin_equivalent.png used on input line 149
 .
 (pdftex.def)             Requested size: 150.56305pt x 67.02756pt.
- [5 <./Slike/casio-solar-calculator.jpg> <./Slike/ISS-solar.jpg> <./Slike/Theve
-nin_equivalent.png>]
+
+
+LaTeX Warning: Citation `wiki:thevenin' on page 5 undefined on input line 150.
+
+
+LaTeX Warning: Citation `wiki:thevenin' on page 5 undefined on input line 150.
+
+
+LaTeX Warning: Citation `Salerno10' on page 5 undefined on input line 166.
+
+[5 <./Slike/casio-solar-calculator.jpg> <./Slike/ISS-solar.jpg> <./Slike/Theven
+in_equivalent.png>]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 168.
@@ -568,7 +619,11 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 168.
 
-<./Slike/PV-band-diagram.png, id=105, 614.295pt x 514.92375pt>
+
+LaTeX Warning: Citation `wiki:solar-cells' on page 6 undefined on input line 18
+4.
+
+<./Slike/PV-band-diagram.png, id=220, 614.295pt x 514.92375pt>
 File: ./Slike/PV-band-diagram.png Graphic file (type png)
 
 <use ./Slike/PV-band-diagram.png>
@@ -576,53 +631,120 @@ Package pdftex.def Info: ./Slike/PV-band-diagram.png used on input line 188.
 (pdftex.def)             Requested size: 318.66948pt x 267.1176pt.
 
 
+LaTeX Warning: Citation `wiki:solar-cells' on page 6 undefined on input line 18
+9.
+
+
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 (/usr/share/texmf-dist/tex/latex/ucs/data/uni-32.def
 File: uni-32.def 2004/10/17 UCS: Unicode data U+2000..U+20FF
-) [6]
-<./Slike/PV-power-curve.png, id=124, 687.31781pt x 306.39468pt>
+)
+
+LaTeX Warning: Citation `wiki:solar-cells' on page 6 undefined on input line 19
+7.
+
+
+LaTeX Warning: Citation `Burgoine11' on page 6 undefined on input line 199.
+
+
+LaTeX Warning: Citation `solar-mppt-ieee' on page 6 undefined on input line 201
+.
+
+[6] <./Slike/PV-power-curve.png, id=230, 687.31781pt x 306.39468pt>
 File: ./Slike/PV-power-curve.png Graphic file (type png)
 
 <use ./Slike/PV-power-curve.png>
 Package pdftex.def Info: ./Slike/PV-power-curve.png used on input line 204.
 (pdftex.def)             Requested size: 455.24411pt x 202.94109pt.
- [7 <./Slike/PV-band-diagram.png> <./Slike/PV-power-curve.png>]
+
+
+LaTeX Warning: Citation `Burgoine11' on page 7 undefined on input line 205.
+
+
+LaTeX Warning: Citation `Burgoine11' on page 7 undefined on input line 205.
+
+[7 <./Slike/PV-band-diagram.png> <./Slike/PV-power-curve.png>]
 Package acronym Info: Label `acro:TEG' newly defined as it shall be overridden
 although it is yet undefined on input line 218.
- <./Slike/TEG-shema.png, id=138, 345.54094pt x 185.19188pt>
+
+
+LaTeX Warning: Citation `Salerno10' on page 8 undefined on input line 222.
+
+<./Slike/TEG-shema.png, id=239, 345.54094pt x 185.19188pt>
 File: ./Slike/TEG-shema.png Graphic file (type png)
 
 <use ./Slike/TEG-shema.png>
 Package pdftex.def Info: ./Slike/TEG-shema.png used on input line 225.
 (pdftex.def)             Requested size: 186.58405pt x 100.0pt.
 
-<./Slike/TEG-slika.jpg, id=139, 1378.14874pt x 767.86874pt>
+<./Slike/TEG-slika.jpg, id=240, 1378.14874pt x 767.86874pt>
 File: ./Slike/TEG-slika.jpg Graphic file (type jpg)
 
 <use ./Slike/TEG-slika.jpg>
 Package pdftex.def Info: ./Slike/TEG-slika.jpg used on input line 226.
 (pdftex.def)             Requested size: 179.46002pt x 100.0pt.
 
-<./Slike/TEG-couple.png, id=142, 177.66376pt x 188.20313pt>
+
+LaTeX Warning: Citation `Salerno10' on page 8 undefined on input line 227.
+
+
+LaTeX Warning: Citation `wiki:teg' on page 8 undefined on input line 227.
+
+<./Slike/TEG-couple.png, id=241, 177.66376pt x 188.20313pt>
 File: ./Slike/TEG-couple.png Graphic file (type png)
 
 <use ./Slike/TEG-couple.png>
 Package pdftex.def Info: ./Slike/TEG-couple.png used on input line 234.
 (pdftex.def)             Requested size: 127.4488pt x 135.0pt.
- [8 <./Slike/TEG-shema.png> <./Slike/TEG-slika.jpg> <./Slike/TEG-couple.png>]
-<./Slike/TEG-curve.png, id=175, 682.80093pt x 422.32782pt>
+
+
+LaTeX Warning: Citation `wiki:thermo' on page 8 undefined on input line 235.
+
+
+LaTeX Warning: Citation `wiki:thermo' on page 8 undefined on input line 235.
+
+
+LaTeX Warning: Citation `wiki:thermo' on page 8 undefined on input line 239.
+
+
+LaTeX Warning: Citation `wiki:thermo' on page 8 undefined on input line 249.
+
+
+LaTeX Warning: Citation `ec:seebeck' on page 8 undefined on input line 249.
+
+
+LaTeX Warning: Citation `Salerno10' on page 8 undefined on input line 253.
+
+
+LaTeX Warning: Citation `teg-curve' on page 8 undefined on input line 253.
+
+
+LaTeX Warning: Citation `wiki:teg' on page 8 undefined on input line 253.
+
+
+LaTeX Warning: Citation `teg-wsn-ieee' on page 8 undefined on input line 255.
+
+[8 <./Slike/TEG-shema.png> <./Slike/TEG-slika.jpg> <./Slike/TEG-couple.png>]
+<./Slike/TEG-curve.png, id=257, 682.80093pt x 422.32782pt>
 File: ./Slike/TEG-curve.png Graphic file (type png)
 
 <use ./Slike/TEG-curve.png>
 Package pdftex.def Info: ./Slike/TEG-curve.png used on input line 277.
 (pdftex.def)             Requested size: 242.51584pt x 150.0pt.
+
+
+LaTeX Warning: Citation `teg-curve' on page 9 undefined on input line 278.
+
+
+LaTeX Warning: Citation `piezo-shoe-ieee' on page 9 undefined on input line 284
+.
+
 Package acronym Info: Label `acro:PZT' newly defined as it shall be overridden
 although it is yet undefined on input line 288.
 LaTeX Info: Redefining \bond on input line 288.
 LaTeX Info: Redefining \dbond on input line 288.
 LaTeX Info: Redefining \tbond on input line 288.
-
 
 ! LaTeX Error: File `./Slike/Piezo-theory-normal' not found.
 
@@ -632,11 +754,8 @@ Type  H <return>  for immediate help.
                                                   
 l.295 ...idth=150pt]{./Slike/Piezo-theory-normal}}
                                                   \hspace{1cm}
-I could not locate the file with any of these extensions:
-.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
+? q
+OK, entering \batchmode...
 
 ! LaTeX Error: File `./Slike/Piezo-theory-polarized' not found.
 
@@ -665,182 +784,172 @@ I could not locate the file with any of these extensions:
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[9 <./Slike/TEG-curve.png>]
-<./Slike/Piezo-UI.png, id=203, 453.19313pt x 450.9347pt>
-File: ./Slike/Piezo-UI.png Graphic file (type png)
 
-<use ./Slike/Piezo-UI.png>
+LaTeX Warning: Citation `cottone' on page 9 undefined on input line 298.
+
+
+LaTeX Warning: Citation `cottone' on page 9 undefined on input line 302.
+
+
+LaTeX Warning: Citation `wiki:piezo' on page 9 undefined on input line 304.
+
+ [9 <./Slike/TEG-curve.png>]
+
+LaTeX Warning: Citation `wiki:piezo' on page 10 undefined on input line 313.
+
+
+<./Slike/Piezo-UI.png, id=273, 453.19313pt x 450.9347pt>
+File: ./Slike/Piezo-UI.png Graphic file (type png)
+ <use ./Slike/Piezo-UI.png>
 Package pdftex.def Info: ./Slike/Piezo-UI.png used on input line 319.
 (pdftex.def)             Requested size: 204.85846pt x 203.83386pt.
 
-<./Slike/Buck.png, id=211, 384.43625pt x 137.51375pt>
+LaTeX Warning: Citation `LT-Piezo' on page 10 undefined on input line 320.
+
+
+LaTeX Warning: Citation `LT-Piezo' on page 10 undefined on input line 324.
+
+
+LaTeX Warning: Citation `piezo-shoe-ieee' on page 10 undefined on input line 32
+6.
+
+
+LaTeX Warning: Citation `solar-mppt-ieee' on page 10 undefined on input line 33
+7.
+
+
+LaTeX Warning: Citation `wiki:dcdc' on page 10 undefined on input line 339.
+
+ <./Slike/Buck.png, id=276, 384.43625pt x 137.51375pt>
 File: ./Slike/Buck.png Graphic file (type png)
  <use ./Slike/Buck.png>
 Package pdftex.def Info: ./Slike/Buck.png used on input line 343.
 (pdftex.def)             Requested size: 201.29237pt x 72.0pt.
-
-<./Slike/Boost.png, id=212, 396.48125pt x 154.5775pt>
+ <./Slike/Boost.png, id=277, 396.48125pt x 154.5775pt>
 File: ./Slike/Boost.png Graphic file (type png)
  <use ./Slike/Boost.png>
 Package pdftex.def Info: ./Slike/Boost.png used on input line 344.
 (pdftex.def)             Requested size: 205.20346pt x 80.0pt.
 
+LaTeX Warning: Citation `wiki:dcdc' on page 10 undefined on input line 345.
+
+
+LaTeX Warning: Citation `wiki:dcdc' on page 10 undefined on input line 345.
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[10 <./Slike/Piezo-UI.png>]
-<./Slike/Supercapacitor_diagram.pdf, id=230, 740.7675pt x 331.2375pt>
-File: ./Slike/Supercapacitor_diagram.pdf Graphic file (type pdf)
+ [10 <./Slike/Piezo-UI.png>]
 
-<use ./Slike/Supercapacitor_diagram.pdf>
+LaTeX Warning: Citation `lt:cenik' on page 11 undefined on input line 364.
+
+
+LaTeX Warning: Citation `ti:eh' on page 11 undefined on input line 364.
+
+
+LaTeX Warning: Citation `cap-wsn-ieee' on page 11 undefined on input line 368.
+
+
+<./Slike/Supercapacitor_diagram.pdf, id=285, 740.7675pt x 331.2375pt>
+File: ./Slike/Supercapacitor_diagram.pdf Graphic file (type pdf)
+ <use ./Slike/Supercapacitor_diagram.pdf>
 Package pdftex.def Info: ./Slike/Supercapacitor_diagram.pdf used on input line 
 374.
 (pdftex.def)             Requested size: 364.19667pt x 162.85365pt.
 
+LaTeX Warning: Citation `wiki:edlc' on page 11 undefined on input line 375.
+
+
+LaTeX Warning: Citation `wiki:edlc' on page 11 undefined on input line 375.
+
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-(./Slike/Supercapacitors_chart.pdf_tex
-<./Slike/Supercapacitors_chart.pdf, id=234, 622.325pt x 385.44pt>
-File: ./Slike/Supercapacitors_chart.pdf Graphic file (type pdf)
 
-<use ./Slike/Supercapacitors_chart.pdf>
+LaTeX Warning: Citation `wiki:edlc' on page 11 undefined on input line 381.
+
+ (./Slike/Supercapacitors_chart.pdf_tex
+<./Slike/Supercapacitors_chart.pdf, id=286, 622.325pt x 385.44pt>
+File: ./Slike/Supercapacitors_chart.pdf Graphic file (type pdf)
+ <use ./Slike/Supercapacitors_chart.pdf>
 Package pdftex.def Info: ./Slike/Supercapacitors_chart.pdf used on input line 5
 2.
 (pdftex.def)             Requested size: 364.19667pt x 225.56677pt.
 )
 
+LaTeX Warning: Citation `wiki:edlc' on page 11 undefined on input line 387.
+
+
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[11 <./Slike/Buck.png> <./Slike/Boost.png (PNG copy)>]
-<./Slike/EnOcean-shema.png, id=251, 858.20625pt x 524.71031pt>
-File: ./Slike/EnOcean-shema.png Graphic file (type png)
 
-<use ./Slike/EnOcean-shema.png>
+LaTeX Warning: Citation `enocean' on page 11 undefined on input line 397.
+
+ [11 <./Slike/Buck.png> <./Slike/Boost.png (PNG copy)>]
+<./Slike/EnOcean-shema.png, id=297, 858.20625pt x 524.71031pt>
+File: ./Slike/EnOcean-shema.png Graphic file (type png)
+ <use ./Slike/EnOcean-shema.png>
 Package pdftex.def Info: ./Slike/EnOcean-shema.png used on input line 401.
 (pdftex.def)             Requested size: 409.71692pt x 250.50499pt.
+
+LaTeX Warning: Citation `enocean' on page 12 undefined on input line 402.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[12 <./Slike/Supercapacitor_diagram.pdf> <./Slike/Supercapacitors_chart.pdf>]
-[13 <./Slike/EnOcean-shema.png>]
+
+LaTeX Warning: Citation `schneider-zb' on page 12 undefined on input line 406.
+
+ [12 <./Slike/Supercapacitor_diagram.pdf> <./Slike/Supercapacitors_chart.pdf>]
+
+LaTeX Warning: Citation `news:laptop-chargers' on page 13 undefined on input li
+ne 413.
+
+
+LaTeX Warning: Citation `mysolarphonecharger' on page 13 undefined on input lin
+e 415.
+
+
+LaTeX Warning: Citation `ibm:5in5' on page 13 undefined on input line 420.
+
+ [13 <./Slike/EnOcean-shema.png>]
 No file harvesting.bbl.
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 431.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 431.
-(./harvesting.aux)
+ (./harvesting.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 431.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 431.
+Package rerunfilecheck Info: File `harvesting.out' has not changed.
+(rerunfilecheck)             Checksum: 75CEB81CECBAA223BFFC623A8A1E7175;1784.
 
+LaTeX Warning: There were undefined references.
 
-Package rerunfilecheck Warning: File `harvesting.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `harvesting.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  75CEB81CECBAA223BFFC623A8A1E7175;1784.
  ) 
 Here is how much of TeX's memory you used:
- 7781 strings out of 493629
- 113398 string characters out of 3148779
- 228138 words of memory out of 3000000
- 10823 multiletter control sequences out of 15000+200000
+ 7792 strings out of 493629
+ 113511 string characters out of 3148779
+ 227397 words of memory out of 3000000
+ 10853 multiletter control sequences out of 15000+200000
  13550 words of font info for 52 fonts, out of 3000000 for 9000
  831 hyphenation exceptions out of 8191
- 29i,13n,37p,854b,371s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{cite.ibm:5in5} has been referenced but does not e
-xist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.mysolarphonecharger} has been referenced but d
-oes not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.news:laptop-chargers} has been referenced but 
-does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.schneider-zb} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.enocean} has been referenced but does not exis
-t, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.wiki:edlc} has been referenced but does not ex
-ist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.lt:cenik} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.wiki:dcdc} has been referenced but does not ex
-ist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.LT-Piezo} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.wiki:piezo} has been referenced but does not e
-xist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.cottone} has been referenced but does not exis
-t, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.piezo-shoe-ieee} has been referenced but does 
-not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.teg-curve} has been referenced but does not ex
-ist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.ec:seebeck} has been referenced but does not e
-xist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.wiki:thermo} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.wiki:teg} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.solar-mppt-ieee} has been referenced but does 
-not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.wiki:thevenin} has been referenced but does no
-t exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.wiki:solar-cells} has been referenced but does
- not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.Salerno10} has been referenced but does not ex
-ist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.wiki:eh} has been referenced but does not exis
-t, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.ti:eh} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.cap-wsn-ieee} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.teg-wsn-ieee} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.Burgoine11} has been referenced but does not e
-xist, replaced by a fixed one
-
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
-i12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/s
-hare/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/
-share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmtt10.pfb>
-Output written on harvesting.pdf (13 pages, 891721 bytes).
+ 29i,13n,37p,850b,371s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mmi12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
+/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></us
+r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmtt10.pfb>
+Output written on harvesting.pdf (13 pages, 901323 bytes).
 PDF statistics:
- 421 PDF objects out of 1000 (max. 8388607)
- 330 compressed objects within 4 object streams
- 105 named destinations out of 1000 (max. 500000)
- 91 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 449 PDF objects out of 1000 (max. 8388607)
+ 364 compressed objects within 4 object streams
+ 80 named destinations out of 1000 (max. 500000)
+ 323 words of extra memory for PDF output out of 10000 (max. 10000000)
 
