@@ -1,0 +1,56 @@
+set terminal epslatex color solid
+set style data lines
+
+set output "g_vrv_05.tex"
+set xlabel "$x$"
+set ylabel "$y$"
+
+set yrange [-0.4:0.6]
+set xrange [-0.1:0.9]
+
+plot for [i = 1:9] sprintf("g_vrv_0.5_%d.dat",i) u 2:3 t sprintf("$\\beta = %d$", i)
+
+set output "g_vrv_visenje_05.tex"
+plot for [i = 1:9] sprintf("g_vrv_visenje_0.5_%d.dat",i) u 2:3 t sprintf("$\\beta = %d$", i)
+
+set output "g_orbita_ena.tex"
+set xrange [-0.05:0.05]
+set yrange [-0.05:0.05]
+plot for [i = 1:20] sprintf("g_orbita_%d.dat",i) u 2:3 notitle
+
+set output "g_orbita_dva.tex"
+set xrange [-0.1:0.1]
+set yrange [-0.1:0.1]
+plot for [i = 1:80] sprintf("g_orbita_%d.dat",i) u 2:3 notitle
+
+set output "g_orbita_tri.tex"
+set xrange [-0.5:0.5]
+set yrange [-0.5:0.5]
+plot for [i = 200:250] sprintf("g_orbita_%d.dat",i) u 2:3 notitle
+
+set output "g_orbita_stiri.tex"
+set xrange [-0.5:0.5]
+set yrange [-0.5:0.5]
+plot for [i = 380:400] sprintf("g_orbita_%d.dat",i) u 2:3 notitle
+
+set output "g_orbite_dolge.tex"
+set xrange [-0.03:0.03]
+set yrange [-0.03:0.03]
+plot for [i in "1001 1004 1010 1020 1030"] sprintf("g_orbita_%s.dat",i) u 2:3 notitle
+
+set output "g_orbite_dolge_dva.tex"
+set xrange [-0.2:0.2]
+set yrange [-0.2:0.2]
+plot for [i = 1151:1180] sprintf("g_orbita_%d.dat",i) u 2:3 notitle
+
+set output "g_orbite_dolge_tri.tex"
+set xrange [-0.5:0.5]
+set yrange [-0.5:0.5]
+plot for [i = 1380:1387] sprintf("g_orbita_%d.dat",i) u 2:3 notitle
+
+set output "g_potencial.tex"
+pi = 3.14159265358979323846
+f(x,y) = 0.5 * log(sin(pi*x)**2 + sin(pi*y)**2)
+set pm3d map
+set isosample 100
+splot f(x,y) with pm3d notitle
