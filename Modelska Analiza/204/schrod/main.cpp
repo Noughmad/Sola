@@ -83,7 +83,9 @@ int neskoncnost(const gsl_vector* y, void* params, gsl_vector* f)
 
 int obestrani(const gsl_vector* y, void* params, gsl_vector* values)
 {
-    double h = 1e-4;
+    const double meja = 5;
+    
+    double h = 1e-3;
     double e = gsl_vector_get(y, 0);
     const double l = *(double*)params;
     
@@ -106,7 +108,7 @@ int obestrani(const gsl_vector* y, void* params, gsl_vector* values)
     
     FILE* f = fopen("g_test_obestrani.dat", "wt");
     
-    for (t1 = 2*h; t1 < 5 + 1.5*h; t1 += h)
+    for (t1 = 2*h; t1 < meja + 1.5*h; t1 += h)
     {
         k0 = k(t1, l, e);
         numerov(y0, y1, y2, k0, k1, k2, h*h/12);
@@ -118,7 +120,7 @@ int obestrani(const gsl_vector* y, void* params, gsl_vector* values)
     k1 = k(tm-h, l, e);
     fprintf(f, "\n");
     
-    for (double t2 = tm-2*h; t2 > 5 - 0.5*h; t2 -= h)
+    for (double t2 = tm-2*h; t2 > meja - 0.5*h; t2 -= h)
     {
         k0 = k(t2, l, e);
         numerov(z0, z1, z2, k0, k1, k2, h*h/12);
@@ -141,9 +143,9 @@ int obestrani(const gsl_vector* y, void* params, gsl_vector* values)
 
 void vodik()
 {
-    double l = 1;
+    double l = 0;
     gsl_vector* v = gsl_vector_alloc(3);
-    gsl_vector_set(v, 0, -0.3); // energija
+    gsl_vector_set(v, 0, -0.6); // energija
     gsl_vector_set(v, 1, 1); // odvod v 0
     gsl_vector_set(v, 2, exp(-20)); // vrednost v 20
     
