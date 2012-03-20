@@ -14,7 +14,12 @@ double step;
 
 inline double k(double x, double l, double e)
 {
-    return 2.0/x - l*(l+1)/x/x + e;
+    double ret = 2.0/x + e;
+    if (fabs(l) > 0.1 && fabs(l+1) > 0.1)
+    {
+      ret -= l*(l+1)/x/x;
+    }
+    return ret;
 }
 
 inline double kHe(int n, double Z, double e)
@@ -157,17 +162,37 @@ inline void numerov(size_t n, double k, double& k1, double& k2, bool reverse)
 
 int obestrani(const gsl_vector* y, void* params, gsl_vector* values)
 {
-    const int M = N/5;
+    const int M = N/2;
     
     double h = step;
     double e = gsl_vector_get(y, 0);
     const double l = *(double*)params;
     
     R[0] = 0;
-    R[1] = -h * gsl_vector_get(y, 1);
+    R[1] = h * gsl_vector_get(y, 1);
+    
+    std::cout << "e = " << e << ", R(x1) = " << R[1] << std::endl;
+    
+    for (int i = 0; i < 3; ++i)
+    {
+      if (gsl_isnan(gsl_vector_get(y, i)))
+      {
+        return GSL_EDOM;
+      }
+    }
+    
+    if (e > 0)
+    {
+      for (int i = 0; i < 3; ++i)
+      {
+        std::cout << "Positive energy, returning a big number" << std::endl;
+        gsl_vector_set(values, i, exp(10*e));
+      }
+      return GSL_SUCCESS;
+    }
     
     double k2 = 0;
-    double k1 = k(h, 0, e);
+    double k1 = k(h, l, e);
     double k0;
     
     double tm = (N-1)*h;
@@ -176,10 +201,6 @@ int obestrani(const gsl_vector* y, void* params, gsl_vector* values)
     {
         k0 = k(i*h, l, e);
         numerov(i, k0, k1, k2, false);
-        if (y->size != 3)
-        {
-          std::cout << y->size << " " << i << " " << M << std::endl;
-        }
     }
     
     double y0 = R[M];
@@ -188,8 +209,6 @@ int obestrani(const gsl_vector* y, void* params, gsl_vector* values)
     k2 = k(tm, l, e);
     k1 = k(tm-h, l, e);
     
-    std::cout << y->size << std::endl;
-
     R[N-1] = gsl_vector_get(y, 2);
     R[N-2] = R[N-1] * (1 + h*sqrt(fabs(k1)));
     
@@ -198,10 +217,17 @@ int obestrani(const gsl_vector* y, void* params, gsl_vector* values)
         k0 = k(i*step, l, e);
         numerov(i, k0, k1, k2, true);
     }
-    
     gsl_vector_set(values, 0, R[M+1] + R[M] - y0 - y1);
-    gsl_vector_set(values, 1, R[M+1] - R[M] + y0 - y1);
-    gsl_vector_set(values, 2, integral_RR(0,N) - 1);
+    gsl_vector_set(values, 1, 1e4 * (R[M+1] - R[M] + y0 - y1));
+    
+    double I = integral_RR(0,N);
+    if (gsl_isinf(I))
+    {
+      I = 1e200;
+    }
+    gsl_vector_set(values, 2, I - 1);
+    
+    gsl_vector_fprintf(stdout, values, "%g");
     
     
     return GSL_SUCCESS;
@@ -221,8 +247,7 @@ int obestrani_helij(const gsl_vector* y, void* params, gsl_vector* values)
     {
       if (gsl_isnan(gsl_vector_get(y, i)))
       {
-        plot_data("g_fail_data.dat");
-        exit(i+1);
+          return GSL_EDOM;
       }
     }
     
@@ -230,6 +255,7 @@ int obestrani_helij(const gsl_vector* y, void* params, gsl_vector* values)
     {
       for (int i = 0; i < 3; ++i)
       {
+        std::cout << "Positive energy, returning a big number" << std::endl;
         gsl_vector_set(values, i, exp(e));
       }
       return GSL_SUCCESS;
@@ -292,18 +318,19 @@ int obestrani_helij(const gsl_vector* y, void* params, gsl_vector* values)
     return GSL_SUCCESS;
 }
 
-void vodik()
+void vodik(double E, double L)
 {
-    N = 30 * 1e3;
+    int n = E < -0.5 ? 30 : E < -0.2 ? 50 : 100;
+    N = n * 1e3;
     step = 1e-3;
     R = new double[N];
     Phi = new double[N];
-    
-    double l = 0;
+
+    double l = L;
     gsl_vector* v = gsl_vector_alloc(3);
-    gsl_vector_set(v, 0, -1); // energija
-    gsl_vector_set(v, 1, 1); // odvod v 0
-    gsl_vector_set(v, 2, exp(-N*step)); // vrednost v 20
+    gsl_vector_set(v, 0, E); // energija
+    gsl_vector_set(v, 1, 0.1); // odvod v 0
+    gsl_vector_set(v, 2, exp(-30)); // vrednost v 20
     
     
     gsl_multiroot_function function = {obestrani, 3, &l};
@@ -315,11 +342,22 @@ void vodik()
     do
     {
         status = gsl_multiroot_fsolver_iterate(solver);
-        status = gsl_multiroot_test_residual(solver->f, 1e-10);
+        if (status != GSL_SUCCESS)
+        {
+            break;
+        }
+        status = gsl_multiroot_test_residual(solver->f, 1e-8);
+        
+        gsl_vector_fprintf(stdout, solver->f, "%g");
+        
         ++iter;
     }
     while (status == GSL_CONTINUE);
-    // printf("Koncal po %d iteracijah, status = %s\n", iter, gsl_strerror(status));
+    printf("Koncal po %d iteracijah, status = %s\n", iter, gsl_strerror(status));
+    
+    char buf[32];
+    sprintf(buf, "g_vodik_%g_%g.dat", fabs(E), L);
+    plot_data(buf);
     
     delete[] R;
     delete[] Phi;
@@ -400,8 +438,16 @@ void helij()
 }
 
 int main(int argc, char **argv) {
-    vodik();
-    std::cout << "Hello, world!" << std::endl;
-    helij();
+  /*
+  for (int n = 3; n < 4; ++n)
+  {
+    for (int l = 0; l < n; ++l)
+    {
+      std::cout << " === Zacetek: n = " << n << ", l = " << l << std::endl;
+      vodik(-1.0/n/n, l);
+    }
+  }
+  */
+  helij();
     return 0;
 }

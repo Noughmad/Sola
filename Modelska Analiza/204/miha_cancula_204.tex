@@ -1,0 +1,60 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[unicode=true]{hyperref}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage{float}
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\newcommand{\dd}{\mathrm{d}}
+
+\newcommand{\parcialno}[2]{
+  \frac{\partial #1}{\partial #2}
+}
+\newcommand{\parcdva}[2]{
+  \frac{\partial^2 #1}{\partial #2 ^2}
+}
+\newcommand{\lag}{\mathcal{L}}
+
+\title{Schr\' odingerjeva ena\v cba}
+\author{Miha \v Can\v cula}
+\begin{document}
+
+\maketitle
+
+\section{Metoda}
+
+Za numeri"cno re"sevanje diferencialne ena"cbe sem uporabil metodo Numerova. Ker ena"cbo nima obmo"cij, kjer bi se $R(x)$ ali njen odvod hitro spreminjal, sem lahko uporabil konstanten, relativno velik korak. 
+
+Za velike $x$ lahko "clene z $x$ v imenovalcu zanemarimo in ena"cbo postane pribli"zno $R''(x) = -ex$. Energija $e$ je za vezana stanja negativno, zato sta re"sitvin ena"cbe eksponentno nara"s"canje in padanje. Fizikalna stanja imajo samo padajo"co komponento, zaradi kon"cne natan"cnosti ra"cunalni"ske aritmetike in velikega koraka pa se nisem mogel znebiti nara"s"cajo"ce komponente. Te"zavi sem se izognil tako, da sem integracijo za"cel z obeh strani, s "cimer sem padajo"co komponento pretvoril v nara"s"cajo"co. Delni funkciji sem zlepil tako, da sem zahteval enakost vrednosti in odvodov. 
+
+\section{Vodikov atom}
+
+\begin{figure}[h]
+ \input{g_vodik}
+\end{figure}
+
+\section{Helijev atom}
+
+Tu sem uporabil dvojno iteracijo, tako da sem za"cel s pribli"zkom za potenical $\Phi(x)$, s katerim sem enako kot za vodikov atom izra"cunal valovno funkcijo elektrona $R(x)$. Na podlagi dobljene gostote naboja sem izra"cunal nov pribli"zek za $\Phi(x)$. Postopek sem ponovil stokrat. Za za"cetne podatke vsakega koraka (odvod $R'(0)$ in vrednost pri izbranem velikem $x$) sem vzel rezultat prej"snjega. 
+
+
+
+
+\end{document}

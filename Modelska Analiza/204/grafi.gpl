@@ -1,0 +1,13 @@
+set terminal epslatex color solid
+set style data lines
+
+set output "g_vodik.tex"
+
+set xlabel "$x$"
+set ylabel "$R(x)$"
+
+plot[0:50] "g_vodik_1_0.dat" u 1:(-$2) t "$n=1, l=0$", \
+"g_vodik_0.25_0.dat" u 1:(-$2) t "$n=2, l=0$", \
+"g_vodik_0.25_1.dat" u 1:(-$2) t "$n=2, l=1$", \
+"g_vodik_0.111111_0.dat" u 1:2 t "$n=3, l=0$", \
+"g_vodik_0.111111_1.dat" u 1:2 t "$n=3, l=1$"

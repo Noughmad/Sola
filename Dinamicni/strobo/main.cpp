@@ -98,10 +98,10 @@ int naslednja(double t, double y[], double polje)
 void portret(double q, double p, double polje, QImage* image)
 {
   double y[2] = {q, p};
-  for (int i = 0; i < 2000; ++i)
+  for (int i = 0; i < 1000; ++i)
   {
     naslednja(0, y, polje);
-    polje *= -1;
+    naslednja(0, y, -polje);
     
     int qq = qBound<int>(0, y[0] * 800.0, 799);
     int pp = qBound<int>(0, (y[1] + 5) * 80, 799);

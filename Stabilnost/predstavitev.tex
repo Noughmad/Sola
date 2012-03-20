@@ -53,7 +53,14 @@
 
 \end{frame}
 
-\begin{frame}{Ena"cbe}
+\begin{frame}{Stabilnost}
+\begin{center}
+\includegraphics[height=0.8\textheight]{./Slike/SimplePendulum3} \quad
+\includegraphics[height=0.8\textheight]{./Slike/Balancer_with_wine}
+\end{center}
+\end{frame}
+
+\begin{frame}{Ena"cbe hidrodinamike}
 
 \begin{block}{Navier-Stokes}
 \[ \frac{\partial \vec u}{\partial t} + (\vec u \cdot \nabla) \vec u = -\frac{1}{\rho}\nabla p + \mu \Delta \vec u \] 
@@ -85,11 +92,21 @@
 \end{frame}
 
 \begin{frame}{Lineariziran problem}
+\begin{block}{Osnovna re"sitev + motnja}
 \begin{itemize}
  \item $ h(x,y,t) = h_0(x,t) + \varepsilon h_1(x,y,t) $, \; $\varepsilon \ll 1$, \; $h_1 \sim h_0$
  \item Re"simo $h_0$ $\rightarrow$ ena"cba za $h_1$
  \item Razvoj po $\varepsilon$, obdr"zimo le do linearnega "clena
 \end{itemize}
+\end{block}
+
+\begin{block}{Linearna ena"cba za $h_1$}
+ \begin{itemize}
+  \item Konstanti koeficienti $h_0$ $\Rightarrow$ eksponentne re"sitve
+  \item Sistem je stabilen, "ce je $\Re \sigma \leq 0$ za vse lastne vrednosti $\sigma$
+ \end{itemize}
+\end{block}
+
 
 \end{frame}
 
@@ -97,9 +114,29 @@
  \includegraphics[width=\textwidth]{./Slike/film-slika}
 \end{frame}
 
-\begin{frame}{Stabilnost}
- 
+\begin{frame}{Osnovna re"sitev}
+ \begin{itemize}
+  \item Teko"cina polzi po klancu z enakomerno hitrostjo
+  \item Substitucija $\xi = x - Ut$ $\Rightarrow$ $h_0(\xi, y)$ je konstanta
+  \item En parameter $D$: viskoznost $\leftrightarrow$ povr"sinska napetost
+ \end{itemize}
+ \begin{center}
+ \includegraphics[width=.7\textwidth]{./Slike/film-osnovna-resitev}
+ \end{center}
 \end{frame}
+
+\begin{frame}{Nestabilnost}
+ \begin{itemize}
+  \item $h_1$ zapi"semo kot vsoto normalnih valovnih na"cinov
+  \item Lastna vrednost $\sigma$ odvisna od valovne dol"zine motnje
+  \item Valovna dol"zina z najve"cjo $\sigma$ $\approx$ razmik med curki
+ \end{itemize}
+ 
+\begin{center}
+ \includegraphics[width=.7\textwidth]{./Slike/film-stabilnost}
+ \end{center} 
+\end{frame}
+
 
 \begin{frame}{Razpad milnega mehur"cka}
 \begin{center}
@@ -144,15 +181,53 @@
 \begin{frame}{Kra"ski "zlebi"ci}
   \begin{block}{Nastanek}
   \begin{itemize}
-    \item Na kra"skih pobo"cjih
+    \item Na kra"skih pobo"cjih pod vplivom de"zja
+    \item Po"casen proces, te"zko izvajati eksperimente
+    \item Ena"cbe za tok teko"cine sklopljen s kemijskimi ena"cbami za topljenje apnenca
     \end{itemize}
   \end{block}
   
   \begin{block}{Nestabilnost}
   \begin{itemize}
-    \item Majhna motnja v obliki povr"sja se poglablja
+    \item Neenakomernost v obliki povr"sja
+    \item Blagi "zlebi"c se s "casom poglablja
+    \item Zlom simetrije v vodoravni smeri
     \end{itemize}
   \end{block}
+\end{frame}
+
+\begin{frame}{Zaklju"cek}
+\begin{columns}
+ \begin{column}{0.45\textwidth}
+  \begin{block}{Hidrodinamika}
+  \begin{itemize}
+   \item Navier-Stokesove ena"cbe
+   \item Lubrikacijski pribli"zek $u \rightarrow h$
+  \end{itemize}
+  \end{block}
+  
+  \begin{block}{Naravni pojavi}
+    \begin{itemize}
+     \item Teko"cina na klancu
+     \item Razpad tanke opne
+     \item Kra"sko povr"sje
+    \end{itemize}
+ \end{block}
+ \end{column}
+ 
+\begin{column}{0.45\textwidth}
+  \begin{block}{Nestabilnost}
+   \begin{itemize}
+    \item Ob"cutljivost na majhne motnje
+    \item Zlom simetrije
+    \item Linearizirana ena"cba
+    \item Lastne vrednosti linearnega operatorja
+   \end{itemize}
+  \end{block}
+
+ \end{column}
+
+\end{columns}
 
 \end{frame}
 
