@@ -44,17 +44,49 @@ Za numeri"cno re"sevanje diferencialne ena"cbe sem uporabil metodo Numerova. Ker
 
 Za velike $x$ lahko "clene z $x$ v imenovalcu zanemarimo in ena"cbo postane pribli"zno $R''(x) = -ex$. Energija $e$ je za vezana stanja negativno, zato sta re"sitvin ena"cbe eksponentno nara"s"canje in padanje. Fizikalna stanja imajo samo padajo"co komponento, zaradi kon"cne natan"cnosti ra"cunalni"ske aritmetike in velikega koraka pa se nisem mogel znebiti nara"s"cajo"ce komponente. Te"zavi sem se izognil tako, da sem integracijo za"cel z obeh strani, s "cimer sem padajo"co komponento pretvoril v nara"s"cajo"co. Delni funkciji sem zlepil tako, da sem zahteval enakost vrednosti in odvodov. 
 
+Zgornjo mejo sem prestavljav v odvisnosti od energije. Stanja z ni"zjo energijo so bolje vezana, zato pri velikem $x$ hitreje konvergirajo proti 0. Za iskanje teh stanj sem za zgornjo mejo integracije postavil $x=20$. Vzbujena stanja z vi"sjimi energijami po"casneje padajo, zato sem zgonjo mejo prestavljav od 20 do 100. Izbira previsoke zgornje meje za nizkoenergijska stanja ne povzro"cin samo dolgotrajnega ra"cunanja, ampak v tak"snem primeru metoda konvergira k vi"sjeenergijskim stanjem. Srednjo to"cko, kjer sem obe delni funkciji zlepil, sem vedno izbral med "cetrtino in polovico zgorje meje. 
+
 \section{Vodikov atom}
 
+Z opisanim postopkom mi je uspelo najti le stanja z nizko energijo in nizko vrtilno koli"cino $l$. Ta stanja so prikazana na sliki \ref{fig:vodik}. 
+
 \begin{figure}[h]
- \input{g_vodik}
+ \input{g_vodik_123}
+ \caption{Lastna stanja elektrona v vodikovem atomu, $n \leq 3$}
+ \label{fig:vodik-123}
 \end{figure}
+
+\begin{figure}[h]
+ \input{g_vodik_4}
+ \caption{Lastna stanja elektrona v vodikovem atomu, $n = 4$}
+ \label{fig:vodik-4}
+\end{figure}
+
+\begin{figure}[h]
+ \input{g_vodik_5}
+ \caption{Lastna stanja elektrona v vodikovem atomu, $n = 5$}
+ \label{fig:vodik-5}
+\end{figure}
+
+
 
 \section{Helijev atom}
 
-Tu sem uporabil dvojno iteracijo, tako da sem za"cel s pribli"zkom za potenical $\Phi(x)$, s katerim sem enako kot za vodikov atom izra"cunal valovno funkcijo elektrona $R(x)$. Na podlagi dobljene gostote naboja sem izra"cunal nov pribli"zek za $\Phi(x)$. Postopek sem ponovil stokrat. Za za"cetne podatke vsakega koraka (odvod $R'(0)$ in vrednost pri izbranem velikem $x$) sem vzel rezultat prej"snjega. 
+Tu sem uporabil dvojno iteracijo, tako da sem za"cel s pribli"zkom za potenical $\Phi(x)$, s katerim sem enako kot za vodikov atom izra"cunal valovno funkcijo elektrona $R(x)$. Na podlagi dobljene gostote naboja sem izra"cunal nov pribli"zek za $\Phi(x)$ z metodo RK4. Za za"cetne podatke vsakega koraka (odvod $R'(0)$ in vrednost pri izbranem velikem $x$) sem vzel rezultat prej"snjega. 
+
+Iteriranje sem ustavil, ko je izraz
+
+\begin{align}
+ \int \left|\varphi''_k(x) - \frac{R_k(x)^2}{x}\right|^2 \dd x
+\end{align}
+
+postal dovolj majhen, pri "cemer sta $R_k$ in $\varphi_k$ pribli"zka za valovno funkcijo in potencial po $k$-tih iteracijah. Integral sem seveda nadomestil s kon"cno vsoto, zgornjo mejo za vrednost izraza pa sem postavil na okrog $10^{-7}$, kar pri dol"zini koraka $10^{-3}$ ustreza absolutni napaki $10^{-5}$ na vsakem koraku. 
 
 
-
+\begin{figure}[h]
+ \input{g_helij}
+ \caption{Lastna stanja elektrona v helijevem atomu}
+ \label{fig:helij}
+\end{figure}
 
 \end{document}
