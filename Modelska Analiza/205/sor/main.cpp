@@ -3,6 +3,7 @@
 #include <gsl/gsl_min.h>
 #include <math.h>
 #include <ctime>
+#include <string.h>
 
 int N = 90; // Stevilo tock na enem robu, vseh je NxN
 gsl_matrix* U;
@@ -40,12 +41,6 @@ void popravi(int i, int j, double eps, double omega, double* vsota)
 {            
     gsl_matrix_set(U, i, j, gsl_matrix_get(U, i,j) + eps * 0.25 * omega);
     *vsota += eps * eps;
-    
-    if (eps > 10)
-    {
-        std::cout << "Velik popravek pri " << i << ", " << j << std::endl;
-        exit(i+j);
-    }
 }
 
 double korak_cev(double rho, double omega)
@@ -97,30 +92,28 @@ double korak_cev(double rho, double omega)
     return popravek;
 }
 
-double korak_valj(double rho, double P, double omega)
+double korak_valj(double P, double omega)
 {
     double popravek = 0;
-    // TODO: Liha in soda polja loceno (ni nujno)
-    // TODO: Popravi diskretizacijo za nabla^2 v cilinidricnih koordinatah (nujno)
     
+    int ti = N/2;
+
     // spodnja ploskev
     
     for (int i = 1; i < N/2; ++i)
     {
-        double eps = 2*gsl_matrix_get(U, i, 1) + (1-0.5/i)*gsl_matrix_get(U, i-1, 0) +(1+0.5/i)*gsl_matrix_get(U, i+1, 0) - 4*gsl_matrix_get(U, i, 0) - h*h*rho + h*P;
+        double eps = 2*gsl_matrix_get(U, i, 1) + (1-0.5/(ti-i))*gsl_matrix_get(U, i-1, 0) +(1+0.5/(ti-i))*gsl_matrix_get(U, i+1, 0) - 4*gsl_matrix_get(U, i, 0) + h*P;
         popravi(i, 0, eps, omega, &popravek);
     }
-        
-    int ti = N/2;
- 
+         
     // kot
-    double eps = 2*gsl_matrix_get(U, ti, 1) + 2*gsl_matrix_get(U, ti-1, 0) - 4*gsl_matrix_get(U, ti, 0) - h*h*rho + h*P;
+    double eps = 2*gsl_matrix_get(U, ti, 1) + 2*gsl_matrix_get(U, ti-1, 0) - 4*gsl_matrix_get(U, ti, 0) + h*P;
     popravi(ti, 0, eps, omega, &popravek);
     
     // srednja simetricna ravnina
     for (int j = 1; j < N; ++j)
     {
-        double eps = 2*gsl_matrix_get(U, ti-1, j) + gsl_matrix_get(U, ti, j-1) +gsl_matrix_get(U, ti, j+1) - 4*gsl_matrix_get(U, ti, j) - h*h*rho;
+        double eps = 2*gsl_matrix_get(U, ti-1, j) + gsl_matrix_get(U, ti, j-1) +gsl_matrix_get(U, ti, j+1) - 4*gsl_matrix_get(U, ti, j);
         popravi(N/2, j, eps, omega, &popravek);
     }
     
@@ -130,7 +123,7 @@ double korak_valj(double rho, double P, double omega)
     {
         for (int j = 1; j < N; ++j)
         {
-            double eps = (1+0.5/i)*gsl_matrix_get(U, i+1, j) + (1-0.5/i)*gsl_matrix_get(U, i-1, j) +gsl_matrix_get(U, i, j-1)+gsl_matrix_get(U, i, j+1) - 4*gsl_matrix_get(U, i, j) - h*h*rho;
+            double eps = (1+0.5/(ti-i))*gsl_matrix_get(U, i+1, j) + (1-0.5/(ti-i))*gsl_matrix_get(U, i-1, j) +gsl_matrix_get(U, i, j-1)+gsl_matrix_get(U, i, j+1) - 4*gsl_matrix_get(U, i, j);
             popravi(i, j, eps, omega, &popravek);
         }
     }
@@ -146,7 +139,7 @@ int cev(double omg, bool print)
     double eps;
     do
     {
-        eps = korak_cev(1.0, omg);
+        eps = korak_cev(-1.0, omg);
         ++korak;
         std::cout << "Popravek pri koraku " << korak << " je bil " << eps << std::endl;
     }
@@ -155,13 +148,13 @@ int cev(double omg, bool print)
     if (print)
     {
         FILE* f = fopen("g_test_cev.dat", "wt");
-        for (int j  = 0; j < N; ++j)
+        for (int j  = 0; j < N+1; ++j)
         {
             for (int i = 0; i < N/2; ++i)
             {
                 fprintf(f, "%g\t", gsl_matrix_get(U, i, j));
             }
-            for (int i = N/2-1; i > 0; --i)
+            for (int i = N/2; i > 0; --i)
             {
                 fprintf(f, "%g\t", gsl_matrix_get(U, i, j));
             }
@@ -183,7 +176,7 @@ int valj(double omg, bool print)
     double eps;
     do
     {
-        eps = korak_valj(0.0, 2, omg);
+        eps = korak_valj(1, omg);
         ++korak;
         std::cout << "Popravek pri koraku " << korak << " je bil " << eps << std::endl;
     }
@@ -192,13 +185,13 @@ int valj(double omg, bool print)
     if (print)
     {
         FILE* f = fopen("g_test_valj.dat", "wt");
-        for (int j  = 0; j < N; ++j)
+        for (int j  = 0; j < N+1; ++j)
         {
             for (int i = 0; i < N/2; ++i)
             {
                 fprintf(f, "%g\t", gsl_matrix_get(U, i, j));
             }
-            for (int i = N/2-1; i > 0; --i)
+            for (int i = N/2; i > 0; --i)
             {
                 fprintf(f, "%g\t", gsl_matrix_get(U, i, j));
             }
@@ -269,8 +262,22 @@ void hitrost()
 
 int main(int argc, char **argv) {
     std::cout << "Hello, world!" << std::endl;
-    N = 90;
-    cev(1.8, true);
-    valj(1.0, true);
+    for (int i = 0; i < argc; ++i)
+    {
+        if (strcmp(argv[i], "hitrost") == 0)
+        {
+            hitrost();
+        }
+        else if (strcmp(argv[i], "cev") == 0)
+        {
+            N = atoi(argv[++i]);
+            cev(2.0/(1.0 + M_PI/N), true);
+        }
+        else if (strcmp(argv[i], "valj") == 0)
+        {
+            N = atoi(argv[++i]);
+            valj(2.0/(1.0 + M_PI/N), true);
+        }
+    }
     return 0;
 }
