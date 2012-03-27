@@ -40,39 +40,47 @@
 
 \section{Metoda}
 
-Za numeri"cno re"sevanje diferencialne ena"cbe sem uporabil metodo Numerova. Ker ena"cbo nima obmo"cij, kjer bi se $R(x)$ ali njen odvod hitro spreminjal, sem lahko uporabil konstanten, relativno velik korak. 
+Za numeri"cno re"sevanje diferencialne ena"cbe sem uporabil metodo Numerova. Ker ena"cbo nima obmo"cij, kjer bi se $R(x)$ ali njen odvod hitro spreminjal, sem lahko uporabil konstanten, relativno velik korak. Dobre rezultate sem dobil pri $h=10^{-3}$. Potencial in normalizacijo valovne funkcije sem izra"cunal z metodo RK4 in interpolacijo. 
 
-Za velike $x$ lahko "clene z $x$ v imenovalcu zanemarimo in ena"cbo postane pribli"zno $R''(x) = -ex$. Energija $e$ je za vezana stanja negativno, zato sta re"sitvin ena"cbe eksponentno nara"s"canje in padanje. Fizikalna stanja imajo samo padajo"co komponento, zaradi kon"cne natan"cnosti ra"cunalni"ske aritmetike in velikega koraka pa se nisem mogel znebiti nara"s"cajo"ce komponente. Te"zavi sem se izognil tako, da sem integracijo za"cel z obeh strani, s "cimer sem padajo"co komponento pretvoril v nara"s"cajo"co. Delni funkciji sem zlepil tako, da sem zahteval enakost vrednosti in odvodov. 
+Lastne energije sem dolo"cil z bisekcijo, tako da sem pri razli"cnih energijah izra"cunal vrednosti $R(x)$ pri nekem velikem $x_0$. Za rob obmo"cja sem vzel razli"cne vrednosti, saj so stanja z vi"sjimi (manj negativnimi) energijami slab"se vezana in $R$ po"casneje pada. V ve"cini primerov je bil mejni $x$ med 20 in 100. 
 
-Zgornjo mejo sem prestavljav v odvisnosti od energije. Stanja z ni"zjo energijo so bolje vezana, zato pri velikem $x$ hitreje konvergirajo proti 0. Za iskanje teh stanj sem za zgornjo mejo integracije postavil $x=20$. Vzbujena stanja z vi"sjimi energijami po"casneje padajo, zato sem zgonjo mejo prestavljav od 20 do 100. Izbira previsoke zgornje meje za nizkoenergijska stanja ne povzro"cin samo dolgotrajnega ra"cunanja, ampak v tak"snem primeru metoda konvergira k vi"sjeenergijskim stanjem. Srednjo to"cko, kjer sem obe delni funkciji zlepil, sem vedno izbral med "cetrtino in polovico zgorje meje. 
+Pri bisekciji je treba najprej najti zgornjo in spodnjo mejo za re"sitev. Za to sem si narisal graf na sliki \ref{fig:spekter}. Ta prikazuje vrednost $R(x_0)$ pri razli"cnih energijah. Za vodikov atom je dovolj en graf, saj energija ni odvisna od "stevila $l$. To"cke, kjer funkcija pre"cka absciso nam povejo lastne energije sistema. 
+
+\begin{figure}[H]
+ \input{g_spekter}
+ \caption{Lastna stanja elektrona v vodikovem atomu, $n \leq 3$}
+ \label{fig:spekter}
+\end{figure}
+
+Graf za helij pa je narisan s privzetkom, da velja potencial, ki ga povzro"ca elektron v za"cetnem pribli"zku. Vsaka re"sitev za $R(x)$ seveda dolo"ca svoj potencial, zato odvisnost ni natan"cna. Slu"zi le kot pomagalo, tako da lahko ocenimo lastne energije. 
 
 \section{Vodikov atom}
 
-Z opisanim postopkom mi je uspelo najti le stanja z nizko energijo in nizko vrtilno koli"cino $l$. Ta stanja so prikazana na sliki \ref{fig:vodik}. 
+Z opisanim postopkom mi je uspelo najti nekaj najni"zjih stanj vodikovega atoma. Funkcije $R(x)$ in pripadajo"ce energije so na slikah \ref{fig:vodik-123}, \ref{fig:vodik-4} in \ref{fig:vodik-5}. 
 
-\begin{figure}[h]
+\begin{figure}[H]
  \input{g_vodik_123}
  \caption{Lastna stanja elektrona v vodikovem atomu, $n \leq 3$}
  \label{fig:vodik-123}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
  \input{g_vodik_4}
  \caption{Lastna stanja elektrona v vodikovem atomu, $n = 4$}
  \label{fig:vodik-4}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
  \input{g_vodik_5}
  \caption{Lastna stanja elektrona v vodikovem atomu, $n = 5$}
  \label{fig:vodik-5}
 \end{figure}
 
-
+Vidimo, da se stanja z vi"sjo energijo res raztezajo proti vi"sjim $x$, zato sem moral zgorjno mejo integracije sproti prilagajati. 
 
 \section{Helijev atom}
 
-Tu sem uporabil dvojno iteracijo, tako da sem za"cel s pribli"zkom za potenical $\Phi(x)$, s katerim sem enako kot za vodikov atom izra"cunal valovno funkcijo elektrona $R(x)$. Na podlagi dobljene gostote naboja sem izra"cunal nov pribli"zek za $\Phi(x)$ z metodo RK4. Za za"cetne podatke vsakega koraka (odvod $R'(0)$ in vrednost pri izbranem velikem $x$) sem vzel rezultat prej"snjega. 
+Tu sem uporabil dvojno iteracijo, tako da sem za"cel s pribli"zkom za potenical $\Phi(x)$, s katerim sem enako kot za vodikov atom izra"cunal valovno funkcijo elektrona $R(x)$. Na podlagi dobljene gostote naboja sem izra"cunal nov pribli"zek za $\Phi(x)$ z metodo RK4. 
 
 Iteriranje sem ustavil, ko je izraz
 
@@ -82,11 +90,37 @@ Iteriranje sem ustavil, ko je izraz
 
 postal dovolj majhen, pri "cemer sta $R_k$ in $\varphi_k$ pribli"zka za valovno funkcijo in potencial po $k$-tih iteracijah. Integral sem seveda nadomestil s kon"cno vsoto, zgornjo mejo za vrednost izraza pa sem postavil na okrog $10^{-7}$, kar pri dol"zini koraka $10^{-3}$ ustreza absolutni napaki $10^{-5}$ na vsakem koraku. 
 
+Pri heliju sem naletel na te"zavo z bisekcijo, saj algoritem deluje le, "ce po vsakem izra"cunun potenciala obstaja lastno stanje z energijo v izbranem intervalu. Zato sem moral uporabiti precej "sirok za za"cetni interval, kar ote"zi iskanje "sibko vezanih lastnih stanj. 
 
-\begin{figure}[h]
+\begin{figure}[H]
  \input{g_helij}
- \caption{Lastna stanja elektrona v helijevem atomu}
+ \caption{Enodel"cna lastna stanja obeh elektronov v helijevem atomu}
  \label{fig:helij}
 \end{figure}
+
+Graf prikazuje le stanja, kjer sta oba elektrona v istem stanju (le z razli"cnima spinoma). Fizikalno so mo"zna tudi stanja, ko je le eden izmed elektronov vzbujen, ampak uporabljena metoda tak"snih primerov ne najde. Za izra"cun ionizacijske energije je dovolj le poznavanje osnovnega stanja. 
+
+Primerjal sem tudi potenciale razli"cnih stanj helijevih elektronov, ki so na sliki \ref{fig:helij-potencial}. Potencial je dolo"cen le do konstante, ki nima fizikalnega pomeni, za konstanto pa spremeni izra"cune energije. Za la"zje primerjanje rezultatov sem za izra"cun potenciala uporabil formulo iz navodil
+
+\begin{align}
+ \varphi(x) = -\int_0^x R^2(y) \dd y - x\int_x^\infty \frac{R^2(y)}{y} \dd y
+\end{align}
+
+Potencial za"cne pri vrednosti $\varphi(0) = 0$, v neskon"cnosti pa dose"ze vrednost $\varphi(\infty) \to -1$. Po pri"cakovanju se potencial elektronov z vi"sjo energijo, ki so v povpre"cju bolj oddaljeni od jedra, razteza do ve"cjega $x$, preden se ustali pri konstantni vrednosti. 
+
+\begin{figure}[H]
+ \input{g_helij_pot}
+ \caption{Elektri"cni potencial, ki ga povzro"ca porazdelitev naboja elektronov v helijevem atomu}
+ \label{fig:helij-potencial}
+\end{figure}
+
+
+Pri re"sevanju ena"cb za helijev atom dobimo kot rezultat dve razli"cni energiji: $\varepsilon$, ki je Lagrangeov multiplikator v ena"cbi, in skupno vezavno energijo obeh elektronov $E$. $\varepsilon$ predstavlja energijo enega elektrona v skupnem polje jedra in drugega elektrona, zato je njegova vrednost v osnovnem stanju dobra ocena za prvo ionizacijsko energijo. Na podlagi zgornjih izra"cunov bi napovedali, da je prva ionizacijska energija helija enaka
+
+\begin{align}
+ E_1 &= E_0 \cdot \varepsilon = 24,98 \mathrm{eV}
+\end{align}
+
+Rezultat je blizu pravi vrednosti, ki je 24,59 eV. Razliko lahko pojasnimo s tem, da odvzem enega elektrona spremeni potencial drugega, zaradi "cesar se spremeni njegovo stanje in posledi"cno energija. Drugi elektron bo verjetno pre"sel v energijsko bolj ugodno stanje, kar povzro"ci zmanj"sanje ionizacijske energije. 
 
 \end{document}

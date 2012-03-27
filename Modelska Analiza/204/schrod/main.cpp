@@ -554,14 +554,15 @@ void helij(double plus, double minus, int n, const char* filename)
     do
     {
         R_to_Phi();
-        plot_data("g_helij_med.dat");
         e = bisekcija(plus, minus, Z, enastran_helij);
         normiraj();
         ++r;
     }
     while (r < 30 && preveri_helij(5e-7));
     
-    std::cout << "Resil helij po " << r << " iteracijah, energija je " << e;
+    std::cout << "Resil helij po " << r << " iteracijah, energija je " << e << ", " << energ_He(Z) << std::endl << std::endl;
+    
+    plot_data(filename);
     
     delete[] R;
     delete[] Phi;
@@ -571,12 +572,56 @@ void helij(double plus, double minus, int n, const char* filename)
 
 void spekter()
 {
+  N = 30 * 1e4;
+  step = 1e-4;
+  
+  R = new double[N];
+  
   FILE* f = fopen("g_vodik_spekter.dat", "wt");
   for (double energ = 0; energ > -1.1; energ -= 0.01)
   {
-    fprintf(f, "%g, %g", energ, enastran_vodik(energ, 0));
+    fprintf(f, "%g, %g\n", energ, enastran_vodik(energ, 0));
   }
   fclose(f);
+  
+  delete[] R;
+}
+
+void spekter_helij(int n)
+{
+  N = n * 1e4;
+    step = 1e-4;
+    R = new double[N];
+    Phi = new double[N];
+    Rint = new double[N];
+    Ryint = new double[N];
+    
+    assert(R);
+    assert(Phi);
+    
+    
+    double Z = 2;
+    
+    double ZZ = Z - 6.0/16.0;
+    for (int i = 0; i < N; ++i)
+    {
+        // Zacetni priblizek za R(x)
+        R[i] = 2*sqrt(ZZ) * i*step * ZZ * exp(-ZZ*i*step);
+    }
+    
+    R_to_Phi();
+    
+  FILE* f = fopen("g_helij_spekter.dat", "wt");
+  for (double energ = 0; energ > -2.1; energ -= 0.01)
+  {
+    fprintf(f, "%g, %g\n", energ, enastran_helij(energ, Z));
+  }
+  fclose(f);
+  
+  delete[] R;
+  delete[] Phi;
+  delete[] Rint;
+  delete[] Ryint;
 }
 
 
@@ -638,8 +683,14 @@ int main(int argc, char **argv) {
   */
   
   // Ti dve zacetni stanji najdeta ustrezne resitve
-  helij(-0.1, -0.3, 20, "g_helij_2.dat");
-  helij(-0.1, -2, 20, "g_helij_2.dat");
+  helij(-0.1, -2, 20, "g_helij_1.dat"); // --> -1.8
+  helij(-0.2, -1.5, 20, "g_helij_2.dat"); // --> -0.46
+  helij(-0.1, -0.3, 30, "g_helij_3.dat"); // --> -0.2
+  helij(-0.01, -0.2, 50, "g_helij_4.dat"); // --> -0.09
+  
+  
+ // spekter();
+ // spekter_helij(30);
   
   // TODO: Najdi se ostale mozne energije
 }
