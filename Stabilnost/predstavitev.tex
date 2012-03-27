@@ -6,8 +6,8 @@
 \usepackage[slovene]{babel}
 \date{21. marec 2012}
 
-\title{Hidrodinamske nestabilnost v tankih plasteh}
-\author{Miha \v Can\v cula}
+\title{Hidrodinamske nestabilnosti v tankih plasteh}
+\author{Avtor: Miha \v Can\v cula \\ Mentor: prof. dr. Alojz Kodre}
 
 \renewcommand{\vec}{\mathbf}
 
@@ -17,17 +17,20 @@
 \frame{\titlepage}
 
 \begin{frame}{Vsebina}
+\begin{block}{Teorija}
  \begin{itemize}
   \item Stabilnost
   \item Ena"cbe toka teko"cin
   \item Lubrikacijski pribli"zek -- ena"cba tankega filma
-  \item Primeri
+  \end{itemize}
+\end{block}
+\begin{block}{Primeri}
   \begin{itemize}
     \item{Plast teko"cine na klancu}
     \item{Razpad milnega mehur"cka}
     \item{Nastanek kra"skih "zlebi"cev}
   \end{itemize}
- \end{itemize}
+\end{block}
 \end{frame}
 
 
@@ -56,7 +59,7 @@
 \begin{frame}{Stabilnost}
 \begin{center}
 \includegraphics[height=0.8\textheight]{./Slike/SimplePendulum3} \quad
-\includegraphics[height=0.8\textheight]{./Slike/Balancer_with_wine}
+\includegraphics[height=0.8\textheight]{./Slike/Balancer_with_wine_3}
 \end{center}
 \end{frame}
 
@@ -78,13 +81,14 @@
  \begin{block}{Predpostavke}
   \begin{itemize}
    \item Zna"cilna dimenzija v smeri $z$ mnogo manj"sa
-   \item Hitrost v tej smeri majhna, $u_z \ll u_x, u_y$. 
+   \item Hitrost v tej smeri majhna, $u_z \ll u_x, u_y$
+   \item Odvodi po $z$ so ve"cji kot odvodi v ravnini $xy$
   \end{itemize}
   \end{block}
   
   \begin{block}{U"cinek}
   \begin{itemize}
-   \item Povpre"cenje v $z$ smeri $\Rightarrow$ izgubimo profil v $z$ smeri
+   \item Povpre"cenje po $z$ $\Rightarrow$ izgubimo profil v eni smeri
    \item Menjava spremenljivke $\vec u(x,y,z,t) \to h(x,y,t)$
    \item 4 skalarne koli"cine ($\vec u, p$) $\to$ 1 skalarna koli"cina. 
    \end{itemize}
@@ -157,7 +161,9 @@
 \end{frame}
 
 \begin{frame}{Neviskozna opna}
+\begin{center}
  \includegraphics[height=.5\textheight]{./Slike/mehurcek-rezultat-1}
+\end{center}
  \begin{itemize}
   \item Razpad simetrije v smeri $x$ $\Rightarrow$ razpad opne v valje
   \item Valji naprej razpadejo v kapljice
@@ -166,11 +172,22 @@
 \end{frame}
 
 \begin{frame}{Viskozna opna}
- \includegraphics[width=.7\textwidth]{./Slike/scat-rezultat-1}
+\begin{columns}
+  \begin{column}{.65\textwidth}
+ \includegraphics[width=\textwidth]{./Slike/meh-vis-1} \\
+ \includegraphics[width=\textwidth]{./Slike/scat-rezultat-1} 
+  \end{column}
+
+\begin{column}{.35\textwidth}
  \begin{itemize}
   \item Po"casnej"se umikanje roba
   \item Opna ne razpade
- \end{itemize}
+ \end{itemize} 
+\end{column}
+
+\end{columns}
+
+ 
 \end{frame}
  
 \begin{frame}{Kra"ski "zlebi"ci}
@@ -183,7 +200,7 @@
   \begin{itemize}
     \item Na kra"skih pobo"cjih pod vplivom de"zja
     \item Po"casen proces, te"zko izvajati eksperimente
-    \item Ena"cbe za tok teko"cine sklopljen s kemijskimi ena"cbami za topljenje apnenca
+    \item Ena"cbe za tok teko"cine sklopljene s kemijskimi ena"cbami za topljenje apnenca
     \end{itemize}
   \end{block}
   
@@ -202,7 +219,7 @@
   \begin{block}{Hidrodinamika}
   \begin{itemize}
    \item Navier-Stokesove ena"cbe
-   \item Lubrikacijski pribli"zek $u \rightarrow h$
+   \item Lubrikacijski pribli"zek $(\vec u, p) \rightarrow h$
   \end{itemize}
   \end{block}
   
