@@ -23,6 +23,7 @@ inline double omega(int korak, double alpha = 1)
 
 inline int meja(int i)
 {
+    return N; // Za kvadratno cev
     if (i < N/3)
     {
         return N-i;
@@ -35,6 +36,25 @@ inline int meja(int i)
     {
         return i;
     }
+}
+
+double pretok()
+{
+    double p = 0;
+    for (int i = 1; i < N/2; ++i)
+    {
+        const double mj = meja(i);
+        for (int j = 1; j < mj; ++j)
+        {
+            p += 2*gsl_matrix_get(U, i, j);
+        }
+    }
+    const double mj = meja(N/2);
+    for (int j = 1; j < mj; ++j)
+    {
+        p += gsl_matrix_get(U, N/2, j);
+    }
+    return p * h * h;
 }
 
 void popravi(int i, int j, double eps, double omega, double* vsota)
@@ -131,9 +151,10 @@ double korak_valj(double P, double omega)
     return popravek;
 }
 
-int cev(double omg, bool print)
+int cev(double omg, bool print = false, bool pretok_p = false)
 {
     U = gsl_matrix_alloc(N/2+1,N+1);
+    h = 1.0/N;
     gsl_matrix_set_zero(U);
     int korak = 0;
     double eps;
@@ -141,7 +162,6 @@ int cev(double omg, bool print)
     {
         eps = korak_cev(-1.0, omg);
         ++korak;
-        std::cout << "Popravek pri koraku " << korak << " je bil " << eps << std::endl;
     }
     while (eps > 1e-8);
     
@@ -163,8 +183,14 @@ int cev(double omg, bool print)
         fclose(f);
     }
     
+    if (pretok_p)
+    {
+        std::cout << "Pretok je " << pretok() << std::endl;
+    }
+    
     gsl_matrix_free(U);
     U = 0;
+    std::cout << "Koncal po " << korak << " korakih, N = " << N << std::endl;
     return korak;
 }
 
@@ -207,7 +233,32 @@ int valj(double omg, bool print)
 
 double trajanje(double x, void* param)
 {
-    return cev(x, false);
+    return cev(x, false, false);
+}
+
+void razni_omega()
+{
+    N = 90;
+    FILE* f = fopen("g_razni_omega_90.dat", "wt");
+    for (double omega = 1.6; omega < 1.99; omega += 0.005)
+    {
+        fprintf(f, "%g, %d\n", omega, cev(omega, false));
+    }
+    fclose(f);
+    N = 180;
+    f = fopen("g_razni_omega_180.dat", "wt");
+    for (double omega = 1.6; omega < 1.99; omega += 0.005)
+    {
+        fprintf(f, "%g, %d\n", omega, cev(omega, false));
+    }
+    fclose(f);
+    N = 30;
+    f = fopen("g_razni_omega_30.dat", "wt");
+    for (double omega = 1.6; omega < 1.99; omega += 0.005)
+    {
+        fprintf(f, "%g, %d\n", omega, cev(omega, false));
+    }
+    fclose(f);
 }
 
 void najdi_omega(FILE* f)
@@ -277,6 +328,15 @@ int main(int argc, char **argv) {
         {
             N = atoi(argv[++i]);
             valj(2.0/(1.0 + M_PI/N), true);
+        }
+        else if (strcmp(argv[i], "omega") == 0)
+        {
+            razni_omega();
+        }
+        else if (strcmp(argv[i], "pretok") == 0)
+        {
+            N = atoi(argv[++i]);
+            cev(2.0/(1.0+M_PI/N), false, true);
         }
     }
     return 0;

@@ -1,0 +1,134 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[unicode=true]{hyperref}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage{float}
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\newcommand{\dd}{\mathrm{d}}
+
+\newcommand{\parcialno}[2]{
+  \frac{\partial #1}{\partial #2}
+}
+\newcommand{\parcdva}[2]{
+  \frac{\partial^2 #1}{\partial #2 ^2}
+}
+\newcommand{\lag}{\mathcal{L}}
+
+\title{Parcialne diferencialne ena"cbe \\ Relaksacija}
+\author{Miha \v Can\v cula}
+\begin{document}
+
+\maketitle
+
+\section{Metoda}
+
+Problem sem re"seval z diskretno mre"zo. Ker imata obe nalogi zrcalno simetrijo, sem diskretizacijo dolo"cil tako, so bile to"cke na vseh robovih in tudi na simetrijski ravnini. Celotno stanje, vklju"cno z robnimi to"ckami, sem predstavil z $(N+1) \times (N/2+1)$ to"ckami. Na ta na"cin sem lahko zagotovil, da je bila razdalja med to"ckami enaka v obeh dimenzijah. 
+
+Iteracijo sem izvajal tako, da sem v spominu dr"zal le eno kopijo celotnega polja, torej po Seidlovem postopku. Za hitrej"so konvergenco sem vsak korak izvedel na lihih in sodih to"ckah lo"ceno. 
+
+Postopek sem prekinil, ko je povpre"cni kvadrat popravkov dosegel dovolj majhno vrednost. 
+
+\section{"Cebi"sev pospe"sek}
+
+Hitrost konvergence sem meril na primeru cevi iz prve naloge. Najprej sem izra"cunal najugodnej"so vrednost $\omega$. Privzel sem, da je ta vrednost med 1 in 2, nato pa optimalno vrednost na"sel z minimizacijo "stevila korakov. Rezultati so na Sliki~\ref{fig:omega-min}. 
+
+\begin{figure}[H]
+  \input{g_alpha}
+  \caption{Optimalen parameter $\alpha$ za cev z danim prerezom}
+  \label{fig:omega-min}
+\end{figure}
+
+Dobljena vrednost za $\alpha$ je malo manj"sa od enice, ki bi jo pri"cakovali za kvadratno cev. 
+
+Pri razli"cnem "stevilu to"ck sem tudi opazoval odvisnost "stevila potrebnih korakov od izbrane $\omega$. Pri tem en korak pomeni popravek vrednosti funkcije $u$ v vseh to"ckah. Odvisnost je prikazana na Sliki~\ref{fig:omega}. 
+
+\begin{figure}[H]
+  \input{g_omega}
+  \caption{Odvisnost "stevila potrebnih korakov od parametra $\omega$}
+  \label{fig:omega}
+\end{figure}
+
+V obeh primerih vidimo najprej po"casno padanje, nato oster minimum in hitro nara"s"canje, ko se $\omega$ bli"za 2. "Ce dose"ze 2, postopek ne konvergira ve"c. Pri majhnih $\omega$ simulacija z ve"cjim "stevilo to"ck potrebuje tudi ve"cje "stevilo korakov, medtem ko za velike $\omega$ razlike ni ve"c. 
+
+\section{Pretok po cevi}
+
+Tu re"sujemo Poissonovo ena"cbo $\nabla^2 u = \rho$, kjer $\rho$ predstavlja tla"cno razliko med koncema cevi. Ker je ena"cba linearna, lahko postavimo $\rho=1$, tako da imamo brezparametri"cen problem. 
+
+\begin{figure}[H]
+\centering
+  \includegraphics[width=.8\textwidth]{g_cev}
+  \caption{Pretok teko"cine po cevi}
+  \label{fig:cev}
+\end{figure}
+
+Za nestisljivo teko"cino je pretok $\vec j$ sorazmeren s hitrostjo $\vec u$. Ker smo re"sevali ena"cbo za $u$, moramo za dolo"citev skupnega pretoka le integrirati hitrost po celotnem preseku cevi. 
+
+\begin{align}
+  \Phi = \int \! u\; \dd S \approx h^2 \sum_{i,j=0}^N u_{i,j} 
+\end{align}
+
+
+V enotah, dolo"cenih z brezdimenzijsko ena"cbo $\nabla u = 1$, je skupni pretok (izra"cunan pri $N=900$) enak $\Phi \approx 0.0163137$. Za primerjavo, pretok po kvadratni cevi je ve"c kot "se enkrat ve"cji in zna"sa $\Phi_\Box \approx 0.0351342$. "Ce upo"stevamo razli"cna preseka obeh cevi lahko izra"cunamo razmerje preto"cnosti
+
+\begin{align}
+  \frac{\Phi}{\Phi_\Box} \cdot \frac{S_\Box}{S} &= \frac{\Phi}{\Phi_\Box} \cdot \frac{9}{7} \approx 0,59698975
+\end{align}
+
+\section{Prevajanje toplote po valju}
+
+Prevajanje toplote opisuje difuzijska ena"cba $\parcialno{T}{t} = D\nabla^2 T$. Z relaksacijo dobimo stacionarno stanje, torej $\parcialno{T}{t} = 0$. Difuzijska ena"cba tedaj preide v Laplaceovo
+
+\begin{align}
+  \nabla^2 T = 0
+\end{align}
+
+"Ce spodnjo ploskev grejemo, bo temperatura povsod po valju ve"cja ali enaka $T_1$, zato lahko robni pogoj postavimo na $T_1=0$. Na greti ploskvi velja zakon o prevajanju toplote $P = -\lambda \parcialno{T}{z}$. Ker je celoten problem "se vedno linearen, lahko konstanto $P/\lambda$ dolo"cimo poljubno in robni pogoj zapi"semo kot
+
+\begin{align}
+  \left.\parcialno{T}{z}\right|_{z=0} &= -1
+\end{align}
+
+Za samo re"sevanje ena"cbe predznak gretja nima pomena, z minusom ga izberemo zaradi la"zje predstave, saj bo v tem primeru temperatura po valju pozitivna. 
+
+Da lahko ena"cbo re"simo numeri"cno moramo operator $\nabla^2$ zapisati v cilindri"cnih koordinatah in ga diskretizirati. 
+
+\begin{align}
+  \nabla^2u = \frac{1}{r} \parcialno{}{r} \left(r\parcialno{u}{r}\right) + \parcdva{u}{z} = \frac{1}{r} \parcialno{u}{r} +  \parcdva{u}{r} + \parcdva{u}{z}
+\end{align}
+
+Pri tem smo privzeli simetrijo okrog navpi"cne osi, tako da je $\parcialno{u}{\phi} = 0$. Odvod po $z$ lahko diskretiziramo enako kot pri prvi nalogi, nov je le prvi "clen. Ker re"sujemo ena"cbo drugega reda, lahko za prvi odvod vzamemo simetri"cno diskretizacijo. 
+
+\begin{align}
+  \left.\frac{1}{r}\parcialno{u}{r}\right|_{r=r_i} &\approx \frac{1}{r_i} \frac{u_{i+1,j}-u_{i-1,j}}{2h} = \frac{u_{i+1,j}-u_{i-1,j}}{2ih^2} \\
+  h^2\nabla^2 u &\approx \frac{u_{i+1,j}-u_{i-1,j}}{2i} + u_{i+1,j} + u_{i-1,j} + u_{i,j+1} + u_{i,j-1} - 4u_{i,j} \\
+&= (1+\frac{1}{2i})u_{i+1,j} + (1-\frac{1}{2i})u_{i-1,j} + u_{i,j+1} + u_{i,j-1} - 4u_{i,j} 
+\end{align}
+
+Pri tem zapisu sem privzel, da je $r_i = i\cdot h$. V mojem primeru sem vzel $i=0$ na robu, tako da sem v ra"cun vstavil $N/2-i$ namesto $i$. Zaradi simetrije sem lahko tudi tokrat ra"cun izvajal le za polovico valja. Ena"cbo sem re"seval enako kot v primeru cevi. Rezultat je na Sliki \ref{fig:valj}
+
+\begin{figure}[H]
+\centering
+  \includegraphics[width=.8\textwidth]{g_valj}
+  \caption{Temperaturni profil v kovinskem valju}
+  \label{fig:valj}
+\end{figure}
+
+\end{document}

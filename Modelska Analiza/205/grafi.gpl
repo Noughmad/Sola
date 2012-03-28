@@ -1,0 +1,39 @@
+set terminal epslatex color solid
+
+pi = 3.141592
+f(x) = 2/(1+a*pi/x)
+
+fit f(x) "g_hitrost_omega.dat" via a
+
+set output "g_alpha.tex"
+set xlabel "$N$"
+set ylabel "$\\omega$"
+set key at 250,1.9
+plot "g_hitrost_omega.dat" t "Meritve", f(x) t sprintf("$\\alpha = %g$", a)
+
+set style data lines
+set output "g_omega.tex"
+set xlabel "$\\omega$"
+set ylabel "\"Stevilo korakov"
+set logscale y
+set key at 1.95, 3000
+
+plot "g_razni_omega_180.dat" t "$N = 180$", "g_razni_omega_90.dat" t "$N = 90$", "g_razni_omega_30.dat" t "$N=30$"
+unset logscale 
+
+set terminal png crop size 800x800 transparent
+set size square
+unset tics
+
+set pm3d map
+set hidden3d
+unset colorbox
+
+set output "g_cev.png"
+unset xlabel
+unset ylabel
+
+splot "g_test_cev.dat" u ($1/300):($2/300):($3+0.1) matrix with pm3d notitle
+
+set output "g_valj.png"
+splot "g_test_valj.dat" u ($1/150-1):($2/150):($3+0.1) matrix with pm3d notitle
