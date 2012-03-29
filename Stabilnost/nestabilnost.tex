@@ -58,15 +58,13 @@ V hidrodinamiki lahko najdemo razli"cne pojave, kjer je tok teko"cine nestabilen
 
 \section{Uvod}
 
-Na nestabilnosti naletimo na mnogih podro"cjih fizike. Zaradi zapletenosti ena"cb in izobilja razli"cnih pogojev so "se posebej zanimive tiste, ki izhajajo iz "studija gibanja teko"cin, hidrodinamike. 
+O nestabilnosti govorimo, ko infinitezimalno majhna sprememba trenutnega stanja lahko povzro"ci ve"cjo, merljivo razliko po nekem kon"cnem "casu~\cite{drazin}. Na nestabilnosti naletimo na mnogih podro"cjih fizike. Zaradi zapletenosti ena"cb in izobilja razli"cnih pogojev so "se posebej zanimive tiste, ki izhajajo iz "studija gibanja teko"cin, hidrodinamike. 
 
 Hidrodinamika je zelo "siroko podro"cje, ena"cbe, ki opisujejo gibanje teko"cin, pa zahtevne za re"sevanje, zato se poslu"zimo dolo"cenih poenostavitev in pribli"zkov. V tem seminarju sem se posvetil le tankim plastem teko"cine. Na ta na"cin si lahko ena"cbe poenostavimo do tak"sne mere, da jih bomo znali re"siti vsaj numeri"cno, vseeno pa tudi v tako zmanj"sanem naboru sistemov najdemo veliko zanimivih problemov. Vse obravnavane primere tudi dobro poznamo iz vsakdanjega "zivljenja. 
 
 \section{Stabilnost in zlom simetrije}
 
-O nestabilnosti govorimo, ko infinitezimalno majhna sprememba trenutnega stanja lahko povzro"ci ve"cjo, merljivo razliko po nekem kon"cnem "casu~\cite{drazin}. 
-
-Tak"sna definicija je precej splo"sna, zato jo za potrebe seminarja raje definiramo o"zje in bolj eksaktno. Stabilnost sistema pomeni, da vse motnje, ki so na za"cetku majhne, ostanejo majhne tudi ob poljubnem "casu. Nasprotno, sistem je nestabilen, "ce vsaj ena motnja po nekem "casu preneha biti majhna. Obi"cajno to pomeni, da za vsako motnjo, ki je ob za"cetnem "casu omejena z neko zgornjo mejo, obstaja neka druga zgornja meja, ki je motnja nikoli ne prese"ze. 
+Zgornja definicija nestabilnosti je precej splo"sna, zato jo za potrebe seminarja raje definiramo o"zje in bolj eksaktno. Stabilnost sistema pomeni, da vse motnje, ki so na za"cetku majhne, ostanejo majhne tudi ob poljubnem "casu. Nasprotno, sistem je nestabilen, "ce vsaj ena motnja po nekem "casu preneha biti majhna. Obi"cajno to pomeni, da za vsako motnjo, ki je ob za"cetnem "casu omejena z neko zgornjo mejo, obstaja neka druga zgornja meja, ki je motnja nikoli ne prese"ze. 
 
 "Ce se poleg stabilnosti motnja s "casom manj"sa, je tok \emph{asimptoti"cno stabilen}. V teoriji dinami"cnih sistemov asimptoti"cno stabilni re"sitvi re"cemo tudi atraktor. 
 
@@ -75,7 +73,6 @@ Stabilnost oz. nestabilnost sistema je tesno povezana z zlomom simetrije. Predst
 Primer nestabilnega pojava je svin"cnik, postavljen na konico. Ena"cba, ki opisuje njegovo gibanje, je simetri"cna glede na rotacijo okrog osi svin"cnika. Zato lahko najdemo re"sitev z enako simetrijo, to je pokon"cna lega. "Ce pa svin"cnih le malo izmaknemo iz simetri"cne lege, bo padel v dolo"ceno smer in kon"cal v stanju brez rotacijske simetrije. 
 
 Po drugi strani pa je te"zno nihalo stabilen sistem. "Ce tak"sno nihalo zmotimo, bo motnja vseskozi ostajala pribli"zno enake velikosti, zaradi trenja in zra"cnega upora se bo s "casom celo manj"sala. Po dolgem "casu bo sistem spet v simetri"cnem stanju. 
-
 
 \section{Hidrodinamika}
 
@@ -127,6 +124,8 @@ kjer so $\vec u_i$ in $p_i$ lastni valovni na"cini. Ker sta ena"cbi linearni v k
 
 Hitro vidimo, da bo tok nestabilen, "ce ima vsaj ena lastna vrednost $s_i$ realni del ve"cji od 0, v nasprotnem primeru pa bo stabilen. Problem stabilnosti sistema lahko torej prevedemo na re"sevanje sistema linearnih ena"cb, kar je enakovredno iskanju lastnih vrednosti matrike. Sedaj tudi vidimo, da matemati"cno natan"cni definiciji mere za velikost motnje in kriterija za stabilnosti nimata velikega pomena, saj motnje v obliki normalnih valovnih na"cinov le eksponentno nara"s"cajo ali padajo, njihova oblika pa ostaja enaka. 
 
+Tak"sna poenostavitev velja le za majhne motnje. "Ce je sistem nestabilen in se motnja s "casom pove"ca, bo po nekem "casu presegla mejo, kjer je lineariziran pribli"zek "se smiselen. Tedaj moramo v ena"cbi upo"stevati tudi vi"sje "clene, zato le-ta ni ve"c linearna. 
+
 \subsection{Lubrikacijski pribli"zek}
 
 V geometrijah, kjer je ena izmed dimenzij mnogo manj"sa od ostalih, si lahko gibalne ena"cbe poenostavimo z lubrikacijskim pribli"zkom (angl. lubrication approximation). Odvisnost od te koordinate lahko izlo"cimo in s tem zmanj"samo "stevilo spremenljivk v Navier-Stokesovi ena"cbi. 
@@ -138,7 +137,7 @@ Na tanki plasti teko"cine obstajata dve razlicni dol"zinski skali, od katerih so
   \item Odvod poljubne spremenljivke po $z$ je dosti ve"cji od odvoda v ravnini. 
 \end{enumerate}
 
-Pri ra"cunih lahko nekatere izmed "clenov v Navier-Stokesovih ena"cbah zanemarimo. Ker pa imamo sedaj smer, v kateri se teko"cina obna"sa druga"ce kot v ostalih, imamo namesto ene vektor"ske ena"cbe razli"cni ena"cbi v smereh $z$ in $xy$. 
+Pri ra"cunih lahko nekatere izmed "clenov v Navier-Stokesovih ena"cbah zanemarimo. Ker pa imamo sedaj smer, v kateri se teko"cina obna"sa druga"ce kot v ostalih, imamo namesto ene vektor"ske ena"cbe razli"cni ena"cbi v smereh $z$ in $xy$. V definiciji Reynoldsovega "stevila nastopa tudi velikostna skala, ki je v tanki plasti enaka debelini plasti, torej majhni dimenziji, $R = v_0 z_0/\mu$. V tak"sni geometriji lahko vedno ra"cunamo v limiti, ko je Reynoldsovo "stevilo majhno. 
 
 Poleg izpu"s"canja "clenov v ena"cbi pa nam tanka plast teko"cine omogo"ca "se eno spremembo. "Ce nas odvisnost hitrosti od vi"sine $z$ ne zanima, lahko hitrost povpre"cimo po debelini filma
 
@@ -156,14 +155,14 @@ s "cimer lahko Navier-Stokesove ena"cbe zapi"semo za spremenljivko $h(x,y,t)$. N
 
 \section{Teko"cina na klancu}
 
-Hidrodinamsko nestabilnost lahko opazujemo pri polzenju teko"cine po klan"cini~\cite{kondic}. Ta pojav je vsem dobro znan, saj ga lahko vidimo na avtomobilskih steklih v de"zju, enostavno pa je tudi pripraviti poskus doma. "Ceprav je re"sevanje ena"cb zahteveno, lahko rezultat preverimo z eksperimentom. 
-
 \begin{figure}[h]
 \centering
  \includegraphics[width=.9\textwidth]{./Slike/film-slika}
 \caption{Polzenje tanke plasti teko"cine po nagnjeni povr"sini. Majhne motnje v obliki fronte (levo) hitro prerastejo v vzorec, ki ni enakomeren, je pa pribli"zno periodi"cen (desno). Vir: \cite{kondic}}
 \label{fig:film-neenakomernost}
 \end{figure}
+
+Hidrodinamsko nestabilnost lahko opazujemo pri polzenju teko"cine po klan"cini~\cite{kondic}. Ta pojav je vsem dobro znan, saj ga lahko vidimo na avtomobilskih steklih v de"zju, enostavno pa je tudi pripraviti poskus doma. "Ceprav je re"sevanje ena"cb zahteveno, lahko rezultat preverimo z eksperimentom. 
 
 Vzorec na sliki~\ref{fig:film-neenakomernost} lahko pojasnimo s kratkim razmislekom. Po klan"cini navzdol vodo poganja sila te"ze, zadr"zujeta pa jo viskoznost in povr"sinska napetost, ki pa imata velik vpliv le na tanke plasti. "Ce majhna motnja ob nekem trenutku povzro"ci, da je na nekem mestu plast voda debelej"sa, imata tako viskoznost kot povr"sinska napetost manj"si vpliv na gibanje vode kot sila te"ze. Na tistem mestu steklo ve"c vode kot drugod, kar bo le okrepilo za"cetno motnjo, tako da bo na tistem mestu voda vedno la"zje tekla. 
 
@@ -194,7 +193,7 @@ Ker obravnavamo tanke filme, lahko privzamemo, da je debelina $h$ manj"sa od kat
 
 \begin{figure}[h]
 \centering
- \includegraphics[width=.8\textwidth]{./Slike/film-skica}
+ \includegraphics[width=.6\textwidth]{./Slike/film-skica}
 \caption{Skica teko"cine na klancu v dveh dimenzijah. Viden je greben tik za fronto teko"cine in pa zo"zitev dale"c za fronto. Pri ra"cunih raje privzamemo, da teko"cina sproti priteka z zgornjega roba klan"cine, tako da zo"zitve ni treba upo"stevati}
 \label{fig:film-skica}
 \end{figure}
@@ -203,11 +202,10 @@ Zgornja ena"cba je simetri"cna glede na poljuben premik v kraju in "casu, saj te
 
 \begin{figure}[h]
  \centering
- \includegraphics[width=.5\textwidth]{./Slike/film-zacetni}
+ \includegraphics[width=.4\textwidth]{./Slike/film-zacetni}
  \caption{Za"cetni pogoj za dolo"canje toka teko"cine po klancu. }
  \label{fig:film-zacetni}
 \end{figure}
-
 
 Da najdemo osnovno re"sitev, najprej privzamemo, da ima re"sitev enako simetrijo kot sama ena"cba. Postavimo se v koordinatni sistem kot na sliki~\ref{fig:film-skica}. Klanec, po katerem te"ce teko"cina, ima translacijsko simetrijo v smeri $y$, zato za osnovno re"sitev velja $h_y = 0$. Za la"zje re"sevanje preidemo "se na brezdimenzijske koli"cine. V ena"cbi ostane le "se en parameter $D(\alpha)$, ki podaja razmerje med vplivom viskoznosti in povr"sinske napetosti, brezdimenzijsko dol"zino klanca v smeri $x$ pa ozna"cimo z $L$. Ena"cba za brezdimenzijske koli"cine, ki predpostavlja simetrijo in zato opisuje osnovno re"sitev problema, se glasi
 
@@ -227,7 +225,6 @@ Zgornja ena"cba je "se vedno prezahtevna, da bi jo re"sevali analiti"cno, zato p
  \label{fig:film-osnovna}
 \end{figure}
 
-
 \subsection{Nestabilnost}
 
 Osnovna re"sitev $h_0(x, t)$ je sicer odvisna od "casa, vendar lahko predpostavimo, da "celo teko"cine polzi s konstantno hitrostjo $U$. "Casovno odvisnost koeficientov $h_0$ bomo torej odpravili, "ce se postavimo v koordinatni sistem, ki se giblje s to hitrostjo. V tem primeru uvedemo spremenljivko $\xi = x - Ut$, splo"sno re"sitev pa lahko zapi"semo v obliki
@@ -245,8 +242,6 @@ Motnjo $h_1$ izberemo tak"sno, da zanjo ne dr"zi translacijska simetrija v smeri
 \end{align}
 
 Tako $\phi$ kot $s$ sta odvisni od valovnega "stevila $q$. "Ce je realni del $s$ pozitivna, bo majhna motnja eksponentno nara"s"cala in povzro"cila zlom simetrije. Pri"cakujemo, da bo valovna dol"zina, pri kateri je vrednost $s$ najve"cja, enaka razdalji med posameznimi pasovi na sliki~\ref{fig:film-neenakomernost}, saj bo motnja s tak"sno valovno dol"zino najhitreje nara"s"cala. Odvisnost $s(q)$, izra"cunana numeri"cno, je prikazana na sliki~\ref{fig:film-rast}. Valovna dol"zina najhitrej"se rasti je odvisna od parametra $D$, prav tako pa tudi hitrost rasti in z njo karakteristi"cni "cas, po katerem motnja postane vidna. 
-
-% TODO: Vec poudarka, zakljucek poglavja
 
 \begin{figure}[h]
  \centering
@@ -356,10 +351,9 @@ Leva slika prikazuje razvoj roba pri $Z=0,0045$, desna pa pri $Z=4,5$. }
 
 Obe sliki se kvalitativno razlikujeta od slike~\ref{fig:mehurcek-rez-1}. Valji teko"cine se ne odcepljajo od roba, zato ne pride do razpada v kapljice. Za razpad milni"cnega mehur"cka je viskoznost teko"cine res klju"cnega pomena. 
 
-\clearpage
 \section{Kra"ski "zlebi"ci}
 
-"Zlebi"ci so kra"ska tvorba, ki nastane na nagnjenih povr"sinah apnen"castih skal pod vplivom de"zja. So vzporedni "zlebovi v smeri najve"cje strmine. Nastanejo zaradi kislih primesi v de"zevnici, ki po"casi topijo kamnino. 
+"Zlebi"ci so kra"ska tvorba, ki nastane na nagnjenih povr"sinah apnen"castih skal pod vplivom de"zja. So vzporedni "zlebovi v smeri najve"cje strmine. Nastanejo zaradi kislih primesi v de"zevnici, ki po"casi topijo kamnino~\cite{perne,perne-seminar}. Tipi"cno so "siroki nekaj centimetrov. 
 
 \begin{figure}[h]
 \centering
@@ -376,7 +370,7 @@ Proces tvorbe "zlebi"cev je bolj zapleten kot zgoraj obravnavani primeri. Namest
  \centering
  \subfigure{\includegraphics[height=.7\textwidth]{./Slike/zlebici-profil}}
  \subfigure{\includegraphics[height=.7\textwidth]{./Slike/zlebici-slika}}
- \caption{Zabele"zeni pre"cni profili "zlebi"cev(levo, \cite{gams}) in pobo"cje, prekrito z "zlebi"ci (desno, \cite{perne})}
+ \caption{Zabele"zeni pre"cni profili "zlebi"cev(levo, \cite{gams}) in skala, prekrita z "zlebi"ci (desno, \cite{perne})}
 \end{figure}
 
 
@@ -403,6 +397,7 @@ Obravnavani primeri "se zda"lec niso vsi naravni pojavi, kjer se v toku teko"cin
   \bibitem{scat} L. J. Gordillo Zavaleta, Self-similar and travelling wave solutions in surface tension-driven thin planar films, Scientific Computing Advanced Training (2007)
   \bibitem{pandit} A. B. Pandit in J. F. Davidson, J. Fluid Mech. \textbf{212}, 11 (1990)
   \bibitem{perne} M. Perne, Advektivni model topljenja opnenca in nastanek de"znih "zlebi"cev, Diplomsko delo (2007)
+  \bibitem{perne-seminar} M. Perne, Physics of karst forms: rillenkarren, Seminar (2006)
 \end{thebibliography}
 
 
