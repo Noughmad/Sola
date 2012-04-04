@@ -102,7 +102,7 @@ function izracun_valj(n,st)
 	nfi = 2*n;
     A = matrik_valj(nr,nfi);
     [Vektorji, Vrednosti] = eigs(A,st,'sm');
-	diag(Vrednosti)
+	sqrt(diag(Vrednosti))
     for i = 1:st
         V = reshape(Vektorji(:,i),nfi,nr);
         save(["g_valj_" int2str(n) "_" int2str(st-i+1) ".dat"], "V");

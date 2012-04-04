@@ -1,9 +1,7 @@
-set terminal epslatex color solid
-set style data lines
+set terminal png crop transparent
 
-set xlabel "$x$"
-set ylabel "$y$"
-set zlabel "$u$"
+set style data lines
+unset colorbox
 
 set pm3d map
 
@@ -15,14 +13,23 @@ unset ytics
 
 ## Kvadrat
 
-set output "g_opna_2_1.tex"
+set output "g_opna_2_1.png"
 splot "g_opna_64_2_1.dat" u 1:2:(-$3) matrix notitle
 
-set output "g_opna_2_2.tex"
+set output "g_opna_2_2.png"
 splot "g_opna_64_2_2.dat" matrix notitle
 
-set output "g_opna_2_3.tex"
+set output "g_opna_2_3.png"
 splot "g_opna_64_2_3.dat" matrix notitle
+
+set output "g_opna_2_4.png"
+splot "g_opna_64_2_4.dat" u 1:2:3 matrix notitle
+
+set output "g_opna_2_5.png"
+splot "g_opna_64_2_5.dat" matrix notitle
+
+set output "g_opna_2_6.png"
+splot "g_opna_64_2_6.dat" matrix notitle
 
 ## Polkrog
 
@@ -30,9 +37,21 @@ set mapping cylindrical
 pi2 = 3.141592/2
 set autoscale
 
-set output "g_valj_1.tex"
+set output "g_valj_1.png"
 splot "g_valj_64_1.dat" u (($2+0.5)/64*pi2):(-$3):1 matrix notitle
 
-set output "g_valj_2.tex"
+set output "g_valj_2.png"
 splot "g_valj_64_2.dat" u (($2+0.5)/64*pi2):3:1 matrix notitle
+
+set output "g_valj_3.png"
+splot "g_valj_64_3.dat" u (($2+0.5)/64*pi2):3:1 matrix notitle
+
+set output "g_valj_4.png"
+splot "g_valj_64_4.dat" u (($2+0.5)/64*pi2):3:1 matrix notitle
+
+set output "g_valj_5.png"
+splot "g_valj_64_5.dat" u (($2+0.5)/64*pi2):3:1 matrix notitle
+
+set output "g_valj_6.png"
+splot "g_valj_64_6.dat" u (($2+0.5)/64*pi2):3:1 matrix notitle
 
