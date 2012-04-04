@@ -23,13 +23,35 @@ set output "g_opna_2_3.png"
 splot "g_opna_64_2_3.dat" matrix notitle
 
 set output "g_opna_2_4.png"
-splot "g_opna_64_2_4.dat" u 1:2:3 matrix notitle
+splot "g_opna_64_2_4.dat" matrix notitle
 
 set output "g_opna_2_5.png"
 splot "g_opna_64_2_5.dat" matrix notitle
 
 set output "g_opna_2_6.png"
 splot "g_opna_64_2_6.dat" matrix notitle
+
+## m = 0.5
+
+set output "g_opna_05_1.png"
+splot "g_opna_64_0.5_1.dat" u 1:2:(-$3) matrix notitle
+
+set output "g_opna_05_2.png"
+splot "g_opna_64_0.5_2.dat" matrix notitle
+
+set output "g_opna_05_3.png"
+splot "g_opna_64_0.5_3.dat" matrix notitle
+
+set output "g_opna_05_4.png"
+splot "g_opna_64_0.5_4.dat" matrix notitle
+
+set output "g_opna_05_5.png"
+splot "g_opna_64_0.5_5.dat" matrix notitle
+
+set output "g_opna_05_6.png"
+splot "g_opna_64_0.5_6.dat" matrix notitle
+
+
 
 ## Polkrog
 
