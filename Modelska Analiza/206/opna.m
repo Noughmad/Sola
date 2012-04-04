@@ -88,7 +88,7 @@ function izracun(n,c,stv)
 	SizeA = size(A)
 	SizeB = size(B)
     [Vektorji, Vrednosti] = eigs(A,B,stv,'sm');
-    for i = 1:st
+    for i = 1:stv
         V = reshape(Vektorji(:,i),n,n);
         save(["g_opna_" int2str(n) "_" num2str(c) "_" int2str(stv-i+1) ".dat"], "V");
         Vrednosti(i,i)

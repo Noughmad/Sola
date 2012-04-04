@@ -1,0 +1,81 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[unicode=true]{hyperref}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage{float}
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\newcommand{\dd}{\mathrm{d}}
+
+\newcommand{\parcialno}[2]{
+  \frac{\partial #1}{\partial #2}
+}
+\newcommand{\parcdva}[2]{
+  \frac{\partial^2 #1}{\partial #2 ^2}
+}
+\newcommand{\lag}{\mathcal{L}}
+
+\title{Parcialne diferencialne ena\v cbe \\ Robni problemi, relaksacija}
+\author{Miha \v Can\v cula}
+\begin{document}
+
+\maketitle
+
+\section{Postopek re"sevanja}
+
+Geometrije nalogo sem pribli"zal z diskretno mre"zo z $N$ to"ckami na vsakem robu. Poljubno stanje opne je tedaj vektor dimenzije $N^2$, operator $\nabla^2$ pa je predstavljen z matriko $A$ dimenzije $N^2 \times N^2$. Diskretizacijo sem izbral tako, da so bile skrajne to"cke za polovico koraka oddaljene od fiksnega roba opne. Na na na"cin je bila matrika $A$ simetri"cna. 
+
+Kvadrati lastnih frekvenc so lastne vrednosti matrike $A$, nihajni na"cini pa ustrezni lastni vektorji. V prvem delu, ko sem obravnaval opno z neenakomerno maso, sem re"seval posplo"sen problem lastnih vrednosti $\vec A\vec u = \lambda \vec B \vec u$. Vse izra"cune sem izvedel v programu Octave s pomo"cjo funkcije \texttt{eigs}, ki uporablja Fortranovo knji"znico \texttt{ARPACK}. Ta knji"znica omogo"ca u"cinkovito re"sevanje problemov lastnih vrednosti velikih strukturiranih matrik. Matriki $A$ in $B$ sta zelo prazni, zato sem zanju uporabil ustrezno redko (\textit{sparse}) predstavitev. Kljub temu mi je uspelo re"sitiv problem v doglednem "casu le do $N = 64$. 
+
+\section{Neenakomerna kvadratna opna}
+
+\begin{figure}[H]
+\input{g_opna_2_1}
+  \caption{Prvi lastni nihajni na"cin kvadratne opne, $\alpha = 2$}
+  \label{fig:opna-2-1}
+\end{figure}
+
+\begin{figure}[H]
+\input{g_opna_2_2}
+  \caption{Drugi lastni nihajni na"cin kvadratne opne, $\alpha = 2$}
+  \label{fig:opna-2-2}
+\end{figure}
+
+\begin{figure}[H]
+\input{g_opna_2_3}
+  \caption{Tretji lastni nihajni na"cin kvadratne opne, $\alpha = 2$}
+  \label{fig:opna-2-3}
+\end{figure}
+
+\section{Polkro"zna opna}
+
+\begin{figure}[H]
+\input{g_valj_1}
+  \caption{Prvi lastni nihajni na"cin polkro"zne opne}
+  \label{fig:valj-1}
+\end{figure}
+
+\begin{figure}[H]
+\input{g_valj_2}
+  \caption{Drugi lastni nihajni na"cin polkro"zne opne}
+  \label{fig:valj-2}
+\end{figure}
+
+\end{document}

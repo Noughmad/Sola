@@ -1,0 +1,38 @@
+set terminal epslatex color solid
+set style data lines
+
+set xlabel "$x$"
+set ylabel "$y$"
+set zlabel "$u$"
+
+set pm3d map
+
+set xrange [0:63]
+set yrange [0:63]
+
+unset xtics
+unset ytics
+
+## Kvadrat
+
+set output "g_opna_2_1.tex"
+splot "g_opna_64_2_1.dat" u 1:2:(-$3) matrix notitle
+
+set output "g_opna_2_2.tex"
+splot "g_opna_64_2_2.dat" matrix notitle
+
+set output "g_opna_2_3.tex"
+splot "g_opna_64_2_3.dat" matrix notitle
+
+## Polkrog
+
+set mapping cylindrical
+pi2 = 3.141592/2
+set autoscale
+
+set output "g_valj_1.tex"
+splot "g_valj_64_1.dat" u (($2+0.5)/64*pi2):(-$3):1 matrix notitle
+
+set output "g_valj_2.tex"
+splot "g_valj_64_2.dat" u (($2+0.5)/64*pi2):3:1 matrix notitle
+
