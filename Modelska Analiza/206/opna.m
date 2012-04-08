@@ -91,7 +91,7 @@ function izracun(n,c,stv)
     for i = 1:stv
         V = reshape(Vektorji(:,i),n,n);
         save(["g_opna_" int2str(n) "_" num2str(c) "_" int2str(stv-i+1) ".dat"], "V");
-        Vrednosti(i,i)
+        sqrt(Vrednosti(i,i))*n
     endfor
 	M = reshape(full(diag(B)),n,n);
 	save(["g_masa_" int2str(n) "_" num2str(c) ".dat"], "M");
@@ -102,7 +102,7 @@ function izracun_valj(n,st)
 	nfi = 2*n;
     A = matrik_valj(nr,nfi);
     [Vektorji, Vrednosti] = eigs(A,st,'sm');
-	sqrt(diag(Vrednosti))
+	sqrt(diag(Vrednosti))*nr
     for i = 1:st
         V = reshape(Vektorji(:,i),nfi,nr);
         save(["g_valj_" int2str(n) "_" int2str(st-i+1) ".dat"], "V");

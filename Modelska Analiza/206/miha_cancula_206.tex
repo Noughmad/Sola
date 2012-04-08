@@ -44,38 +44,107 @@ Geometrije nalogo sem pribli"zal z diskretno mre"zo z $N$ to"ckami na vsakem rob
 
 Kvadrati lastnih frekvenc so lastne vrednosti matrike $A$, nihajni na"cini pa ustrezni lastni vektorji. V prvem delu, ko sem obravnaval opno z neenakomerno maso, sem re"seval posplo"sen problem lastnih vrednosti $\vec A\vec u = \lambda \vec B \vec u$. Vse izra"cune sem izvedel v programu Octave s pomo"cjo funkcije \texttt{eigs}, ki uporablja Fortranovo knji"znico \texttt{ARPACK}. Ta knji"znica omogo"ca u"cinkovito re"sevanje problemov lastnih vrednosti velikih strukturiranih matrik. Matriki $A$ in $B$ sta zelo prazni, zato sem zanju uporabil ustrezno redko (\textit{sparse}) predstavitev. Kljub temu mi je uspelo re"sitiv problem v doglednem "casu le do $N = 64$. 
 
+Za obe geometriji in razli"cne porazdelitve gostote opne sem izra"cunal lastno frekvenco $k_i = \sqrt{-\lambda_i}$ in nihajni na"cin, ki je lastni vektor $\vec u$. Namesto operatorja $\nabla^2$ sem v matri"cni obliki zapisal $A = -h^2\nabla^2$, zato sem moral lastne vrednosti pomno"ziti "se s "stevilom to"ck po enem robu, $k_i = N\sqrt{\lambda_i}$. 
+
 \section{Neenakomerna kvadratna opna}
 
-\begin{figure}[H]
-  \subfigure[$k_1 = 0.058841$]{\includegraphics[width=.5\textwidth]{g_opna_2_1}}
-  \subfigure[$k_2 = 0.088345$]{\includegraphics[width=.5\textwidth]{g_opna_2_2}}
-  \subfigure[$k_3 = 0.092194$]{\includegraphics[width=.5\textwidth]{g_opna_2_3}}
-  \subfigure[$k_4 = 0.11387$]{\includegraphics[width=.5\textwidth]{g_opna_2_4}}
-  \subfigure[$k_5 = 0.12178$]{\includegraphics[width=.5\textwidth]{g_opna_2_5}}
-  \subfigure[$k_6 = 0.12275$]{\includegraphics[width=.5\textwidth]{g_opna_2_6}}
-\caption{Prvih 6 nihajnih na"cinov kvadratne opne z $\rho_+ = 2\rho$. }
-\end{figure}
+Opno sem orientiral enako kot na sliki v navodilih, tako da je kri"z spodaj levo. Primerjal sem nekaj najni"zjih lastnih nihanj opne pri razli"cnih razmerjih gostote v krizu $\rho_+$ in na robu $\rho$. Same lastne frekvence oz. velikosti valovnih vektorjem nimajo neposrednega pomena, saj so odvisni od gostote opne. Za la"zjo primerjavo sem se dr"zal notacije v navodilih, tako da je bila $\rho_+ = 1$, gostoto na robu pa sem spreminjal. 
+
+Najprej sem izra"cunal primer, ko je opna v vogalih odebeljena do dvojne povr"sinske gostote. Rezultati so na sliki \ref{fig:kvadrat-2}. Ze na prvi sliki vidimo, da opna niha z ve"cjo amplitudo v zgornjem desnem delu, torej v predelu z ve"cjo gostoto. To je za pri"cakovati, saj potrebujemo ve"cjo ukrivljenost $\nabla^2 u$ da uravnovesimo ve"cjo maso. 
+
+Naslednja tri nihanja imajo hrbte v dveh ali vseh "stirih vogalih. Neenakomernost opne poru"si rotacijsko simetrijo in povzro"ci, da imata prvi dve vzbujeno nihanji (b in c) rahlo razli"cni frekvenci. Peto in "sesto lastno nihanje sta "ze bolj zapleteni in ju iz same geometrije opne ne bi znal napovedati. 
 
 \begin{figure}[H]
-  \subfigure[$k_1 = 0.058841$]{\includegraphics[width=.5\textwidth]{g_opna_05_1}}
-  \subfigure[$k_2 = 0.088345$]{\includegraphics[width=.5\textwidth]{g_opna_05_2}}
-  \subfigure[$k_3 = 0.092194$]{\includegraphics[width=.5\textwidth]{g_opna_05_3}}
-  \subfigure[$k_4 = 0.11387$]{\includegraphics[width=.5\textwidth]{g_opna_05_4}}
-  \subfigure[$k_5 = 0.12178$]{\includegraphics[width=.5\textwidth]{g_opna_05_5}}
-  \subfigure[$k_6 = 0.12275$]{\includegraphics[width=.5\textwidth]{g_opna_05_6}}
-\caption{Prvih 6 nihajnih na"cinov kvadratne opne z $\rho_+ = \rho/2$. }
+\centering
+  \subfigure[$k_1 = 3.7658$]{\includegraphics[width=.4\textwidth]{g_opna_2_1}}
+  \subfigure[$k_2 = 5.6541$]{\includegraphics[width=.4\textwidth]{g_opna_2_2}} \\
+  \subfigure[$k_3 = 5.9004$]{\includegraphics[width=.4\textwidth]{g_opna_2_3}} 
+  \subfigure[$k_4 = 7.2879$]{\includegraphics[width=.4\textwidth]{g_opna_2_4}} \\
+  \subfigure[$k_5 = 7.7936$]{\includegraphics[width=.4\textwidth]{g_opna_2_5}} 
+  \subfigure[$k_6 = 7.8562$]{\includegraphics[width=.4\textwidth]{g_opna_2_6}}
+\caption{Prvih 6 nihajnih na"cinov kvadratne opne z $\rho = 2\rho_+$. }
+\label{fig:kvadrat-2}
 \end{figure}
+
+Ogledal sem si tudi dogajanje, ko ima opna v vogalih manj"so gostoto, kar je prikazano na sliki \ref{fig:kvadrat-05}. Prva tri nihanja so pri"cakovana in pribli"zno zrcalna nihanjem na prej"snji sliki. Osnovno nihanje ima sedaj hrbet pomaknjen proti spodnjem levem vogalu, kjer je gostota ve"cja. Drugi dve nihanji sta zamenjali vlogi, sedaj ima ni"zjo frekvenco nihanje s hrbti levo zgoraj in desno spodaj. "Cetrti nihanji vzorec je podoben "sestemu na zgornji sliki, ostala dva pa sta nova. Zaradi manj"se skupne mase so frekvence v povpre"cju vi"sje. 
+
+\begin{figure}[H]
+\centering
+  \subfigure[$k_1 = 4.8463$]{\includegraphics[width=.4\textwidth]{g_opna_05_1}}
+  \subfigure[$k_2 = 7.6885$]{\includegraphics[width=.4\textwidth]{g_opna_05_2}} \\
+  \subfigure[$k_3 = 7.9820$]{\includegraphics[width=.4\textwidth]{g_opna_05_3}}
+  \subfigure[$k_4 = 10.870$]{\includegraphics[width=.4\textwidth]{g_opna_05_4}} \\
+  \subfigure[$k_5 = 10.905$]{\includegraphics[width=.4\textwidth]{g_opna_05_5}}
+  \subfigure[$k_6 = 11.047$]{\includegraphics[width=.4\textwidth]{g_opna_05_6}}
+\caption{Prvih 6 nihajnih na"cinov kvadratne opne z $\rho = \rho_+/2$. }
+\label{fig:kvadrat-05}
+\end{figure}
+
+Dodatno ve"canje razmerja gostot opne spremeni lastne frekvence, saj se spremeni povpre"cna masa opne. Na obliko valovnih na"cinov, zlasti najni"zjih, pa tudi velika sprememba gostote nima velikega vpliva. Zato sem prikazal le dve mo"znosti s kvalitativno razli"cnima gostotama, ki pa vidno spremenita valovne na"cine. 
 
 \section{Polkro"zna opna}
 
+Za obravnavo nihanj na polkro"zni opne sem pre"sel v polarni koordinati sistem. V tem zapisu se $\nabla^2$ zapi"se kot
+
+\begin{align}
+\label{eq:nabla-polar}
+  \nabla^2 u = \frac{1}{r}\parcialno{}{r}\left(r\parcialno{u}{r}\right) + \frac{1}{r^2} \parcdva{u}{\phi} 
+  = \frac{1}{r}\parcialno{u}{r} + \parcdva{u}{r} + \frac{1}{r^2} \parcdva{u}{\phi} 
+\end{align}
+
+Ker je $r$ med 0 in 1, $\phi$ pa med 0 in $\pi$, sem uporabil razli"cno "stevilo to"ck in razli"cen korak diskretizacije v vsaki smeri. Koraka sta dolo"cina z zvezama $h_r = 1/N_r$ in $h_\phi = \pi/N_\phi$, iz "cesar sledi njuno razmerje
+\begin{align}
+h_\phi &= h_r \cdot \frac{\pi N_r}{N_\phi} = h_r \sqrt{c}
+\end{align}
+
+Pri tem smo vpeljali konstanto $c$, ki nastopa v diskretizaciji operatorja $\nabla^2$. Najprej izraz na desni strani ena"cbe (\ref{eq:nabla-polar}) zapi"semo v diskretni obliki:
+
+\begin{align}
+  \nabla^2 u_{i,j} &= \frac{u_{i+1,j} - u_{i-1,j}}{2 r_i h} + \frac{u_{i+1,j} + u_{i-1,j} - 2u_{i,j}}{h^2} + \frac{u_{i,j-1} + u_{i,j+1} - 2u_{i,j}}{r_i^2 \cdot ch^2} \\
+  -h^2\nabla^2 u_{i,j} &= \left(2 + \frac{2/c}{r_i^2}\right)u_{i,j} - \left( 1 - \frac{1}{2r_i} \right) u_{i-1,j} - \left( 1 + \frac{1}{2r_i} \right) u_{i+1,j} - \frac{u_{i,j-1} + u_{i,j+1}}{c r_i^2}
+\end{align}
+
+Ker sem izbral to"cke diskretne mre"ze tako, da je robna to"cka od roba opne oddaljena $h/2$, moram ustrezno dolo"citi tudi radij $r_i = (i+1/2)\cdot h$. S tem je zgornji izraz pripravljen, da ga vstavim v matriko. Vsakemu paru $(i,j)$ pripada en indeks v matriki, koeficienti v zgornji ena"cbi pa postanejo neni"celni elementi matrike v vrstici, ki pripada temu paru. 
+
+V tem primeru ra"sujemo problem pravih lastnih vrednosti $\vec A\vec u = \lambda \vec u$, zaradi "cesar je algoritem hitrej"si. Dobre rezultate sem dobil z izbiro $N_r = 64, N_\phi = 2N_r = 128$. 
+
+Tokrat ima opna enakomerno gostoto, zato so nihajni na"cini manj zanimivi. Prvih osem sem narisal na sliki \ref{fig:polkrog}. 
+
 \begin{figure}[H]
-  \subfigure[$k_1 = 0.058841$]{\includegraphics[width=.5\textwidth]{g_valj_1}}
-  \subfigure[$k_2 = 0.088345$]{\includegraphics[width=.5\textwidth]{g_valj_2}}
-  \subfigure[$k_3 = 0.092194$]{\includegraphics[width=.5\textwidth]{g_valj_3}}
-  \subfigure[$k_4 = 0.11387$]{\includegraphics[width=.5\textwidth]{g_valj_4}}
-  \subfigure[$k_5 = 0.12178$]{\includegraphics[width=.5\textwidth]{g_valj_5}}
-  \subfigure[$k_6 = 0.12275$]{\includegraphics[width=.5\textwidth]{g_valj_6}}
+\centering
+  \subfigure[$k_1 = 3.8403$]{\includegraphics[width=.47\textwidth]{g_valj_1}}
+  \subfigure[$k_2 = 5.1374$]{\includegraphics[width=.47\textwidth]{g_valj_2}} \\
+  \subfigure[$k_3 = 6.3800$]{\includegraphics[width=.47\textwidth]{g_valj_3}}
+  \subfigure[$k_4 = 7.0284$]{\includegraphics[width=.47\textwidth]{g_valj_4}} \\
+  \subfigure[$k_5 = 7.5864$]{\includegraphics[width=.47\textwidth]{g_valj_5}}
+  \subfigure[$k_6 = 8.4178$]{\includegraphics[width=.47\textwidth]{g_valj_6}} \\
+  \subfigure[$k_7 = 8.7673$]{\includegraphics[width=.47\textwidth]{g_valj_7}}
+  \subfigure[$k_8 = 9.7580$]{\includegraphics[width=.47\textwidth]{g_valj_8}}
 \caption{Prvih 6 nihajnih na"cinov polkro"zne opne.}
+\label{fig:polkrog}
 \end{figure}
+
+V ena"cbi $\nabla^2 u = k^2 u$ lahko lo"cimo spremenljivke in zapi"semo $u(r,\phi) = R(r) \cdot \Phi(\phi)$. Re"sitve kotnega dela so tedaj harmoni"cne funkcije $\Phi(\phi) = \sin(m\phi)$, $m\in\mathbb{N}$, re"sitve radialnega pa Besselova funkcija $R(r) = J_m(kr)$. Zaradi robnega pogoja" prve vrste $R(1) = 0$ je $k$ je ravno ni"cla $m$-te Besselove funkcije. Ker imajo te funkcije po ve"c ni"cel, vpeljemo indeks ni"cle $n$, ki predstavlja "stevilo valov v radialni smeri. Numeri"cno izra"cunane vrednosti se dobro ujemajo z vrednostmi v tabelah. 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+  $i$ & Izra"cunan $k_i$ & $m$ & $n$ & Tabeliran $k_{mn}$ \\
+\hline
+  1 & 3.8403 & 1 & 1 & 3.8317 \\
+  2 & 5.1374 & 2 & 1 & 5.1356 \\
+  3 & 6.3800 & 3 & 1 & 6.3802 \\
+  4 & 7.0284 & 1 & 2 & 7.0156 \\
+  5 & 7.5864 & 4 & 1 & 7.5883 \\
+  6 & 8.4178 & 2 & 2 & 8.4172 \\
+  7 & 8.7673 & 5 & 1 & 8.7715 \\
+  8 & 9.7580 & 3 & 2 & 9.7610 \\
+\hline
+\end{tabular}
+  \caption{Izra"cunane in tabelirane ni"cle Besselovih funkcij}
+\end{table}
+
+Z napovedjo se ujemajo tako vrednosti za $k$ kot tudi sami nihajni na"cini, saj ima na"cin $(m,n)$ $m$ polperiod v smeri $\phi$ in $n$ polperiod v smeri $r$. 
 
 \end{document}
