@@ -1,0 +1,34 @@
+set terminal png crop size 800,455 transparent
+
+set pm3d map
+unset tics
+unset colorbox
+
+set mapping cylindrical
+pi2 = 3.141592/2
+set autoscale
+
+set output "g_valj_1.png"
+splot "g_valj_64_1.dat" u (($2+0.5)/64*pi2):(-$3):1 matrix notitle
+
+set output "g_valj_2.png"
+splot "g_valj_64_2.dat" u (($2+0.5)/64*pi2):3:1 matrix notitle
+
+set output "g_valj_3.png"
+splot "g_valj_64_3.dat" u (($2+0.5)/64*pi2):3:1 matrix notitle
+
+set output "g_valj_4.png"
+splot "g_valj_64_4.dat" u (($2+0.5)/64*pi2):3:1 matrix notitle
+
+set output "g_valj_5.png"
+splot "g_valj_64_5.dat" u (($2+0.5)/64*pi2):3:1 matrix notitle
+
+set output "g_valj_6.png"
+splot "g_valj_64_6.dat" u (($2+0.5)/64*pi2):3:1 matrix notitle
+
+set output "g_valj_7.png"
+splot "g_valj_64_7.dat" u (($2+0.5)/64*pi2):3:1 matrix notitle
+
+set output "g_valj_8.png"
+splot "g_valj_64_8.dat" u (($2+0.5)/64*pi2):3:1 matrix notitle
+
