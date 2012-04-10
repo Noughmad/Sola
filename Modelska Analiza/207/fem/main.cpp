@@ -185,7 +185,7 @@ public:
         return m;
     }
     
-    bool noter(int i)
+    virtual bool noter(int i)
     {
         const Tocka& t = tocke[i];
         if (qFuzzyIsNull(t.y))
@@ -266,7 +266,7 @@ public:
         return v;
     }
     
-    void popravi_krog(double h)
+    virtual void popravi(double h)
     {
         for (int i = 0; i < tocke.size(); ++i)
         {
@@ -312,7 +312,7 @@ public:
         }
     }
     
-    void narisi(const QString& filename)
+    virtual void narisi(const QString& filename)
     {
         QImage image(800, 400, QImage::Format_ARGB32);
         image.fill(Qt::white);
@@ -344,11 +344,70 @@ public:
         painter.end();
         image.save(filename);
     }
-
-private:
+    
+protected:
     QList<Tocka> tocke;
     gsl_matrix_char* povezave;
     int n;
+};
+
+class DelitevBatman : public Delitev
+{
+public:
+    virtual bool noter(int i)
+    {
+        Tocka& t = tocke[i];
+        if (t.x < 0.01 || t.x > 0.99 || t.y < 0.01 || t.y > 0.99)
+        {
+            return false;
+        }
+        if (t.x < 1.0/3)
+        {
+            return t.y < 0.99-t.x;
+        }
+        else if (t.x < 2.0/3)
+        {
+            return t.y < 0.666;
+        }
+        else
+        {
+            return t.y < t.x;
+        }
+    }
+    
+    virtual void narisi(const QString& filename)
+    {
+        QImage image(400, 400, QImage::Format_ARGB32);
+        image.fill(Qt::white);
+        QPainter painter;
+        painter.begin(&image);
+        
+        for (int i = 0; i < n; ++i)
+        {
+            const Tocka& t = tocke[i];
+            QPointF p = QPointF(400 * t.x, 400 * t.y);
+            
+            if (!noter(i))
+            {
+                painter.setBrush(Qt::red);
+            }
+            painter.drawEllipse(p, 2, 2);
+            painter.setBrush(Qt::black);
+            
+            for (int j = 0; j < i; ++j)
+            {
+                if (gsl_matrix_char_get(povezave, i, j))
+                {
+                    QPointF q = QPointF(400 * tocke[j].x, 400 * tocke[j].y);
+                    painter.drawLine(p, q);
+                }
+            }
+        }
+        
+        painter.end();
+        image.save(filename);
+    }
+    
 };
 
 Delitev srediscna(int n)
@@ -370,7 +429,7 @@ Delitev srediscna(int n)
     }
     
     d.init();
-    d.popravi_krog(h);
+    d.popravi(h);
     d.samo_povezi(h*h*2.05);
     d.narisi("g_povezave_20.png");
     return d;
@@ -392,11 +451,49 @@ Delitev heksagonalna(int n)
         }
     }
     
-    d.popravi_krog(h);
+    d.popravi(h);
 
     d.init();
     d.samo_povezi(h*h*1.2);
     d.narisi("g_povezave_hex.png");
+    return d;
+}
+
+DelitevBatman batman(int n)
+{
+    double h = 1.0/n;
+    double v = h * sqrt(3) / 2;
+    int k = n/3;
+    
+    DelitevBatman d;
+    double y = 0;
+    
+    for (int i = 0; i < k; ++i)
+    {
+        for (int j = 0; j < n-i+1; ++j)
+        {
+            d.dodaj_tocko(i*h, j*h);
+        }
+    }
+    for (int i = k; i < 2*k+1; ++i)
+    {
+        for (int j = 0; 2*k+1; ++j)
+        {
+            d.dodaj_tocko(i*h, j*h);
+        }
+    }
+    for (int i = 2*k+1; i < n+1; ++i)
+    {
+        for (int j = 0; j < i+1; ++j)
+        {
+            d.dodaj_tocko(i*h, j*h);
+        }
+    }
+    
+    
+    d.init();
+    d.narisi("g_pov_batman.png");
+    
     return d;
 }
 
@@ -405,6 +502,8 @@ int main(int argc, char **argv) {
     srediscna(20).resitev("g_srediscna_20.dat");
 //    srediscna(10).resitev("g_srediscna_10.dat");
 */
-    heksagonalna(20).resitev("g_hex_20.dat");
+ //   heksagonalna(20).resitev("g_hex_20.dat");
+    
+    batman(20);
     return 0;
 }
