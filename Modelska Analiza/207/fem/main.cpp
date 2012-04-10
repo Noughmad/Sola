@@ -1,17 +1,20 @@
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
+#include <ctime>
 
 #include <QtCore/qmath.h>
 #include <QtCore/qglobal.h>
 
 #include <QtCore/QList>
+#include <QtCore/QQueue>
 #include <QtCore/QPair>
 
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
 
 #include <SuiteSparseQR.hpp>
+#include <cholmod.h>
 
 #include <gsl/gsl_matrix_char.h>
 #include <gsl/gsl_matrix_double.h>
@@ -84,6 +87,30 @@ public:
         gsl_matrix_char_free(povezave);
     }
     
+    double pretok(const cholmod_dense* v)
+    {
+        double phi;
+        double* vx = (double*)v->x;
+        for (int i = 0; i < n; ++i)
+        {
+            if (!noter(i))
+            {
+                continue;
+            }
+            for (int j = 0; j < n; ++j)
+            {
+                for (int k = 0; k < j; ++k)
+                {
+                    if (povezano(i,j,k))
+                    {
+                        phi += vx[i] * ploscina(i,j,k);
+                    }
+                }
+            }
+        }
+        return phi;
+    }
+    
     void init()
     {
         n = tocke.size();
@@ -102,6 +129,11 @@ public:
     {
         Tocka t = {x, y};
         return dodaj_tocko(t);
+    }
+    
+    void konec_vrstice()
+    {
+        vrstice << tocke.size();
     }
     
     int dodaj_tocko_noter(double x, double y, double h)
@@ -172,17 +204,31 @@ public:
         return a;
     }
     
-    gsl_matrix* matrika()
+    cholmod_sparse* matrika(cholmod_common* c)
     {
+        cholmod_sparse* A = cholmod_spzeros(n, n, 6*n, CHOLMOD_REAL, c);
+        
         gsl_matrix* m = gsl_matrix_alloc(n,n);
+        
+        double* Ax = (double*)A->x;
+        int* Ap = (int*)A->p;
+        int* Ai = (int*)A->i;        
+
+        int t = 0;
         for (int i = 0; i < n; ++i)
         {
-            for (int j = 0; j < n; ++j)
+            for (int j = 0; j < i; ++j)
             {
-                gsl_matrix_set(m, i, j, element(i,j));
+                double E = element(i,j);
+                if (E != 0)
+                {
+                    Ax[t] = E;
+                    Ai[t] = i;
+                    ++t;
+                }
             }
         }
-        return m;
+        return A;
     }
     
     virtual bool noter(int i)
@@ -205,10 +251,11 @@ public:
         return gsl_matrix_char_get(povezave, i, j) && gsl_matrix_char_get(povezave, j, k) && gsl_matrix_char_get(povezave, k, i);
     }
     
-    gsl_vector* desne()
+    cholmod_dense* desne(cholmod_common* c)
     {
-        gsl_vector* b = gsl_vector_alloc(n);
-        gsl_vector_set_zero(b);
+        cholmod_dense* b = cholmod_zeros(n, 1, CHOLMOD_REAL, c);
+        b->nzmax = n;
+        double* bx = (double*)b->x;
         for (int i = 0; i < n; ++i)
         {
             if (!noter(i))
@@ -221,7 +268,7 @@ public:
                 {
                     if (povezano(i,j,k))
                     {
-                        gsl_vector_set(b, i, gsl_vector_get(b, i) + ploscina(i, j, k));
+                        bx[i] += ploscina(i, j, k);
                     }
                 }
             }
@@ -241,29 +288,51 @@ public:
         }
     }
     
-    gsl_vector* resitev(const char* filename)
+    double resitev(const QString& filename = QString())
     {
-        gsl_vector* v = desne();
-        gsl_matrix* m = matrika();
+        cholmod_common cc;
+        cholmod_start(&cc);
         
-        gsl_vector_fprintf(stdout, v, "%g");
+        cholmod_dense* b = desne(&cc);
+        cholmod_sparse* A = matrika(&cc);
         
-        shrani_matriko(m, n, "g_matrika_A.dat");
-
-        int s;
-        gsl_permutation * p = gsl_permutation_alloc (n);
-        gsl_linalg_LU_decomp (m, p, &s);
-        gsl_linalg_LU_svx (m, p, v);
-       
-        FILE *f = fopen(filename, "wt");
-        for (int i = 0; i < n; ++i)
+        cholmod_dense* x = SuiteSparseQR<double>(A, b, &cc);
+        if (!x)
         {
-            const Tocka& t = tocke[i];
-            fprintf(f, "%g %g %g\n", t.x, t.y, gsl_vector_get(v, i));
+            cout << A->ncol << A->nrow << b->ncol << b->nrow << endl;
+            cholmod_print_sparse(A, "matrika.dat", &cc);
+            cout << "status: " << cc.status << endl;
         }
-        fclose(f);
         
-        return v;
+        cholmod_free_sparse(&A, &cc);
+        cholmod_free_dense(&b, &cc);
+
+        double* xx = (double*)x->x;
+        
+        if (!filename.isEmpty())
+        {
+            FILE *f = fopen(filename.toLatin1(), "wt");
+            QQueue <int> lines = vrstice;
+            for (int i = 0; i < n; ++i)
+            {
+                if (lines.first()  == i)
+                {
+                    fprintf(f, "\n");
+                    lines.dequeue();
+                }
+                const Tocka& t = tocke[i];
+                fprintf(f, "%g %g %g\n", t.x, t.y, xx[i]);
+            }
+            fclose(f);
+        }
+        
+        int nt = 0;
+        double phi = pretok(x);
+                
+        cholmod_free_dense(&x, &cc);
+        cholmod_finish(&cc);
+        
+        return phi;
     }
     
     virtual void popravi(double h)
@@ -345,10 +414,16 @@ public:
         image.save(filename);
     }
     
+    int stevilo()
+    {
+        return n;
+    }
+    
 protected:
     QList<Tocka> tocke;
     gsl_matrix_char* povezave;
     int n;
+    QQueue<int> vrstice;
 };
 
 class DelitevBatman : public Delitev
@@ -426,6 +501,7 @@ Delitev srediscna(int n)
             double y = r*sin(f);
             d.dodaj_tocko(x,y);
         }
+        d.konec_vrstice();
     }
     
     d.init();
@@ -446,9 +522,16 @@ Delitev heksagonalna(int n)
         for (int j = 1; j < i+1; ++j)
         {
             d.dodaj_tocko((i-0.5*j)*h, j*v);
+        }
+        for (int j = 1; j < i+1; ++j)
+        {
             d.dodaj_tocko((i*0.5-j)*h, i*v);
+        }
+        for (int j = 1; j < i+1; ++j)
+        {
             d.dodaj_tocko((-i+0.5*(j-1))*h, (j-1)*v);
         }
+        d.konec_vrstice();
     }
     
     d.popravi(h);
@@ -468,42 +551,123 @@ DelitevBatman batman(int n)
     DelitevBatman d;
     double y = 0;
     
+    QList<int> lineStarters;
+    
     for (int i = 0; i < k; ++i)
     {
-        for (int j = 0; j < n-i+1; ++j)
+        lineStarters << d.dodaj_tocko(i*h, 0);
+        for (int j = 1; j < n-i+1; ++j)
         {
             d.dodaj_tocko(i*h, j*h);
         }
+        d.konec_vrstice();
     }
-    for (int i = k; i < 2*k+1; ++i)
+    for (int i = k; i < 2*k; ++i)
     {
-        for (int j = 0; 2*k+1; ++j)
+        lineStarters << d.dodaj_tocko(i*h, 0);
+        for (int j = 1; j < 2*k+1; ++j)
         {
             d.dodaj_tocko(i*h, j*h);
         }
+        d.konec_vrstice();
     }
-    for (int i = 2*k+1; i < n+1; ++i)
+    for (int i = 2*k; i < n+1; ++i)
     {
-        for (int j = 0; j < i+1; ++j)
+        lineStarters << d.dodaj_tocko(i*h, 0);
+        for (int j = 1; j < i+1; ++j)
         {
             d.dodaj_tocko(i*h, j*h);
         }
+        d.konec_vrstice();
     }
-    
     
     d.init();
+    d.samo_povezi(h*h*1.01);
+    
+    const int m = 2*k;
+    for (int i = 0; i < n/2; ++i)
+    {
+        const int s1 = lineStarters[i];
+        const int s2 = lineStarters[i+1];
+        for (int j = 0; j < m; ++j)
+        {
+            d.vez(s1+j, s2+j+1);
+        }
+    }
+    for (int i = n/2; i < n; ++i)
+    {
+        const int s1 = lineStarters[i];
+        const int s2 = lineStarters[i+1];
+        for (int j = 0; j < m; ++j)
+        {
+            d.vez(s1+j+1, s2+j);
+        }
+    }
+    
+    for (int i = 0; i < k; ++i)
+    {
+        const int s1 = lineStarters[i];
+        const int s2 = lineStarters[i+1];
+        
+        const int z1 = lineStarters[n-i];
+        const int z2 = lineStarters[n-i-1];
+        for (int j = 0; j < k-i; ++j)
+        {
+            d.vez(s1 + 2*k + j + 1, s2 + 2*k + j);
+            d.vez(z1 + 2*k + j + 1, z2 + 2*k + j);
+        }
+    }
+    
     d.narisi("g_pov_batman.png");
     
     return d;
 }
 
+void srediscna_vse()
+{
+    FILE* f = fopen("g_konv_srediscna.dat", "wt");
+    for (int i = 7; i < 24; ++i)
+    {
+        Delitev d = srediscna(i);
+        int n = d.stevilo();
+        clock_t start = clock();
+        double r = d.resitev();
+        fprintf(f, "%d %d %g %g\n", i, n, r, (double)(clock() - start)/(CLOCKS_PER_SEC));
+    }
+    fclose(f);
+}
+
+void heksa_vse()
+{
+    FILE* f = fopen("g_konv_hex.dat", "wt");
+    for (int i = 10; i < 50; i += 3)
+    {
+        Delitev d = heksagonalna(i);
+        int n = d.stevilo();
+        clock_t start = clock();
+        double r = d.resitev();
+        fprintf(f, "%d %d %g %g\n", i, n, r, (double)(clock() - start)/(CLOCKS_PER_SEC));
+    }
+    fclose(f);
+}
+
+void batman_vse()
+{
+    FILE* f = fopen("g_konv_batman.dat", "wt");
+    for (int i = 12; i < 61; i += 6)
+    {
+        DelitevBatman d = batman(i);
+        int n = d.stevilo();
+        clock_t start = clock();
+        double r = d.resitev();
+        fprintf(f, "%d %d %g %g\n", i, n, r, (double)(clock() - start)/(CLOCKS_PER_SEC));
+    }
+    fclose(f);
+}
+
 int main(int argc, char **argv) {
-    /*
-    srediscna(20).resitev("g_srediscna_20.dat");
-//    srediscna(10).resitev("g_srediscna_10.dat");
-*/
- //   heksagonalna(20).resitev("g_hex_20.dat");
-    
-    batman(20);
+    srediscna_vse();
+    heksa_vse();
+    batman_vse();
     return 0;
 }
