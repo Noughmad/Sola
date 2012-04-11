@@ -2,12 +2,14 @@
 #include <fstream>
 #include <stdio.h>
 #include <ctime>
+#include <cassert>
 
 #include <QtCore/qmath.h>
 #include <QtCore/qglobal.h>
 
 #include <QtCore/QList>
 #include <QtCore/QQueue>
+#include <QtCore/QHash>
 #include <QtCore/QPair>
 
 #include <QtGui/QImage>
@@ -43,43 +45,39 @@ struct Tocka
     double x,y;
 };
 
-/**
- * Tri tocke s ciklicnimi indeksi
- **/
-class Trikotnik
+struct Trikotnik
 {
-public:
-    Trikotnik(Tocka* a, Tocka* b, Tocka* c)
-    {
-        tocke[0] = 0;
-        tocke[1] = b;
-        tocke[2] = c;
-    }
-    
-    Tocka& operator[](int i)
-    {
-        return *(tocke[i % 3]);
-    }
-    
-    const Tocka& operator[](int i) const
-    {
-        return *(tocke[i % 3]);
-    }
-    
-    double ploscina()
-    {
-    }
-        
-private:
-    Tocka* tocke[3];
+    int i,j,k;
 };
+
+quint16 qHash(const Trikotnik& t)
+{
+    return (t.i << 8) ^ (t.j << 4) ^ t.k;
+}
+
+bool operator==(const Trikotnik& t1, const Trikotnik& t2)
+{
+    return (t1.i == t2.i) && (t1.j == t2.j) && (t1.k == t2.k);
+}
 
 class Delitev
 {
 public:
+    
+    
     Delitev() : povezave(0)
     {
         
+    }
+    
+    void obrni()
+    {
+        QList<Tocka> novi;
+        while (!tocke.isEmpty())
+        {
+            novi << tocke.takeLast();
+        }
+        tocke = novi;
     }
     
     ~Delitev()
@@ -103,7 +101,7 @@ public:
                 {
                     if (povezano(i,j,k))
                     {
-                        phi += vx[i] * ploscina(i,j,k);
+                        phi += vx[i] * ploscina(i,j,k) / 3;
                     }
                 }
             }
@@ -134,6 +132,7 @@ public:
     void konec_vrstice()
     {
         vrstice << tocke.size();
+        cout << "Koncal vrstico pri " << tocke.size() << endl;
     }
     
     int dodaj_tocko_noter(double x, double y, double h)
@@ -149,20 +148,47 @@ public:
     
     double ploscina(int i, int j, int k)
     {
-        double s = 0;
-        s += tocke[i].x * ( tocke[j].y - tocke[k].y );
-        s += tocke[k].x * ( tocke[i].y - tocke[j].y );
-        s += tocke[j].x * ( tocke[k].y - tocke[i].y );
-        if (gsl_isnan(s) || gsl_isinf(s) || s == 0)
+        Trikotnik t = {i,j,k};
+        if (ploscine.contains(t))
         {
-            printf("%d, %d, %d => S = %g\n", i, j, k, s);
+            return ploscine.value(t);
         }
-        return fabs(s)/2;
+        
+        double s = 0;
+        s += tocke[i].x * y(j,k);
+        s += tocke[k].x * y(i,j);
+        s += tocke[j].x * y(k,i);
+        s = fabs(s)/2;
+        ploscine.insert(t, s);
+        return s;
     }
     
     double dd(int i, int j)
     {
-        return pow(tocke[i].x - tocke[j].x, 2) + pow(tocke[i].y - tocke[j].y, 2);
+        return x(i,j)*x(i,j) + y(i,j)*y(i,j);
+    }
+    
+    double skupna_ploscina()
+    {
+        double S = 0;
+        for (int i = 0; i < n; ++i)
+        {
+            for (int j = 0; j < i; ++j)
+            {
+                if (!gsl_matrix_char_get(povezave, i, j))
+                {
+                    continue;
+                }
+                for (int k = 0; k < j; ++k)
+                {
+                    if (povezano(i,j,k))
+                    {
+                        S += ploscina(i,j,k);
+                    }
+                }
+            }
+        }
+        return S;
     }
     
     double x(int i, int j)
@@ -178,27 +204,42 @@ public:
     double element(int i, int j)
     {
         double a = 0;
+        int st = 0;
         if (i == j)
         {
             for (int k = 0; k < n; ++k)
             {
+                if (!gsl_matrix_char_get(povezave, i, k))
+                {
+                    continue;
+                }
                 for (int l = 0; l < k; ++l)
                 {
                     if (povezano(i,k,l))
                     {
-                        a += dd(k,l) / 4 / ploscina(i,k,l);
+                        a += dd(k,l) / 4.0 / ploscina(i,k,l);
+                        ++st;
                     }
                 }
             }
+            if (st > 6)
+            {
+                cout << "Tocka z vec kot 6 trikotniki " << i << endl;
+            }
         }
-        else if (gsl_matrix_char_get(povezave, i, j) && noter(i) && noter(j))
+        else if (gsl_matrix_char_get(povezave, i, j) && noter(i))
         {
             for (int k = 0; k < n; ++k)
             {
                 if (gsl_matrix_char_get(povezave, i, k) && gsl_matrix_char_get(povezave, j, k))
                 {
-                    a += ( x(j,k)*x(k,i) + y(j,k)*y(k,i) ) / 4 / ploscina(i,j,k);
+                    a += ( x(j,k)*x(k,i) + y(j,k)*y(k,i) ) / 4.0 / ploscina(i,j,k);
+                    ++st;
                 }
+            }
+            if (st > 2)
+            {
+                cout << "Povezava z vec kot 2 trikotnikoma " << i << ", " << j << endl; 
             }
         }
         return a;
@@ -206,28 +247,35 @@ public:
     
     cholmod_sparse* matrika(cholmod_common* c)
     {
-        cholmod_sparse* A = cholmod_spzeros(n, n, 6*n, CHOLMOD_REAL, c);
-        
-        gsl_matrix* m = gsl_matrix_alloc(n,n);
+        int N = 7*n;
+        cholmod_sparse* A = cholmod_allocate_sparse(n, n, N, 1, 1, 0, CHOLMOD_REAL, c);
+                
         
         double* Ax = (double*)A->x;
         int* Ap = (int*)A->p;
-        int* Ai = (int*)A->i;        
-
+        int* Ai = (int*)A->i;   
+        
         int t = 0;
         for (int i = 0; i < n; ++i)
         {
-            for (int j = 0; j < i; ++j)
+            Ap[i] = t;
+            for (int j = 0; j < n; ++j)
             {
-                double E = element(i,j);
-                if (E != 0)
+                const double E = element(i,j);
+                if (!qFuzzyIsNull(E))
                 {
+                    assert(t < N);
                     Ax[t] = E;
-                    Ai[t] = i;
+                    Ai[t] = j;
                     ++t;
                 }
             }
         }
+        Ap[n] = t;
+        
+        
+        Ax = (double*)A->x;
+        A->stype = 0;
         return A;
     }
     
@@ -253,72 +301,67 @@ public:
     
     cholmod_dense* desne(cholmod_common* c)
     {
-        cholmod_dense* b = cholmod_zeros(n, 1, CHOLMOD_REAL, c);
-        b->nzmax = n;
+        cholmod_dense* b = cholmod_allocate_dense(n, 1, n, CHOLMOD_REAL, c);
         double* bx = (double*)b->x;
+        
         for (int i = 0; i < n; ++i)
         {
+            bx[i] = 0;
             if (!noter(i))
             {
                 continue;
             }
             for (int j = 0; j < n; ++j)
             {
+                if (!gsl_matrix_char_get(povezave, i, j))
+                {
+                    continue;
+                }
                 for (int k = 0; k < j; ++k)
                 {
                     if (povezano(i,j,k))
                     {
-                        bx[i] += ploscina(i, j, k);
+                        bx[i] += ploscina(i, j, k) / 3;
                     }
                 }
             }
         }
+        
         return b;
     }
     
-    QList<int> sosede(int i)
-    {
-        QList<int> list;
-        for (int j = 0; j < n; ++j)
-        {
-            if (gsl_matrix_char_get(povezave, i, j))
-            {
-                list << j;
-            }
-        }
-    }
     
     double resitev(const QString& filename = QString())
     {
         cholmod_common cc;
         cholmod_start(&cc);
+        cc.dtype = CHOLMOD_DOUBLE;
+        cc.nmethods = CHOLMOD_MAXMETHODS;
+        cc.print = 5;
         
         cholmod_dense* b = desne(&cc);
         cholmod_sparse* A = matrika(&cc);
-        
-        cholmod_dense* x = SuiteSparseQR<double>(A, b, &cc);
-        if (!x)
-        {
-            cout << A->ncol << A->nrow << b->ncol << b->nrow << endl;
-            cholmod_print_sparse(A, "matrika.dat", &cc);
-            cout << "status: " << cc.status << endl;
-        }
-        
-        cholmod_free_sparse(&A, &cc);
-        cholmod_free_dense(&b, &cc);
+        cholmod_sparse* T = cholmod_copy_sparse(A, &cc);
+        double rnorm, one [2] = {1.0/n,0}, minusone [2] = {-1,0} ;
 
+        
+        cout << "Norme: |A| = " << cholmod_norm_sparse(A, 1, &cc)/n << ", |b| = " << cholmod_norm_dense(b, 1, &cc)/3 << endl;
+        
+        
+        cholmod_factor* L = cholmod_analyze(A, &cc);
+        cholmod_factorize(A, L, &cc);
+        cholmod_dense* x = cholmod_solve(CHOLMOD_A, L, b, &cc);
         double* xx = (double*)x->x;
         
         if (!filename.isEmpty())
         {
             FILE *f = fopen(filename.toLatin1(), "wt");
-            QQueue <int> lines = vrstice;
             for (int i = 0; i < n; ++i)
             {
-                if (lines.first()  == i)
+                if (vrstice.contains(i))
                 {
+                    cout << "Delam vrstico pri " << i << endl;
                     fprintf(f, "\n");
-                    lines.dequeue();
                 }
                 const Tocka& t = tocke[i];
                 fprintf(f, "%g %g %g\n", t.x, t.y, xx[i]);
@@ -327,12 +370,52 @@ public:
         }
         
         int nt = 0;
-        double phi = pretok(x);
+        double phi = 0;
+        
+        double* bx = (double*)b->x;
+        for (int i = 0; i < n; ++i)
+        {
+            phi += bx[i] * xx[i];
+        }
+        
+        phi /= n;
+        
+        double S = skupna_ploscina();
+        
+        cholmod_dense* Residual = cholmod_copy_dense (b, &cc) ;
+        cholmod_sdmult (A, 0, minusone, one, x, Residual, &cc) ;
+        
+     //   cholmod_print_dense(Residual, "Residual", &cc);
+
+        
+        cout << "Ploscina je " << S << ", pretok je " << phi << ", norma x je " << cholmod_norm_dense(x, 1, &cc)/n << endl;
                 
-        cholmod_free_dense(&x, &cc);
         cholmod_finish(&cc);
         
         return phi;
+    }
+    
+    void odrezi(double h)
+    {
+        for (int i = 0; i < tocke.size(); ++i)
+        {
+            const Tocka& t = tocke[i];
+            double r2 = t.x * t.x + t.y * t.y;
+            if (r2 > 1+1.8*h)
+            {
+                tocke.removeAt(i);
+                --i;
+                for (int j = 0; j < vrstice.size(); ++j)
+                {
+                    if (vrstice[j] > i)
+                    {
+                        vrstice[j] = vrstice[j] - 1;
+                    }
+                }
+                
+                vrstice << i+1;
+            }
+        }
     }
     
     virtual void popravi(double h)
@@ -341,12 +424,7 @@ public:
         {
             Tocka& t = tocke[i];
             double r2 = t.x * t.x + t.y * t.y;
-            if (r2 > 1+1.5*h)
-            {
-                tocke.removeAt(i);
-                --i;
-            }
-            else if (r2 > 1)
+            if (r2 > 1)
             {
                 double s = 1.0 / sqrt(r2);
                 t.x *= s;
@@ -383,7 +461,7 @@ public:
     
     virtual void narisi(const QString& filename)
     {
-        QImage image(800, 400, QImage::Format_ARGB32);
+        QImage image(801, 401, QImage::Format_ARGB32);
         image.fill(Qt::white);
         QPainter painter;
         painter.begin(&image);
@@ -424,6 +502,7 @@ protected:
     gsl_matrix_char* povezave;
     int n;
     QQueue<int> vrstice;
+    QHash<Trikotnik, double> ploscine;
 };
 
 class DelitevBatman : public Delitev
@@ -452,7 +531,7 @@ public:
     
     virtual void narisi(const QString& filename)
     {
-        QImage image(400, 400, QImage::Format_ARGB32);
+        QImage image(401, 401, QImage::Format_ARGB32);
         image.fill(Qt::white);
         QPainter painter;
         painter.begin(&image);
@@ -506,8 +585,7 @@ Delitev srediscna(int n)
     
     d.init();
     d.popravi(h);
-    d.samo_povezi(h*h*2.05);
-    d.narisi("g_povezave_20.png");
+    d.samo_povezi(h*h*2.1);
     return d;
 }
 
@@ -527,18 +605,18 @@ Delitev heksagonalna(int n)
         {
             d.dodaj_tocko((i*0.5-j)*h, i*v);
         }
-        for (int j = 1; j < i+1; ++j)
+        for (int j = i; j > 0; --j)
         {
             d.dodaj_tocko((-i+0.5*(j-1))*h, (j-1)*v);
         }
         d.konec_vrstice();
     }
     
-    d.popravi(h);
+    d.odrezi(h);
 
     d.init();
     d.samo_povezi(h*h*1.2);
-    d.narisi("g_povezave_hex.png");
+    d.popravi(h);
     return d;
 }
 
@@ -617,16 +695,14 @@ DelitevBatman batman(int n)
             d.vez(z1 + 2*k + j + 1, z2 + 2*k + j);
         }
     }
-    
-    d.narisi("g_pov_batman.png");
-    
+        
     return d;
 }
 
 void srediscna_vse()
 {
     FILE* f = fopen("g_konv_srediscna.dat", "wt");
-    for (int i = 7; i < 24; ++i)
+    for (int i = 10; i < 80; i += 3)
     {
         Delitev d = srediscna(i);
         int n = d.stevilo();
@@ -640,7 +716,7 @@ void srediscna_vse()
 void heksa_vse()
 {
     FILE* f = fopen("g_konv_hex.dat", "wt");
-    for (int i = 10; i < 50; i += 3)
+    for (int i = 10; i < 80; i += 3)
     {
         Delitev d = heksagonalna(i);
         int n = d.stevilo();
@@ -654,7 +730,7 @@ void heksa_vse()
 void batman_vse()
 {
     FILE* f = fopen("g_konv_batman.dat", "wt");
-    for (int i = 12; i < 61; i += 6)
+    for (int i = 12; i < 120; i += 6)
     {
         DelitevBatman d = batman(i);
         int n = d.stevilo();
@@ -665,9 +741,18 @@ void batman_vse()
     fclose(f);
 }
 
+
 int main(int argc, char **argv) {
+    /*
     srediscna_vse();
     heksa_vse();
     batman_vse();
+    */
+    
+  //  srediscna(90).resitev("g_srediscna_90.dat");
+    heksagonalna(30).resitev("g_heksagonalna_90.dat");
+  //  batman(90).resitev("g_batman_90.dat");
+    
+  //  srediscna_vse();
     return 0;
 }
