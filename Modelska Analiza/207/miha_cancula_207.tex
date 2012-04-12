@@ -74,34 +74,30 @@ Tlakovanje cevi iz 5. naloge je bilo la"zje, saj tu nimamo okroglih oblik. Delo 
 \label{fig:povezave-batman}
 \end{figure}
 
+Prednost tak"snega tlakovanja v primerjavi s polkro"zno cevjo je pri iskanju povezav. Povezave med to"ckami kvadratne cevi sem lahko povezal po nekem pravilu, brez da bi ra"cunal medsebojne razdalje. 
+
 \subsection{Re"sevanje matri"cnega sistema}
 
 Naslednji korak po dolo"citvi polo"zaja to"ck in povezav med njimi je priprava matri"cnega sistema za re"sevanje. Pri tem nastopajo skalarni produkti konstantih funkcij in pa plo"s"cine trikotnikov. To lahko izra"cunamo s preprostimi formulami, ki so napisane tudi v navodilih. Geometrijo moramo upo"stevati le "se za dolo"citev, katere to"cke so na robu, nato pa jo lahko pozabimo. 
 
 Pozornost pa je treba posvetiti "se robnim pogojem. Ra"cunamo vrednost funkcije $u$ le v to"ckah, ki niso na robu obmo"cja, saj imamo robni pogoj "ze podan. Notranjim to"ckam sem priredil vrstico, podano z elementi in desno stranjo kot so opisani v navodilih. Vrstice, ki pripadajo robnim to"ckam, pa so imele le diagonalni element neni"celn, pripadajo"co desno stran pa 0. S je bila matrika $A$ ve"cja, kot je nujno potrebno, kar seveda pomeni po"casnej"se ra"cunanje. Ker pa je matrika $A$ redka in se za re"sevanje matri"cnega sistema uporabil knji"znico za redke matrike \texttt{cholmod}, se dodatek majhnega "stevila diagonalnih "clenov ni mo"cno poznal. 
 
-V "casu okrog ene minute mi je uspelo re"siti primer z nekaj deset tiso"c to"ck. 
+V "casu okrog ene minute mi je uspelo re"siti primer z nekaj ve"c kot 10000 to"ck. 
 
 \section{Re"sitve}
 
-Rezultat metode FEM je te"zko prikazati kot 3D graf, saj to"cke niso enakomerno porazdeljene po ravnini $xy$. Zaradi pomanjkanja "casa sem jih vseeno narisal kar v Gnuplotu. Na grafih sicer ne vidimo posameznih trikotnikov, pa tudi robovi so prikazani nekoliko nerodno, sama oblika re"sitve pa je vseeno jasna. 
-
-Obe geometriji smo pri predmetu "ze obravnavali, zato za primerjavo prilagam tudi slike, dobljene z metodo pospe"sene relaksacije. 
+Rezultat metode FEM je te"zko prikazati kot 3D graf, saj to"cke niso enakomerno porazdeljene po ravnini $xy$. Zaradi pomanjkanja "casa sem jih vseeno narisal kar v Gnuplotu. Na grafih sicer ne vidimo posameznih trikotnikov, pa tudi robovi so prikazani nekoliko nerodno, sama oblika re"sitve pa je vseeno jasna. Zaradi druga"cnega vrstnega reda to"ck mi ni uspelo jasno prikazati profila s heksagonalno delitvijo, sem pa preveril da je na pogled zelo podoben tistemu na Sliki \ref{fig:profil-srediscna}. 
 
 \begin{figure}[H]
- \includegraphics[width=.45\textwidth]{g_profil_srediscna}
+\centering
+ \input{g_profil_srediscna}
  \caption{Profil hitrosti v polkro"zni cevi, sredi"s"cna diskretizacija}
  \label{fig:profil-srediscna}
 \end{figure}
 
 \begin{figure}[H]
- \includegraphics[width=.45\textwidth]{g_profil_hex}
- \caption{Profil hitrosti v polkro"zni cevi, heksagonalna diskretizacija}
- \label{fig:profil-heksagonalna}
-\end{figure}
-
-\begin{figure}[H]
- \includegraphics[width=.45\textwidth]{g_profil_kvadrat}
+\centering
+ \input{g_profil_kvadrat}
  \caption{Profil hitrosti v cevi z obliko izrezanega kvadrata}
  \label{fig:profil-kvadrat}
 \end{figure}
@@ -111,13 +107,20 @@ Obe geometriji smo pri predmetu "ze obravnavali, zato za primerjavo prilagam tud
 
 Kon"cno sem izra"cunal "se pretok teko"cine po cevi z izbranim profilom. Ker trikotniki nimajo enakih plo"s"cin, je tudi te"za vsakega izra"cunanega koeficienta razli"cna. Pretok, ki pripada to"cki $i$, sem izrazil kot produkt vrednosti $w_i$ in tretjine plo"s"cin vseh trikotnikov, ki mejijo na to to"cko. Tretjina nastopa z enakim razlogom kot pri vektorju desnih strani, ker je 1/3 integral linearne funkcije po trikotniku. Zaradi te lastnosti lahko pretok po cevi hitro izra"cunamo kot skalarni produkt $\vec x \cdot \vec b$.  
 
-Pri izbiri matri"cnih elementov, kot so opisani v navodilih, pa maksimum re"sitve in s tem tudi pretok nara"s"ca linearno s "stevilom to"ck. 
+Pri izbiri matri"cnih elementov, kot so opisani v navodilih, pa maksimum re"sitve in s tem tudi pretok nara"s"ca linearno s "stevilom to"ck. Zato sem povsod risal koli"cino 
+
+\begin{align}
+ \Phi = \frac{\langle \vec x, \vec b\rangle}{n}
+\end{align}
+
 
 \begin{figure}[H]
  \input{g_pretok_polkrog}
  \caption{Pretok po polkro"zni cevi, diskretizirani na oba na"cina}
  \label{fig:pretok-polkrog}
 \end{figure}
+
+Opazimo razliko med obema pristopoma za diskretizacijo polkro"zne cevi. Za bolj"so se izka"ze razdelitev na kolobarje, saj da vi"sjo vrednost pretoka, hkrati se pa tudi bolje prilagaja modelu poten"cne konvergence. Pri heksagonalni razdelitvi opazimo skoke, ki so verjetno posledica neenakomerne velikosti trikotnikov na robu. 
 
 \begin{figure}[H]
  \input{g_pretok_kvadrat}
@@ -131,7 +134,9 @@ Prave vrednost, ki je limita pri $n\to\infty$, seveda ne moremo izra"cunati na t
  \Phi(n) = \Phi_0 - \alpha \cdot n^{-\beta}
 \end{align}
 
-Optimalno vrednost parametra $\Phi_0$ je ocena za preto"cnost cevi, potenca $\beta$ pa stopnja konvergence. 
+Optimalno vrednost parametra $\Phi_0$ je ocena za preto"cnost cevi, potenca $\beta$ pa stopnja konvergence. Pri vseh treh izra"cunih je optimanla vrednost $\beta$ med 0.4 in 0.5, torej nenatan"cnost pada pribli"zno s korenom "stevila to"ck. Konvergenca je o"citno precej po"casna, kar potrjujejo tudi izra"cuni, saj tudi pri ve"c kot 10000 to"ckah pretok "se vedno vztrajno nara"s"ca. 
+
+Pri re"sevanju pete naloge s pospe"seno relaksacijo sem dobil rezultat $\Phi_{SOR} \approx 0.01631$. Domnevam, da je odstopanje posledica zgoraj opisane normalizacije pretoka (moral sem deliti z $n$), pri "cemer nastopa "se neznana multiplikativna konstanta. V primeru izrezane kvadratne cevi sem dobil pretok, ki je premajhen pribli"zno za faktor $5/2$. 
 
 \section{Hitrost re"sevanja}
 
@@ -143,8 +148,8 @@ Meril sem tudi "cas, ki ga algoritem porabi za re"sevanje problema
  \label{fig:hitrost}
 \end{figure}
 
-Z grafa lahko vidimo, da "cas izvajanja ni odvisen od geometrije problema ali izbire diskretizacije, le od "stevila to"ck. V vseh treh izbranih diskretizacijah "cas ra"cunanja nara"s"ca z drugo potenco $n$, torej je algoritem reda $\mathcal{O}(n^2)$. 
+Z grafa lahko vidimo, da "cas izvajanja ni odvisen od geometrije problema ali izbire diskretizacije, le od "stevila to"ck. V vseh treh izbranih diskretizacijah "cas ra"cunanja nara"s"ca z drugo potenco $n$, torej je algoritem reda $\mathcal{O}(n^2)$.
 
-Program ve"cino "casa porabi v knjigovodskem delu, torej pri pripravi to"ck, povezav in matri"cnih elementov. Na podlagi tega domnevam, da bi se ga dalo "se pospe"siti. 
+Pri majhnem "stevilu to"ck je ra"cun s kvadratno cevjo hitrej"si, ker sem se lahko izognil ra"cunanju razdalj med vsemi to"ckami. Pri dovolj velikem $n$ pa razlika ni ve"c vidna, graf pa se mo"cno pribli"za premici. 
 
 \end{document}

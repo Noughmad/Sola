@@ -132,7 +132,6 @@ public:
     void konec_vrstice()
     {
         vrstice << tocke.size();
-        cout << "Koncal vrstico pri " << tocke.size() << endl;
     }
     
     int dodaj_tocko_noter(double x, double y, double h)
@@ -287,7 +286,7 @@ public:
             return false;
         }
         double rr = t.x*t.x + t.y*t.y;
-        return rr < 0.99;
+        return rr < 0.9999;
     }
     
     bool povezano(int i, int j, int k)
@@ -360,7 +359,6 @@ public:
             {
                 if (vrstice.contains(i))
                 {
-                    cout << "Delam vrstico pri " << i << endl;
                     fprintf(f, "\n");
                 }
                 const Tocka& t = tocke[i];
@@ -471,13 +469,6 @@ public:
             const Tocka& t = tocke[i];
             QPointF p = QPointF(400 + 400 * t.x, 400 * t.y);
             
-            if (!noter(i))
-            {
-                painter.setBrush(Qt::red);
-            }
-            painter.drawEllipse(p, 2, 2);
-            painter.setBrush(Qt::black);
-            
             for (int j = 0; j < i; ++j)
             {
                 if (gsl_matrix_char_get(povezave, i, j))
@@ -486,6 +477,19 @@ public:
                     painter.drawLine(p, q);
                 }
             }
+        }
+        
+        for (int i = 0; i < n; ++i)
+        {
+            const Tocka& t = tocke[i];
+            QPointF p = QPointF(400 + 400 * t.x, 400 * t.y);
+            
+            if (!noter(i))
+            {
+                painter.setBrush(Qt::red);
+            }
+            painter.drawEllipse(p, 2, 2);
+            painter.setBrush(Qt::black);
         }
         
         painter.end();
@@ -511,13 +515,13 @@ public:
     virtual bool noter(int i)
     {
         Tocka& t = tocke[i];
-        if (t.x < 0.01 || t.x > 0.99 || t.y < 0.01 || t.y > 0.99)
+        if (t.x < 0.001 || t.x > 0.999 || t.y < 0.001 || t.y > 0.999)
         {
             return false;
         }
         if (t.x < 1.0/3)
         {
-            return t.y < 0.99-t.x;
+            return t.y < 0.999-t.x;
         }
         else if (t.x < 2.0/3)
         {
@@ -541,13 +545,6 @@ public:
             const Tocka& t = tocke[i];
             QPointF p = QPointF(400 * t.x, 400 * t.y);
             
-            if (!noter(i))
-            {
-                painter.setBrush(Qt::red);
-            }
-            painter.drawEllipse(p, 2, 2);
-            painter.setBrush(Qt::black);
-            
             for (int j = 0; j < i; ++j)
             {
                 if (gsl_matrix_char_get(povezave, i, j))
@@ -556,6 +553,18 @@ public:
                     painter.drawLine(p, q);
                 }
             }
+        }
+        for (int i = 0; i < n; ++i)
+        {
+            const Tocka& t = tocke[i];
+            QPointF p = QPointF(400 * t.x, 400 * t.y);
+            
+            if (!noter(i))
+            {
+                painter.setBrush(Qt::red);
+            }
+            painter.drawEllipse(p, 2, 2);
+            painter.setBrush(Qt::black);
         }
         
         painter.end();
@@ -730,7 +739,7 @@ void heksa_vse()
 void batman_vse()
 {
     FILE* f = fopen("g_konv_batman.dat", "wt");
-    for (int i = 12; i < 120; i += 6)
+    for (int i = 12; i < 121; i += 6)
     {
         DelitevBatman d = batman(i);
         int n = d.stevilo();
@@ -743,16 +752,14 @@ void batman_vse()
 
 
 int main(int argc, char **argv) {
-    /*
     srediscna_vse();
     heksa_vse();
     batman_vse();
-    */
-    
-  //  srediscna(90).resitev("g_srediscna_90.dat");
-    heksagonalna(30).resitev("g_heksagonalna_90.dat");
-  //  batman(90).resitev("g_batman_90.dat");
-    
-  //  srediscna_vse();
+  /* 
+  heksagonalna(10).narisi("g_povezave_hex.png");
+  srediscna(10).narisi("g_povezave_sred.png");
+  batman(18).narisi("g_batman_18.png");
+  batman(30).narisi("g_batman_30.png");
+**/
     return 0;
 }

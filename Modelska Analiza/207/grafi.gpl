@@ -18,15 +18,15 @@ fit phi(x) "g_konv_srediscna.dat" u 2:3 via Phi,a,b
 fit phi2(x) "g_konv_hex.dat" u 2:3 via Phi2,a2,b2
 
 plot "g_konv_srediscna.dat" u 2:3 t "Sredi\"s\"cna", \
-phi(x) t sprintf("$\\Phi_0 = %.2g \\pm %.2g$", Phi*1000, Phi_err*1000), \
+phi(x) t sprintf("$\\Phi_0 = (%.4g \\pm %.1g)\\cdot 10^{-3}$", Phi*1000, Phi_err*1000), \
 "g_konv_hex.dat" u 2:3 t "Heksagonalna", \
-phi2(x) t sprintf("$\\Phi_0 = %.2g \\pm %.2g$", Phi2*1000, Phi2_err*1000)
+phi2(x) t sprintf("$\\Phi_0 = (%.4g \\pm %.1g)\\cdot 10^{-3}$", Phi2*1000, Phi2_err*1000)
 
 set output "g_pretok_kvadrat.tex"
 
 fit phi(x) "g_konv_batman.dat" u 2:3 via Phi,a,b
 plot "g_konv_batman.dat" u 2:3 t "Izrezan kvadrat", \
-phi(x) t sprintf("$\\Phi_0 = %.2g \\pm %.2g$", Phi*1000, Phi_err*1000)
+phi(x) t sprintf("$\\Phi_0 = (%.4g \\pm %.1g)\\cdot 10^{-3}$", Phi*1000, Phi_err*1000)
 
 set output "g_hitrost.tex"
 
@@ -39,12 +39,10 @@ set key top left
 
 fit f(x) "< cat g_konv_srediscna.dat g_konv_hex.dat g_konv_batman.dat" u 2:4 via C,p
 
-plot "g_konv_srediscna.dat" u 2:4 t "Sredi\"s\"cna", \
+plot[:20000] "g_konv_srediscna.dat" u 2:4 t "Sredi\"s\"cna", \
 "g_konv_hex.dat" u 2:4 t "Heksagonalna", \
 "g_konv_batman.dat" u 2:4 t "Izrezan kvadrat", \
 f(x) t sprintf("$p = %g$", p)
-
-set terminal png crop transparent
 
 unset xlabel
 unset ylabel
@@ -55,11 +53,13 @@ set pm3d map
 unset logscale
 set autoscale
 
-set output "g_profil_srediscna.png"
-splot "g_srediscna_90.dat"
+unset key
 
-set output "g_profil_hex.png"
-splot "g_heksagonalna_90.dat"
+set output "g_profil_srediscna.tex"
+splot[][0:1] "g_srediscna_90.dat"
 
-set output "g_profil_kvadrat.png"
+set output "g_profil_hex.tex"
+splot[][0:1] "g_heksagonalna_90.dat"
+
+set output "g_profil_kvadrat.tex"
 splot "g_batman_90.dat"
