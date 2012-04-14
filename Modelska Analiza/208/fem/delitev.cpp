@@ -6,6 +6,11 @@
 #include <cholmod.h>
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
+#include <QtCore/QMap>
+
+#include <QtCore/QDebug>
+
+#include <dsaupd.h>
 
 using namespace std;
 
@@ -19,7 +24,7 @@ quint16 qHash(const Trikotnik& t)
     return (t.i << 10) | (t.j << 5) | t.k;
 }
 
-Tocka::operator QPointF()
+Tocka::operator QPointF() const
 {
     return QPointF(400 + 400 * x, 400 * y);
 }
@@ -47,22 +52,6 @@ int Delitev::indeks(int i, int j) const
     return ni * not_indeksi.size() + nj;
 }
 
-double Delitev::ploscina(const Trikotnik& t)
-{
-    if (ploscine.contains(t))
-    {
-        return ploscine.value(t);
-    }
-
-    double s = 0;
-    s += tocke[t.i].x * y(t.j,t.k);
-    s += tocke[t.k].x * y(t.i,t.j);
-    s += tocke[t.j].x * y(t.k,t.i);
-    s = fabs(s)/2;
-    ploscine.insert(t, s);
-    return s;
-}
-
 double Delitev::dd(int i, int j) const
 {
     return x(i,j)*x(i,j) + y(i,j)*y(i,j);
@@ -78,18 +67,17 @@ double Delitev::y(int i, int j) const
     return tocke[i].y - tocke[j].y;
 }
 
-int Delitev::dodaj_tocko(double x, double y)
+int Delitev::dodaj_tocko(double x, double y, bool noter)
 {
     const int i = tocke.size();
     
     Tocka t;
     t.x = x;
     t.y = y;
-    if (qFuzzyIsNull(y) || (x*x+y*y) > 0.999)
+    if (!noter)
     {
         t.noter = false;
         t.z = 0;
-
     }
     else
     {
@@ -104,7 +92,33 @@ int Delitev::dodaj_tocko(double x, double y)
 
 int Delitev::dodaj_trikotnik(int i, int j, int k)
 {
-    Trikotnik t = {i,j,k};
+    int ti, tj, tk;
+    if (i < qMin(j,k))
+    {
+        ti = i;
+        tj = qMin(j,k);
+        tk = qMax(j,k);
+    }
+    else if (j < qMin(i,k))
+    {
+        ti = j;
+        tj = qMin(i,k);
+        tk = qMax(i,k);
+    }
+    else 
+    {
+        ti = k;
+        tj = qMin(i,j);
+        tk = qMax(i,j);
+    }
+    Trikotnik t = {ti,tj,tk};
+    
+    double s = 0;
+    s += tocke[t.i].x * y(t.j,t.k);
+    s += tocke[t.k].x * y(t.i,t.j);
+    s += tocke[t.j].x * y(t.k,t.i);
+    t.ploscina = fabs(s)/2;
+    
     trikotniki << t;
     return trikotniki.size() - 1;
 }
@@ -124,6 +138,12 @@ cholmod_dense* Delitev::desne_strani()
     int n = notranje.size();
     cholmod_dense* b = cholmod_allocate_dense(n, 1, n, CHOLMOD_REAL, cc);
     double* bx = (double*)b->x;
+    
+    for (int i = 0; i < n; ++i)
+    {
+        bx[i] = 0;
+    }
+    
     foreach (const Trikotnik& t, trikotniki)
     {
         const double s = ploscina(t)/3;
@@ -146,15 +166,8 @@ cholmod_dense* Delitev::desne_strani()
 cholmod_sparse* Delitev::matrika()
 {
     int n = notranje.size();
-    int N = 7*n;
-    cholmod_dense* D = cholmod_allocate_dense(n, n, n, CHOLMOD_REAL, cc);
-    // cholmod_sparse* A = cholmod_allocate_sparse(n, n, N, 1, 1, 0, CHOLMOD_REAL, c);
     
-    double* Dx = (double*)D->x;
-    for (int i = 0; i < n*n; ++i)
-    {
-        Dx[i] = 0;
-    }
+    QMap<int, QMap<int, double> > elementi;
         
     foreach (const Trikotnik& t, trikotniki)
     {
@@ -170,43 +183,77 @@ cholmod_sparse* Delitev::matrika()
         
         if (ni)
         {
-            Dx[indeks(t.i, t.i)] += dd(t.j, t.k) * s;
+            elementi[t.i][t.i] += dd(t.j, t.k) * s;
         }
         
         if (nj)
         {
-            Dx[indeks(t.j, t.j)] += dd(t.k, t.i) * s;
+            elementi[t.j][t.j] += dd(t.k, t.i) * s;
         }
         
         if (nk)
         {
-            Dx[indeks(t.k, t.k)] += dd(t.i, t.j) * s;
+            elementi[t.k][t.k] += dd(t.i, t.j) * s;
         }
         
         if (ni && nj)
         {
-            const double ts = ( x(j,k)*x(k,i) + y(j,k)*y(k,i) ) * s;
-            Dx[indeks(i,j)] += ts;
-            Dx[indeks(j,i)] += ts;
+            elementi[i][j] += ( x(j,k)*x(k,i) + y(j,k)*y(k,i) ) * s;
         }
         
         if (nj && nk)
         {
-            const double ts = ( x(j,i)*x(i,k) + y(j,i)*y(i,k) ) * s;
-            Dx[indeks(j,k)] += ts;
-            Dx[indeks(k,j)] += ts;
+            elementi[j][k] += ( x(j,i)*x(i,k) + y(j,i)*y(i,k) ) * s;
         }
         
         if (ni && nk)
         {
-            const double ts = ( x(i,j)*x(j,k) + y(i,j)*y(j,k) ) * s;
-            Dx[indeks(k,i)] += ts;
-            Dx[indeks(i,k)] += ts;
+            elementi[i][k] += ( x(i,j)*x(j,k) + y(i,j)*y(j,k) ) * s;
         }
     }
+        
+    Q_ASSERT(elementi.size() == n);
+        
+    int m = 0;
+    QMap<int,double> vrstica;
+    foreach (vrstica, elementi)
+    {
+        m += vrstica.size();
+    }
+        
+    cholmod_sparse* A = cholmod_allocate_sparse(n, n, m, 1, 1, -1, CHOLMOD_REAL, cc);
     
-    cholmod_sparse* A = cholmod_dense_to_sparse(D, 1, cc);
-    cholmod_free_dense(&D, cc);
+    double* Ax = (double*)A->x;
+    int* Ap = (int*)A->p;
+    int* Ai = (int*)A->i;
+    
+    int t = 0;
+    int i = 0;
+    
+    QMap<int,QMap<int,double> >::const_iterator gend = elementi.constEnd();
+    QMap<int,QMap<int,double> >::const_iterator git = elementi.constBegin();
+    
+    for (; git != gend; ++git)
+    {
+        Ap[i] = t;
+        QMap<int,double>::const_iterator end = git.value().constEnd();
+        QMap<int,double>::const_iterator it = git.value().constBegin();
+        for (; it != end; ++it)
+        {
+            Q_ASSERT(it.key() >= git.key());
+            
+            Ai[t] = not_indeksi[it.key()];
+            Ax[t] = it.value();
+            ++t;
+        }
+        ++i;
+    }
+    Ap[n] = t;
+    Q_ASSERT(t == m);
+    
+    cc->print = 4;
+  //  cholmod_print_sparse(A, "A", cc);
+    
     return A;
 }
 
@@ -216,13 +263,20 @@ void Delitev::resi_poisson()
     cc = &Common;
     
     cholmod_start(cc);
-    
+    Common.dtype = CHOLMOD_DOUBLE;
+        
     cholmod_sparse* A = matrika();
     cholmod_dense* b = desne_strani();
     
+   // cholmod_print_sparse(A, "A", cc);
+        
     cholmod_factor* L = cholmod_analyze(A, cc);
     cholmod_factorize(A, L, cc);
     cholmod_dense* x = cholmod_solve(CHOLMOD_A, L, b, cc);
+    
+    cholmod_free_sparse(&A, cc);
+    cholmod_free_dense(&b, cc);
+    
     double* xx = (double*)x->x;
     
     int n = x->nrow;
@@ -232,6 +286,10 @@ void Delitev::resi_poisson()
     {
         tocke[notranje[i]].z = xx[i];
     }
+    
+    cholmod_free_dense(&x, cc);
+    
+    cholmod_finish(cc);
 }
 
 void Delitev::narisi(const QString& file)
@@ -251,6 +309,52 @@ void Delitev::narisi(const QString& file)
         painter.setPen(QPen(Qt::red, 2));
         painter.drawPoint(QPointF(tocke[t.i] + tocke[t.j] + tocke[t.k])/3);
     }
+    
+    painter.setPen(QPen(Qt::green, 2));
+    foreach (const Tocka& t, tocke)
+    {
+        if (t.noter)
+        {
+            continue;
+        }
+        painter.drawPoint(t);
+    }
+    
     painter.end();
     image.save(file);
 }
+
+int Delitev::st_notranjih() const
+{
+    return notranje.size();
+}
+
+int Delitev::st_tock() const
+{
+    return tocke.size();
+}
+
+cholmod_sparse* Delitev::masa()
+{
+    
+}
+
+void Delitev::resi_nihanje()
+{
+    cholmod_common Common;
+    cc = &Common;
+    cc->dtype = CHOLMOD_DOUBLE;
+    
+    cholmod_sparse* A = matrika();
+    cholmod_sparse* B = masa();
+    
+    cholmod_factor* L = cholmod_analyze(B, cc);
+    cholmod_factorize(B, L, cc);
+    
+    cholmod_sparse* Y = cholmod_spsolve(CHOLMOD_L, L, cholmod_transpose(A,0,cc), cc);
+    Y = cholmod_transpose(Y, 0, cc);
+    
+    cholmod_sparse* C = cholmod_spsolve(CHOLMOD_L, L, Y, cc);
+}
+
+

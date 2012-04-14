@@ -12,12 +12,13 @@ struct Tocka
     double x, y, z;
     bool noter;
     
-    operator QPointF();
+    operator QPointF() const;
 };
 
 struct Trikotnik
 {
     int i, j, k;
+    double ploscina;
 };
 
 quint16 qHash(const Trikotnik& t);
@@ -29,11 +30,15 @@ public:
     Delitev();
     virtual ~Delitev();
     
-    double ploscina(const Trikotnik& t);
+    inline double ploscina(const Trikotnik& t) const
+    {
+        return t.ploscina;
+    }
+    
     double dd(int i, int j) const;
     double pretok();
     
-    int dodaj_tocko(double x, double y);
+    int dodaj_tocko(double x, double y, bool noter);
     int dodaj_trikotnik(int i, int j, int k);
     
     cholmod_sparse* matrika();
@@ -43,10 +48,13 @@ public:
     double x(int i, int j) const;
     double y(int i, int j) const;
     
-    void pripravi();
     void resi_poisson();
+    void resi_nihanje();
     
     void narisi(const QString& file);
+    
+    int st_notranjih() const;
+    int st_tock() const;
     
 private:
     int indeks(int i, int j) const;
@@ -59,6 +67,8 @@ private:
     QHash<Trikotnik, double> ploscine;
     cholmod_common* cc;
 };
+
+typedef Delitev (*Generator)(int);
 
 #endif // DELITEV_H
 
