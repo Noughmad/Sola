@@ -9,8 +9,10 @@
 #include <QtCore/QMap>
 
 #include <QtCore/QDebug>
+#include <QFile>
 
-#include <dsaupd.h>
+
+
 
 using namespace std;
 
@@ -163,11 +165,11 @@ cholmod_dense* Delitev::desne_strani()
     return b;
 }
 
-cholmod_sparse* Delitev::matrika()
+Matrika Delitev::matrika()
 {
     int n = notranje.size();
     
-    QMap<int, QMap<int, double> > elementi;
+    Matrika elementi;
         
     foreach (const Trikotnik& t, trikotniki)
     {
@@ -214,14 +216,41 @@ cholmod_sparse* Delitev::matrika()
         
     Q_ASSERT(elementi.size() == n);
         
+    return elementi;
+}
+
+cholmod_sparse* Delitev::sparse(const Matrika& matrika, bool symmetric)
+{    
+    Matrika elementi(matrika);
+        
+    if (!symmetric)
+    {
+        // Insert the other half of values
+        for (Matrika::const_iterator git = matrika.constBegin(); git != matrika.constEnd(); ++git)
+        {
+            Vrstica::const_iterator end = git.value().constEnd();
+            Vrstica::const_iterator it = git.value().constBegin();
+            for (; it != end; ++it)
+            {
+                if (it.key() != git.key())
+                {
+                    elementi[it.key()][git.key()] = it.value();
+                }
+            }
+        }
+    }
+    
+    Matrika::const_iterator gend = elementi.constEnd();
+    Matrika::const_iterator git = elementi.constBegin();
+    
+    int n = notranje.size();
     int m = 0;
-    QMap<int,double> vrstica;
-    foreach (vrstica, elementi)
+    foreach (const Vrstica& vrstica, elementi)
     {
         m += vrstica.size();
     }
-        
-    cholmod_sparse* A = cholmod_allocate_sparse(n, n, m, 1, 1, -1, CHOLMOD_REAL, cc);
+    
+    cholmod_sparse* A = cholmod_allocate_sparse(n, n, m, 1, 1, symmetric ? -1 : 0, CHOLMOD_REAL, cc);
     
     double* Ax = (double*)A->x;
     int* Ap = (int*)A->p;
@@ -230,18 +259,14 @@ cholmod_sparse* Delitev::matrika()
     int t = 0;
     int i = 0;
     
-    QMap<int,QMap<int,double> >::const_iterator gend = elementi.constEnd();
-    QMap<int,QMap<int,double> >::const_iterator git = elementi.constBegin();
     
-    for (; git != gend; ++git)
+    for (git = elementi.constBegin(); git != gend; ++git)
     {
         Ap[i] = t;
-        QMap<int,double>::const_iterator end = git.value().constEnd();
-        QMap<int,double>::const_iterator it = git.value().constBegin();
+        Vrstica::const_iterator end = git.value().constEnd();
+        Vrstica::const_iterator it = git.value().constBegin();
         for (; it != end; ++it)
-        {
-            Q_ASSERT(it.key() >= git.key());
-            
+        {          
             Ai[t] = not_indeksi[it.key()];
             Ax[t] = it.value();
             ++t;
@@ -251,13 +276,10 @@ cholmod_sparse* Delitev::matrika()
     Ap[n] = t;
     Q_ASSERT(t == m);
     
-    cc->print = 4;
-  //  cholmod_print_sparse(A, "A", cc);
-    
     return A;
 }
 
-void Delitev::resi_poisson()
+void Delitev::resi_poisson(bool risi)
 {
     cholmod_common Common;
     cc = &Common;
@@ -265,7 +287,7 @@ void Delitev::resi_poisson()
     cholmod_start(cc);
     Common.dtype = CHOLMOD_DOUBLE;
         
-    cholmod_sparse* A = matrika();
+    cholmod_sparse* A = sparse(matrika(), true);
     cholmod_dense* b = desne_strani();
     
    // cholmod_print_sparse(A, "A", cc);
@@ -285,6 +307,11 @@ void Delitev::resi_poisson()
     for (int i = 0; i < n; ++i)
     {
         tocke[notranje[i]].z = xx[i];
+    }
+    
+    if (risi)
+    {
+        plot(x, 0, 0);
     }
     
     cholmod_free_dense(&x, cc);
@@ -334,27 +361,69 @@ int Delitev::st_tock() const
     return tocke.size();
 }
 
-cholmod_sparse* Delitev::masa()
+int Delitev::st_trikotnikov() const
 {
-    
+    return trikotniki.size();
 }
 
-void Delitev::resi_nihanje()
+Matrika Delitev::masa()
 {
-    cholmod_common Common;
-    cc = &Common;
-    cc->dtype = CHOLMOD_DOUBLE;
-    
-    cholmod_sparse* A = matrika();
-    cholmod_sparse* B = masa();
-    
-    cholmod_factor* L = cholmod_analyze(B, cc);
-    cholmod_factorize(B, L, cc);
-    
-    cholmod_sparse* Y = cholmod_spsolve(CHOLMOD_L, L, cholmod_transpose(A,0,cc), cc);
-    Y = cholmod_transpose(Y, 0, cc);
-    
-    cholmod_sparse* C = cholmod_spsolve(CHOLMOD_L, L, Y, cc);
+    Matrika elementi;
+    foreach (const Trikotnik& t, trikotniki)
+    {
+        const int& i = t.i;
+        const int& j = t.j;
+        const int& k = t.k;
+        
+        bool ni = tocke[i].noter;
+        bool nj = tocke[j].noter;
+        bool nk = tocke[k].noter;
+        
+        double s = ploscina(t) / 12.0;
+        
+        if (ni)
+        {
+            elementi[t.i][t.i] += 2 * s;
+        }
+        
+        if (nj)
+        {
+            elementi[t.j][t.j] += 2 * s;
+        }
+        
+        if (nk)
+        {
+            elementi[t.k][t.k] += 2 * s;
+        }
+        
+        if (ni && nj)
+        {
+            elementi[i][j] += s;
+        }
+        
+        if (nj && nk)
+        {
+            elementi[j][k] += s;
+        }
+        
+        if (ni && nk)
+        {
+            elementi[i][k] += s;
+        }
+    }
+    return elementi;
+}
+
+void Delitev::shrani(const QString& file)
+{
+    QFile f(file);
+    f.open(QIODevice::WriteOnly);
+    QTextStream stream(&f);
+    foreach (const Tocka& t, tocke)
+    {
+        stream << t.x << " " << t.y << " " << t.z << endl;
+    }
+    f.close();
 }
 
 

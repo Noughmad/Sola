@@ -3,6 +3,8 @@
 
 #include <QtCore/QList>
 #include <QtCore/QHash>
+#include <QtCore/QMap>
+#include <QtCore/QRectF>
 
 #include <cholmod.h>
 
@@ -24,6 +26,9 @@ struct Trikotnik
 quint16 qHash(const Trikotnik& t);
 bool operator==(const Trikotnik& t1, const Trikotnik& t2);
 
+typedef QMap<int, double> Vrstica;
+typedef QMap<int, Vrstica> Matrika;
+
 class Delitev
 {
 public:
@@ -41,20 +46,30 @@ public:
     int dodaj_tocko(double x, double y, bool noter);
     int dodaj_trikotnik(int i, int j, int k);
     
-    cholmod_sparse* matrika();
+    virtual Matrika matrika();
     cholmod_dense* desne_strani();
-    cholmod_sparse* masa();
+    virtual Matrika masa();
+    
+    cholmod_sparse* sparse(const Matrika& elementi, bool symmetric);
+    int arpack(const Matrika& m, int** i, int** p, double** x);
     
     double x(int i, int j) const;
     double y(int i, int j) const;
     
-    void resi_poisson();
-    void resi_nihanje();
+    void resi_poisson(bool risi);
+    void resi_nihanje(int stevilo, bool risi, double lastne_vrednosti[]);
     
     void narisi(const QString& file);
+    void shrani(const QString& file);
     
-    int st_notranjih() const;
+    virtual int st_notranjih() const;
     int st_tock() const;
+    int st_trikotnikov() const;
+    
+    virtual void plot(cholmod_dense* a, int d, double k);
+    
+    QRectF rect;
+    const char* name;
     
 private:
     int indeks(int i, int j) const;
@@ -68,7 +83,11 @@ private:
     cholmod_common* cc;
 };
 
-typedef Delitev (*Generator)(int);
+typedef Delitev* (*Generator)(int);
+
+int lastne_arpack(double EigVal[], double EigVec[], int n, int nnz, double A[],
+          int irow[], int pcol[], char uplo, int nev,
+          char* which = "LM");
 
 #endif // DELITEV_H
 

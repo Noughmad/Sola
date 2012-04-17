@@ -1,0 +1,80 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[unicode=true]{hyperref}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage{float}
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\newcommand{\dd}{\mathrm{d}}
+
+\newcommand{\parcialno}[2]{
+  \frac{\partial #1}{\partial #2}
+}
+\newcommand{\parcdva}[2]{
+  \frac{\partial^2 #1}{\partial #2 ^2}
+}
+\newcommand{\lag}{\mathcal{L}}
+
+\title{Metoda kon\v cnih elementov: \\ Poissonova ena\v cba}
+\author{Miha \v Can\v cula}
+\begin{document}
+
+\maketitle
+
+\section{Uporabljena orodja}
+
+Za izra"cun lastnih vrednosti in lastnih vektorjev matrike sem uporabil knji"znico \texttt{ARPACK}, za prikaz re"sitev \texttt{MathGL}, ostalo pa sem napisal v programskem jeziku \texttt{C}. 
+
+\section{Kon"cni elementi}
+
+\section{Galerkinov nastavek}
+Podoben postopek lahko izvedemo tudi, "ce re"sitev namesto po funkcijah $w_i$, ki so razli"cne od 0 le na majhnem prostoru, razvijemo po zveznih funkcijah
+
+\begin{align}
+ u &= \sum_{m=1}^{\infty} \sum_{k=0}^{\infty} a_{k}^{m} g_{k}^{m} \\
+ g_{k}^{m} &= r^{m+k} (1-r) \sin(m\phi)
+\end{align}
+
+"Ce usmerimo os $y$ v smeri ravnega roba polkroga, je $\phi \in [0,\pi]$ in so pri robnih pogojih prve vrste smiselne kotne odvisnosti le sinusi. Ti so za razli"cne $m$ med seboj ortogonalni, zato je matrika $A$ blo"cno diagonalna in razpade na podmatrike $A_m$. Isto velja tudi za masno matriko $B$. Dovolj je torej, "ce izra"cunamo koeficiente $a_{k}^{m}$ za vsak $m$ posebej. 
+
+Matri"cne elemente $A$ in $B$ izrazimo kot integrale funkcij $g_{k}^{m}$ in njihovih gradientov, ki jih lahko izra"cunamo analiti"cno. 
+
+\begin{align}
+\langle g_{k}^{m}, g_{l}^{m} \rangle &= \int_0^\pi \int_0^1 r^{2m+k+l}(1-r)^2 \sin^2 (m\phi) r \dd r \dd \phi \nonumber \\
+  &= \frac{\pi}{2} \int_0^1 \left( r^{2m+k+l+1} -2r^{2m+k+l+2} + r^{2m+k+l+3} \right) \dd r \nonumber \\
+  &= \frac{\pi}{2} \left( \frac{1}{2m+k+l+2} - \frac{2}{2m+k+l+3} + \frac{1}{2m+k+l+4} \right) \\
+  \nabla g_{k}^{m} &= \left( \parcialno{}{r}, \frac{1}{r} \parcialno{}{\phi} \right) \left( r^{m+k} - r^{m+k+1}\right) \sin(m\phi) \nonumber \\
+  &= \left((m+k)r^{m+k-1} - (m+k+1)r^{m+k} \right)\sin(m\phi), \nonumber \\
+  & {} \quad \quad m\left( r^{m+k-1} - r^{m+k}\right) \cos(m\phi) \\
+  \langle \nabla g_{k}^{m}, \nabla g_{l}^{m} \rangle &= \frac{\pi}{2} \int_0^1 \Big[ \left((m+k)r^{m+k-1} - (m+k+1)r^{m+k} \right)\left((m+l)r^{m+l-1} - (m+l+1)r^{m+l} \right) + \nonumber \\
+  & {} \hspace{50pt} + m^2 \left( r^{m+k-1} - r^{m+k}\right)\left( r^{m+l-1} - r^{m+l}\right) \Big] r \dd r = \nonumber \\
+  &= \frac{\pi}{2} \int_0^1 r^{2m+k+l} \Big\{ \big[ (m+k)(m+l) + m^2 \big] r^{-1} + \big[ (m+k+1)(m+l+1) + m^2 \big]r - \nonumber \\ 
+  & \hspace{80pt} - \big[ (m+k)(m+l+1) + (m+k+1)(m+l) + 2m^2 \big] \Big\} \dd r \nonumber \\
+  &= \frac{\pi}{2} \left( m + \frac{kl}{2m+k+l} -2m - \frac{k + l}{2m+k+l+1} + m + \frac{k+l + kl}{2m+k+l+2} \right) \nonumber \\
+  &= \frac{\pi}{2} \left( \frac{kl}{2m+k+l} - \frac{k + l}{2m+k+l+1} + \frac{k+l + kl}{2m+k+l+2} \right)
+\end{align}
+
+Lastne vrednosti in lastni vektorji se ne spremenijo, "ce matriki $A$ in $B$ pomno"zimo s konstantnim faktorjem, zato sem pri ra"cunih izpustil mno"zenje s $\pi/2$. 
+
+\subsection{Re"sevanje}
+
+Matriki $A$ in $B$ sedaj nista ve"c redki, pri velikih $k$ pa funkcije $g$ postajajo vse bolj linearno odvisne, zato smo omejeni na majhne $k$ in s tem tudi majhne matrike. Zato ne potrebujemo posebej optimiziranega postopka za iskanje lastnih vrednosti in vektorjev, v mojem primeru sem uporabil kar \texttt{GSL}. Sta pa obe matriki "se vedno simetri"cni. 
+
+\end{document}
