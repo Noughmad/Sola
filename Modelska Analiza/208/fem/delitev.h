@@ -57,7 +57,7 @@ public:
     double y(int i, int j) const;
     
     void resi_poisson(bool risi);
-    void resi_nihanje(int stevilo, bool risi, double lastne_vrednosti[]);
+    virtual void resi_nihanje(int stevilo, bool risi, double lastne_vrednosti[]);
     
     void narisi(const QString& file);
     void shrani(const QString& file);

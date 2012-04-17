@@ -68,13 +68,13 @@ Matri"cne elemente $A$ in $B$ izrazimo kot integrale funkcij $g_{k}^{m}$ in njih
   &= \frac{\pi}{2} \int_0^1 r^{2m+k+l} \Big\{ \big[ (m+k)(m+l) + m^2 \big] r^{-1} + \big[ (m+k+1)(m+l+1) + m^2 \big]r - \nonumber \\ 
   & \hspace{80pt} - \big[ (m+k)(m+l+1) + (m+k+1)(m+l) + 2m^2 \big] \Big\} \dd r \nonumber \\
   &= \frac{\pi}{2} \left( m + \frac{kl}{2m+k+l} -2m - \frac{k + l}{2m+k+l+1} + m + \frac{k+l + kl}{2m+k+l+2} \right) \nonumber \\
-  &= \frac{\pi}{2} \left( \frac{kl}{2m+k+l} - \frac{k + l}{2m+k+l+1} + \frac{k+l + kl}{2m+k+l+2} \right)
+  &= \frac{\pi}{2} \left( \frac{kl}{2m+k+l} - \frac{k + l}{2m+k+l+1} + \frac{(k+1)(l+1)}{2m+(k+1)+(l+1)} \right)
 \end{align}
 
 Lastne vrednosti in lastni vektorji se ne spremenijo, "ce matriki $A$ in $B$ pomno"zimo s konstantnim faktorjem, zato sem pri ra"cunih izpustil mno"zenje s $\pi/2$. 
 
 \subsection{Re"sevanje}
 
-Matriki $A$ in $B$ sedaj nista ve"c redki, pri velikih $k$ pa funkcije $g$ postajajo vse bolj linearno odvisne, zato smo omejeni na majhne $k$ in s tem tudi majhne matrike. Zato ne potrebujemo posebej optimiziranega postopka za iskanje lastnih vrednosti in vektorjev, v mojem primeru sem uporabil kar \texttt{GSL}. Sta pa obe matriki "se vedno simetri"cni. 
+Matriki $A$ in $B$ sedaj nista ve"c redki, pri velikih $k$ pa funkcije $g$ postajajo vse bolj linearno odvisne, zato smo omejeni na majhne $k$ in s tem tudi majhne matrike. Zaradi majhnih dimenzij matrik ne potrebujemo posebej optimiziranega postopka za iskanje lastnih vrednosti in vektorjev, v mojem primeru sem uporabil kar istega kot pri kon"cnih elementih. To lahko naredimo, ker sta obe matriki "se vedno simetri"cni. 
 
 \end{document}

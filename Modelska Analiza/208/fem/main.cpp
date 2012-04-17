@@ -215,5 +215,7 @@ Delitev* galerkin(int m, int n)
 int main(int argc, char **argv) {
     double lv[5];
     galerkin(1, 10)->resi_nihanje(5, true, lv);
+    galerkin(2, 10)->resi_nihanje(5, true, lv);
+    galerkin(3, 10)->resi_nihanje(5, true, lv);
     return 0;
 }

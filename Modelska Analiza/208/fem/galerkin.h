@@ -4,6 +4,7 @@
 
 #include "delitev.h"
 
+#include <gsl/gsl_matrix.h>
 
 class Galerkin : public Delitev
 {
@@ -21,6 +22,11 @@ public:
     
     virtual void plot(cholmod_dense* a, int d, double k);
     virtual int st_notranjih() const;
+    
+#ifndef WITH_ARPACK
+    virtual void resi_nihanje(int stevilo, bool risi, double lastne_vrednosti[]);
+    gsl_matrix* gsl(const Matrika& mat);
+#endif
     
 private:
     int m;

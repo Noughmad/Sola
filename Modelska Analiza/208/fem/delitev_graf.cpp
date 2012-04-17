@@ -1,10 +1,11 @@
 
 #include "delitev.h"
-#include <mgl/mgl.h>
-#include <mgl/mgl_eps.h>
-#include <mgl/mgl_zb.h>
-
 #include <QtCore/QDebug>
+
+#if defined WITH_MATHGL
+#  include <mgl/mgl.h>
+#  include <mgl/mgl_eps.h>
+#  include <mgl/mgl_zb.h>
 
 void Delitev::plot(cholmod_dense* a, int d, double k)
 {
@@ -83,3 +84,12 @@ void Delitev::plot(cholmod_dense* a, int d, double k)
     delete[] t;
     delete[] x, y, z;
 }
+
+#else // WITH_MATHGL
+
+void Delitev::plot(cholmod_dense* x, int d, double k)
+{
+    qWarning() << "Plotting needs MathGL";
+}
+
+#endif
