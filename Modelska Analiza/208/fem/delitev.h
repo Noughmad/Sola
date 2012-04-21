@@ -7,6 +7,7 @@
 #include <QtCore/QRectF>
 
 #include <cholmod.h>
+#include <gsl/gsl_matrix_double.h>
 
 class QPointF;
 struct Tocka
@@ -28,6 +29,9 @@ bool operator==(const Trikotnik& t1, const Trikotnik& t2);
 
 typedef QMap<int, double> Vrstica;
 typedef QMap<int, Vrstica> Matrika;
+
+typedef Vrstica::const_iterator VIt;
+typedef Matrika::const_iterator MIt;
 
 class Delitev
 {
@@ -51,7 +55,9 @@ public:
     virtual Matrika masa();
     
     cholmod_sparse* sparse(const Matrika& elementi, bool symmetric);
-    int arpack(const Matrika& m, int** i, int** p, double** x);
+    gsl_matrix* gsl(const Matrika& elementi);
+    
+    void print_matrix(gsl_matrix* m);
     
     double x(int i, int j) const;
     double y(int i, int j) const;
@@ -71,10 +77,12 @@ public:
     QRectF rect;
     const char* name;
     
+    virtual int indeks(int key);
+    
 private:
     int indeks(int i, int j) const;
         
-private:
+protected:
     QList<Tocka> tocke;
     QList<int> notranje;
     QHash<int,int> not_indeksi;
@@ -87,8 +95,10 @@ typedef Delitev* (*Generator)(int);
 
 int lastne_arpack(double EigVal[], double EigVec[], int n, int nnz, double A[],
           int irow[], int pcol[], char uplo, int nev,
-          char* which = "LM");
+          char* which = "SM");
+
+int lastne(double EigVal[], double EigVec[], int n, int nnz, cholmod_sparse* A, int nev, char* which = "SM");
+int lastne_gen(double EigVal[], double EigVec[], int n, int nnzA, cholmod_sparse* A, int nnzB, cholmod_sparse* B, int nev, char* which = "SM");
+
 
 #endif // DELITEV_H
-
-struct Tocka;

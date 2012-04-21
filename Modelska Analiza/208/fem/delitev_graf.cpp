@@ -29,9 +29,7 @@ void Delitev::plot(cholmod_dense* a, int d, double k)
     {
         zRange = qMax(zRange, fabs(ax[i]));
     }
-    
-    qDebug() << zRange;
-    
+        
     int j = -1;    
     mreal* t = new mreal[3*trikotniki.size()];
 

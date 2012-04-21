@@ -167,7 +167,7 @@ cholmod_dense* Delitev::desne_strani()
 
 Matrika Delitev::matrika()
 {
-    int n = notranje.size();
+    int n = st_notranjih();
     
     Matrika elementi;
         
@@ -243,7 +243,7 @@ cholmod_sparse* Delitev::sparse(const Matrika& matrika, bool symmetric)
     Matrika::const_iterator gend = elementi.constEnd();
     Matrika::const_iterator git = elementi.constBegin();
     
-    int n = notranje.size();
+    int n = st_notranjih();
     int m = 0;
     foreach (const Vrstica& vrstica, elementi)
     {
@@ -426,4 +426,42 @@ void Delitev::shrani(const QString& file)
     f.close();
 }
 
+gsl_matrix* Delitev::gsl(const Matrika& mat)
+{
+    int n = st_notranjih();
+    gsl_matrix* g = gsl_matrix_alloc(n,n);
+    
+    for (MIt mit = mat.constBegin(); mit != mat.constEnd(); ++mit)
+    {
+        for (VIt vit = mit.value().constBegin(); vit != mit.value().constEnd(); ++vit)
+        {
+            gsl_matrix_set(g, indeks(mit.key()), indeks(vit.key()), vit.value());
+            if (mit.key() != vit.key())
+            {
+                gsl_matrix_set(g, indeks(vit.key()), indeks(mit.key()), vit.value());
+            }
+        }
+    }
+    return g;
+}
+
+void Delitev::print_matrix(gsl_matrix* m)
+{
+    int n = m->size1;
+    for (int i = 0; i < n; ++i)
+    {
+        for (int j = 0; j < n; ++j)
+        {
+            double f = gsl_matrix_get(m, i, j);
+            char c = (f > 0) ? '+' : (f < 0) ? '-' : ' ';
+            printf("%c", c);
+        }
+        printf("\n");
+    }
+}
+
+int Delitev::indeks(int key)
+{
+    return not_indeksi[key];
+}
 

@@ -4,79 +4,35 @@
 
 #include <QtCore/QDebug>
 
+#ifndef WITH_ARPACK
+#  include <gsl/gsl_matrix_double.h>
+#  include <gsl/gsl_vector_complex_double.h>
+#  include <gsl/gsl_eigen.h>
+#endif
+
+
 void Delitev::resi_nihanje(int stevilo, bool risi, double lastne_vrednosti[])
 {
+#ifdef WITH_ARPACK
     cholmod_common Common;
     cc = &Common;
     cholmod_start(cc);
     cc->dtype = CHOLMOD_DOUBLE;
     
-    cholmod_sparse* A = sparse(matrika(), false);
+    cholmod_sparse* A = sparse(matrika(), true);
     cholmod_sparse* B = sparse(masa(), true);
     
-    cholmod_factor* L = cholmod_analyze(B, cc);
-    cholmod_factorize(B, L, cc);
-    Q_ASSERT(L);
-    
-    cholmod_sparse* Yt = cholmod_spsolve(CHOLMOD_L, L, A, cc);
-    Q_ASSERT(Yt);
-    
-    cholmod_sparse* Y = cholmod_transpose(Yt, 1, cc);
-    cholmod_sparse* C = cholmod_spsolve(CHOLMOD_L, L, Y, cc);
-    Q_ASSERT(C);
-        
-    // Matrika C mora biti simetricna, ceprav cholmod_spsolve tega ne uposteva
-    
     int n = st_notranjih();
-    int nzmax = (C->nzmax + n + 1) / 2;
+    double* EigVal = new double[stevilo];
+    double* EigVec = new double[stevilo * n];
     
-    int t = 0;
-    int c = 0;
-    
-    int* Cp = (int*)C->p;
-    int* Ci = (int*)C->i;
-    double* Cx = (double*)C->x;
-    
-    cholmod_sparse* R = cholmod_allocate_sparse(n, n, nzmax, 1, 1, 1, CHOLMOD_REAL, cc);
-    
-    int* Rp = (int*)R->p;
-    int* Ri = (int*)R->i;
-    double* Rx = (double*)R->x;
-    
-    Rp[0] = 0;
-    Ri[0] = 0;
-    Rx[0] = Cx[0];
-    ++t;
-    
-    for (int col = 1; col < n; ++col)
-    {
-        Rp[col] = t;
-        for (int j = Cp[col]; j < Cp[col+1]; ++j)
-        {
-            int row = Ci[j];
-            if (row <= col)
-            {
-                Ri[t] = row;
-                Rx[t] = Cx[j];
-                ++t;
-            }
-        }
-    }
-    Rp[n] = t;
-    
-    int nconv = stevilo;
-    double* EigVal = new double[nconv];
-    double* EigVec = new double[nconv * n];
-    
-    nconv = lastne_arpack(EigVal, EigVec, n, 
-                            t, Rx, Ri, Rp, 
-                            'U', nconv, "SM");
+    int nconv = lastne_gen(EigVal, EigVec, n, A->nzmax, A, B->nzmax, B, stevilo, "SM");
     
     qDebug() << "Izracunal" << nconv << "lastnih nihanj";
     for (int i = 0; i < nconv; ++i)
     {
-        qDebug() << "lambda [" << i << "] =" << EigVal[i];
-        lastne_vrednosti[i] = EigVal[i];
+        qDebug() << "k [" << i << "] =" << sqrt(EigVal[i]);
+        lastne_vrednosti[i] = sqrt(EigVal[i]);
     }
     
     if (risi)
@@ -89,69 +45,59 @@ void Delitev::resi_nihanje(int stevilo, bool risi, double lastne_vrednosti[])
             {
                 bx[i] = EigVec[vec*n+i];
             }
-            
-            cholmod_dense* a = cholmod_solve(CHOLMOD_Lt, L, b, cc);
-            double* ax = (double*)a->x;
-            
-            plot(a, vec+1, sqrt(EigVal[vec]));
+            plot(b, vec+1, sqrt(EigVal[vec]));
         }
     }
     
     cholmod_finish(cc);
-}
-
-
-int Delitev::arpack(const Matrika& elementi, int** i, int** p, double** x)
-{
-    int nnz = 0;
-    int n = notranje.size();
-    int t = 0;
     
-    Matrika::const_iterator gend = elementi.constEnd();
-    Matrika::const_iterator git = elementi.constBegin();
+#else // WITH_ARPACK
     
-    for (git = elementi.constBegin(); git != gend; ++git)
+    int n = st_notranjih();
+    gsl_matrix* A = gsl(matrika());
+    gsl_matrix* B = gsl(masa());
+    
+    // print_matrix(A);
+    // print_matrix(B);
+    
+    gsl_vector* lambda = gsl_vector_alloc(n);
+    gsl_matrix* evec = gsl_matrix_alloc(n, n);
+   
+    gsl_eigen_gensymmv_workspace* w = gsl_eigen_gensymmv_alloc(n);
+    gsl_eigen_gensymmv(A, B, lambda, evec, w);
+    gsl_eigen_gensymmv_sort(lambda, evec, GSL_EIGEN_SORT_ABS_ASC);
+
+    for (int i = 0; i < stevilo; ++i)
     {
-        nnz += git.value().size();
+        lastne_vrednosti[i] = gsl_vector_get(lambda, i);
+        qDebug() << sqrt(gsl_vector_get(lambda, i));
     }
     
-    qDebug() << n << nnz;
-    
-    int* Ai = new int[nnz];
-    int* Ap = new int[n+1];
-    double* Ax = new double[nnz];
-    
-    int col = 0;
-    for (git = elementi.constBegin(); git != gend; ++git)
+    if (risi)
     {
-        Ap[col] = t;
-        Vrstica::const_iterator end = git.value().constEnd();
-        Vrstica::const_iterator it = git.value().constBegin();
-        for (; it != end; ++it)
-        {          
-            Ai[t] = not_indeksi[it.key()];
-            Ax[t] = it.value();
-            ++t;
+        for (int vec = 0; vec < stevilo; ++vec)
+        {
+            cholmod_common Common;
+            cc = &Common;
+            cholmod_start(cc);
+            
+            cholmod_dense* b = cholmod_allocate_dense(n, 1, n, CHOLMOD_REAL, cc);
+            double* bx = (double*)b->x;
+            for (int i = 0; i < n; ++i)
+            {
+                bx[i] = gsl_matrix_get(evec, vec, i);
+            }
+            
+            plot(b, vec+1, sqrt(gsl_vector_get(lambda, vec)));
+            cholmod_finish(cc);
         }
-        ++col;
     }
     
-    Ap[n] = t;
+    gsl_eigen_gensymmv_free(w);
+    gsl_matrix_free(A);
+    gsl_matrix_free(B);
+    gsl_matrix_free(evec);
+    gsl_vector_free(lambda);
     
-    for (int j = 0; j < n+1; ++j)
-    {
-        qDebug() << "Ap [" << j << "] = " << Ap[j];
-    }
-    
-    for (int j = 0; j < nnz; ++j)
-    {
-        qDebug() << "Ai [" << j << "] = " << Ai[j] << ", Ax [" << j << "] = " << Ax[j];
-    }
-    
-    
-    
-    *i = Ai;
-    *p = Ap;
-    *x = Ax;
-    return nnz;
+#endif // WITH_ARPACK
 }

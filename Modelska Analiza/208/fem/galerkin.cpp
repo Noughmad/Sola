@@ -1,18 +1,23 @@
 
 #include "galerkin.h"
-#include <QDebug>
 
-#include <gsl/gsl_matrix_double.h>
-#include <gsl/gsl_vector_complex_double.h>
-#include <gsl/gsl_eigen.h>
+#include <QtCore/QDebug>
+#include <QtCore/qmath.h>
+#include <QFile>
 
-#include <gsl/gsl_sort_vector.h>
+double g(double m, double k, double r, double phi)
+{
+    return pow(r, m+k) * (1-r) * sin(m*phi);
+}
 
 Galerkin::Galerkin(int m, int n) : Delitev(), 
 m(m),
 n(n)
 {
-
+    for (int i = 0; i < n; ++i)
+    {
+        not_indeksi[i] = i;
+    }
 }
 
 Galerkin::~Galerkin()
@@ -41,7 +46,7 @@ Matrika Galerkin::matrika()
     {
         for (int l = k; l < n; ++l)
         {
-            mat[k][l] = 1.0*k*l/(2*m+k+l) - 1.0*(k+l)/(2*m+k+l+1) + 1.0*(k+1)*(l+1)/(2*m+k+l+2);
+            mat[k][l] = 1.0*k*l/(2*m+k+l) - 1.0*(2*k*l+k+l)/(2*m+k+l+1) + 1.0*(k+1)*(l+1)/(2*m+k+l+2);
         }
     }
     return mat;
@@ -50,52 +55,39 @@ Matrika Galerkin::matrika()
 void Galerkin::plot(cholmod_dense* a, int d, double k)
 {
     qDebug() << "Resil galerkin: " << d << k;
+    
+    QFile file(QString("g_galerkin_%1_%2.dat").arg(m).arg(d));
+    file.open(QIODevice::WriteOnly);
+    
+    QTextStream stream(&file);
+    double* ax = (double*)a->x;
+    
+    QString vector = "(";
+    for(int i = 0; i < n; ++i)
+    {
+        vector += QString::number(ax[i], 'g', 3) += ',';
+    }
+    vector.chop(1);
+    vector += ")";
+    qDebug() << m << d << ": => " << vector;
+    
+    for (double r = 0; r <= 1; r += 0.01)
+    {
+        for (double phi = 0; phi < M_PI; phi += M_PI*0.01)
+        {
+            double t = 0;
+            for (int i = 0; i < n; ++i)
+            {
+                t += ax[i] * g(m, d, r, phi);
+            }
+            stream << t << " ";
+        }
+        stream << endl;
+    }
+    file.close();
 }
 
 int Galerkin::st_notranjih() const
 {
     return n;
 }
-
-// #if not defined WITH_ARPACK
-void Galerkin::resi_nihanje(int stevilo, bool risi, double lastne_vrednosti[])
-{
-   gsl_matrix* A = gsl(matrika());
-   gsl_matrix* B = gsl(masa());
-   
-   gsl_vector* lambda = gsl_vector_alloc(n);
-   gsl_matrix* evec = gsl_matrix_alloc(n, n);
-   
-    gsl_eigen_gensymmv_workspace* w = gsl_eigen_gensymmv_alloc(n);
-    gsl_eigen_gensymmv(A, B, lambda, evec, w);
-    gsl_eigen_gensymmv_sort(lambda, evec, GSL_EIGEN_SORT_ABS_ASC);
-
-    for (int i = 0; i < stevilo; ++i)
-    {
-        lastne_vrednosti[i] = gsl_vector_get(lambda, i);
-        qDebug() << gsl_vector_get(lambda, i);
-    }
-    
-    gsl_eigen_gensymmv_free(w);
-    gsl_matrix_free(A);
-    gsl_matrix_free(B);
-    gsl_matrix_free(evec);
-    gsl_vector_free(lambda);
-}
-
-gsl_matrix* Galerkin::gsl(const Matrika& mat)
-{
-    gsl_matrix* g = gsl_matrix_alloc(n,n);
-    for (int i = 0; i < n; ++i)
-    {
-        gsl_matrix_set(g, i, i, mat[i][i]);
-        for (int j = i; j < n; ++j)
-        {
-            gsl_matrix_set(g, i, j, mat[i][j]);
-            gsl_matrix_set(g, j, i, mat[i][j]);
-        }
-    }
-    return g;
-}
-
-// #endif

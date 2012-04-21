@@ -11,20 +11,20 @@ option(WITH_MATHGL "Use MathGL for plotting")
 option(WITH_GSL "Use the GNU Scientific Library" ON)
 
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-add_executable(fem galerkin.cpp delitev.cpp delitev_graf.cpp delitev_arpack.cpp delitev_lastne.cpp main.cpp)
 
 set (LIBS
     ${QT_QTCORE_LIBRARIES} 
     ${QT_QTGUI_LIBRARIES} 
     spqr 
     lapack 
-    blas 
+    blas
     cholmod
     amd
     colamd
 )
 
 if (WITH_ARPACK)
+    add_definitions(-DWITH_ARPACK)
     set (LIBS ${LIBS}
         arpack
         parpack
@@ -34,17 +34,20 @@ if (WITH_ARPACK)
 endif()
 
 if (WITH_MATHGL)
+    add_definitions(-DWITH_MATHGL)
     set (LIBS ${LIBS}
         mgl
     )
 endif()
 
 if (WITH_GSL)
+    add_definitions(-DWITH_GSL)
     set (LIBS ${LIBS}
         gsl
         gslcblas
     )
 endif()
 
+add_executable(fem galerkin.cpp delitev.cpp delitev_graf.cpp delitev_arpack.cpp delitev_lastne.cpp main.cpp)
 target_link_libraries(fem ${LIBS})
 

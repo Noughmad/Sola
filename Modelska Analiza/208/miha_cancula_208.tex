@@ -40,11 +40,13 @@
 
 \section{Uporabljena orodja}
 
-Za izra"cun lastnih vrednosti in lastnih vektorjev matrike sem uporabil knji"znico \texttt{ARPACK}, za prikaz re"sitev \texttt{MathGL}, ostalo pa sem napisal v programskem jeziku \texttt{C}. 
+Za izra"cun lastnih vrednosti in lastnih vektorjev matrike sem uporabil knji"znico \texttt{ARPACK}, za prikaz re"sitev \texttt{MathGL}, ostalo pa sem napisal v programskem jeziku \texttt{C}. Metoda za re"sevanje posplo"senega sistema lastnih vrednosti uporablja LU razcep. Za ekstrapolacijo lastnih vrednosti pri $n \to \infty$ sem uporabil \texttt{Gnuplot}. 
 
 \section{Kon"cni elementi}
 
 Najprej sem nalogo re"sile z metodo kon"cnih elementov. Celoten postopek je zelo podoben kot pri prej"snji nalogi, razlika je le v samem re"sevanju matri"cnega sistema. 
+
+Iskanje lastnih vrednosti matrike je bolj zahtevna operacija kot re"sevanje sistema, zato sem se moral omejiti na manj"se matrike. Matriki $A$ in $B$ redki (vsaka ima pribli"zno $7n$ elementov, matriki pa sta $n\times n$), ko pa problem z razcepom matrike $B$ prevedemo na iskanje lastnih vrednosti matrike $C$, pa ima ta matrika "ze ve"c elementov. 
 
 \section{Galerkinov nastavek}
 Podoben postopek lahko izvedemo tudi, "ce re"sitev namesto po funkcijah $w_i$, ki so razli"cne od 0 le na majhnem prostoru, razvijemo po zveznih funkcijah
@@ -70,13 +72,108 @@ Matri"cne elemente $A$ in $B$ izrazimo kot integrale funkcij $g_{k}^{m}$ in njih
   &= \frac{\pi}{2} \int_0^1 r^{2m+k+l} \Big\{ \big[ (m+k)(m+l) + m^2 \big] r^{-1} + \big[ (m+k+1)(m+l+1) + m^2 \big]r - \nonumber \\ 
   & \hspace{80pt} - \big[ (m+k)(m+l+1) + (m+k+1)(m+l) + 2m^2 \big] \Big\} \dd r \nonumber \\
   &= \frac{\pi}{2} \left( m + \frac{kl}{2m+k+l} -2m - \frac{k + l}{2m+k+l+1} + m + \frac{k+l + kl}{2m+k+l+2} \right) \nonumber \\
-  &= \frac{\pi}{2} \left( \frac{kl}{2m+k+l} - \frac{k + l}{2m+k+l+1} + \frac{(k+1)(l+1)}{2m+(k+1)+(l+1)} \right)
+  &= \frac{\pi}{2} \left( \frac{kl}{2m+k+l} - \frac{2kl + k + l}{2m+k+l+1} + \frac{(k+1)(l+1)}{2m+k+l+2} \right)
 \end{align}
 
 Lastne vrednosti in lastni vektorji se ne spremenijo, "ce matriki $A$ in $B$ pomno"zimo s konstantnim faktorjem, zato sem pri ra"cunih izpustil mno"zenje s $\pi/2$. 
 
 \subsection{Re"sevanje}
 
-Matriki $A$ in $B$ sedaj nista ve"c redki, pri velikih $k$ pa funkcije $g$ postajajo vse bolj linearno odvisne, zato smo omejeni na majhne $k$ in s tem tudi majhne matrike. Zaradi majhnih dimenzij matrik ne potrebujemo posebej optimiziranega postopka za iskanje lastnih vrednosti in vektorjev, v mojem primeru sem uporabil kar istega kot pri kon"cnih elementih. To lahko naredimo, ker sta obe matriki "se vedno simetri"cni. 
+Matriki $A$ in $B$ sedaj nista ve"c redki, pri velikih $k$ pa funkcije $g$ postajajo vse bolj linearno odvisne, zato smo omejeni na majhne $k$ in s tem tudi majhne matrike. Zaradi majhnih dimenzij matrik ne potrebujemo posebej optimiziranega postopka za iskanje lastnih vrednosti in vektorjev, v mojem primeru sem uporabil \texttt{GSL}. Obe matriki sta "se vedno simetri"cni, zato lahko uporabimo funkcijo za simetri"cne matrike, lastne vrednosti pa so realne. 
+
+"Stevilo testnih funkcij sem izbral tako, da je bila bil najve"cji eksponent $m+k \leq 15$. Pri ve"cjem "stevilu sem imel te"zave z izra"cunom, saj matrika ni bila ve"c pozitivno definitna. 
+
+\section{Rezultati}
+
+\begin{figure}[H]
+ \centering
+ \subfigure{\includegraphics[width=.4\textwidth]{g_contour_srediscna_1}}
+ \subfigure{\includegraphics[width=.4\textwidth]{g_contour_srediscna_2}} \\
+ \subfigure{\includegraphics[width=.4\textwidth]{g_contour_srediscna_3}} 
+ \subfigure{\includegraphics[width=.4\textwidth]{g_contour_srediscna_4}} \\
+ \subfigure{\includegraphics[width=.4\textwidth]{g_contour_srediscna_5}}
+ \subfigure{\includegraphics[width=.4\textwidth]{g_contour_srediscna_6}} \\
+ \subfigure{\includegraphics[width=.4\textwidth]{g_contour_srediscna_7}}
+ \subfigure{\includegraphics[width=.4\textwidth]{g_contour_srediscna_8}}
+ \caption{Prvih 8 nihanj polkro"zne opne, izra"cunanih po metodi kon"cnih elementov}
+ \label{fig:nihanja}
+\end{figure}
+
+
+\begin{comment}
+ Rezultati relaksacije: 
+ 
+ 1 & 3.8403 & 1 & 1 & 3.8317 \\
+  2 & 5.1374 & 2 & 1 & 5.1356 \\
+  3 & 6.3800 & 3 & 1 & 6.3802 \\
+  4 & 7.0284 & 1 & 2 & 7.0156 \\
+  5 & 7.5864 & 4 & 1 & 7.5883 \\
+  6 & 8.4178 & 2 & 2 & 8.4172 \\
+  7 & 8.7673 & 5 & 1 & 8.7715 \\
+  8 & 9.7580 & 3 & 2 & 9.7610 \\
+\end{comment}
+
+Po obeh metodah sem izra"cunal 8 najni"znih lastnih frekvence polkro"zne opne. Rezultati ter primerjava z vrednosti po metodi relaksacije in tabeliranimi ni"clami Besselovih funkcij so v tabeli \ref{tab:rezultati}. 
+
+\begin{table}[H]
+ \centering
+  \begin{tabular}{|c|c|c|c|c|c|c|}
+  \hline
+    $m$ & $n$ & Relaksacija & \multicolumn{2}{|c|}{FEM} & Galerkin & Tabeliran \\
+    \hline
+    & & 8192 to"ck & 9401 to"ck & Ekstrapolacija & 10 funkcij & \\
+    \hline
+    1 & 1 & 3.8403 & 3.8321 & 3.8316 & 3.8317 & 3.8317 \\
+    2 & 1 & 5.1374 & 5.1365 & 5.1354 & 5.1356 & 5.1356 \\
+    3 & 1 & 6.3800 & 6.3822 & 6.3797 & 6.3802 & 6.3802 \\
+    1 & 2 & 7.0284 & 7.0180 & 7.0150 & 7.0156 & 7.0156 \\
+    4 & 1 & 7.5864 & 7.5914 & 7.5876 & 7.5883 & 7.5883 \\
+    2 & 2 & 8.4178 & 8.4214 & 8.4162 & 8.4172 & 8.4172 \\
+    5 & 1 & 8.7673 & 8.7761 & 8.7704 & 8.7715 & 8.7715 \\
+    3 & 2 & 9.7580 & 9.7681 & 9.7594 & 9.7610 & 9.7610 \\
+    \hline
+  \end{tabular}
+  \caption{Primerjava lastnih frekvenc, izra"cunanih po razli"cnih metodah}
+  \label{tab:rezultati}
+\end{table}
+
+S tabele vidimo, da je izmed vseh treh preizku"sanih metoda uporaba nastavkov dale"c najbolj"sa. Tudi pri uporabi majhnega "stevila poskusnih funkcij se prvih 8 lastnih vrednosti ujema s pravimi vrednostmi na vsaj 4 decimalke. Poleg najbolj"se natan"cnosti je ta metoda tudi mnogo hitrej"sa, saj ima matrika 100 elementov namesto nekaj milijonov. 
+
+Seveda za tak"sno izbolj"savo potrebujemo nastavke, ki so dobra baza za iskane nihajne na"cine. V na"sem primeru smo privzeli celotno kotno odvisnost re"sitve, pribli"zno pa smo poznali vsaj obliko radialnega dela. V poljubni geometriji tak"snih predpostav ne moremo narediti, zato je te"zko uganiti prave nastavke. 
+
+Metodi relaksacije in kon"cnih elementov se pri fiksnem "stevilu to"ck izka"zeta za podobno natan"cni. Lastne vrednosti so pri ra"cunu s pribli"zno 9000 to"ckami natan"cne na 1 do 2 decimalki. Tudi v hitrost se ne razlikujeta, saj v obeh primerih ra"cunamo lastne vrednosti in vektorje redke matrike. Prednost FEM pa je, da lastne vrednosti konvergirajo monotono, torej se z ve"canjem "stevila to"ck le manj"sajo. "Ce to odvisnost ekstrapoliramo, dose"zemo ve"cjo natan"cnost (na 3 decimalke). 
+
+Odvisnosti $i$-te lastne frekvence od "stevila to"ck sem prilagodil funkcijo
+
+\begin{align}
+\label{eq:konvergenca}
+ k_i(n) &= k_i + \alpha_i n ^{-\beta_i}
+\end{align}
+
+Za prvih osem lastnih frekvence je ekstrapolirana vrednost manj"sa od prave, zato domnevam, da bi nastavek (\ref{eq:konvergenca}) lahko izbolj"sali in s tem pove"cali natan"cnost celotnega izra"cuna. 
+
+\section{Hitrost in konvergenca}
+
+Pri metodi kon"cnih elementov sem opazoval, kako sta trajanje in natan"cnost ra"cunanja odvisna od "stevila to"ck. Pri nastavku Galerkina to po"cetje ni bilo smiselno, saj sem bil zaradi linearne odvisnosti funkcij omejen na majhne matrike (najve"c $10\times10$). Rezultati so na slikah \ref{fig:konvergenca} in \ref{fig:hitrost}. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_konvergenca}
+ \caption{Konvergenca prvih nekaj lastnih vrednostih pri ve"canju "stevila to"ck}
+ \label{fig:konvergenca}
+\end{figure}
+
+Za razliko od re"sevanja Poissonove ena"cbe je iskanje lastnih nihanj reda $\mathcal{O}(n^2)$. Zaradi te odvisnosti mi je uspelo re"siti le sisteme z do 10000 to"ckami. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_hitrost}
+ \caption{Odvisnost "casa ra"cunanja lastnih frekvenc in nihanj od "stevila to"ck}
+ \label{fig:hitrost}
+\end{figure}
+
+Ker metoda izhaja iz variacijskega problema, sem preveril, da tudi izra"cunane lastne frekvence monotono konvergirajo k pravi vrednosti. Za razliko od ra"cunanja pretoka po cevi se frekvence pribli"zujejo pravi vrednosti od zgoraj. 
+
+Za prva tri lastna nihanja so vrednosti na sliki \ref{fig:konvergenca}, v vseh treh primerih je $\beta$ med 0.9 in 1. S podvojitvijo "stevila to"ck se "cas ra"cunanja pove"ca za "stirikrat, napaka lastnih frekvenc pa se le prepolovi. 
 
 \end{document}

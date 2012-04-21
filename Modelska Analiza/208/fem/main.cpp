@@ -159,11 +159,11 @@ void vse_n(Generator g, const QString& filename)
     file.open(QIODevice::WriteOnly);
     QTextStream stream(&file);
     
-    QString vrstica = "%1 %2 %3 %4\n";
+    QString vrstica = "%1 %2 %3";
     
-    const int NV = 8;
+    const int NV = 10;
     
-    for (int n = 10; n < 70; n += 3)
+    for (int n = 10; n < 80; n += 3)
     {
         clock_t start = clock();
         
@@ -174,8 +174,12 @@ void vse_n(Generator g, const QString& filename)
         double t = (double)(clock() - start)/CLOCKS_PER_SEC;
         stream << vrstica.arg(n)
                          .arg(d->st_notranjih())
-                         .arg(vrednosti[0])
                          .arg(t);
+        for (int i = 0; i < NV; ++i)
+        {
+            stream << " " << vrednosti[i];
+        }
+        stream << endl;
         cout << "Resil za n = " << n << ", tock = " << d->st_notranjih() << ", lambda_0 = " << vrednosti[0] << endl;
     }
     file.close();
@@ -212,10 +216,17 @@ Delitev* galerkin(int m, int n)
     return g;
 }
 
-int main(int argc, char **argv) {
+void vse_g()
+{
     double lv[5];
-    galerkin(1, 10)->resi_nihanje(5, true, lv);
-    galerkin(2, 10)->resi_nihanje(5, true, lv);
-    galerkin(3, 10)->resi_nihanje(5, true, lv);
+    for (int m = 1; m < 6; ++m)
+    {
+        qDebug() << m;
+        galerkin(m, 10)->resi_nihanje(4, false, lv);
+    }
+}
+
+int main(int argc, char **argv) {
+    vse_n(srediscna, "../../g_srediscna_k.dat");
     return 0;
 }

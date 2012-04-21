@@ -36,4 +36,3 @@ fit[100:] f(x) "< cat g_konv_srediscna.dat g_konv_batman.dat" u 2:4 via C,p
 plot[100:200000] "g_konv_srediscna.dat" u 2:4 t "Polkrog", \
 "g_konv_batman.dat" u 2:4 t "Izrezan kvadrat", \
 f(x) t sprintf("$p = %g$", p)
-
