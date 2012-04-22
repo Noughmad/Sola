@@ -2,6 +2,9 @@
 
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_linalg.h>
+#include <gsl/gsl_blas.h>
+
+#include <gsl/gsl_odeiv2.h>
 
 #include <QtGui/QPolygonF>
 #include <QtGui/qtransform.h>
@@ -12,11 +15,57 @@
 #include <QtCore/QDebug>
 #include <QtCore/qtextstream.h>
 
+inline bool compare(double p1, double p2)
+{
+    return (qAbs(p1 - p2) <= 0.001 * qMin(qAbs(p1), qAbs(p2)));
+}
+
+inline double arctan(double y, double x)
+{
+    double a = qAtan2(y, x);
+    if (x > 0)
+    {
+        return a;
+    }
+    else if (y < 0)
+    {
+        return a + M_PI;
+    }
+    else if (y > 0)
+    {
+        return a - M_PI;
+    }
+    return 0;
+}
+
+typedef QPair<double,double> K;
+
 struct Sistem
 {
     gsl_matrix* A;
+    gsl_matrix* B;
     gsl_vector* b;
     QPolygonF delitev;
+    gsl_vector* resitev;
+    int N;
+    
+    Sistem& resi();
+    Sistem& shrani(const QString& filename);
+    
+    Sistem& el_polje(const QString& filename);
+    Sistem& hitrostno_polje(const QString& filename);
+    Sistem& tokovnice(const QString& filename);
+    
+    double epot(double x, double y) const;
+    
+    QPair<double, double> hitrost(double x, double y);
+    
+    void preveri_hitrosti();
+    double kot(int i);
+    
+    Sistem& matrika(const QString& filename);
+    
+    void test();
 };
 
 void save(const QPolygonF& poly, const QString& name)
@@ -51,7 +100,6 @@ double n_y(double x)
 QPolygonF naca(int n, double t, double kot)
 {
     QPolygonF poly(n+1);
-    poly[0] = QPointF(0,0);
     
     double F = 2.75;
     
@@ -59,7 +107,7 @@ QPolygonF naca(int n, double t, double kot)
     double m = F / 3.0;
     double l = (double)2*(3.0-F) / n;
     
-    for (int i ; i <= n; ++i)
+    for (int i = 0; i <= n; ++i)
     {
         double x = 1 - cos(M_PI * (i-n/2) * 1.0 / n);
         if (i < n/2)
@@ -84,7 +132,7 @@ double u(double x, double y, double ksi1, double ksi2)
 {
     double x1 = x-ksi1;
     double x2 = x-ksi2;
-    return 0.25 * M_1_PI * (2*x1 - 2*x2 + 2*y*(atan2(x1, y) - atan2(x2, y)) + x1 * log(x1*x1 + y*y) - x2 * log(x2*x2 + y*y));
+    return 0.25 * M_1_PI * (2*x1 - 2*x2 + 2*y*(arctan(x1, y) - arctan(x2, y)) + x1 * log(x1*x1 + y*y) - x2 * log(x2*x2 + y*y));
 }
 
 inline double u(const QPointF& xy, const QPair<double, double>& center)
@@ -92,17 +140,35 @@ inline double u(const QPointF& xy, const QPair<double, double>& center)
     return u(xy.x(), xy.y(), center.first, center.second);
 }
 
-void transform(const QPointF& p1, const QPointF& p2, double* x, double* y)
-{
-    double angle = -M_PI / 180.0 * QLineF(p1, p2).angle();
-    
+void rotate(double angle, double* x, double* y)
+{    
     double xn = (*x) * cos(angle) + (*y) * sin(angle);
     double yn = (*y) * cos(angle) - (*x) * sin(angle);
     *x = xn;
     *y = yn;
 }
 
-double v_T(const QPointF& ap1, const QPointF& ap2, double x, double y)
+void rotate(double angle, K* k)
+{
+    rotate(angle, &(k->first), &(k->second));
+}
+
+double angle(const QPointF& p1, const QPointF& p2)
+{
+    return -M_PI / 180.0 * QLineF(p1, p2).angle();
+}
+
+void transform(const QPointF& p1, const QPointF& p2, double* x, double* y)
+{
+    rotate(angle(p1, p2), x, y);
+}
+
+double Sistem::kot(int i)
+{
+    return angle(delitev[i], delitev[i+1]);
+}
+
+K v(const QPointF& ap1, const QPointF& ap2, double x, double y)
 {
     QPointF c = (ap1+ap2)/2;
     QTransform t;
@@ -119,34 +185,25 @@ double v_T(const QPointF& ap1, const QPointF& ap2, double x, double y)
     double eta1 = p1.y();
     double eta2 = p2.y();
     
-    transform(p1, p2, &x, &y);
-    transform(p1, p2, &ksi1, &eta1);
-    transform(p1, p2, &ksi2, &eta2);
+    double kot = angle(p1, p2);
+    
+    rotate(kot, &x, &y);
+    rotate(kot, &ksi1, &eta1);
+    rotate(kot, &ksi2, &eta2);
     
     Q_ASSERT(qFuzzyIsNull(eta1));
     Q_ASSERT(qFuzzyIsNull(eta2));
     
-    return 0.5 * M_1_PI * (atan2(x-ksi1, y) - atan2(x-ksi1, y));
-}
-
-double v_II(const QPointF& p1, const QPointF& p2, double x, double y)
-{
-    double ksi1 = p1.x();
-    double ksi2 = p2.x();
-    double eta1 = p1.y();
-    double eta2 = p2.y();
-    
-    transform(p1, p2, &x, &y);
-    transform(p1, p2, &ksi1, &eta1);
-    transform(p1, p2, &ksi2, &eta2);
-    
-    Q_ASSERT(qFuzzyIsNull(eta1));
-    Q_ASSERT(qFuzzyIsNull(eta2));
     
     double x1 = x - ksi1;
     double x2 = x - ksi2;
     
-    return 0.25 * M_1_PI * log( (x1*x1 + y*y) / (x2*x2 + y*y) );
+    K v;
+    v.first = 0.25 * M_1_PI * log( (x1*x1 + y*y) / (x2*x2 + y*y) );
+    v.second = 0.5 * M_1_PI * (arctan(x1, y) - arctan(x2, y));
+    
+    rotate(-angle(ap1, ap2), &v);
+    return v;
 }
 
 Sistem elektroda(const QPolygonF& delitev)
@@ -159,15 +216,17 @@ Sistem elektroda(const QPolygonF& delitev)
     {
         for (int j = 0; j < n; ++j)
         {
-            gsl_matrix_set(matrika, i, j, u(center(delitev, i), qMakePair(delitev[i].x(), delitev[i+1].x()) ));
+            gsl_matrix_set(matrika, i, j, u(center(delitev, j), qMakePair(delitev[i].x(), delitev[i+1].x()) ));
         }
         gsl_vector_set(rhs, i, 1);
     }
-    
+        
     Sistem s;
     s.A = matrika;
     s.b = rhs;
+    s.resitev = 0;
     s.delitev = delitev;
+    s.N = n;
     return s;
 }
 
@@ -176,45 +235,89 @@ Sistem obtekanje(const QPolygonF& delitev)
     int n = delitev.size() - 1;
     Sistem s;
     s.A = gsl_matrix_alloc(n, n);
+    s.B = gsl_matrix_alloc(n, n);
     s.b = gsl_vector_alloc(n);
     s.delitev = delitev;
+    s.resitev = 0;
+    s.N = n;
     
     for (int i = 0; i < n; ++i)
     {
-        gsl_matrix_set(s.A, i, i, -0.5);
-        for (int j = 0; j < i; ++j)
+        for (int j = 0; j < n; ++j)
         {
-            QPointF p = center(delitev, j);
-            double e = v_T(delitev[i], delitev[i+1], p.x(), p.y());
-            gsl_matrix_set(s.A, i, j, e);
-            gsl_matrix_set(s.A, j, i, e);
+            if (i == j)
+            {
+                gsl_matrix_set(s.A, i, j, -0.5);
+            }
+            else
+            {
+                QPointF p = center(delitev, j);
+                K e = v(delitev[i], delitev[i+1], p.x(), p.y());
+                rotate(s.kot(j), &e);
+                
+                if (qAbs(e.second) > 0.5)
+                {
+                    qDebug() << i << j << e.second << e.first;
+                }
+                
+                gsl_matrix_set(s.A, i, j, e.second);
+                gsl_matrix_set(s.B, i, j, e.first);
+            }
         }
-        gsl_vector_set(s.b, i, -sin(M_PI / 180.0 * QLineF(delitev[i], delitev[i+1]).angle() ));
+        qDebug() << sin(s.kot(i));
+        gsl_vector_set(s.b, i, sin(s.kot(i)));
     }
+    
     return s;
 }
 
-void resi(const Sistem& sistem, const QString& filename)
+Sistem& Sistem::resi()
 {
-    gsl_vector* x = gsl_vector_alloc(sistem.b->size);
-    gsl_linalg_HH_solve(sistem.A, sistem.b, x);
+    Q_ASSERT(N);
+    resitev = gsl_vector_alloc(b->size);
+    gsl_linalg_HH_solve(A, b, resitev);
     
+    // TODO: Remove
+   // resitev = b;
+    
+    return *this;
+}
+
+void napisi(QTextStream& stream, Sistem& sistem, int i, int j)
+{
+    stream << sistem.delitev[i].x() << " " << sistem.delitev[i].y() << " ";
+    stream << gsl_vector_get(sistem.resitev, j);
+    
+    if (i < sistem.N)
+    {
+        QPointF p = center(sistem.delitev, i);
+        K h = sistem.hitrost(p.x(), p.y());
+        rotate(-sistem.kot(i), &h);
+        stream << " " << h.first << " " << h.second;
+    }
+    
+    stream << endl;
+}
+
+Sistem& Sistem::shrani(const QString& filename)
+{
     if (!filename.isEmpty())
     {
-        int n = sistem.delitev.size() - 1;
+        int n = delitev.size() - 1;
         QFile file(filename);
         file.open(QIODevice::WriteOnly);
         QTextStream stream(&file);
-        stream << sistem.delitev[0].x() << " " << sistem.delitev[0].y() << " " << gsl_vector_get(x, 0) << endl;
+        napisi(stream, *this, 0, 0);
         for (int i = 1; i < n; ++i)
         {
-            stream << sistem.delitev[i].x() << " " << sistem.delitev[i].y() << " " << gsl_vector_get(x, i-1) << endl;
-            stream << sistem.delitev[i].x() << " " << sistem.delitev[i].y() << " " << gsl_vector_get(x, i) << endl;
+            napisi(stream, *this, i, i-1);
+            napisi(stream, *this, i, i);
         }
-        stream << sistem.delitev[n].x() << " " << sistem.delitev[n].y() << " " << gsl_vector_get(x, n-1) << endl;
+        napisi(stream, *this, n, n-1);        
         
         file.close();
     }
+    return *this;
 }
 
 QPolygonF zukovski(int n, double A, double B)
@@ -245,10 +348,178 @@ QPolygonF elipsoid(int n, double b)
     return poly;
 }
 
+double Sistem::epot(double x, double y) const
+{
+    double pot = 0;
+    for (int i = 0; i < N; ++i)
+    {
+        const QPointF p = center(delitev, i);
+        double rr = (p.x() - x) * (p.x() - x) + (p.y() - y) * (p.y() - y);
+        pot += gsl_vector_get(resitev, i) * 0.25 * M_1_PI * log(rr);
+    }
+    return pot;
+}
+
+Sistem& Sistem::el_polje(const QString& filename)
+{
+    QFile file(filename);
+    file.open(QIODevice::WriteOnly);
+    QTextStream stream(&file);
+    const double L = 2;
+    
+    for (double y = -L; y <= L; y += 0.02)
+    {
+        for (double x = -L; x <= L; x += 0.02)
+        {
+            stream << x << " " << y << " " << epot(x, y) << endl;
+        }
+        stream << endl;
+    }
+    
+    file.close();
+    return *this;
+}
+
+K Sistem::hitrost(double x, double y)
+{
+    double vx = 1, vy = 0;
+    Q_ASSERT(N > 0);
+    for (int i = 0; i < N; ++i)
+    {
+        K t = v(delitev[i], delitev[i+1], x, y);
+        
+        vx += gsl_vector_get(resitev, i) * t.first;
+        vy += gsl_vector_get(resitev, i) * t.second;
+    }
+    return qMakePair(vx, vy);
+}
+
+
+Sistem& Sistem::hitrostno_polje(const QString& filename)
+{
+    QFile file(filename);
+    file.open(QIODevice::WriteOnly);
+    QTextStream stream(&file);
+    const double Lx = 2;
+    const double Ly = 0.4;
+    
+    for (double y = -Ly; y <= Ly; y += 0.02)
+    {
+        for (double x = -Lx; x <= Lx; x += 0.1)
+        {
+            K v = hitrost(x, y);
+            stream << x << " " << y << " " << v.first << " " << v.second << endl;
+        }
+        stream << endl;
+    }
+    
+    file.close();
+    return *this;
+}
+
+int odvod_hitrost(double t, const double y[], double dydt[], void* params)
+{
+    Sistem* s = (Sistem*)params;
+    
+    QPair< double, double > p = s->hitrost(y[0], y[1]);
+    dydt[0] = p.first;
+    dydt[1] = p.second;
+    
+    return GSL_SUCCESS;
+}
+
+Sistem& Sistem::tokovnice(const QString& filename)
+{
+    
+    QFile file(filename);
+    file.open(QIODevice::WriteOnly);
+    QTextStream stream(&file);
+    const double Lx = 3;
+    const double Ly = 0.4;
+    
+    gsl_odeiv2_system sys = {odvod_hitrost, 0, 2, this};
+    gsl_odeiv2_driver* driver = gsl_odeiv2_driver_alloc_y_new(&sys, gsl_odeiv2_step_rk4, 1e-2, 1e-3, 1e-3);
+    
+    for (double y = -Ly; y <= Ly; y += 0.02)
+    {
+        double v[2] = {-Lx, y};
+        double t = 0;
+        double dt = 1e-2;
+        
+        while (v[0] < Lx && t < 10)
+        {
+            gsl_odeiv2_driver_apply(driver, &t, t+dt, v);
+            stream << v[0] << " " << v[1] << endl;
+        }
+        stream << endl;
+    }
+    
+    file.close();
+    return *this;
+}
+
+void Sistem::preveri_hitrosti()
+{
+    for (int i = 0; i < N; ++i)
+    {
+        QPointF p = center(delitev, i);
+        QPair< double, double > a = hitrost(p.x(), p.y());
+        /*
+        
+        double phi = -M_PI / 180.0 * QLineF(delitev[i], delitev[i+1]).angle();
+        qDebug() << a.first * cos(phi) + a.second * sin(phi) << a.second * cos(phi) - a.first * sin(phi);
+        */
+        qDebug() << a;
+    }
+}
+
+void test()
+{
+    QPointF one(0,0);
+    QPointF two(-1,-1);
+    
+    QFile file("g_test.dat");
+    file.open(QIODevice::WriteOnly);
+    QTextStream stream(&file);
+    
+    double L = 3.0;
+    
+    for (double x = -L; x < L; x += 0.1)
+    {
+        for (double y = -L; y < L; y += 0.1)
+        {
+            K h = v(one, two, x, y);
+            stream << x << " " << y << " " << h.first << " " << h.second << endl;
+        }
+    }
+    file.close();
+}
+
+Sistem& Sistem::matrika(const QString& filename)
+{
+    QFile file(filename);
+    file.open(QIODevice::WriteOnly);
+    QTextStream stream(&file);
+    
+    for (int i = 0; i < N; ++i)
+    {
+        for (int j = 0; j < N; ++j)
+        {
+            stream << i << " " << j << " " << gsl_matrix_get(A, i, j) << " " << gsl_matrix_get(B, i, j) << endl;
+        }
+        stream << endl;
+    }
+    
+    file.close();
+    return *this;
+}
+
+
 int main(int argc, char **argv) {
-  //  resi(obtekanje(naca(120, 15, -10)), "g_naca_15.dat");
- //   save(zukovski(120, -0.1, 0.1), "g_slika_zukovski.dat");
- //   resi(obtekanje(zukovski(120, -0.1, 0.025)), "g_zukovski_0.5_0.dat");
-    resi(obtekanje(elipsoid(500, 0.3)), "g_elipsoid.dat");
+    test();
+    
+    QPolygonF z = elipsoid(100, 0.3);
+    obtekanje(z).matrika("g_matrika.dat").resi().shrani("g_elipsoid.dat").hitrostno_polje("g_elipsoid_hitrost.dat").tokovnice("g_tok.dat");
+    
     return 0;
 }

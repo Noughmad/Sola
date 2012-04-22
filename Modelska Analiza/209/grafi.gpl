@@ -1,0 +1,10 @@
+set terminal epslatex color solid
+set style data lines
+
+## Elektricno polje
+set contour
+set cntrparam levels 10
+unset key
+unset colorbox
+
+splot "g_trak_100.dat" with lines palette
