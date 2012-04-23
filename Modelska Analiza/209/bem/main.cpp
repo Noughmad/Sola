@@ -27,7 +27,7 @@ inline double arctan(double y, double x)
     {
         return a;
     }
-    else if (y < 0)
+    else if (y <= 0)
     {
         return a + M_PI;
     }
@@ -61,6 +61,7 @@ struct Sistem
     QPair<double, double> hitrost(double x, double y);
     
     void preveri_hitrosti();
+    Sistem& preveri();
     double kot(int i);
     
     Sistem& matrika(const QString& filename);
@@ -142,8 +143,13 @@ inline double u(const QPointF& xy, const QPair<double, double>& center)
 
 void rotate(double angle, double* x, double* y)
 {    
+    double rr = (*x) * (*x) + (*y) * (*y);
+    
     double xn = (*x) * cos(angle) + (*y) * sin(angle);
     double yn = (*y) * cos(angle) - (*x) * sin(angle);
+    
+    Q_ASSERT(qFuzzyCompare(xn*xn + yn*yn, rr));
+    
     *x = xn;
     *y = yn;
 }
@@ -171,21 +177,16 @@ double Sistem::kot(int i)
 K v(const QPointF& ap1, const QPointF& ap2, double x, double y)
 {
     QPointF c = (ap1+ap2)/2;
-    QTransform t;
-    t.translate(-c.x(), -c.y());
-    QPointF p1 = t.map(ap1);
-    QPointF p2 = t.map(ap2);
     
     x -= c.x();
     y -= c.y();
     
+    double ksi1 = ap1.x() - c.x();
+    double ksi2 = ap2.x() - c.x();
+    double eta1 = ap1.y() - c.y();
+    double eta2 = ap2.y() - c.y();
     
-    double ksi1 = p1.x();
-    double ksi2 = p2.x();
-    double eta1 = p1.y();
-    double eta2 = p2.y();
-    
-    double kot = angle(p1, p2);
+    double kot = angle(ap1, ap2);
     
     rotate(kot, &x, &y);
     rotate(kot, &ksi1, &eta1);
@@ -200,9 +201,9 @@ K v(const QPointF& ap1, const QPointF& ap2, double x, double y)
     
     K v;
     v.first = 0.25 * M_1_PI * log( (x1*x1 + y*y) / (x2*x2 + y*y) );
-    v.second = 0.5 * M_1_PI * (arctan(x1, y) - arctan(x2, y));
+    v.second = (y == 0) ? -0.5 : 0.5 * M_1_PI * (arctan(x1, y) - arctan(x2, y));
     
-    rotate(-angle(ap1, ap2), &v);
+    rotate(-kot, &v);
     return v;
 }
 
@@ -241,6 +242,9 @@ Sistem obtekanje(const QPolygonF& delitev)
     s.resitev = 0;
     s.N = n;
     
+    K u_inf;
+    u_inf.first = 1;
+    u_inf.second = 0;
     for (int i = 0; i < n; ++i)
     {
         for (int j = 0; j < n; ++j)
@@ -251,21 +255,16 @@ Sistem obtekanje(const QPolygonF& delitev)
             }
             else
             {
-                QPointF p = center(delitev, j);
-                K e = v(delitev[i], delitev[i+1], p.x(), p.y());
-                rotate(s.kot(j), &e);
-                
-                if (qAbs(e.second) > 0.5)
-                {
-                    qDebug() << i << j << e.second << e.first;
-                }
-                
+                QPointF p = center(delitev, i);
+                K e = v(delitev[j], delitev[j+1], p.x(), p.y());
+                rotate(s.kot(i), &e);
                 gsl_matrix_set(s.A, i, j, e.second);
-                gsl_matrix_set(s.B, i, j, e.first);
+                gsl_matrix_set(s.B, i, j, -e.first);
             }
         }
-        qDebug() << sin(s.kot(i));
-        gsl_vector_set(s.b, i, sin(s.kot(i)));
+        K u = u_inf;
+        rotate(-s.kot(i), &u);
+        gsl_vector_set(s.b, i, u.second);
     }
     
     return s;
@@ -275,10 +274,15 @@ Sistem& Sistem::resi()
 {
     Q_ASSERT(N);
     resitev = gsl_vector_alloc(b->size);
-    gsl_linalg_HH_solve(A, b, resitev);
-    
-    // TODO: Remove
-   // resitev = b;
+    gsl_matrix* T = gsl_matrix_alloc(N, N);
+    for (int i = 0; i < N; ++i)
+    {
+        for (int j = 0; j < N; ++j)
+        {
+            gsl_matrix_set(T, i, j, gsl_matrix_get(A, i, j));
+        }
+    }
+    gsl_linalg_HH_solve(T, b, resitev);
     
     return *this;
 }
@@ -292,7 +296,7 @@ void napisi(QTextStream& stream, Sistem& sistem, int i, int j)
     {
         QPointF p = center(sistem.delitev, i);
         K h = sistem.hitrost(p.x(), p.y());
-        rotate(-sistem.kot(i), &h);
+       // rotate(-sistem.kot(i), &h);
         stream << " " << h.first << " " << h.second;
     }
     
@@ -386,11 +390,21 @@ K Sistem::hitrost(double x, double y)
     Q_ASSERT(N > 0);
     for (int i = 0; i < N; ++i)
     {
-        K t = v(delitev[i], delitev[i+1], x, y);
+        K t;
+        if (QPointF(x,y) == center(delitev, i))
+        {
+            t = qMakePair(0.0, -0.5);
+            rotate(kot(i), &t);
+        }
+        else
+        {
+            t = v(delitev[i], delitev[i+1], x, y);
+        }
         
         vx += gsl_vector_get(resitev, i) * t.first;
         vy += gsl_vector_get(resitev, i) * t.second;
     }
+    
     return qMakePair(vx, vy);
 }
 
@@ -514,12 +528,41 @@ Sistem& Sistem::matrika(const QString& filename)
     return *this;
 }
 
+Sistem& Sistem::preveri()
+{
+    // Najprej preverimo resite sistema
+    gsl_blas_dgemv(CblasNoTrans, 1, A, resitev, -1, b);
+    
+    double r;
+    gsl_blas_ddot(b, b, &r);
+    qDebug() << "Residual =" << r;
+    
+    // Potem pa se hitrosti po povrsini
+    
+    for (int i = 0; i < N; ++i)
+    {
+        const QPointF p = center(delitev, i);
+        K h = hitrost(p.x(), p.y());
+        qDebug() << h.first << h.second;
+        rotate(kot(i), &h);
+        qDebug() << "Tok [" << i << "] =" << h.first << h.second;
+    }
+    
+    return *this;
+}
 
 int main(int argc, char **argv) {
     test();
     
-    QPolygonF z = elipsoid(100, 0.3);
-    obtekanje(z).matrika("g_matrika.dat").resi().shrani("g_elipsoid.dat").hitrostno_polje("g_elipsoid_hitrost.dat").tokovnice("g_tok.dat");
+    QPointF p1(0,0);
+    QPointF p2(1,0);
+    K h = v(p1, p2, 1.5, 2);
+    qDebug() << h;
+    rotate(0.1, &h);
+    qDebug() << h;
+    
+    QPolygonF z = naca(50, 15, 10);
+    obtekanje(z).matrika("g_matrika.dat").resi().preveri().shrani("g_elipsoid.dat").hitrostno_polje("g_hitrost.dat").tokovnice("g_tok.dat");
     
     return 0;
 }
