@@ -403,7 +403,7 @@ K Sistem::hitrost(double x, double y)
         if (QPointF(x,y) == center(delitev, i))
         {
             t = qMakePair(0.0, -0.5);
-            rotate(kot(i), &t);
+            rotate(-kot(i), &t);
         }
         else
         {
@@ -570,7 +570,7 @@ void vse_trak()
     file.open(QIODevice::WriteOnly);
     QTextStream stream(&file);
     
-    for (int i = 10; i < 200; i += 10)
+    for (int i = 100; i <= 2000; i += 100)
     {
         Sistem s = elektroda(trak(i)).resi().el_polje(potencial.arg(i)).naboj(naboj.arg(i));
         stream << i << " " << s.kapaciteta() << endl;
@@ -615,11 +615,39 @@ double Sistem::kapaciteta()
     return C * 0.5 / N;
 }
 
+double analiticna(double b, double x, double y)
+{
+    return (1+b)*y / sqrt(y*y + b*b*b*b*x*x);
+}
+
+void tangencialna(int n)
+{
+    double b = 0.4;
+    Sistem s = obtekanje(elipsoid(n, b));
+    s.resi();
+    
+    QFile file(fileName(QString("tangencialna_%1").arg(n)));
+    file.open(QIODevice::WriteOnly);
+    QTextStream stream(&file);
+    
+    for (int i = 0; i < n; ++i)
+    {
+        const QPointF p = center(s.delitev, i);
+        K v = s.hitrost(p.x(), p.y());
+        rotate(s.kot(i), &v);
+        
+        stream << p.x() << " " << p.y() << " " << -v.first << " " << v.second << " " << analiticna(b, p.x(), p.y()) << endl;
+    }
+    
+    file.close();
+}
+
 int main(int argc, char **argv) {
-    vse_trak();
+  //  vse_trak();
     
     naredi_obtekanje(elipsoid(100, 0.2), "elipsoid");
     naredi_obtekanje(naca(100, 15, 0), "naca");
+    naredi_obtekanje(naca(100, 15, -20), "naca-r");
     naredi_obtekanje(zukovski(100, -0.2, 0.1), "zukovski");
     
     return 0;

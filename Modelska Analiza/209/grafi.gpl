@@ -7,7 +7,28 @@ f(x) = A + B/x
 
 set output "g_kapaciteta.tex"
 fit f(x) "g_kapaciteta.dat" via A,B
-plot "g_kapaciteta.dat" t "Podatki", f(x) t sprintf("$C_\\infty = %g$", A)
+plot "g_kapaciteta.dat" t "Izra\"cun", f(x) t sprintf("$C_\\infty = %g$", A)
+
+set xlabel "Panel $i$"
+set ylabel "$v_{\\parallel}$"
+
+set output "g_tangencialna.tex"
+plot "g_tangencialna_100.dat" u 0:3 t "Izra\"cun", '' u 0:5 w lines t "Analiti\"cno"
+
+set ylabel "$\\left|v_{I} - v_{A}\\right|$"
+
+set output "g_tangencialna_log.tex"
+set xlabel "Panel $i/N$"
+set logscale y
+
+
+set pointsize 0.3
+set key bottom right
+plot "g_tangencialna_100.dat" u ($0/100):(abs($3 - $5)) t "$N = 100$", \
+"g_tangencialna_300.dat" u ($0/300):(abs($3 - $5)) t "$N = 300$", \
+"g_tangencialna_1000.dat" u ($0/1000):(abs($3 - $5)) t "$N = 1000$", \
+"g_tangencialna_2000.dat" u ($0/2000):(abs($3 - $5)) t "$N = 2000$"
+unset logscale 
 
 ## Elektricno polje
 set contour
@@ -20,7 +41,6 @@ unset ylabel
 
 set output "g_trak_polje.tex"
 splot "g_trak_potencial_100.dat" with lines palette
-
 
 ## Hitrostno polje
 
@@ -37,6 +57,9 @@ plot "g_elipsoid_polje.dat" u 1:2:($3/20):($4/20) w vectors, "g_elipsoid_telo.da
 set output "g_naca_hitrost.tex"
 plot "g_naca_polje.dat" u 1:2:($3/20):($4/20) w vectors, "g_naca_telo.dat" w lines palette
 
+set output "g_naca-r_hitrost.tex"
+plot "g_naca-r_polje.dat" u 1:2:($3/20):($4/20) w vectors, "g_naca-r_telo.dat" w lines palette
+
 set output "g_zukovski_hitrost.tex"
 plot "g_zukovski_polje.dat" u 1:2:($3/20):($4/20) w vectors, "g_zukovski_telo.dat" w lines palette
 
@@ -45,6 +68,9 @@ plot "g_elipsoid_tok.dat" w lines, "g_elipsoid_telo.dat" w lines palette
 
 set output "g_naca_tokovnice.tex"
 plot "g_naca_tok.dat" w lines, "g_naca_telo.dat" w lines palette
+
+set output "g_naca-r_tokovnice.tex"
+plot "g_naca-r_tok.dat" w lines, "g_naca-r_telo.dat" w lines palette
 
 set output "g_zukovski_tokovnice.tex"
 plot "g_zukovski_tok.dat" w lines, "g_zukovski_telo.dat" w lines palette

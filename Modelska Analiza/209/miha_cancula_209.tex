@@ -44,13 +44,22 @@ Ko kovinski trak razdelimo na panele s konstantno gostoto naboja, lahko prispeve
 
 Desna stran je v tem primeru potencial na traku, ki je za prevodni trak konstanten. Ta vrednost predstavlja le multiplikativno konstanto v gostoti naboja, na kapaciteto pa sploh ne vpliva, zato sem jo postavil na 1. Gostoto naboja na posameznem panelu dobimo kot re"sitev matri"cnega sistema. 
 
+Matrika je polna, zato re"sevanje sistema zahteva $\mathcal{O}(N^2)$ operacij. Ker pa v ra"cun zajamemo le robne to"cke, je matrika mnogo manj"sa kot pri prej"snjih nalogah. Ra"cun sem v kratkem "casu izvedel do $N = 2000$. 
+
 \subsection{Rezultati}
 
+\begin{figure}[H]
 \input{g_trak_polje}
+\caption{Elektri"cni potencial v okolici kovinskega traka s potencialom $U = 1$}
+\label{fig:trak-polje}
+\end{figure}
 
 Iz znane porazdelitve naboja izra"cunamo kapaciteto elektrode kot razmerje med skupnim nabojem in potencialom na njej. Izra"cunana vrednost je odvisna od "stevila uporabljenih panelov, ampak pri vedno bolj finih delitvah konvergira k kon"cni vrednosti. 
 
+\begin{figure}[H]
 \input{g_kapaciteta}
+\caption{Konvergenca izra"cunane kapacitete elektrode v odvisnosti od "stevila panelov} 
+\end{figure}
 
 Podobno kot skalarjem v prej"snjih nalogah sem odvisnosti $C(N)$ prilagodil funkcijo $C(N) = C_\infty + B/N$. Iz dobrega prileganja (na sliki) lahko potrdimo, da kapaciteta konvergira k vrednosti $C_\infty \approx 5.117$, s podvojitvijo "stevila panelov pa zmanj"samo napako na polovico. 
 
@@ -64,23 +73,34 @@ Re"sitev sistema ima fizikalni pomen tlaka tik ob povr"sini telesa. Za rekonstru
 
 \subsection{Rezultati}
 
-Za tri razli"cne geometrije telesa sem najprej izra"cunal gostoto izvirov na povr"sini, ki je na slikah ponazorjena z barvo. Nato sem izra"cunal hitrost in smer toka teko"cine, na podlagi tega pa "se tokovnice. 
+Za tri razli"cne geometrije telesa sem najprej izra"cunal gostoto izvirov na povr"sini, ki je na slikah ponazorjena z barvo. Nato sem izra"cunal hitrost in smer toka teko"cine, na podlagi tega pa "se tokovnice. Rezultati so na slikah \ref{fig:elipsoid}, \ref{fig:naca} in \ref{fig:zukovski}. 
 
-\begin{figure}
+Tokovnice so izra"cunane z numeri"cnim re"sevanjem diferencialne ena"cbe. Pri tem je potrebno izra"cunati obe komponenti hitrost v vsaki to"cki tokovnice, zato je ra"cunanje precej po"casno. Pri risanju tokovnic sem se zato omejil na $N=100$ panelov. 
+
+\begin{figure}[H]
  \subfigure{\input{g_elipsoid_hitrost}}
  \subfigure{\input{g_elipsoid_tokovnice}}
  \caption{Obtekanje elipsoidnega valja z razmerjem stranic $b = 1/5$}
  \label{fig:elipsoid}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
  \subfigure{\input{g_naca_hitrost}}
  \subfigure{\input{g_naca_tokovnice}}
  \caption{Obtekanje profila NACA-0015}
  \label{fig:naca}
 \end{figure}
 
-\begin{figure}
+Pri simetri"cnih profilih opazimo, da je hitrost znotraj telesa vedno enaka $u_\infty$. To sicer nima fizikalnega pomena, lahko pa slu"zi za preverjanje metode. To pa ne dr"zi tudi za nagnjena ali nesimetri"cna telesa, kot lahko vidimo na slikah \ref{fig:naca-r} in \ref{fig:zukovski}. Rob, ki je obrnjen proti toku, ima vi"sjo gostoto izvirov, zato so tokovnice znotraj telesa obrnene stran od tega roba. 
+
+\begin{figure}[H]
+ \subfigure{\input{g_naca-r_hitrost}}
+ \subfigure{\input{g_naca-r_tokovnice}}
+ \caption{Obtekanje profila NACA-0015, nagnjenega za 20 stoping}
+ \label{fig:naca-r}
+\end{figure}
+
+\begin{figure}[H]
  \subfigure{\input{g_zukovski_hitrost}}
  \subfigure{\input{g_zukovski_tokovnice}}
  \caption{Obtekanje krila "Zukovskega s parametri $A=-0.2$, $B = 0.1$}
@@ -90,5 +110,17 @@ Za tri razli"cne geometrije telesa sem najprej izra"cunal gostoto izvirov na pov
 \subsection{Tangencialna komponenta hitrosti}
 
 Ker z re"sitvijo po metodi robnih elementov lahko rekonstruiramo celotno hitrostno polje, lahko izra"cunamo tudi hitrost teko"cine tik ob telesu. Komponenta, pravokotna na telo je seveda enaka 0, vzporedno komponento pa lahko primerjamo z znano vrednostjo. 
+
+\begin{figure}[H]
+\input{g_tangencialna}
+\caption{Analiti"cna in izra"cunana hitrost ob povr"sini telesa, pri $N=100$ panelih}
+\label{fig:tangencialna}
+\end{figure}
+
+\begin{figure}[H]
+\input{g_tangencialna_log}
+\caption{Absolutna razlika med analiti"cno in izra"cunano hitrostjo ob povr"sini telesa. Intervali brez pik pomenijo razliko pod strojno  natan"cnostjo. }
+\label{fig:tangencialna-log}
+\end{figure}
 
 \end{document}
