@@ -15,6 +15,11 @@
 #include <QtCore/QDebug>
 #include <QtCore/qtextstream.h>
 
+inline QString fileName(const QString& name)
+{
+    return "../../g_" + name + ".dat";
+}
+
 inline bool compare(double p1, double p2)
 {
     return (qAbs(p1 - p2) <= 0.001 * qMin(qAbs(p1), qAbs(p2)));
@@ -64,7 +69,11 @@ struct Sistem
     Sistem& preveri();
     double kot(int i);
     
+    Sistem& naboj(const QString& filename);
+    
     Sistem& matrika(const QString& filename);
+    
+    double kapaciteta();
     
     void test();
 };
@@ -113,11 +122,11 @@ QPolygonF naca(int n, double t, double kot)
         double x = 1 - cos(M_PI * (i-n/2) * 1.0 / n);
         if (i < n/2)
         {
-            poly[i] = QPointF(x, t / 50.0 * n_y(x));
+            poly[i] = QPointF(2*x-1, t / 50.0 * n_y(x));
         }
         else
         {
-            poly[i] = QPointF(x, -t / 50.0 * n_y(x));
+            poly[i] = QPointF(2*x-1, -t / 50.0 * n_y(x));
         }
     }
     
@@ -415,11 +424,11 @@ Sistem& Sistem::hitrostno_polje(const QString& filename)
     file.open(QIODevice::WriteOnly);
     QTextStream stream(&file);
     const double Lx = 2;
-    const double Ly = 0.4;
+    const double Ly = 1;
     
-    for (double y = -Ly; y <= Ly; y += 0.02)
+    for (double y = -Ly; y <= Ly; y += Ly/15.5)
     {
-        for (double x = -Lx; x <= Lx; x += 0.1)
+        for (double x = -Lx; x <= Lx; x += Lx/10.0)
         {
             K v = hitrost(x, y);
             stream << x << " " << y << " " << v.first << " " << v.second << endl;
@@ -448,13 +457,13 @@ Sistem& Sistem::tokovnice(const QString& filename)
     QFile file(filename);
     file.open(QIODevice::WriteOnly);
     QTextStream stream(&file);
-    const double Lx = 3;
-    const double Ly = 0.4;
+    const double Lx = 2;
+    const double Ly = 1;
     
     gsl_odeiv2_system sys = {odvod_hitrost, 0, 2, this};
     gsl_odeiv2_driver* driver = gsl_odeiv2_driver_alloc_y_new(&sys, gsl_odeiv2_step_rk4, 1e-2, 1e-3, 1e-3);
     
-    for (double y = -Ly; y <= Ly; y += 0.02)
+    for (double y = -Ly; y <= Ly; y += Ly / 10.0)
     {
         double v[2] = {-Lx, y};
         double t = 0;
@@ -543,7 +552,6 @@ Sistem& Sistem::preveri()
     {
         const QPointF p = center(delitev, i);
         K h = hitrost(p.x(), p.y());
-        qDebug() << h.first << h.second;
         rotate(kot(i), &h);
         qDebug() << "Tok [" << i << "] =" << h.first << h.second;
     }
@@ -551,18 +559,68 @@ Sistem& Sistem::preveri()
     return *this;
 }
 
+void vse_trak()
+{
+    
+    QString naboj = fileName("trak_naboj_%1");
+    QString potencial = fileName("trak_potencial_%1");
+    
+    
+    QFile file(fileName("kapaciteta"));
+    file.open(QIODevice::WriteOnly);
+    QTextStream stream(&file);
+    
+    for (int i = 10; i < 200; i += 10)
+    {
+        Sistem s = elektroda(trak(i)).resi().el_polje(potencial.arg(i)).naboj(naboj.arg(i));
+        stream << i << " " << s.kapaciteta() << endl;
+    }
+    
+    file.close();
+}
+
+Sistem& Sistem::naboj(const QString& filename)
+{
+    QFile file(filename);
+    file.open(QIODevice::WriteOnly);
+    QTextStream stream(&file);
+    
+    for (int i = 0; i < N; ++i)
+    {
+        stream << gsl_vector_get(resitev, i) << " ";
+    }
+    stream << endl;
+    
+    file.close();
+    return *this;
+}
+
+void naredi_obtekanje(const QPolygonF& delitev, const QString& ime)
+{
+    QString telo = fileName("%1_telo");
+    QString polje = fileName("%1_polje");
+    QString tok = fileName("%1_tok");
+    
+    obtekanje(delitev).resi().shrani(telo.arg(ime)).hitrostno_polje(polje.arg(ime)).tokovnice(tok.arg(ime));
+    qDebug() << "Naredil" << ime;
+}
+
+double Sistem::kapaciteta()
+{
+    double C = 0;
+    for (int i = 0; i < N; ++i)
+    {
+        C += gsl_vector_get(resitev, i);
+    }
+    return C * 0.5 / N;
+}
+
 int main(int argc, char **argv) {
-    test();
+    vse_trak();
     
-    QPointF p1(0,0);
-    QPointF p2(1,0);
-    K h = v(p1, p2, 1.5, 2);
-    qDebug() << h;
-    rotate(0.1, &h);
-    qDebug() << h;
-    
-    QPolygonF z = naca(50, 15, 10);
-    obtekanje(z).matrika("g_matrika.dat").resi().preveri().shrani("g_elipsoid.dat").hitrostno_polje("g_hitrost.dat").tokovnice("g_tok.dat");
+    naredi_obtekanje(elipsoid(100, 0.2), "elipsoid");
+    naredi_obtekanje(naca(100, 15, 0), "naca");
+    naredi_obtekanje(zukovski(100, -0.2, 0.1), "zukovski");
     
     return 0;
 }

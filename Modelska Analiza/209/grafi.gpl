@@ -1,5 +1,13 @@
 set terminal epslatex color solid
-set style data lines
+
+set xlabel "\"Stevilo panelov $N$"
+set ylabel "Kapaciteta $C$"
+
+f(x) = A + B/x
+
+set output "g_kapaciteta.tex"
+fit f(x) "g_kapaciteta.dat" via A,B
+plot "g_kapaciteta.dat" t "Podatki", f(x) t sprintf("$C_\\infty = %g$", A)
 
 ## Elektricno polje
 set contour
@@ -7,4 +15,36 @@ set cntrparam levels 10
 unset key
 unset colorbox
 
-splot "g_trak_100.dat" with lines palette
+unset xlabel
+unset ylabel
+
+set output "g_trak_polje.tex"
+splot "g_trak_potencial_100.dat" with lines palette
+
+
+## Hitrostno polje
+
+set terminal epslatex color solid size 8cm,5cm
+unset contour
+unset tics
+
+set xrange [-2:2]
+set yrange [-1:1]
+
+set output "g_elipsoid_hitrost.tex"
+plot "g_elipsoid_polje.dat" u 1:2:($3/20):($4/20) w vectors, "g_elipsoid_telo.dat" w lines palette
+
+set output "g_naca_hitrost.tex"
+plot "g_naca_polje.dat" u 1:2:($3/20):($4/20) w vectors, "g_naca_telo.dat" w lines palette
+
+set output "g_zukovski_hitrost.tex"
+plot "g_zukovski_polje.dat" u 1:2:($3/20):($4/20) w vectors, "g_zukovski_telo.dat" w lines palette
+
+set output "g_elipsoid_tokovnice.tex"
+plot "g_elipsoid_tok.dat" w lines, "g_elipsoid_telo.dat" w lines palette
+
+set output "g_naca_tokovnice.tex"
+plot "g_naca_tok.dat" w lines, "g_naca_telo.dat" w lines palette
+
+set output "g_zukovski_tokovnice.tex"
+plot "g_zukovski_tok.dat" w lines, "g_zukovski_telo.dat" w lines palette

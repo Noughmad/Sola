@@ -1,0 +1,94 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[unicode=true]{hyperref}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage{float}
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\newcommand{\dd}{\mathrm{d}}
+
+\newcommand{\parcialno}[2]{
+  \frac{\partial #1}{\partial #2}
+}
+\newcommand{\parcdva}[2]{
+  \frac{\partial^2 #1}{\partial #2 ^2}
+}
+\newcommand{\lag}{\mathcal{L}}
+
+\title{Metoda kon\v cnih elementov: \\ Poissonova ena\v cba}
+\author{Miha \v Can\v cula}
+\begin{document}
+
+\maketitle
+
+\section{Polje kovinskega traku}
+
+Ko kovinski trak razdelimo na panele s konstantno gostoto naboja, lahko prispevek vsakega panela na vse ostale zlo"zimo v matriko. Na ravnem traku z enakomerno delitvijo v panele je ta matrika simetri"cna, saj je medsebojni vpliv dveh vzporednih panelov vedno vzajemen. 
+
+Desna stran je v tem primeru potencial na traku, ki je za prevodni trak konstanten. Ta vrednost predstavlja le multiplikativno konstanto v gostoti naboja, na kapaciteto pa sploh ne vpliva, zato sem jo postavil na 1. Gostoto naboja na posameznem panelu dobimo kot re"sitev matri"cnega sistema. 
+
+\subsection{Rezultati}
+
+\input{g_trak_polje}
+
+Iz znane porazdelitve naboja izra"cunamo kapaciteto elektrode kot razmerje med skupnim nabojem in potencialom na njej. Izra"cunana vrednost je odvisna od "stevila uporabljenih panelov, ampak pri vedno bolj finih delitvah konvergira k kon"cni vrednosti. 
+
+\input{g_kapaciteta}
+
+Podobno kot skalarjem v prej"snjih nalogah sem odvisnosti $C(N)$ prilagodil funkcijo $C(N) = C_\infty + B/N$. Iz dobrega prileganja (na sliki) lahko potrdimo, da kapaciteta konvergira k vrednosti $C_\infty \approx 5.117$, s podvojitvijo "stevila panelov pa zmanj"samo napako na polovico. 
+
+\section{Problem obtekanja}
+
+Namesto elektri"cnih nabojev tokrat na povr"sino telesa posejemo izvore hitrosti. Robni pogoj je, da teko"cina ne more prehajati skozi pov"sino telesa, zato v matri"cni ena"cbi nastopa samo pravokotna komponenta hitrosti. 
+
+Hitrost teko"cine v vsaki to"cki sestavljajo prispevki vseh panelov in zunanje hitrosti $\vec u_\infty$. Za izra"cun medsebojnega vpliva dveh panelov moramo najprej preslikati celotno sliko v koordinatni sistem prvega, kjer lahko uporabimo podani ena"cbi za $\vec v = (v_\parallel,v_\perp)$. Nato moramo izra"cunani hitrosti zavrteti v sistem drugega in pravokotno komponento vstaviti v matriko. Zaradi razli"cnih velikosti panelov in kotov med njimi matrika ni ve"c simetri"cna. 
+
+Re"sitev sistema ima fizikalni pomen tlaka tik ob povr"sini telesa. Za rekonstrukcijo hitrostnega polja v celotnem prostoru spet uporabimo ena"cbi za $\vec v$ in se"stejemo po vseh panelih. Na ta na"cin lahko dolo"cimo tudi tangencialno komponento hitrosti ob povr"sini, s pomo"cjo katere lahko izra"cunamo silo zaradi viskoznosti teko"cine. 
+
+\subsection{Rezultati}
+
+Za tri razli"cne geometrije telesa sem najprej izra"cunal gostoto izvirov na povr"sini, ki je na slikah ponazorjena z barvo. Nato sem izra"cunal hitrost in smer toka teko"cine, na podlagi tega pa "se tokovnice. 
+
+\begin{figure}
+ \subfigure{\input{g_elipsoid_hitrost}}
+ \subfigure{\input{g_elipsoid_tokovnice}}
+ \caption{Obtekanje elipsoidnega valja z razmerjem stranic $b = 1/5$}
+ \label{fig:elipsoid}
+\end{figure}
+
+\begin{figure}
+ \subfigure{\input{g_naca_hitrost}}
+ \subfigure{\input{g_naca_tokovnice}}
+ \caption{Obtekanje profila NACA-0015}
+ \label{fig:naca}
+\end{figure}
+
+\begin{figure}
+ \subfigure{\input{g_zukovski_hitrost}}
+ \subfigure{\input{g_zukovski_tokovnice}}
+ \caption{Obtekanje krila "Zukovskega s parametri $A=-0.2$, $B = 0.1$}
+ \label{fig:zukovski}
+\end{figure}
+
+\subsection{Tangencialna komponenta hitrosti}
+
+Ker z re"sitvijo po metodi robnih elementov lahko rekonstruiramo celotno hitrostno polje, lahko izra"cunamo tudi hitrost teko"cine tik ob telesu. Komponenta, pravokotna na telo je seveda enaka 0, vzporedno komponento pa lahko primerjamo z znano vrednostjo. 
+
+\end{document}
