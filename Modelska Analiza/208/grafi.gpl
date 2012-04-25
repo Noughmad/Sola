@@ -1,0 +1,42 @@
+set terminal epslatex color solid
+
+set output "g_hitrost.tex"
+
+set xlabel "\"Stevilo to\"ck $n$"
+set ylabel "\"Cas ra\"cunanja [s]"
+
+b = 2
+f(x) = A*x**b
+set logscale xy
+set key bottom right
+
+fit f(x) "g_srediscna_k.dat" u 2:3 via A,b
+plot "g_srediscna_k.dat" u 2:3 t "Podatki", f(x) t sprintf("$p = %g$", b)
+
+set output "g_konvergenca.tex"
+c0 = -1
+c1 = -1
+c2 = -1
+c3 = -1
+c4 = -1
+
+g0(x) = A0 + B0*x**c0
+g1(x) = A1 + B1*x**c1
+g2(x) = A2 + B2*x**c2
+g3(x) = A3 + B3*x**c3
+g4(x) = A4 + B4*x**c4
+
+set xlabel "$k$"
+unset logscale
+set key under
+
+fit g0(x) "g_srediscna_k.dat" u 2:4 via A0,B0,c0
+fit g1(x) "g_srediscna_k.dat" u 2:5 via A1,B1,c1
+fit g2(x) "g_srediscna_k.dat" u 2:6 via A2,B2,c2
+
+plot "g_srediscna_k.dat" u 2:4 t "Izra\"cunan $k_1$", g0(x) t sprintf("$k_1 = %g$",A0), \
+"g_srediscna_k.dat" u 2:5 t "Izra\"cunan $k_2$", g1(x) t sprintf("$k_2 = %g$",A1), \
+"g_srediscna_k.dat" u 2:6 t "Izra\"cunan $k_3$", g2(x) t sprintf("$k_3 = %g$",A2)
+
+n = 4
+load "ekstrapolacija.gpl"

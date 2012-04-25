@@ -1,0 +1,4 @@
+
+fit g0(x) sprintf("g_srediscna_k.dat") u 2:n via A0,B0,c0
+n = n + 1
+if(n < 12) reread
