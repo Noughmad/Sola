@@ -587,7 +587,7 @@ Sistem& Sistem::naboj(const QString& filename)
     
     for (int i = 0; i < N; ++i)
     {
-        stream << gsl_vector_get(resitev, i) << " ";
+        stream << center(delitev, i).x() << " " << gsl_vector_get(resitev, i) << endl;
     }
     stream << endl;
     
@@ -643,12 +643,14 @@ void tangencialna(int n)
 }
 
 int main(int argc, char **argv) {
-  //  vse_trak();
+    vse_trak();
     
+    /*
     naredi_obtekanje(elipsoid(100, 0.2), "elipsoid");
     naredi_obtekanje(naca(100, 15, 0), "naca");
     naredi_obtekanje(naca(100, 15, -20), "naca-r");
     naredi_obtekanje(zukovski(100, -0.2, 0.1), "zukovski");
+    */
     
     return 0;
 }

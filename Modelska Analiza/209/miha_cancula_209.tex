@@ -48,20 +48,40 @@ Matrika je polna, zato re"sevanje sistema zahteva $\mathcal{O}(N^2)$ operacij. K
 
 \subsection{Rezultati}
 
+Ra"cun sem delal z neskon"cno dolgim trakom "sirine 1. Direktna re"sitev matri"cnea sistema nam poda porazdelitev naboja po traku, kot je na sliki \ref{fig:trak-naboj}. Po pri"cakovanju je gostota najve"cja pri robu traku, saj se nosilci naboja razporedijo tako, da je med njimi v povpre"cju "cim ve"cja razdalja. 
+
 \begin{figure}[H]
-\input{g_trak_polje}
-\caption{Elektri"cni potencial v okolici kovinskega traka s potencialom $U = 1$}
-\label{fig:trak-polje}
+\input{g_naboj}
+\caption{Gostota naboja na kovinskem traku}
+\label{fig:trak-naboj}
 \end{figure}
 
-Iz znane porazdelitve naboja izra"cunamo kapaciteto elektrode kot razmerje med skupnim nabojem in potencialom na njej. Izra"cunana vrednost je odvisna od "stevila uporabljenih panelov, ampak pri vedno bolj finih delitvah konvergira k kon"cni vrednosti. 
+Ve"canje "stevila trakov ne prinese pomembne razlike, "se najbolj opazno odstopanje je v bli"zini roba. Tam se gostota naboja hitro spreminja s polo"zajem v smeri $x$, zato ima kon"cna velikost panela najve"cji vpliv. Obna"sanje na robu lahko podrobneje opazujemo z logaritemskim grafom na sliki \ref{fig:trak-naboj-log}. Ker je porazdelitev naboja simetri"cna, je narisana le leva polovica traku. 
+
+\begin{figure}[H]
+\input{g_naboj_log}
+\caption{Gostota naboja na kovinskem traku}
+\label{fig:trak-naboj-log}
+\end{figure}
+
+Pri razli"cnem "stevilu panelov dobimo naklon premice 1/2, kar nakazuje znano korensko singularnost na robovih traku. Diskretizacija traku najve"c vpliva na gostoto naboja na prvem panelu, na ostalih je ujemanje mnogo bolj"se. 
+
+Iz znane porazdelitve naboja izra"cunamo kapaciteto elektrode kot razmerje med skupnim nabojem in potencialom na njej. Izra"cunana vrednost je odvisna od "stevila uporabljenih panelov, ampak pri vedno bolj finih delitvah konvergira k kon"cni vrednosti. Ker uporabljene ena"cbe veljajo za neskon"cno dolg trak, je re"sitev naloge pravzaprav dol"zinska gostota naboja, tako da je izra"cunana kapaciteta v resnici $C^* = C/l$ kapaciteta na enoto dol"zine traku. 
 
 \begin{figure}[H]
 \input{g_kapaciteta}
 \caption{Konvergenca izra"cunane kapacitete elektrode v odvisnosti od "stevila panelov} 
 \end{figure}
 
-Podobno kot skalarjem v prej"snjih nalogah sem odvisnosti $C(N)$ prilagodil funkcijo $C(N) = C_\infty + B/N$. Iz dobrega prileganja (na sliki) lahko potrdimo, da kapaciteta konvergira k vrednosti $C_\infty \approx 5.117$, s podvojitvijo "stevila panelov pa zmanj"samo napako na polovico. 
+Podobno kot skalarjem v prej"snjih nalogah sem odvisnosti $C(N)$ prilagodil funkcijo $C(N) = C_\infty + B/N$. Iz dobrega prileganja (na sliki) lahko potrdimo, da kapaciteta konvergira k vrednosti $C_\infty \approx 5.119$, s podvojitvijo "stevila panelov pa zmanj"samo napako na polovico. 
+
+Elektri"cni potencial v okolici traku izra"cunamo iz porazdelitve naboja s poznavanjem Greenove funkcije. Za primer traku s 100 paneli so potencial in ekvipotencialne ploskve narisane na sliki \ref{fig:trak-polje}. 
+
+\begin{figure}[H]
+\input{g_trak_polje}
+\caption{Elektri"cni potencial v okolici kovinskega traka s potencialom $U = 1$}
+\label{fig:trak-polje}
+\end{figure}
 
 \section{Problem obtekanja}
 

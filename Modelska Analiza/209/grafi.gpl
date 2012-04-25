@@ -19,16 +19,27 @@ set ylabel "$\\left|v_{I} - v_{A}\\right|$"
 
 set output "g_tangencialna_log.tex"
 set xlabel "Panel $i/N$"
+
 set logscale y
-
-
 set pointsize 0.3
 set key bottom right
 plot "g_tangencialna_100.dat" u ($0/100):(abs($3 - $5)) t "$N = 100$", \
 "g_tangencialna_300.dat" u ($0/300):(abs($3 - $5)) t "$N = 300$", \
 "g_tangencialna_1000.dat" u ($0/1000):(abs($3 - $5)) t "$N = 1000$", \
 "g_tangencialna_2000.dat" u ($0/2000):(abs($3 - $5)) t "$N = 2000$"
-unset logscale 
+unset logscale
+
+set xlabel "$x$"
+set ylabel "$\\sigma_i$"
+
+set output "g_naboj.tex"
+set key top center
+plot[-0.01:1.01] for [i in "100 300 1000 2000"] sprintf("g_trak_naboj_%s.dat", i) w lines t sprintf("$N = %s$", i)
+
+set output "g_naboj_log.tex"
+set logscale xy
+plot[:0.5] for [i in "100 300 1000 2000"] sprintf("g_trak_naboj_%s.dat", i) w lines t sprintf("$N = %s$", i)
+unset logscale
 
 ## Elektricno polje
 set contour
