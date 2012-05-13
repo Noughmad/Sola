@@ -85,6 +85,22 @@ function obtezene_opne(Ns, c)
     endfor
 endfunction
 
+function cajt()
+	R = [];
+	for n=[16 32 64 128]
+		T = [n];
+		G = ones(n,n);
+		a = time();
+		ena(G);
+		T = [T (time()-a)];
+		a = time();
+		dva(G);
+		T = [T (time()-a)];
+		R = [R; T];
+	endfor
+	save g_cas.dat R
+endfunction
+
 # obtezene_opne([16 32 64 128 256 512 1024], 3);
 
-plot_3d(valj(1, 32, 32));
+cajt()
