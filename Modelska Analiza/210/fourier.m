@@ -87,7 +87,7 @@ endfunction
 
 function cajt()
 	R = [];
-	for n=[16 32 64 128 256 512 1024]
+	for n=[16 32 64 128 256 512 1024 2048]
 		T = [n];
 		G = ones(n,n);
 		a = time();
