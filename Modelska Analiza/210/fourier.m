@@ -21,19 +21,19 @@ endfunction
 
 function R = ena(P)
     [m,n] = size(P);
-    F = dst(P)
+    F = dst(P);
     
-    F = F'
+    F = F';
     X = [];
     for j=1:m
         D = (4-2*cos(j*pi/m)) * ones(n,1);
         A = sparse(-diag(D) + diag(ones(n-1,1),1) + diag(ones(n-1,1),-1));
-        b = 1.0/m/n* F(:,j)
+        b = 1.0/m/n* F(:,j);
         X = [X, (A\b)];
     endfor
-    X = X'
+    X = X';
     # plot_3d(X)
-    R = idst(X)
+    R = idst(X);
 endfunction
 
 function R = valj(T, m, n)
@@ -87,7 +87,7 @@ endfunction
 
 function cajt()
 	R = [];
-	for n=[16 32 64 128]
+	for n=[16 32 64 128 256 512 1024]
 		T = [n];
 		G = ones(n,n);
 		a = time();
@@ -96,7 +96,7 @@ function cajt()
 		a = time();
 		dva(G);
 		T = [T (time()-a)];
-		R = [R; T];
+		R = [R; T]
 	endfor
 	save g_cas.dat R
 endfunction
