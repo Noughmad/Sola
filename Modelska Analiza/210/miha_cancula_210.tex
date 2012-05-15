@@ -51,15 +51,26 @@ Najprej sem na primeru kvadratne, enakomerno obte"zene opne preverjal u"cinkovit
 
 Za "cimbolj nepristransko primerjavo sem vse tri algoritme implementiral v jeziku Octave. Ker je ta jezik interpretiran, sem se izogibal zankam. Za Fourierovo transformacijo sem uporabil vgrajene rutine, re"sevanje diferencialne ena"cbe v eni dimenziji in relaksacijo pa sem prevedel na operacije z redkimi matrikami. 
 
+\begin{figure}[H]
+\centering
+ \includegraphics[width=.8\textwidth]{g_enakomerna}
+ \caption{Oblika enakomerno obte"zene opne}
+ \label{fig:enakomerna}
+\end{figure}
+
 \subsection{Hitrost}
 
 Najprej sem primerjal hitrost razli"cnih algoritmov. FFT in re"sevanje 1D diferencialne ena"cbe sta direktna postopka, kjer je natan"cnost odvisna le od diskretizacije oz. od "stevila to"ck. Pri relaksaciji pa sem moral dolo"citi "se pogoj, kdaj ustaviti ra"cunanje. Izbral sem enakega kot pri nalogi 205, torej sem ra"cun ustavil, ko je vsota kvadratov popravkov v enem koraku padla pod fiksno mejo $10^{-8}$. 
 
 \begin{figure}[H]
-\input{hitrost}
+\input{g_hitrost}
 \caption{"Casovna zahtevnost uporabljenih algoritmov}
 \label{fig:hitrost}  
 \end{figure}
+
+Pri diskretizacijah z majhnim "stevilom to"ck (do $1000 \times 1000$) je najhitrej"sa metoda s Fourierovo transformacijo v eni smeri in re"sevanjem sistema v drugi. Z ve"canjem "stevila to"ck pa "casovna zahtevnost hitro nara"s"ca in postane najugodnej"sa dvodimenzionalna FFT. Dvodimenzionalna metoda ima tudi najbolj jasno "casovno odvisnost $\mathcal{O}(n^2)$, torej kar linearno s "stevilom to"ck. Pri ostalih dveh ne vidimo tako lepe poten"cne odvisnosti. 
+
+Relaksacija pri zgoraj opisanem pogoju za ustavitev je najbolj ra"cunsko zahtevna metoda. Njeno "casovno zahtevnost bi lahko spremenil, "ce bi mejo za ustavitev spreminjal s "stevilom to"ck. S tem pa bi se spremenila tudi natan"cnost metode, ki sem jo opazoval na naslednjem grafu. 
 
 \subsection{Natan"cnost}
 
@@ -80,10 +91,48 @@ Za kvadratno cev poznamo tudi to"cno re"sitev, ki zna"sa $\Phi_\Box \approx 0.03
 \caption{Napaka skupnega pretoka po cevi}
 \label{fig:pretok-log}  
 \end{figure}
-\end{document}
+
+1D in 2D FFT imata obe pribli"zno linearno konvergenco, 2D FFT pa je vseskozi malo natan"cnej"sa. Opazimo pa lahko tudi, da relaksacijska metoda odpove "ze pri $100\times 100$ to"ckah. Razlog za to je verjetno v slabo izbranem pogoju za ustavitev. "Zal pa zaradi po"casne konvergence nisem mogel natan"cneje re"sitiv problema za ve"cje "stevilo to"ck. 
 
 \section{Obte"zena opna}
 
+Po preizku"sanju metod sem zaklju"cil, da je najbolj"sa 2D FFT, ki je tudi najenostavnej"sa za implementacijo. Z njo sem izra"cunal obliko neenakomerno obte"zene opne. Oblike opne je na sliki \ref{fig:opna-oblika}
+
+\begin{figure}[H]
+\centering
+ \includegraphics[width=.6\textwidth]{g_opna}
+ \caption{Oblika opne s prikazanimi obmo"cji ve"cje in manj"se obte"zitve}
+ \label{fig:opna-oblika}
+\end{figure}
+
+Na slikah \ref{fig:obtezena-2} in \ref{fig:obtezena-05} sta ravnovesni obliki opne z razli"cnima razmerjima gostote, izra"cunane z mre"zo $1024\times 1024$ to"ck. 
+
+\begin{figure}[H]
+\centering
+ \includegraphics[width=.8\textwidth]{g_obtezena_2}
+ \caption{Oblika opne, ki je na robovih dvojno obte"zena}
+ \label{fig:obtezena-2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+ \includegraphics[width=.8\textwidth]{g_obtezena_05}
+ \caption{Oblika opne, ki je na robovih polovi"cno obte"zena}
+ \label{fig:obtezena-05}
+\end{figure}
+
+
 \section{Prevajanje toplote po valju}
 
+Za re"sevanje ena"cb v valjni geometriji ne moremo uporabiti Fourierove v obeh smereh, saj operator $\nabla^2$ v radialni smeri ne vsebuje le drugega odvoda po $r$. Zato sem FFT izvedel samo v smeri $z$, v radialni smeri pa re"sil matri"cni sistem. 
 
+Zaradi linearnosti ena"cbe sem problem lahko poenostavil, tako da sem eno izmed temperatur postavil na 0, drugo pa na 1. Nehomogeni robni pogoj bi lahko dal na vrh in dno valja (in s tem ote"zil FFT) ali na pla"s"c (in ote"zil re"sevanje matri"cnega sistema). Odlo"cil sem se, da nehomogen robni pogoj postavim na stran Fourierove transformacije in ga pridru"zim gostoti izvirov, kot je opisano v navodilih. 
+
+\begin{figure}[H]
+\centering
+ \includegraphics[width=.8\textwidth]{g_valj}
+ \caption{Temperaturni profil po preseku valja}
+ \label{fig:valj}
+\end{figure}
+
+\end{document}

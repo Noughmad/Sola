@@ -42,14 +42,12 @@ function R = valj(T, m, n)
     P(:,n) = T*m*n * ones(1,m);
     P(:,1) = T*m*n * ones(1,m);
     [m,n] = size(P);
-    P
-    F = dst(P)'
+    F = dst(P)';
     X = [];
     for j=1:m
         D = (4-2*cos(j*pi/m)) * ones(n,1);
         r = linspace(-1,1,n);
         A = sparse(-diag(D) + diag(1 - 0.5 ./ n ./ r(1:n-1), 1) + diag(1 + 0.5 ./ n ./ r(2:n), -1));
-        FullA = full(A)
         b = 1.0/m/n* F(:,j);
         X = [X, (A\b)];
     endfor
