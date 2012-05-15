@@ -21,19 +21,16 @@ endfunction
 
 function R = ena(P)
     [m,n] = size(P);
-    F = dst(P);
-    
-    F = F';
+    F = dst(P)';
     X = [];
+    hk = 1.0 / m / n;
     for j=1:m
         D = (4-2*cos(j*pi/m)) * ones(n,1);
         A = sparse(-diag(D) + diag(ones(n-1,1),1) + diag(ones(n-1,1),-1));
-        b = 1.0/m/n* F(:,j);
+        b = hk * F(:,j);
         X = [X, (A\b)];
     endfor
-    X = X';
-    # plot_3d(X)
-    R = idst(X);
+    R = idst(X');
 endfunction
 
 function R = valj(T, m, n)
@@ -85,22 +82,89 @@ function obtezene_opne(Ns, c)
     endfor
 endfunction
 
+function p = pretok(R)
+    p = sum(sum(R,1,'extra'),2,'extra');
+    [m,n] = size(R);
+    p = abs(p) / m / n;
+endfunction
+
+function R = sor(G)
+    [m,n] = size(G);
+    omega = 2.0/(1.0 + pi/n);
+    popravek = m*n;
+    rho = -1.0/m/n;
+    R = zeros(size(G));
+    meja = 1e-5;
+    while popravek > meja
+        popravek = 0;
+        for i=1:n
+            for j=1:m
+                if mod(i+j,2) == 0
+                    v = rho - 4*R(i,j);
+                    if i > 1
+                        v = v + R(i-1,j);
+                    endif
+                    if i < n
+                        v = v + R(i+1,j);
+                    endif
+                    if j > 1
+                        v = v + R(i,j-1);
+                    endif
+                    if j < n
+                        v = v + R(i,j+1);
+                    endif
+                    popravek = popravek + abs(v);
+                    R(i,j) = R(i,j) + v*omega*0.25;
+                endif
+            endfor
+        endfor
+        for i=1:n
+            for j=1:m
+                if mod(i+j,2) == 1
+                    v = rho - 4*R(i,j);
+                    if i > 1
+                        v = v + R(i-1,j);
+                    endif
+                    if i < n
+                        v = v + R(i+1,j);
+                    endif
+                    if j > 1
+                        v = v + R(i,j-1);
+                    endif
+                    if j < n
+                        v = v + R(i,j+1);
+                    endif
+                    popravek = popravek + v*v;
+                    R(i,j) = R(i,j) + v*omega*0.25;
+                endif
+            endfor
+        endfor
+    endwhile
+endfunction
+
 function cajt()
 	R = [];
-	for n=[16 32 64 128 256 512 1024 2048]
+	for n=[16 32 64 128]
 		T = [n];
 		G = ones(n,n);
+        
 		a = time();
-		ena(G);
-		T = [T (time()-a)];
-		a = time();
-		dva(G);
-		T = [T (time()-a)];
-		R = [R; T]
+		E = ena(G);
+		T = [T pretok(E) (time()-a)];
+	
+                a = time();
+                D = dva(G);
+                T = [T pretok(D) (time()-a)];
+                
+                a = time();
+                S = sor(G);
+                T = [T pretok(S) (time()-a)];
+                
+                R = [R; T]
 	endfor
 	save g_cas.dat R
 endfunction
 
 # obtezene_opne([16 32 64 128 256 512 1024], 3);
 
-cajt()
+# cajt()
