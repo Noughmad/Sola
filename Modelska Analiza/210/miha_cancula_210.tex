@@ -51,4 +51,39 @@ Najprej sem na primeru kvadratne, enakomerno obte"zene opne preverjal u"cinkovit
 
 Za "cimbolj nepristransko primerjavo sem vse tri algoritme implementiral v jeziku Octave. Ker je ta jezik interpretiran, sem se izogibal zankam. Za Fourierovo transformacijo sem uporabil vgrajene rutine, re"sevanje diferencialne ena"cbe v eni dimenziji in relaksacijo pa sem prevedel na operacije z redkimi matrikami. 
 
+\subsection{Hitrost}
+
+Najprej sem primerjal hitrost razli"cnih algoritmov. FFT in re"sevanje 1D diferencialne ena"cbe sta direktna postopka, kjer je natan"cnost odvisna le od diskretizacije oz. od "stevila to"ck. Pri relaksaciji pa sem moral dolo"citi "se pogoj, kdaj ustaviti ra"cunanje. Izbral sem enakega kot pri nalogi 205, torej sem ra"cun ustavil, ko je vsota kvadratov popravkov v enem koraku padla pod fiksno mejo $10^{-8}$. 
+
+\begin{figure}[H]
+\input{hitrost}
+\caption{"Casovna zahtevnost uporabljenih algoritmov}
+\label{fig:hitrost}  
+\end{figure}
+
+\subsection{Natan"cnost}
+
+"Casovna odvisnost od "stevila to"ck nam ni"c ne pove, "ce ne vemo kak"sno natan"cnost lahko pri"cakujemo. Zato sem opazoval tudi hitrost konvergence posameznih metod. 
+
+Problem enakomerno obte"zene opne ima rezultat, ki je skalarna spremenljivka in je enak povpre"cnemu povesu opne. Enaka Poissonova ena"cba opisuje tudi tok teko"cine po cevi, kjer ima ta rezultat bolj nazoren fizikalen pomen skupnega pretoka po cevi. Na grafu \ref{fig:pretok} sem prikazal, kako se ta pretok pribli"zuje kon"cni vrednosti, ko pove"cujemo "stevilo to"ck. 
+
+\begin{figure}[H]
+\input{g_pretok}
+\caption{Konvergenca skupnega pretoka po cevi}
+\label{fig:pretok}  
+\end{figure}
+
+Za kvadratno cev poznamo tudi to"cno re"sitev, ki zna"sa $\Phi_\Box \approx 0.0351342$. Natan"cnost metod torej bolj vidimo na logaritemskem grafu napake \ref{fig:pretok-log}. 
+
+\begin{figure}[H]
+\input{g_pretok_log}
+\caption{Napaka skupnega pretoka po cevi}
+\label{fig:pretok-log}  
+\end{figure}
 \end{document}
+
+\section{Obte"zena opna}
+
+\section{Prevajanje toplote po valju}
+
+

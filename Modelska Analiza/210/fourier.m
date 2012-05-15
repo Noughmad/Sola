@@ -94,21 +94,21 @@ endfunction
 
 function R = sor(G)
     [m,n] = size(G);
-    omega = 2.0/(1.0 + pi/n)
-    popravek = m*n;
-    rho = -1.0/m/n;
-    meja = 1e-5;
+    # omega = 2.0/(1.0 + pi/n)
+    popravek = 1;
+    rho = -1.0/(m+1)/(n+1);
+    meja = 1e-8;
     N = n*m;
     Res = zeros(N,1);
-    D1 = []
+    D1 = [];
     for i=1:n
-        D1 = [D1 ones(1,n-1) 0];
+        D1 = [D1; ones(n-1,1); 0];
     endfor
     D1 = D1(1:N-1);
-    D2 = ones(N-n,1);
-    M = -4*diag(ones(N,1)) + diag(D1,1) + diag(D1,-1) + diag(D2,n) + diag(D2,-n);
-    M = sparse(M);
-    size(M)
+    
+    D2 = [ones(N-n,1)];
+    Dd = -4*ones(N,1);
+    M = spdiags([[D2; zeros(n,1)], [D1;0], Dd, [0;D1], [zeros(n,1); D2]], [-n -1 0 1 n], N, N);
     while popravek > meja
         P = M*Res + rho;
         popravek = sumsq(P);
@@ -119,23 +119,31 @@ endfunction
 
 function cajt()
 	R = [];
-	for n=[16 32 64 128]
+	for n=[16 32 64 128 256 512 1024 2048 4096]
 		T = [n];
 		G = ones(n,n);
         
 		a = time();
 		E = ena(G);
-		T = [T pretok(E) (time()-a)];
+                d = time()-a;
+		T = [T pretok(E) d];
 	
                 a = time();
                 D = dva(G);
-                T = [T pretok(D) (time()-a)];
+                d = time()-a;
+                T = [T pretok(D) d];
                 
-                a = time();
-                S = sor(G);
-                T = [T pretok(S) (time()-a)];
+                if n < 1000
+                    a = time();
+                    S = sor(G);
+                    d = time()-a;
+                    T = [T pretok(S) d];
+                else
+                    T = [T 0 0];
+                endif
                 
-                R = [R; T]
+                T
+                R = [R; T];
 	endfor
 	save g_cas.dat R
 endfunction
