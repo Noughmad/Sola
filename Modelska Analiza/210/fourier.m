@@ -6,6 +6,10 @@ function F = idst2(P)
     F = idst(idst(P)')';
 endfunction
 
+function S = sum2(P)
+    S = sum(sum(P,1),2);
+endfunction
+
 function R = dva(P)
     F = dst2(P);
     [m,n] = size(P);
@@ -90,56 +94,27 @@ endfunction
 
 function R = sor(G)
     [m,n] = size(G);
-    omega = 2.0/(1.0 + pi/n);
+    omega = 2.0/(1.0 + pi/n)
     popravek = m*n;
     rho = -1.0/m/n;
-    R = zeros(size(G));
     meja = 1e-5;
+    N = n*m;
+    Res = zeros(N,1);
+    D1 = []
+    for i=1:n
+        D1 = [D1 ones(1,n-1) 0];
+    endfor
+    D1 = D1(1:N-1);
+    D2 = ones(N-n,1);
+    M = -4*diag(ones(N,1)) + diag(D1,1) + diag(D1,-1) + diag(D2,n) + diag(D2,-n);
+    M = sparse(M);
+    size(M)
     while popravek > meja
-        popravek = 0;
-        for i=1:n
-            for j=1:m
-                if mod(i+j,2) == 0
-                    v = rho - 4*R(i,j);
-                    if i > 1
-                        v = v + R(i-1,j);
-                    endif
-                    if i < n
-                        v = v + R(i+1,j);
-                    endif
-                    if j > 1
-                        v = v + R(i,j-1);
-                    endif
-                    if j < n
-                        v = v + R(i,j+1);
-                    endif
-                    popravek = popravek + abs(v);
-                    R(i,j) = R(i,j) + v*omega*0.25;
-                endif
-            endfor
-        endfor
-        for i=1:n
-            for j=1:m
-                if mod(i+j,2) == 1
-                    v = rho - 4*R(i,j);
-                    if i > 1
-                        v = v + R(i-1,j);
-                    endif
-                    if i < n
-                        v = v + R(i+1,j);
-                    endif
-                    if j > 1
-                        v = v + R(i,j-1);
-                    endif
-                    if j < n
-                        v = v + R(i,j+1);
-                    endif
-                    popravek = popravek + v*v;
-                    R(i,j) = R(i,j) + v*omega*0.25;
-                endif
-            endfor
-        endfor
+        P = M*Res + rho;
+        popravek = sumsq(P);
+        Res = Res + P*0.25;
     endwhile
+    R = reshape(Res,m,n);
 endfunction
 
 function cajt()

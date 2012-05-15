@@ -1,0 +1,54 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[unicode=true]{hyperref}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage{float}
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\newcommand{\dd}{\mathrm{d}}
+
+\newcommand{\parcialno}[2]{
+  \frac{\partial #1}{\partial #2}
+}
+\newcommand{\parcdva}[2]{
+  \frac{\partial^2 #1}{\partial #2 ^2}
+}
+\newcommand{\lag}{\mathcal{L}}
+
+\title{Direktno re\v sevanje Poissonove ena\v cbe}
+\author{Miha \v Can\v cula}
+\begin{document}
+
+\maketitle
+
+\section{Kvadratna opna}
+
+Najprej sem na primeru kvadratne, enakomerno obte"zene opne preverjal u"cinkovitost treh metod:
+
+\begin{description}
+  \item[SOR] Pospe"seno relaksacijo smo uporabljali "ze pri eni izmed prej"snjih nalog, zato sem lahko uporabil kar isti algoritem. 
+  \item[1D FFT] Opno sem preslikal v frekven"cni prostor le po eni dimenziji, v drugi dimenziji pa sem nastavil in re"sil tridiagonalni matri"cni sistem v vsaki vrstici. 
+  \item[2D FFT] Najenostavnej"sa med uporabljenimi metodami pa je bila dvodimenzionalna Fourierova transformacija. Tu sem uporabil FFT v obeh dimenzijah, koeficiente delil s primernim faktorjem in tako re"sil ena"cbo, nato pa spet uporabil dvodimenzionalno inverzno transformacijo. 
+  
+\end{description}
+
+Za "cimbolj nepristransko primerjavo sem vse tri algoritme implementiral v jeziku Octave. Ker je ta jezik interpretiran, sem se izogibal zankam. Za Fourierovo transformacijo sem uporabil vgrajene rutine, re"sevanje diferencialne ena"cbe v eni dimenziji in relaksacijo pa sem prevedel na operacije z redkimi matrikami. 
+
+\end{document}
