@@ -1,0 +1,141 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[unicode=true]{hyperref}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage{float}
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\newcommand{\dd}{\mathrm{d}}
+
+\newcommand{\parcialno}[2]{
+  \frac{\partial #1}{\partial #2}
+}
+\newcommand{\parcdva}[2]{
+  \frac{\partial^2 #1}{\partial #2 ^2}
+}
+\newcommand{\lag}{\mathcal{L}}
+
+\title{Direktno re\v sevanje Poissonove ena\v cbe}
+\author{Miha \v Can\v cula}
+\begin{document}
+
+\maketitle
+
+\section{Algoritem}
+
+Gibanje vrvice sem ra"cunal v korakih. Vsak korak je sestavljen iz dveh delov:
+\begin{enumerate}
+ \item Ob poznavanju naklona $\phi(s,t)$ in $\phi(s,t-\Delta t)$ izra"cunomo silo $F(s,t)$
+ \item Ob poznavanju naklona $\phi(s,t)$ in $\phi(s,t-\Delta t)$ ter sile $F(s,t)$ izra"cunomo naklon $\phi(s,t+\Delta t)$
+\end{enumerate}
+
+"Casovni korak vsebuje le druga ena"cba, medtem ko je prva le pomo"zna. Za"cetni pogoj nam dolo"ca pogoje prvega dela, zato za"cnemo s tem, nato pa izmeni"cno izvajamo oba. 
+
+V ena"cbah nastopa drugi "casovni odvod $\parcdva{\phi}{t}$, zato sem v spominu vedno shranjeval trenutno in prej"snjo vrednosti $\phi$. Po drugi strani pa nikjer ne nastopa "casovni odvod sile, zato mi je ni bilo treba shranjevati med koraki, ampak sem jo potreboval le na prehodu od 1. do 2. dela koraka. 
+
+\subsection{Izra"cun sile v vrvi}
+
+Za"cetni pogoj nam dolo"ca, da je vrv na za"cetku ravna, torej je $\phi(s, t=0) = \phi_0$. S tem imamo podan naklon vrvi po celotni dol"zini, o sili v njej pa ne vemo ni"c. Zato najprej izra"cunamo silo s pomo"cjo ena"cbe (\ref{eq:sila}). 
+
+\begin{align}
+ \label{eq:sila}
+ \left[\parcdva{}{s} - \left(\parcialno{\phi}{s}\right)^2 \right]F = -\left(\parcialno{\phi}{t}\right)^2
+\end{align}
+
+Na desni strani ena"cbe nastopa "casovni odvod kota $\phi$. Tega lahko izra"cunamo kot razliko med kotom ob trenutnem in prej"snjim "casu, na za"cetku pa uporabimo pogoj, da je vrv pri miru $\dot \phi(s,0) = 0$. 
+
+Najbolj primerno se mi je zdelo $F$ in $\phi$ predstaviti kot vektorja, tako da vrv razdelimo na kon"cno "stevilo enako dolgih odsekov. V tak"sni predstavitvi moramo diskretizirati tudi operator odvoda po $s$, se ena"cba (\ref{eq:sila}) prevede na matri"cni sistem
+
+\begin{align}
+ \label{eq:sila-diskretno}
+ \frac{F_{i-1} - 2F_i + F_{i+1}}{h^2} - \frac{(\phi_{i+1} - \phi_{i-1})^2}{(2h)^2}F_i &= -\left(\dot\phi_i\right)^2 \\
+ F_{i-1} + F_{i+1} + \left(-2 - \frac{(\phi_{i+1} - \phi_{i-1})^2}{4}\right) F_i &= -h^2 \left(\dot\phi_i\right)^2
+\end{align}
+
+kjer je $h=1/N$ korak diskretizacije. Ker je ena"cba drugega reda, sem za pribli"zek prvega odvoda $\parcialno{\phi}{s}$ uporabil simetri"cno diferenco. 
+
+Zgornja ena"cba seveda velja le tam, kjer so vsi indeksi smiselni, torej povsod razen na za"cetku in koncu vrvi. Na robovih moramo seveda upo"stevati robne pogoje. Kon"cni robni pogoj je enostaven; tam je sila kar predpisana in je enaka ni"c. Zato lahko kon"cno ena"cbo kar izpustimo, prav tako pa izpustimo "clen z $F_{i+1} = 0$ v predzadnji ena"cbi. S tem smo zmanj"sali dimenzijo sistema in prihranili drobec ra"cunske zmogljivosti. 
+
+Robni pogoj na za"cetku vrvi je bolj zapleten, saj ne poznamo vrednosti sile. Poznamo pa njen prvi odvod, ki ga lahko izra"cunamo iz ena"cbe 
+
+\begin{align}
+\label{eq:sila-zacetni-pogoj}
+ \parcialno{F}{s} + \sin\phi = 0
+\end{align}
+
+Prvi odvod lahko zapi"semo s kon"cno diferenco. Ker smo na za"cetku vrvi, ta diferenca ne more biti simetri"cna, zato vzamemo kar najenostavnej"so
+
+\begin{align}
+\label{eq:sila-zacetni-pogoj-diskretno}
+ F_1 - F_0 = -h\sin\phi_0
+\end{align}
+
+Pri tem sem upo"steval, da odseke vrvi "stevil"cimo z $i=0,1,\ldots,N-1$. S $\phi_0$ je tako ozna"cen naklon prvega odseka vrvi, ne pa naklon ob za"cetnem "casu. Sedaj imamo sistem $N-1$ ena"cb za $N-1$ neznank, medtem ko je zadnja neznanka (vrednost sile v zadnjem odseku vrvi) znana. Na ta na"cin lahko izra"cunamo silo v vrvi ob vsakem "casu. 
+
+\subsection{Izra"cun naklona vrvi}
+
+Drugi korak pa je izra"cun naklona vrvi, "ce poznamo naklon ob prej"snjem "casu in napetost. Za to uporabimo ena"cbo
+
+\begin{align}
+ \label{eq:kot}
+ \parcdva{\phi}{t} = 2\parcialno{F}{s}\parcialno{\phi}{s} + F\parcdva{\phi}{s}
+\end{align}
+
+Odvode po $s$ diskretiziramo podobno kot v prej"snjem poglavju, tako da spremenljivki $F$ in $\phi$ obravnavamo kot vektorja. "Casovni odvod pa ima tu druga"cno vlogo, saj "zelimo simulirati gibanje vrvice z velikim "stevilom "casovnih korakov. Poleg tega poznamo le za"cetni pogoj, o kon"cnem stanju pa ne vemo ni"c. Ker pa poznamo tako naklon kot njegov odvod ob za"cetnem "casu, je "casovna odvisnost v resnici za"cetni problem, ki ga lahko re"simo z enostavno integracijo. Tudi "cas diskretiziramo, tako da v vsakem koraku napredujemo za $\Delta t = k$. 
+
+S poznavanjem trenutnega in prej"snjega stanja lahko izra"cunamo naklon od naslednjem "casu. Za jasnej"so pisavo nisem ozna"cil implicitne krajevne odvisnosti. 
+
+\begin{align}
+ \label{eq:kot-razvoj}
+ \phi(t+k) &= 2\phi(t) - \phi(t-k) + k^2 \left[ 2\parcialno{F}{s}\parcialno{\phi(t)}{s} + F\parcdva{\phi(t)}{s} \right]
+\end{align}
+
+Krajevne odvode, ki nastopajo na desni strani ena"cbe spet nadomestimo s kon"cnimi diferencami. 
+
+\begin{align}
+ \phi_i(t+k) = 2\phi_i(t) - \phi_i(t-k) + k^2 &\left[2\frac{(F_{i+1}-F_{i-1})(\phi_{i+1}(t)-\phi_{i-1}(t))}{(2h)^2}\right. + \nonumber \\
++ & \left. F_i\frac{\phi_{i+1}(t) - 2\phi_i(t) + \phi_{i-1}(t)}{h^2}\right] \label{eq:kot-diskretno}
+\end{align}
+
+Tudi ena"cba (\ref{eq:kot-diskretno}) velja le za odseke v notranjosti vrvi. Na kraji"s"cih jo nadomestimo z robnimi pogoji. Tokrat nobeden izmed obeh robnih pogojev ni tako enostaven kot je bil pri ra"cunu sile, ampak dobimo dve netrivialni ena"cbi. Pogoj v prijemali"s"cu vrvi sledi iz Newtonovega zakona in se glasi
+
+\begin{align}
+ \label{eq:kot-zacetni-pogoj}
+ F \parcialno{\phi}{s} + \cos \phi = 0
+\end{align}
+
+Enako in iz istega razloga kot za ena"cbo (\ref{eq:sila-zacetni-pogoj}) lahko naredimo le enostransko diferenco. 
+
+\begin{align}
+ \label{eq:kot-zacetni-pogoj-diskretno}
+ \phi_0(t+k) = \phi_1(t+k) - \frac{h}{F_0} \cos \phi_0(t+k)
+\end{align}
+
+Vrednosti $\phi_1$ lahko izra"cunamo po ena"cbi (\ref{eq:kot-diskretno}), $\phi_0$ pa je neznanka. Ker je ena"cba (\ref{eq:kot-zacetni-pogoj-diskretno}) implicitna v $\phi_0$ in transcendentna, jo re"sujemo s standardnimi orodji za re"sevanje nelinearnih ena"cb. 
+
+Robni pogoj na prostem koncu vrvi nima jasne fizikalne podlage in si ga lahko izberemo. Pogoj dolo"ca le obliko konca vrvi in ima pri ve"canju "stevila odsekov vedno manj"si vpliv, zato sem si izbral enega izmed najenostavnej"sih, ki pa "se vedno da dovolj realisti"cno gibanje vrvi. To je pogoj $\parcdva{\phi}{s}=0$, ki je predlagan tudi v navodilih. Ker nastopa drugi odvod, ga moramo v diskretni obliki zapisati na predzadnjem odseku vrvi (zadnji odsek je $N-1$)
+
+\begin{align}
+ \phi_{N-3} -2\phi_{N-2} + \phi_{N-1} = 0
+\end{align}
+
+Pogoj uporabimo ob "casu, za katerega ra"cunamo naklon vrvi, torej $\phi_i = \phi_i(t+k)$. Vrednosti v to"ckah $N-3$ in $N-2$ izra"cunamo po ena"cbi (\ref{eq:kot-diskretno}), edina neznanka je $\phi_{N-1}$, ki ga enostavno izrazimo iz zgorjnje ena"cbe. 
+
+\end{document}
