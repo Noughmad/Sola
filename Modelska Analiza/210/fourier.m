@@ -46,8 +46,8 @@ function R = valj(T, m, n)
     X = [];
     for j=1:m
         D = (4-2*cos(j*pi/m)) * ones(n,1);
-        r = linspace(-1,1,n);
-        A = sparse(-diag(D) + diag(1 - 0.5 ./ n ./ r(1:n-1), 1) + diag(1 + 0.5 ./ n ./ r(2:n), -1));
+        r = linspace(-0.5,0.5,n);
+        A = sparse(-diag(D) + diag(1 + 0.5 ./ n ./ r(1:n-1), 1) + diag(1 - 0.5 ./ n ./ r(2:n), -1));
         b = 1.0/m/n* F(:,j);
         X = [X, (A\b)];
     endfor

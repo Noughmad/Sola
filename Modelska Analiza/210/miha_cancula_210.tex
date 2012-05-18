@@ -49,7 +49,18 @@ Najprej sem na primeru kvadratne, enakomerno obte"zene opne preverjal u"cinkovit
   
 \end{description}
 
-Za "cimbolj nepristransko primerjavo sem vse tri algoritme implementiral v jeziku Octave. Ker je ta jezik interpretiran, sem se izogibal zankam. Za Fourierovo transformacijo sem uporabil vgrajene rutine, re"sevanje diferencialne ena"cbe v eni dimenziji in relaksacijo pa sem prevedel na operacije z redkimi matrikami. 
+Za "cimbolj nepristransko primerjavo sem vse tri algoritme implementiral v jeziku Octave, za ra"cunsko zahtevne dele (FFT, matri"cne operacije) pa sem uporabil 
+ 
+Relaksacijo sem implementiral v matri"cni obliki. Poves opne v vsaki to"cke na mre"zi sem predstavil z vektorjem $x$ z $n\times n$ komponentami, popravek v vsak
+
+\begin{align}
+ \vec{p}_i &= \vec A \vec{x}_i + \vec{g} \\
+ \vec{x}_{i+1} &= \vec{x}_i + \frac{1}{4} \omega \vec{p}_i
+\end{align}
+
+kjer je $\vec A$ matrika diskretiziranega operatorja $\nabla^2$, $\vec{g}$ vektor desne strani Poissonove ena"cbe, $\vec{p}_i$ pa popravek v $i$-tem koraku. Relaksacijo sem ustavil, ko je velikost popravka $\|\vec{p}_i\|$ padla pod dolo"ceno mejo. 
+
+Ker imamo v nalogi robne pogoje 1. vrste, v Fourierovem razvoju nastopajo le sinusi. Zato sem namesto FFT vedno uporabil hitro sinusno transformacijo, ki jo ponuja paket \texttt{octave-control}. 
 
 \begin{figure}[H]
 \centering
@@ -92,7 +103,7 @@ Za kvadratno cev poznamo tudi to"cno re"sitev, ki zna"sa $\Phi_\Box \approx 0.03
 \label{fig:pretok-log}  
 \end{figure}
 
-1D in 2D FFT imata obe pribli"zno linearno konvergenco, 2D FFT pa je vseskozi malo natan"cnej"sa. Opazimo pa lahko tudi, da relaksacijska metoda odpove "ze pri $100\times 100$ to"ckah. Razlog za to je verjetno v slabo izbranem pogoju za ustavitev. "Zal pa zaradi po"casne konvergence nisem mogel natan"cneje re"sitiv problema za ve"cje "stevilo to"ck. 
+1D in 2D FFT imata obe pribli"zno linearno konvergenco, 2D FFT pa je vseskozi malo natan"cnej"sa. Opazimo pa lahko tudi, da relaksacijska metoda odpove "ze pri $100\times 100$ to"ckah. Razlog za to je verjetno v slabo izbranem pogoju za ustavitev.  "Zal pa zaradi po"casne konvergence nisem mogel natan"cneje re"siti problema za ve"cje "stevilo to"ck. "Ce bi mejo za ustavitev zni"zeval, bi se natana"cnost seveda izbolj"sala, ampak bi ra"cun postal "se bolj dolgotrajen. V nobenem primeru pa ne bi dobil bolj"sega rezultata kot z direktnim re"sevanjem. 
 
 \section{Obte"zena opna}
 
@@ -126,7 +137,15 @@ Na slikah \ref{fig:obtezena-2} in \ref{fig:obtezena-05} sta ravnovesni obliki op
 
 Za re"sevanje ena"cb v valjni geometriji ne moremo uporabiti Fourierove v obeh smereh, saj operator $\nabla^2$ v radialni smeri ne vsebuje le drugega odvoda po $r$. Zato sem FFT izvedel samo v smeri $z$, v radialni smeri pa re"sil matri"cni sistem. 
 
-Zaradi linearnosti ena"cbe sem problem lahko poenostavil, tako da sem eno izmed temperatur postavil na 0, drugo pa na 1. Nehomogeni robni pogoj bi lahko dal na vrh in dno valja (in s tem ote"zil FFT) ali na pla"s"c (in ote"zil re"sevanje matri"cnega sistema). Odlo"cil sem se, da nehomogen robni pogoj postavim na stran Fourierove transformacije in ga pridru"zim gostoti izvirov, kot je opisano v navodilih. 
+Zaradi linearnosti ena"cbe sem problem lahko poenostavil, tako da sem eno izmed temperatur postavil na 0, drugo pa na 1. Nehomogeni robni pogoj bi lahko dal na vrh in dno valja (in s tem ote"zil FFT) ali na pla"s"c (in ote"zil re"sevanje matri"cnega sistema). Odlo"cil sem se, da nehomogen robni pogoj postavim na stran Fourierove transformacije in ga pridru"zim gostoti izvirov, kot je opisano v navodilih. Povsod razen na zgornji in spodnji ploskvi je gostota izvirov enaka ni"c. 
+
+Diferencialno ena"cbo, ki jo re"sujemo v transformiranem prostoru sem popravil, tako da sem dodal "clen s prvim odvodom po $r$. 
+
+\begin{align}
+ (1-\frac{h}{2r}) U^m_{l-1} - (4-2\cos(m\pi/J)) U^m_l + (1+\frac{h}{2r}) U^m_{l+1} &= h^2 G^m_l
+\end{align}
+
+Ra"cunal sem s celotnim valjem, tako da je $r$ "sel od -1/2 do +1/2. 
 
 \begin{figure}[H]
 \centering
