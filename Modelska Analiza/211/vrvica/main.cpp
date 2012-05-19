@@ -10,6 +10,7 @@
 #include <QtGui/QPainter>
 #include <QtGui/QBitmap>
 #include <QtGui/QApplication>
+#include <QtCore/QDebug>
 
 inline double sq(double x)
 {
@@ -157,6 +158,7 @@ void zacetni_pogoj(int n, double phi_0)
     
     image = new QImage(2*VelikostSlike, VelikostSlike, QImage::Format_RGB16);
     painter = new QPainter(image);
+    painter->setRenderHint(QPainter::Antialiasing, true);
     
     solver = gsl_root_fdfsolver_alloc(gsl_root_fdfsolver_newton);
     function.fdf = fn_fdf;
