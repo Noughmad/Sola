@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdio.h>
 
 #include <math.h>
 #include <gsl/gsl_vector.h>
@@ -16,11 +17,11 @@ inline double sq(double x)
 }
 
 const int VelikostSlike = 200;
-const QString ImageFileNameFormat = "image_%1.jpg";
+QString ImageFileNameFormat;
 
 int StClenov;
 int StClenovMinusDva;
-double k = 0.001;
+double k = 6e-6;
 double h;
 
 double C; // C = k*k/h/h
@@ -32,18 +33,30 @@ double *Phi, *Phi1, *pn;
 gsl_vector* F;
 
 QImage* image;
-QBitmap* bitmap;
 QPainter* painter;
-QPainter* imagePainter;
 
 gsl_vector *d, *u, *l, *rhs;
 
-gsl_root_fsolver* solver;
-gsl_function function;
+gsl_root_fdfsolver* solver;
+gsl_function_fdf function;
 
-double fn(double x, void* params)
+double fn_f(double x, void* params)
 {
-    return x - Phi[1] - h*gsl_vector_get(F,0) * cos(x);
+    double* p = (double*)params;
+    return x - p[1] + h*gsl_vector_get(F,0) * cos(x);
+}
+
+double fn_df(double x, void* params)
+{
+    return 1 - h*gsl_vector_get(F,0) * sin(x);
+}
+
+void fn_fdf (double x, void *params, double *y, double *dy)
+{
+    double* p = (double*)params;
+    const double b = h * gsl_vector_get(F,0);
+    *y = x - p[1] + b*cos(x);
+    *dy = 1 - b*sin(x);
 }
 
 void izracunaj_silo()
@@ -92,23 +105,30 @@ void izracunaj_kot()
     // Robni pogoj na zacetku
 
     // Privzamem da se vrednost ne bo veliko spreminjala
-    gsl_root_fsolver_set (solver, &function, 0.5 * Phi[0], 2.0 * Phi[0]);
+    /*
+    function.params = pn;
+    gsl_root_fdfsolver_set (solver, &function, Phi[0]);
     
     int status;
+    double x, x0;
     do
     {
-           gsl_root_fsolver_iterate (solver);
-           double r = gsl_root_fsolver_root (solver);
-           double x_lo = gsl_root_fsolver_x_lower (solver);
-           double x_hi = gsl_root_fsolver_x_upper (solver);
-           status = gsl_root_test_interval (x_lo, x_hi, 0, 1e-5);
+           gsl_root_fdfsolver_iterate (solver);
+           x0 = x;
+           x = gsl_root_fdfsolver_root (solver);
+           status = gsl_root_test_delta (x, x0, 0, 1e-3);
     }
     while (status == GSL_CONTINUE);  
     
-    pn[0] = gsl_root_fsolver_root(solver);
+    pn[0] = gsl_root_fdfsolver_root(solver);
+    
+    */
+    
+    pn[0] = pn[2] + h/gsl_vector_get(F,1) * cos(pn[1]);
         
-    Phi1 = Phi;
+    Phi1 = p;
     Phi = pn;
+    pn = pm;
 }
 
 void zacetni_pogoj(int n, double phi_0)
@@ -135,40 +155,47 @@ void zacetni_pogoj(int n, double phi_0)
     l = gsl_vector_alloc(StClenov-2);
     rhs = gsl_vector_alloc(StClenov-1);
     
-    bitmap = new QBitmap(2*VelikostSlike, VelikostSlike);
     image = new QImage(2*VelikostSlike, VelikostSlike, QImage::Format_RGB16);
-    painter = new QPainter(bitmap);
-    QPen pen;
-    pen.setColor(Qt::color1);
-    pen.setWidth(5);
-    painter->setPen(pen);
+    painter = new QPainter(image);
     
-    imagePainter = new QPainter(image);
-    imagePainter->setPen(Qt::white);
-    imagePainter->setBackgroundMode(Qt::TransparentMode);
-    
-    solver = gsl_root_fsolver_alloc(gsl_root_fsolver_brent);
-    function.function = fn;
+    solver = gsl_root_fdfsolver_alloc(gsl_root_fdfsolver_newton);
+    function.fdf = fn_fdf;
+    function.df = fn_df;
+    function.f = fn_f;
     function.params = 0;
 }
 
 void shrani_sliko(int frame)
 {
-    bitmap->clear();
+    image->fill(QColor(Qt::black));
+    
     QPointF lastPos = QPointF(VelikostSlike, 0);
     QPointF currentPos;
     
     const double h = 1.0/StClenov * VelikostSlike;
     
-    for (int i = 0; i < StClenov; ++i)
+    QPen pen;
+    pen.setWidth(5);
+    for (int i = 0; i < StClenov-1; ++i)
     {
+        if (gsl_vector_get(F, i) < 0)
+        {
+            exit(27);
+        }
+        pen.setColor(QColor(255, 200 * gsl_vector_get(F, i), 0));
+        painter->setPen(pen);
+        
         currentPos = lastPos + h*QPointF(cos(Phi[i]), sin(Phi[i]));
         painter->drawLine(lastPos, currentPos);
         lastPos = currentPos;
     }
     
-    image->fill(QColor(Qt::black));
-    imagePainter->drawPixmap(0,0,*bitmap);
+    pen.setColor(QColor(255, 0, 0));
+    painter->setPen(pen);
+        
+    currentPos = lastPos + h*QPointF(cos(Phi[StClenov-1]), sin(Phi[StClenov-1]));
+    painter->drawLine(lastPos, currentPos);
+    
     image->save(ImageFileNameFormat.arg(frame, 4, 10, QLatin1Char('0')));
     
     std::cout << "Shranil sliko " << frame << std::endl;
@@ -180,29 +207,41 @@ void korak()
     izracunaj_kot();
 }
 
-void postopek(int n, double phi, double T)
+void postopek(int n, double phi, int slike)
 {
     zacetni_pogoj(n, phi);
     double t = 0;
     int iteration = 0;
-    while (t < T)
+    while (iteration < slike * IterationsPerFrame)
     {
+        izracunaj_silo();
+
         if (iteration % IterationsPerFrame == 0)
         {
             shrani_sliko(iteration/IterationsPerFrame+1);
         }
         
-        izracunaj_silo();
+        
+        if (gsl_vector_get(F, 0) < 0)
+        {
+            std::cout << "Negativna sila " << iteration << std::endl;
+            exit(4);
+        }
+        
         izracunaj_kot();
         
         
         ++iteration;
-        t += k;
     }
 }
 
 int main(int argc, char **argv) {
     QApplication app(argc, argv);
-    postopek(100, 0.5, 10000.0);
+    int cleni = argc > 1 ? atoi(argv[1]) : 100;
+    double kot = argc > 2 ? atof(argv[2]) : 0.9;
+    int slike = argc > 3 ? atoi(argv[3]) : 1000;
+    ImageFileNameFormat = argc > 4 ? argv[4] : "g_frame_%1.jpg";
+    
+    postopek(cleni, kot, slike);
     return 0;
 }
