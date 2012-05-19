@@ -18,6 +18,10 @@ POINT_SIZE = 6.0
 
 
 def krogi(n):
+	SOURCE_ONE = 600
+	SOURCE_TWO = 1000
+	SOURCE_DIF = 400.0
+	
 	image = QImage(1600, 1200, QImage.Format_RGB32)
 	image.fill(Qt.white)
 	painter = QPainter(image)
@@ -126,6 +130,10 @@ def krogi(n):
 	image.save("krogi.png")
 	
 def svetla(n):
+	SOURCE_ONE_x = 800 - 135
+	SOURCE_TWO_x = 800 + 135
+	SOURCE_DIF = 270.0
+
 	image = QImage(1600, 1200, QImage.Format_RGB32)
 	image.fill(Qt.white)
 	painter = QPainter(image)
