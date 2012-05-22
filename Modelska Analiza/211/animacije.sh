@@ -1,5 +1,7 @@
 EXE="`pwd`/vrvica/build/vrvica"
 
+rm -rf g_animacija*
+
 for kot in 0,9 1,0 1,1 1,2
 do
     mkdir "g_animacija_${kot}"

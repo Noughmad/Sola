@@ -121,14 +121,21 @@ Tudi ena"cba (\ref{eq:kot-diskretno}) velja le za odseke v notranjosti vrvi. Na 
  F \parcialno{\phi}{s} + \cos \phi = 0
 \end{align}
 
-Enako in iz istega razloga kot za ena"cbo (\ref{eq:sila-zacetni-pogoj}) lahko naredimo le enostransko diferenco. 
+Enako in kot za ena"cbo (\ref{eq:sila-zacetni-pogoj}) lahko naredimo enostransko diferenco
 
 \begin{align}
  \label{eq:kot-zacetni-pogoj-diskretno}
  \phi_0(t+k) = \phi_1(t+k) - \frac{h}{F_0} \cos \phi_0(t+k)
 \end{align}
 
-Vrednosti $\phi_1$ lahko izra"cunamo po ena"cbi (\ref{eq:kot-diskretno}), $\phi_0$ pa je neznanka. Ker je ena"cba (\ref{eq:kot-zacetni-pogoj-diskretno}) implicitna v $\phi_0$ in transcendentna, jo re"sujemo s standardnimi orodji za re"sevanje nelinearnih ena"cb. 
+Vrednosti $\phi_1$ lahko izra"cunamo po ena"cbi (\ref{eq:kot-diskretno}), $\phi_0$ pa je neznanka. Ena"cba (\ref{eq:kot-zacetni-pogoj-diskretno}) implicitna v $\phi_0$ in transcendentna. Lahko bi jo re"sevali s standardnimi orodji za re"sevanje nelinearnih ena"cb (npr. Newtonovo metodo). Re"sitev pa dobimo hitreje in enostavneje, "ce robni pogoj zapi"semo s simetri"cno diferenco za drugi odsek vrvi 
+
+\begin{align}
+ \label{eq:kot-zacetni-pogoj-diskretno-enostavno}
+ \phi_0(t+k) = \phi_2(t+k) - 2\frac{h}{F_0} \cos \phi_1(t+k)
+\end{align}
+
+Zgornja ena"cba ni ve"c implicitna, zato lahko $\phi_0$ izra"cunamo direktno. 
 
 Robni pogoj na prostem koncu vrvi nima jasne fizikalne podlage in si ga lahko izberemo. Pogoj dolo"ca le obliko konca vrvi in ima pri ve"canju "stevila odsekov vedno manj"si vpliv, zato sem si izbral enega izmed najenostavnej"sih, ki pa "se vedno da dovolj realisti"cno gibanje vrvi. To je pogoj $\parcdva{\phi}{s}=0$, ki je predlagan tudi v navodilih. Ker nastopa drugi odvod, ga moramo v diskretni obliki zapisati na predzadnjem odseku vrvi (zadnji odsek je $N-1$)
 
@@ -137,5 +144,62 @@ Robni pogoj na prostem koncu vrvi nima jasne fizikalne podlage in si ga lahko iz
 \end{align}
 
 Pogoj uporabimo ob "casu, za katerega ra"cunamo naklon vrvi, torej $\phi_i = \phi_i(t+k)$. Vrednosti v to"ckah $N-3$ in $N-2$ izra"cunamo po ena"cbi (\ref{eq:kot-diskretno}), edina neznanka je $\phi_{N-1}$, ki ga enostavno izrazimo iz zgorjnje ena"cbe. 
+
+\section{Rezultati}
+
+Nihanje vrvice je najla"zje prikazat z animacijo. Re"sitvi prilagam tri animacije, ki se razlikujejo po za"cetnemu kotu vrvice. V vseh treh primerih sem uporabil simuliral nihanje vrvice s 100 odseki in "casovnim korakom $4 \cdot 10^{-6}$ v brezdimenzijskih enotah. V eni sekundi simulacije je $2.5 \cdot 10^5$ korakov, kar ustreza nihanju vrvice s karakteristi"cnim "casom $\tau = 1\mathrm{s}$. 
+
+\section{Natan"cnost}
+
+Natan"cnost metod sem opazoval tako, da sem spreminjal "stevilo odsekov vrvi in velikost "casovnega koraka. 
+
+\subsection{Polo"zaj repa}
+
+Med nihanjem vrvi se najhitreje spreminja polo"zaj prostega konca vrvi. "Ze zaradi kro"zenja okrog prijemali"s"ca je hitrost najve"cja na koncu vrvi, poleg tega pa se v bli"zini prostega konca pojavijo tudi manj"sa nihanja z ve"cjimi frekvencami. Zlasti zaradi teh nihanj se mi je zdelo gibanje konca vrvi najprimernej"sa metoda za dolo"canje natan"cnosti metode. 
+
+\subsection{Ohranitev energije}
+
+Ker shema integracije sama po sebi ne ohranja skupne energije vrvi, je spreminjanje energije s "casom primeren kriterij za dolo"canje natan"cnosti. V nihanjo"ci vrvi imamo kineti"cno in potencialno energijo, medtem ko se pri neraztegljivi vrvice pro"znostna ne spreminja. Kineti"cno energijo vsakega odseka lahko razdelimo na translacijsko in rotacijsko. 
+
+Skupno energijo enega odseka vrvi lahko zapi"semo kot
+
+\begin{align}
+ E_i = E_{trans} + E_{rot} + E_{pot} = \frac{m_i}{2} v_i^2 + \frac{m_i l_i^2}{24} \dot{\phi}^2- m_i g y_i
+\end{align}
+
+Hitrost $v_i$ in polo"zaj $y_i$ sta odvisni le od $\phi$ in $\dot\phi$, zato za izra"cun ne bomo potrebovali sile. Navpi"cno komponentno polo"zaja lahko izrazimo enostavno, s se"stevanjem navpi"cnih komponent smeri vseh prej"snjih odsekov. Ker v izrazu za potencialno energijo nastopa polo"zaj te"zi"s"ca odsekov, $i$-ti "clen upo"stevamo le polovi"cno. Podobno lahko izra"cunamo tudi vodoravno komponento $x$, ki jo bomo potrebovali pri ra"cunu hitrosti. 
+
+\begin{align}
+ y_i &= \sum_{m=0}^{i-1} h \sin \phi_m + \frac{1}{2}h\sin\phi_i \\
+ x_i &= \sum_{m=0}^{i-1} h \cos \phi_m + \frac{1}{2}h\cos\phi_i
+\end{align}
+
+Hitrost lahko izra"cunamo kot odvod polo"zaja s kon"cno diferenco. La"zje kot samo hitrost je zapisati njen kvadrat
+
+\begin{align}
+ v_i^2 = \frac{\left(y_i(t) - y_i(t-k)\right)^2 + \left(x_i(t) - x_i(t-k)\right)^2}{k^2}
+\end{align}
+
+"Casovna odvisnost $y_i$ je izra"zena le prek "casovne odvisnosti $\phi$. Ker program vedno shranjuje $\phi$ ob dveh zaporednih korakih, lahko hitrost izra"cunamo po vsakem koraku. 
+
+Izraza za polo"zaj $i$-tega odseka vrvi lahko prepi"semo v rekurzivno formulo
+
+\begin{align}
+ (x_0, y_0) &= \frac{h}{2}(0, 0) \\
+ (x_i, y_i) &= (x_{i-1}, y_{i-1}) + \frac{h}{2} (\cos\phi_{i-1} + \cos\phi_i, \sin\phi_{i+1} + \sin\phi_i)
+\end{align}
+
+po kateri lahko celotno energijo izra"cunamo z enim prehodom po podatki in v linearnem "casu. 
+
+Energija ima "se to prednost, da njeno za"cetno vrednost lahko izra"cunamo analiti"cno. Na za"cetku vrvica nima kineti"cne energije, njena potencialna energija pa je enaka
+
+\begin{align}
+ E(0) &= - m g \frac{l}{2} \sin \phi(0)
+\end{align}
+
+\begin{figure}
+ \input{g_energija}
+\end{figure}
+
 
 \end{document}

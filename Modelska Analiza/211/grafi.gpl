@@ -1,0 +1,11 @@
+set terminal epslatex color solid
+
+E = -0.420735
+set output "g_energija.tex"
+
+set xlabel "\"Stevilo korakov"
+set ylabel "Odstopanje energije"
+
+set logscale y
+
+plot for [i in "10 30 100 300 1000"] sprintf("g_energija_%s.dat", i) u 1:(abs($2-E)) w lines t sprintf("$J = %s$", i)

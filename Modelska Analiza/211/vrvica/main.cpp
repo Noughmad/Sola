@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <stdio.h>
 
 #include <math.h>
@@ -22,7 +23,7 @@ QString ImageFileNameFormat;
 
 int StClenov;
 int StClenovMinusDva;
-double k = 6e-6;
+double k = 4e-6;
 double h;
 
 double C; // C = k*k/h/h
@@ -58,6 +59,46 @@ void fn_fdf (double x, void *params, double *y, double *dy)
     const double b = h * gsl_vector_get(F,0);
     *y = x - p[1] + b*cos(x);
     *dy = 1 - b*sin(x);
+}
+
+void polozaj_repa(double& x, double& y)
+{
+    x = 0;
+    y = 0;
+    for (int i = 0; i < StClenov; ++i)
+    {
+        x += cos(Phi[i]);
+        y += sin(Phi[i]);
+    }
+    
+    x *= h;
+    y *= h;
+}
+
+double energija()
+{   
+    double x = cos(Phi[0]);
+    double y = sin(Phi[0]);
+    double xk = cos(Phi1[0]);
+    double yk = sin(Phi1[0]);
+    
+    double Ep = -y;
+    double Ek = (x-xk) * (x-xk) + (y-yk) * (y-yk);
+    double Er = (Phi[0] - Phi1[0]) * (Phi[0] - Phi1[0]);
+        
+    for (int i = 1; i < StClenov; ++i)
+    {
+        x += cos(Phi[i-1]) + cos(Phi[i]);
+        y += sin(Phi[i-1]) + sin(Phi[i]);
+        xk += cos(Phi1[i-1]) + cos(Phi1[i]);
+        yk += sin(Phi1[i-1]) + sin(Phi1[i]);
+
+        Ep -= y;
+        Ek += (x-xk) * (x-xk) + (y-yk) * (y-yk);
+        Er += (Phi[i] - Phi1[i]) * (Phi[i] - Phi1[i]);
+    }
+    
+    return (0.125 * Ek * D * h + 1.0/12.0*h*D * Er + 0.5 * h*h * Ep);
 }
 
 void izracunaj_silo()
@@ -125,7 +166,7 @@ void izracunaj_kot()
     
     */
     
-    pn[0] = pn[2] + h/gsl_vector_get(F,1) * cos(pn[1]);
+    pn[0] = pn[2] + 2*h/gsl_vector_get(F,1) * cos(pn[1]);
         
     Phi1 = p;
     Phi = pn;
@@ -184,7 +225,7 @@ void shrani_sliko(int frame)
         {
             exit(27);
         }
-        pen.setColor(QColor(255, 200 * gsl_vector_get(F, i), 0));
+        pen.setColor(QColor(255, 150 * gsl_vector_get(F, i), 0));
         painter->setPen(pen);
         
         currentPos = lastPos + h*QPointF(cos(Phi[i]), sin(Phi[i]));
@@ -237,7 +278,69 @@ void postopek(int n, double phi, int slike)
     }
 }
 
+void natancnost()
+{
+    int iteracije = 10000;
+    const double phi = 1.0;
+    
+    int delitve[] = {10, 20, 30, 50, 75, 100, 200, 300, 500, 750, 1000, 0};
+    
+    std::ofstream f("g_natancnost_delitve.dat");
+    
+    for (int i = 0; delitve[i]; ++i)
+    {
+        zacetni_pogoj(delitve[i], phi);
+        
+        int iter = 0;
+        while (iter < iteracije)
+        {
+            izracunaj_silo();
+            izracunaj_kot();
+            ++iter;
+        }
+        
+        double x, y;
+        polozaj_repa(x, y);
+        f << delitve[i] << " " << x << " " << y << " " << energija() << std::endl;
+    }
+    
+    f.close();
+}
+
+void ohranitev_energije()
+{
+    int iteracije = 100000;
+    int IterationsPerEnergy = 100;
+    const double phi = 1.0;
+    
+    int delitve[] = {10, 30, 100, 300, 1000, 0};
+    char buf[32];
+    
+    for (int i = 0; delitve[i]; ++i)
+    {
+        sprintf(buf, "g_energija_%d.dat", delitve[i]);
+        std::ofstream f(buf);
+        zacetni_pogoj(delitve[i], phi);
+        
+        f << "# Should be: E_0 = " << -sin(phi) / 2 << std::endl;
+        
+        int iter = 0;
+        while (iter < iteracije)
+        {
+            if (iter % IterationsPerEnergy == 0)
+            {
+                f << iter << " " << energija() << std::endl;
+            }
+            izracunaj_silo();
+            izracunaj_kot();
+            
+            ++iter;
+        }
+    }
+}
+
 int main(int argc, char **argv) {
+    /*
     QApplication app(argc, argv);
     int cleni = argc > 1 ? atoi(argv[1]) : 100;
     double kot = argc > 2 ? atof(argv[2]) : 0.9;
@@ -245,5 +348,9 @@ int main(int argc, char **argv) {
     ImageFileNameFormat = argc > 4 ? argv[4] : "g_frame_%1.jpg";
     
     postopek(cleni, kot, slike);
+    */
+    
+    // natancnost();
+    ohranitev_energije();
     return 0;
 }

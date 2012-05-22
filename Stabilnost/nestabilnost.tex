@@ -127,6 +127,7 @@ Hitro vidimo, da bo tok nestabilen, "ce ima vsaj ena lastna vrednost $s_i$ realn
 Tak"sna poenostavitev velja le za majhne motnje. "Ce je sistem nestabilen in se motnja s "casom pove"ca, bo po nekem "casu presegla mejo, kjer je lineariziran pribli"zek "se smiselen. Tedaj moramo v ena"cbi upo"stevati tudi vi"sje "clene, zato le-ta ni ve"c linearna. 
 
 \subsection{Lubrikacijski pribli"zek}
+\label{sec:lubrikacijski-priblizek}
 
 V geometrijah, kjer je ena izmed dimenzij mnogo manj"sa od ostalih, si lahko gibalne ena"cbe poenostavimo z lubrikacijskim pribli"zkom (angl. lubrication approximation). Odvisnost od te koordinate lahko izlo"cimo in s tem zmanj"samo "stevilo spremenljivk v Navier-Stokesovi ena"cbi. 
 
@@ -145,7 +146,9 @@ Poleg izpu"s"canja "clenov v ena"cbi pa nam tanka plast teko"cine omogo"ca "se e
  \vec u(x,y) &=  \frac{1}{h}\int_0^h \vec u(x,y,z)\dd z
 \end{align}
 
-kjer je $h = h(x,y)$ debelina plasti na mestu $(x,y)$. Ohranitev mase da zvezo med $h$ in $\vec u$
+kjer je $h = h(x,y)$ debelina plasti na mestu $(x,y)$. 
+
+Ohranitev mase da zvezo med $h$ in $\vec u$
 
 \begin{align}
   \frac{\partial h}{\partial t} + \nabla\cdot(h\vec u) = 0
@@ -153,7 +156,7 @@ kjer je $h = h(x,y)$ debelina plasti na mestu $(x,y)$. Ohranitev mase da zvezo m
 
 s "cimer lahko Navier-Stokesove ena"cbe zapi"semo za spremenljivko $h(x,y,t)$. Namesto "stirih skalarnih koli"cin $\vec u$ in $p$ v poenostavljeni ena"cbi nastopa le ena koli"cina, kar olaj"sa re"sevanje. Za ugotavljanje stabilnosti tanke plasti teko"cine je torej dovolj re"sevati ena"cbo z eno samo skalarno spremenljivko. 
 
-S tem korakom seveda izgubimo del informacije o re"sitvi. Hitrostni profil v smeri $z$ pa v ve"cini primerov lahko vsaj pribli"zno rekonstruiramo. Z upo"stevanjem zgornjih pribli"zkov se ena"cbe v smeri $z$ poenostavi v Laplaceovo ena"cbo, tako da je odvisnost $u(z)$ premica ali parabola, odvisno od robnih pogojev. 
+S tem korakom seveda izgubimo del informacije o re"sitvi. Hitrostni profil v smeri $z$ pa v ve"cini primerov lahko vsaj pribli"zno rekonstruiramo. Z upo"stevanjem zgornjih pribli"zkov se ena"cba v smeri $z$ poenostavi v Laplaceovo ena"cbo, tako da je odvisnost $u(z)$ premica ali parabola, odvisno od robnih pogojev. Ta rekonstrukcija pa za dolo"canje nestabilnosti ni pomembna, zato v tem seminarju ni nikjer prikazana. 
 
 \section{Teko"cina na klancu}
 
@@ -285,7 +288,7 @@ Tok neviskozne in nestisljive teko"cine opisuje Eulerjeva ena"cba
  \odv{\vec v} + (\vec v \cdot \nabla)\vec v = - \nabla p
 \end{equation}
 
-Za tanko opno smemo uporabiti lubrikacijski pribli"zek, tako da ohranitev prostornine v brezdimenzijski obliki zapi"semo kot
+Za tanko opno smemo uporabiti lubrikacijski pribli"zek. Pri tem moramo paziti, saj ena izmed predpostavk za uporabo pribli"zka za prosto tanko opno ne velja. Teko"cina je na obeh straneh v stiku le z zrakom, zato se na mejah lahko prosto giblje. Ni nobenega razloga za spreminjanje hitrosti ali tlaka v smeri $z$, zato lahko predpostavimo, da sta konstantna. To predpostavko prikazuje tudi slika ~\ref{fig:mehurcek-skica}. V tem primeru torej gradient v smeri $z$ ni najve"cji, ampak je celo enak ni"c. Ne moremo uporabiti vseh poenostavitev iz poglavja \ref{sec:lubrikacijski-priblizek}, vseeno pa lahko uporabimo zamenjavo spremenljivk, tako da ohranitev prostornine v brezdimenzijski obliki zapi"semo kot
 
 \begin{equation}
 \label{eq:meh-ohranitev}
