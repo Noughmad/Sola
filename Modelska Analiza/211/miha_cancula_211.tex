@@ -50,9 +50,23 @@ Gibanje vrvice sem ra"cunal v korakih. Vsak korak je sestavljen iz dveh delov:
 
 V ena"cbah nastopa drugi "casovni odvod $\parcdva{\phi}{t}$, zato sem v spominu vedno shranjeval trenutno in prej"snjo vrednosti $\phi$. Po drugi strani pa nikjer ne nastopa "casovni odvod sile, zato mi je ni bilo treba shranjevati med koraki, ampak sem jo potreboval le na prehodu od 1. do 2. dela koraka. 
 
+\subsection{Za"cetni pogoj}
+
+Najenostavnej"sa izbiri za za"cetni pogoj je oblike $\phi(s,0) = \phi_0$, kar predstavlja ravno vrv. Za simulacijo pa to ni dober za"cetni pogoj, saj tak"sno obliko vrvi dobimo le, "ce je vrv napeta z neskon"cno silo. Zelo velika sila v vrvi pa povzro"ci napake v numeri"cnem ra"cunu. Zato sem raje izbral bolj fizikalne robne pogoje, torej vrv v obliki veri"znice. Ena"cba veri"znice v na"sih koordinatah se glasi
+
+\begin{align}
+  y &= y_0 + C \cdot \cosh \left(\frac{x-a}{C}\right) \\
+  \phi &= \arctan \left(\parcialno{y}{x}\right) = \arctan \sinh\left(\frac{x-a}{C}\right) \\
+  \phi &= \arctan \sinh\left(\frac{x-a}{C}\right)
+\end{align}
+
+Konstante $y_0$, $C$ in $a$ si izberemo tako, da zadostimo pogoju $y(x=0) = 0$. Druga dva pogoj si lahko izberemo poljubno, dolo"cata pa za"cetni naklon in napetost vrvi. Ravni vrvi se pribli"zamo, 
+
+
+
 \subsection{Izra"cun sile v vrvi}
 
-Za"cetni pogoj nam dolo"ca, da je vrv na za"cetku ravna, torej je $\phi(s, t=0) = \phi_0$. S tem imamo podan naklon vrvi po celotni dol"zini, o sili v njej pa ne vemo ni"c. Zato najprej izra"cunamo silo s pomo"cjo ena"cbe (\ref{eq:sila}). 
+Za"cetni pogoj nam dolo"ca, naklon vrvi po celotni dol"zini, o sili v njej pa ne vemo ni"c. Zato najprej izra"cunamo silo s pomo"cjo ena"cbe (\ref{eq:sila}). 
 
 \begin{align}
  \label{eq:sila}
@@ -197,9 +211,11 @@ Energija ima "se to prednost, da njeno za"cetno vrednost lahko izra"cunamo anali
  E(0) &= - m g \frac{l}{2} \sin \phi(0)
 \end{align}
 
+\begin{comment}
 \begin{figure}
  \input{g_energija}
 \end{figure}
 
+\end{comment}
 
 \end{document}

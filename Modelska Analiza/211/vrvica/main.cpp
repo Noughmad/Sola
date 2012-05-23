@@ -75,16 +75,30 @@ void polozaj_repa(double& x, double& y)
     y *= h;
 }
 
-double energija()
+struct energy_t
+{
+    double potencialna;
+    double kineticna;
+    double rotacijska;
+};
+
+std::ostream& operator<<(std::ostream& stream, const energy_t& energy)
+{
+    stream << energy.potencialna << " " << energy.kineticna << " " << energy.rotacijska;
+    return stream;
+}
+
+energy_t energija()
 {   
     double x = cos(Phi[0]);
     double y = sin(Phi[0]);
     double xk = cos(Phi1[0]);
     double yk = sin(Phi1[0]);
     
-    double Ep = -y;
-    double Ek = (x-xk) * (x-xk) + (y-yk) * (y-yk);
-    double Er = (Phi[0] - Phi1[0]) * (Phi[0] - Phi1[0]);
+    energy_t E;
+    E.potencialna = -y;
+    E.kineticna = (x-xk) * (x-xk) + (y-yk) * (y-yk);
+    E.rotacijska = (Phi[0] - Phi1[0]) * (Phi[0] - Phi1[0]);
         
     for (int i = 1; i < StClenov; ++i)
     {
@@ -93,12 +107,19 @@ double energija()
         xk += cos(Phi1[i-1]) + cos(Phi1[i]);
         yk += sin(Phi1[i-1]) + sin(Phi1[i]);
 
-        Ep -= y;
-        Ek += (x-xk) * (x-xk) + (y-yk) * (y-yk);
-        Er += (Phi[i] - Phi1[i]) * (Phi[i] - Phi1[i]);
+        E.potencialna -= y;
+        E.kineticna += (x-xk) * (x-xk) + (y-yk) * (y-yk);
+        E.rotacijska += (Phi[i] - Phi1[i]) * (Phi[i] - Phi1[i]);
+        
+        std::cout << E << std::endl;
     }
     
-    return (0.125 * Ek * D * h + 1.0/12.0*h*D * Er + 0.5 * h*h * Ep);
+    E.potencialna *= 0.5 * h * h;
+    E.kineticna *= 0.125 * D * h;
+    E.rotacijska *= 1.0/12.0 * h * D;
+
+    std::cout << E << std::endl;
+    return E;
 }
 
 void izracunaj_silo()
@@ -183,10 +204,18 @@ void zacetni_pogoj(int n, double phi_0)
     
     Phi = new double[StClenov];
     Phi1 = new double[StClenov];
+    
+    double x = 0;
+    
+    double c = 0.7;
+    double a = 1;
+    double bb = -c * cosh((x-a)/c);
     for (int i = 0; i < StClenov; ++i)
     {
-        Phi[i] = phi_0;
-        Phi1[i] = phi_0;
+        Phi[i] = -atan(sinh((x-a)/c));
+        Phi1[i] = Phi[i];
+        
+        x += h*cos(Phi[i]);
     }
     
     pn = new double[StClenov];
@@ -309,11 +338,11 @@ void natancnost()
 
 void ohranitev_energije()
 {
-    int iteracije = 100000;
-    int IterationsPerEnergy = 100;
+    int iteracije = 10000;
+    int IterationsPerEnergy = 1;
     const double phi = 1.0;
     
-    int delitve[] = {10, 30, 100, 300, 1000, 0};
+    int delitve[] = {10, 30, 100, 0};
     char buf[32];
     
     for (int i = 0; delitve[i]; ++i)
@@ -342,6 +371,8 @@ void ohranitev_energije()
 int main(int argc, char **argv) {
     /*
     QApplication app(argc, argv);
+    
+    
     int cleni = argc > 1 ? atoi(argv[1]) : 100;
     double kot = argc > 2 ? atof(argv[2]) : 0.9;
     int slike = argc > 3 ? atoi(argv[3]) : 1000;
@@ -350,7 +381,11 @@ int main(int argc, char **argv) {
     postopek(cleni, kot, slike);
     */
     
-    // natancnost();
-    ohranitev_energije();
+    zacetni_pogoj(20, 1.0);
+    izracunaj_silo();
+    izracunaj_kot();
+    
+    energija();
+    
     return 0;
 }
