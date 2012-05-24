@@ -161,17 +161,11 @@ Pogoj uporabimo ob "casu, za katerega ra"cunamo naklon vrvi, torej $\phi_i = \ph
 
 \section{Rezultati}
 
-Nihanje vrvice je najla"zje prikazat z animacijo. Re"sitvi prilagam tri animacije, ki se razlikujejo po za"cetnemu kotu vrvice. V vseh treh primerih sem uporabil simuliral nihanje vrvice s 100 odseki in "casovnim korakom $4 \cdot 10^{-6}$ v brezdimenzijskih enotah. V eni sekundi simulacije je $2.5 \cdot 10^5$ korakov, kar ustreza nihanju vrvice s karakteristi"cnim "casom $\tau = 1\mathrm{s}$. 
+Nihanje vrvice je najla"zje prikazat z animacijo. Re"sitvi prilagam tri animacije, ki se razlikujejo po za"cetnemu kotu vrvice. V vseh treh primerih sem uporabil simuliral nihanje vrvice s 100 odseki in "casovnim korakom $10^{-5}$ v brezdimenzijskih enotah. V eni sekundi simulacije je ravno $10^5$ korakov, kar ustreza nihanju vrvice s karakteristi"cnim "casom $\tau = 1\mathrm{s}$. 
 
-\section{Natan"cnost}
+Poleg polo"zaja vrvi sem posku"sal prikazati tudi silo v vrvi. Ta je v animacija ozna"cena z barvo. Rde"ca barva ustreza sili $F=0$, medtem ko rumena pomeni silo $F=1$. Zaradi centripetalne sile lahko sila na za"cetku vrvi tudi prese"ze vrednost 1, zato sem prispevek ustrezno skaliral. Izkazalo se je, da pri izbranih za"cetnih pogojih sila nikoli ne prese"ze vrednosti 5/4, tako da sem za barvne komponente RGB izbral (255, 200*F, 0). 
 
-Natan"cnost metod sem opazoval tako, da sem spreminjal "stevilo odsekov vrvi in velikost "casovnega koraka. 
-
-\subsection{Polo"zaj repa}
-
-Med nihanjem vrvi se najhitreje spreminja polo"zaj prostega konca vrvi. "Ze zaradi kro"zenja okrog prijemali"s"ca je hitrost najve"cja na koncu vrvi, poleg tega pa se v bli"zini prostega konca pojavijo tudi manj"sa nihanja z ve"cjimi frekvencami. Zlasti zaradi teh nihanj se mi je zdelo gibanje konca vrvi najprimernej"sa metoda za dolo"canje natan"cnosti metode. 
-
-\subsection{Ohranitev energije}
+\section{Energija vrvi}
 
 Ker shema integracije sama po sebi ne ohranja skupne energije vrvi, je spreminjanje energije s "casom primeren kriterij za dolo"canje natan"cnosti. V nihanjo"ci vrvi imamo kineti"cno in potencialno energijo, medtem ko se pri neraztegljivi vrvice pro"znostna ne spreminja. Kineti"cno energijo vsakega odseka lahko razdelimo na translacijsko in rotacijsko. 
 
@@ -205,17 +199,51 @@ Izraza za polo"zaj $i$-tega odseka vrvi lahko prepi"semo v rekurzivno formulo
 
 po kateri lahko celotno energijo izra"cunamo z enim prehodom po podatki in v linearnem "casu. 
 
-Energija ima "se to prednost, da njeno za"cetno vrednost lahko izra"cunamo analiti"cno. Na za"cetku vrvica nima kineti"cne energije, njena potencialna energija pa je enaka
+\subsection{Za"cetno stanje}
 
-\begin{align}
- E(0) &= - m g \frac{l}{2} \sin \phi(0)
-\end{align}
+"Ce ra"cunamo energijo nihanja na za"cetku, po enem ali dveh "casovnih korakih, naletimo na te"zavo. Stanje vrvi, ki ga opisuje za"cetni pogoj, ni fizikalno. Ravna vrv nikakor ne zadostuje pogoju (\ref{eq:kot-zacetni-pogoj}), saj je $\parcialno{\phi}{s}=0$ sila kon"cna, kosinus kota pa neni"celen. 
 
-\begin{comment}
-\begin{figure}
- \input{g_energija}
+Za izvajanje simulacije to ni velika ovira. Podobne primere smo re"sevali "ze ve"ckrat, med drugim tudi pri prej"snji nalogi, ko je imelo dno valja druga"cno temperaturo kot pla"s"c, torej rob valja ni mogel ustrezati obema pogojema. Vseeno pa smo ena"cbo lahko re"sili brez velikih ovir. Situacija je tu malo druga"cna, saj je eden izmed pogojev robni, drugi pa za"cetni. Za re"sevanje je to morda celo prednost; "Casovni razvoj re"sitve "ze sam poskrbi, da vrvica hitro preide v fizikalno stanje, kjer velja robni pogoj (\ref{eq:kot-zacetni-pogoj}). V tem prehodnem obdobju se zgodi hitra sprememba kota prvega odseka vrvi, kar posledi"cno premakne celotno vrv in prinese zelo visoko kineti"cno energijo. 
+
+\begin{figure}[H]
+ \input{g_energija_zacetek}
+ \caption{Spreminjanje skupne kineti"cne energije takoj po za"cetku simulacije. Viden je skok na za"cetku, vrnitev k pri"cakovani vrednosti, nato pa po"casno nara"s"canje, ki je posledica pretvorbe potencialne energije v kineti"cno. }
+ \label{fig:energija-zacetek}
 \end{figure}
 
-\end{comment}
+Na sre"co pa je to prehodno obdobje kratko, pri dovolj fini diskretizaciji se fizikalno stanje vzpostavi "ze po treh "casovnih korakih. Takrat v nobeni ena"cbe ne nastopa ve"c eksplicitno za"cetni pogoj. Za bolj grobe diskretizacije ($J < 100$) vzpostavitev robnega pogoja traja dlje, ampak tudi pri $J=10$ traja le 6 korakov. 
+
+Ohranitev energije sem preverjal tako, da sem kot za"cetno stanje vzel energijo vrvi po 10 korakih. 
+
+\subsection{"Stevilo odsekov}
+
+Najprej sem opazoval, kaj se dogaja z ohranitvijo energije pri razli"cnih "stevilih odsekov. Rezultat je na sliki ~\ref{fig:energija-odseki}. 
+
+\begin{figure}[H]
+ \input{g_energija}
+ \caption{Odstopanje energije pri razli"cnih "stevilih odsekov vrvi in "casovnim korakom $k = 10^{-5}$}
+ \label{fig:energija-odseki}
+\end{figure}
+
+Po pri"cakovanju finej"sa delitev vrvi povzro"ci manj"se odstopanje energije. U"cinek ve"canja "stevila odsekov je bolje viden na logaritemskem grafu na sliki~\ref{fig:energija-odseki-log}. Tu vidimo, da je povpre"cna napaka pribli"zno sorazmerna z dol"zino enega odseka. 
+
+\begin{figure}[H]
+ \input{g_energija_log}
+ \caption{Odstopanje energije pri razli"cnih "stevilih odsekov vrvi in "casovnim korakom $k = 10^{-5}$}
+ \label{fig:energija-odseki-log}
+\end{figure}
+
+\subsection{"Casovni korak}
+\label{sec:casovni-korak}
+
+Logi"cno se zdi, da na odstopanje energije vpliva tudi velikost "casovnega koraka. 
+
+\begin{figure}[H]
+ \input{g_energija_korak}
+ \caption{Odstopanje energije pri razli"cnih "casovnih korakih in delitvijo na $J=100$ odsekov}
+ \label{fig:energija-korak}
+\end{figure}
+
+Vidimo, da dol"zina koraka nima velikega vpliva na spremembe energije. Izjema so le koraki, dalj"si od $10^{-3}$. V tistem primeru se integracijska shema podre, saj v za"cetnih korakih prekora"cimo meje strojne natan"cnosti. Dodatno zmanj"sevanje koraka pod to mejo pa ima veliko manj"si vpliv na napako energije kot pove"cevanje "stevila odsekov vrvi. 
 
 \end{document}

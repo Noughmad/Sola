@@ -23,13 +23,13 @@ QString ImageFileNameFormat;
 
 int StClenov;
 int StClenovMinusDva;
-double k = 4e-6;
+double k = 1e-5;
 double h;
 
 double C; // C = k*k/h/h
 double D; // D = h*h/k/k
 
-const int IterationsPerFrame = 1e4;
+const int IterationsPerFrame = 1e5 / 25;
 
 double *Phi, *Phi1, *pn;
 gsl_vector* F;
@@ -110,15 +110,12 @@ energy_t energija()
         E.potencialna -= y;
         E.kineticna += (x-xk) * (x-xk) + (y-yk) * (y-yk);
         E.rotacijska += (Phi[i] - Phi1[i]) * (Phi[i] - Phi1[i]);
-        
-        std::cout << E << std::endl;
     }
     
     E.potencialna *= 0.5 * h * h;
     E.kineticna *= 0.125 * D * h;
     E.rotacijska *= 1.0/12.0 * h * D;
 
-    std::cout << E << std::endl;
     return E;
 }
 
@@ -336,22 +333,23 @@ void natancnost()
     f.close();
 }
 
-void ohranitev_energije()
+void zacetek_energije()
 {
-    int iteracije = 10000;
+    int iteracije = 20;
     int IterationsPerEnergy = 1;
     const double phi = 1.0;
     
-    int delitve[] = {10, 30, 100, 0};
-    char buf[32];
+    int delitve[] = {10, 30, 100, 300, 1000, 0};
+    char buf[64];
     
     for (int i = 0; delitve[i]; ++i)
     {
-        sprintf(buf, "g_energija_%d.dat", delitve[i]);
+        sprintf(buf, "g_energija_zacetek_%d.dat", delitve[i]);
         std::ofstream f(buf);
         zacetni_pogoj(delitve[i], phi);
         
         f << "# Should be: E_0 = " << -sin(phi) / 2 << std::endl;
+        f.precision(12);
         
         int iter = 0;
         while (iter < iteracije)
@@ -360,6 +358,7 @@ void ohranitev_energije()
             {
                 f << iter << " " << energija() << std::endl;
             }
+            
             izracunaj_silo();
             izracunaj_kot();
             
@@ -367,9 +366,102 @@ void ohranitev_energije()
         }
     }
 }
+void ohranitev_energije()
+{
+    int iteracije = 1e6;
+    int IterationsPerEnergy = 1e4;
+    
+    std::cout << iteracije << " " << IterationsPerEnergy << std::endl;
+    
+    const double phi = 1.0;
+    
+    int delitve[] = {10, 30, 100, 300, 1000, 0};
+    char buf[64];
+    
+    for (int i = 0; delitve[i]; ++i)
+    {
+        sprintf(buf, "g_energija_%d.dat", delitve[i]);
+        std::ofstream f(buf);
+        zacetni_pogoj(delitve[i], phi);
+        
+        f << "# Should be: E_0 = " << -sin(phi) / 2 << std::endl;
+        f.precision(12);
+                
+        for (int j = 0; j < 10; ++j)
+        {
+            izracunaj_silo();
+            izracunaj_kot();
+        }
+        
+        energy_t energy = energija();
+        double E = energy.kineticna + energy.potencialna + energy.rotacijska;
+        
+        for (int iter = 0; iter < iteracije; ++iter)
+        {
+            if (iter % IterationsPerEnergy == 0)
+            {
+                f << iter+10 << " " << energija() << " " << E << std::endl;
+            }
+            
+            izracunaj_silo();
+            izracunaj_kot();
+        }
+    }
+}
+
+void ohranitev_korak()
+{
+    int ks[] = {1, 4, 10, 40, 100, 0};
+    
+    
+    const double phi = 1.0;
+    char buf[64];
+    
+    const double T = 10.0;
+    
+    
+    for (int i = 0; ks[i]; ++i)
+    {
+        k = ks[i] * 1e-5;
+        int IterationsPerEnergy = 0.01 / k;
+        zacetni_pogoj(100, phi);
+        
+        double t = 0;
+        for (int j = 0; j < 10; ++j)
+        {
+            izracunaj_silo();
+            izracunaj_kot();
+            t += k;
+        }
+        
+        sprintf(buf, "g_energija_korak_%d.dat", ks[i]);
+        std::ofstream f(buf);
+        
+        energy_t erg = energija();
+        double E = erg.kineticna + erg.potencialna + erg.rotacijska;
+        
+        int iter = 0;
+        while (t < T)
+        {
+            if (iter % IterationsPerEnergy == 0)
+            {
+                f << t << " " << energija() << " " << E << std::endl;
+            }
+            
+            izracunaj_silo();
+            izracunaj_kot();
+            
+            ++iter;
+            t += k;
+        }
+        
+        f.close();
+    }
+    
+}
 
 int main(int argc, char **argv) {
-    /*
+    
     QApplication app(argc, argv);
     
     
@@ -379,13 +471,7 @@ int main(int argc, char **argv) {
     ImageFileNameFormat = argc > 4 ? argv[4] : "g_frame_%1.jpg";
     
     postopek(cleni, kot, slike);
-    */
     
-    zacetni_pogoj(20, 1.0);
-    izracunaj_silo();
-    izracunaj_kot();
-    
-    energija();
     
     return 0;
 }
