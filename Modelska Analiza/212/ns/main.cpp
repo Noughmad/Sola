@@ -88,8 +88,7 @@ vy(n,n)
 {
     h = 1.0 / (N-1);
     k = h / 3.0;
-    // omega = 2.0/(1+M_PI/N);
-    omega = 1;
+    omega = 2.0/(1+M_PI/N);
     zacetni_pogoj();
 }
 
@@ -253,7 +252,7 @@ void NsWorkspace::izracunaj_psi()
     {
         eps = korak_psi();
     }
-    while (eps > 1e-6);
+    while (eps > 1e-7);
 }
 
 void Matrix::save(const char* filename)
@@ -276,7 +275,7 @@ double postopek(int N)
     NsWorkspace workspace(N);
     workspace.R = 50;
     
-    const int IterationsPerSave = 1000;
+    const int IterationsPerSave = 100;
     const int Saves = 10;
     
     char buf[64];
@@ -296,6 +295,6 @@ double postopek(int N)
 }
 
 int main(int argc, char **argv) {
-    postopek(30);
+    postopek(40);
     return 0;
 }
