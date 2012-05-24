@@ -1,44 +1,38 @@
 #include <iostream>
 #include <fstream>
 
-#include <gsl/gsl_matrix.h>
-#include <gsl/gsl_vector.h>
-
 #include <math.h>
 
 class Matrix
 {
 public:
-    Matrix(size_t n1, size_t n2);
+    Matrix(int n);
     ~Matrix();
     
-    inline double get(int i, int j);
-    inline void set(int i, int j, double v);
+    inline const double& get(int i, int j) const
+    {
+        return data[i*n+j];
+    }
+    inline void set(int i, int j, double v)
+    {
+        data[i*n+j] = v;
+    }
     
     void save(const char* filename);
         
 private:
-    gsl_matrix* m;
+    int n;
+    double* data;
 };
 
-Matrix::Matrix(size_t n1, size_t n2) : m(gsl_matrix_alloc(n1, n2))
+Matrix::Matrix(int n) : n(n), data(new double[n*n])
 {
 
 }
 
 Matrix::~Matrix()
 {
-    gsl_matrix_free(m);
-}
-
-double Matrix::get(int i, int j)
-{
-    return gsl_matrix_get(m, i, j);
-}
-
-void Matrix::set(int i, int j, double v)
-{
-    gsl_matrix_set(m, i, j, v);
+    delete[] data;
 }
 
 struct NsWorkspace
@@ -81,13 +75,13 @@ struct NsWorkspace
 
 NsWorkspace::NsWorkspace(int n) : 
 N(n),
-Psi(n,n),
-Zeta(n,n),
-vx(n,n),
-vy(n,n)
+Psi(n),
+Zeta(n),
+vx(n),
+vy(n)
 {
     h = 1.0 / (N-1);
-    k = h / 3.0;
+    k = h / 10.0;
     omega = 2.0/(1+M_PI/N);
     zacetni_pogoj();
 }
@@ -187,7 +181,6 @@ void NsWorkspace::izracunaj_zeta()
             if (isnan(Zeta.get(i,j)))
             {
                 std::cout << " NaN: " << i << ", " << j << std::endl;
-                exit(-4);
             }
         }
     }
@@ -258,9 +251,9 @@ void NsWorkspace::izracunaj_psi()
 void Matrix::save(const char* filename)
 {
     std::ofstream stream(filename);
-    for (int i = 0; i < m->size1; ++i)
+    for (int i = 0; i < n; ++i)
     {
-        for (int j = 0; j < m->size2; ++j)
+        for (int j = 0; j < n; ++j)
         {
             stream << get(i,j) << " ";
         }
@@ -275,7 +268,7 @@ double postopek(int N)
     NsWorkspace workspace(N);
     workspace.R = 50;
     
-    const int IterationsPerSave = 100;
+    const int IterationsPerSave = 1000;
     const int Saves = 10;
     
     char buf[64];
@@ -295,6 +288,6 @@ double postopek(int N)
 }
 
 int main(int argc, char **argv) {
-    postopek(40);
+    postopek(50);
     return 0;
 }
