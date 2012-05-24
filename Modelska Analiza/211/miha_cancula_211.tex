@@ -32,7 +32,7 @@
 }
 \newcommand{\lag}{\mathcal{L}}
 
-\title{Direktno re\v sevanje Poissonove ena\v cbe}
+\title{Gibanje neraztegljive vrvice}
 \author{Miha \v Can\v cula}
 \begin{document}
 
@@ -49,20 +49,6 @@ Gibanje vrvice sem ra"cunal v korakih. Vsak korak je sestavljen iz dveh delov:
 "Casovni korak vsebuje le druga ena"cba, medtem ko je prva le pomo"zna. Za"cetni pogoj nam dolo"ca pogoje prvega dela, zato za"cnemo s tem, nato pa izmeni"cno izvajamo oba. 
 
 V ena"cbah nastopa drugi "casovni odvod $\parcdva{\phi}{t}$, zato sem v spominu vedno shranjeval trenutno in prej"snjo vrednosti $\phi$. Po drugi strani pa nikjer ne nastopa "casovni odvod sile, zato mi je ni bilo treba shranjevati med koraki, ampak sem jo potreboval le na prehodu od 1. do 2. dela koraka. 
-
-\subsection{Za"cetni pogoj}
-
-Najenostavnej"sa izbiri za za"cetni pogoj je oblike $\phi(s,0) = \phi_0$, kar predstavlja ravno vrv. Za simulacijo pa to ni dober za"cetni pogoj, saj tak"sno obliko vrvi dobimo le, "ce je vrv napeta z neskon"cno silo. Zelo velika sila v vrvi pa povzro"ci napake v numeri"cnem ra"cunu. Zato sem raje izbral bolj fizikalne robne pogoje, torej vrv v obliki veri"znice. Ena"cba veri"znice v na"sih koordinatah se glasi
-
-\begin{align}
-  y &= y_0 + C \cdot \cosh \left(\frac{x-a}{C}\right) \\
-  \phi &= \arctan \left(\parcialno{y}{x}\right) = \arctan \sinh\left(\frac{x-a}{C}\right) \\
-  \phi &= \arctan \sinh\left(\frac{x-a}{C}\right)
-\end{align}
-
-Konstante $y_0$, $C$ in $a$ si izberemo tako, da zadostimo pogoju $y(x=0) = 0$. Druga dva pogoj si lahko izberemo poljubno, dolo"cata pa za"cetni naklon in napetost vrvi. Ravni vrvi se pribli"zamo, 
-
-
 
 \subsection{Izra"cun sile v vrvi}
 
