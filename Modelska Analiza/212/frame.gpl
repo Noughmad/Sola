@@ -1,0 +1,4 @@
+set output sprintf("g_tok_%d_%.3d.png", R, i)
+splot sprintf("g_tok_%d_%d.dat", R, i) matrix with lines lc rgb #000000
+i = i+1
+if(i < n) reread

@@ -25,6 +25,10 @@ public:
     }
     
     double interpolate(double x, double y) const;
+    inline double laplace(int i, int j)
+    {
+        return get(i+1,j) + get(i-1, j) + get(i, j+1) + get(i, j-1) - 4 * get(i,j);
+    }
     
     void save(const char* filename);
     
@@ -96,6 +100,7 @@ bool Matrix::isValid()
         if (isnan(data[i]) || isinf(data[i]))
         {
             std::cout << "Nan v elementu " << i << std::endl;
+            save("error.dat");
             return false;
         }
     }
@@ -112,6 +117,10 @@ struct NsWorkspace
     inline void korak(int i)
     {
         izracunaj_zeta();
+        if (!Zeta.isValid())
+        {
+            Psi.save("psi_error.dat");
+        }
         
         CHECK_VALID(Zeta)
         
@@ -148,9 +157,11 @@ struct NsWorkspace
     
     inline void popravi_psi(int i, int j, double eps, double* vsota)
     {
-        Psi.set(i, j, Psi.get(i,j) + eps * 0.25 * omega);
+        tmp.set(i, j, Psi.get(i,j) + eps * 0.25 * omega);
         *vsota += eps * eps;
     }
+    
+    double sila();
     
     int N;
     double k;
@@ -171,8 +182,8 @@ tmp(n),
 R(R)
 {
     h = 1.0 / (double)(N-1);
-    k = h / 1000.0;
-    omega = 2.0/(1+M_PI/N);
+    k = h / std::max(30.0, 400/R);
+    omega = 1.0/(1+M_PI/N);
     std::cout << "Omega = " << omega << ", h = " << h << ", k = " << k << std::endl;
     zacetni_pogoj();
 }
@@ -201,44 +212,21 @@ void NsWorkspace::zacetni_pogoj()
         }
     }
     
-    // Zgonja plosca
-    
+    // Spodnja plosca
     for (int i = 0; i < N; ++i)
     {
-        vx.set(i, 0, 1);
+        vx.set(i, 0, -1);
     }
-    
-    /*
-     * Na zacetku predpostavimo nekaj enostavnega, a se vedno dovolj smiselnega
-     * 
-     * * Vrtinec na sredini opisemo kot vrh hitrostnega potenciala Psi
-     * * Hitrost izracunamo iz psi
-     * * Vrtincnost lahko izrazimo neposredno iz hitrosti
-     */
-    
-    /*
-    
-    for (int i = 0; i < N; ++i)
-    {
-        for (int j = 0; j < N; ++j)
-        {
-            Psi.set(i, j, sin(M_PI * i / N) * sin(M_PI * j / N));
-        }
-    }
-    
-    izracunaj_v();
     
     for (int i = 1; i < N-1; ++i)
     {
-        for (int j = 1; j < N-1; ++j )
+        for (int j = 1; j < N-1; ++j)
         {
-            double udy = vx.get(i, j+1) - vx.get(i, j-1);
-            double vdx = vy.get(i+1, j) - vy.get(i-1, j);
-            Zeta.set(i, j, 0.5 / h * (udy - vdx));
+            double uzy = vx.get(i, j+1) - vx.get(i, j-1);
+            double vzx = vx.get(i+1, j) - vx.get(i-1, j);
+            Zeta.set(i, j, (uzy - vzx) / h / 2);
         }
     }
-    
-    */
 }
 
 
@@ -250,11 +238,16 @@ void NsWorkspace::izracunaj_zeta()
     {
         for (int j = 1; j < N-1; ++j)
         {
-            vzy = (Zeta.get(i+1,j) * vy.get(i+1,j) - Zeta.get(i-1,j) * vy.get(i-1,j)) / 2;
-            uzx = (Zeta.get(i,j+1) * vx.get(i,j+1) - Zeta.get(i,j-1) * vx.get(i,j-1)) / 2;
-            nbz = ( -4 * Zeta.get(i,j) + Zeta.get(i-1,j) + Zeta.get(i+1,j) + Zeta.get(i,j-1) + Zeta.get(i,j+1) ) / h;
-        
-            tmp.set(i, j, Zeta.get(i,j) - k / h * (uzx + vzy - nbz / R ));
+            uzx = (Zeta.get(i+1,j) * vx.get(i+1,j) - Zeta.get(i-1,j) * vx.get(i-1,j)) / 2;
+            vzy = (Zeta.get(i,j+1) * vy.get(i,j+1) - Zeta.get(i,j-1) * vy.get(i,j-1)) / 2;
+            nbz = Zeta.laplace(i,j) / h;
+                   
+            tmp.set(i, j, Zeta.get(i,j) - k / h * (uzx + vzy - nbz / R));
+            
+            if (isnan(tmp.get(i,j)))
+            {
+                std::cout << vzy * k / h << " " << uzx * k / h << " " << k * nbz / h << " "  << Zeta.get(i,j) << std::endl;
+            }
         }
     }
     
@@ -267,15 +260,16 @@ void NsWorkspace::izracunaj_zeta()
     }
     
     // Robni pogoji: Enacba (10) v navodilih
+    
+    for (int j = 0; j < N; ++j)
+    {
+        Zeta.set(0, j, 2.0/h/h * Psi.get(1, j) - h * vy.get(0, j));
+        Zeta.set(N-1, j, 2.0/h/h * Psi.get(N-2, j) - h* vy.get(N-1, j));
+    }
     for (int i = 0; i < N; ++i)
     {
         Zeta.set(i, 0, 2.0/h/h * (Psi.get(i, 1) - h * vx.get(i, 0)));
         Zeta.set(i, N-1, 2.0/h/h * Psi.get(i, N-2) - h * vx.get(i, N-1));
-    }
-    for (int j = 0; j < N; ++j)
-    {
-        Zeta.set(0, j, 2.0/h/h * Psi.get(1, j));
-        Zeta.set(N-1, j, 2.0/h/h * Psi.get(N-2, j));
     }
 }
 
@@ -285,8 +279,8 @@ void NsWorkspace::izracunaj_v()
     {
         for (int j = 1; j < N-1; ++j)
         {
-            vx.set(i, j, (Psi.get(i+1,j) - Psi.get(i-1,j)) / 2 / h);
-            vy.set(i, j, (Psi.get(i,j+1) - Psi.get(i,j-1)) / 2 / h);
+            vx.set(i, j, (Psi.get(i,j+1) - Psi.get(i,j-1)) / 2 / h);
+            vy.set(i, j, -(Psi.get(i+1,j) - Psi.get(i-1,j)) / 2 / h);
         }
     }
     
@@ -304,20 +298,18 @@ double NsWorkspace::korak_psi()
     // Lihe tocke v notranjosti
     for (int i = 1; i < N-1; ++i)
     {
-        for (int j = 1+(i%2); j < N-1; j += 2)
+        for (int j = 1; j < N-1; ++j)
         {
-            double eps = Psi.get(i+1, j) + Psi.get(i-1, j) + Psi.get(i, j+1) + Psi.get(i, j-1) - 4*Psi.get(i, j) - h*h*Zeta.get(i,j);
+            double eps = Psi.laplace(i, j) - h*h*Zeta.get(i,j);
             popravi_psi(i, j, eps, &popravek);
         }
     }
     
-    // Sode tocke v notranjosti
     for (int i = 1; i < N-1; ++i)
     {
-        for (int j = 2-(i%2); j < N-1; j += 2)
+        for (int j = 1; j < N-1; ++j)
         {
-            double eps = Psi.get(i+1, j) + Psi.get(i-1, j) + Psi.get(i, j+1) + Psi.get(i, j-1) - 4*Psi.get(i, j) - h*h*Zeta.get(i,j);
-            popravi_psi(i, j, eps, &popravek);
+            Psi.set(i, j, tmp.get(i,j));
         }
     }
     
@@ -327,6 +319,8 @@ double NsWorkspace::korak_psi()
      * 
      * Podobno kot pri racunu Zeta se robne tocke s casom ne spreminjajo. 
      */
+    
+    // std::cout << "Popravek: " << popravek << " " << omega << std::endl;
     return popravek;
 }
 
@@ -350,9 +344,14 @@ void NsWorkspace::izracunaj_psi()
         ++i;
         eps = korak_psi();
         
+        if (isnan(eps) || isinf(eps))
+        {
+            exit(64);
+        }
+        
       //  std::cout << "Popravek " << i << " : " << eps << std::endl;
     }
-    while (eps > 1e-6 && i < 1000);
+    while (eps > 1e-8);
 }
 
 void Matrix::save(const char* filename)
@@ -397,64 +396,64 @@ NsWorkspace* razdeli_mrezo(const NsWorkspace* stari, int n)
     return novi;
 }
 
-double postopek(int N, double R)
+double NsWorkspace::sila()
+{
+    double F = 0;
+    for (int i = 0; i < N; ++i)
+    {
+        F -= vx.get(i, 0) - vx.get(i, 1);
+    }
+        
+    return F;
+}
+
+
+double postopek(int stopnje[], int N, double R)
 {
     NsWorkspace* workspace = new NsWorkspace(10, R);
     
-    const int IterationsPerSave = 1e5;
-    const int Saves = 10;
+    const int IterationsPerSave = 200;
+    const int Saves = 200;
     
-    const int Iterations = 1e4;
+    const int Iterations = 1 * std::max(1.0, 100.0/R);
     
     char buf[64];
-
-    for (int n = workspace->N; n < N; n = 2*n-2)
+    
+    for (int s = 0; s < Saves; ++s)
     {
-        for (int i = 0; i < Iterations; ++i)
-        {   
+        for (int i = 0; stopnje[i]; ++i)
+        {
+            workspace = razdeli_mrezo(workspace, stopnje[i]);
+            
+            for (int j = 0; j < Iterations * stopnje[i]; ++j)
+            {
+                workspace->korak(j);
+            }
+        }
+        
+        workspace = razdeli_mrezo(workspace, N);
+        
+        for (int i = 0; i < IterationsPerSave; ++i)
+        {
             workspace->korak(i);
         }
         
-        sprintf(buf, "g_po_%d.dat", n);
+        sprintf(buf, "g_tok_%g_%d.dat", R, s);
         workspace->shrani(buf);
+        sprintf(buf, "g_zeta_%g_%d.dat", R, s);
+        workspace->Zeta.save(buf);
+        std::cout << "Shranil " << buf << std::endl;
         
-        if (n < N/2)
-        {
-            std::cout << "Povecujem mrezo na " << 2*n-2 << std::endl;
-            workspace = razdeli_mrezo(workspace, 2*n-2);
-            sprintf(buf, "g_prej_%d.dat", 2*n-2);
-            workspace->shrani(buf);
-        }
-        else
-        {
-            break;
-        }
-    }
-    
-    workspace = razdeli_mrezo(workspace, N);
-
-    for (int i = 0; i < IterationsPerSave * Saves; ++i)
-    {
-        if (i % IterationsPerSave == 0)
-        {
-            sprintf(buf, "g_tok_50_%d.dat", i / IterationsPerSave);
-            workspace->shrani(buf);
-            std::cout << "Shranil " << buf << std::endl;
-            sprintf(buf, "g_zeta_50_%d.dat", i / IterationsPerSave);
-            workspace->Zeta.save(buf);
-            sprintf(buf, "g_vx_50_%d.dat", i / IterationsPerSave);
-            workspace->vx.save(buf);
-            sprintf(buf, "g_vy_50_%d.dat", i / IterationsPerSave);
-            workspace->vy.save(buf);
-        }
-        
-        workspace->korak(i);
+        std::cout << "Sila: F = " << workspace->sila() << std::endl;
     }
     
     delete workspace;
 }
 
 int main(int argc, char **argv) {
-    postopek(100, 2000);
+    int stopnje[] = {15, 30, 50, 0};
+    postopek(stopnje, 100, 1000);
+    postopek(stopnje, 100, 100);
+    postopek(stopnje, 100, 10);
     return 0;
 }
