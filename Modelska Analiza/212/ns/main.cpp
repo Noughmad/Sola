@@ -110,39 +110,17 @@ bool Matrix::isValid()
 
 struct NsWorkspace
 {
-    NsWorkspace(int n, double R);
+    NsWorkspace(int n, double R, double T = 0);
     ~NsWorkspace();
     
     void zacetni_pogoj();
     inline void korak(int i)
     {
         izracunaj_zeta();
-        if (!Zeta.isValid())
-        {
-            Psi.save("psi_error.dat");
-        }
-        
-        CHECK_VALID(Zeta)
-        
         izracunaj_psi();
-        CHECK_VALID(Psi)
-        
         izracunaj_v();
-        assert(vx.isValid());
-        assert(vy.isValid());
         
-        /*
-        for (int i = 0; i < N; ++i)
-        {
-            for (int j = 0; j < N; ++j)
-            {
-                assert(vx.get(i,j) >= -1.1);
-                assert(vy.get(i,j) >= -1.1);
-                assert(vx.get(i,j) <= 1.1);
-                assert(vy.get(i,j) <= 1.1);
-            }
-        }
-        */
+        T += k;
     }
     
     void izracunaj_zeta();
@@ -168,23 +146,25 @@ struct NsWorkspace
     double R;
     double h;
     double omega;
+    double T;
     
     Matrix Psi, Zeta, vx, vy, tmp;
 };
 
-NsWorkspace::NsWorkspace(int n, double R) : 
+NsWorkspace::NsWorkspace(int n, double R, double T) : 
 N(n),
 Psi(n),
 Zeta(n),
 vx(n),
 vy(n),
 tmp(n),
-R(R)
+R(R),
+T(T)
 {
     h = 1.0 / (double)(N-1);
     k = h / std::max(30.0, 400/R);
     omega = 1.0/(1+M_PI/N);
-    std::cout << "Omega = " << omega << ", h = " << h << ", k = " << k << std::endl;
+    // std::cout << "Omega = " << omega << ", h = " << h << ", k = " << k << std::endl;
     zacetni_pogoj();
 }
 
@@ -385,7 +365,7 @@ void interpoliraj(const Matrix& mala, Matrix& velika)
 
 NsWorkspace* razdeli_mrezo(const NsWorkspace* stari, int n)
 {
-    NsWorkspace* novi = new NsWorkspace(n, stari->R);
+    NsWorkspace* novi = new NsWorkspace(n, stari->R, stari->T);
     
     interpoliraj(stari->Psi, novi->Psi);
     interpoliraj(stari->Zeta, novi->Zeta);
@@ -408,14 +388,14 @@ double NsWorkspace::sila()
 }
 
 
-double postopek(int stopnje[], int N, double R)
+double postopek(int stopnje[], int N, double R, int Speed)
 {
     NsWorkspace* workspace = new NsWorkspace(10, R);
     
-    const int IterationsPerSave = 200;
+    const int IterationsPerSave = 20;
     const int Saves = 200;
     
-    const int Iterations = 1 * std::max(1.0, 100.0/R);
+    const int Iterations = Speed;
     
     char buf[64];
     
@@ -425,7 +405,7 @@ double postopek(int stopnje[], int N, double R)
         {
             workspace = razdeli_mrezo(workspace, stopnje[i]);
             
-            for (int j = 0; j < Iterations * stopnje[i]; ++j)
+            for (int j = 0; j < Iterations; ++j)
             {
                 workspace->korak(j);
             }
@@ -440,9 +420,7 @@ double postopek(int stopnje[], int N, double R)
         
         sprintf(buf, "g_tok_%g_%d.dat", R, s);
         workspace->shrani(buf);
-        sprintf(buf, "g_zeta_%g_%d.dat", R, s);
-        workspace->Zeta.save(buf);
-        std::cout << "Shranil " << buf << std::endl;
+        std::cout << "Shranil " << buf << " ob casu T = " << workspace->T << std::endl;
         
         std::cout << "Sila: F = " << workspace->sila() << std::endl;
     }
@@ -452,8 +430,8 @@ double postopek(int stopnje[], int N, double R)
 
 int main(int argc, char **argv) {
     int stopnje[] = {15, 30, 50, 0};
-    postopek(stopnje, 100, 1000);
-    postopek(stopnje, 100, 100);
-    postopek(stopnje, 100, 10);
+    postopek(stopnje, 100, 1000, 50);
+    postopek(stopnje, 100, 100, 2);
+    postopek(stopnje, 100, 10, 1);
     return 0;
 }
