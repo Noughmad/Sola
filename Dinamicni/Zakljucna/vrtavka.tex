@@ -1,0 +1,100 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[unicode=true]{hyperref}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage{float}
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\newcommand{\dd}{\mathrm{d}}
+
+\newcommand{\parcialno}[2]{
+  \frac{\partial #1}{\partial #2}
+}
+\newcommand{\parcdva}[2]{
+  \frac{\partial^2 #1}{\partial #2 ^2}
+}
+\newcommand{\lag}{\mathcal{L}}
+
+\title{Gibanje gravitacijske vrtavke}
+\author{Miha \v Can\v cula}
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Razi"s"ci gibanje splo"sne gravitacijske vrtavke s Hamiltonovo funkcijo
+
+\begin{align}
+  H = \sum_{s=1}^{3}\left(\frac{1}{2J_s}l_s^2 + mga_s n_s\right)
+\end{align}
+
+kjer so $l_1$,$l_2$,$l_3$ komponente vrtilne koli"cine vzdol"z lastnih osi teznorja vztrajnostnega momenta $J$, $\vec e_s$, in $J\vec e_s = J_s\vec e_s$, $n_1$,$n_2$,$n_3$ pa so vertikalne komponente lastnih osi, $n_s = (0,0,1)\cdot \vec e_s$. $\vec l$ in $\vec e$ predstavljajo kanoni"cen set dinami"cnih spremenljivk s slede"co (Liejevo) algebro Poissonovih oklepajev
+
+\begin{align}
+  \{l_r, l_s\} &= \sum_t \eps_{rst}l_t \\
+  \{l_r, n_s\} &= \sum_t \eps_{rst}n_t \\
+  \{n_r, n_s\} &= 0
+\end{align}
+
+kjer je $\eps_{rst}$ popolnoma antisimetri"cen Levi-Civitajev tenzor. Vzemi npr. perturbirano Langrangeovo vrtavko, s parametri $(\Delta, a, \lambda)$, $J_1=J_2 = 1$ in $J_3=\Delta$, ter $a_1 = \lambda$, $a_2=0$, $a_3=a$, tako da je za $\lambda=0$ vrtavka integrabilna. Napravi smiselno predstavitev dinamike s Poincarejevo preslikavo in poskusi dolo"citi relativen dele"z kaoti"cnega faznega prostora (energijske lupine, pri neki energiji $E$) v odvisnosti od perturbacijskega parametra $\lambda$. 
+\end{abstract}
+
+\section{Ena"cbe gibanja}
+
+Ena"cbe gibanja vrtavke v Hamiltonovi formulaciji se glasijo
+
+\begin{align}
+  \dot l_s &= \{H,l_s\} \\
+  \dot n_s &= \{H,n_s\}
+\end{align}
+
+V Hamiltonianu nastopajo tako $l_s$ kot $n_s$, njihove medsebojne Poissonove oklepaje pa poznamo. Netrivialni so le "cleni z $l_s^2$, zato moramo najprej izra"cunati Poissonove oklepaje oblike
+
+\begin{align}
+  \{l_s^2, l_r\} &= \sum_i\left( \parcialno{l_s^2}{q_i}\parcialno{l_r}{p_i} - \parcialno{l_s^2}{p_i}\parcialno{l_r}{q_i} \right) = 2l_s \sum_i\left[ \parcialno{l_s}{q_i}\parcialno{l_r}{p_i} - \parcialno{l_s}{p_i}\parcialno{l_r}{q_i} \right] = 2l_s \{l_s, l_r\}
+\end{align}
+
+Uporabili smo kanoni"cne spremenljivke $q_i$ in $p_i$, ki nastopajo v definiciji Poissonovega oklepaja. Fizika ni odvisna od izbire teh spremenjivk, in tudi v nadaljnjem ra"cunanju jih ne bomo potrebovali. 
+
+Sedaj lahko zapi"semo tudi ena"cbe gibanja v ekplicitni obliki
+
+\begin{align}
+  \dot l_s = \{H,l_s\} &= \frac{l_{s+1}}{J_{s+1}}l_{s+2} - \frac{l_{s+2}}{J_{s+2}}l_{s+1} - mga_{s+1}n_{s+2} + mga_{s+2}n_{s+1} \\
+  \dot n_s = \{H,n_s\} &= \frac{l_{s+1}}{J_{s+1}}n_{s+2} - \frac{l_{s+2}}{J_{s+2}}n_{s+1}
+\end{align}
+
+kjer upo"stevamo cikli"cne indekse, $l_{s+3} = l_s$. 
+
+Za na"s poseben primer vrtavke, z dolo"cinim vrednostmi za $J_s$ in $a_s$, se ena"cbe glasijo
+
+\begin{align}
+  \dot l_1 &= l_2l_3 \left( 1 - \frac{1}{\Delta} \right) + mgan_2 \\
+  \dot l_2 &= l_3l_1 \left( \frac{1}{\Delta} - 1 \right) + mg\left( \lambda n_3 - a n_1 \right) \\
+  \dot l_3 &= -mg \lambda n_2 \\
+  \dot n_1 &= l_2n_3 - \frac{l_3n_2}{\Delta} \\
+  \dot n_2 &= \frac{l_3n_1}{\Delta} - l_1n_3 \\
+  \dot n_3 &= l_1 n_2 - l_2 n_1
+\end{align}
+
+\section{Poincarejeva preslikava}
+
+
+
+\end{document}
