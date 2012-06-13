@@ -1,0 +1,102 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[unicode=true]{hyperref}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage{float}
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\newcommand{\dd}{\mathrm{d}}
+
+\newcommand{\parcialno}[2]{
+  \frac{\partial #1}{\partial #2}
+}
+\newcommand{\parcdva}[2]{
+  \frac{\partial^2 #1}{\partial #2 ^2}
+}
+\newcommand{\lag}{\mathcal{L}}
+
+\title{Navier-Stokesov sistem}
+\author{Miha \v Can\v cula}
+\begin{document}
+
+\maketitle
+
+\section{Algoritem}
+
+Postopek re"sevanje sistem ena"cb je bil podoben kot pri prej"snji nalogi. Re"sevanje je potekalo v "casovnih korakih, od katerih je bil vsako korak sestavljen iz trek delov:
+\begin{enumerate}
+ \item $\zeta(t) \mapsto \psi(t)$
+ \item $\psi(t) \mapsto \vec v(t)$
+ \item $\zeta(t), \vec v(t) \mapsto \zeta(t+\Delta t)$
+\end{enumerate}
+
+Tu so hitrost $\vec v$, vrtin"cnost $\zeta$ in hitrostni potencial $\psi$ definirani enako kot v navodilih. "Casovno spremembo opi"se le zadnji del. 
+
+Mre"zo sem postavil tako, da so bile to"cke postavljene tudi na robu obmo"cja. S tem sem najla"zje upo"steval robne pogoje, saj se vrednost ve"cine spremenljivk na robu sploh ni spreminjala. Prav zaradi robnih pogojev sem vse spremenljivke ra"cunal na isti mre"zi. 
+
+\subsection{Za"cetno stanje}
+
+Za"cel sem z najbolj enostavnim za"cetnim pogojem, pri katerem se teko"cina v votlini ne giblje. Fizikalno to ustreza poskusu, kjer od "casu 0 za"cnemo premikati eno stranico. Za konsistentnost sem ra"cunanje za"cel na ta na"cin:
+
+\begin{enumerate}
+ \item Hitrost po celi votlini sem postavil na 0
+ \item "Ce je hitrost enaka ni"c, je potencial $\phi$ konstanten, zato sem tudi tega postavil na 0
+ \item Upo"steval sem robni pogoj, da je hitrost v smeri $x$ na spodnji steni votline enaka 1
+ \item Izra"cunal sem $\zeta$ kot rotor hitrost
+ \item Izra"cunal sem $\zeta$ ob naslednjem "casu
+\end{enumerate}
+
+Nato sem za"cel delati korake, kot so opisani zgoraj. 
+
+\subsection{Izra"cun potenciala $\psi$}
+
+Ra"cunsko najbolj zahteven je prvi korak, torej re"sevanje ena"cbe
+\begin{align}
+ \nabla^2 \psi = \zeta
+\end{align}
+
+Ker je sprememba $\zeta$ v enem "casovnem koraku majhna, je $\psi(t-\Delta t)$ dober pribli"zek za re"sitev ena"cbe tudi ob "casu $t$. Izmed metod za re"sevanje Poissonove ena"cbe, ki smo jih obravnavali, poznavanje za"cetnega pribli"zka najbolje izkoristi metoda SOR. 
+
+Hitrostni potencial je definiran le preko svojega odvoda, zato mu lahko pri"stejemo poljubno konstanto. To sem izbral tako, da je bila vrednosti $\psi$ povsod na robu votline enaka ni"c, kar je poenostavilo korak relaksacije. 
+
+\subsection{Izra"cun hitrosti $\vec v$}
+
+"Ce poznamo potencial $\psi$, lahko obe komponenti hitrosti izra"cunamo ekplicitno iz definicije kot
+
+\begin{align}
+ u = v_x &= \parcialno{\psi}{x} \\
+ v = v_y &= -\parcialno{\psi}{y}
+\end{align}
+
+Krajevni odvod sem zapi"sal s simetri"cnimi diferencami, robne vrednosti hitrosti pa se s "casom ne spreminjajo. 
+
+\subsection{"Casovni korak vrtin"cnosti $\zeta$}
+
+Tudi "casovni korak se da zapisati ekspliticno. Uporabil sem enostavne diference, za "casovni korak seveda enostranske, za krajevne odvode pa simetri"cne, saj v ena"cbi nastopa tudi drugi krajevni odvod. 
+
+"Casovni korak $\Delta t$ sem seveda spreminjal v odvisnosti od koraka krajevne diskretizacije $\Delta x$. Zaradi uporabe relaksacije za izra"cun potenciala pa dalj"si "casovni korak ne pomeni nujno hitrej"sega ra"cunanja. Manj"si $\Delta x$ namre"c povzro"ci, da je stanje iz prej"snjega koraka bolj"si pribli"zek za trenutno re"sitev ena"cbe, zato metoda SOR hitreje konvergira. Pri dovolj velikem Reynoldsovem "stevilu (nad 50) je bilo dovolj upo"stevati Courantov pogoj, za manj"sa Re pa sem raje uporabil formulo $\Delta t = \mathrm{Re}\Delta x/400$. 
+
+Prisilno manj"sanje koraka za majhne Re pa ni velika te"zava zaradi samega obna"sanja teko"cine. V tem primeru je namre"c teko"cina zelo viskozna, zato se ravnovesno stanje vzpostavi "ze kmalu. 
+
+\section{Rezultati}
+
+Najprej sem dolo"cil hitrostni profil pri nekaj razli"cnih vrednostih za Re. Stanje po dolgem "casu je prikazano na slikah. Prilo"zeni so tudi film"cki, ki prikazujejo "casovni razvoj za"cetnega stanja. 
+
+\end{document}

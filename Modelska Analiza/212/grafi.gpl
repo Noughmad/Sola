@@ -1,0 +1,18 @@
+set terminal png
+
+set contour
+set cntrparam levels 20
+set view map
+unset surface 
+unset key
+
+n = 200
+R = 1000
+i = 0
+
+load "frame.gpl"
+
+R = 10
+i = 0
+
+load "frame.gpl"
