@@ -1,7 +1,14 @@
 #include <iostream>
+#include <fstream>
+#include <math.h>
 
 #include <gsl/gsl_odeiv2.h>
 #include <gsl/gsl_errno.h>
+
+#define l(x) y[x]
+#define n(x) y[x+3]
+
+using namespace std;
 
 struct top_params
 {
@@ -10,6 +17,11 @@ struct top_params
     double L;
     double mg;
 };
+
+inline double interpolate(double t1, double t2, double x1, double x2, double t)
+{
+  return ((t-t1)*x2 + (t2-t)*x1) / (t2-t1);
+}
 
 int odvod(double t, const double y[], double dy[], void* params)
 {
@@ -36,18 +48,22 @@ public:
     void poincare();
     inline void apply()
     {
-        last = y[3];
-        gsl_odeiv2_driver_apply(driver, &t, t1, y);
+        for (int i = 0; i < 6; ++i)
+        {
+          last[i] = y[i];
+        }
+        gsl_odeiv2_driver_apply(driver, &t, t+t1, y);
     }
     
 private:
     gsl_odeiv2_system system;
     gsl_odeiv2_driver* driver;
     top_params params;
-    double y[];
+    double y[6];
     double t;
     double t1;
-    double last;
+    double last[6];
+    ofstream output;
 };
 
 TopWorkspace::TopWorkspace(double D, double a, double L)
@@ -58,30 +74,50 @@ TopWorkspace::TopWorkspace(double D, double a, double L)
     
     t1 = 1e-4;
     
+    output.open("g_vrtavka.dat");
+    
     // TODO: Zacetni pogoji
+    y[0] = 0.0;
+    y[1] = 0.0;
+    y[2] = 1.0;
+    
+    y[3] = 0.9;
+    y[4] = 0.0;
+    y[5] = sqrt(1.0 - y[3] * y[3] - y[4] * y[4]);
+    cout << y[5] << endl;
 }
 
 TopWorkspace::~TopWorkspace()
 {
     gsl_odeiv2_driver_free(driver);
+    output.close();
 }
 
 void TopWorkspace::poincare()
 {
-    last = y[3];
-    while (last * y[3] > 0)
+    last[3] = y[3];
+    cout << "Zacnem en korak preslikave" << endl;
+    cout << t << " " << y[3] << " " << y[4] << " " << y[5] << endl;
+
+    while (last[3] * y[3] > 0 || y[3] > last[3])
     {
         apply();
     }
-    apply();
-    last = y[3];
-    while (last * y[3] > 0)
+    
+    double tS = t - t1 * fabs(y[3]) / (fabs(y[3]) + fabs(last[3]));
+    
+    for (int i = 0; i < 6; ++i)
     {
-        apply();;
-    }    
+        output << interpolate(t-t1, t, last[i], y[i], tS) << " ";
+    }
+    output << endl;
 }
 
 int main(int argc, char **argv) {
-    std::cout << "Hello, world!" << std::endl;
+    TopWorkspace w(2.0, 1.0, 0.1);
+    for (int i = 0; i < 100; ++i)
+    {
+      w.poincare();
+    }
     return 0;
 }
