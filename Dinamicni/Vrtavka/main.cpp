@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <math.h>
+#include <sstream>
 
 #include <gsl/gsl_odeiv2.h>
 #include <gsl/gsl_errno.h>
@@ -10,6 +11,7 @@
 
 using namespace std;
 
+const int PoincareIndex = 3;
 
 struct top_params
 {
@@ -53,6 +55,7 @@ int odvod(double t, const double y[], double dy[], void* params)
 class TopWorkspace
 {
 public:
+    TopWorkspace(const top_params& top, const string& file);
     TopWorkspace(double D, double a, double L);
     ~TopWorkspace();
 
@@ -62,6 +65,8 @@ public:
     double operator-(const TopWorkspace& other);
 
     void poincare();
+    void save();
+    
     inline void apply()
     {
         for (int i = 0; i < 6; ++i)
@@ -88,6 +93,18 @@ private:
     double last[6];
     ofstream output;
 };
+
+TopWorkspace::TopWorkspace(const top_params& top, const string& file)
+{
+    params = top;
+    system = {odvod, 0, 6, &params};
+    driver = gsl_odeiv2_driver_alloc_y_new(&system, gsl_odeiv2_step_rk4, 1e-4, 1e-4, 1e-4);
+
+    t1 = 1e-3;
+
+    output.open("g_" + file + ".dat");
+}
+
 
 TopWorkspace::TopWorkspace(double D, double a, double L)
 {
@@ -135,20 +152,29 @@ double TopWorkspace::operator-(const TopWorkspace& other)
   return d;
 }
 
+void TopWorkspace::save()
+{
+    output << t;
+    for (int i = 0; i < 6; ++i)
+    {
+        output << " " << y[i];
+    }
+    output << endl;
+}
 
 void TopWorkspace::poincare()
 {
-    last[3] = y[3];
+    const int p = PoincareIndex;
     apply();
     apply();
     double tt = t;
 
-    while (last[3] * y[3] > 0 || y[3] > last[3])
+    while (last[p] * y[p] > 0 || y[p] > last[p])
     {
         apply();
     }
 
-    double tS = t - t1 * fabs(y[3]) / (fabs(y[3]) + fabs(last[3]));
+    double tS = t - t1 * fabs(y[p]) / (fabs(y[p]) + fabs(last[p]));
     
  //   cout << "Poincare: perioda je " << tS - tt << endl; 
 
@@ -269,15 +295,30 @@ double chaos_part(const top_params& top, double emax)
     return (double)C/N;
 }
 
+void fazni_prostor(double lambda)
+{
+    top_params top = {2.0, 1.0, lambda, 1.0};
+    stringstream name;
+    name << "vrtavka_" << lambda;
+    TopWorkspace w(top, name.str());
+    for (int i = 0; i < 20; ++i)
+    {
+        double y[6];
+        random_state(y, top, 10.0);
+        w.setInitial(y);
+        
+        for (int k = 0; k < 2000; ++k)
+        {
+            w.poincare();
+            w.save();
+        }
+        
+        cout << "Naredil zacetni pogoj " << i << endl;
+    }
+}
+
 int main(int argc, char **argv) {
-    int seed = time(0);
-    srand(seed);
-    
-    top_params params = {2.0, 1.0, 0.5, 1.0};
-    cout << "Delez kaosa je " << chaos_part(params, 10) << endl;
-    top_params params2 = {2.0, 1.0, 0.0, 1.0};
-    cout << "Delez kaosa je " << chaos_part(params2, 10) << endl;
-    
-    
+    fazni_prostor(0.0);
+    fazni_prostor(0.2);
     return 0;
 }
