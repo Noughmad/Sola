@@ -99,4 +99,17 @@ Prisilno manj"sanje koraka za majhne Re pa ni velika te"zava zaradi samega obna"
 
 Najprej sem dolo"cil hitrostni profil pri nekaj razli"cnih vrednostih za Re. Stanje po dolgem "casu je prikazano na slikah. Prilo"zeni so tudi film"cki, ki prikazujejo "casovni razvoj za"cetnega stanja. 
 
+Vsi primeri so izra"cunani na mre"zi s $100\times 100$ to"ckami. Za hitrej"se ra"cunanje sem uporabil trik z mre"zami razli"cnih velikosti. Vsaka slika v animaciji je narejena tako, da sem najprej mre"zo zmanj"sal na $15\times 15$ to"ck, napravil nekaj "casovnih korakov, in mre"zo postopoma ve"cal. Po vsaki pove"cavi sem seveda izvedel "se nekaj korakov, njihovo "stevilo pa sem prilagajal v odvisnosti od Re. Poleg hitrej"sega ra"cunanja zaradi manj"sega "stevila to"ck si na manj"si mre"zi lahko privo"s"cimo tudi ve"cji "casovni korak. 
+
+\begin{figure}[H]
+\subfigure[$\mathrm{Re} = 10$, $T = 0.82$]{\scalebox{0.7}{\input{g_map_10}}}
+\subfigure[$\mathrm{Re} = 100$, $T = 1.53$]{\scalebox{0.7}{\input{g_map_100}}}
+\subfigure[$\mathrm{Re} = 1000$, $T = 2.39$]{\scalebox{0.7}{\input{g_map_1000_5}}}
+\subfigure[$\mathrm{Re} = 1000$, $T = 21.9$]{\scalebox{0.7}{\input{g_map_1000_100}}}
+\end{figure}
+
+Oblika vrtincev se ujema s pri"cakovanji in s slikami v navodilih. Pri nizkem Re je vrtinec v bli"zini sredine gnane stene, pri velikem Re pa se pribli"za sredini votline, pove"cajo pa se tudi sekundarni vrtinci. Pri velikem Reynoldsovem "stevilu pa dodatno opazimo, da se pojavlja vedno ve"c izohips potenciala. 
+
+Te"zave pa sem imel pri ra"cunu sile; ne glede na Re se sila na gnano stranico v izbranih brezdimenzijskih koli"cinah giblje med 15 in 20. Pri"cakovana odvisnost je $F \propto \mathrm{Re}^{-1}$, ki je pa v svojih izra"cunih ne opazim. Domnevam, da sem naredil kak"sno napako pri normalizaciji oz. upo"stevanju koraka $\Delta x$. 
+
 \end{document}

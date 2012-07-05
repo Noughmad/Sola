@@ -1,4 +1,9 @@
 set output sprintf("g_tok_%d_%.3d.png", R, i)
-splot sprintf("g_tok_%d_%d.dat", R, i) matrix with lines lc rgb #000000
+unset label
+set label sprintf("t = %.1f", T) at 65,90
+
+splot sprintf("g_tok_%d_%d.dat", R, i) matrix u 1:2:(-$3) with lines lc rgb "#000000"
+
 i = i+1
+T = T+k
 if(i < n) reread
