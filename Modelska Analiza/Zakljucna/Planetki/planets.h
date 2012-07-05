@@ -2,7 +2,9 @@
 #define PLANETS_H
 
 #include <QVector>
+#include <QDebug>
 
+class QImage;
 struct Vector
 {
     double x;
@@ -11,7 +13,10 @@ struct Vector
     Vector operator-(const Vector& other) const;
     Vector operator+(const Vector& other) const;
     Vector operator*(double factor) const;
+    operator QPointF() const;
 };
+
+QDebug operator<<(QDebug stream, const Vector& vector);
 
 struct Trajectory
 {
@@ -32,8 +37,12 @@ public:
     
     Vector force(const Vector& pos, double t);
     
-    void relax_step(Trajectory& trajectory);
+    double relax_step(Trajectory& trajectory);
     void move_planets();
+    
+    Trajectory direct_route(int steps);
+    
+    QImage plot(const Trajectory& trajectory);
     
     double dt;
     double mu;
@@ -42,6 +51,7 @@ public:
     double M;
     double m;
     double r;
+    double chebishev;
     
     Vector star;
 };
