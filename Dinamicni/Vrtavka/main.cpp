@@ -5,16 +5,29 @@
 
 #include <gsl/gsl_odeiv2.h>
 #include <gsl/gsl_errno.h>
+#include <gsl/gsl_fit.h>
 
 #define l(x) y[x-1]
 #define n(x) y[x+2]
 
 using namespace std;
 
-const int PoincareIndex = 3;
+const int PoincareIndex = 4;
 
 struct top_params
 {
+    top_params() {}
+    top_params(double l)
+    {
+        D = 5.0;
+        a = 1.0;
+        mg = 1.0;
+        L = l;
+    }
+    top_params(double D, double a, double L, double mg)
+    : D(D), a(a), L(L), mg(mg)
+    {}
+    
     double D;
     double a;
     double L;
@@ -23,7 +36,7 @@ struct top_params
 
 inline double energy(const top_params& top, double y[])
 {
-    return 0.5 * (y[0]*y[0] + y[1]*y[1] + top.D*y[2]*y[2]) + top.mg * (top.L * n(1) + top.a * n(2));
+    return 0.5 * (y[0]*y[0] + y[1]*y[1] + y[2]*y[2]/top.D) + top.mg * (top.L * n(1) + top.a * n(3));
 }
 
 void random_state(double y[], const top_params& top, double emax);
@@ -32,7 +45,7 @@ double lyapunov(const top_params& top, const double initial[]);
 
 inline double interpolate(double t1, double t2, double x1, double x2, double t)
 {
-  return ((t-t1)*x2 + (t2-t)*x1) / (t2-t1);
+    return ((t-t1)*x2 + (t2-t)*x1) / (t2-t1);
 }
 
 int odvod(double t, const double y[], double dy[], void* params)
@@ -66,19 +79,19 @@ public:
 
     void poincare();
     void save();
-    
+
     inline void apply()
     {
         for (int i = 0; i < 6; ++i)
         {
-          last[i] = y[i];
+            last[i] = y[i];
         }
         gsl_odeiv2_driver_apply(driver, &t, t+t1, y);
     }
 
     inline double energy()
     {
-	return ::energy(params, y);
+        return ::energy(params, y);
     }
 
 public:
@@ -86,6 +99,8 @@ public:
     double t;
 
 private:
+    void init(const string& name);
+    
     gsl_odeiv2_system system;
     gsl_odeiv2_driver* driver;
     top_params params;
@@ -97,25 +112,25 @@ private:
 TopWorkspace::TopWorkspace(const top_params& top, const string& file)
 {
     params = top;
-    system = {odvod, 0, 6, &params};
-    driver = gsl_odeiv2_driver_alloc_y_new(&system, gsl_odeiv2_step_rk4, 1e-4, 1e-4, 1e-4);
-
-    t1 = 1e-3;
-
-    output.open("g_" + file + ".dat");
+    init("g_" + file + ".dat");
 }
 
 
 TopWorkspace::TopWorkspace(double D, double a, double L)
 {
     params = {D, a, L, 1.0};
-    system = {odvod, 0, 6, &params};
-    driver = gsl_odeiv2_driver_alloc_y_new(&system, gsl_odeiv2_step_rk4, 1e-4, 1e-4, 1e-4);
-
-    t1 = 1e-3;
-
-    output.open("g_vrtavka.dat");
+    init("g_vrtavka.dat");
 }
+
+void TopWorkspace::init(const string& name)
+{
+    system = {odvod, 0, 6, &params};
+    driver = gsl_odeiv2_driver_alloc_y_new(&system, gsl_odeiv2_step_rk4, 1e-3, 1e-12, 0);
+    
+    t1 = 1e-3;
+    output.open(name);
+}
+
 
 TopWorkspace::~TopWorkspace()
 {
@@ -125,31 +140,31 @@ TopWorkspace::~TopWorkspace()
 
 void TopWorkspace::setInitial(double l1, double l2, double l3, double n1, double n2, double n3)
 {
-  l(1) = l1;
-  l(2) = l2;
-  l(3) = l3;
+    l(1) = l1;
+    l(2) = l2;
+    l(3) = l3;
 
-  n(1) = n1;
-  n(2) = n2;
-  n(3) = n3;
+    n(1) = n1;
+    n(2) = n2;
+    n(3) = n3;
 }
 
 void TopWorkspace::setInitial(const double initial[])
 {
-  for (int i = 0; i < 6; ++i)
-  {
-    y[i] = initial[i];
-  }
+    for (int i = 0; i < 6; ++i)
+    {
+        y[i] = initial[i];
+    }
 }
 
 double TopWorkspace::operator-(const TopWorkspace& other)
 {
-  double d = 0;
-  for (int i = 0; i < 6; ++i)
-  {
-      d += (y[i] - other.y[i]) * (y[i] - other.y[i]);
-  }
-  return d;
+    double d = 0;
+    for (int i = 0; i < 6; ++i)
+    {
+        d += (y[i] - other.y[i]) * (y[i] - other.y[i]);
+    }
+    return d;
 }
 
 void TopWorkspace::save()
@@ -165,18 +180,16 @@ void TopWorkspace::save()
 void TopWorkspace::poincare()
 {
     const int p = PoincareIndex;
-    apply();
-    apply();
     double tt = t;
+    apply();
+    apply();
 
-    while (last[p] * y[p] > 0 || y[p] > last[p])
+    while (last[p] * y[p] > 0)
     {
         apply();
     }
 
     double tS = t - t1 * fabs(y[p]) / (fabs(y[p]) + fabs(last[p]));
-    
- //   cout << "Poincare: perioda je " << tS - tt << endl; 
 
     /*
     output << t;
@@ -191,113 +204,143 @@ void TopWorkspace::poincare()
         y[i] = interpolate(t-t1, t, last[i], y[i], tS);
     }
     t = tS;
+
+//    cout << "Poincare: perioda = " << tS - tt << endl;;
 }
 
 double lyapunov(const top_params& top, const double initial[])
 {
-  double factor = 1;
-  const double step = 1e-12;
-  const double limit = 1e-9;
+    double factor = 1;
+    const double step = 1e-6;
 
-  const int N = 100;
+    const int N = 200;
+    const int P = 2;
 
-  double z[6];
-  for (int i = 0; i < 6; ++i)
-  {
-    z[i] = initial[i];
-  }
+    double z[6];
+    for (int i = 0; i < 6; ++i)
+    {
+        z[i] = initial[i];
+    }
 
-  TopWorkspace top1(top.D, top.a, top.L);
-  top1.setInitial(z);
+    TopWorkspace top1(top.D, top.a, top.L);
+    top1.setInitial(z);
 
-  for (int i = 0; i < 6; ++i)
-  {
-    z[i] += (double)rand() / RAND_MAX * step;
-  }
+    for (int i = 0; i < 6; ++i)
+    {
+        z[i] += (double)rand() / RAND_MAX * step;
+    }
+    
 
-  TopWorkspace top2(top.D, top.a, top.L);
-  top2.setInitial(z);
-  double d0 = top1 - top2;
+    TopWorkspace top2(top.D, top.a, top.L);
+    top2.setInitial(z);
 
-  for (int i = 0; i < N; ++i)
-  {
-      double d = top1 - top2;
-      
-      if (d > limit)
-      {
-          for (int i = 0; i < 6; ++i)
-          {
-              top2.y[i] = (1.0-step) * top1.y[i] + step * top2.y[i];
-          }
-          factor /= step;
-      }
-      top1.poincare();
-      top2.poincare();
-  }
-  
-  double d_mid = (top1 - top2) * factor;
-  factor = 1;
-  
-  for (int i = 0; i < N; ++i)
-  {
-      double d = top1 - top2;
-      
-      if (d > limit)
-      {
-          cout << "Manjsam razliko" << endl;
-          for (int i = 0; i < 6; ++i)
-          {
-              top2.y[i] = (1.0-step) * top1.y[i] + step * top2.y[i];
-          }
-          factor /= step;
-      }
-      top1.poincare();
-      top2.poincare();
-  }
+    for (int p = 0; p < 20; ++p)
+    {
+        top1.poincare();
+        top2.poincare();
+    }
+    double d0 = top1 - top2;
 
-  double d = (top1 - top2) * factor;
-  double l1 = log(d_mid / d0) / N;
-  double l2 = log(d / d_mid) / N;
-  return l2;
+    double* a = new double[N];
+
+    for (int k = 0; k < N; ++k)
+    {
+        for (int p = 0; p < P; ++p)
+        {
+            top1.poincare();
+            top2.poincare();
+        }
+        
+        double d = top1 - top2;
+        a[k] = sqrt(d0/d);
+        
+        for (int i = 0; i < 6; ++i)
+        {
+            top2.y[i] = (1.0-a[k]) * top1.y[i] + a[k] * top2.y[i];
+        }
+
+        a[k] = -log(a[k]);
+        // cout << a[k] << ", " << d0 << ", " << top1-top2 << endl;
+        // cout << " Koeficient " << k << " je " << a[k] << endl;
+    }
+    
+    double* x = new double[N];
+    for (int i = 0; i < N; ++i)
+    {
+        x[i] = 1.0/(i+1);
+    }
+    double c0, c1, cov00, cov01, cov11, sumsq;
+    gsl_fit_linear(x, 1, a, 1, N, &c0, &c1, &cov00, &cov01, &cov11, &sumsq);
+    /*
+    cout << "c1 = " << c1 << " +/- " << sqrt(cov11) << endl;
+    cout << "c0 = " << c0 << " +/- " << sqrt(cov00) << endl;
+    
+
+    stringstream str;
+    str << "g_ljapunov_" << top.L << ".dat" << flush;
+    cout << "Saving to " << str.str() << endl;
+    ofstream out(str.str());
+    for (int i = 0; i < N; ++i)
+    {
+        out << (i+1) << '\t' << a[i] << endl;
+    }
+    out.close();
+    */
+    
+    delete[] x;
+    delete[] a;
+    if (c0 > sqrt(cov00))
+    {
+        return c0;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 void random_state(double y[], const top_params& top, double emax)
 {
-    do 
+    do
     {
-	for (int i = 1; i < 4; ++i)
-	{
-	    l(i) = 10 * (2 * (double)rand() / RAND_MAX - 1);
-	    n(i) = (double)rand() / RAND_MAX;
-	}
+        for (int i = 1; i < 4; ++i)
+        {
+            l(i) = 20 * (2 * (double)rand() / RAND_MAX - 1);
+            n(i) = (double)rand() / RAND_MAX;
+        }
+        double nn = 1.0/sqrt(n(1)*n(1) + n(2)*n(2) + n(3)*n(3));
+        for (int i = 1; i < 4; ++i)
+        {
+            n(i) *= nn;
+        }
     }
     while (energy(top, y) > emax);
 }
 
 double chaos_part(const top_params& top, double emax)
 {
-    int N = 100;
+    int N = 200;
     double y[6];
-    double lambda_limit = 1e-3;
     int C = 0;
-    
+
     for (int i = 0; i < N; ++i)
     {
-	random_state(y, top, emax);
-	double l = lyapunov(top, y);
-	cout << "Eksponent je " << l << endl;
-	if (l > lambda_limit)
-	{
-	    C++;
-	}
+        random_state(y, top, emax);
+        double l = lyapunov(top, y);
+        if (l > 0)
+        {
+            C++;
+        }
     }
-    
-    return (double)C/N;
+
+    double del = (double)C/N;
+    cout << "Delez kaosa pri lambda=" << top.L << " je " << del << endl;
+    return del;
 }
 
 void fazni_prostor(double lambda)
 {
-    top_params top = {2.0, 1.0, lambda, 1.0};
+    top_params top(lambda);
     stringstream name;
     name << "vrtavka_" << lambda;
     TopWorkspace w(top, name.str());
@@ -306,19 +349,23 @@ void fazni_prostor(double lambda)
         double y[6];
         random_state(y, top, 10.0);
         w.setInitial(y);
-        
+
         for (int k = 0; k < 2000; ++k)
         {
             w.poincare();
             w.save();
         }
-        
+
         cout << "Naredil zacetni pogoj " << i << endl;
     }
 }
 
 int main(int argc, char **argv) {
-    fazni_prostor(0.0);
-    fazni_prostor(0.2);
+    srand(time(0));
+    double erg = atof(argv[1]);
+    for (double L = 0; L < 2.05; L += 0.1)
+    {
+        chaos_part(top_params(L), erg);
+    }
     return 0;
 }

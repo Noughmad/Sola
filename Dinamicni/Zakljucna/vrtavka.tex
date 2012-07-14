@@ -95,6 +95,19 @@ Za na"s poseben primer vrtavke, z dolo"cinim vrednostmi za $J_s$ in $a_s$, se en
 
 \section{Poincarejeva preslikava}
 
+Vrtavka nima nobene lastne "casovne enote ali od zunaj dolo"cene frekvence. Kljub temu pa se sistem vrti, zato je najbolj primerna Poincarejeva preslikava. Preostane nam le "se izbira koli"cine, ki jo bomo dolo"cili s se"cno ploskvijo. 
 
+Element faznega prostora je podan s tremi komponentami vrtilnime koli"ciname in tremi komponentami orientacije. Vrtilna koli"cina v osnovi ne periodi"cna, zato nobene izmed njenih komponent nisem upo"steval pri preslikavi. Ostanejo nam tri koli"cine, ki dolo"cajo orientacijo vrtavke. 
 
+Lagrangeva vrtavka ima dve enaki vrednosti vztrajnostnega momenta, tretja ($J_3$) pa je od njiju razli"cna. Tak"sne so tudi obi"cajne vrtavke, ki jih vrtimo na ravni povr"sini. Ta asimetrija jim da preferen"cno smer, iz izku"senj vemo, da se ve"cina vrtavk vrti predvsem v smeri osi $z$. V tem na"cinu gibanja se komponenta $n_3$ le po"casi spreminja, medtem ko $n_1$ in $n_2$ nihata s frekvenco vrtenja vrtavke. Naravni izbiri za se"cno ploskev sta torej tak"sni, da je $n_1$ ali $n_2$ enaka ni"c, izbrati moramo pa "se predznak njenega "casovnega odvoda. Od predznaka odvoda ni ni"c odvisno, zato sem lahko izbral, naj bo pozitiven. 
+
+Pri nezmoteni vrtavki sma smeri $x$ in $y$ povsem enakovredni, zato je vseeno, katero izmed komponent $n_1$ ali $n_2$ izberemo. Motnja $\lambda$ pa to simetrijo zlomi. "Ce izhodi"s"ce koordinatnega sistema postavimo v te"zi"s"ce vrtavke, je pri nemoteni prijemali"s"ce na osi $z$, motnja pa ga premakne nekam na ravnino $xz$. Edini lastni vektor, ki je "se vedno pravokoten na prijemali"s"ce, je $e_y$ oz. $e_2$. Za se"cno ploskev sem zato izbral pogoj $n_2 = 0$ in $\dot n_2 > 0$. 
+
+\section{Ljapunovi eksponenti}
+
+Kaoti"cnost sistema sem dolo"cal z najve"cjim Ljapunovim eksponentom. Ta eksponent sem izra"cunal numeri"cno, s simulacijo dveh bli"znjih orbit. 
+
+Velikost eksponenta nas v resnici ne zanima, pomembno je le, ali je ve"cji od 0. Ravno s tak"snimi kriteriji imajo numeri"cne metode najve"cje te"zave. Zato sem se potrudil dose"ci "cim ve"cjo natan"cnost, tako da sem izra"cunal relativno razhajanje orbit po vsaki izmed 1000 iteracij Poincarejeve preslikave. Logaritmom izra"cunanih razhajanj sem prilagodil linearno funkcijo, nato pa ugotavljal, ali je dobljeno nara"s"canje dovolj mo"cno, da lahko trdimo, da je Ljapunov eksponent pozitiven. 
+
+Za umeritev in preverjanje algoritma sem uporabil nemoteno Lagrangevo vrtavko. Ta je integrabilna, zato pri njej ne smemo dobiti kaoti"cnega gibanja, ne glede na za"cetne pogoje. Zaradi omejene ra"cunalni"ske zmogljivosti
 \end{document}
