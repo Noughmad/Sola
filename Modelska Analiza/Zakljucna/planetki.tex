@@ -1,0 +1,76 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{relsize}
+\usepackage[smaller]{acronym}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[unicode=true]{hyperref}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage{float}
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\renewcommand{\vec}{\mathbf}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\newcommand{\dd}{\mathrm{d}}
+
+\newcommand{\parcialno}[2]{
+  \frac{\partial #1}{\partial #2}
+}
+\newcommand{\parcdva}[2]{
+  \frac{\partial^2 #1}{\partial #2 ^2}
+}
+\newcommand{\lag}{\mathcal{L}}
+
+\newcommand{\drug}[1]{
+  \vec{\ddot{#1}}
+}
+
+\title{Potovanje sonde med planeti}
+\author{Miha \v Can\v cula}
+\begin{document}
+
+\maketitle
+
+\section{"Stevilo parametrov}
+
+Sonda se po son"cnem sistemu giblje, kot to dolo"ca Newtonov zakon
+
+\begin{align}
+  \vec{\ddot r}= \frac{\vec F}{m_s}
+\end{align}
+
+Nanjo delujejo tri sile, to so gravitacijski privlaki sonca in obeh planetov. 
+
+$$ \vec F = Gm_s \left( \frac{-M\vec r}{r^3} + \frac{m(\vec r_1 - \vec r)}{|\vec r_1 - \vec r|^2} + \frac{m(\vec r_2 - \vec r)}{|\vec r_2 - \vec r|^2} \right) $$
+
+Masa sonde se po pri"cakovanju kraj"sa, ostanejo pa nam "se gravitacijska konstanta in mase vseh treh nebesnih teles. Poznamo pa tudi gibanje planetov, saj kro"zita okrog zvezde. Njun radialni pospe"sek je enak
+
+\begin{align}
+\label{eq:gibanje-planetov}
+\vec{\ddot r_i} = -\omega^2\vec r_i = GM \frac{-\vec r_i}{r_i^3}
+\end{align}
+
+Imamo torej zvezo med maso sonca $M$, gravitacijsko konstanto $G$, polmerom orbite planeta $r_i$ ($i$ je 1 ali 2) in frekvenco kro"zenja $\omega$. Konstanta $G$ nastopa povsod kot multiplikativna konstanta k drugemu "casovnemu odvodu. Izbira njene vrednosti je zato enakovredna izbiri "casovne skale $t \to t/\sqrt{G}$. Enak u"cinek ima pove"canje ali zmanj"sanje mase sonca in planetov za enak faktor. Vrednosti za $G$ in $M$ lahko torej postavimo na 1, namesto mase planeta $m$ pa ra"cunamo z razmerjem $\mu = m/M$. Ena"cbo gibanja planetov re"simo enostavno, tako da zanemarimo medsebojni vpliv in privzamemo kro"zno gibanje. Iz zveze (\ref{eq:gibanje-planetov}) izrazimo kro"zno frekvenco kot $\omega^2 = 1/r^3$. 
+
+\begin{align}
+\drug r &= -\frac{\vec r}{r^3} + \mu\frac{\vec{r_1-r}}{|\vec{r_1-r}|^3} + \mu\frac{\vec{r_2-r}}{|\vec{r_2-r}|^3} \\
+\vec r_i &= \omega_i^{-2/3} \left[ \cos(\omega_i t + \phi_i), \sin(\omega_i t + \phi_i) \right]^T
+\end{align}
+
+V nalogi je podano razmerje polmerov orbit obeh planetov $r_2 = 2r_i$. Po drugem Keplerjevem zakonu lahko to pretvorimo v razmerje kro"znih frekvenc
+
+\[ \omega_1 = \sqrt{8}\omega_2 \approx 2.828 \omega_2 \]
+
+
+\end{document}
