@@ -52,7 +52,7 @@ Sonda se po son"cnem sistemu giblje, kot to dolo"ca Newtonov zakon
 
 Nanjo delujejo tri sile, to so gravitacijski privlaki sonca in obeh planetov. 
 
-$$ \vec F = Gm_s \left( \frac{-M\vec r}{r^3} + \frac{m(\vec r_1 - \vec r)}{|\vec r_1 - \vec r|^2} + \frac{m(\vec r_2 - \vec r)}{|\vec r_2 - \vec r|^2} \right) $$
+$$ \vec F = Gm_s \left( \frac{-M\vec r}{r^3} + \frac{m(\vec r_1 - \vec r)}{|\vec r_1 - \vec r|^3} + \frac{m(\vec r_2 - \vec r)}{|\vec r_2 - \vec r|^3} \right) $$
 
 Masa sonde se po pri"cakovanju kraj"sa, ostanejo pa nam "se gravitacijska konstanta in mase vseh treh nebesnih teles. Poznamo pa tudi gibanje planetov, saj kro"zita okrog zvezde. Njun radialni pospe"sek je enak
 
@@ -72,5 +72,45 @@ V nalogi je podano razmerje polmerov orbit obeh planetov $r_2 = 2r_i$. Po drugem
 
 \[ \omega_1 = \sqrt{8}\omega_2 \approx 2.828 \omega_2 \]
 
+Nazadnje preverimo "se, ali lahko dolo"cimo tudi vrednosti za $r_1$ in $r_2$. "Ce vse razdalje pove"camo za faktor $k$, se kro"zni frekvenci zmanj"sata za $\sqrt{k^3}$, sile na sondo pa se zmanj"sajo za $k^2$. Samo s spreminjanjem "casovne skale ne moremo odpraviti parametra $r_1$. 
+
+\section{Robni pogoji}
+
+Koordinatni sistem postavimo tako, da je sonce v sredi"s"cu. Ob "casu $t=0$ lahko brez izgube splo"snosti privzamemo, da se prvi (notranji) planet nahaja na osi $x$, torej je njegov kot v polarnih koordinatah enak 0. Za drugi planet tega ne moremo privzeti, saj ima lahko fazni zamik $\delta$. Oba planeta se gibljeta po kro"znih orbitah, torej lahko njun polo"zaj po poljubnem "casu v polarnih koordinatah zapi"semo kot
+
+\begin{align}
+ \vec r_1(t) &= (r_1, \omega_1 t) \\
+ \vec r_2(t) &= (r_2, \omega_2 t + \delta)
+\end{align}
+
+"Ce sonda za potovanje med planetoma potrebuje "cas $T$, se njuna robna pogoja glasita
+
+\begin{align}
+ \vec r(0) &= (r_1, 0) \\
+ \vec r(T) &= (r_2, \omega_2 T + \delta)
+\end{align}
+
+Poznamo silo na sondo ob vsakem "casu, torej je ena"cba drugega reda, imamo pa tudi dva robna pogoja. Prost pa je "se parameter $T$, torej bomo za pot med dvema planetoma verjetno na"sli ve"c re"sitev. Zato bomo lahko omejili "cas potovanja $T$, ali pa za"cetno in kon"cno hitrost sonde, da bo re"sitev "se vedno obstajala. 
+
+\section{Pribli"zek z $\mu \ll 1$}
+
+Analiti"cno re"sevenaje celotnega sistem je prezahtevno. Lahko pa to"cno re"simo primer, ko sta masi planetov zanemarljivi v primerjavi z maso zvezde. To je upravi"cen pribli"zek, v primeru Sonca, Zemlje in Marsa je vrednost reda velikosti $\mu \approx 10^{-6}$, z upo"stevanjem Jupitra in Saturna pa zraste na $\mu \approx 10^{-3}$. 
+
+"Ce zanemarimo gravitacijska vpliva obeh planetov, dobimo Keplerjev problem, za katerega vemo, da je re"sitev gibanje sonde po elipsi s Soncem z gori"s"cu. V na"sih brezdimenzijskih enotah in polarnih koordinatah se re"sitev glasi
+
+\begin{align}
+\label{eq:kepler-solution}
+ r(\phi) &= \frac{R}{1 + e\cos (\phi - \phi_0)}
+\end{align}
+
+kjer $R = \frac{r^4\omega^2}{GM}$ konstanta gibanja, odvisna od za"cetnih pogojev, in je enaka razdalji, na kateri bi sonda kro"zila. Kot smo videli v prej"snjem poglavju, imamo za pot med dvema planetoma ve"c mo"znih orbit, ki se razlikujejo ravno po konstanti $R$. Integralski konstanti $e$ in $\phi_0$ dolo"cimo iz robnih pogojev, ki trdita, da sonda leti od enega planeta do drugega.
+
+Najbolj ``ugodna'' orbita za vesoljska plovila je tak"sna, kjer potovanje traja "cim manj, hrati pa sta za"cetna in kon"cna hitrost (relativno na planet) dovolj majhni, da plovilo lahko varno pristane. Potrebi po kratkotrajnem poletu je vsaj teoreti"cno enostavno ugoditi, saj lahko po"sljemo sondo z neskon"cno hitrostjo. "Zal pa poleg tehni"cnih te"zav na ta na"cin tudi uni"cimo sondo ob pristanku. Minizimacija za"cetne in kon"cne hitrosti je bolj zahtevna, tudi "ce si dovolimo dolgotrajno pot. Sonda se ne sme gibati enako hitro kot planet, saj bi v tem primeru kro"zila z njim. Lahko pa skonstruiramo elipso z minimalno ekscentri"cnostjo, ki je tangentna na orbiti obeh planetov, tako da sta za"cetna in kon"cna relativna hitrost vedno v tangentni smeri glede na sonce. Njena perioda je v iracionalnem razmerju s periodo kro"zenja drugega planeta, zato se bosta slej ko prej sre"cala. 
+
+V praksi seveda "zelimo nek kompromis med obema skrajnostma. Te"zava je, kjer v ena"cbi $\ref{eq:kepler-solution}$ "cas ne nastopa, skupen "cas prehoda $T$ pa lahko izra"cunamo z drugim Keplerjevim zakonom. 
+
+\section{Poljuben $\mu$}
+
+Ker v znanih son"cnih sistemih masa sonca mo"cno presega mase planetov, si lahko pri iskanju splo"sne re"sitve pomagamo s prej"snjim pribli"zkom. Za iskanje orbit zato nisem uporabil strelske metode z ugibanjem za"cetnih pogojev in numeri"cno integriranjem. Namesto tega sem za"cel z elipti"cno orbito in jo relaksiral, tako da je v vsaki to"cki ustrezala Newtonovem zakonu. Tak"sna relaksacija seveda ni fizikalna, se pa je izkazala za u"cinkovit ra"cunski pripomo"cek. 
 
 \end{document}

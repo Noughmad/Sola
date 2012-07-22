@@ -107,7 +107,21 @@ Pri nezmoteni vrtavki sma smeri $x$ in $y$ povsem enakovredni, zato je vseeno, k
 
 Kaoti"cnost sistema sem dolo"cal z najve"cjim Ljapunovim eksponentom. Ta eksponent sem izra"cunal numeri"cno, s simulacijo dveh bli"znjih orbit. 
 
-Velikost eksponenta nas v resnici ne zanima, pomembno je le, ali je ve"cji od 0. Ravno s tak"snimi kriteriji imajo numeri"cne metode najve"cje te"zave. Zato sem se potrudil dose"ci "cim ve"cjo natan"cnost, tako da sem izra"cunal relativno razhajanje orbit po vsaki izmed 1000 iteracij Poincarejeve preslikave. Logaritmom izra"cunanih razhajanj sem prilagodil linearno funkcijo, nato pa ugotavljal, ali je dobljeno nara"s"canje dovolj mo"cno, da lahko trdimo, da je Ljapunov eksponent pozitiven. 
+Velikost eksponenta nas v resnici ne zanima, pomembno je le, ali je ve"cji od 0. Ravno s tak"snimi kriteriji imajo numeri"cne metode najve"cje te"zave. Zato sem se potrudil dose"ci "cim ve"cjo natan"cnost, tako da sem izra"cunal relativno razhajanje orbit po vsaki izmed 200 iteracij Poincarejeve preslikave. Logaritmom izra"cunanih razhajanj sem prilagodil linearno funkcijo, nato pa ugotavljal, ali je dobljeno nara"s"canje dovolj mo"cno, da lahko trdimo, da je Ljapunov eksponent pozitiven. 
 
-Za umeritev in preverjanje algoritma sem uporabil nemoteno Lagrangevo vrtavko. Ta je integrabilna, zato pri njej ne smemo dobiti kaoti"cnega gibanja, ne glede na za"cetne pogoje. Zaradi omejene ra"cunalni"ske zmogljivosti
+Na vsakem koraku sem orbiti reskaliral, tako da je razlika med njima vedno ostala majhna. Velikosti relativnih skokov na vsakem koraku sem prilagodil funkcijo $y(t) = a+b/t$, saj v primeru kaosa pri"cakujemo konstanto, druga"ce pa padanje kot $\sim 1/t$. Funkcijo sem prilagajal s knji"znico \texttt{GSL}, ki vrne tudi kovarian"cno matriko, iz katere lahko preberemo napako posameznega koeficienta. Orbito sem "stel kot kaoti"cno, "ce je bil koeficient $a$ ve"cji od absolutne vrednosti svoje napake. 
+
+\section{Dele"z kaoti"cnega faznega prostora}
+
+Fazni prostor sem omejil z najve"cno energijo $E$, nato pa naklju"cno izbral po 200 za"cetnih to"ck znotraj energijske lupine in izra"cunal najve"cji Ljapunov eksponent za ta za"cetni pogoj. Pre"stel sem, v koliko primerih je bila orbita kaoti"cna, v odvisnosti od parametra motnje $\lambda$. Rezultati so na sliki \ref{fig:kaos}. 
+
+\begin{figure}[H]
+ \label{fig:kaos}
+ \input{g_kaos}
+\end{figure}
+
+Po pri"cakovanju kaoti"cnost nara"s"ca z velikostjo motnje $\lambda$. Kljub temu, da je Lagrangeva vrtavka z $\lambda=0$ integrabilna, sem vseeno dobil dolo"cen dele"z (pribli"zno 10\%) kaoti"cnosti. To pripisujem predvsem napakam numeri"cnega ra"cunanja. 
+
+Nepri"cakovan rezultat pa je, da kaoti"cnost pada z nara"s"canjem energije, torej je kaoti"cen predvsem del faznega prostora z nizkimi energijami oz. po"casnim vrtenjem vrtavke. 
+
 \end{document}

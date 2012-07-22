@@ -14,6 +14,8 @@ struct Vector
     Vector operator+(const Vector& other) const;
     Vector operator*(double factor) const;
     operator QPointF() const;
+
+    void to_polar(double& r, double& phi) const;
 };
 
 QDebug operator<<(QDebug stream, const Vector& vector);
@@ -41,6 +43,7 @@ public:
     void move_planets();
     
     Trajectory direct_route(int steps);
+    Trajectory ellipse(int steps, int circles);
     
     QImage plot(const Trajectory& trajectory);
     

@@ -51,6 +51,17 @@ Vector from_polar(double r, double phi)
     return p;
 }
 
+void Vector::to_polar(double& r, double& phi) const
+{
+    phi = atan2(y, x);
+    if (phi < 0)
+    {
+        phi += 2*M_PI;
+    }
+    r = sqrt(x*x+y*y);
+}
+
+
 Vector::operator QPointF() const
 {
     return QPointF(400 + 200 * x, 400 - 200 * y);
@@ -87,7 +98,7 @@ double Planets::relax_step(Trajectory& trajectory)
         change += (eps.x * eps.x) + (eps.y * eps.y);
         current = current + eps * 0.25 * chebishev;
     }
-    for (int i = trajectory.n-2; i > 1; i -= 2)
+    for (int i = 2; i < trajectory.n; i += 2)
     {
         const Vector& previous = trajectory.positions.at(i-1);
         Vector& current = trajectory.positions[i];
@@ -115,6 +126,26 @@ Trajectory Planets::direct_route(int steps)
     }
     return t;
 }
+
+Trajectory Planets::ellipse(int steps, int circles)
+{
+    Trajectory t;
+    t.n = steps;
+    double r1, phi1, r2, phi2;
+    planet_one(0).to_polar(r1, phi1);
+    planet_two(steps * dt).to_polar(r2, phi2);
+
+    const double angle = (circles*2*M_PI + phi2 - phi1) / (steps);
+    const double rad = (r2-r1)/(steps);
+
+    for (int i = 0; i < steps+1; ++i)
+    {
+        t.positions << from_polar(r1 + i*rad, phi1 + i*angle);
+    }
+
+    return t;
+}
+
 
 Vector Planets::force(const Vector& pos, double t)
 {
