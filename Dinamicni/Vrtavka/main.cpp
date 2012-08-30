@@ -6,6 +6,10 @@
 #include <gsl/gsl_odeiv2.h>
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_fit.h>
+#include <gsl/gsl_histogram.h>
+
+#include <QtOpenCL/QtOpenCL>
+#include <QtOpenCL/qclcontext.h>
 
 #define l(x) y[x-1]
 #define n(x) y[x+2]
@@ -13,6 +17,12 @@
 using namespace std;
 
 const int PoincareIndex = 4;
+const double dE = 0.001;
+
+const int ParallelRuns = 200;
+
+QCLContext context;
+QCLProgram program;
 
 struct top_params
 {
@@ -23,15 +33,19 @@ struct top_params
         a = 1.0;
         mg = 1.0;
         L = l;
+        R = 1.0 - 1.0/D;
     }
     top_params(double D, double a, double L, double mg)
     : D(D), a(a), L(L), mg(mg)
-    {}
+    {
+        R = 1.0 - 1.0/D;
+    }
     
-    double D;
-    double a;
-    double L;
-    double mg;
+    float D;
+    float a;
+    float L;
+    float mg;
+    float R;
 };
 
 inline double energy(const top_params& top, double y[])
@@ -41,7 +55,7 @@ inline double energy(const top_params& top, double y[])
 
 void random_state(double y[], const top_params& top, double emax);
 
-double lyapunov(const top_params& top, const double initial[]);
+double lyapunov(const top_params& top, const double initial[], double* exponent, double* sigma);
 
 inline double interpolate(double t1, double t2, double x1, double x2, double t)
 {
@@ -50,17 +64,10 @@ inline double interpolate(double t1, double t2, double x1, double x2, double t)
 
 int odvod(double t, const double y[], double dy[], void* params)
 {
-    top_params& p = *(top_params*)params;
-
-    const double R = 1.0-1.0/p.D;
-
-    dy[0] = y[1] * y[2] * R + p.mg * p.a * y[4];
-    dy[1] = -y[2] * y[0] * R + p.mg * (p.L * y[5] - p.a * y[3]);
-    dy[2] = -p.mg * p.L * y[4];
-
-    dy[3] = y[1] * y[5] - y[2] * y[4] / p.D;
-    dy[4] = y[2] * y[3] / p.D - y[0] * y[5];
-    dy[5] = y[0] * y[4] - y[1] * y[3];
+    QCLKernel& kernel = *(QCLKernel*)params;
+    kernel.setArg(0, y, 6*ParallelRuns*sizeof(double));
+    kernel.setArg(1, dy, 6*ParallelRuns*sizeof(double));
+    kernel.run().waitForFinished();
 
     return GSL_SUCCESS;
 }
@@ -72,7 +79,6 @@ public:
     TopWorkspace(double D, double a, double L);
     ~TopWorkspace();
 
-    void setInitial(double l1, double l2, double l3, double n1, double n2, double n3);
     void setInitial(const double initial[]);
 
     double operator-(const TopWorkspace& other);
@@ -82,7 +88,7 @@ public:
 
     inline void apply()
     {
-        for (int i = 0; i < 6; ++i)
+        for (int i = 0; i < 6*ParallelRuns; ++i)
         {
             last[i] = y[i];
         }
@@ -95,7 +101,7 @@ public:
     }
 
 public:
-    double y[6];
+    double y[6*ParallelRuns];
     double t;
 
 private:
@@ -105,8 +111,10 @@ private:
     gsl_odeiv2_driver* driver;
     top_params params;
     double t1;
-    double last[6];
+    double last[6*ParallelRuns];
+    bool run[6*ParallelRuns];
     ofstream output;
+    QCLKernel kernel;
 };
 
 TopWorkspace::TopWorkspace(const top_params& top, const string& file)
@@ -124,7 +132,15 @@ TopWorkspace::TopWorkspace(double D, double a, double L)
 
 void TopWorkspace::init(const string& name)
 {
-    system = {odvod, 0, 6, &params};
+    kernel = program.createKernel("odvod");
+    kernel.setArg(2, run, ParallelRuns);
+    kernel.setArg(3, params.D);
+    kernel.setArg(4, params.L);
+    kernel.setArg(5, params.mg);
+    kernel.setArg(6, params.a);
+    kernel.setArg(7, params.R);
+    
+    system = {odvod, 0, 6*ParallelRuns, &kernel};
     driver = gsl_odeiv2_driver_alloc_y_new(&system, gsl_odeiv2_step_rk4, 1e-3, 1e-12, 0);
     
     t1 = 1e-3;
@@ -138,20 +154,9 @@ TopWorkspace::~TopWorkspace()
     output.close();
 }
 
-void TopWorkspace::setInitial(double l1, double l2, double l3, double n1, double n2, double n3)
-{
-    l(1) = l1;
-    l(2) = l2;
-    l(3) = l3;
-
-    n(1) = n1;
-    n(2) = n2;
-    n(3) = n3;
-}
-
 void TopWorkspace::setInitial(const double initial[])
 {
-    for (int i = 0; i < 6; ++i)
+    for (int i = 0; i < 6*ParallelRuns; ++i)
     {
         y[i] = initial[i];
     }
@@ -180,35 +185,37 @@ void TopWorkspace::save()
 void TopWorkspace::poincare()
 {
     const int p = PoincareIndex;
-    double tt = t;
+
+    for (int i = 0; i < ParallelRuns; ++i)
+    {
+        run[i] == 0;
+    }
+    
     apply();
     apply();
 
-    while (last[p] * y[p] > 0)
+    int running = ParallelRuns;
+
+    while (running > 0)
     {
+        for (int i = 0; i < ParallelRuns; ++i)
+        {
+            if (run[i] && last[6*i+p] * y[6*i+p] > 0)
+            {
+                double tS = t - t1 * fabs(y[6*i+p]) / (fabs(y[6*i+p]) + fabs(last[6*i+p]));
+                for (int k = 0; k < 6; ++k)
+                {
+                    y[6*i+k] = interpolate(t-t1, t, last[6*i+k], y[6*i+k], tS);
+                }
+                run[i] = false;
+                --running;
+            }
+        }
         apply();
     }
-
-    double tS = t - t1 * fabs(y[p]) / (fabs(y[p]) + fabs(last[p]));
-
-    /*
-    output << t;
-    for (int i = 0; i < 6; ++i)
-    {
-        output << " " << interpolate(t-t1, t, last[i], y[i], tS);
-    }
-    output << endl;
-    */
-    for (int i = 0; i < 6; ++i)
-    {
-        y[i] = interpolate(t-t1, t, last[i], y[i], tS);
-    }
-    t = tS;
-
-//    cout << "Poincare: perioda = " << tS - tt << endl;;
 }
 
-double lyapunov(const top_params& top, const double initial[])
+double lyapunov(const top_params& top, const double initial[], double* exponent, double* sigma)
 {
     double factor = 1;
     const double step = 1e-6;
@@ -216,11 +223,14 @@ double lyapunov(const top_params& top, const double initial[])
     const int N = 200;
     const int P = 2;
 
-    double z[6];
+    double z[6*ParallelRuns];
     for (int i = 0; i < 6; ++i)
     {
         z[i] = initial[i];
     }
+
+    context.create();
+    program = context.buildProgramFromSourceFile("odvod.cl");
 
     TopWorkspace top1(top.D, top.a, top.L);
     top1.setInitial(z);
@@ -289,14 +299,9 @@ double lyapunov(const top_params& top, const double initial[])
     
     delete[] x;
     delete[] a;
-    if (c0 > sqrt(cov00))
-    {
-        return c0;
-    }
-    else
-    {
-        return 0;
-    }
+
+    *exponent = c0;
+    *sigma = sqrt(cov00);
 }
 
 void random_state(double y[], const top_params& top, double emax)
@@ -317,25 +322,31 @@ void random_state(double y[], const top_params& top, double emax)
     while (energy(top, y) > emax);
 }
 
-double chaos_part(const top_params& top, double emax)
+void chaos_part(const top_params& top, double emax)
 {
-    int N = 200;
-    double y[6];
-    int C = 0;
+    double y[6*ParallelRuns];
 
-    for (int i = 0; i < N; ++i)
+    gsl_histogram* h = gsl_histogram_alloc(14);
+    gsl_histogram_set_ranges_uniform(h, -1, 6);
+
+    double exponent[ParallelRuns];
+    double sigma[ParallelRuns];
+    for (int i = 0; i < ParallelRuns; ++i)
     {
-        random_state(y, top, emax);
-        double l = lyapunov(top, y);
-        if (l > 0)
-        {
-            C++;
-        }
+        random_state(&(y[6*i]), top, emax);
+    }
+    lyapunov(top, y, exponent, sigma);
+
+    for (int i = 0; i < ParallelRuns; ++i)
+    {
+        gsl_histogram_increment(h, exponent[i]/sigma[i]);
     }
 
-    double del = (double)C/N;
-    cout << "Delez kaosa pri lambda=" << top.L << " je " << del << endl;
-    return del;
+    char buf[32];
+    sprintf(buf, "g_histogram_%g_%g.dat", emax, top.L);
+    FILE* f = fopen(buf, "wt");
+    gsl_histogram_fprintf(f, h, "%g", "%g");
+    fclose(f);
 }
 
 void fazni_prostor(double lambda)
@@ -365,6 +376,7 @@ int main(int argc, char **argv) {
     double erg = atof(argv[1]);
     for (double L = 0; L < 2.05; L += 0.1)
     {
+        cout << "Starting with lambda=" << L << endl;
         chaos_part(top_params(L), erg);
     }
     return 0;
