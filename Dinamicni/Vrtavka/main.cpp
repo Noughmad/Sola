@@ -209,11 +209,6 @@ void TopWorkspace::poincare()
 {
     const int p = PoincareIndex;
 
-    for (int i = 0; i < ParallelRuns; ++i)
-    {
-        run[i] == 0;
-    }
-
     int running = ParallelRuns;
     for (int i = 0; i < ParallelRuns; ++i)
     {
@@ -236,7 +231,6 @@ void TopWorkspace::poincare()
                 }
                 run[i] = 0;
                 --running;
-                cout << running << endl;
             }
         }
         apply();
@@ -257,13 +251,13 @@ void lyapunov(const top_params& top, const double initial[], double* exponent, d
         z[i] = initial[i];
     }
 
-    context.create();
+    context.create(QCLDevice::CPU);
     program = context.buildProgramFromSourceFile("../odvod.cl");
 
     TopWorkspace top1(top.D, top.a, top.L);
     top1.setInitial(z);
 
-    for (int i = 0; i < 6; ++i)
+    for (int i = 0; i < 6*ParallelRuns; ++i)
     {
         z[i] += (double)rand() / RAND_MAX * step;
     }
@@ -284,11 +278,12 @@ void lyapunov(const top_params& top, const double initial[], double* exponent, d
     double d0[ParallelRuns];
     QCLBuffer buf1 = context.createBufferCopy(top1.y, 6*ParallelRuns*sizeof(double), QCLMemoryObject::ReadOnly);
     QCLBuffer buf2 = context.createBufferCopy(top2.y, 6*ParallelRuns*sizeof(double), QCLMemoryObject::ReadOnly);
-    QCLBuffer buf3 = context.createBufferHost(d0, ParallelRuns*sizeof(double), QCLMemoryObject::WriteOnly);
+    QCLBuffer buf3 = context.createBufferDevice(ParallelRuns*sizeof(double), QCLMemoryObject::ReadWrite);
     diff.setArg(0, buf1);
     diff.setArg(1, buf2);
     diff.setArg(2, buf3);
     diff.run().waitForFinished();
+    buf3.read(d0, ParallelRuns*sizeof(double));
 
     double** a = new double*[ParallelRuns];
     for (int i = 0; i < ParallelRuns; ++i)
@@ -310,11 +305,12 @@ void lyapunov(const top_params& top, const double initial[], double* exponent, d
         double d[ParallelRuns];
         buf1 = context.createBufferCopy(top1.y, 6*ParallelRuns*sizeof(double), QCLMemoryObject::ReadOnly);
         buf2 = context.createBufferCopy(top2.y, 6*ParallelRuns*sizeof(double), QCLMemoryObject::ReadOnly);
-        buf3 = context.createBufferHost(d, ParallelRuns*sizeof(double), QCLMemoryObject::ReadWrite);
+        buf3 = context.createBufferDevice(ParallelRuns*sizeof(double), QCLMemoryObject::ReadWrite);
         diff.setArg(0, buf1);
         diff.setArg(1, buf2);
         diff.setArg(2, buf3);
         diff.run().waitForFinished();
+        buf3.read(d, ParallelRuns*sizeof(double));
 
         for (int i = 0; i < ParallelRuns; ++i)
         {
