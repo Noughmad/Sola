@@ -10,6 +10,7 @@
 
 #include <QtOpenCL/QtOpenCL>
 #include <QtOpenCL/qclcontext.h>
+#include <CL/cl_platform.h>
 
 #define l(x) y[x-1]
 #define n(x) y[x+2]
@@ -19,7 +20,7 @@ using namespace std;
 const int PoincareIndex = 4;
 const double dE = 0.001;
 
-const int ParallelRuns = 200;
+const int ParallelRuns = 100;
 
 QCLContext context;
 QCLProgram program;
@@ -55,7 +56,7 @@ inline double energy(const top_params& top, double y[])
 
 void random_state(double y[], const top_params& top, double emax);
 
-double lyapunov(const top_params& top, const double initial[], double* exponent, double* sigma);
+void lyapunov(const top_params& top, const double initial[], double* exponent, double* sigma);
 
 inline double interpolate(double t1, double t2, double x1, double x2, double t)
 {
@@ -65,9 +66,17 @@ inline double interpolate(double t1, double t2, double x1, double x2, double t)
 int odvod(double t, const double y[], double dy[], void* params)
 {
     QCLKernel& kernel = *(QCLKernel*)params;
-    kernel.setArg(0, y, 6*ParallelRuns*sizeof(double));
-    kernel.setArg(1, dy, 6*ParallelRuns*sizeof(double));
-    kernel.run().waitForFinished();
+
+    QCLBuffer yBuffer = context.createBufferCopy(y, 6*ParallelRuns*sizeof(double), QCLMemoryObject::ReadOnly);
+    kernel.setArg(6, yBuffer);
+
+    QCLBuffer dyBuffer = context.createBufferDevice(6*ParallelRuns*sizeof(double), QCLMemoryObject::WriteOnly);
+    kernel.setArg(7, dyBuffer);
+
+    QCLEvent event = kernel.run();
+    event.waitForFinished();
+
+    dyBuffer.read(dy, 6*ParallelRuns*sizeof(double));
 
     return GSL_SUCCESS;
 }
@@ -92,6 +101,8 @@ public:
         {
             last[i] = y[i];
         }
+        runBuffer = context.createBufferCopy(run, ParallelRuns*sizeof(cl_char), QCLMemoryObject::ReadOnly);
+        kernel.setArg(0, runBuffer);
         gsl_odeiv2_driver_apply(driver, &t, t+t1, y);
     }
 
@@ -112,9 +123,12 @@ private:
     top_params params;
     double t1;
     double last[6*ParallelRuns];
-    bool run[6*ParallelRuns];
+    cl_char run[ParallelRuns];
     ofstream output;
+
+public:
     QCLKernel kernel;
+    QCLBuffer runBuffer, yBuffer, dyBuffer;
 };
 
 TopWorkspace::TopWorkspace(const top_params& top, const string& file)
@@ -133,16 +147,25 @@ TopWorkspace::TopWorkspace(double D, double a, double L)
 void TopWorkspace::init(const string& name)
 {
     kernel = program.createKernel("odvod");
-    kernel.setArg(2, run, ParallelRuns);
-    kernel.setArg(3, params.D);
-    kernel.setArg(4, params.L);
-    kernel.setArg(5, params.mg);
-    kernel.setArg(6, params.a);
-    kernel.setArg(7, params.R);
-    
+    QCLWorkSize size(ParallelRuns);
+    kernel.setGlobalWorkSize(size);
+
+    cout << kernel.localWorkSize().toString().toStdString() << endl;
+
+    kernel.setArg(1, params.D);
+    kernel.setArg(2, params.L);
+    kernel.setArg(3, params.mg);
+    kernel.setArg(4, params.a);
+    kernel.setArg(5, params.R);
+
     system = {odvod, 0, 6*ParallelRuns, &kernel};
     driver = gsl_odeiv2_driver_alloc_y_new(&system, gsl_odeiv2_step_rk4, 1e-3, 1e-12, 0);
-    
+
+    for (int i = 0; i < ParallelRuns; ++i)
+    {
+        run[i] = 1;
+    }
+
     t1 = 1e-3;
     output.open(name);
 }
@@ -190,32 +213,37 @@ void TopWorkspace::poincare()
     {
         run[i] == 0;
     }
-    
-    apply();
-    apply();
 
     int running = ParallelRuns;
+    for (int i = 0; i < ParallelRuns; ++i)
+    {
+        run[i] = 1;
+    }
+
+    apply();
+    apply();
 
     while (running > 0)
     {
         for (int i = 0; i < ParallelRuns; ++i)
         {
-            if (run[i] && last[6*i+p] * y[6*i+p] > 0)
+            if (run[i] && last[6*i+p] * y[6*i+p] <= 0)
             {
                 double tS = t - t1 * fabs(y[6*i+p]) / (fabs(y[6*i+p]) + fabs(last[6*i+p]));
                 for (int k = 0; k < 6; ++k)
                 {
                     y[6*i+k] = interpolate(t-t1, t, last[6*i+k], y[6*i+k], tS);
                 }
-                run[i] = false;
+                run[i] = 0;
                 --running;
+                cout << running << endl;
             }
         }
         apply();
     }
 }
 
-double lyapunov(const top_params& top, const double initial[], double* exponent, double* sigma)
+void lyapunov(const top_params& top, const double initial[], double* exponent, double* sigma)
 {
     double factor = 1;
     const double step = 1e-6;
@@ -224,13 +252,13 @@ double lyapunov(const top_params& top, const double initial[], double* exponent,
     const int P = 2;
 
     double z[6*ParallelRuns];
-    for (int i = 0; i < 6; ++i)
+    for (int i = 0; i < 6*ParallelRuns; ++i)
     {
         z[i] = initial[i];
     }
 
     context.create();
-    program = context.buildProgramFromSourceFile("odvod.cl");
+    program = context.buildProgramFromSourceFile("../odvod.cl");
 
     TopWorkspace top1(top.D, top.a, top.L);
     top1.setInitial(z);
@@ -244,14 +272,30 @@ double lyapunov(const top_params& top, const double initial[], double* exponent,
     TopWorkspace top2(top.D, top.a, top.L);
     top2.setInitial(z);
 
-    for (int p = 0; p < 20; ++p)
+    for (int p = 0; p < P; ++p)
     {
         top1.poincare();
         top2.poincare();
     }
-    double d0 = top1 - top2;
 
-    double* a = new double[N];
+    QCLKernel diff = program.createKernel("razdalja");
+    diff.setGlobalWorkSize(QCLWorkSize(ParallelRuns));
+
+    double d0[ParallelRuns];
+    QCLBuffer buf1 = context.createBufferCopy(top1.y, 6*ParallelRuns*sizeof(double), QCLMemoryObject::ReadOnly);
+    QCLBuffer buf2 = context.createBufferCopy(top2.y, 6*ParallelRuns*sizeof(double), QCLMemoryObject::ReadOnly);
+    QCLBuffer buf3 = context.createBufferHost(d0, ParallelRuns*sizeof(double), QCLMemoryObject::WriteOnly);
+    diff.setArg(0, buf1);
+    diff.setArg(1, buf2);
+    diff.setArg(2, buf3);
+    diff.run().waitForFinished();
+
+    double** a = new double*[ParallelRuns];
+    for (int i = 0; i < ParallelRuns; ++i)
+    {
+        a[i] = new double[N];
+    }
+
 
     for (int k = 0; k < N; ++k)
     {
@@ -260,48 +304,52 @@ double lyapunov(const top_params& top, const double initial[], double* exponent,
             top1.poincare();
             top2.poincare();
         }
-        
-        double d = top1 - top2;
-        a[k] = sqrt(d0/d);
-        
-        for (int i = 0; i < 6; ++i)
-        {
-            top2.y[i] = (1.0-a[k]) * top1.y[i] + a[k] * top2.y[i];
-        }
 
-        a[k] = -log(a[k]);
-        // cout << a[k] << ", " << d0 << ", " << top1-top2 << endl;
-        // cout << " Koeficient " << k << " je " << a[k] << endl;
+        cout << "One Poincare mapping done: " << k << endl;
+
+        double d[ParallelRuns];
+        buf1 = context.createBufferCopy(top1.y, 6*ParallelRuns*sizeof(double), QCLMemoryObject::ReadOnly);
+        buf2 = context.createBufferCopy(top2.y, 6*ParallelRuns*sizeof(double), QCLMemoryObject::ReadOnly);
+        buf3 = context.createBufferHost(d, ParallelRuns*sizeof(double), QCLMemoryObject::ReadWrite);
+        diff.setArg(0, buf1);
+        diff.setArg(1, buf2);
+        diff.setArg(2, buf3);
+        diff.run().waitForFinished();
+
+        for (int i = 0; i < ParallelRuns; ++i)
+        {
+            a[i][k] = sqrt(d0[i]/d[i]);
+            for (int j = 0; j < 6; ++j)
+            {
+                top2.y[6*i+j] = (1.0-a[i][k]) * top1.y[6*i+j] + a[i][k] * top2.y[6*i+j];
+            }
+
+            a[i][k] = -log(a[i][k]);
+        }
     }
-    
+
     double* x = new double[N];
     for (int i = 0; i < N; ++i)
     {
         x[i] = 1.0/(i+1);
     }
-    double c0, c1, cov00, cov01, cov11, sumsq;
-    gsl_fit_linear(x, 1, a, 1, N, &c0, &c1, &cov00, &cov01, &cov11, &sumsq);
-    /*
-    cout << "c1 = " << c1 << " +/- " << sqrt(cov11) << endl;
-    cout << "c0 = " << c0 << " +/- " << sqrt(cov00) << endl;
-    
 
-    stringstream str;
-    str << "g_ljapunov_" << top.L << ".dat" << flush;
-    cout << "Saving to " << str.str() << endl;
-    ofstream out(str.str());
+    for (int p = 0; p < ParallelRuns; ++p)
+    {
+
+        double c0, c1, cov00, cov01, cov11, sumsq;
+        gsl_fit_linear(x, 1, a[p], 1, N, &c0, &c1, &cov00, &cov01, &cov11, &sumsq);
+
+        exponent[p] = c0;
+        sigma[p] = sqrt(cov00);
+    }
+
+    delete[] x;
     for (int i = 0; i < N; ++i)
     {
-        out << (i+1) << '\t' << a[i] << endl;
+        delete[] a[i];
     }
-    out.close();
-    */
-    
-    delete[] x;
     delete[] a;
-
-    *exponent = c0;
-    *sigma = sqrt(cov00);
 }
 
 void random_state(double y[], const top_params& top, double emax)
@@ -335,6 +383,7 @@ void chaos_part(const top_params& top, double emax)
     {
         random_state(&(y[6*i]), top, emax);
     }
+    
     lyapunov(top, y, exponent, sigma);
 
     for (int i = 0; i < ParallelRuns; ++i)
