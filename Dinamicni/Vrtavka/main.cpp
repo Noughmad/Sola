@@ -8,10 +8,6 @@
 #include <gsl/gsl_fit.h>
 #include <gsl/gsl_histogram.h>
 
-#include <QtOpenCL/QtOpenCL>
-#include <QtOpenCL/qclcontext.h>
-#include <CL/cl_platform.h>
-
 #define l(x) y[x-1]
 #define n(x) y[x+2]
 
@@ -20,10 +16,23 @@ using namespace std;
 const int PoincareIndex = 4;
 const double dE = 0.001;
 
-const int ParallelRuns = 100;
+const int ParallelRuns = 200;
+const int LyapunovMaps = 500;
 
-QCLContext context;
-QCLProgram program;
+class TopWorkspace;
+
+void razdalja(const double y1[], const double y2[], double d[])
+{
+    for (int i = 0; i < ParallelRuns; ++i)
+    {
+        d[i] = 0;
+        for (int k = 0; k < 6; ++k)
+        {
+            const double t = y1[6*i+k] - y2[6*i+k];
+            d[i] += t*t;
+        }
+    }
+}
 
 struct top_params
 {
@@ -63,23 +72,7 @@ inline double interpolate(double t1, double t2, double x1, double x2, double t)
     return ((t-t1)*x2 + (t2-t)*x1) / (t2-t1);
 }
 
-int odvod(double t, const double y[], double dy[], void* params)
-{
-    QCLKernel& kernel = *(QCLKernel*)params;
-
-    QCLBuffer yBuffer = context.createBufferCopy(y, 6*ParallelRuns*sizeof(double), QCLMemoryObject::ReadOnly);
-    kernel.setArg(6, yBuffer);
-
-    QCLBuffer dyBuffer = context.createBufferDevice(6*ParallelRuns*sizeof(double), QCLMemoryObject::WriteOnly);
-    kernel.setArg(7, dyBuffer);
-
-    QCLEvent event = kernel.run();
-    event.waitForFinished();
-
-    dyBuffer.read(dy, 6*ParallelRuns*sizeof(double));
-
-    return GSL_SUCCESS;
-}
+int odvod(double t, const double y[], double dy[], void* params);
 
 class TopWorkspace
 {
@@ -101,8 +94,6 @@ public:
         {
             last[i] = y[i];
         }
-        runBuffer = context.createBufferCopy(run, ParallelRuns*sizeof(cl_char), QCLMemoryObject::ReadOnly);
-        kernel.setArg(0, runBuffer);
         gsl_odeiv2_driver_apply(driver, &t, t+t1, y);
     }
 
@@ -120,16 +111,48 @@ private:
     
     gsl_odeiv2_system system;
     gsl_odeiv2_driver* driver;
-    top_params params;
     double t1;
     double last[6*ParallelRuns];
-    cl_char run[ParallelRuns];
     ofstream output;
 
 public:
-    QCLKernel kernel;
-    QCLBuffer runBuffer, yBuffer, dyBuffer;
+    bool run[ParallelRuns];
+    top_params params;
 };
+
+int odvod(double t, const double y[], double dy[], void* params)
+{
+    const TopWorkspace* ws = static_cast<TopWorkspace*>(params);
+    
+    const top_params& p = ws->params;
+    
+    for (int i = 0; i < ParallelRuns; ++i)
+    {
+        const int s = 6*i;
+        if (ws->run[i])
+        {
+            dy[s+0] = y[s+1] * y[s+2] * p.R + p.mg * p.a * y[s+4];
+            dy[s+1] = -y[s+2] * y[s+0] * p.R + p.mg * (p.L * y[s+5] - p.a * y[s+3]);
+            dy[s+2] = -p.mg * p.L * y[s+4];
+            
+            dy[s+3] = y[s+1] * y[s+5] - y[s+2] * y[s+4] / p.D;
+            dy[s+4] = y[s+2] * y[s+3] / p.D - y[s+0] * y[s+5];
+            dy[s+5] = y[s+0] * y[s+4] - y[s+1] * y[s+3];
+        }
+        else
+        {
+            dy[s] = 0;
+            dy[s+1] = 0;
+            dy[s+2] = 0;
+            dy[s+3] = 0;
+            dy[s+4] = 0;
+            dy[s+5] = 0;
+        }
+    }
+    
+    return GSL_SUCCESS;
+}
+
 
 TopWorkspace::TopWorkspace(const top_params& top, const string& file)
 {
@@ -146,19 +169,8 @@ TopWorkspace::TopWorkspace(double D, double a, double L)
 
 void TopWorkspace::init(const string& name)
 {
-    kernel = program.createKernel("odvod");
-    QCLWorkSize size(ParallelRuns);
-    kernel.setGlobalWorkSize(size);
 
-    cout << kernel.localWorkSize().toString().toStdString() << endl;
-
-    kernel.setArg(1, params.D);
-    kernel.setArg(2, params.L);
-    kernel.setArg(3, params.mg);
-    kernel.setArg(4, params.a);
-    kernel.setArg(5, params.R);
-
-    system = {odvod, 0, 6*ParallelRuns, &kernel};
+    system = {odvod, 0, 6*ParallelRuns, this};
     driver = gsl_odeiv2_driver_alloc_y_new(&system, gsl_odeiv2_step_rk4, 1e-3, 1e-12, 0);
 
     for (int i = 0; i < ParallelRuns; ++i)
@@ -242,7 +254,7 @@ void lyapunov(const top_params& top, const double initial[], double* exponent, d
     double factor = 1;
     const double step = 1e-6;
 
-    const int N = 200;
+    const int N = LyapunovMaps;
     const int P = 2;
 
     double z[6*ParallelRuns];
@@ -250,9 +262,6 @@ void lyapunov(const top_params& top, const double initial[], double* exponent, d
     {
         z[i] = initial[i];
     }
-
-    context.create(QCLDevice::CPU);
-    program = context.buildProgramFromSourceFile("../odvod.cl");
 
     TopWorkspace top1(top.D, top.a, top.L);
     top1.setInitial(z);
@@ -272,25 +281,16 @@ void lyapunov(const top_params& top, const double initial[], double* exponent, d
         top2.poincare();
     }
 
-    QCLKernel diff = program.createKernel("razdalja");
-    diff.setGlobalWorkSize(QCLWorkSize(ParallelRuns));
-
     double d0[ParallelRuns];
-    QCLBuffer buf1 = context.createBufferCopy(top1.y, 6*ParallelRuns*sizeof(double), QCLMemoryObject::ReadOnly);
-    QCLBuffer buf2 = context.createBufferCopy(top2.y, 6*ParallelRuns*sizeof(double), QCLMemoryObject::ReadOnly);
-    QCLBuffer buf3 = context.createBufferDevice(ParallelRuns*sizeof(double), QCLMemoryObject::ReadWrite);
-    diff.setArg(0, buf1);
-    diff.setArg(1, buf2);
-    diff.setArg(2, buf3);
-    diff.run().waitForFinished();
-    buf3.read(d0, ParallelRuns*sizeof(double));
+    double d[ParallelRuns];
 
+    razdalja(top1.y, top2.y, d0);
+    
     double** a = new double*[ParallelRuns];
     for (int i = 0; i < ParallelRuns; ++i)
     {
         a[i] = new double[N];
     }
-
 
     for (int k = 0; k < N; ++k)
     {
@@ -300,17 +300,10 @@ void lyapunov(const top_params& top, const double initial[], double* exponent, d
             top2.poincare();
         }
 
-        cout << "One Poincare mapping done: " << k << endl;
+        if (k % 30 == 0)
+            cout << "Poincare mapping done: " << k << endl;
 
-        double d[ParallelRuns];
-        buf1 = context.createBufferCopy(top1.y, 6*ParallelRuns*sizeof(double), QCLMemoryObject::ReadOnly);
-        buf2 = context.createBufferCopy(top2.y, 6*ParallelRuns*sizeof(double), QCLMemoryObject::ReadOnly);
-        buf3 = context.createBufferDevice(ParallelRuns*sizeof(double), QCLMemoryObject::ReadWrite);
-        diff.setArg(0, buf1);
-        diff.setArg(1, buf2);
-        diff.setArg(2, buf3);
-        diff.run().waitForFinished();
-        buf3.read(d, ParallelRuns*sizeof(double));
+        razdalja(top1.y, top2.y, d);
 
         for (int i = 0; i < ParallelRuns; ++i)
         {
@@ -341,7 +334,7 @@ void lyapunov(const top_params& top, const double initial[], double* exponent, d
     }
 
     delete[] x;
-    for (int i = 0; i < N; ++i)
+    for (int i = 0; i < ParallelRuns; ++i)
     {
         delete[] a[i];
     }
@@ -370,7 +363,7 @@ void chaos_part(const top_params& top, double emax)
 {
     double y[6*ParallelRuns];
 
-    gsl_histogram* h = gsl_histogram_alloc(14);
+    gsl_histogram* h = gsl_histogram_alloc(28);
     gsl_histogram_set_ranges_uniform(h, -1, 6);
 
     double exponent[ParallelRuns];
@@ -384,7 +377,7 @@ void chaos_part(const top_params& top, double emax)
 
     for (int i = 0; i < ParallelRuns; ++i)
     {
-        gsl_histogram_increment(h, exponent[i]/sigma[i]);
+        gsl_histogram_increment(h, max(min(exponent[i]/sigma[i], 6.0), -1.0));
     }
 
     char buf[32];
@@ -419,7 +412,17 @@ void fazni_prostor(double lambda)
 int main(int argc, char **argv) {
     srand(time(0));
     double erg = atof(argv[1]);
-    for (double L = 0; L < 2.05; L += 0.1)
+    double from = 0;
+    double to = 2.05;
+    if (argc > 2)
+    {
+        from = atof(argv[2]);
+    }
+    if (argc > 3)
+    {
+        to = atof(argv[3]);
+    }
+    for (double L = from; L < to; L += 0.1)
     {
         cout << "Starting with lambda=" << L << endl;
         chaos_part(top_params(L), erg);

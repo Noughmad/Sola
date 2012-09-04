@@ -5,5 +5,5 @@ find_package(Qt4 REQUIRED)
 
 
 add_executable(vrtavka main.cpp)
-target_link_libraries(vrtavka gsl gslcblas ${QT_QTCORE_LIBRARY} QtOpenCL OpenCL)
+target_link_libraries(vrtavka gsl gslcblas)
 
