@@ -68,7 +68,7 @@ Ena"cbe gibanja vrtavke v Hamiltonovi formulaciji se glasijo
 V Hamiltonianu nastopajo tako $l_s$ kot $n_s$, njihove medsebojne Poissonove oklepaje pa poznamo. Netrivialni so le "cleni z $l_s^2$, zato moramo najprej izra"cunati Poissonove oklepaje oblike
 
 \begin{align}
-  \{l_s^2, l_r\} &= \sum_i\left( \parcialno{l_s^2}{q_i}\parcialno{l_r}{p_i} - \parcialno{l_s^2}{p_i}\parcialno{l_r}{q_i} \right) = 2l_s \sum_i\left[ \parcialno{l_s}{q_i}\parcialno{l_r}{p_i} - \parcialno{l_s}{p_i}\parcialno{l_r}{q_i} \right] = 2l_s \{l_s, l_r\}
+  \{l_s^2, l_r\} &= \sum_i\left( \parcialno{l_s^2}{q_i}\parcialno{l_r}{p_i} - \parcialno{l_s^2}{p_i}\parcialno{l_r}{q_i} \right) = 2l_s \sum_i\left( \parcialno{l_s}{q_i}\parcialno{l_r}{p_i} - \parcialno{l_s}{p_i}\parcialno{l_r}{q_i} \right) = 2l_s \{l_s, l_r\}
 \end{align}
 
 Uporabili smo kanoni"cne spremenljivke $q_i$ in $p_i$, ki nastopajo v definiciji Poissonovega oklepaja. Fizika ni odvisna od izbire teh spremenjivk, in tudi v nadaljnjem ra"cunanju jih ne bomo potrebovali. 
@@ -115,7 +115,7 @@ Namesto tega sem opazoval vrednost $\alpha = a/\sigma_a$, ki je povezana z gotov
 
 \begin{figure}[H]
  \input{g_umeritev}
- \caption{Umeritev mejhne gotovosti $\alpha_c$ v sistem brez motnje ($\lambda=0$)}
+ \caption{Umeritev mejne gotovosti $\alpha_c$ v sistemu brez motnje ($\lambda=0$)}
  \label{fig:umeritev}
 \end{figure}
 
@@ -139,7 +139,7 @@ Z obeh grafov lahko vidimo, da izbira mejne vrednosti za gotovost le malo vpliva
 
 
 \section{Dele"z kaoti"cnega faznega prostora}
-Simulacijo sem pognal pri "stirih razli"cnih maksimalnih energijah $E$ in velikostih motnje $\lambda$ med 0 in 2. Vsaki"c sem hkrati spremljal 200 parov bli"znjih orbit, na vsaki orbiti pa sem naredil 500 iteracij Poincarejeve preslikave. Za kriterij kaoti"cnosti orbite sem uporabil mejhno vrednost $\alpha_c=3$. Kon"cni rezultat je na sliki \ref{fig:kaos}. 
+Izbral sem vrtavko s parametri $\Delta = 5$, $a=1$ in $mg = 1$, parameter $\lambda$ pa sem spreminjal od 0 do 2. Simulacijo sem pognal pri "stirih razli"cnih maksimalnih energijah $E$. Vsaki"c sem hkrati spremljal 200 parov bli"znjih orbit, na vsaki orbiti pa sem naredil 500 iteracij Poincarejeve preslikave. Za kriterij kaoti"cnosti orbite sem uporabil mejno vrednost $\alpha_c=3$. Kon"cni rezultat je na sliki \ref{fig:kaos}. 
 
 \begin{figure}[H]
  \label{fig:kaos}
