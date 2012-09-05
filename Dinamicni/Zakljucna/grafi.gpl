@@ -1,0 +1,32 @@
+set terminal epslatex color solid
+
+## Delez kaosa
+set xlabel "Motnja $\\lambda$"
+set ylabel "Dele\"z kaoti\"cnega FP"
+set output "g_kaos_1.tex"
+plot for [e in "1 3 10 30"] sprintf("Data/g_data_%s_1.dat", e) w lines title sprintf("E = %s", e)
+
+set output "g_kaos_3.tex"
+plot for [e in "1 3 10 30"] sprintf("Data/g_data_%s_3.dat", e) w lines title sprintf("E = %s", e)
+
+set output "g_kaos_5.tex"
+plot for [e in "1 3 10 30"] sprintf("Data/g_data_%s_5.dat", e) w lines title sprintf("E = %s", e)
+
+## Umeritev alpha
+set xlabel "$\\alpha$"
+set ylabel "$dP/d\\alpha$"
+set output "g_umeritev.tex"
+plot for [e in "1 3 10 30"] sprintf("Data/g_histogram_%s_0.dat", e) u ($1/2+$2/2):($3/200) w lines title sprintf("E = %s", e)
+
+
+## Gotovost
+set xlabel "$\\alpha_c$"
+set ylabel "Dele\"z kaoti\"cnega FP"
+
+set output "g_gotovost_1.tex"
+set key at 1.5, 0.7
+plot for [s=1:5] sprintf("Data/g_data_1_%i.dat", s) w lines title sprintf("$\\alpha_c = %i$", s)
+
+set output "g_gotovost_30.tex"
+set key at 0.7, 0.28
+plot for [s=1:5] sprintf("Data/g_data_30_%i.dat", s) w lines title sprintf("$\\alpha_c = %i$", s)

@@ -17,7 +17,7 @@ const int PoincareIndex = 4;
 const double dE = 0.001;
 
 const int ParallelRuns = 200;
-const int LyapunovMaps = 500;
+const int LyapunovMaps = 50;
 
 class TopWorkspace;
 
@@ -377,6 +377,7 @@ void chaos_part(const top_params& top, double emax)
 
     for (int i = 0; i < ParallelRuns; ++i)
     {
+        cout << exponent[i]/sigma[i] << " => " << max(min(exponent[i]/sigma[i], 6.0), -1.0) << endl;
         gsl_histogram_increment(h, max(min(exponent[i]/sigma[i], 6.0), -1.0));
     }
 
