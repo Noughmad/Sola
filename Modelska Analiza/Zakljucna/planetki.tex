@@ -22,7 +22,7 @@
 \newcommand{\eps}{\varepsilon}
 \renewcommand{\phi}{\varphi}
 \renewcommand{\theta}{\vartheta}
-\newcommand{\dd}{\mathrm{d}}
+\newcommand{\dd}{\,\mathrm{d}}
 
 \newcommand{\parcialno}[2]{
   \frac{\partial #1}{\partial #2}
@@ -42,8 +42,9 @@
 
 \maketitle
 
-\section{"Stevilo parametrov}
+\section{Zapis problema}
 
+\subsection{Newtonov zakon}
 Sonda se po son"cnem sistemu giblje, kot to dolo"ca Newtonov zakon
 
 \begin{align}
@@ -61,38 +62,62 @@ Masa sonde se po pri"cakovanju kraj"sa, ostanejo pa nam "se gravitacijska konsta
 \vec{\ddot r_i} = -\omega^2\vec r_i = GM \frac{-\vec r_i}{r_i^3}
 \end{align}
 
-Imamo torej zvezo med maso sonca $M$, gravitacijsko konstanto $G$, polmerom orbite planeta $r_i$ ($i$ je 1 ali 2) in frekvenco kro"zenja $\omega$. Konstanta $G$ nastopa povsod kot multiplikativna konstanta k drugemu "casovnemu odvodu. Izbira njene vrednosti je zato enakovredna izbiri "casovne skale $t \to t/\sqrt{G}$. Enak u"cinek ima pove"canje ali zmanj"sanje mase sonca in planetov za enak faktor. Vrednosti za $G$ in $M$ lahko torej postavimo na 1, namesto mase planeta $m$ pa ra"cunamo z razmerjem $\mu = m/M$. Ena"cbo gibanja planetov re"simo enostavno, tako da zanemarimo medsebojni vpliv in privzamemo kro"zno gibanje. Iz zveze (\ref{eq:gibanje-planetov}) izrazimo kro"zno frekvenco kot $\omega^2 = 1/r^3$. 
+Imamo torej zvezo med maso sonca $M$, gravitacijsko konstanto $G$, polmerom orbite planeta $r_i$ ($i$ je 1 ali 2) in frekvenco kro"zenja $\omega$. 
+
+\subsection{"Stevilo parametrov}
+Konstanta $G$ nastopa povsod kot multiplikativna konstanta k drugemu "casovnemu odvodu. Izbira njene vrednosti je zato enakovredna izbiri "casovne skale $t \to t/\sqrt{G}$. Enak u"cinek ima pove"canje ali zmanj"sanje mase sonca in planetov za enak faktor. Vrednosti za $G$ in $M$ lahko torej postavimo na 1, namesto mase planeta $m$ pa ra"cunamo z razmerjem $\mu = m/M$. Ena"cbo gibanja planetov re"simo enostavno, tako da zanemarimo medsebojni vpliv in privzamemo kro"zno gibanje. Iz zveze (\ref{eq:gibanje-planetov}) izrazimo kro"zno frekvenco kot $\omega^2 = 1/r^3$. 
 
 \begin{align}
-\drug r &= -\frac{\vec r}{r^3} + \mu\frac{\vec{r_1-r}}{|\vec{r_1-r}|^3} + \mu\frac{\vec{r_2-r}}{|\vec{r_2-r}|^3} \\
-\vec r_i &= \omega_i^{-2/3} \left[ \cos(\omega_i t + \phi_i), \sin(\omega_i t + \phi_i) \right]^T
+\drug r &= -\frac{\vec r}{r^3} + \mu\frac{\vec{r_1-r}}{|\vec{r_1-r}|^3} + \mu\frac{\vec{r_2-r}}{|\vec{r_2-r}|^3} \label{eq:sonda} \\
+\vec r_i(t) &= \omega_i^{-2/3} \left[ \cos(\omega_i t + \phi_i), \sin(\omega_i t + \phi_i) \right]^T
 \end{align}
 
 V nalogi je podano razmerje polmerov orbit obeh planetov $r_2 = 2r_i$. Po drugem Keplerjevem zakonu lahko to pretvorimo v razmerje kro"znih frekvenc
 
 \[ \omega_1 = \sqrt{8}\omega_2 \approx 2.828 \omega_2 \]
 
-Nazadnje preverimo "se, ali lahko dolo"cimo tudi vrednosti za $r_1$ in $r_2$. "Ce vse razdalje pove"camo za faktor $k$, se kro"zni frekvenci zmanj"sata za $\sqrt{k^3}$, sile na sondo pa se zmanj"sajo za $k^2$. Samo s spreminjanjem "casovne skale ne moremo odpraviti parametra $r_1$. 
+Nazadnje preverimo "se, ali lahko dolo"cimo tudi vrednosti za $r_1$ in $r_2$. "Ce vse razdalje pove"camo za faktor $k$, se kro"zni frekvenci pomno"zita s $\sqrt{k^{-3}}$, sile na sondo s $k^{-2}$. "Ce spet reskaliramo "casovno skalo kot $t \to t\sqrt{k^3}$, se vsi pospe"ski mno"zijo s $k \cdot \sqrt{k^{-3}} \cdot \sqrt{k^{-3}} = k^{-2}$, kar se ujema z izrazom za silo. Torej oblika re"sitve ni odvisna od prostorske skale, in lahko postavimo $r_1 = 1$ in $\omega_1 = 1$. O"citno je, da problem ni odvisen od orientacije koordinatnega sistema, zato lahko enega izmed kotov $\phi_i$, na primer $\phi_1$, postavimo na 0. 
 
-\section{Robni pogoji}
+\begin{align}
+ \vec r_1(t) &= \left[ \cos t, \sin t \right]^T \\
+ \vec r_2(t) &= 1/\sqrt{8} \left[ \cos(\sqrt{8} t + \delta), \sin(\sqrt{8} t + \delta) \right]^T
+\end{align}
+
+V sistemu ena"cb sta ostala le "se dva neodvisna parametra: relativna masa obeh planetov $\mu$ in fazni zamik med orbitama $\delta$. Ostale koli"cine so dolo"cene s Keplerjevim zakonov in z izbiro "casovne skale. 
+
+\subsection{Robni pogoji}
 
 Koordinatni sistem postavimo tako, da je sonce v sredi"s"cu. Ob "casu $t=0$ lahko brez izgube splo"snosti privzamemo, da se prvi (notranji) planet nahaja na osi $x$, torej je njegov kot v polarnih koordinatah enak 0. Za drugi planet tega ne moremo privzeti, saj ima lahko fazni zamik $\delta$. Oba planeta se gibljeta po kro"znih orbitah, torej lahko njun polo"zaj po poljubnem "casu v polarnih koordinatah zapi"semo kot
 
 \begin{align}
- \vec r_1(t) &= (r_1, \omega_1 t) \\
- \vec r_2(t) &= (r_2, \omega_2 t + \delta)
+ \vec r_1(t) &= (r_1, t) \\
+ \vec r_2(t) &= (r_2, \sqrt{8}t + \delta)
 \end{align}
 
 "Ce sonda za potovanje med planetoma potrebuje "cas $T$, se njuna robna pogoja glasita
 
 \begin{align}
  \vec r(0) &= (r_1, 0) \\
- \vec r(T) &= (r_2, \omega_2 T + \delta)
+ \vec r(T) &= (r_2, \sqrt{8} T + \delta)
 \end{align}
 
 Poznamo silo na sondo ob vsakem "casu, torej je ena"cba drugega reda, imamo pa tudi dva robna pogoja. Prost pa je "se parameter $T$, torej bomo za pot med dvema planetoma verjetno na"sli ve"c re"sitev. Zato bomo lahko omejili "cas potovanja $T$, ali pa za"cetno in kon"cno hitrost sonde, da bo re"sitev "se vedno obstajala. 
 
-\section{Pribli"zek z $\mu \ll 1$}
+\subsection{Vrednotenje re"sitve}
+
+Najbolj ``ugodna'' orbita za vesoljska plovila je tak"sna, kjer potovanje traja "cim manj, hrati pa sta za"cetna in kon"cna hitrost (relativno na planet) dovolj majhni, da plovilo lahko varno pristane. Potrebi po kratkotrajnem poletu je vsaj teoreti"cno enostavno ugoditi, saj lahko po"sljemo sondo z neskon"cno hitrostjo. "Zal pa poleg tehni"cnih te"zav na ta na"cin tudi uni"cimo sondo ob pristanku. 
+Minizimacija za"cetne in kon"cne hitrosti je bolj zahtevna, tudi "ce si dovolimo dolgotrajno pot. Sonda se ne sme gibati enako hitro kot planet, saj bi v tem primeru kro"zila z njim. Vsaj v primeru $\mu \ll 1$ pa lahko skonstruiramo elipso z minimalno ekscentri"cnostjo, ki je tangentna na orbiti obeh planetov, tako da sta za"cetna in kon"cna relativna hitrost vedno v tangentni smeri glede na sonce. 
+Njena perioda je v iracionalnem razmerju s periodo kro"zenja drugega planeta, zato se bosta slej ko prej sre"cala. Tak"sno orbito imenujemo Hohmannova prenosna orbita, uporabna pa je predvsem za spremebme orbit satelitov. Po tak"sni orbiti lahko telo po"sljemo z enega planeta na drugega le pri dolo"cenem faznem zamiku med orbitama planetov, torej le v ozkih izstrelitvenih oknih (launch windows). 
+
+Izku"sje z medplanetarnimi poleti s "clove"sko posadko "zal "se nimamo, zato sem predpostavil da je sonda robotska in lahko zdr"zi tudi ve"cleten polet po son"cnem sistemu. Po drugi strani pa ima omejeno zalogo goriva, torej sta za"cetno pospe"sevanje in kon"cno zaviranje omejena. To lahko pri simulaciji upo"stevamo tako, da omejimo za"cetno in kon"cno hitrost, mogo"ce celo 
+vsoto velikosti hitrosti glede na za"cetni in kon"cni planet, $|\delta v_1| + |\delta v_2| \leq C$. S tak"sno omejitvimo trdimo, da je sonda zmo"znega hitrega pospe"sevanja (hitrega v primerjavi s trajanjem poleta), omejujo"c faktor je le zaloga goriva. 
+
+Za trajanje potovanja $T$ nimamo tako stroge omejitve, koristno je le, da najdemo re"sitev s "cim manj"sim $T$. 
+
+\section{Re"sevanje}
+
+\subsection{Pribli"zek z $\mu \ll 1$}
+% TODO: To ni ravno produktivno, mogoce lahko izpustim
 
 Analiti"cno re"sevenaje celotnega sistem je prezahtevno. Lahko pa to"cno re"simo primer, ko sta masi planetov zanemarljivi v primerjavi z maso zvezde. To je upravi"cen pribli"zek, v primeru Sonca, Zemlje in Marsa je vrednost reda velikosti $\mu \approx 10^{-6}$, z upo"stevanjem Jupitra in Saturna pa zraste na $\mu \approx 10^{-3}$. 
 
@@ -105,12 +130,38 @@ Analiti"cno re"sevenaje celotnega sistem je prezahtevno. Lahko pa to"cno re"simo
 
 kjer $R = \frac{r^4\omega^2}{GM}$ konstanta gibanja, odvisna od za"cetnih pogojev, in je enaka razdalji, na kateri bi sonda kro"zila. Kot smo videli v prej"snjem poglavju, imamo za pot med dvema planetoma ve"c mo"znih orbit, ki se razlikujejo ravno po konstanti $R$. Integralski konstanti $e$ in $\phi_0$ dolo"cimo iz robnih pogojev, ki trdita, da sonda leti od enega planeta do drugega.
 
-Najbolj ``ugodna'' orbita za vesoljska plovila je tak"sna, kjer potovanje traja "cim manj, hrati pa sta za"cetna in kon"cna hitrost (relativno na planet) dovolj majhni, da plovilo lahko varno pristane. Potrebi po kratkotrajnem poletu je vsaj teoreti"cno enostavno ugoditi, saj lahko po"sljemo sondo z neskon"cno hitrostjo. "Zal pa poleg tehni"cnih te"zav na ta na"cin tudi uni"cimo sondo ob pristanku. Minizimacija za"cetne in kon"cne hitrosti je bolj zahtevna, tudi "ce si dovolimo dolgotrajno pot. Sonda se ne sme gibati enako hitro kot planet, saj bi v tem primeru kro"zila z njim. Lahko pa skonstruiramo elipso z minimalno ekscentri"cnostjo, ki je tangentna na orbiti obeh planetov, tako da sta za"cetna in kon"cna relativna hitrost vedno v tangentni smeri glede na sonce. Njena perioda je v iracionalnem razmerju s periodo kro"zenja drugega planeta, zato se bosta slej ko prej sre"cala. 
+Te"zava je, kjer v ena"cbi (\ref{eq:kepler-solution}) ne nastopata niti "cas niti hitrost sonde. Skupen "cas prehoda $T$ lahko izra"cunamo z drugim Keplerjevim zakonom. 
 
-V praksi seveda "zelimo nek kompromis med obema skrajnostma. Te"zava je, kjer v ena"cbi $\ref{eq:kepler-solution}$ "cas ne nastopa, skupen "cas prehoda $T$ pa lahko izra"cunamo z drugim Keplerjevim zakonom. 
+\begin{align}
+ T &= \int_1^2 r \dd \phi
+\end{align}
 
-\section{Poljuben $\mu$}
+\subsection{Poljuben $\mu$}
 
 Ker v znanih son"cnih sistemih masa sonca mo"cno presega mase planetov, si lahko pri iskanju splo"sne re"sitve pomagamo s prej"snjim pribli"zkom. Za iskanje orbit zato nisem uporabil strelske metode z ugibanjem za"cetnih pogojev in numeri"cno integriranjem. Namesto tega sem za"cel z elipti"cno orbito in jo relaksiral, tako da je v vsaki to"cki ustrezala Newtonovem zakonu. Tak"sna relaksacija seveda ni fizikalna, se pa je izkazala za u"cinkovit ra"cunski pripomo"cek. 
+
+Trajektorija sonde mora v vsaki to"cki zado"s"cati pogoju (\ref{eq:sonda}). Drugi odvod na levi strani ena"cbe sem pribli"zal s kon"cno diferenco, nato pa z metodo pospe"sene relaksacije SOR popravljal $r(t_i)$, dokler pogoj ni bil izpolnjen v vsaki to"cki.
+
+Velika prednost pristopa z relaksacijo je ta, da lahko za"cetno in kon"cno to"cko postavimo to"cno na polo"zaj ustreznega planeta. Na ta na"cin lahko zadenemo tudi planete, ki so dosti manj"si od polmera svojega tira okrog sonca, kar definitivno dr"zi za planetev v na"sem oson"cju. Na ta na"cin re"sitev sploh ni odvisna od polmera planeta, kar nam zmanj"sa "stevilo pogojev in s tem poenostavi re"sevanje. 
+
+\subsection{Relaksacija}
+
+Tak"sna relaksacija zahteva "casovno diskretizacijo tira. Ni treba, da je ta diskretizacija enakomerna, moramo pa v naprej dolo"citi "stevilo in dol"zino "casovnih korakov, torej moramo izbrati tudi skupen "cas $T$. S to izbiro tedaj najdemo ustrezno orbito in izra"cunamo za"cetno in kon"cno relativno hitrost. 
+
+Z relaksacijo ne moremo upo"stevati "zelje, naj bosta za"cetna in kon"cna hitrost sonde "cim bli"zje hitrosti planeta. Lahko pa uporabimo ve"c za"cetnih pribli"zkov in primerjamo dobljene $\delta v$. Za za"cetek sem uporabil slede"ce za"cetne pribli"zke za orbito sonde:
+
+\begin{enumerate}
+ \item Ravna pot z enakomerno hitrostjo od za"cetne do kon"cne to"cke
+ \item Spirala, kjer tako $r$ kot $\phi$ linearno nara"s"cata od za"cetne do kon"cne to"cke
+ \item Krivulja, sestavljena iz kratkotrajnega sledenja orbiti prvega planeta, ravne poti vmes, in sledenja orbiti drugiga planeta
+\end{enumerate}
+
+\begin{figure}
+\centering
+ \input{g_hitrost_01_05}
+ \caption{Skupna sprememba hitrosti, potrebna za doseg drugega planeta in varno zaustavitev v oson"cju s parametri $\mu=0.1$ in $\delta = 1/2$}
+ \label{fig:hitrost}
+\end{figure}
+
 
 \end{document}

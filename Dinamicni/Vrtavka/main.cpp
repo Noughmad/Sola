@@ -17,7 +17,8 @@ const int PoincareIndex = 4;
 const double dE = 0.001;
 
 const int ParallelRuns = 200;
-const int LyapunovMaps = 50;
+const int LyapunovMaps = 502;
+const int StepsPerSave = 50;
 
 class TopWorkspace;
 
@@ -249,6 +250,34 @@ void TopWorkspace::poincare()
     }
 }
 
+void save_histogram(double exponent[], double sigma[], const char* filename, FILE* part_file, int k)
+{
+    gsl_histogram* h = gsl_histogram_alloc(28);
+    gsl_histogram_set_ranges_uniform(h, -1, 6);
+
+    int chaos = 0;
+    for (int i = 0; i < ParallelRuns; ++i)
+    {
+        gsl_histogram_increment(h, max(min(exponent[i]/sigma[i], 5.9), -0.9));
+        if (exponent[i] > 3*sigma[i])
+        {
+            ++chaos;
+        }
+    }
+    
+    FILE* f = fopen(filename, "wt");
+    gsl_histogram_fprintf(f, h, "%g", "%g");
+    fclose(f);
+    
+    gsl_histogram_free(h);
+
+    if (part_file)
+    {
+        cout << "Saving with part=" << chaos << endl;
+        fprintf(part_file, "%d %d\n", k, chaos);
+    }
+}
+
 void lyapunov(const top_params& top, const double initial[], double* exponent, double* sigma)
 {
     double factor = 1;
@@ -292,6 +321,14 @@ void lyapunov(const top_params& top, const double initial[], double* exponent, d
         a[i] = new double[N];
     }
 
+    double* x = new double[N];
+    for (int i = 0; i < N; ++i)
+    {
+        x[i] = 1.0/(i+1);
+    }
+
+    FILE* part_file = fopen("g_part.dat", "wt");
+    
     for (int k = 0; k < N; ++k)
     {
         for (int p = 0; p < P; ++p)
@@ -315,13 +352,26 @@ void lyapunov(const top_params& top, const double initial[], double* exponent, d
 
             a[i][k] = -log(a[i][k]);
         }
+
+        if ((k % StepsPerSave) == 0 && k > 0)
+        {
+            for (int p = 0; p < ParallelRuns; ++p)
+            {
+                
+                double c0, c1, cov00, cov01, cov11, sumsq;
+                gsl_fit_linear(x, 1, a[p], 1, k, &c0, &c1, &cov00, &cov01, &cov11, &sumsq);
+                
+                exponent[p] = c0;
+                sigma[p] = sqrt(cov00);
+            }
+
+            char buf[32];
+            sprintf(buf, "g_konv_%d.dat", k);
+            save_histogram(exponent, sigma, buf, part_file, k);
+        }
     }
 
-    double* x = new double[N];
-    for (int i = 0; i < N; ++i)
-    {
-        x[i] = 1.0/(i+1);
-    }
+    fclose(part_file);
 
     for (int p = 0; p < ParallelRuns; ++p)
     {
@@ -363,9 +413,6 @@ void chaos_part(const top_params& top, double emax)
 {
     double y[6*ParallelRuns];
 
-    gsl_histogram* h = gsl_histogram_alloc(28);
-    gsl_histogram_set_ranges_uniform(h, -1, 6);
-
     double exponent[ParallelRuns];
     double sigma[ParallelRuns];
     for (int i = 0; i < ParallelRuns; ++i)
@@ -375,17 +422,9 @@ void chaos_part(const top_params& top, double emax)
     
     lyapunov(top, y, exponent, sigma);
 
-    for (int i = 0; i < ParallelRuns; ++i)
-    {
-        cout << exponent[i]/sigma[i] << " => " << max(min(exponent[i]/sigma[i], 6.0), -1.0) << endl;
-        gsl_histogram_increment(h, max(min(exponent[i]/sigma[i], 6.0), -1.0));
-    }
-
     char buf[32];
     sprintf(buf, "g_histogram_%g_%g.dat", emax, top.L);
-    FILE* f = fopen(buf, "wt");
-    gsl_histogram_fprintf(f, h, "%g", "%g");
-    fclose(f);
+    save_histogram(exponent, sigma, buf, 0, 0);
 }
 
 void fazni_prostor(double lambda)

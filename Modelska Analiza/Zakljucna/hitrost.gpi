@@ -1,0 +1,10 @@
+set terminal epslatex color solid
+set style data lines
+
+set output "g_hitrost_01_05.tex"
+
+set xlabel "Trajanje potovanja $T$"
+set ylabel "$\\Delta v$"
+plot "Data/g_direct_0.1_0.5.dat" u 1:5 t "Ravna pot", \
+"Data/g_spiral_0.1_0.5.dat" u 1:5 t "Spirala", \
+"Data/g_spiral_imp_0.1_0.5.dat" u 1:5 t "Spirala z ve\"c obhodi"

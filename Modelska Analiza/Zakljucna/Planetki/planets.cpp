@@ -34,16 +34,26 @@ QDebug operator<<(QDebug stream, const Vector& vector)
     return stream;
 }
 
+double operator*(const Vector& one, const Vector& other)
+{
+    return sqrt(one.x * other.x + one.y * other.y);
+}
 
 Vector gravity(const Vector& object, const Vector& source)
 {
+    Q_ASSERT(object.x != source.x || object.y != source.y);
     Vector d = source - object;
-    const double sd2 = sqrt((d.x) * (d.x) + (d.y) * (d.y));
- //   qDebug() << "gravity(): " << d << d2 << d13;
-    return d * (1.0 / sd2 / sd2 / sd2);
+    const double sd2 = d * d;
+    return d * (1.0 / (sd2 * sd2 * sd2));
 }
 
-Vector from_polar(double r, double phi)
+Vector::operator QPointF() const
+{
+    return QPointF(400 + 200 * x, 400 - 200 * y);
+}
+
+
+inline Vector from_polar(double r, double phi)
 {
     Vector p;
     p.x = r * cos(phi);
@@ -51,7 +61,7 @@ Vector from_polar(double r, double phi)
     return p;
 }
 
-void Vector::to_polar(double& r, double& phi) const
+inline void Vector::to_polar(double& r, double& phi) const
 {
     phi = atan2(y, x);
     if (phi < 0)
@@ -61,27 +71,21 @@ void Vector::to_polar(double& r, double& phi) const
     r = sqrt(x*x+y*y);
 }
 
-
-Vector::operator QPointF() const
+Trajectory::Trajectory() : n(0), positions(0)
 {
-    return QPointF(400 + 200 * x, 400 - 200 * y);
+
 }
 
-Planets::Planets(double r, double mu)
- : r(r)
- , omega(sqrt(1.0/r))
- , mu(mu)
+void Trajectory::operator=(const Trajectory& other)
 {
+    n = other.n;
+    positions = other.positions;
 }
 
-Vector Planets::planet_one(double t)
-{
-    return from_polar(r, omega * t);
-}
 
-Vector Planets::planet_two(double t)
+Planets::Planets(double mu, double phase)
+ : mu(mu), phase(phase)
 {
-    return from_polar(2*r, omega * t / sqrt(8) + phase);
 }
 
 double Planets::relax_step(Trajectory& trajectory)
@@ -114,38 +118,53 @@ double Planets::relax_step(Trajectory& trajectory)
 
 Trajectory Planets::direct_route(int steps)
 {
-    Trajectory t;
-    t.n = steps;
+    Trajectory t(steps);
     Vector start = planet_one(0);
     Vector end = planet_two(steps * dt);
-    qDebug() << start << end;
     for (int i = 0; i < steps+1; ++i)
     {
         const double u = (double)i/steps;
-        t.positions << (end * u + start * (1-u));
+        t.positions[i] = end * u + start * (1-u);
     }
     return t;
 }
 
 Trajectory Planets::ellipse(int steps, int circles)
 {
-    Trajectory t;
-    t.n = steps;
-    double r1, phi1, r2, phi2;
-    planet_one(0).to_polar(r1, phi1);
-    planet_two(steps * dt).to_polar(r2, phi2);
+    Trajectory t(steps);
 
-    const double angle = (circles*2*M_PI + phi2 - phi1) / (steps);
-    const double rad = (r2-r1)/(steps);
+    const double angle = (circles * 2 * M_PI + phase) / steps + dt * invsqrt8;
+    const double rad = 1.0 / steps;
 
     for (int i = 0; i < steps+1; ++i)
     {
-        t.positions << from_polar(r1 + i*rad, phi1 + i*angle);
+        t.positions[i] = from_polar(1.0 + i*rad, i*angle);
     }
 
     return t;
 }
 
+Trajectory Planets::spline(int steps)
+{
+    Trajectory t(steps);
+    int m = steps / 4;
+
+    for (int i = 0; i < m; ++i)
+    {
+        t.positions[i] = planet_one(i * dt * 1.1);
+        t.positions[steps-i] = planet_two((steps-i*1.1) * dt);
+    }
+    
+    Vector start = planet_one(m * dt * 1.1);
+    Vector end = planet_two((steps-m*1.1) * dt);
+
+    for (int i = m; i <= (steps-m); ++i)
+    {
+        t.positions[i] = end * (i-m) + start * (steps-m-i);
+    }
+
+    return t;
+}
 
 Vector Planets::force(const Vector& pos, double t)
 {
@@ -160,7 +179,17 @@ QImage Planets::plot(const Trajectory& trajectory)
     const double T = dt * trajectory.n;
     
     painter.setBrush(Qt::yellow);
-    painter.drawEllipse(star, 10, 10);
+    painter.drawEllipse(star, 15, 15);
+
+    painter.setBrush(Qt::NoBrush);
+    painter.drawEllipse(star, 200, 200);
+    painter.drawEllipse(star, 400, 400);
+
+    painter.setBrush(Qt::blue);
+    painter.drawEllipse(planet_one(0), 5, 5);
+    
+    painter.setBrush(Qt::red);
+    painter.drawEllipse(planet_two(trajectory.n*dt), 5, 5);
     
     for (int i = 0; i < trajectory.n; ++i)
     {
@@ -168,13 +197,16 @@ QImage Planets::plot(const Trajectory& trajectory)
         f = qBound(0, f, 255);
         painter.setPen(QColor(qRgb(f, 255, 255-f)));
         painter.drawLine(trajectory.positions[i], trajectory.positions[i+1]);
-        
-        painter.setBrush(QColor(qRgb(0, 0, 255 - f/2)));
-        painter.drawEllipse(planet_one(i*dt), 5, 5);
-        
-        painter.setBrush(QColor(qRgb(255 - f/2, 0, 0)));
-        painter.drawEllipse(planet_two(i*dt), 5, 5);
     }
     painter.end();
     return image;
+}
+
+QPair< double, double > Planets::burst(const Trajectory& trajectory) const
+{
+    double invt = 1.0/dt;
+    Vector dv1 = (trajectory.positions[1] - trajectory.positions[0] - planet_one(dt) + planet_one(0)) * invt;
+    int n = trajectory.n;
+    Vector dv2 = (trajectory.positions[n] - trajectory.positions[n-1] - planet_two(n*dt) + planet_two((n-1)*dt)) * invt;
+    return qMakePair(dv1 * dv1, dv2 * dv2);
 }

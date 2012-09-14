@@ -137,6 +137,31 @@ Zaradi omejene natan"cnosti ra"cunalnika najdemo pozitivne Ljapunove eksponente 
 
 Z obeh grafov lahko vidimo, da izbira mejne vrednosti za gotovost le malo vpliva na izra"cunan dele"z kaosa. Izjema je le $\alpha_c \leq 1$, ki pri visokih energijah vrne veliko ``false positive'' to"ck in vidno odstopa od ostalih. Z izbiro $\alpha_c = 3$ torej ne postavimo prehude omejitve, hkrati pa tudi z ve"canjem zahteve po gotovosti Ljapunovih eksponentov le malo spremenimo rezultat. Pri tak"sni izbiri dobimo dobro sliko odvistosti kaoti"cnosti od energije sistema in motnje $\lambda$. 
 
+\section{Dol"zina orbit}
+
+V zgorjih ra"cunih sem vsaki"c simuliral $N=500$ iteracij Poincarejeva preslikave. Pred uporabo rezultatov je koristno preveriti, ali je to smiselna dol"zina orbit. To sem preveril tako, da sem opazoval dele"z kaoti"cnega faznega prostora in porazdelitev $dP/d\alpha$ pri razli"cnih izbirah za $N$. 
+
+\begin{figure}[H]
+ \input{g_dolzina_brez}
+ \caption{Odvisnost porazdelitve $\alpha$ od dol"zine orbit $N$ pri energiji $E=1$ za nemoteno Lagrangevo vrtavko ($\lambda=0$)}
+ \label{fig:dolzina-brez}
+\end{figure}
+
+\begin{figure}[H]
+ \input{g_dolzina_motnja}
+ \caption{Odvisnost porazdelitve $\alpha$ od dol"zine orbit $N$ pri energiji $E=1$ za moteno Lagrangevo vrtavko ($\lambda=0,\!5$)}
+ \label{fig:dolzina-motnja}
+\end{figure}
+
+Takoj opazimo, da je v nemotenem sistemu razlika med porazdelitvama za $N=50$ in $N=500$ na sliki \ref{fig:dolzina-brez} majhna, zato se tam lahko zadovoljimo "ze s kratkimi orbitami. Podoben rezultat dobimo tudi za sisteme s pozitivno $\lambda$ pri vi"sjih energijah. Mo"cna odvisnost od dol"zine orbit pa se pojavi, "ce ima sistem znaten dele"z kaoti"cnega faznega prostora, kot na primer na sliki \ref{fig:dolzina-motnja}. Zato sem podrobno preu"cil le del faznega prostora z nizkimi energijami, kjer je kaoti"cnost najve"cja. Takoj lahko vidimo, da za majhne $N$ porazdelitev izgleda naklju"cna in pribli"zno enakomerna, pri $N$ nad 200 pa se izoblikujeta dva jasna vrhova, eden pri $\alpha \approx 0$ in drugi pri $\alpha > 6$. Izrazit vrh pri $\alpha=6$ se pojavi, ker sem tja uvrstil tudi vse orbite z ve"cjim $\alpha$. 
+
+\begin{figure}[H]
+ \input{g_dolzina_kaos}
+ \caption{Izra"cunan dele"z kaoti"cnega FP pri energiji $E=1$ in pogoju $\alpha_c = 3$ za dve razli"cni veliosti motnje $\lambda$ in razli"cnih dol"zinah orbit $N$}
+ \label{fig:dolzina-kaos}
+\end{figure}
+
+Ker nas v kon"cni fazi zanima predvsem dele"za kaoti"cnega FP, sem opazoval tudi odvisnost tega dele"za od $N$. Rezultat za pri nizki energiji ($E=1$) je na grafu \ref{fig:dolzina-kaos}. S pomo"cjo prilagojenih krivulj vidimo, da napaka za mo"cno kaoti"cen sistem pada pribli"zno z $N^{-1}$, za integrabilen sistem pa je skoraj konstantna. Graf potrjuje zgornjo trditev, da je napaka najve"cja pri mo"cno kaoti"cnih sistemih, kjer je tudi konvergenca najpo"casnej"sa, torej za natan"cno dolo"citev kaoti"cnosti tak"snih sistemov potrebujemo dolge orbite. 
 
 \section{Dele"z kaoti"cnega faznega prostora}
 Izbral sem vrtavko s parametri $\Delta = 5$, $a=1$ in $mg = 1$, parameter $\lambda$ pa sem spreminjal od 0 do 2. Simulacijo sem pognal pri "stirih razli"cnih maksimalnih energijah $E$. Vsaki"c sem hkrati spremljal 200 parov bli"znjih orbit, na vsaki orbiti pa sem naredil 500 iteracij Poincarejeve preslikave. Za kriterij kaoti"cnosti orbite sem uporabil mejno vrednost $\alpha_c=3$. Kon"cni rezultat je na sliki \ref{fig:kaos}. 
