@@ -19,8 +19,14 @@ int main(int argc, char **argv)
 
     double T = atof(argv[3]);
     int N = atoi(argv[4]);
+    int s = atoi(argv[5]);
     p.dt = T/N;
 
+    /*
+     *
+     * 
+     * 
+     *
     QString type = (argc > 5) ? argv[5] : "direct";
     Trajectory t;
     if (type == "direct")
@@ -39,33 +45,50 @@ int main(int argc, char **argv)
     {
         t = p.spline(N);
     }
+    else if (type == "orbit")
+    {
+        t = p.orbit(N);
+    }
+    else if (type == "lambert")
+    {
+        t = p.toolbox(N, atoi(argv[3])/15);
+    }
     else
     {
         qDebug() << "Unknown orbit type: " << type << endl;
-        qDebug() << "Recognized orbit types are 'direct', 'spiral' and 'spline'" << endl;
+        qDebug() << "Recognized orbit types are 'direct', 'spiral', 'lambert' and 'spline'" << endl;
         return 0;
     }
     
     Q_ASSERT(t.positions[0] == p.planet_one(0));
     Q_ASSERT(t.positions[N] == p.planet_two(T));
 
-    double change;
+    */
+
+    Trajectory t = p.toolbox(N, s);
     int iter = 0;
-    p.chebishev = 1;
-    do
+
+    if (!qFuzzyIsNull(mu))
     {
-        ++iter;
-        change = p.relax_step(t);
+        double change;
+        p.chebishev = 1.8;
+        do
+        {
+            ++iter;
+            change = p.relax_step(t);
+        }
+        while (change > 1e-8 && iter < 1e6);
     }
-    while (change > 1e-8 && iter < 1e6);
-    p.plot(t).save("g_plot_after.png");
+    // p.plot(t).save("g_plot_after.png");
     
     QPair<double, double> b = p.burst(t);
     qDebug() << T << iter << b.first << b.second << b.first + b.second;
 
+    /*
     QString plot = QString("g_plot_%1_%2_%3_%4.png")
-                   .arg(mu).arg(delta).arg(type).arg(T);
+                   .arg(mu).arg(delta).arg(s).arg(T);
     p.plot(t).save(plot);
+    */
     
     return 0;
 }

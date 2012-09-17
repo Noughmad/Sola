@@ -52,25 +52,6 @@ Vector::operator QPointF() const
     return QPointF(400 + 200 * x, 400 - 200 * y);
 }
 
-
-inline Vector from_polar(double r, double phi)
-{
-    Vector p;
-    p.x = r * cos(phi);
-    p.y = r * sin(phi);
-    return p;
-}
-
-inline void Vector::to_polar(double& r, double& phi) const
-{
-    phi = atan2(y, x);
-    if (phi < 0)
-    {
-        phi += 2*M_PI;
-    }
-    r = sqrt(x*x+y*y);
-}
-
 Trajectory::Trajectory() : n(0), positions(0)
 {
 
@@ -149,20 +130,42 @@ Trajectory Planets::spline(int steps)
     Trajectory t(steps);
     int m = steps / 4;
 
+    const double R1 = sqrt(sqrt(2));
+
     for (int i = 0; i < m; ++i)
     {
-        t.positions[i] = planet_one(i * dt * 1.1);
-        t.positions[steps-i] = planet_two((steps-i*1.1) * dt);
+        t.positions[i] = planet_one(i * dt * R1);
+        t.positions[steps-i] = planet_two((steps-i*R1) * dt);
     }
-    
-    Vector start = planet_one(m * dt * 1.1);
-    Vector end = planet_two((steps-m*1.1) * dt);
+
+    double phi1 = m * dt * R1;
+    double phi2 = (steps-m*R1) * dt * invsqrt8;
 
     for (int i = m; i <= (steps-m); ++i)
     {
-        t.positions[i] = end * (i-m) + start * (steps-m-i);
+        const double r = (double)(i - m)/(steps-2*m);
+        t.positions[i] = from_polar(1 + r, phi1 * (1-r) + phi2 * r);
     }
 
+    return t;
+}
+
+Trajectory Planets::orbit(int steps, int circles)
+{
+    Trajectory t(steps);
+
+    const double angle = (circles * 2 * M_PI + phase) / steps + dt * invsqrt8;
+
+    t.positions[0] = planet_one(0);
+    t.positions[steps] = planet_two(steps * dt);
+
+    double e = 1.0/3.0;
+    double r0 = 1+e;
+    for (int i = 1; i < steps; ++i)
+    {
+        t.positions[i] = from_polar(r0 / (1 + e * cos(i*M_PI/steps)), i*angle);
+    }
+    
     return t;
 }
 
@@ -181,15 +184,16 @@ QImage Planets::plot(const Trajectory& trajectory)
     painter.setBrush(Qt::yellow);
     painter.drawEllipse(star, 15, 15);
 
-    painter.setBrush(Qt::NoBrush);
-    painter.drawEllipse(star, 200, 200);
-    painter.drawEllipse(star, 400, 400);
-
     painter.setBrush(Qt::blue);
     painter.drawEllipse(planet_one(0), 5, 5);
     
     painter.setBrush(Qt::red);
     painter.drawEllipse(planet_two(trajectory.n*dt), 5, 5);
+
+    painter.setBrush(Qt::NoBrush);
+    painter.setPen(Qt::white);
+    painter.drawEllipse(star, 200, 200);
+    painter.drawEllipse(star, 400, 400);
     
     for (int i = 0; i < trajectory.n; ++i)
     {

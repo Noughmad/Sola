@@ -24,6 +24,26 @@ struct Vector
 double operator*(const Vector& one, const Vector& other);
 QDebug operator<<(QDebug stream, const Vector& vector);
 
+
+inline Vector from_polar(double r, double phi)
+{
+    Vector p;
+    
+    p.x = r * cos(phi);
+    p.y = r * sin(phi);
+    return p;
+}
+
+inline void Vector::to_polar(double& r, double& phi) const
+{
+    phi = atan2(y, x);
+    if (phi < 0)
+    {
+        phi += 2*M_PI;
+    }
+    r = sqrt(x*x+y*y);
+}
+
 struct Trajectory
 {
     Trajectory();
@@ -54,6 +74,8 @@ public:
     Trajectory direct_route(int steps);
     Trajectory ellipse(int steps, int circles = 0);
     Trajectory spline(int steps);
+    Trajectory orbit(int steps, int circles = 0);
+    Trajectory toolbox(int steps, int circles = 0);
 
     QPair<double, double> burst(const Trajectory& trajectory) const;
     QImage plot(const Trajectory& trajectory);
