@@ -7,7 +7,7 @@
 
 static const double invsqrt8 = 1.0/sqrt(8);
 
-class QImage;
+class QPaintDevice;
 struct Vector
 {
     double x;
@@ -78,7 +78,8 @@ public:
     Trajectory toolbox(int steps, int circles = 0);
 
     QPair<double, double> burst(const Trajectory& trajectory) const;
-    QImage plot(const Trajectory& trajectory);
+    void plot(QPaintDevice* image, const Trajectory& trajectory);
+    double adjust_speed(double speed) const;
     
     double dt;
     double mu;

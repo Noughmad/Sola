@@ -1,51 +1,90 @@
 set terminal epslatex color solid
 set style data linespoints
 
-set output "g_hitrost_01_05.tex"
-
 set xlabel "Trajanje potovanja $T$"
 set ylabel "$\\Delta v$"
-plot "Data/g_direct_0.1_1.0.dat" u 1:5 t "Ravna pot", \
-"Data/g_spiral_0.1_1.0.dat" u 1:5 t "Spirala", \
-"Data/g_spline_0.1_1.0.dat" u 1:5 t "Zlepek", \
-"Data/g_orbit_0.1_1.0.dat" u 1:5 t "Orbita", \
-"Data/g_lambert_0.1_1.0.dat" u 1:5 t "Lambert"
-
-set output "g_lambert_01_00.tex"
-
-plot "Data/g_lambert_0.1_0_0.dat" u 1:5 t "Osnovna re\"sitev", \
-"Data/g_lambert_0.1_0_1.dat" u 1:5 t "1 obrat", \
-"Data/g_lambert_0.1_0_2.dat" u 1:5 t "1 obrat", \
-"Data/g_lambert_0.1_0_3.dat" u 1:5 t "2 obrata", \
-"Data/g_lambert_0.1_0_4.dat" u 1:5 t "2 obrata", \
-"Data/g_lambert_0.1_0_5.dat" u 1:5 t "Direct"
 
 set output "g_lambert_mu.tex
-plot for [mu in "0.0 0.01 0.02 0.05 0.1 0.2"] sprintf("Data/g_lambert_%s_0.dat",mu) u 1:5 t sprintf("$\\mu = %s$", mu)
+plot for [mu in "0.0 0.01 0.05 0.1 0.2"] sprintf("Data/g_lambert_%s_0.dat",mu) u 1:5 t sprintf("$\\mu = %s$", mu)
 
 set output "g_lambert_mu_23.tex
-plot for [mu in "0.0 0.01 0.02 0.05 0.1 0.2"] sprintf("Data/g_lambert_%s_2.094.dat",mu) u 1:5 t sprintf("$\\mu = %s$", mu)
+plot for [mu in "0.0 0.01 0.05 0.1 0.2"] sprintf("Data/g_lambert_%s_2.094.dat",mu) u 1:5 t sprintf("$\\mu = %s$", mu)
 
 set output "g_lambert_mu_43.tex
-plot for [mu in "0.0 0.01 0.02 0.05 0.1 0.2"] sprintf("Data/g_lambert_%s_-2.094.dat",mu) u 1:5 t sprintf("$\\mu = %s$", mu)
+plot for [mu in "0.0 0.01 0.05 0.1 0.2"] sprintf("Data/g_lambert_%s_-2.094.dat",mu) u 1:5 t sprintf("$\\mu = %s$", mu)
 
-set output "g_lambert_delta.tex"
-og(x) = 1.3 + 13/(x+3.1)
-plot[][1:7] "Data/g_lambert_0.01_-2.094.dat" u 1:5 t "$\\delta = -2\\pi/3$", \
+set output "g_lambert_delta_1.tex"
+plot "Data/g_lambert_0.01_-2.094.dat" u 1:5 t "$\\delta = -2\\pi/3$", \
 "Data/g_lambert_0.01_0.dat" u 1:5 t "$\\delta = 0$", \
-"Data/g_lambert_0.01_2.094.dat" u 1:5 t "$\\delta = +2\\pi/3$", \
-og(x) t "Ogrinja\"ca"
+"Data/g_lambert_0.01_2.094.dat" u 1:5 t "$\\delta = +2\\pi/3$"
+
+set output "g_lambert_delta_01.tex"
+plot "Data/g_lambert_0.001_-2.094.dat" u 1:5 t "$\\delta = -2\\pi/3$", \
+"Data/g_lambert_0.001_0.dat" u 1:5 t "$\\delta = 0$", \
+"Data/g_lambert_0.001_2.094.dat" u 1:5 t "$\\delta = +2\\pi/3$"
 
 set output "g_lambert_delta_2.tex"
-og(x) = 1.5 + 18/(x+3.1)
-plot[][1:7] "Data/g_lambert_0.02_-2.094.dat" u 1:5 t "$\\delta = -2\\pi/3$", \
+plot "Data/g_lambert_0.02_-2.094.dat" u 1:5 t "$\\delta = -2\\pi/3$", \
 "Data/g_lambert_0.02_0.dat" u 1:5 t "$\\delta = 0$", \
-"Data/g_lambert_0.02_2.094.dat" u 1:5 t "$\\delta = +2\\pi/3$", \
-og(x) t "Ogrinja\"ca"
+"Data/g_lambert_0.02_2.094.dat" u 1:5 t "$\\delta = +2\\pi/3$"
 
 set output "g_lambert_delta_10.tex"
-og(x) = 2.5 + 31/(x+3.1)
-plot[][1:7] "Data/g_lambert_0.1_-2.094.dat" u 1:5 t "$\\delta = -2\\pi/3$", \
+plot "Data/g_lambert_0.1_-2.094.dat" u 1:5 t "$\\delta = -2\\pi/3$", \
 "Data/g_lambert_0.1_0.dat" u 1:5 t "$\\delta = 0$", \
-"Data/g_lambert_0.1_2.094.dat" u 1:5 t "$\\delta = +2\\pi/3$", \
-og(x) t "Ogrinja\"ca"
+"Data/g_lambert_0.1_2.094.dat" u 1:5 t "$\\delta = +2\\pi/3$"
+
+set output "g_lambert_delta_0.tex"
+plot "Data/g_lambert_0.0_-2.094.dat" u 1:5 t "$\\delta = -2\\pi/3$", \
+"Data/g_lambert_0.0_0.dat" u 1:5 t "$\\delta = 0$", \
+"Data/g_lambert_0.0_2.094.dat" u 1:5 t "$\\delta = +2\\pi/3$"
+
+a0(x) = A1/x + b + c
+a1(x) = A2/x + b + c
+
+A1 = 1
+A2 = sqrt(7)
+c = 0
+
+set output "g_zoom_delta_1.tex"
+b = sqrt(10)
+plot "Data/g_zoom_0.01_-2.094.dat" u 1:5 t "$\\delta = -2\\pi/3$", \
+"Data/g_zoom_0.01_0.dat" u 1:5 t "$\\delta = 0$", \
+"Data/g_zoom_0.01_2.094.dat" u 1:5 t "$\\delta = +2\\pi/3$"
+
+set output "g_zoom_delta_01.tex"
+b = 1
+plot "Data/g_zoom_0.001_-2.094.dat" u 1:5 t "$\\delta = -2\\pi/3$", \
+"Data/g_zoom_0.001_0.dat" u 1:5 t "$\\delta = 0$", \
+"Data/g_zoom_0.001_2.094.dat" u 1:5 t "$\\delta = +2\\pi/3$"
+
+set output "g_zoom_delta_10.tex"
+b = 10
+plot "Data/g_zoom_0.1_-2.094.dat" u 1:5 t "$\\delta = -2\\pi/3$", \
+"Data/g_zoom_0.1_0.dat" u 1:5 t "$\\delta = 0$", \
+"Data/g_zoom_0.1_2.094.dat" u 1:5 t "$\\delta = +2\\pi/3$"
+
+set output "g_zoom_delta_0.tex"
+plot "Data/g_zoom_0.0_-2.094.dat" u 1:5 t "$\\delta = -2\\pi/3$", \
+"Data/g_zoom_0.0_0.dat" u 1:5 t "$\\delta = 0$", \
+"Data/g_zoom_0.0_2.094.dat" u 1:5 t "$\\delta = +2\\pi/3$"
+
+mindv(x) = sqrt(2000*x+1) + sqrt(2000*x)
+
+set output "g_zoom_odvisnost.tex"
+b = 2*sqrt(20)
+plot[0:5][0:30] "Data/g_zoom_0.01_-2.094.dat" u 1:5 t "$\\delta = -2\\pi/3$", \
+"Data/g_zoom_0.01_0.dat" u 1:5 t "$\\delta = 0$", \
+"Data/g_zoom_0.01_2.094.dat" u 1:5 t "$\\delta = +2\\pi/3$", \
+a0(x) t "Napoved za $\\delta = 0$", \
+a1(x) t "Napoved za $\\delta = \\pm 2\\pi/3$"
+
+
+set output "g_min_hitrosti.tex"
+set xlabel "$\\mu$"
+set ylabel "$\\min \\Delta v$"
+set style data points
+set key bottom right
+
+
+plot[-0.01:0.21] "Data/g_min_hitrost.dat" t "Podatki", \
+mindv(x) t "Napoved"

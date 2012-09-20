@@ -17,6 +17,7 @@
 \usepackage{comment}
 \usepackage{float}
 \usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+\usepackage{pdflscape}
 
 \renewcommand{\vec}{\mathbf}
 \newcommand{\eps}{\varepsilon}
@@ -41,6 +42,8 @@
 \begin{document}
 
 \maketitle
+
+\abstract{V sistemu dveh planetov z enakima polmeroma in masama, ki potujeta po kro"znih orbitah okrog mati"cne zvezde v isti ravnini na razdaljah v razmerju 1:2, sku"samo izstreliti sondo iz prvega na drugi planet. Koliko zunanjih parametrov ima sistem (polmer planeta, \ldots)? Koliko parametrov lahko predpi"semo, da ima problem "se vedno re"sitev?}
 
 \section{Zapis problema}
 
@@ -90,15 +93,15 @@ V sistemu ena"cb sta ostala le "se dva neodvisna parametra: relativna masa obeh 
 Koordinatni sistem postavimo tako, da je sonce v sredi"s"cu. Ob "casu $t=0$ lahko brez izgube splo"snosti privzamemo, da se prvi (notranji) planet nahaja na osi $x$, torej je njegov kot v polarnih koordinatah enak 0. Za drugi planet tega ne moremo privzeti, saj ima lahko fazni zamik $\delta$. Oba planeta se gibljeta po kro"znih orbitah, torej lahko njun polo"zaj po poljubnem "casu v polarnih koordinatah zapi"semo kot
 
 \begin{align}
- \vec r_1(t) &= (r_1, t) \\
- \vec r_2(t) &= (r_2, \sqrt{8}t + \delta)
+ \vec r_1(t) &= (1, t) \\
+ \vec r_2(t) &= (2, \sqrt{8}t + \delta)
 \end{align}
 
 "Ce sonda za potovanje med planetoma potrebuje "cas $T$, se njuna robna pogoja glasita
 
 \begin{align}
- \vec r(0) &= (r_1, 0) \\
- \vec r(T) &= (r_2, \sqrt{8} T + \delta)
+ \vec r(0) &= (1, 0) \\
+ \vec r(T) &= (2, \sqrt{8} T + \delta)
 \end{align}
 
 Poznamo silo na sondo ob vsakem "casu, torej je ena"cba drugega reda, imamo pa tudi dva robna pogoja. Prost pa je "se parameter $T$, torej bomo za pot med dvema planetoma verjetno na"sli ve"c re"sitev. Zato bomo lahko omejili "cas potovanja $T$, ali pa za"cetno in kon"cno hitrost sonde, da bo re"sitev "se vedno obstajala. 
@@ -110,7 +113,7 @@ Minizimacija za"cetne in kon"cne hitrosti je bolj zahtevna, tudi "ce si dovolimo
 Njena perioda je v iracionalnem razmerju s periodo kro"zenja drugega planeta, zato se bosta slej ko prej sre"cala. Tak"sno orbito imenujemo Hohmannova prenosna orbita, uporabna pa je predvsem za spremebme orbit satelitov. Po tak"sni orbiti lahko telo po"sljemo z enega planeta na drugega le pri dolo"cenem faznem zamiku med orbitama planetov, torej le v ozkih izstrelitvenih oknih (launch windows). 
 
 Izku"sje z medplanetarnimi poleti s "clove"sko posadko "zal "se nimamo, zato sem predpostavil da je sonda robotska in lahko zdr"zi tudi ve"cleten polet po son"cnem sistemu. Po drugi strani pa ima omejeno zalogo goriva, torej sta za"cetno pospe"sevanje in kon"cno zaviranje omejena. To lahko pri simulaciji upo"stevamo tako, da omejimo za"cetno in kon"cno hitrost, mogo"ce celo 
-vsoto velikosti hitrosti glede na za"cetni in kon"cni planet, $|\delta v_1| + |\delta v_2| \leq C$. S tak"sno omejitvimo trdimo, da je sonda zmo"znega hitrega pospe"sevanja (hitrega v primerjavi s trajanjem poleta), omejujo"c faktor je le zaloga goriva. 
+vsoto velikosti hitrosti glede na za"cetni in kon"cni planet, $\Delta v = |\Delta v_1| + |\Delta v_2| \leq C$. S tak"sno omejitvimo predpostavimo, da je sonda zmo"znega hitrega pospe"sevanja (hitrega v primerjavi s trajanjem poleta), omejujo"c faktor je le zaloga goriva. 
 
 Za trajanje potovanja $T$ nimamo tako stroge omejitve, koristno je le, da najdemo re"sitev s "cim manj"sim $T$. 
 
@@ -121,9 +124,22 @@ Analiti"cno re"sevenaje celotnega sistem je prezahtevno. Lahko pa to"cno re"simo
 
 "Ce zanemarimo gravitacijska vpliva obeh planetov, dobimo Keplerjev problem, za katerega vemo, da je re"sitev gibanje sonde po elipsi s Soncem z gori"s"cu. Keplerjev problem s podanimi robnimi pogoji $\vec r(t_1) = \vec r_1$ in $\vec r(t_2) = \vec r_2$ se imenuje Lambertov problem\cite{wiki:lambert}. Geometrijsko je problem ekvivalenten iskanju elipse z gori"s"cem v Soncu, ki gre skozi oba robna polo"zaja planetov. Z enostavno geometrijo se da poka"zati, da mora drugo gori"s"ce elipse le"zati na enem kraku hiperbole, torej obstaja enoparametri"cna dru"zina re"sitev. 
 
-Tako "cas potovanja kot za"cetna in kon"cna hitrost sonde so odvisni od izbrite drugega gori"s"ca. Ker je od "casa potovanja odvisen tudi kon"cni polo"zaj drugega planeta, sem najprej izbral vrednost za "cas potovanja $T$, nato na"sel elipti"cno orbito sonde s tak"snim "casom potovanja in zapisal potrebne spremebme hitrosti za to orbito. Za iskanje parametrov elipse sem uporabil orodje \texttt{kepler\_toolbox}, ki so ga razvili v Evropski vesoljski agenciji ESA. Orodje vrne za"cetno hitrost sonde, s pomo"cjo katere sem rekonstruiral celotno orbite z navadno integracijo po metodi RK4. 
+Tako "cas potovanja kot za"cetna in kon"cna hitrost sonde so odvisni od izbrite drugega gori"s"ca. Ker je od "casa potovanja odvisen tudi kon"cni polo"zaj drugega planeta, sem najprej izbral vrednost za "cas potovanja $T$, nato na"sel elipti"cno orbito sonde s tak"snim "casom potovanja in zapisal potrebne spremebme hitrosti za to orbito. Za iskanje parametrov elipse sem uporabil orodje \texttt{kepler\_toolbox}\cite{toolbox}, ki so ga razvili v Evropski vesoljski agenciji ESA. Orodje vrne za"cetno hitrost sonde, s pomo"cjo katere sem rekonstruiral celotno orbite z navadno integracijo po metodi RK4. 
 
-Lambertov problem s fiksnim "casom potovanja ima vsaj eno re"sitev, ki pa ni vedno enoli"cna. Pri dovolj dolgih "casih potovanja so mo"zno tudi orbite, kjer sonda naredi enega ali ve"c obratov okrog sonca preden pristane na drugem planetu. 
+Lambertov problem s fiksnim "casom potovanja ima vsaj eno re"sitev, ki pa ni vedno enoli"cna. Pri dovolj dolgih "casih potovanja so mo"zno tudi orbite, kjer sonda naredi enega ali ve"c obratov okrog sonca preden pristane na drugem planetu. Knji"znica \texttt{kepler\_toolbox} poda za"cetno in kon"cno hitrost vsake orbite, iz katerih sem izra"cunam $\Delta v$, nato pa uporabil tisto orbito, kjer je bil $\Delta v$ najmanj"si. Ker nas zanima predvsem zveza med "casom potovanja in potrebno spremembo hitrost, sem to zvezo narisal za nekaj re"sitev Lambertovega problema na sliki \ref{fig:hitrost-delta-0}. 
+
+\begin{figure}[H]
+\centering
+ \input{g_lambert_delta_0}
+ \caption{Skupna sprememba hitrosti, potrebna za doseg drugega planeta in varno zaustavitev, pri faznih zamikih $\delta$ in pri relativni masi planetov $\mu=0$}
+ \label{fig:hitrost-delta-0}
+\end{figure}
+
+"Ce "zelimo dose"ci zelo kratke "case potovanja, moramo sondo izstreliti z veliko hitrostjo, kar vemo "ze iz zveze $v = \frac{\Delta s}{\Delta t}$. Zato nas ne presene"ca pol pri $T=0$ in hitro padanje potrebne hitrosti pri "casih do $T=5$. Prav tako ne presene"ca periodi"cnost grafa pri posameznem zamiku $\delta$. Zunanji planet kro"zi s periodo $t_2 = 2\pi\sqrt{8} \approx 17,8$, kar se ujema z razmikom med vrhovi na grafu.
+
+Zanimiv vzorec pa nastane, ko skupaj nari"semo odvisnost $\Delta v$ od $T$ za razli"cne zamike $\delta$ pri istem $\mu$. Tak prikaz je uporaben, saj mas planetov "se ne znamo poljubno spreminjati, medtem ko datum vzleta in s tem fazni zamik planetov lahko izberemo. Ra"cun sem napravil le za tri mo"zne zamike, ki so med seboj razmaknjeni za tretjino polnega kota. Minimalen $\Delta v$ pri poljubnem "casu poleta $T$ pa lahko interpoliramo z grafa s pomo"cjo ogrinja"ce, ki povezuje najni"zje to"cke na grafu. V primeru, ko zanemarimo masi planetov, je to kar premica z majhnim negativnim naklonom. Ena"cba ogrinja"ce na sliki je $\Delta v = 0,\!5 + T/300$. 
+
+Ko zdru"zimo za"ceten hiter padec potrebne hitrosti (in s tem koli"cine goriva) in po"casno padanje pri dolgih "casih, se zdi najpremernej"sa izstrelitev tak"sna, da bo sonda potovala pribli"zno $T=5$. V izbranih brezdimenzijskih enotah je perioda kro"zenja notranjega planeta $2\pi$, torej bo sonda potovala pribli"zno 9 mesecev. 
 
 \subsection{Poljuben $\mu$}
 
@@ -133,9 +149,44 @@ Trajektorija sonde mora v vsaki to"cki zado"s"cati pogoju (\ref{eq:sonda}). Drug
 
 Velika prednost pristopa z relaksacijo je ta, da lahko za"cetno in kon"cno to"cko postavimo to"cno na polo"zaj ustreznega planeta. Na ta na"cin lahko zadenemo tudi planete, ki so dosti manj"si od polmera svojega tira okrog sonca, kar definitivno dr"zi za planetev v na"sem oson"cju. Na ta na"cin re"sitev sploh ni odvisna od polmera planeta, kar nam zmanj"sa "stevilo pogojev in s tem poenostavi re"sevanje. 
 
-\subsection{Relaksacija}
+Tak"sna relaksacija zahteva "casovno diskretizacijo tira. Ni treba, da je ta diskretizacija enakomerna, moramo pa v naprej dolo"citi "stevilo in dol"zino "casovnih korakov, torej moramo izbrati tudi skupen "cas $T$. S to izbiro tedaj najdemo ustrezno orbito in izra"cunamo za"cetno in kon"cno relativno hitrost. Za ra"cune v tej nalogi sem izbral diskretizacijo na $N=500$ intervalov (torej $N+1$ to"ck, vklju"cno z za"cetno in kon"cno) z enakomernim "casovnim korakom $\Delta t = T/N$. Z uporabo "Cebi"sevega pospe"ska je bila relaksacija zelo hitra, ustavil sem jo, ko je skupen popravek vseh 500 to"ck zna"sal manj kot $10^{-10}$. 
 
-Tak"sna relaksacija zahteva "casovno diskretizacijo tira. Ni treba, da je ta diskretizacija enakomerna, moramo pa v naprej dolo"citi "stevilo in dol"zino "casovnih korakov, torej moramo izbrati tudi skupen "cas $T$. S to izbiro tedaj najdemo ustrezno orbito in izra"cunamo za"cetno in kon"cno relativno hitrost. 
+Ube"zna hitrost je poleg mase planeta odvisna od razdalje med te"zi"s"cem planeta in krajem, kjer jo merimo. Diskretizacijo sem izbral tako, da je bila prva to"cka v te"zi"s"cu planeta, hitrost pa sem lahko izra"cunal le na sredini med dvema to"ckama. S tem sem se tudi izognil potrebi po neskon"cni hitrost v sredi"s"cu planeta, ker sem predpostavil, da so vsa telesa to"ckasta. Relativno hitrost tik ob prvem planetu, ki je enaka hitrosti, s katerom moramo izstreliti sondo, sem izra"cunal kot
+
+\begin{align}
+ \vec v_1 &= \vec r(\Delta t) - \vec r(0) - \vec r_1(\Delta t) + \vec r_1(0)
+\end{align}
+
+kjer je $r(t)$ polo"zaj sonde, $r_1(t)$ pa polo"zaj planeta. Seveda je ta hitrost definirana ob "casu $\frac{\Delta t}{2}$, takratni polo"zaj sonde pa ni dobro dolo"cen. Pribli"zamo ga lahko z $\frac{\vec r(\Delta t) + \vec r(0)}{2}$, pri "cemer pa privzamemo, da je pospe"sek takrat majhen, kar v bli"zini planeta nikakor ne dr"zi. Namesto tega sem uporabil splo"snej"si izraz 
+
+\begin{align}
+ \vec{\tilde r} = \frac{\alpha \vec r(\Delta t) + (1-\alpha) \vec r(0)}{2} \label{eq:skalirana-hitrost}
+\end{align}
+
+Konstanto $\alpha$ sem dolo"cil s posku"sanjem, tako da kon"cni rezultat ni bil odvisen od koraka diskretizacije $\Delta t$. To se zgodi pri $\alpha \approx 0,\!6385$. Ker se $\vec r(\Delta t)$ razlikuje or orbite do orbite, se razlikujejo tudi razdalje od planeta $\vec{\tilde r}$, pri kateri je $\vec v_1$ merjena. Za medsebojno primerjavo sem moral hitrost skalirati tako, da sem izra"cunal, kolik"sna mora biti hitrost sonde na fiksni razdalji od planeta $h_0$. 
+
+"Ce projektil izstrelimo s povr"sine planeta, se njegova skupna energija ohranja. 
+
+\begin{align}
+ E &= E_p + E_k = -\frac{\mu m_s}{h} + \frac{m_s v^2}{2} = \mathrm{konst}
+\end{align}
+
+Ob "casu $\frac{\Delta t}{2}$ poznamo polo"zaj in hitrost sonde, torej lahko izra"cunamo njeno energijo. Ker je energija odvisna od mase sonde, sem raje ra"cunal specifi"cno energijo $\eps = E/m$, nato pa na"sel tak"sno hitrost $\tilde{v}_1$, kakr"sno ima sonda na razdalji $h_0$. 
+
+\begin{align}
+ \eps_1 &= \frac{|\vec v_1|^2}{2} - \frac{\mu}{\tilde r}  \\
+ \tilde v_1 &= \sqrt{2(\eps_1 + \mu/h_0)} = \sqrt{v_1^2 - 2\mu \left(\frac{1}{\tilde r} - \frac{1}{h_0}\right)}
+\end{align}
+
+Podobno sem izra"cunal hitrost $\tilde v_2$, s katero sonda prileti na drugi planet. Najkraj"sa mo"zna pot je dolga 1, zate sem za $h_0$ vzel vrednosti, ki ustreza polovici dol"zini intervala na tej poti pri diskretizaciji s 500 to"ckami, torej $h_0 = 1/1000$. 
+
+\section{Rezultati}
+
+% TODO: Ti grafi pokazejo le da potrebna hitrost narasca z maso
+
+\begin{comment}
+ 
+\subsection{Odvisnost od $\mu$}
 
 \begin{figure}[H]
 \centering
@@ -144,29 +195,90 @@ Tak"sna relaksacija zahteva "casovno diskretizacijo tira. Ni treba, da je ta dis
  \label{fig:hitrost}
 \end{figure}
 
-S slike lahko razberemo, da ve"cja masa planetov terja mo"cnejse pospe"sevanje in zaviranje sonde. To sledi iz dejstva, da moramo tako pri vzletu kot pri pristanku premagovati ve"cjo silo te"znosti. 
-
-Drugo zanimivost je periodi"cnost grafa. Zunanji planet kro"zi s periodo $t_2 = 2\pi\sqrt{8} \approx 17,8$, kar se ujema z razmikom med vrhovi na grafu. Slika \ref{fig:hitrost} je narejena za fazni zamik $\delta=0$, torej so ob "casu izstrelitve sonce in oba planeta na isti premici. Pri tak"sni konfiguraciji je energijsko najugodnej"sa pot, ki traja malo manj kot celi ve"ckratnik periode zunanjega planeta. 
-
-"Ce spremenimo fazni zamik med planetoma, kar je enakovredno izstrelitvi ob drugem "casu, se celoten graf ustrezno premakne. Primer z $\delta = 2\pi/3$ je na sliki \ref{fig:hitrost-2}. 
+S slike lahko razberemo, da ve"cja masa planetov terja mo"cnejse pospe"sevanje in zaviranje sonde. To sledi iz dejstva, da moramo tako pri vzletu kot pri pristanku premagovati ve"cjo silo te"znosti. Slika \ref{fig:hitrost} je narejena za fazni zamik $\delta=0$, torej so ob "casu izstrelitve sonce in oba planeta na isti premici. Pri tak"sni konfiguraciji je energijsko najugodnej"sa pot, ki traja malo manj kot celi ve"ckratnik periode zunanjega planeta. "Ce spremenimo fazni zamik med planetoma, kar je enakovredno izstrelitvi ob drugem "casu, se celoten graf ustrezno premakne. Primer z $\delta = 2\pi/3$ je na sliki \ref{fig:hitrost-1}. 
 
 \begin{figure}[H]
 \centering
  \input{g_lambert_mu_23}
  \caption{Skupna sprememba hitrosti, potrebna za doseg drugega planeta in varno zaustavitev, pri razli"cnih masah planetov ($\delta = 2\pi/3$)}
- \label{fig:hitrost}
+ \label{fig:hitrost-1}
 \end{figure}
 
-Vidimo podobno periodi"cnost kot prej, le da so vsi vrhovi premaknjeni v levo. 
+Vidimo podobno periodi"cnost kot prej, le da so vsi vrhovi premaknjeni v levo. Podobno so na sliki \ref{fig:hitrost-2}, kjer je $\delta = -2\pi/3$, vsi vrhovi premaknjeni za tretjino periode v desno. 
 
 \begin{figure}[H]
 \centering
  \input{g_lambert_mu_43}
- \caption{Skupna sprememba hitrosti, potrebna za doseg drugega planeta in varno zaustavitev, pri razli"cnih masah planetov ($\delta = 4\pi/3$)}
+ \caption{Skupna sprememba hitrosti, potrebna za doseg drugega planeta in varno zaustavitev, pri razli"cnih masah planetov ($\delta = -2\pi/3$)}
  \label{fig:hitrost-2}
 \end{figure}
 
-Zanimiv vzorec pa nastane, ko skupaj nari"semo odvisnost $\Delta v$ od $T$ za razli"cne zamike $\delta$ pri istem $\mu$. Ta primer je bolj uporaben, saj mas planetov "se ne znamo poljubno spreminjati, medtem ko datum vzleta in s tem fazni zamik planetov lahko izberemo. Ra"cun sem napravil le za tri mo"zne zamike, ki so med seboj razmaknjeni za tretjino polnega kota. Minimalen $\Delta v$ pri poljubnem "casu poleta $T$ pa lahko interpoliramo z grafa s pomo"cjo ogrinja"ce, ki povezuje najni"zje to"cke na grafu.  
+\end{comment}
+
+\subsection{Pospe"sevanje}
+
+Najprej sem izra"cunal odvisnost potrebne spremembe hitrosti $\Delta v$ v odvisnosti od zahtevanega "casa potovanja za razli"cne mase planetov $\mu$. Rezultati so na sliki na naslednji strani. V vseh primerih opazimo strmo nara"s"canje hitrosti, ko se $T$ pribli"zuje 0. Za kratko potovanje seveda potrebujemo veliko hitrost, razdalja med planetoma ostaja pribli"zno konstantna, torej pri"cakujemo zvezo $\Delta v \propto 1/T$. 
+
+Nasprotno pa se grafi za velike $T$ izravnajo, opazimo le periodi"cno nihanje. Perioda tega nihanje se ujema s periodo kro"zenja zunanjega planeta $t_2 = 2\pi\sqrt{8} \approx 17,8$. Ta periodi"cnost pa se podre za dovolj velike maso planetov, na primer za $\mu > 0,\!01$. Takrat ima gravitacijski privlak obeh planetov dovolj velik vpliv na pot sonde, da njena orbita ni ve"c elipti"cna. Predvsem na zadnjem grafu so vidni skoki pri posameznih "casih $T$, vzorec pa ni ve"c periodi"cen. 
+
+Vsi grafi se pri velikem "casu $T$ pribli"zno izravnajo, tako da lahko potegnemo premico skozi najni"zje to"cke. Seveda pa je vi"sina oz. minimalni $\Delta v$, pri katerem se izravnajo, odvisen od mase planetov. Ne glede na dovoljen "cas potovanja moramo namre"c za izstrelitev sonde dose"ci vsaj ube"zno hitrost, za varen pristanek pa moramo s te hitrosti upo"casniti. Ube"zna hitrost nara"s"ca s korenom mase planeta, kar lahko potrdimo tudi na grafih. "Ce $\mu$ pomno"zimo s 100, na primer iz slike (b) na sliko (d), se minimalen $\Delta v$ pove"ca pribli"zno za faktor 10. 
+
+Vse hitrosti so merjene pri enaki oddaljenosti od planeta $h_0$. Ube"zna hitrost planeta na tej oddaljenosti je enaka
+
+\begin{align}
+\label{eq:ubezna-hitrost}
+ v_e = \sqrt{\frac{2Gm}{r}} = \sqrt{\frac{2GM\mu}{h_0}} = \sqrt{2000\mu}
+\end{align}
+
+pri "cemer smo upo"stevali skaliranje $GM=1$ iz uvoda in izbrano vrednost $h_0 = 1/1000$. Poleg ube"zne hitrosti planetov pa mora imeti sonda dovolj veliko hitrost, da delno ube"zi privlaku Sonca in preide v vi"sjo orbito. Za prehod v vi"sjo orbito sonda porabi $\Delta \eps = \frac{GM}{1} - \frac{GM}{2} = 1/2$ specifi"cne energije, torej mora imeti ob vzletu vsaj toliko skupne energije. To pomeni, da bo izraz pod korenom v izrazu (\ref{eq:ubezna-hitrost}), ki je enak dvakratniku potencialne energije, za 1 ve"cji. Ta dodatek moramo upo"stevati le pri vzletu, torej pri za"cetni hitrosti sonde, medtem ko moramo za pristanek premagati le ube"zno hitrost. 
+
+\begin{align}
+ \min v_1 &= \sqrt{2000\mu + 1} \\
+ \min v_2 &= \sqrt{2000\mu} \\
+ \min \Delta v &= \sqrt{2000\mu + 1} + \sqrt{2000\mu} \label{eq:min-hitrost}
+\end{align}
+
+Gornji izrazi seveda niso to"cni, saj smo pot sonde razdelili tri dele: na pobeg od prvega planeta, pot vmes in pristanek na drugem planetu. V resnici sonda v vsaki to"cki "cuti privlak obeh planetov in Sonca, zato ne moremo definirati meje med deli poleta. Poleg tega se planeta gibljeta, pot sonde pa je zaradi vplivov planetov in Sonca ukrivljena. Smiselnost predpostavk in ocen sem zato preveril na sliki \ref{fig:hitrosti}. 
+
+\newgeometry{left=1cm,right=0cm,top=0cm,bottom=3cm}
+\begin{landscape}
+ \begin{figure}[H]
+  \subfigure[$\mu = 0$]{\input{g_lambert_delta_0}}
+  \subfigure[$\mu = 0,\!001$]{\input{g_lambert_delta_01}} \\
+  \subfigure[$\mu = 0,\!01$]{\input{g_lambert_delta_1}}
+  \subfigure[$\mu = 0,\!1$]{\input{g_lambert_delta_10}}
+ \end{figure}
+\end{landscape}
+\restoregeometry
+
+\newgeometry{left=1cm,right=0cm,top=0cm,bottom=3cm}
+\begin{landscape}
+ \begin{figure}[H]
+  \subfigure[$\mu = 0$]{\input{g_zoom_delta_0}}
+  \subfigure[$\mu = 0,\!001$]{\input{g_zoom_delta_01}} \\
+  \subfigure[$\mu = 0,\!01$]{\input{g_zoom_delta_1}}
+  \subfigure[$\mu = 0,\!1$]{\input{g_zoom_delta_10}}
+ \end{figure}
+\end{landscape}
+\restoregeometry
+
+\begin{figure}[H]
+ \input{g_min_hitrosti}
+ \caption{Odvisnost najmanj"se spremembe hitrosti $\Delta v$ od mase planetov}
+ \label{fig:hitrosti}
+\end{figure}
+
+Na zgornji sliki opazimo odli"cno ujemanje z napovedjo (\ref{eq:min-hitrost}), za vse $\mu$ od 0,001 do 0,2. Za ra"cun minimalne porabe goriva brez omejitve "casa potovanja $T$ nam torej ni treba ra"cunati orbite, ampak lahko uporabimo zgornji izraz. Odstopanje vidimo le pri $\mu=0$, kjer je izra"cunana minimalna hitrost dejansko manj"sa od napovedane. V tem primeru seveda ne moremo ra"cunati z ube"zno hitrostjo planetov, ampak je dovolj uporabiti re"sitev Lambertovega problema. 
+
+Ocenimo lahko tudi hitrost, ki jo sonda potrebuje za doseg drugega planeta ob poljubnem "casu $T$. Ne glede na "cas mora sonda premagati vsaj dvakratno ube"zno hitrost, po enkrat na vsakem planetu. Namesto minimalne hitrosti, s katero "se dose"ze orbito zunanji planet, pa lahko uporabimo kar zvezo $v = s/T$. Skupno spremembo hitrosti, ki jo mora povzro"citi pogon sonde, lahko torej ocenimo kot $\Delta v \approx s/T + 2v_e$. Pri kotu $\delta=0$ je razdalja med planetoma enaka 1, torej bo za zelene "crte na grafih konstanta $s$ enaka $s_0 = 1$. V primeru $\delta = \pm 2\pi/3$ pa je dol"zina poti dalj"sa in je enaka $s_1=\sqrt{7}$, zato so modre in rde"ce "crte na grafih ustrezno vi"sje. Napoved $\Delta v \approx s/T + 2v_e$ sem primerjal z rezultati na sliki \ref{fig:odvisnost}. Tu ujemanje ni tako dobro, saj ta zveza sledi iz mnogih poenostavitev. Zanemarili smo premik planetov v "casu potovanja sonde, pa tudi gravitacijske vplive obeh planetov in Sonca. 
+
+\begin{figure}[H]
+ \input{g_zoom_odvisnost}
+ \caption{Odvisnost potrebne spremembe hitrosti $\Delta v$ od "casa potovanja $T$ pri $\mu = 0,\!01$}
+ \label{fig:odvisnost}
+\end{figure}
+
+\begin{comment}
 
 \begin{figure}[H]
 \centering
@@ -175,25 +287,78 @@ Zanimiv vzorec pa nastane, ko skupaj nari"semo odvisnost $\Delta v$ od $T$ za ra
  \label{fig:hitrost-delta}
 \end{figure}
 
-Ena"cba ogrinja"ce na zgornji sliki je $\Delta v = 1,\!3 + 13/(T-3,\!1)$. Ta zveza je monotono padajo"ca, torej si s podalj"sevanjem "casa potovanja lahko privo"s"cimo manj pospe"sevanja. Poleg tega pa obstaja spodnja meja za potrebno hitrost, ki je odvisna le od mase planetov. 
+Ena"cba ogrinja"ce na zgornji sliki je $\Delta v = 0,\!94 + 4,\!35/\sqrt{T}$. Ta zveza je monotono padajo"ca, torej si s podalj"sevanjem "casa potovanja lahko privo"s"cimo manj pospe"sevanja. To je v nasprotju z ogrinja"co na sliki \ref{fig:hitrost-delta-0}. V sistemu, kjer imata planeta maso vsaj stotino mase sonca, je so torej dalj"sa potovanja energijsko ugodnej"sa. Ker domnevamo, da so vse odvisnosti zvezne, mora obstajati tak"sna masa $\mu$, da se bo graf izravnal, torej da je potrebna hitrost (vsaj za dolga potovanja) neodvisna od "casa potovanja $T$. S posku"sanjem ugotovimo, da se to zgodi blizu $\mu = 0,\!001$, kar je prikazano na sliki \ref{fig:hitrost-delta-01}. 
+
+Na tem mestu bi opozoril, da je v sistemu Sonca, Zemlje in Marse $\mu$ pribli"zno tiso"ckrat manj"si, torej smo trdno v re"zimu na sliki \ref{fig:hitrost-delta-0}, kjer obstaja dolo"cen "cas potovanja, za katerega porabimo najmanj goriva. Zato so poleti na Mars omejeni na izstrelitvena okna, ko kot $\delta$ dopu"s"ca tak"sna nizkoenergijska potovanja. Pri nadaljnjem ra"cunanju pa sem se posvetil tudi ve"cjim $\mu$, saj se le tam re"sitev mo"cno razlikuje od znane elipti"cne orbite. 
+
+\begin{figure}[H]
+\centering
+ \input{g_lambert_delta_01}
+ \caption{Skupna sprememba hitrosti, potrebna za doseg drugega planeta in varno zaustavitev, pri faznih zamikih $\delta$ in pri relativni masi planetov $\mu=0,\!001$}
+ \label{fig:hitrost-delta-01}
+\end{figure}
+
+Poleg tega pa obstaja spodnja meja za potrebno hitrost, ki je odvisna le od mase planetov. Podoben graf sem naredil tudi za razli"cne mase planetov, spodaj sta primera za $\mu = 0,\!02$ in $\mu = 0,\!1$. 
 
 \begin{figure}[H]
 \centering
  \input{g_lambert_delta_2}
  \caption{Skupna sprememba hitrosti, potrebna za doseg drugega planeta in varno zaustavitev, pri faznih zamikih $\delta$ in pri relativni masi planetov $\mu=0,\!02$}
- \label{fig:hitrost-delta}
+ \label{fig:hitrost-delta-2}
 \end{figure}
 
 \begin{figure}[H]
 \centering
  \input{g_lambert_delta_10}
  \caption{Skupna sprememba hitrosti, potrebna za doseg drugega planeta in varno zaustavitev, pri faznih zamikih $\delta$ in pri relativni masi planetov $\mu=0,\!1$}
- \label{fig:hitrost-delta}
+ \label{fig:hitrost-delta-10}
 \end{figure}
 
+
+Poleg pri"cakovanega nara"s"canja ube"zne hitrosti z ve"canjem $\mu$ opazimo tudi, da grafi postajajo vse manj periodi"cni, vrhovi pa vse manj izraziti. Mo"cnej"sa privla"cna sila planetov o"citno dovoljuje orbite, ki niso ve"c elipti"cne, ampak so zaradi vpliva planetov popa"cene in nimajo stalne periode. 
+
+Ena"cbe uporabljenih ogrinja"c, ki sem jih dobil s prilagajanjem funkcije $f(x) = a+b/\sqrt{x}$ najni"zjim to"ckam na grafu, so navedene v tabeli \ref{tab:ogrinjace}. Ta funkcija se je izkalaza kot dober pribli"zek pri razli"cnih vrednostih $\mu$, "ceprav ima le dva parametra. Vidimo, da se parameter $a$ le malo spreminja z maso planetov, medtem ko $b$ mo"cno nara"s"ca. V splo"snem potrebna sprememba hitrosti z maso planetov nara"s"ca, k "ceme pripomore predvsem pove"canje ube"zne hitrosti. 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+ $\mu$ & Ena"cba ogrinja"ce \\
+ \hline
+ 0,0 & $1,\!33 - 2,\!81/\sqrt{T}$ \\
+ \hline
+ 0,001 & 1,08 \\
+ 0,01 & $0,\!94 + 4,\!35/\sqrt{T}$ \\
+ 0,02 & $1,\!07 + 5,\!64/\sqrt{T}$ \\
+ 0,1 & $1,\!26 + 11,\!9/\sqrt{T}$ \\
+ \hline
+\end{tabular}
+\caption{Ena"cbe prilagojenih ogrinja"c pri razli"cnih masah planetov}
+\label{tab:ogrinjace}
+\end{table}
+
+\end{comment}
+
+\subsection{Orbite}
+
+Za konec sem prikazal "se nekaj orbit, po katerih se giblje sonda med obema planetoma. Polna "crna "crta prikazuje pot sonde v primeru z $\mu=0$, svetlej"se in bolj rde"ce "crte pa po vrsti ustrezajo vrednostim $\mu = 0.01, 0.03$ in $0.1$. 
+
+\begin{figure}[H]
+\centering
+ \subfigure[$\delta=0$, $T=3$]{\includegraphics[height=150pt,clip=true,trim=200 400 300 150]{./Data/g_plot_0_3}} \qquad\qquad
+ \subfigure[$\delta=-2\pi/3$, $T=3$]{\includegraphics[height=150pt,clip=true,trim=280 300 220 270]{./Data/g_plot_-2_3}} \\
+ \subfigure[$\delta=0$, $T=7$]{\includegraphics[height=140pt,clip=true,trim=140 450 350 100]{./Data/g_plot_0_7}} \qquad\qquad
+ \subfigure[$\delta=-2\pi/3$, $T=7$]{\includegraphics[height=140pt,clip=true,trim=150 280 260 220]{./Data/g_plot_2_7}} \\
+ \subfigure[$\delta=0$, $T=10$]{\includegraphics[height=140pt,clip=true,trim=80 380 380 100]{./Data/g_plot_0_10}} \qquad\qquad
+ \subfigure[$\delta=+2\pi/3$, $T=10$]{\includegraphics[height=140pt,clip=true,trim=250 270 220 250]{./Data/g_plot_2_10}}
+\end{figure}
+
+Pri kratkih "casih potovanj, na primer na slikah (a) in (b) s "casom $T=3$, masi planetov le malo spremenita orbito sonde. Odstopanje od elipse vidimo le v bli"zini obeh planetov. Vpliv planetov je bolj viden pri dalj"sih potovanjih, kjer so orbite "ze vidno razli"cne od elipti"cnih re"sitev Lambertovega problema. Opazna je predvsem delna zanka okrog zunanjega planeta, kjer sonda uporabi gravitacijo planeta za spremembo smeri. V nekaterih primerih, kot vidimo na sliki (f), pa relaksacija konvergira k kvalitativno druga"cni orbiti. Najsvetlej"sa orbita na sliki (f) je bolj podobna neki drugi re"sitvi Lambertovega problema, ki v primeru brezmasnih planetov zahteva ve"c pospe"sevanja, pri dovolj velikem $\mu$ pa je bolj ugodna. 
+
+\newpage
 \begin{thebibliography}{3}
  \bibitem{wiki:lambert} Wikipedia: Lambert's problem (\url{http://en.wikipedia.org/wiki/Lambert's_problem})
- \bibitem{wiki:kepler} Wikipedia: Kepler's laws of planetary motion (\url{http://en.wikipedia.org/wiki/Kepler's_laws_of_planetary_motion})
+ \bibitem{toolbox} \url{http://keptoolbox.sourceforge.net}
 \end{thebibliography}
 
 

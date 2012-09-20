@@ -38,12 +38,22 @@ Trajectory Planets::toolbox(int steps, int circles)
     tr.positions[0] = r1;
     tr.positions[steps] = planet_two(steps*dt);
 
-    int s = circles;
-    if (s > 2*p.get_Nmax())
+    int n = p.get_Nmax();
+    int m = 0;
+    double v = std::numeric_limits<double>::max();
+    for (int i = 0; i < 2*n+1; ++i)
     {
-        exit(2);
+        array3D one = p.get_v1()[i];
+        array3D two = p.get_v2()[i];
+        const double test = sqrt(one[0]*one[0]+one[1]*one[1]) + sqrt(two[0]*two[0] + two[1]*two[1]);
+        if (test < v)
+        {
+            v = test;
+            m = i;
+        }
     }
-    array3D v1 = p.get_v1()[s];
+
+    array3D v1 = p.get_v1()[m];
     double y[4] = {r1.x, r1.y, v1[0], v1[1]};
     gsl_odeiv2_system sys = {odvod, 0, 4, 0};
     gsl_odeiv2_driver* driver = gsl_odeiv2_driver_alloc_y_new(&sys, gsl_odeiv2_step_rk4, 1e-3, 1e-8, 1e-8);
