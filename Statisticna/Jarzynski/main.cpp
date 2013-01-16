@@ -1,11 +1,27 @@
 #include <iostream>
 #include "system.h"
 
-int main(int argc, char **argv) {
-    System sys(128);
-    sys.beta = 0.2;
+void simulation(int L, int tau, double beta)
+{
+    System sys(L);
+    sys.beta = beta;
 
-    sys.metropolis();
+    for (int i = 0; i < L*L*5; ++i)
+    {
+        sys.metropolis();
+    }
+
+    for (int t = 0; t < tau; ++t)
+    {
+        for (int i = 0; i < L*L; ++i)
+        {
+            sys.metropolis();
+        }
+    }
+}
+
+int main(int argc, char **argv) {
+    simulation(1024, 100, 1);
 
     std::cout << "Hello, world!" << std::endl;
     return 0;
