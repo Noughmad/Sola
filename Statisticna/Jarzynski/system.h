@@ -29,6 +29,7 @@ public:
     spin_t& value(int i, int j) const;
 
     void randomState();
+    double magnetization();
 
     double energyChange(int i, int j) const;
     void metropolis();

@@ -69,3 +69,13 @@ void System::metropolis()
     }
 }
 
+double System::magnetization()
+{
+    double M = 0;
+    for (int i = 0; i < L*L; ++i)
+    {
+        M += data[i];
+    }
+    return M;
+}
+
