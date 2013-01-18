@@ -1,0 +1,41 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[slovene]{babel}
+\usepackage[utf8]{inputenc}
+
+%opening
+\title{Re\v sitev doma\v ce naloge 7.6}
+\author{Miha \v Can\v cula}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+a) Gaussov snop po"sljemo skozi tanek nelinearni kristal debeline $d$, kjer pride do opti"cnega Kerrovega pojava $n(I) = n_0 + n_2 I$. Poka"zi, da tak material deluje kot le"ca. Izra"cunaj gori"s"cnico $f$. Namig: vzemi intenzitetni profil $I = I_0(1-\frac{2r^2}{w^2})$ ter upo"stevaj, da je kompleksna prepustnost $t$ za zbiralno le"co z gori"s"cnico $f$ sorazmerna z $\exp(-ikr^2/2f)$. 
+
+b) Izra"cunaj mejhno mo"c, pri kateri bo "sirina snopa v kristalu ostala konstantna
+
+c) V kristal po"sljemo tri vale s frekvencami $\omega_1$, $\omega_2$ in $\omega_3$, polariziranimi v smeri $x$. Zapi"si komponento nelinearne polarizacije $P_{x}^{(NL)}$ pri frekvenci $\omega_1$ in poka"zi, da se ta val "siri s hitrostjo $c_0/(n+\Delta n)$, kjer je $\Delta n = n_2(|E_1|^2 + 2|E_2|^2 + 2|E_3|)$, $n_2 = \frac{3}{4}\chi^{(3)}$. 
+\end{abstract}
+
+\section{Gori"s"cnica}
+
+Intenziteta svetlobe v Gaussovem snopu z oddaljenostjo od osi pada kot $I = e^{-2r^2/w^2} \approx I_0(1 - \frac{2r^2}{w^2})$. Zaradi Kerrovega pojava je od oddaljenosti od osi odvisen tudi lomni koli"cnik, in sicer
+
+$$n(r) = n_0 + n_2 I(r) = n_0 + n_2I_0 - 2n_2I_0\frac{r^2}{w^2}$$
+
+Kompleksna prepustnost kristala je odvisna od njegove debeline in valovne dol"zine svetlobe. V kristalu s Kerrovim pojavom je odvisna od radija $r$ kot
+
+$$t(r) \propto e^{ikd} = e^{ik_0d n(r)} = e^{ik_0d(n_0 + n_2I_0)} e^{-2ik_0dn_2I_0 r^2/w^2}$$
+
+Od $r$ je odvisen le drugi faktor. "Ce tega primerjamo z izrazom za prepustnost zbiralne le"ce, lahko izra"cunamo gori"s"cnico
+
+$$-2ik_0n_2 r^2/w^2 = -ik_0r^2/2f$$
+$$f = \frac{w^2}{I_0 n_2 d}$$
+
+\section{Konstantna "sirina}
+
+Gaussov snop se znotraj kristala "siri zaradi uklona svetlobe, hkrati pa se o"zi ker kristal deluje kot zbiralna le"ca. V primeru, da se oba prispevka ravno izni"cita, bo "sirina snopa ostala konstantna. 
+
+\end{document}
