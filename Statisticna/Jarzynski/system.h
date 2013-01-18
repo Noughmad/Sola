@@ -26,13 +26,14 @@ public:
     System(int L);
     ~System();
 
-    spin_t& value(int i, int j) const;
+    inline spin_t& value(int i, int j) const;
 
     void randomState();
     double magnetization();
 
-    double energyChange(int i, int j) const;
-    void metropolis();
+    inline double energyChange(int i, int j) const;
+    inline void metropolis();
+    void metropolisSteps(int N);
 
 public:
     double beta;

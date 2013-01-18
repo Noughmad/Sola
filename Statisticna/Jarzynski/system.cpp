@@ -52,7 +52,7 @@ void System::randomState()
 
 double System::energyChange(int i, int j) const
 {
-    const spin_t factor = value(i+1, j) + value(i-1, j) + value(i, j+1) + value(i, j-1);
+    const spin_t factor = value(i+1, j) + value(i-1, j) + value(i, j+1) + value(i, j-1) + h;
     return -2 * value(i, j) * factor;
 }
 
@@ -63,9 +63,9 @@ void System::metropolis()
 
     double dE = energyChange(i, j);
 
-    if ((double)rand() / RAND_MAX > exp(-beta * dE))
+    if ((double)rand() / RAND_MAX < exp(-beta * dE))
     {
-        value(i, j) *= -1;
+        data[i*L + j] *= -1;
     }
 }
 
@@ -79,3 +79,11 @@ double System::magnetization()
     return M;
 }
 
+void System::metropolisSteps(int N)
+{
+    #pragma omp parallel for
+    for (int i = 0; i < N; ++i)
+    {
+        metropolis();
+    }
+}
