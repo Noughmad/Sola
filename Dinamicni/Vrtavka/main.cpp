@@ -20,7 +20,7 @@ const int ParallelRuns = 200;
 const int LyapunovMaps = 502;
 const int StepsPerSave = 50;
 
-class TopWorkspace;
+class Workspace;
 
 void razdalja(const double y1[], const double y2[], double d[])
 {
@@ -75,12 +75,12 @@ inline double interpolate(double t1, double t2, double x1, double x2, double t)
 
 int odvod(double t, const double y[], double dy[], void* params);
 
-class TopWorkspace
+class Workspace
 {
 public:
-    TopWorkspace(const top_params& top, const string& file);
-    TopWorkspace(double D, double a, double L);
-    ~TopWorkspace();
+    Workspace(const top_params& top, const string& file);
+    Workspace(double D, double a, double L);
+    ~Workspace();
 
     void setInitial(const double initial[]);
 
