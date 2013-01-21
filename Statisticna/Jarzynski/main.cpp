@@ -50,11 +50,11 @@ double simulation(int L, int tau, double beta, double H)
     }
     else if (beta > 0.6)
     {
-        EqSteps = 80;
+        EqSteps = 200;
     }
     else
     {
-        EqSteps = 300;
+        EqSteps = 200;
     }
 
     sys.metropolisSteps(L*L*EqSteps);

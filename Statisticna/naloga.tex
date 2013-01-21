@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[slovene]{babel}
 \usepackage{amsmath}
+\usepackage{graphicx}
 
 %opening
 \title{Neravnovesni pojavi -- enakost Jarzynskega}
@@ -65,14 +66,78 @@ Enakosti sem preveril tudi numeri"cno, in sicer na dvodimenzionalnem Isingovem m
 \end{align}
 kjer je $M(t) = \sum_i S_i(t)$ magnetizacija sistema. 
 
-Za simulacijo sem uporabil Metropolisov algoritem, za vsako kombinacijo parametrov ($\beta$, $H$ in $\tau$) pa sem simulacijo ponovil 100000-krat. 
+Za simulacijo sem uporabil Metropolisov algoritem, za vsako kombinacijo parametrov ($\beta$, $H$ in $\tau$) pa sem simulacijo ponovil 100000-krat. Vsaki"c sem uporabil kvadratno mre"zo velikosti 64x64. 
 
-TODO: Tukaj pride rezultat za majhno beto $\Rightarrow$ paramagnetno stanje
+\subsection{Paramagnetna faza}
 
-V vseh primerih je porazdelitev pribli"zno Gaussova. Za tak"sno porazdelitev je sprememba proste energije enaka
+\begin{figure}[h]
+ \input{para}
+ \caption{Statistika opravljenega dela v paramagnetni fazi ($\beta = 0.2 < \beta_c$, $\beta h = 0.3$)}
+\end{figure}
+
+V vseh primerih je porazdelitev pribli"zno Gaussova. 
+
+\subsection{Feromagnetna faza}
+
+Pri $\beta$ nad kriti"cno vrednostjo snov preide v feromagnetno fazo. V tej fazi "ze pred vklopom zunanjega polja skoraj vsi spini ka"zejo v isto smer, opravljeno delo pa je odvisno od te smeri. Na voljo imamo le dve smeri (spin $\pm 1$), zato sta na grafu jasno vidna dva vrhova. 
+
+\begin{figure}[h]
+ \input{fero}
+ \caption{Statistika opravljenega dela v feromagnetni fazi ($\beta = 0.7 > \beta_c$, $\beta h = 0.1$)}
+\end{figure}
+
+\subsection{Kriti"cna temperatura}
+
+Zanimivo je tudi obna"sanje to"cno pri temperaturi prehoda, torej $\beta = \beta_c = \frac{\ln 1+\sqrt{2}}{2}$. 
+
+\begin{figure}[h]
+ \input{crit_1}
+ \caption{Statistika opravljenega dela pri temperaturi prehoda ($\beta = \beta_c$, $\beta h = 0.1$)}
+\end{figure}
+
+\begin{figure}[h]
+ \input{crit_3}
+ \caption{Statistika opravljenega dela pri temperaturi prehoda ($\beta = \beta_c$, $\beta h = 0.3$)}
+\end{figure}
+
+Tudi v tem primeru opazimo dva vrhova, ki pa nista jasno lo"cena med seboj. Poleg tega vrhova nista simetri"cna, polo"zaj desnega je odvisen od "casa $\tau$, medtem ko je levi konstanten. 
+
+\subsection{Preverjanje enakosti}
+
+Opravljeno delo je po absolutni vrednosti preveliko, da bi lahko neposredno izra"cunal pri"cakovano vrednosti $\langle e^{-\beta W}\rangle$, saj pridemo do mejo ra"cunalni"ske natan"cnosti. Namesto tega sem uporabil zvezo
+
 \begin{align}
  \Delta F = \langle W \rangle - \frac{\beta}{2}\theta
 \end{align}
-kjer sta $\langle W \rangle$ in $\theta$ povpre"cna vrednost in "sirina porazdelitve. Rezultati ka"zejo, da $\Delta F$ ni odvisna od izbire "casa $\tau$, ampak le od kon"cne vrednosti $H$. 
+kjer sta $\langle W \rangle$ in $\theta$ povpre"cna vrednost in varianca porazdelitve. Rezultati v spodnji tabeli ka"zejo, da $\Delta F$ ni odvisna od izbire "casa $\tau$, ampak le od kon"cne vrednosti $H$. 
+
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{|c|c|c|c|}
+ \hline
+  $\beta$ & $\beta h$ & $\tau$ & $\langle W\rangle - \frac{\beta}{2}\theta$ \\
+  \hline
+  0.2 & 0.3 & 25 & -2556\\
+  0.2 & 0.3 & 50 & -2413\\
+  0.2 & 0.3 & 100 & -2305\\
+  \hline
+  0.7 & 0.1 & 25 & -1416\\
+  0.7 & 0.1 & 50 & -1436\\
+  0.7 & 0.1 & 100 & -1415\\
+  \hline
+  0.44 & 0.1 & 25 & -1492\\
+  0.44 & 0.1 & 50 & -1509\\
+  0.44 & 0.1 & 100 & -1519\\
+  \hline
+  0.44 & 0.3 & 25 & -13302\\
+  0.44 & 0.3 & 50 & -13280\\
+  0.44 & 0.3 & 100 & -12800\\
+  \hline
+ \end{tabular}
+ \caption{Pri"cakovane vrednosti $\langle e^{-\beta W}\rangle$}
+\end{center}
+\end{table}
+
+Vrednosti v zgornji tabeli ka"zejo nekak"sno odvisnosti od $\tau$, ki pa nikoli ne prese"ze pribli"zno 10\%. Tolik"sno odstopanje lahko pojasnimo z izbiro kon"cnega sistema, nenatan"cnosti ra"cunanja. Zaradi "casovne omejitve morda sistem na za"cetku ni bil v ravnovesnem stanju. Odstopanja so kljub temu dovolj majhna, da lahko potrdimo enakost Jarzynskega. 
 
 \end{document}
