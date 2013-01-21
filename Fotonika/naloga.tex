@@ -31,11 +31,72 @@ $$t(r) \propto e^{ikd} = e^{ik_0d n(r)} = e^{ik_0d(n_0 + n_2I_0)} e^{-2ik_0dn_2I
 
 Od $r$ je odvisen le drugi faktor. "Ce tega primerjamo z izrazom za prepustnost zbiralne le"ce, lahko izra"cunamo gori"s"cnico
 
-$$-2ik_0n_2 r^2/w^2 = -ik_0r^2/2f$$
+$$-2ik_0dn_2 r^2/w^2 = -ik_0r^2/2f$$
 $$f = \frac{w^2}{I_0 n_2 d}$$
 
 \section{Konstantna "sirina}
 
-Gaussov snop se znotraj kristala "siri zaradi uklona svetlobe, hkrati pa se o"zi ker kristal deluje kot zbiralna le"ca. V primeru, da se oba prispevka ravno izni"cita, bo "sirina snopa ostala konstantna. 
+Gaussov snop se znotraj kristala "siri zaradi uklona svetlobe, hkrati pa se o"zi ker kristal deluje kot zbiralna le"ca. V primeru, da se oba prispevka ravno izni"cita, bo "sirina snopa ostala konstantna. Polje v Gaussovem snopu je sorazmerno z $\exp(ikr^2/2R(z))$, kjer je $R(z) = z + z_0^2/z$. Eksponent ima nasproten predznak kot pri prepustnosti le"ce, zato lahko najdemo tak"sno kombinacijo parametrov, da se bosta prispevka ravno izni"cila. 
+
+\subsection{Pri $z=z_0$}
+Privzamemo lahko, da je intenziteta dovolj velika za izrazit Kerrov pojav le znotraj grla snopa, zato se lahko postavimo v mejo grla, torej pri $z=z_0$. 
+
+$$ik\frac{r^2}{2R(z_0)} -2ikdn_2I_0\frac{r^2}{w^2} = 0$$
+
+Krivinskih radij valovnih front pri $z_0$ je enak $2z_0$, za debelino kristala pa vzamemo kar $z_0$. Ker nas zanima pogoj za konstantno "sirino snopa, se ta v kristalu ne "siri, in je njegova "sirina povsed enaka $w_0$. 
+
+$$ik\frac{r^2}{4z_0} - 2ikz_0n_2I_0\frac{r^2}{w_0^2} = 0$$
+$$\frac{1}{4z_0} = 2z_0n_2I_0\frac{1}{w_0^2}$$
+$$I_0 = \frac{w_0^2}{8z_0^2n_2}$$
+
+"Ce poznamo intenziteto $I_0$ in "sirino snopa $w_0$, lahko zapi"semo mejno mo"c kot
+
+$$P_m = 2\pi\int I_0 e^{-2r^2/w_0^2} r\;\mathrm{d}r = \frac{\pi}{2} I_0 w_0^2 \varepsilon_0c$$
+$$P_m = \frac{\pi w_0^4}{16z_0^2n_2}\varepsilon_0c = \frac{\lambda^2\varepsilon_0 c_0}{16\pi n_2n}$$
+
+\subsection{Pri zelo majhnem $z$}
+
+Zgoraj smo predpostavili, da se "zarek vzdol"z razdalje $z_0$ ne "siri. Hkrati pa smo uporabili izraz za ukrivljenost Gaussovega snopa na tej dol"zini, ki predpostavlja "sirjenje "zarka. Teh nasprotujo"cih se predpostavk se lahko znebimo, "ce isti ra"cun ponovimo za zelo majhen $z$. V tem primeru izraz za $1/R(z)$ razvijemo
+$$1/R(z) = \frac{z}{z^2+z_0^2} \approx \frac{z}{z_0^2}$$
+Ostali parametri so enaki, zato lahko kot prej izena"cimo. 
+$$ik\frac{r^2}{2R(z_0)} -2ikdn_2I_0\frac{r^2}{w^2} = 0$$
+$$ik\frac{zr^2}{2z_0^2} -2ikzn_2I_0\frac{r^2}{w^2} = 0$$
+$$\frac{1}{2z_0^2} -2n_2I_0\frac{1}{w^2} = 0$$
+$$I_0 = \frac{w_0^2}{4z_0^2n_2}$$
+
+Dobili smo izraz, ki je dvakrat ve"cji od tistega pri $z=z_0$. Ustrezno je tudi mejna mo"c dvakrat ve"cja. 
+
+\section{Nelinearna polarizacija}
+
+V kristalu so prisotni trije "zarki z enako polarizacijo in razli"cnimi frekvencami. Realno elektri"cno polje lahko torej zapi"semo kot
+
+$$E = \frac{1}{2}\left(E_1 e^{-i\omega_1t} + E_1^* e^{\omega t} + E_2 e^{-i\omega_2t} + E_2^* e^{\omega_2 t} + E_3 e^{-i\omega_3t} + E_3^* e^{\omega_3 t}\right)$$
+
+Ker so vse tri polarizacije v smeri $x$, lahko ra"cunamo s skalarnimi polji, implicitno pa upo"stevamo, da so to $x$ komponente elektri"cnega polja. Nelinearno polarizacijo izrazimo kot $$P^{(NL)} = \varepsilon_0 \chi^{(3)} E^3$$
+
+Ker nas zanima komponenta pri frekvenci $\omega_1$, moramo upo"stevati vse "clene v zgornjem izrazu, kjer se frekvence se"stejejo v $\pm \omega_1$. Najprej poi"s"cimo vse "clene z vsoto frekvence $+\omega_1$. V izrazu nastopa kub skupnega elektri"cnega polja, zato i"s"cemo produkte po treh "clenov z vsoto frekvence $\omega_1$. Med frekvencami no nobene povezave, zato lahko tak"sno vsoto dobimo le na naslednje na"cine
+
+\begin{itemize}
+ \item $\omega_1 + \omega_1 - \omega_1$. Tak"sni "cleni so trije, saj lahko "clen z negativno frekvenco vzamemo iz vsakega izmed treh faktorjev. Amplituda je v vseh primerih enaka $E_1E_1E_1^*$. 
+ \item $\omega_1 + \omega_2 - \omega_2$. Tak"snih "clenov je 6, saj lahko "clen s frekvenco $\omega_1$ vzamemo iz vsakega izmed treh faktorjev, druga dva "clena pa lahko "se zamenjamo. Amplituda je v vseh primerih enaka $E_1E_2E_2^*$. 
+ \item $\omega_1 + \omega_3 - \omega_3$. Enak razmislek kot pri prej"snji alinei, tudi teh "clenov je 6, amplitude pa so enake $E_1E_3E_3^*$. 
+\end{itemize}
+
+Ker je elektri"cno polje realna koli"cina, je "clenov z negativno frekvenco enako kot tistih s pozitivno, njihove amplitude pa so ravno kompleksno konjugirane. Skupna nelinearna polarizacija pri frekvenci $\omega_1$ je torej enaka
+
+$$P^{(NL)}(\omega_1) = \frac{\varepsilon_0\chi^{(3)}}{8}\left(3|E_1|^2 + 6|E_2|^2 + 6|E_3|^3\right)\left(E_1 e^{-i\omega_1 t} + E_1^*e^{i\omega_1 t}\right)$$
+
+Fazo enega izmed valov si lahko izberemo poljubno, zato lahko privzamemo, da je skalarna koli"cina $E_1$ realna zapi"semo
+
+$$P^{(NL)}(\omega_1) = \frac{3}{4}\varepsilon_0\chi^{(3)}\left(|E_1|^2 + 2|E_2|^2 + 2|E_3|^3\right)E_1 \cos \omega_1 t$$
+
+Razmerje med nelinearna polarizacija in elektri"cnim poljem $E_1$ je popravek k kvadratu lomnega koli"cnika
+
+$$n^2 = n_0^2 + \Delta n^2 = n_0^2 + \frac{3}{4}\varepsilon_0\chi^{(3)}\left(|E_1|^2 + 2|E_2|^2 + 2|E_3|^3\right)$$
+
+Popravek k lomnemu koli"cniku lahko izra"cunamo z razvojem
+
+$$n = n_0 + \Delta n = \sqrt{n_0^2 + \Delta n^2} \approx n_0 + \frac{\Delta n^2}{2n_0}$$
+$$\Delta n = \frac{3\varepsilon_0\chi^{(3)}}{8n_0} \left(|E_1|^2 + 2|E_2|^2 + 2|E_3|^3\right)$$
 
 \end{document}

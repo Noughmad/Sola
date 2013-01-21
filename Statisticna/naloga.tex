@@ -1,0 +1,78 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+
+%opening
+\title{Neravnovesni pojavi -- enakost Jarzynskega}
+\author{Miha \v Can\v cula}
+
+\begin{document}
+
+\maketitle
+
+\section{Enakost Jarzynskega}
+
+Vzemimo sistem z vsaj enim zunanjim parametrom. V primeru Isingovega modela, ki se mu bomo posvetili v drugem poglavju, je ta parameter zunanje magnetno polje $h$. "Ce je sistem na za"cetku v ravnovesju pri vrednosti parametra $A$, nato pa v kon"cnem "casu spremenimo zunanji parameter na vrednost $B$, s to spremembo opravimo delo $W$. To delo je odvisno od mikrostanja sistema. "Ce pa poskus ponovimo mnogokrat in vsaki"c zapi"semo koli"cino opravljenega dela, enakost Jarzynskega trdi
+
+\begin{align}
+ \langle e^{-\beta W}\rangle \equiv \int \mathrm{d}W \rho(W) e^{-\beta W} = e^{-\beta \Delta F}
+\end{align}
+
+kjer je $\rho(W)$ verjetnostna porazdelitev dela, $\Delta F = F_B - F_A$ pa razlika prostih energij med ravnovesnima stanjema pri temperaturi $\beta$ in vrednosti zunanjega parametra $A$ oz. $B$. 
+
+Na levi strani enakosti nastopa delo, ki ga opravimo, ko sistem spravimo iz ravnovesja. "Ce je sprememba zunanjega parametra velika in hitra, je lahko sistem dale"c od ravnovesja. Na desni strani enakosti pa nastopajo le ravnovesne vrednosti proste energije. Enakost Jarzynskega torej povezuje neravnovesno obna"sanje sistema z ravnovesnimi koli"cinami. 
+
+Pomembna lastnost zgornje enakosti je, da ni odvisna od na"cina, kako se zunanji parameter spreminja s "casom. Sprememba je lahko poljubno hitra ali pa zelo po"casna. 
+\section{Izpeljava}
+
+Hamiltonian sistema s faznim prostorom $\Gamma$ in zunanjim parametrom $\lambda$ lahko zapi"semo kot
+
+\begin{align}
+ \mathcal{H} = \mathcal{H}(\Gamma; \lambda)
+\end{align}
+
+Na za"cetku je sistem pri $\lambda=A$ v stanju mikrostanju $\Gamma_0$. Ko pa parameter v "casu $\tau$ spremenimo na vrednosti $B$, sistem preide v mikrostanje $\Gamma_\tau$. V hamiltonskem sistemu je opravljeno delo $W$ enako razliki energij na koncu in na za"cetku. 
+\begin{align}
+ W = \mathcal{H}(\Gamma_\tau; B) - \mathcal{H}(\Gamma_0; A)
+\end{align}
+
+"Ce zapi"semo izraz za povpre"cje $\langle e^{-\beta W}\rangle$ po za"cetnem stanju kot
+\begin{align}
+ \langle e^{-\beta W}\rangle = \int \mathrm{d}\Gamma_0 p(\Gamma_0) e^{\beta [\mathcal{H}(\Gamma_\tau; B) - \mathcal{H}(\Gamma_0; A)]}
+\end{align}
+in uporabimo verjetnostno porazdelitev za"cetnega stanja
+\begin{align}
+ p(\Gamma) = \frac{1}{Z(A)} \exp\left[-\beta \mathcal{H}(\Gamma; A)\right]
+\end{align}
+dobimo povezavo
+\begin{align}
+ \langle e^{-\beta W}\rangle = \frac{1}{Z(A)}\int \mathrm{d}\Gamma_0 e^{-\beta\mathcal{H}(\Gamma_\tau; B)} 
+\end{align}
+
+Sedaj lahko uvedemo kanoni"cno substitucijo spremenljivk $\Gamma_0 \to \Gamma_\tau$ in upo"stevamo Liouvillov izrek o invariantnosti mere pri kanoni"cnih transformacijah. Pridemo do enakosti
+
+\begin{align}
+  \langle e^{-\beta W}\rangle = \frac{1}{Z(A)}\int \mathrm{d}\Gamma_\tau e^{-\beta\mathcal{H}(\Gamma_\tau; B)} = \frac{Z(B)}{Z(A)} = e^{-\beta \Delta F}
+\end{align}
+
+\section{Simulacija}
+
+Enakosti sem preveril tudi numeri"cno, in sicer na dvodimenzionalnem Isingovem modelu. Zunanje magnetno polje $h$ sem linearno pove"ceval od vrednosti 0 do kon"cne vrednosti $H$ po "casu $\tau$. Pri tak"sni spremembi sistem prejme delo
+
+\begin{align}
+ W = -\int_0^H M \;\mathrm{d}H = -\frac{H}{\tau} \int_0^\tau M(t) \; \mathrm{d}t
+\end{align}
+kjer je $M(t) = \sum_i S_i(t)$ magnetizacija sistema. 
+
+Za simulacijo sem uporabil Metropolisov algoritem, za vsako kombinacijo parametrov ($\beta$, $H$ in $\tau$) pa sem simulacijo ponovil 100000-krat. 
+
+TODO: Tukaj pride rezultat za majhno beto $\Rightarrow$ paramagnetno stanje
+
+V vseh primerih je porazdelitev pribli"zno Gaussova. Za tak"sno porazdelitev je sprememba proste energije enaka
+\begin{align}
+ \Delta F = \langle W \rangle - \frac{\beta}{2}\theta
+\end{align}
+kjer sta $\langle W \rangle$ in $\theta$ povpre"cna vrednost in "sirina porazdelitve. Rezultati ka"zejo, da $\Delta F$ ni odvisna od izbire "casa $\tau$, ampak le od kon"cne vrednosti $H$. 
+
+\end{document}
