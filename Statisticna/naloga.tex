@@ -3,6 +3,8 @@
 \usepackage[slovene]{babel}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 
 %opening
 \title{Neravnovesni pojavi -- enakost Jarzynskega}
@@ -66,41 +68,59 @@ Enakosti sem preveril tudi numeri"cno, in sicer na dvodimenzionalnem Isingovem m
 \end{align}
 kjer je $M(t) = \sum_i S_i(t)$ magnetizacija sistema. 
 
-Za simulacijo sem uporabil Metropolisov algoritem, za vsako kombinacijo parametrov ($\beta$, $H$ in $\tau$) pa sem simulacijo ponovil 100000-krat. Vsaki"c sem uporabil kvadratno mre"zo velikosti 64x64. 
+Za simulacijo sem uporabil Metropolisov algoritem, za vsako kombinacijo parametrov ($\beta$, $H$ in $\tau$) pa sem simulacijo ponovil 100000-krat. Vsaki"c sem uporabil kvadratno mre"zo velikosti 64x64. "Casovno enoto sem izbral tako, da je program ob vsakem koraku dol"zine 1 naredil 64x64 korakov Metropolisovega algoritma. Vsak spin je tako imel v povpre"cju vsak korak eno mo"znost, da se obrne. 
 
 \subsection{Paramagnetna faza}
 
-\begin{figure}[h]
+\begin{figure}[H]
+\centering
  \input{para}
  \caption{Statistika opravljenega dela v paramagnetni fazi ($\beta = 0.2 < \beta_c$, $\beta h = 0.3$)}
 \end{figure}
 
-V vseh primerih je porazdelitev pribli"zno Gaussova. 
+V paramagnetni fazi je porazdelitev dela pribli"zno Gaussova, ne glede na izbiro "casa $\tau$. S tem ko podalj"sujemo "cas, process postaja vedno bolj obrnljiv, vrh porazdelitve pa o"zji in vi"sji.  
 
 \subsection{Feromagnetna faza}
 
 Pri $\beta$ nad kriti"cno vrednostjo snov preide v feromagnetno fazo. V tej fazi "ze pred vklopom zunanjega polja skoraj vsi spini ka"zejo v isto smer, opravljeno delo pa je odvisno od te smeri. Na voljo imamo le dve smeri (spin $\pm 1$), zato sta na grafu jasno vidna dva vrhova. 
 
-\begin{figure}[h]
+\begin{figure}[H]
+\centering
  \input{fero}
  \caption{Statistika opravljenega dela v feromagnetni fazi ($\beta = 0.7 > \beta_c$, $\beta h = 0.1$)}
+\end{figure}
+
+Pove"cavi obeh vrhov sta na naslednjih dveh slikah. Vrhova nista Gaussova, podobno kot prej pa s podalj"sevanje "casa $\tau$ postajata ostrej"sa. 
+
+\begin{figure}[H]
+\centering
+ \input{fero_left}
+ \caption{Statistika opravljenega dela v feromagnetni fazi ($\beta = 0.7 > \beta_c$, $\beta h = 0.1$), levi vrh}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+ \input{fero_right}
+ \caption{Statistika opravljenega dela v feromagnetni fazi ($\beta = 0.7 > \beta_c$, $\beta h = 0.1$), desni vrh}
 \end{figure}
 
 \subsection{Kriti"cna temperatura}
 
 Zanimivo je tudi obna"sanje to"cno pri temperaturi prehoda, torej $\beta = \beta_c = \frac{\ln 1+\sqrt{2}}{2}$. 
 
-\begin{figure}[h]
+\begin{figure}[H]
+\centering
  \input{crit_1}
  \caption{Statistika opravljenega dela pri temperaturi prehoda ($\beta = \beta_c$, $\beta h = 0.1$)}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
+\centering
  \input{crit_3}
  \caption{Statistika opravljenega dela pri temperaturi prehoda ($\beta = \beta_c$, $\beta h = 0.3$)}
 \end{figure}
 
-Tudi v tem primeru opazimo dva vrhova, ki pa nista jasno lo"cena med seboj. Poleg tega vrhova nista simetri"cna, polo"zaj desnega je odvisen od "casa $\tau$, medtem ko je levi konstanten. 
+Tudi v tem primeru opazimo dva vrhova, ki pa nista jasno lo"cena med seboj. Poleg tega vrhova nista simetri"cna, polo"zaj desnega je odvisen od "casa $\tau$, medtem ko je levi pribli"zno konstanten. 
 
 \subsection{Preverjanje enakosti}
 
@@ -111,7 +131,7 @@ Opravljeno delo je po absolutni vrednosti preveliko, da bi lahko neposredno izra
 \end{align}
 kjer sta $\langle W \rangle$ in $\theta$ povpre"cna vrednost in varianca porazdelitve. Rezultati v spodnji tabeli ka"zejo, da $\Delta F$ ni odvisna od izbire "casa $\tau$, ampak le od kon"cne vrednosti $H$. 
 
-\begin{table}[h]
+\begin{table}[H]
 \begin{center}
  \begin{tabular}{|c|c|c|c|}
  \hline

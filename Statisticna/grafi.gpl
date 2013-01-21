@@ -3,16 +3,25 @@ set style data steps
 
 set output "para.tex"
 # set xrange [-6200:-6000]
-plot for [i in "25 50 100"] sprintf("< LC_ALL=C sort -n Jarzynski/data/g_work_%s_0.2_1.5.dat | awk '{printf \"%%.0f\\n\", $1}' | uniq -c | awk '{printf \"%%f %%d 0.01\\n\", $2, $1}'",i) title sprintf("tau = %s", i)
+plot for [i in "25 50 100"] sprintf("< LC_ALL=C sort -n Jarzynski/data/g_work_%s_0.2_1.5.dat | awk '{printf \"%%.0f\\n\", $1}' | uniq -c | awk '{printf \"%%f %%d 0.01\\n\", $2, $1}'",i) title sprintf("$\\tau = %s$", i)
 
 set output "crit_1.tex"
 # set xrange [-1000:-900]
-plot for [i in "25 50 100"] sprintf("< LC_ALL=C sort -n Jarzynski/data/g_work_%s_0.440687_0.226919.dat | awk '{printf \"%%.0f\\n\", $1}' | uniq -c | awk '{printf \"%%f %%d 0.001\\n\", $2, $1}'",i) title sprintf("tau = %s", i)
+plot for [i in "25 50 100"] sprintf("< LC_ALL=C sort -n Jarzynski/data/g_work_%s_0.440687_0.226919.dat | awk '{printf \"%%.0f\\n\", $1/5}' | uniq -c | awk '{printf \"%%f %%d 0.001\\n\", $2*5, $1}'",i) title sprintf("$\\tau = %s$", i)
 
 set output "crit_3.tex"
 # set xrange [-3000:-2500]
-plot for [i in "25 50 100"] sprintf("< LC_ALL=C sort -n Jarzynski/data/g_work_%s_0.440687_0.680756.dat | awk '{printf \"%%.0f\\n\", $1}' | uniq -c | awk '{printf \"%%f %%d 0.001\\n\", $2, $1}'",i) title sprintf("tau = %s", i)
+plot for [i in "25 50 100"] sprintf("< LC_ALL=C sort -n Jarzynski/data/g_work_%s_0.440687_0.680756.dat | awk '{printf \"%%.0f\\n\", $1/20}' | uniq -c | awk '{printf \"%%f %%d 0.001\\n\", $2*20, $1}'",i) title sprintf("$\\tau = %s$", i)
 
 set output "fero.tex"
 # set xrange [-600:-500]
-plot for [i in "25 50 100"] sprintf("< LC_ALL=C sort -n Jarzynski/data/g_work_%s_0.7_0.142857.dat | awk '{printf \"%%.0f\\n\", $1}' | uniq -c | awk '{printf \"%%f %%d 0.001\\n\", $2, $1}'",i) title sprintf("tau = %s", i)
+plot for [i in "25 50 100"] sprintf("< LC_ALL=C sort -n Jarzynski/data/g_work_%s_0.7_0.142857.dat | awk '{printf \"%%.0f\\n\", $1}' | uniq -c | awk '{printf \"%%f %%d 0.001\\n\", $2, $1}'",i) title sprintf("$\\tau = %s$", i)
+
+set output "fero_left.tex"
+set xrange [-148:-142]
+plot for [i in "25 50 100"] sprintf("< LC_ALL=C sort -n Jarzynski/data/g_work_%s_0.7_0.142857.dat | awk '{printf \"%%.1f\\n\", $1}' | uniq -c | awk '{printf \"%%f %%d 0.001\\n\", $2, $1}'",i) title sprintf("$\\tau = %s$", i)
+
+set output "fero_right.tex"
+set xrange [142:148]
+plot for [i in "25 50 100"] sprintf("< LC_ALL=C sort -n Jarzynski/data/g_work_%s_0.7_0.142857.dat | awk '{printf \"%%.1f\\n\", $1}' | uniq -c | awk '{printf \"%%f %%d 0.001\\n\", $2, $1}'",i) title sprintf("$\\tau = %s$", i)
+
