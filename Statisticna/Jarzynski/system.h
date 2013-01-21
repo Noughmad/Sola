@@ -35,14 +35,17 @@ public:
     inline void metropolis();
     void metropolisSteps(int N);
 
+    void snapshot(const char* filename);
+
 public:
     double beta;
     double h;
 
 private:
     spin_t* data;
-    short int L;
-    short int mask;
+    const short int L;
+    const short int mask;
+    const int RandMax;
 };
 
 #endif // SYSTEM_H

@@ -21,11 +21,16 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <math.h>
+#include <fstream>
 
-System::System(int L) : L(L)
+using namespace std;
+
+System::System(int L)
+: L(L)
+, data(new spin_t[L*L])
+, mask(L-1)
+, RandMax(RAND_MAX / L / L)
 {
-    data = new spin_t[L*L];
-    mask = L-1;
     assert((mask & L) == 0);
 }
 
@@ -53,19 +58,22 @@ void System::randomState()
 double System::energyChange(int i, int j) const
 {
     const spin_t factor = value(i+1, j) + value(i-1, j) + value(i, j+1) + value(i, j-1) + h;
-    return -2 * value(i, j) * factor;
+    return 2 * value(i, j) * factor;
 }
 
 void System::metropolis()
 {
-    int i = rand() & mask;
-    int j = rand() & mask;
+    int r = rand();
+    int i = r & mask;
+    r /= L;
+    int j = r & mask;
+    r /= L;
 
-    double dE = energyChange(i, j);
+    double ee = exp(-beta * energyChange(i, j));
 
-    if ((double)rand() / RAND_MAX < exp(-beta * dE))
+    if (ee > 1 || ee > ((double)rand() / RandMax))
     {
-        data[i*L + j] *= -1;
+        value(i, j) *= -1;
     }
 }
 
@@ -86,4 +94,18 @@ void System::metropolisSteps(int N)
     {
         metropolis();
     }
+}
+
+void System::snapshot(const char* filename)
+{
+    ofstream out(filename);
+    for (int i = 0; i < L; ++i)
+    {
+        for (int j = 0; j < L; ++j)
+        {
+            out << (int)value(i, j) << " ";
+        }
+        out << endl;
+    }
+    out.close();
 }

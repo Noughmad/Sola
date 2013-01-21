@@ -1,10 +1,10 @@
 #include "system.h"
 
 #include <iostream>
+#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
-#include <gsl/gsl_histogram.h>
+#include <string.h>
 
 double simulation(int L, int tau, double beta, double H)
 {
@@ -17,18 +17,14 @@ double simulation(int L, int tau, double beta, double H)
 
     double work = 0;
     const double hdot = H/tau;
+    const int n = L*L;
 
     for (int t = 0; t < tau; ++t)
     {
         sys.h += hdot;
-        sys.metropolisSteps(2*L*L);
+        sys.metropolisSteps(n);
         work -= hdot * sys.magnetization();
     }
-
-    work /= (L*L);
-
-    std::cout << "Work: " << work << std::endl;
-
     return work;
 }
 
@@ -48,7 +44,7 @@ void complete(int L, int tau, double beta, double H, int N)
 
 void timeDependence(int L, double beta, double H, int N)
 {
-    int TT[] = {15, 25, 50, 100, 150, 0};
+    int TT[] = {25, 50, 100, 0};
     for (int i = 0; TT[i]; ++i)
     {
         complete(L, TT[i], beta, H, N);
@@ -58,8 +54,8 @@ void timeDependence(int L, double beta, double H, int N)
 
 void repeatFromArticle()
 {
-    const int L = 256;
-    const int N = 1000000;
+    const int L = 32;
+    const int N = 1e5;
     const double betaC = log(1 + sqrt(2)) / 2;
 
     timeDependence(L, 0.2, 1.5, N);
@@ -71,7 +67,21 @@ void repeatFromArticle()
 int main(int argc, char **argv) {
     srand(time(0));
 
-    repeatFromArticle();
+    int L = 64;
+    int N = 1e4;
+
+    double beta;
+    if (strcmp(argv[1], "c") == 0)
+    {
+        beta = log(1 + sqrt(2)) / 2;
+    }
+    else
+    {
+        beta = atof(argv[1]);
+    }
+
+    double betaH = atof(argv[2]);
+    timeDependence(L, beta, betaH/beta, N);
 
     return 0;
 }
