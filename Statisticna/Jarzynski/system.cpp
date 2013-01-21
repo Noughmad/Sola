@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -39,11 +40,6 @@ System::~System()
     delete[] data;
 }
 
-spin_t& System::value(int i, int j) const
-{
-    return data[(i & mask) * L + (j & mask)];
-}
-
 void System::randomState()
 {
     for (int i = 0; i < L; ++i)
@@ -57,8 +53,15 @@ void System::randomState()
 
 double System::energyChange(int i, int j) const
 {
-    const spin_t factor = value(i+1, j) + value(i-1, j) + value(i, j+1) + value(i, j-1) + h;
-    return 2 * value(i, j) * factor;
+    const spin_t delta = -value(i, j) * (value(i+1, j) + value(i-1, j) + value(i, j+1) + value(i, j-1));
+    if (value(i, j) == 1)
+    {
+        return expmBH * expBetaE(delta);
+    }
+    else
+    {
+        return expBH * expBetaE(delta);
+    }
 }
 
 void System::metropolis()
@@ -69,9 +72,9 @@ void System::metropolis()
     int j = r & mask;
     r /= L;
 
-    double ee = exp(-beta * energyChange(i, j));
+    double ee = energyChange(i, j);
 
-    if (ee > 1 || ee > ((double)rand() / RandMax))
+    if (ee > 1 || ee > ((double)r / RandMax))
     {
         value(i, j) *= -1;
     }

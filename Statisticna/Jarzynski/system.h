@@ -18,6 +18,8 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#include <math.h>
+
 typedef char spin_t;
 
 class System
@@ -31,21 +33,51 @@ public:
     void randomState();
     double magnetization();
 
-    inline double energyChange(int i, int j) const;
+    double energyChange(int i, int j) const;
     inline void metropolis();
     void metropolisSteps(int N);
 
     void snapshot(const char* filename);
 
 public:
-    double beta;
-    double h;
+    inline double h() const {return mH;}
+    inline void setH(double h)
+    {
+        mH = h;
+        expBH = exp(2 * beta * mH);
+        expmBH = exp(-2 * beta * mH);
+    }
+
+    inline double setBeta(double b)
+    {
+        beta = b;
+        for (spin_t i = -4; i <= 4; ++i)
+        {
+            expBeta[i+4] = exp(2 * i * b);
+        }
+    }
+
+    inline double expBetaE(spin_t delta) const
+    {
+        return expBeta[delta + 4];
+    }
 
 private:
     spin_t* data;
     const short int L;
     const short int mask;
     const int RandMax;
+    double expBH;
+    double expmBH;
+    double mH;
+    double beta;
+    double expBeta[9];
 };
+
+
+spin_t& System::value(int i, int j) const
+{
+    return data[(i & mask) * L + (j & mask)];
+}
 
 #endif // SYSTEM_H
