@@ -3,10 +3,23 @@ global N
 global tau
 global h
 
-L = 50;
-N = 1000;
+# Precej v redu vrednosti so L=20, N=400, potem je lahko |z| nekje do 5
+
+L = 20;
+N = 400;
 h = 2*L/N;
 tau = h^2
+
+function p = hermitovp(n)
+  if n == 0
+    p = [1];
+  elseif n == 1
+    p = [2, 0];
+  else
+    m = hermitovp(n-1);
+    p = [2*m, 0] - [0, 0, polyder(m)];
+  endif
+endfunction
 
 function x = space()
   global L;
@@ -18,21 +31,20 @@ function psi = stanje(n)
   psi = koherentno_stanje(n, 0);
 endfunction
 
-function psi = koherentno_stanje(n, z)
+function psi = stanje(n)
   global N;
   global L;
-  x = space() - z;
-  H = zeros(N, 1);
-  if n == 0
-    H = ones(size(x));
-  elseif n == 1
-    H = 2*x;
-  elseif n == 2
-    H = 4*x.^2 - 2;
-  elseif n == 3
-    H = 8*x.^3 - 12*x;
-  endif
-  psi = H .* exp(-0.5 * x.^2) / pi^(1/4) / sqrt(2^n * factorial(n));
+  x = space();
+  psi = polyval(hermitovp(n), x) .* exp(-0.5 * x.^2) / pi^(1/4) / sqrt(2^n * factorial(n));
+endfunction
+
+function psi = koherentno_stanje(z)
+  global N;
+  psi = zeros(N, 1);
+  C = exp(-abs(z^2)/2);
+  for n = 0:30
+    psi = psi + C * z^n / sqrt(factorial(n)) * stanje(n);
+  endfor
 endfunction
 
 function H = hamiltonian(lambda)
@@ -61,7 +73,7 @@ function U = eksplicitna(H)
 
   U = zeros(size(H));
   F = eye(size(H));
-  for k = 1:100
+  for k = 1:10
     U = U + F;
     F = F * (-i*tau)/k * H;
   endfor
@@ -77,36 +89,18 @@ function E = energija(H, psi)
   E = (psi' * H * psi * h) / (norma(psi));
 endfunction
 
-function rac_eksp(lambda, n, z)
+function primerjava(lambda, z)
   H = hamiltonian(lambda);
-  psi = koherentno_stanje(n, z);
+  psi_e = koherentno_stanje(z);
+  psi_i = psi_e;
   U = eksplicitna(H);
-  x = space();
-  
-  
-  for step = 1:1000
-    psi = U * psi;
-    plot(x, real(psi), x, imag(psi));
-    n = norma(psi)
-    E = energija(H, psi)
-    usleep(30);
-  endfor
-endfunction
-
-function rac_imp(lambda, n, z)
-  H = hamiltonian(lambda);
-  psi = koherentno_stanje(n,z);
-  [U,V] = implicitna(H);
+  [W, V] = implicitna(H);
   x = space();
   
   for step = 1:1000
-    psi = U \ (V * psi);
-    plot(x, real(psi), x, imag(psi));
-    n = norma(psi);
-    E = energija(H, psi);
-    usleep(30);
+    psi_e = U * psi_e;
+    psi_i = W \ (V * psi_i);
+    plot(x, abs(psi_e), x, abs(psi_i));
+    usleep(10);
   endfor
 endfunction
-
-# rac_eksp(0, 0);
-# rac_imp(0, 0);
