@@ -5,10 +5,21 @@ global h
 
 # Precej v redu vrednosti so L=20, N=400, potem je lahko |z| nekje do 5
 
-L = 20;
-N = 400;
-h = 2*L/N;
-tau = h^2
+function set_sizes(l, n)
+  global L
+  global N
+  global tau
+  global h
+  
+  L = l;
+  N = n;
+  h = 2*L/N;
+  tau = h^2
+endfunction
+
+# Za 1D: dobre vrednosti je L=20, N = 400, |z| do 10
+# Za 2D: Treba manjse, naprimer L=6 in N=100, |z| do 2
+set_sizes(20, 100)
 
 function p = hermitovp(n)
   if n == 0
@@ -32,19 +43,14 @@ function psi = stanje(n)
 endfunction
 
 function psi = stanje(n)
-  global N;
-  global L;
   x = space();
   psi = polyval(hermitovp(n), x) .* exp(-0.5 * x.^2) / pi^(1/4) / sqrt(2^n * factorial(n));
 endfunction
 
 function psi = koherentno_stanje(z)
-  global N;
-  psi = zeros(N, 1);
-  C = exp(-abs(z^2)/2);
-  for n = 0:30
-    psi = psi + C * z^n / sqrt(factorial(n)) * stanje(n);
-  endfor
+  n = 0;
+  x = space() - real(z);
+  psi = polyval(hermitovp(n), x) .* exp(-0.5 * x.^2 + i*imag(z)*x) / pi^(1/4) / sqrt(2^n * factorial(n));
 endfunction
 
 function H = hamiltonian(lambda)
@@ -60,12 +66,29 @@ function H = hamiltonian(lambda)
   
   x = space();
   H = H + diag(0.5 * x.^2 + lambda * x.^4);
+  H = sparse(H);
+endfunction
+
+function H = ham2d(lambda)
+  global N;
+  global h;
+  global L;
+  
+  H = -4*speye(N*N, N*N);
+
+  H = spdiags(ones(N*N,4),[-N, -1, 1, N], H);
+  H = -H / h^2 / 2;
+  
+  x = space();
+  
+  T = 0.5 * ones(N,1) * x'.^2 + 0.5 * x.^2 * ones(1,N) + lambda * x.^2 * x'.^2;
+  H = H + spdiags(reshape(T, N*N, 1), 0, speye(N*N));
 endfunction
 
 function U,V = implicitna(H)
   global tau;
-  U = eye(size(H)) + i*tau/2*H;
-  V = eye(size(H)) - i*tau/2*H;
+  U = sparse(eye(size(H)) + i*tau/2*H);
+  V = sparse(eye(size(H)) - i*tau/2*H);
 endfunction
 
 function U = eksplicitna(H)
@@ -89,6 +112,14 @@ function E = energija(H, psi)
   E = (psi' * H * psi * h) / (norma(psi));
 endfunction
 
+function plot2d(psi)
+  global N;
+
+  x = space();
+  [xx, yy] = meshgrid(x, x);
+  contourf(xx, yy, reshape(psi, N, N));
+endfunction
+
 function primerjava(lambda, z)
   H = hamiltonian(lambda);
   psi_e = koherentno_stanje(z);
@@ -100,7 +131,28 @@ function primerjava(lambda, z)
   for step = 1:1000
     psi_e = U * psi_e;
     psi_i = W \ (V * psi_i);
-    plot(x, abs(psi_e), x, abs(psi_i));
-    usleep(10);
+    plot(x, abs(psi_i));
+    usleep(30);
   endfor
+endfunction
+
+function racun2d(lambda, a, b);
+  global N;
+  H = ham2d(lambda);
+  [W, V] = implicitna(H);
+  psi = reshape(koherentno_stanje(a) * koherentno_stanje(b)', N*N, 1);
+  
+  for step = 1:100
+    for i = 1:10
+      psi = W \ (V * psi);
+    endfor
+    plot2d(abs(psi));
+    usleep(30);
+  endfor
+endfunction
+
+function krozenje(lambda)
+# Lepa animacija krozenja, ce je lambda 0
+  set_sizes(6, 100);
+  racun2d(lambda, 1, i);
 endfunction
