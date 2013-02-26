@@ -153,6 +153,7 @@ endfunction
 
 function krozenje(lambda)
 # Lepa animacija krozenja, ce je lambda 0
+# Za razpade naj bo lambda med 0.1 (blizu krozenja, vidno razpadanje) in 1 (hitro razpade)
   set_sizes(6, 100);
   racun2d(lambda, 1, i);
 endfunction
