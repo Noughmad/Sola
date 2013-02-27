@@ -104,12 +104,16 @@ endfunction
 
 function n = norma(psi)
   global h;
-  n = psi' * psi * h;
+  n = real(psi' * psi * h);
 endfunction
 
-function E = energija(H, psi)
+function p = pricakovana(A, psi);
   global h;
-  E = (psi' * H * psi * h) / (norma(psi));
+  s = size(A);
+  if s(1) == 1 || s(2) == 1
+    A = diag(A);
+  endif
+  p = real(psi' * A * psi * h) / norma(psi);
 endfunction
 
 function plot2d(psi)
@@ -128,12 +132,20 @@ function primerjava(lambda, z)
   [W, V] = implicitna(H);
   x = space();
   
-  for step = 1:1000
+  Pr_i = [];
+  Pr_e = [];
+  
+  for step = 1:10000
     psi_e = U * psi_e;
     psi_i = W \ (V * psi_i);
-    plot(x, abs(psi_i));
-    usleep(30);
+    # plot(x, abs(psi_i));
+    Pr_i = [Pr_i; step, norma(psi_i), pricakovana(x, psi_i), pricakovana(H, psi_i)];
+    Pr_e = [Pr_e; step, norma(psi_e), pricakovana(x, psi_e), pricakovana(H, psi_e)];
+    # usleep(30);
   endfor
+  
+  csvwrite(["g_implicitna_" num2str(lambda) ".csv"], Pr_i);
+  csvwrite(["g_eksplicitna_" num2str(lambda) ".csv"], Pr_e);
 endfunction
 
 function racun2d(lambda, a, b);
@@ -156,4 +168,9 @@ function krozenje(lambda)
 # Za razpade naj bo lambda med 0.1 (blizu krozenja, vidno razpadanje) in 1 (hitro razpade)
   set_sizes(6, 100);
   racun2d(lambda, 2, 2i);
+endfunction
+
+function stabilnost()
+  set_sizes(20, 330)
+  primerjava(0, 2)
 endfunction
