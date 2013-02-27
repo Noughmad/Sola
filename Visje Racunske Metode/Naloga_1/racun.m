@@ -107,7 +107,7 @@ function n = norma(psi)
   n = real(psi' * psi * h);
 endfunction
 
-function p = pricakovana(A, psi);
+function p = pricakovana(A, psi)
   global h;
   s = size(A);
   if s(1) == 1 || s(2) == 1
@@ -122,6 +122,10 @@ function plot2d(psi)
   x = space();
   [xx, yy] = meshgrid(x, x);
   contourf(xx, yy, reshape(psi, N, N));
+endfunction
+
+function s = sirina(A, psi)
+  s = sqrt(pricakovana(A.^2, psi) - pricakovana(A, psi)^2);
 endfunction
 
 function primerjava(lambda, z)
@@ -139,8 +143,8 @@ function primerjava(lambda, z)
     psi_e = U * psi_e;
     psi_i = W \ (V * psi_i);
     # plot(x, abs(psi_i));
-    Pr_i = [Pr_i; step, norma(psi_i), pricakovana(x, psi_i), pricakovana(H, psi_i)];
-    Pr_e = [Pr_e; step, norma(psi_e), pricakovana(x, psi_e), pricakovana(H, psi_e)];
+    Pr_i = [Pr_i; step, norma(psi_i), pricakovana(x, psi_i), pricakovana(H, psi_i), sirina(x, psi_i)];
+    Pr_e = [Pr_e; step, norma(psi_e), pricakovana(x, psi_e), pricakovana(H, psi_e), sirina(x, psi_e)];
     # usleep(30);
   endfor
   
@@ -154,12 +158,13 @@ function racun2d(lambda, a, b);
   [W, V] = implicitna(H);
   psi = reshape(koherentno_stanje(a) * koherentno_stanje(b)', N*N, 1);
   
-  for step = 1:100
-    for i = 1:10
+  for step = 1:300
+    for i = 1:3
       psi = W \ (V * psi);
     endfor
     plot2d(abs(psi));
-    usleep(30);
+    axis([-6, 6, -6, 6], "square")
+    print("-dpng", "-S500,480", sprintf("g_animation_%g_%.3d.png", lambda, step));
   endfor
 endfunction
 
@@ -173,4 +178,11 @@ endfunction
 function stabilnost()
   set_sizes(20, 330)
   primerjava(0, 2)
+  primerjava(0.1, 2)
+  primerjava(1, 2)
 endfunction
+
+# stabilnost()
+krozenje(0)
+krozenje(0.1)
+krozenje(1)
