@@ -186,3 +186,100 @@ endfunction
 krozenje(0)
 krozenje(0.1)
 krozenje(1)
+
+global I
+global V
+
+function p = numerov_end(E)
+  global N
+  global h
+  global V
+  global I
+  
+  p1 = I(1);
+  p2 = I(2);
+  
+  K = 2 * (E - V);
+
+  hh = h*h;
+
+  for i=2:N-1
+    t = ( 2*(1-5*hh/12*K(i))*p2 - (1+hh/12*K(i-1))*p1 ) / (1+hh/12*K(i+1));
+    p1 = p2;
+    p2 = t;
+  endfor
+  p = t;
+endfunction
+
+function En = numerov(n, lambda)
+  global N;
+  global L;
+  global h;
+  global I;
+  global V;
+
+  E = n + 1/2;
+  x = linspace(0, L, N);
+  V = lambda * x .* x .* x .* x;
+  h = L/N;
+  
+  if rem(n, 2) == 0
+    I = [1, 0];
+  else
+    I = [0, 1];
+  endif
+  
+  En = fsolve(numerov_end, E)
+endfunction
+
+function p = mat_element(psi1, A, psi2)
+  global h;
+  s = size(A);
+  if s(1) == 1 || s(2) == 1
+    A = diag(A);
+  endif
+  p = real(psi1' * A * psi2 * h) / sqrt(norma(psi1) * norma(psi2));
+endfunction
+
+function Em = matricni(baza, lambda)
+  n = size(baza, 1);
+  Hb = zeros(size(n));
+  H = hamiltonian(lambda)
+
+  for i=1:n
+    for j=1:n
+      Hb(i,j) = mat_element(baza(:,i), H, baza(:,j));
+    endfor
+  endfor
+  
+  Em = eigs(Hb, min(20, n));
+endfunction
+
+function B = ho_baza(n)
+  B = []
+  for i=1:n
+    B = [B, stanje(i)];
+  endfor
+endfunction
+
+function L = lanczos_baza(n, lambda)
+  global N
+  
+  H = hamiltonian(lambda);
+  L = []
+  psi = stanje(0);
+  psi = psi / sqrt(norma(psi));
+  L = psi;
+  
+  psi = H*psi
+  psi = psi / sqrt(norma(psi));
+  L = [L, psi];
+  
+  for i = 3:n
+    pj = L(:,i-1);
+    pm = L(:,i-2);
+    psi = H*pj - pj * pricakovana(H, pj) - pm * mat_element(pm, H, pj);
+    psi = psi / sqrt(norma(psi));
+    L = [L, psi];
+  endfor
+endfunction

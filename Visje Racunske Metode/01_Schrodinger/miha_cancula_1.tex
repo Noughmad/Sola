@@ -1,0 +1,68 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{graphicx}
+
+%opening
+\title{Schr\"odingerjeva ena\v cba}
+\author{Miha \v Can\v cula}
+
+\begin{document}
+
+\maketitle
+
+\section{Stabilnost}
+
+Za reševanje časovnega razvoja Schr\"odingerjeve enačbe sem uporabil vse tri obravnavane metode: eksplicitno Eulerjevo, eksplicitno s končnimi propagatorji in implicitno. 
+Najprej sem primerjal njehovo stabilnost. V ta namen sem po vsakem časovnem koraku izračunal normalizacijo $\langle\psi|\psi\rangle$. 
+Za velikost časovnega koraka sem postavil $\tau=h^{2}$, kjer je $h$ krajevni korak diskretizacije. 
+
+Izkazalo se je, da direktna Eulerjeva metoda ne ohranja normalizacije. 
+Vrednost $\langle\psi|\psi\rangle$ močno naraste že po nekaj korakih. 
+Ker metoda propade tako hitro je nisem niti upošteval na grafih. 
+
+Ostali dve metodi se obneseta dosti bolje, saj se normalizacija le malo spremeni tudi po nekaj 1000 korakih. 
+Primerjava med metodo s končnimi propagatorji in implicitno metodo je na sliki \ref{fig:stabilnost}.
+
+\begin{figure}[h]
+\input{g_stabilnost}
+\caption{Primerjava stabilnosti eksplicitne in implicitne metode}
+\label{fig:stabilnost} 
+\end{figure}
+
+Očitno je tako z motnjo kot brez nje implicitna metoda najstabilnejša. 
+Opazoval pa sem tudi obnašanje njene stabolnosti, če sistemu dodamu motnjo $\lambda x^{4}$.
+V nekaterih primerih normalizacija $\langle\psi|\psi\rangle$ pada, v drugih pa narašča, vedno pa je ta sprememba zelo majhna tudi po 10000 korakih. 
+Odvisnosti za nekaj vredosti $\lambda$ so na sliki \ref{fig:stabilnost-imp}
+
+\begin{figure}[h]
+\input{g_stabilnost_imp}
+\caption{Stabilnost implicitne metode pri različnih vrednosti motnje $\lambda$}
+\label{fig:stabilnost-imp} 
+\end{figure}
+
+V vseh primerih je skupna verjetnost malo manjša od 1. 
+Razlog za to je omejeno območje integracije, sam sem integriral le med $-L$ in $L$, nisem pa upošteval majhne verjetnosti, da se delec nahaja izven škatle. 
+
+\section{Koherentna stanja}
+
+Pravilnost metod sem preverjal tudi z opazovanjem koherentnih stanj. 
+
+Na spodnjih slikah sta prikazani časovni odvisnosti pričakovanega položaja porazdelitve $\langle\psi|x|\psi\rangle$ in 
+širine porazdelitve $\sqrt(\langle\psi|x^{2}|\psi\rangle - \langle\psi|x|\psi\rangle^{2})$. 
+Vidi se, da v primeru brez motnje ($\lambda=0$) pričakovana vrednost $x$ sledi sinusni krivulji, širina porazdelitve pa ostaja konstantna.
+Ko pa vključimo motnjo, postane gibanje kaotično. 
+Dodatno lahko vidimo, da se amplituda nihanja pričakovane vrednosti položaja zmanjša. 
+
+\input{g_trajektorija}
+\input{g_sirina}
+
+\section{Dvodimenzionalni problem}
+
+Obravnaval sem tudi problem v dveh dimenzijah. 
+Poročilu so priložene animacije, ki prikazujejo časovni razvoj koherentnega stanja pri različnih vrednostih $\lambda$. 
+Jasno je vidno, da brez motnje dobimo kroženje, ki je malo popačeno zaradi numeričnih napak (uporabil sem območje 100x100). 
+Pri dodatku že šibke motnje ($\lambda=0.1$) gibanje postane kaotično, oblika paketa pa se hitro izgubi. 
+Pri močnejši motnji je pojav še hitrejši, dodatni potencial postane močnejši od harmonskega in kroženja ne opazimo več. 
+
+\end{document}
