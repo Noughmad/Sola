@@ -164,7 +164,7 @@ function racun2d(lambda, a, b);
     endfor
     plot2d(abs(psi));
     axis([-6, 6, -6, 6], "square")
-    print("-dpng", "-S500,480", sprintf("g_animation_%g_%.3d.png", lambda, step));
+    print("-dpng", "-S500,480", sprintf("g_animation_2D_%g_%.3d.png", lambda, step));
   endfor
 endfunction
 
@@ -181,6 +181,32 @@ function stabilnost()
   primerjava(0.1, 2)
   primerjava(1, 2)
 endfunction
+
+function racun(lambda, z, S, M)
+  global N;
+  H = hamiltonian(lambda);
+  [W, V] = implicitna(H);
+  psi = koherentno_stanje(z);
+  x = space();
+  
+  for step = 1:300
+    for i = 1:S
+      psi = W \ (V * psi);
+    endfor
+    plot(x, abs(psi));
+    axis([-10, 10, 0, M]);
+    print("-dpng", "-S500,480", sprintf("g_animation_1D_%g_%.3d.png", lambda, step));
+  endfor
+endfunction
+
+function nihanje()
+# animacija nihanja v 1D
+  set_sizes(10, 400)
+  racun(0, 3, 20, 1);
+  racun(0.1, 3, 10, 2);
+  racun(1, 3, 5, 2);
+endfunction
+  
 
 # stabilnost()
 krozenje(0)

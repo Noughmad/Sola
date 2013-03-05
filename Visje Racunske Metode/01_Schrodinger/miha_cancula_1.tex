@@ -2,6 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage[slovene]{babel}
 \usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
 
 %opening
 \title{Schr\"odingerjeva ena\v cba}
@@ -31,7 +33,7 @@ Primerjava med metodo s končnimi propagatorji in implicitno metodo je na sliki 
 \end{figure}
 
 Očitno je tako z motnjo kot brez nje implicitna metoda najstabilnejša. 
-Opazoval pa sem tudi obnašanje njene stabolnosti, če sistemu dodamu motnjo $\lambda x^{4}$.
+Opazoval pa sem tudi obnašanje njene stabilnosti, če sistemu dodamu motnjo $\lambda x^{4}$.
 V nekaterih primerih normalizacija $\langle\psi|\psi\rangle$ pada, v drugih pa narašča, vedno pa je ta sprememba zelo majhna tudi po 10000 korakih. 
 Odvisnosti za nekaj vredosti $\lambda$ so na sliki \ref{fig:stabilnost-imp}
 
@@ -48,14 +50,27 @@ Razlog za to je omejeno območje integracije, sam sem integriral le med $-L$ in 
 
 Pravilnost metod sem preverjal tudi z opazovanjem koherentnih stanj. 
 
-Na spodnjih slikah sta prikazani časovni odvisnosti pričakovanega položaja porazdelitve $\langle\psi|x|\psi\rangle$ in 
-širine porazdelitve $\sqrt(\langle\psi|x^{2}|\psi\rangle - \langle\psi|x|\psi\rangle^{2})$. 
+Na spodnjih slikah sta prikazani časovni odvisnosti pričakovanega položaja porazdelitve $\langle\psi|x|\psi\rangle$ (slika \ref{fig:trajektorija}) in 
+širine porazdelitve $\sqrt{\langle\psi|x^{2}|\psi\rangle - \langle\psi|x|\psi\rangle^{2}}$ (slika \ref{fig:sirina}). 
 Vidi se, da v primeru brez motnje ($\lambda=0$) pričakovana vrednost $x$ sledi sinusni krivulji, širina porazdelitve pa ostaja konstantna.
 Ko pa vključimo motnjo, postane gibanje kaotično. 
 Dodatno lahko vidimo, da se amplituda nihanja pričakovane vrednosti položaja zmanjša. 
 
+\begin{figure}[h]
 \input{g_trajektorija}
+\caption{Trajektorija pri"cakovane vrednosti polo"zaja delca pri razli"cnih $\lambda$} 
+\label{fig:trajektorija}
+\end{figure}
+
+\begin{figure}[h]
 \input{g_sirina}
+\caption{"Sirina porazdelitve verjetnostne gostote delca pri razli"cnih $\lambda$} 
+\label{fig:sirina}
+\end{figure}
+
+Pri motenem potencialu lahko opazimo, da "sirina porazdelitve hitro naraste, nato pa se ustali pri neki vrednosti in le "se niha. 
+"Sirina porazdelitve v harmonskem potencialu, ki bi pri to"cnem ra"cunu morala ostati konstantna, pa za"cne nihati brez izrazitega trenda. 
+Le po velikem "stevilu nihajev (nekaj tiso"c korakov) lahko opazimo, da "sirina v povpre"cju nara"s"ca. 
 
 \section{Dvodimenzionalni problem}
 
