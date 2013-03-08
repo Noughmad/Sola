@@ -1,0 +1,181 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[slovene]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{default}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amsmath}
+\usepackage[vcentermath]{youngtab}
+\usepackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
+
+\author{Miha \v Can\v cula}
+\title{Grafi\v cne metode in Youngovi tabloji}
+
+\newcommand{\parcialno}[2]{\ensuremath{\frac{\partial #1}{\partial #2}}}
+
+\begin{document}
+
+\maketitle
+
+\section{Simetri"cna grupa}
+
+\subsection{Permutacije}
+
+Simetri"cna grupa $S_n$ je grupa, katere elementi so bijektivnih preslikav na $n$ elementih, operacija pa kompozicija permutacij. Vsak element $\sigma$ te grupe si lahko predstavljamo kot permutacijo mno"zice z $n$ elementi, na primer mno"zice $x = \{1, 2, \ldots, n\}$. 
+
+Permutacija je dolo"cena s tem, kam preslika vsak element $x$. Primer tak"snega zapisa za element $S_5$ je
+
+$$
+\sigma = \begin{pmatrix} 1 & 2 & 3 & 4 & 5 \\ 4 & 2 & 1 & 3 & 5\end{pmatrix}
+$$
+
+kar pomeni, da $\sigma$ preslika 1 v 4, 2 v 2, 3 v 1, 4 v 3 in 5 v 5. Elementi simetri"cne grupe so le bijektivne preslikave, zato se vsako "stevilo od 1 do 5 v spodnji vrstici pojavi natan"cno enkrat. Ker ne moremo prosto izbrati vseh slik, je tak"sen zapis je nepotrebno dolg. 
+
+\subsection{Cikli}
+
+Element simetri"cne grupe kraj"se predstavimo tako, da povemo kam se slika nek element mno"zice $x$ z ve"ckratnim delovanjem permutacije $\sigma$. V zgornjem primeru se 1 preslika v 4, 4 v 3, 3 pa nazaj v 1. "Ce torej s permutacijo $h$ zaporedoma delujemo na element 1, dobimo zaporedje $(1, 4, 3, 1, 4, 3, \ldots)$. Tak"snemu zaporedju re"cemo cikel in na kratko ozna"cimo z (143). 
+
+Vsako permutacijo v $S_n$ lahko zapi"semo kot produkt disjunktnih ciklov. V zgornjem primeru $\sigma$ imamo "ze opisani cikel (143), ostali dve "stevili 2 in 5 pa se obe preslikata sami vase. To permutacijo bi lahko zapisali kot
+
+$$\sigma = (143)(2)(5)$$
+
+Ta zapis je enakovreden kot zgornji in popolnoma dolo"ca permutacijo. "Ce vemo, s katero simetri"cno grupo imamo opravka, lahko cikle z enim elementom pri zapisu izpustimo. 
+
+Ker cikli nimajo nobenega skupnega elementa, med seboj komutirajo, zato njihov vrstni red ni pomemben in je permutacija $(123)(4)(5)$ enaka permutaciji $(5)(4)(123)$. Nadalje lahko "stevila znotraj cikla cikli"cno preme"samo, brez da bi spremenili permutacijo. Tako je cikel $(123)$ enak ciklu $(231)$, ne pa tudi ciklu $(132)$, saj v tem primeru preureditev "stevil ni cikli"cna. 
+
+\section{Cikli in razredi}
+
+\subsection{Cikli"cne strukture in delitve}
+
+Cikli"cna struktura permutacije pove, koliko in kako dolge cikle vsebuje dolo"cena permutacija. Permutacija, ki ima $\alpha$ ciklov dol"zine 1, $\beta$ ciklov dol"zine 2 in $\gamma$ ciklov dol"zine 3 ima cikli"cno strukturo $(1^\alpha 2^\beta 3^\gamma \cdots )$. Seveda ima ve"c razli"cnih permutacije enako cikli"cno strukturo: tak"sen primer sta $(143)(2)(5)$ in $(123)(4)(5)$. To sta razli"cni permutaciji, obe pa imata po en 3-cikel in dva 1-cikla. 
+
+Permutacije v $S_n$ delujejo na $n$ elementih, cikli pa so med seboj disjunktni, zato mora biti vsota njihovih dol"zin ravno enaka $n$. Vsaka delitev elementov mno"zice $x$ v cikle je torej enakovredna razdelitvi $n$ predmetov v skupine. Formalno temu re"cemo delitev (particija) "stevila $n$, predstavlja pa zapis "stevila $n$ kot vsoto naravnih "stevil. "Stevilo 4 lahko zapi"semo kot vsoto naravnih "stevil na 5 na"cinov, zato imajo elemnti grupe $S_4$ natan"cno 5 razli"cnih cikli"cnih struktur. Ker vrstni red ciklov ni pomemben, ni pomemben tudi vrsti red se"stevancev v delitvi in jih lahko razvrstimo od najve"cjega proti najmanj"semu. 
+
+\begin{table}[h]
+\centering
+ \begin{tabular}{|c|c|c|}
+ \hline
+  Delitev & Oznaka & Cikli"cna struktura \\
+  \hline
+  1 + 1 + 1 + 1 & (1,1,1,1) & (1)(2)(3)(4) \\
+  2 + 1 + 1 & (2,1,1) & (12)(3)(4) \\
+  2 + 2 & (2,2) & (12)(34) \\
+  3 + 1 & (3,1) & (123)(4) \\
+  4 & (4) & (1234) \\
+  \hline
+ \end{tabular}
+ \label{tab:delitve}
+ \caption{Vse mo"zne delitve "stevila 4 in pripadajo"ce cikli"cne strukture permutacij v $S_4$}
+ \end{table}
+ 
+ Name"sto s "stevili lahko delitev prika"zemo tudi grafi"cno, tako da vsak se"stevanec $k$ napi"semo v svoji vrstici, nato pa ga nadomestimo s $k$ kvadratki v tej vrstici. Na ta na"cin dobimo Youngov ali Ferrersov digram. Primeri Youngovih diagramov, ki ustrezajo zgoraj na"stetim delitvam "stevila 4, so prikazani na spodnji sliki.  
+ 
+ \begin{figure}[h]
+ \centering
+  \young(\quad,\quad,\quad,\quad) \qquad
+  \young(\quad\quad,\quad,\quad) \qquad
+  \young(\quad\quad,\quad\quad) \qquad
+  \young(\quad\quad\quad,\quad) \qquad
+  \young(\quad\quad\quad\quad) \qquad
+  \caption{Youngovi diagrami, ki ustrezajo delitvam v tabeli \ref{tab:delitve}}
+  \label{fig:diagrami}
+ \end{figure}
+
+ 
+ \subsection{Konjugiranostni razredi}
+ 
+  "Ce $\sigma$ preslika zaporedje "stevil $x$ v $y$, potem konjugirana permutacija $\alpha\sigma\alpha^{-1}$ preslika $\alpha(x)$ v $\alpha(y)$. To lahko enostavno preverimo
+  
+  $$\alpha\sigma\alpha^{-1}(\alpha(x)) = \alpha (\sigma x) = \alpha(y) $$
+  
+  V zapisu z vrsticami je to enako, kot bi "stevila v zgornji in spodnji vrstici nadomestili z njihovimi slikam pri permutiranju z $\alpha$
+  
+  $$\alpha\begin{pmatrix} 1 & 2 & 3 & 4 & 5 \\ 4 & 2 & 1 & 3 & 5\end{pmatrix} \alpha^{-1} = \begin{pmatrix} \alpha_1 & \alpha_2 & \alpha_3 & \alpha_4 & \alpha_5 \\ \alpha_4 & \alpha_2 & \alpha_1 & \alpha_3 & \alpha_5\end{pmatrix}$$
+  
+  Hitro lahko vidimo, da smo cikle (143)(2)(5) nadomestili s cikli $(\alpha_1 \alpha_4 \alpha_3)(\alpha_2)(\alpha_5)$. Konjugacija torej ne spremeni cikli"cne strukture. Velja tudi obrat prej"snjega izreka: med poljubnima permutacijama z enako cikli"cno strukturo lahko najdemo konjugiranostno preslikavo. "Stevilo razredov v grupi $S_n$ je torej enako "stevilu razli"cnih cikli"cnih struktur, kar je enako "stevilo delitev "stevila $n$. To je pomembno predvsem zato, ker nam teorija grup pove, da je to "stevilo enako "stevilu nerazcepnih upodobitev grupe $S_n$. 
+  
+\section{Karakterji nerazcepnih upodobitev}
+
+"Stevilo razredov v grupi $S_n$ je enako "stevilu nerazcepnih upodobitev te grupe, oboje pa je enako "stevilu delitev "stevila $n$. To znanje nam pomaga pri izra"cunu vseh karakterjev nerazcepnih upodobitev te grupe. 
+
+Vsako delitev lahko predstavimo z Youngovim diagramom. Zaradi povezave s cikli lahko enostavno ugotovimo, kateri konjugiranostni razred permutacij pripada dolo"cen delitvi. Po drugi strani pa vsaki delitvi pripada tudi natan"cno ena nerazcepna upodobitev za $S_n$. Tu pa nimamo nobene enostavne zveze, ki bi povezovala izbiro delitve z dolo"ceno upodobitvijo ali obratno. Lahko pa z grafi"cno metodo in nekaj enostavnimi predpisi dolo"cimo karakterje teh nerazcepih upodobitev. 
+
+Karakter upodobitve je ena na vseh elemntih v istem razredu, zato zadostuje le karakter vsake upodobitve na vsakem razredu. Tako upodobitev kot razred pa sta dolo"cena z izbiro ene delitve $n$, torej posamezen karakter indeksiramo z dvema delitvama, $\chi^{(\lambda)}_{(l)}$, kjer delitev $(\lambda)$ dolo"ca upodobitev, $(l) = (l_1, l_2, l_3, \ldots)$ pa razred. 
+
+\subsection{Algoritem}
+
+Najprej nari"semo Youngov diagram, ki ustreza upodobitvi $(\lambda)$. Nato v kvadratke po vrsti vpisujemo simbole, tako da upo"stevamo pogoje
+
+\begin{enumerate}
+ \item V $i$-tem koraku $l_i$-krat vpi"semo simbol $a_i$.
+ \item Vpisovati za"cnemo v prvem praznem kvadratku v vrstici $q$, dodajamo dokler dol"zina vrstice $q$ ne prese"ze dol"zine prej"snje vrstice, nato pa postopek nadaljujemo v prej"snji vrstici.
+ \item Po vsakem koraku (torej po dodatku $l_i$ simbolov) mora biti dol"zina vsake vrstice manj"sa ali enaka dol"zini prej"snje. 
+\end{enumerate}
+ 
+ Tak"snemu vpisovanju simbolov v Youngov diagram pravimo regularna aplikacija. Youngovemu diagramu, ki ima v vsakem kvadratku vpisan simbol, simboli pa so vpisani po pravilih regularne aplikacije, pravimo Youngov tabl\'o. 
+
+Pri vsakem koraku si zabele"zimo "stevilo vrstic, v katere smo vpisali simbole. "Ce je to "stevilo liho, koraku pripi"semo parnost 1, v nasprotnem primeru pa parnost $-1$. "Ce je produkt parnosti vseh korakov neke aplikacje 1, tak"sni aplikaciji pravimo pozitivna, "ce ne pa negativna aplikacija. Karakter upodobitve $(\lambda)$ na razredu $(l)$ je enak "stevilu vseh mo"znih pozitivnih aplikaciji minus "stevilu vseh mo"znih negativnih aplikacij. 
+
+\subsection{Primer}
+
+Izra"cunajmo tabelo karakterjev simetri"cne grupe $S_3$, ki je izomorfna znani grupi $D_3$. Njena tabela karakterjev je
+
+\begin{table}[h]
+ \centering
+ \begin{tabular}{|r|c|c|c|}
+ \hline
+  $D_3$ & $\mathcal{C}(E)$ & $\mathcal{C}(R_1, R_2)$ & $\mathcal{C}(R_3 - R_5)$ \\
+  Cikli & (1)(2)(3) & (123) & (12)(3) \\
+  Delitev & (1,1,1) & (3) & (2,1) \\
+  \hline
+  $T^{(1)}$ & 1 & 1 & 1 \\
+  $T^{(2)}$ & 1 & 1 & -1 \\
+  $T^{(3)}$ & 2 & -1 & 0 \\
+  \hline
+ \end{tabular}
+\end{table}
+ 
+ Kot re"ceno, povezava med razredi v grupi in delitvami je enostavna. Ne moremo pa direktno vedeti, kateri delitvi ustreza posamezna nerazcepna upodobitev grupe $D_3$. V ta namen izra"cunajmno vse karakterje. Za enostavnej"se pisanje za simbole uporabimo kar "stevilke, $a_i = i$. Na ta na"cin je zaporedje vpisovanja simbolov jasno "ze iz kon"cne slike. 
+ 
+ \subsubsection{Upodobitev (1, 1, 1)}
+ 
+ Youngov diagram, ki ustreza delitvi $(\lambda) = (1,1,1)$ je \young(\quad,\quad,\quad). 
+ 
+ Razredu z enotskim elementom ustreza delitev $(l) = (1,1,1)$, torej bomo v diagram po vrsti vpisali eno enko, eno dvojko in eno trojko. Izpolniti moramo pogoj 3, da po vsakem koraku nobena vrstica ne sme presegati prej"snje, zato lahko vedno dodajamo le v najbolj zgornjo prosto vrstico. Edina mo"zna mo"zna aplikacija je \young(1,2,3), in ker smo vse simbole vpisali v liho "stevilo vrstic, je aplikacija pozitivna. Karakter $\chi^{(1,1,1)}_{(1,1,1)}$ je torej enak 1. 
+ 
+ Podobno lahko izra"cunamo karakter razreda $(123)$, ki ustreza delitvi $(3)$. Tokrat moramo vpisati tri enake simbole, kar lahko naredimo le na na"cin \young(1,1,1). Simbol 1 smo vpisali v tri vrstice, torej je aplikacija pozitivna in $\chi^{(1,1,1)}_{(3)} = 1$.
+ 
+ Nazadnje izra"cunajmo "se karakter razreda $(12)(3)$ oz. delitve $(2,1)$. Najprej vpi"semo dva simbola 1, tako da za"cnemo v drugi vrstici. Ko vpi"semo prvi simbol, druga vrstica prese"ze prvo, zato nadaljujemo v prvi in dobimo tabl\'o \young(1,1,\quad), nato pa dopi"semo se drugi simbol v edini prazen prostor \young(1,1,2). Enki smo vpisali v dve vrstici, zato je aplikacija negativna in $\chi^{(1,1,1)}_{(2,1)} = -1$. 
+ 
+ S primerjavo karakterjev lahko zaklju"cimo, da je nerazcepna upodobitev, ki ustreza delitvi $(\lambda) = (1,1,1)$, upodobitev $T^{(2)}$ grupe $D_3$. 
+ 
+ \subsubsection{Upodobitev (3)}
+ 
+  Youngov diagram, ki ustreza delitvi $(\lambda) = (3)$ ima tri "skatlice v eni vrstici, torej je \young(\quad\quad\quad). V tak"sen diagram lahko simbole vpisujemo le od leve proti desni, torej na en sam na"cin. Poleg tega bodo vsi simboli v eni vrstici, zato bo aplikacija vedno pozitivna. Karakter bo zato enak 1 ne glede na razred, torej delitev $(3)$ ustreza trivialni upodobitvi $T^{(1)}$. 
+  
+\subsubsection{Upodobitev (2, 1)}
+
+  Tej delitvi ustreza Youngov diagram \young(\quad\quad,\quad). 
+  
+  Za delitev $(l) = (1,1,1)$ bomo spet vpisali tri razli"cne simbole, na primer 1, 2 in 3. To lahko storimo na dva razli"cna na"cina: \young(12,3) in \young(13,2). Obe aplikaciji sta pozitivni, zato je karakter $\chi^{(2,1)}_{(1,1,1)} = 2$. 
+  
+  Delitev $(l) = (3)$ je spet najbolj enostavna, saj moramo vpisati tri enake simbole. To lahko storimo na en na"cin, in sicer \young(11,1). Enko smo vpisali v dve vrstici, zato je aplikacija negativna, karakter $\chi^{(2,1)}_{(3)}$ pa enak -1. 
+  
+  Za razred $(l) = (2,1)$ moramo vpisati dva simbola 1 in en simbol dva. To lahko storimo na dva na"cina: \young(11,2) in \young(12,1). Prvi je pozitiven, drugi pa negativen, karakter je zato enak  $\chi^{(2,1)}_{(2,1)} = 1 - 1 = 0$. 
+  
+  Delitvi $(\lambda) = (2,1)$ torej po pri"cakovanju ustreza dvodimenzionalna nerazcepna upodobitev grupe $D_3$, $T^{(3)}$. 
+
+\subsection{Dimenzije upodobitev}
+
+Z metodo Youngovih tabl\'ojev lahko zelo enostavno izra"cunamo dimenzijo nerazcepnih upodobitev. Vemo, da je dimenzija nerazcepne upodobitve enaka karakterju te upodobitve v razredu z enotskim elementom. V simetri"cni grupi $S_n$ enotski element vedno ustreza delitvi $(l)_e = (1,1,\ldots)$, torej moramo v diagram vpisati $n$ razli"cnih simbolov, vse aplikacije pa so pozitivne. Dimenzija nerazcepne upodobitve, ki ustreza delitvi $(\lambda)$, je tako enaka "stevilu na"cinov zlaganja Youngovega diagrama, kjer na vsakem koraku upo"stevamo pogoje (1-3). 
+
+\subsection{Trivialne upodobitve}
+
+Na primeru smo videli, da trivialni upodobitvi grupe $S_3$ ustreza delitev $(\lambda) = (3)$. To lahko posplo"simo na poljuben $n$. Youngov diagram za delitev $(n)$ lahko zapolnimo le na en na"cin (simbole zlagamo po vrsti v edino vrstico), vse aplikacije pa so pozitivne. Tako brez ra"cunanja vemo, da delitvi $(n)$ ustreza trivialna upodobitev. 
+
+Podobno lahko sklepamo za delitev $(\lambda) = (1, 1, \ldots)$. Pripadajo"c Youngov diagram lahko zopet zapolnimo le na en na"cin, tako da simbole zlagamo po vrst od zgoraj navzdol. Ta aplikacija pa ni vedno pozitivna, njen predznak dolo"ca "stevilo sodih se"stevancev v delitvi $(l)$ oz. "stevilu sodih ciklov v razredu. Vsak cikel sode dol"zine je produkt lihega "stevila transpozicij, tako da je skupen predznak aplikacje enak predznaku permutacij v razredu $(l)$. Delitvi $(1, 1, \ldots)$ torej pripada enodimenzionalna nerazcepna upodobitev grupe $S_n$, ki vsaki permutaciji priredi njen predznak. 
+ 
+\end{document}
