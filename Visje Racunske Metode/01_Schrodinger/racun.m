@@ -38,13 +38,19 @@ function x = space()
   x = linspace(-L, L, N)';
 endfunction
 
-function psi = stanje(n)
-  psi = koherentno_stanje(n, 0);
+function psi = hermitov(n, x)
+  m = 0:floor(n/2);
+  psi = zeros(size(x));
+  for i=1:size(x,1)
+    v = (-1).^m .* bincoeff(n, m) .* factorial(n-m) ./ factorial(n-2*m) .* (2*x(i)).^(n-2*m);
+    psi(i) = sum(v);
+  endfor
 endfunction
+
 
 function psi = stanje(n)
   x = space();
-  psi = polyval(hermitovp(n), x) .* exp(-0.5 * x.^2) / pi^(1/4) / sqrt(2^n * factorial(n));
+  psi = hermitov(n, x) .* exp(-0.5 * x.^2) / pi^(1/4) / sqrt(2^n * factorial(n));
 endfunction
 
 function psi = koherentno_stanje(z)
@@ -209,9 +215,9 @@ endfunction
   
 
 # stabilnost()
-krozenje(0)
-krozenje(0.1)
-krozenje(1)
+# krozenje(0)
+# krozenje(0.1)
+# krozenje(1)
 
 global I
 global V
@@ -255,7 +261,7 @@ function En = numerov(n, lambda)
     I = [0, 1];
   endif
   
-  En = fsolve(numerov_end, E)
+  En = fsolve(@numerov_end, E)
 endfunction
 
 function p = mat_element(psi1, A, psi2)
@@ -267,22 +273,95 @@ function p = mat_element(psi1, A, psi2)
   p = real(psi1' * A * psi2 * h) / sqrt(norma(psi1) * norma(psi2));
 endfunction
 
-function Em = matricni(baza, lambda)
-  n = size(baza, 1);
-  Hb = zeros(size(n));
-  H = hamiltonian(lambda)
+function Hb = ham_matrika(N, lambda)
+  D = zeros(N,5);
+  n = 0:N-1;
+  D(:,1) = lambda * sqrt(n.*(n-1).*(n-2).*(n-3));
+  D(:,2) = lambda * (2*(2*n-1) .* sqrt(n .* (n-1)));
+  D(:,3) = n + 0.5 + lambda * (1 + 4*n + 4*n.^2 + (n+1).*(n+2) + n .* (n-1));
+  D(:,4) = lambda * 2*(2*n+3) .* sqrt((n+1) .* (n+2));
+  D(:,5) = lambda * sqrt((n+1).*(n+2).*(n+3).*(n+4));
+  Hb = spdiags(D, [4, 2, 0, -2, -4], zeros(N));
+endfunction
 
+function Hb = mat_v_bazi(baza, lambda)
+  n = size(baza, 2);
+  Hb = zeros(n);
+  H = hamiltonian(0);
+  x = space();
+  Vd = lambda * x .^ 4;
+  
   for i=1:n
     for j=1:n
-      Hb(i,j) = mat_element(baza(:,i), H, baza(:,j));
+      Hb(i,j) = mat_element(baza(:,i), Vd, baza(:,j));
     endfor
+    Hb(i,i) = Hb(i,i) + i - 0.5;
+  endfor
+endfunction
+
+function Em = matricni(Hb)
+  n = size(Hb,1);
+  st = (n-3);
+  Em = eigs(Hb, st, "sm");
+  if Em(1) > Em(st)
+      Em = flipud(Em);
+  endif
+endfunction
+
+function st = st_skonvergiranih(E)
+  n = size(E,1)
+  st = zeros(n, 1);
+  for i = 1:n
+    st(i) = sum(abs(E(i,:) - E(n,:)) < 1e-3);
+  endfor
+endfunction
+
+function konvergenca_x(lambda)
+  set_sizes(20, 400);
+  E = [];
+  Bb = 25:5:175;
+  for b=Bb
+    E = [E; matricni(mat_v_bazi(ho_baza(b), lambda))'(1:20)];
   endfor
   
-  Em = eigs(Hb, min(20, n));
+  E = [Bb', st_skonvergiranih(E), E];
+  csvwrite(["g_konvergenca_x_" num2str(lambda) ".csv"], E);
+endfunction
+
+function konvergenca_ho(lambda)
+  set_sizes(20, 400);
+  E = [];
+  Bb = 25:5:175;
+  for b=Bb
+    E = [E; matricni(ham_matrika(b, lambda))'(1:20)];
+  endfor
+  
+  E = [Bb', st_skonvergiranih(E), E];
+  csvwrite(["g_konvergenca_ho_" num2str(lambda) ".csv"], E);
+endfunction
+
+function konvergenca_L(lambda)
+  set_sizes(20, 400);
+  E = [];
+  Bb = 25:5:175;
+  for b=Bb
+    E = [E; matricni(mat_v_bazi(lanczos_baza(b, lambda), lambda))'(1:20)];
+  endfor
+  
+  E = [Bb', st_skonvergiranih(E), E];
+  csvwrite(["g_konvergenca_L_" num2str(lambda) ".csv"], E);
+endfunction
+
+function vse_konvergence()
+  for lambda=[0.1, 1]
+    konvergenca_ho(lambda);
+    konvergenca_x(lambda);
+    konvergenca_L(lambda);
+  endfor
 endfunction
 
 function B = ho_baza(n)
-  B = []
+  B = [];
   for i=1:n
     B = [B, stanje(i)];
   endfor
@@ -292,12 +371,12 @@ function L = lanczos_baza(n, lambda)
   global N
   
   H = hamiltonian(lambda);
-  L = []
+  L = [];
   psi = stanje(0);
   psi = psi / sqrt(norma(psi));
   L = psi;
   
-  psi = H*psi
+  psi = H*psi;
   psi = psi / sqrt(norma(psi));
   L = [L, psi];
   

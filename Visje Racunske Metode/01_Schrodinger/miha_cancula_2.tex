@@ -1,0 +1,64 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage{amsmath}
+
+%opening
+\title{Schr\"odingerjeva ena\v cba, stacionaren problem}
+\author{Miha \v Can\v cula}
+
+\begin{document}
+
+\maketitle
+
+\section{Matrika hamiltoniana}
+
+Za izra"cun lastnih energij sistema s hamiltonovim operatorjem $\hat H$ potrebujemo matri"cne elemente $H_{ij} = \langle\psi_i|H|\psi_j\rangle$ v neki ortonormirani bazi $|\psi_i\rangle$. Logi"cna izbira za na"s problem so lastna stanja harmonskega oscilatorja $|n\rangle$. Matri"cne elemente bi lahko izra"cunali neposredno iz lastnih stanja in hamiltonove matrike, dobljene z diskretizacijo prostora. Te"zava se pojavi, ko nas zanimajo vi"sja vzbujena stanja. Pri rekurzivnem ali eksplicitnem ra"cunanju Hermitovih polinomov $H_n$ za velike $n$ (ve"cje od 50) namre"c hitro pridemo do odstevanja velikih "stevil, kar zaradi kon"cne ra"cunalni"ske natan"cnosti privede do velikih napak. Dodatno ta stanja zelo hitro nihajo v prostoru, zato moramo za dober opis uporabiti zelo fino diskretizacjo. 
+
+Obema te"zavama se lahko v na"sem primeru izognemo, "ce matri"cne elemente izrazimo analiti"cno. Vemo, da se hamiltonov operator za harmonski oscilator v bazi lastnih stanj $|n\rangle$ glasi
+\begin{align}
+  \hat H_0 &= \frac{p^2}{2} + \frac{x^2}{2} = a^\dagger a + \frac{1}{2}
+\end{align}
+Drugi del potenciala, $x^4$, tudi lahko izrazimo s kreacijskim in anihilacijskim operatorjem
+\begin{align}
+  x = & {} \frac{1}{\sqrt{2}} (a^\dagger + a) \\
+  x^4 = & {} \frac{1}{4} (a^\dagger + a)^4 = \frac{1}{4} \left({a^\dagger}^2 + 1 + 2n + a^2\right)^2 \\
+      = & {} \frac{1}{4} \Big( {a^\dagger}^4 + 1 + 4n^2 + a^4 + 2{a^\dagger}^2 + 4n + 2a^2 + \\
+      &+ 2{a^\dagger}^2n + 2n{a^\dagger}^2 + 2{a}^2n + 2n{a}^2 + {a^\dagger}^2a^2 + a^2{a^\dagger}^2\Big)
+\end{align}
+kjer je $n=a^\dagger a$, oznake za operatorje pa sem spu"s"cal. Matri"cne elemente kreacijskega in anihilacijskega operatorja poznamo
+\begin{align}
+  \langle m|\hat a^\dagger|n\rangle &= \sqrt{n+1}\,\delta_{m,n+1}\\
+  \langle m|\hat a|n\rangle &= \sqrt{n}\,\delta_{m,n-1} \\ 
+  \langle m|\hat n|n\rangle &= n\,\delta_{m,n} 
+\end{align}
+"Ce to vstavimo v izraz za $x$ in zdru"zimo "clene z enakimi $\delta_{ij}$, dobimo rezultat
+\begin{align}
+  4\langle m|\hat x^4|n\rangle = & {} \sqrt{n(n-1)(n-2)(n-3)} \; \delta_{m,n-4} \\
+  & + 2(n-2 + n + 1)\sqrt{n(n-1)} \; \delta_{m,n-2} \\
+  & + (1 + 4n + 4n^2 + (n+1)(n+2) + n(n-1)) \; \delta_{m,n} \\
+  & + 2(n+2 + n + 1)\sqrt{(n+1)(n+2)} \; \delta_{m,n+2} \\
+  & + \sqrt{(n+1)(n+2)(n+3)(n+4)} \; \delta_{m,n+4}
+\end{align}
+in kon"cen izraz za matri"cni element $H$ v bazi $|n\rangle$
+\begin{align}
+  H_{mn} &= \left(n+\frac{1}{2}\right) \delta_{m,n} + \lambda\langle m|\hat x^4|n\rangle
+\end{align}
+
+Matrika $H$ ima pet neni"celnih diagonal. 
+
+
+\section{Konvergenca lastnih energij}
+
+\input{g_konvergenca_ho_01} \\
+\input{g_konvergenca_L_01} \\
+\input{g_konvergenca_ho_1} \\
+\input{g_konvergenca_L_1} \\
+\input{g_konvergenca} \\
+
+Pri ve"cjem "stevilu uporabljenih baznih stanj so se za"cele lastne vrednosti podvojevati. 
+
+\end{document}
