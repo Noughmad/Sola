@@ -317,8 +317,8 @@ function st = st_skonvergiranih(E)
 endfunction
 
 function konvergenca_x(lambda)
-  set_sizes(20, 400);
   E = [];
+  set_sizes(20, 400);
   Bb = 25:5:175;
   for b=Bb
     E = [E; matricni(mat_v_bazi(ho_baza(b), lambda))'(1:20)];
@@ -329,9 +329,8 @@ function konvergenca_x(lambda)
 endfunction
 
 function konvergenca_ho(lambda)
-  set_sizes(20, 400);
   E = [];
-  Bb = 25:5:175;
+  Bb = 25:5:225;
   for b=Bb
     E = [E; matricni(ham_matrika(b, lambda))'(1:20)];
   endfor
@@ -341,9 +340,9 @@ function konvergenca_ho(lambda)
 endfunction
 
 function konvergenca_L(lambda)
-  set_sizes(20, 400);
+  set_sizes(20, 1000);
   E = [];
-  Bb = 25:5:175;
+  Bb = 25:10:275;
   for b=Bb
     E = [E; matricni(mat_v_bazi(lanczos_baza(b, lambda), lambda))'(1:20)];
   endfor
