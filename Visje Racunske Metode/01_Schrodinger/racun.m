@@ -435,23 +435,29 @@ endfunction
 function razvoj(s, lambda)
   global tau;
   global N;
-  M = 60;
+  M = 20;
   set_sizes(10, 400);
 
   baza = ho_baza(M);
-  psi = koherentno_stanje(1);
-  S = zeros(M,1);
-  for i=1:M
-    S(i) = mat_element_c(psi, eye(N), baza(:,i));
-  endfor
+  
+  Hb = ham_matrika(M, lambda);
+  [V, D] = eigs(Hb, s+1, 'sm');
+  S = V(:,s+1);
 
   x = space();
   H = hamiltonian(lambda);
   [W, V] = implicitna(H);
+  
+  psi = stanje_ob_casu(baza, S, 0);
 
-  for step=1:100
-    psi = W \ (V * psi);
-    plot(x, abs(stanje_ob_casu(baza, S, step * tau)), x, psi);
+  T = 10
+  for step=1:300
+    for i = 1:T
+      psi = W \ (V * psi);
+    endfor
+    plot(x, stanje_ob_casu(baza, S, step * T * tau), x, psi);
+    axis([-10, 10, -1, 1]);
+
     usleep(40);
   endfor
 endfunction
