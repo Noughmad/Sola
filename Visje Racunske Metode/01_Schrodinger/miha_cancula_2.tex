@@ -5,6 +5,7 @@
 \usepackage{hyperref}
 \usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
 \usepackage{amsmath}
+\usepackage{float}
 
 %opening
 \title{Schr\"odingerjeva ena\v cba, stacionaren problem}
@@ -50,15 +51,67 @@ in kon"cen izraz za matri"cni element $H$ v bazi $|n\rangle$
 
 Matrika $H$ ima pet neni"celnih diagonal. 
 
+\section{Lastne energije}
+
+Izra"cunal sem prvih 100 lastnih energij oscilatorja, ki so enake najni"zjih lastnim vrednostim zgoraj opisane matrike. Uporabil sem matriko velikosti $1000\times1000$, nato pa z uporabo rutin iz paketa \texttt{ARPACK} izra"cunal 100 najni"zjih lastnih vrednosti. Uporaba 1000 baznih stanj se mi je zdela primerna, ker pri najve"cjih obravnavani motnji $\lambda=1$ energija stanja ravno dose"ze energijo tiso"cega lastnega stanja. 
+
+\begin{figure}[H]
+ \centering
+\input{g_energije}
+\caption{Odvisnost prvih 100 lastnih energij anharmonskega oscilatorja od motnje $\lambda$}
+\label{fig:lastne-energije}
+\end{figure}
+
+V primeru brez motnje energija je $n$-tega stanja linearno nara"s"ca z $n$, kar seveda pri"cakujemo po ena"cbi $E_n^{(0)} = n + 1/2$. Pri pove"cevanju motnje odvisnost postaja superlinearna, pove"cajo pa se tudi lastne energije najni"zjih stanj. Odvisnost pri $\lambda=1$ lahko pribli"zno opi"semo kot $E_n^{(1)}(n) = 2.6 + 2.28 \cdot n^{1.33}$. 
 
 \section{Konvergenca lastnih energij}
 
-\input{g_konvergenca_ho_01} \\
-\input{g_konvergenca_L_01} \\
-\input{g_konvergenca_ho_1} \\
-\input{g_konvergenca_L_1} \\
-\input{g_konvergenca} \\
+Opazoval sem tudi, kako se energije lastnih stanj pribli"zujejo konstanti vrednosti, ko pove"cujemo velikost matrike. V ta namen se "studiral le prvih 20 lastni stanj. "Se vedno sem uporabil matriko, skonstruirano po postopku iz prvega poglavja. 
 
-Pri ve"cjem "stevilu uporabljenih baznih stanj so se za"cele lastne vrednosti podvojevati. 
+\begin{figure}[H]
+\centering
+\input{g_konvergenca_ho_01}
+\caption{Konvergenca stanj s kontruirano matriko in $\lambda=0.1$}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\input{g_konvergenca_ho_1}
+\caption{Konvergenca stanj s kontruirano matriko in $\lambda=1$}
+\end{figure}
+
+Opazimo, da so pri uporabi premajhnih matrik lastne energije vedno prevelike. Pri pove"cevanju $N$, torej pri dodatku ve"cjega "stevila osnovnih stanj harmonskega oscilatorja, lastne vrednosti padejo in se po"casi pribli"zujejo kon"cnim vrednosti. 
+
+Enak postopek sem ponovil tudi z baznimi stanji, dobljenimi po Lanczosevem algoritmu. Najprej sem poskusil za za"cetno stanje vzeti osnovno stanje HO. Pri tem sem za"sel v te"zave, saj je pri majhni motnji to stanje blizu lastnega stanja hamiltoniana. Rezultati so dosti bolj"si, "ca za za"cetno stanje uporabim produkt po elementih med osnovnim stanjem in naklju"cnim vektorjem. Tak"sno stanje ima "se vedno Gaussovo envelopo in gre na obeh koncih proti ni"c, zato nimamo te"zav zaradi robnih efektov. Hkrati pa zaradi naklju"cnosti ni blizu nobenemu lastnemu stanju hamiltoniana. 
+
+\begin{figure}[H]
+\centering
+\input{g_konvergenca_L_01}
+\caption{Konvergenca stanj z Lanczosevim algoritmom in $\lambda=0.1$}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\input{g_konvergenca_L_1}
+\caption{Konvergenca stanj z Lanczosevim algoritmom in $\lambda=1$}
+\end{figure}
+
+Lanczosev algoritem se v tem primeru izka"ze za slab"sega, saj tudi pri zelo velikih matrikah ($250\times 250$) energije ne skonvergirajo. Napake lahko pripi"semo numeri"cni nenatan"cnosti, saj pri Lanczosevem postopku pogosto od"stevamo vektorje med seboj. Poleg tega je natan"cnost omejena z diskretizacijo. "Ce "zelimo $N$ ortogonalnih baznih stanj, mora biti prostor diskretiziran na vsaj $N$ enot, "se bolj"sa pa je bolj fina diskretizacija. V na"sem primeru ima konstrukcija matrike iz prvega poglavja odlo"cilno prednost, saj se izognemo tako diskretizaciji prostora kot numeri"cnemu od"stevanju vektorjev. 
+
+Nazadnje sem preverjal "se "stevilo stanj, ki so dovolj blizu njihove kon"cne vrednosti, v odvisnosti od velikosti matrike $N$. Mera za dovolj blizu je bila, da se je energija razlikovala od kon"cne vrednosti za najvec $\varepsilon = 0.001$. Ket kon"cno vrednost sem uporabil vrednosti pri $N=1000$. S kontruirano matriko opazimo lepo linearno nara"s"canje, naklon premice pa je kar enak iskanemu "stevilu $r$. 
+
+\begin{figure}
+\centering
+ \input{g_konvergenca}
+ \caption{Konvergenca in dele"z natan"cno izra"cunanih lastnih energij}
+ \label{fig:konvergenca}
+\end{figure}
+
+
+Za $\lambda=1$ je vrednost $r$ malo nad 1/10. Iz tega lahko sklepamo, da so lastne energije na sliki \ref{fig:lastne-energije}, kjer sem za izra"cun 100 energij uporabil 1000 lastnih stanj, izra"cunane z natan"cnostjo ravno $\varepsilon$, torej 1/1000. 
+
+\section{"Casovni razvoj}
+
+
 
 \end{document}

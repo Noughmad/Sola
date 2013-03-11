@@ -18,7 +18,7 @@ function set_sizes(l, n)
 endfunction
 
 # Za 1D: dobre vrednosti je L=20, N = 400, |z| do 10
-# Za 2D: Treba manjse, naprimer L=6 in N=100, |z| do 2
+# Za 2D: Treba manjse, na primer L=6 in N=100, |z| do 2
 set_sizes(20, 100)
 
 function p = hermitovp(n)
@@ -154,8 +154,8 @@ function primerjava(lambda, z)
     # usleep(30);
   endfor
   
-  csvwrite(["g_implicitna_" num2str(lambda) ".csv"], Pr_i);
-  csvwrite(["g_eksplicitna_" num2str(lambda) ".csv"], Pr_e);
+  csvwrite(["data/g_implicitna_" num2str(lambda) ".csv"], Pr_i);
+  csvwrite(["data/g_eksplicitna_" num2str(lambda) ".csv"], Pr_e);
 endfunction
 
 function racun2d(lambda, a, b);
@@ -170,7 +170,7 @@ function racun2d(lambda, a, b);
     endfor
     plot2d(abs(psi));
     axis([-6, 6, -6, 6], "square")
-    print("-dpng", "-S500,480", sprintf("g_animation_2D_%g_%.3d.png", lambda, step));
+    print("-dpng", "-S500,480", sprintf("data/g_animation_2D_%data/g_%.3d.png", lambda, step));
   endfor
 endfunction
 
@@ -201,7 +201,7 @@ function racun(lambda, z, S, M)
     endfor
     plot(x, abs(psi));
     axis([-10, 10, 0, M]);
-    print("-dpng", "-S500,480", sprintf("g_animation_1D_%g_%.3d.png", lambda, step));
+    print("-dpng", "-S500,480", sprintf("data/g_animation_1D_%data/g_%.3d.png", lambda, step));
   endfor
 endfunction
 
@@ -273,6 +273,15 @@ function p = mat_element(psi1, A, psi2)
   p = real(psi1' * A * psi2 * h) / sqrt(norma(psi1) * norma(psi2));
 endfunction
 
+function p = mat_element_c(psi1, A, psi2)
+  global h;
+  s = size(A);
+  if s(1) == 1 || s(2) == 1
+    A = diag(A);
+  endif
+  p = (psi1' * A * psi2 * h) / sqrt(norma(psi1) * norma(psi2));
+endfunction
+
 function Hb = ham_matrika(N, lambda)
   D = zeros(N,5);
   n = 0:N-1;
@@ -299,9 +308,26 @@ function Hb = mat_v_bazi(baza, lambda)
   endfor
 endfunction
 
-function Em = matricni(Hb)
+function Hb = lan_matrika(n, lambda)
+  baza = lanczos_baza(n, lambda);
+  Hb = spalloc(n, n, 3*n-2);
+  
+  H = hamiltonian(lambda);
+
+  for i=1:n
+    if i < n
+      Hb(i,i+1) = mat_element(baza(:,i), H, baza(:,i+1));
+    endif
+    Hb(i,i) = mat_element(baza(:,i), H, baza(:,i));
+    if i > 1
+      Hb(i,i-1) = mat_element(baza(:,i), H, baza(:,i-1));
+    endif
+  endfor
+
+endfunction
+
+function Em = matricni(Hb, st)
   n = size(Hb,1);
-  st = (n-3);
   Em = eigs(Hb, st, "sm");
   if Em(1) > Em(st)
       Em = flipud(Em);
@@ -321,40 +347,40 @@ function konvergenca_x(lambda)
   set_sizes(20, 400);
   Bb = 25:5:175;
   for b=Bb
-    E = [E; matricni(mat_v_bazi(ho_baza(b), lambda))'(1:20)];
+    E = [E; matricni(mat_v_bazi(ho_baza(b), lambda), 20)'];
   endfor
   
   E = [Bb', st_skonvergiranih(E), E];
-  csvwrite(["g_konvergenca_x_" num2str(lambda) ".csv"], E);
+  csvwrite(["data/g_konvergenca_x_" num2str(lambda) ".csv"], E);
 endfunction
 
 function konvergenca_ho(lambda)
   E = [];
-  Bb = 25:5:225;
+  Bb = [25:5:225, 1000];
   for b=Bb
-    E = [E; matricni(ham_matrika(b, lambda))'(1:20)];
+    E = [E; matricni(ham_matrika(b, lambda), 20)'];
   endfor
   
   E = [Bb', st_skonvergiranih(E), E];
-  csvwrite(["g_konvergenca_ho_" num2str(lambda) ".csv"], E);
+  csvwrite(["data/g_konvergenca_ho_" num2str(lambda) ".csv"], E);
 endfunction
 
 function konvergenca_L(lambda)
-  set_sizes(20, 1000);
+  set_sizes(20, 2000);
   E = [];
   Bb = 25:10:275;
   for b=Bb
-    E = [E; matricni(mat_v_bazi(lanczos_baza(b, lambda), lambda))'(1:20)];
+    E = [E; matricni(lan_matrika(b, lambda), 20)'];
   endfor
   
   E = [Bb', st_skonvergiranih(E), E];
-  csvwrite(["g_konvergenca_L_" num2str(lambda) ".csv"], E);
+  csvwrite(["data/g_konvergenca_L_" num2str(lambda) ".csv"], E);
 endfunction
 
 function vse_konvergence()
   for lambda=[0.1, 1]
     konvergenca_ho(lambda);
-    konvergenca_x(lambda);
+    # konvergenca_x(lambda);
     konvergenca_L(lambda);
   endfor
 endfunction
@@ -385,5 +411,47 @@ function L = lanczos_baza(n, lambda)
     psi = H*pj - pj * pricakovana(H, pj) - pm * mat_element(pm, H, pj);
     psi = psi / sqrt(norma(psi));
     L = [L, psi];
+  endfor
+endfunction
+
+function En = lastne_energije(n, N)
+  En = (0:n-1)';
+  for lambda = [0 1e-4 3e-4 1e-3 3e-3 1e-2 3e-2 1e-1 3e-1 1]
+    H = ham_matrika(N, lambda);
+    En = [En, matricni(H, n)];
+  endfor
+
+  csvwrite(["data/g_energije.csv"], En);
+endfunction
+
+function psi = stanje_ob_casu(baza, stanje, t)
+  [N, n] = size(baza);
+  psi = zeros(N,1);
+  for i = 1:n
+    psi = psi + baza(:,i) .* stanje(i) .* exp(-j*(i+0.5)*t);
+  endfor
+endfunction
+
+function razvoj(s, lambda)
+  global tau;
+  global N;
+  M = 60;
+  set_sizes(10, 400);
+
+  baza = ho_baza(M);
+  psi = koherentno_stanje(1);
+  S = zeros(M,1);
+  for i=1:M
+    S(i) = mat_element_c(psi, eye(N), baza(:,i));
+  endfor
+
+  x = space();
+  H = hamiltonian(lambda);
+  [W, V] = implicitna(H);
+
+  for step=1:100
+    psi = W \ (V * psi);
+    plot(x, abs(stanje_ob_casu(baza, S, step * tau)), x, psi);
+    usleep(40);
   endfor
 endfunction
