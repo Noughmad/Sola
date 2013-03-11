@@ -424,25 +424,30 @@ function En = lastne_energije(n, N)
   csvwrite(["data/g_energije.csv"], En);
 endfunction
 
-function psi = stanje_ob_casu(baza, stanje, t)
+function psi = stanje_ob_casu(baza, energije, stanje, t)
   [N, n] = size(baza);
   psi = zeros(N,1);
   for i = 1:n
-    psi = psi + baza(:,i) .* stanje(i) .* exp(-j*(i+0.5)*t);
+    psi = psi + baza(:,i) .* stanje(i) .* exp(-j*energije(i)*t);
   endfor
 endfunction
 
 function razvoj(s, lambda)
   global tau;
   global N;
-  M = 20;
+  M = 60;
   set_sizes(10, 400);
 
   baza = ho_baza(M);
   
   Hb = ham_matrika(M, lambda);
-  [V, D] = eigs(Hb, s+1, 'sm');
-  S = V(:,s+1);
+  [baza, energije] = eig(Hb);
+
+## TODO: Najdi prava lastna stanja v pravih bazah
+  S = zeros(M, 1);
+  for i=1:M
+    S(i) = mat_element_c()
+  endfor
 
   x = space();
   H = hamiltonian(lambda);
@@ -451,7 +456,7 @@ function razvoj(s, lambda)
   psi = stanje_ob_casu(baza, S, 0);
 
   T = 10
-  for step=1:300
+  for step=1:500
     for i = 1:T
       psi = W \ (V * psi);
     endfor
