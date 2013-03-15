@@ -62,7 +62,7 @@ Izra"cunal sem prvih 100 lastnih energij oscilatorja, ki so enake najni"zjih las
 \label{fig:lastne-energije}
 \end{figure}
 
-V primeru brez motnje energija je $n$-tega stanja linearno nara"s"ca z $n$, kar seveda pri"cakujemo po ena"cbi $E_n^{(0)} = n + 1/2$. Pri pove"cevanju motnje odvisnost postaja superlinearna, pove"cajo pa se tudi lastne energije najni"zjih stanj. Odvisnost pri $\lambda=1$ lahko pribli"zno opi"semo kot $E_n^{(1)}(n) = 2.6 + 2.28 \cdot n^{1.33}$. 
+V primeru brez motnje energija je $n$-tega stanja linearno nara"s"ca z $n$, kar seveda pri"cakujemo po ena"cbi $E_n^{(0)} = n + 1/2$. Pri pove"cevanju motnje odvisnost postaja superlinearna, pove"cajo pa se tudi lastne energije najni"zjih stanj. Odvisnost pri $\lambda=1$ lahko pribli"zno opi"semo kot $E_n^{(1)}(n) = 1.9 + 1.47 \cdot n^{1.32}$. 
 
 \section{Konvergenca lastnih energij}
 
@@ -98,7 +98,7 @@ Enak postopek sem ponovil tudi z baznimi stanji, dobljenimi po Lanczosevem algor
 
 Lanczosev algoritem se v tem primeru izka"ze za slab"sega, saj tudi pri zelo velikih matrikah ($250\times 250$) energije ne skonvergirajo. Napake lahko pripi"semo numeri"cni nenatan"cnosti, saj pri Lanczosevem postopku pogosto od"stevamo vektorje med seboj. Poleg tega je natan"cnost omejena z diskretizacijo. "Ce "zelimo $N$ ortogonalnih baznih stanj, mora biti prostor diskretiziran na vsaj $N$ enot, "se bolj"sa pa je bolj fina diskretizacija. V na"sem primeru ima konstrukcija matrike iz prvega poglavja odlo"cilno prednost, saj se izognemo tako diskretizaciji prostora kot numeri"cnemu od"stevanju vektorjev. 
 
-Nazadnje sem preverjal "se "stevilo stanj, ki so dovolj blizu njihove kon"cne vrednosti, v odvisnosti od velikosti matrike $N$. Mera za dovolj blizu je bila, da se je energija razlikovala od kon"cne vrednosti za najvec $\varepsilon = 0.001$. Ket kon"cno vrednost sem uporabil vrednosti pri $N=1000$. S kontruirano matriko opazimo lepo linearno nara"s"canje, naklon premice pa je kar enak iskanemu "stevilu $r$. 
+Nazadnje sem preverjal "se "stevilo stanj, ki so dovolj blizu njihove kon"cne vrednosti, v odvisnosti od velikosti matrike $N$. Mera za dovolj blizu je bila, da se je energija razlikovala od kon"cne vrednosti za najvec $\varepsilon = 0.001$. Ket kon"cno vrednost sem uporabil vrednosti pri $N=1000$. S kontruirano matriko opazimo lepo linearno nara"s"canje, naklon premice pa je kar enak iskanemu "stevilu $r$. Lanczoseva metoda pri velikosti matrik, ki sem si jih lahko privo"s"cil s svojim ra"cunalnikom, "se ni skonvergirala, tako da nisem mogel dolo"citi vrednosti $r$. 
 
 \begin{figure}
 \centering
@@ -107,11 +107,16 @@ Nazadnje sem preverjal "se "stevilo stanj, ki so dovolj blizu njihove kon"cne vr
  \label{fig:konvergenca}
 \end{figure}
 
-
-Za $\lambda=1$ je vrednost $r$ malo nad 1/10. Iz tega lahko sklepamo, da so lastne energije na sliki \ref{fig:lastne-energije}, kjer sem za izra"cun 100 energij uporabil 1000 lastnih stanj, izra"cunane z natan"cnostjo ravno $\varepsilon$, torej 1/1000. 
+Za $\lambda=1$ je vrednost $r$ skoraj 1/5. Iz tega lahko sklepamo, da so lastne energije na sliki \ref{fig:lastne-energije}, kjer sem za izra"cun 100 energij uporabil 1000 lastnih stanj, izra"cunane z natan"cnostjo, bolj"so od $\varepsilon$ 1/1000. 
 
 \section{"Casovni razvoj}
 
+Za ra"cun "casovnega razvoja sem koherentno stanje $|z\rangle$ razvil po lastnih stanjih anharmonskega oscilatorja, $|z\rangle = \sum c_k |\psi_k\rangle$, $c_k = \langle z|\psi_k\rangle$. Ker poznamo energijo vsakega izmed lastnih stanj, lahko "casovni razvoj poljubnega stanja zapi"semo kot
 
+\begin{align}
+|z(t)\rangle = \sum c_k |\psi_k(t) \rangle = \sum c_k e^{-iE_kt} |\psi_k\rangle
+\end{align}
+
+Animacije, ki so rezultat izra"cuna tako s "casovnim korakom iz prej"snji naloge kot z razvojem po lastnih funkcija, so prilo"zene poro"cilu. V tem primeru je direktna metoda bolj natan"cna. Domnevam, da je vir napake predvsem dejstvo, da je zgornji razvoj kon"cen, torej koherentnega stanja ne moremo natan"cno opisati. 
 
 \end{document}

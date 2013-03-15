@@ -283,13 +283,14 @@ function p = mat_element_c(psi1, A, psi2)
 endfunction
 
 function Hb = ham_matrika(N, lambda)
+  F = lambda / 4;
   D = zeros(N,5);
   n = 0:N-1;
-  D(:,1) = lambda * sqrt(n.*(n-1).*(n-2).*(n-3));
-  D(:,2) = lambda * (2*(2*n-1) .* sqrt(n .* (n-1)));
-  D(:,3) = n + 0.5 + lambda * (1 + 4*n + 4*n.^2 + (n+1).*(n+2) + n .* (n-1));
-  D(:,4) = lambda * 2*(2*n+3) .* sqrt((n+1) .* (n+2));
-  D(:,5) = lambda * sqrt((n+1).*(n+2).*(n+3).*(n+4));
+  D(:,1) = F * sqrt(n.*(n-1).*(n-2).*(n-3));
+  D(:,2) = F * (2*(2*n-1) .* sqrt(n .* (n-1)));
+  D(:,3) = n + 0.5 + F * (1 + 4*n + 4*n.^2 + (n+1).*(n+2) + n .* (n-1));
+  D(:,4) = F * 2*(2*n+3) .* sqrt((n+1) .* (n+2));
+  D(:,5) = F * sqrt((n+1).*(n+2).*(n+3).*(n+4));
   Hb = spdiags(D, [4, 2, 0, -2, -4], zeros(N));
 endfunction
 
@@ -388,7 +389,7 @@ endfunction
 function B = ho_baza(n)
   B = [];
   for i=1:n
-    B = [B, stanje(i)];
+    B = [B, stanje(i-1)];
   endfor
 endfunction
 
@@ -425,44 +426,53 @@ function En = lastne_energije(n, N)
 endfunction
 
 function psi = stanje_ob_casu(baza, energije, stanje, t)
-  [N, n] = size(baza);
+  [N, M] = size(baza);
   psi = zeros(N,1);
-  for i = 1:n
-    psi = psi + baza(:,i) .* stanje(i) .* exp(-j*energije(i)*t);
+  for i = 1:M
+    psi = psi + baza(:,i) .* stanje(i) .* exp(j*energije(i)*t);
   endfor
 endfunction
 
-function razvoj(s, lambda)
+function razvoj(z, lambda)
   global tau;
   global N;
-  M = 60;
+  M = 40;
   set_sizes(10, 400);
-
-  baza = ho_baza(M);
   
-  Hb = ham_matrika(M, lambda);
-  [baza, energije] = eig(Hb);
-
-## TODO: Najdi prava lastna stanja v pravih bazah
-  S = zeros(M, 1);
-  for i=1:M
-    S(i) = mat_element_c()
+  [V, D] = eig(ham_matrika(M, lambda));
+  [S, I] = sort(diag(D));
+  energije = S;
+  V = V(:,I);
+  
+  
+  psi = koherentno_stanje(z);
+  
+  bazaHo = ho_baza(M);
+  enHo = (1:M) - 0.5;
+  baza = zeros(N, M);
+  S = zeros(M,1);
+  for i = 1:M
+    P = stanje_ob_casu(bazaHo, enHo, V(:,i), 0);
+    P = P / sqrt(norma(P));
+    baza(:,i) = P;
+    S(i) = mat_element_c(psi, eye(N), P);
   endfor
-
+  
+    
   x = space();
   H = hamiltonian(lambda);
   [W, V] = implicitna(H);
   
-  psi = stanje_ob_casu(baza, S, 0);
+  # psi = stanje_ob_casu(baza, energije, S, 0);
 
-  T = 10
-  for step=1:500
+  T = 10;
+  for step=1:1000
     for i = 1:T
       psi = W \ (V * psi);
     endfor
-    plot(x, stanje_ob_casu(baza, S, step * T * tau), x, psi);
+    plot(x, abs(stanje_ob_casu(baza, energije, S, step * T * tau)), x, abs(psi));
+    legend("Spektralna", "Direktna");
     axis([-10, 10, -1, 1]);
-
-    usleep(40);
+    print("-dpng", "-S500,480", sprintf("anim/g_razvoj_%g_%.3d.png", lambda, step));
   endfor
 endfunction
