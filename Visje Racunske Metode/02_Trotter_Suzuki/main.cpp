@@ -5,10 +5,11 @@
 
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_odeiv2.h>
+#include <string.h>
 
 using namespace std;
 
-const double lambda = 0.5;
+double lambda = 0;
 
 typedef vector<double> shema;
 
@@ -116,7 +117,7 @@ void vse_metode(double T, int N, int n)
     shema sm4 = s4();
     
     gsl_odeiv2_system sys = {odvod, 0, 4, 0};
-    gsl_odeiv2_driver* driver = gsl_odeiv2_driver_alloc_y_new(&sys, gsl_odeiv2_step_rk4, T/N, 1e-3, 1e-3);
+    gsl_odeiv2_driver* driver = gsl_odeiv2_driver_alloc_y_new(&sys, gsl_odeiv2_step_rk4, step, 1e-3, 1e-3);
     
     for (int i = 0; i < N; ++i)
     {
@@ -135,7 +136,7 @@ void vse_metode(double T, int N, int n)
     }
 }
 
-void ekviparticija(double T, double N)
+void ekviparticija(double T, double N, int n)
 {
     X x = {1, 0, 0, 2};
     shema s = s4();
@@ -143,25 +144,31 @@ void ekviparticija(double T, double N)
     double pp1 = 0;
     double pp2 = 0;
     
-    const int Interval = 1;
-    
-    double step = T / N;
+    double step = T / (N * n);
     for (int i = 0; i < N; ++i)
     {
-        x.korak(step, s);
-        pp1 = i*pp1/(i+1) + x.p1 * x.p1 / (i+1);
-        pp2 = i*pp2/(i+1) + x.p2 * x.p2 / (i+1);
-        
-        if ((i % Interval) == 0)
+        for (int j = 0; j < n; ++j)
         {
-            cout << i * step << " " << pp1 << " " << pp2 << endl;
+            x.korak(step, s);
+            pp1 = i*pp1/(i+1) + x.p1 * x.p1 / (i+1);
+            pp2 = i*pp2/(i+1) + x.p2 * x.p2 / (i+1);
         }
+        
+        cout << i * step * n << " " << pp1 << " " << pp2 << endl;
     }
 }
 
 int main(int argc, char** argv)
 {
-    // vse_metode(atof(argv[1]), atoi(argv[2]), atoi(argv[3]));
-    ekviparticija(atof(argv[1]), atoi(argv[2]));
+    lambda = atof(argv[2]);
+    
+    if (strcmp(argv[1], "eq") == 0)
+    {
+        ekviparticija(atof(argv[3]), atoi(argv[4]), atoi(argv[5]));
+    }
+    else
+    {
+        vse_metode(atof(argv[3]), atoi(argv[4]), atoi(argv[5]));
+    }
     return 0;
 }

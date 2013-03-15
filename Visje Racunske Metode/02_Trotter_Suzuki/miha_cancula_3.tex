@@ -1,0 +1,33 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage{amsmath}
+\usepackage{float}
+
+%opening
+\title{Trotter-Suzukijev razcep, simplekti\v cna integracija}
+\author{Miha \v Can\v cula}
+
+\begin{document}
+
+\maketitle
+
+\section{Ohranitev energije}
+
+Implementiral sem integrator, ki za "casovni korak uporablja Trotter-Suzukijev razcep. 
+Izbral sem dve shemi, in sicer simetri"cni $S_2$ in $S_4$. 
+Za primerjavo sem dodal "se znano metodo \texttt{RK4}. 
+V preizkusu sem za vse tri metode nastavil enako in nespremenljivo dol"zino koraka. 
+
+\input{g_energija_0.tex} \\
+\input{g_energija_01.tex} \\
+\input{g_energija_1.tex}
+
+\section{Ekviparticijski izrek}
+
+
+
+\end{document}
