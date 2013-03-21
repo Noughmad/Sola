@@ -49,8 +49,35 @@
 
 \section{Teoreti"cno ozadje}
 
+\subsection{Direktor v cilindri"cni kapilari}
+
+\begin{figure}[h]
+\centering
+\subfigure{\includegraphics{./Slike/director-profile-cylinder-kleman}}
+\subfigure{\includegraphics{./Slike/escaped-director-energy}}
+\caption{Levo: Prerezi valja s singularno (a) in nesingularno pobeglo disklinacijo (b). 
+Razli"cne smeri pobega povzro"cija nastanek to"ckastih singularnosti (c). Desno: Energija singularne in pobegle konfiguracije v odvisnosti od razmerja med elasti"cnima kostantama $K_1$ in $K_3$\cite{kleman}. }
+ \label{fig:director-profiles}
+\end{figure}
+
+Do pobega pride, "ce je razmerje $K_3/K_1$ manj"se od 13, kar velja za ve"cino nematskih teko"cih kristalov. Z minimizacijo energije lahko izpeljemo ravnovesni radialni profil direktorja v cilindri"cnih koordinatah. V poenostavljenem primeru, ko sta elasti"cni konstanti $K_3$ in $K_1$ enaki, je energijsko najugodnje"se stanje\cite{kleman} 
+\begin{align}
+ \vec n &= (n_r, n_\phi, n_z) = (\cos \chi(r), 0, \sin \chi(r)) \\
+ \chi(r) &= 2 \arctan \frac{R-r}{R+r}
+\end{align}
+kjer je $R$ polmer valja. Tak"sen profil je prikazan na sliki \ref{fig:director-profiles}b. 
+
+V primeru pobega v tretjo dimenzijo je direktor povsod dobro definiran. "Ce pa do pobega ne pride, je tik ob osi valja obmo"cje zmanj"sanega reda, kjer ureditveni parameter $S$ pade na 0. 
+
+\subsection{Valj z dvojnim zvojem}
+
+
+
+
 \subsection{TK kot anizotropni dielektrik}
 % Tenzor Q, prosta energija
+
+Slika pobega je v Kleman-Lavrentovich, stran 397. 
 
 \subsection{Maxwellove ena"cbe v neizotropnem sredstvu}
 % Predstavi ME v obliki, primerni za resevanje. 
@@ -195,6 +222,8 @@ Na enak na"cin so razcepljene ostale komponente eletri"cnega in magnetnega polja
 
 \section{Preverjanje metode}
 
+\todo{Test z dejasnkim profilom, ki ga imajo v opti"cnih vodniki}
+
 \subsection{Prazen prostor}
 
 Prvi preizkus metode, ki sem ga opravil, je "sirjenje svetlobe skozi prazen prostor. 
@@ -208,9 +237,6 @@ Prazen prostor sem modeliral kot snov, kjer je dielektri"cni tenzor uniformen in
 \caption{Levo: Trenutna slika valovanja v celici. Desno: "Casovna in krajevna odvisnost valovanja. \todo{Bolj"si opis, pu"s"cice na slikah}}
 \label{fig:test-plane}
 \end{figure}
-
-
-\subsection{Lom in odboj}
 
 \subsection{Uniformen direktor}
 
@@ -288,6 +314,10 @@ Pri ve"cjih potencah pa lahko izgube "se pove"camo in s tem dose"zemo ni"zjo odb
 V zgornjem primeru se za najbolj"si profil izka"ze kvadratno nara"s"canje absorpcije, zato sem za vse nadaljnje ra"cune uporabil tak"sno plast. 
 
 \section{Rezultati}
+
+\subsection{Smekti"cni valood}
+
+
 
 \section{Zaklju"cek}
 
