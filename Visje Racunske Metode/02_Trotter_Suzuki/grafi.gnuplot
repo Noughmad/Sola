@@ -35,11 +35,29 @@ plot "g_eq_0.1.dat" u 1:2 t "$\\langle p_1^2 \\rangle$", '' u 1:3 t "$\\langle p
 set output "g_ekviparticija_1.tex"
 plot "g_eq_1.dat" u 1:2 t "$\\langle p_1^2 \\rangle$", '' u 1:3 t "$\\langle p_2^2 \\rangle$"
 
+set output "g_ekviparticija_2.tex"
+plot "g_eq_2.dat" u 1:2 t "$\\langle p_1^2 \\rangle$", '' u 1:3 t "$\\langle p_2^2 \\rangle$"
+
+set output "g_ekviparticija_3.tex"
+plot "g_eq_3.dat" u 1:2 t "$\\langle p_1^2 \\rangle$", '' u 1:3 t "$\\langle p_2^2 \\rangle$"
+
+set output "g_ekviparticija_4.tex"
+plot "g_eq_4.dat" u 1:2 t "$\\langle p_1^2 \\rangle$", '' u 1:3 t "$\\langle p_2^2 \\rangle$"
+
 set output "g_ekviparticija_5.tex"
 plot "g_eq_5.dat" u 1:2 t "$\\langle p_1^2 \\rangle$", '' u 1:3 t "$\\langle p_2^2 \\rangle$"
 
 set output "g_ekviparticija_10.tex"
 plot "g_eq_10.dat" u 1:2 t "$\\langle p_1^2 \\rangle$", '' u 1:3 t "$\\langle p_2^2 \\rangle$"
+
+set output "g_ekviparticija_mid.tex"
+plot "g_eq_1.18.dat" u 1:2 t "$\\langle p_1^2 \\rangle$", '' u 1:3 t "$\\langle p_2^2 \\rangle$"
+
+set output "g_ekviparticija_high.tex"
+plot "g_eq_1.2.dat" u 1:2 t "$\\langle p_1^2 \\rangle$", '' u 1:3 t "$\\langle p_2^2 \\rangle$"
+
+set output "g_ekviparticija_low.tex"
+plot "g_eq_1.16.dat" u 1:2 t "$\\langle p_1^2 \\rangle$", '' u 1:3 t "$\\langle p_2^2 \\rangle$"
 
 # MEJA ZA EKVIPARTICIJO
 # TODO

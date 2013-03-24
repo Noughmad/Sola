@@ -1,0 +1,211 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{bbold}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+%opening
+\title{Trotter-Suzukijev razcep, kubitne verige}
+\author{Miha \v Can\v cula}
+
+\newcommand{\uvec}[1]{\ensuremath{\underline{#1}}}
+\newcommand{\bb}{
+  \ensuremath{b_1 b_2 \ldots b_n}
+}
+\newcommand{\psibb}{
+  \ensuremath{\psi_{\bb}}
+}
+
+\begin{document}
+
+\maketitle
+
+\section{Ozna"cevanje stanj}
+
+Ra"cune sem opravljal v binarni bazi, katere lastna stanja so $|\uvec{b}\rangle = |b_1 b_2 \ldots b_n\rangle$, $b_i \in {0,1}$. 
+Ta baza je $2^n$-dimenzionalna, torej vsako stanje opi"semo z $N = 2^n$ koeficienti $\psi_{\uvec{b}}$. 
+
+Za numeri"cno ra"cunanje stanja predstavimo z vektorji, operatorje pa z matrikami. 
+Bazne vektorje je koristno urediti tako, da bo ra"cunanje z njimi "cim la"zje in "cim bolj u"cinkovito. 
+To velja predvsem za konstrukcijo matrik operatorjev. 
+Ker so matrike velike ($2^n \times 2^n$), je "ze sama njihova konstrukcija zamudna, "ce vsak element nastavimo posebej. 
+V tej nalogi bomo uporabljali predvsem dvodel"cne operatorje, ki delujejo na dva sosednja delca $j$ in $j+1$. 
+Propagator $U^{2}$ je "ze tak"sen, Hamiltonov operator pa lahko zapi"semo kot vsoto dvodel"cnih operatorjev. 
+
+Izbral sem ``binarno'' ureditev stanj, torej tak"sno, kjer so bazna stanja urejena po vrednosti $\overline{b_1 b_2 \ldots b_n}$, "ce jih zapi"semo v obratnem vrstnem redu in interpretiramo kot dvoji"ska "stevila. 
+Prekomernim zankam sem se izognil tako, da sem dvodel"cni operator prevedel na matriko $N\times N$. 
+Indeks delca $j$ je dolo"cen tako, da ima stanje, kjer ima le prvi delec spin 1, indeks stanja $1$.
+
+\begin{table}[H]
+\centering
+ \begin{tabular}{r|l}
+  $J$ & $b_4 b_3 b_2 b_1$ \\
+  \hline
+  0 & 0000 \\
+  1 & 0001 \\
+  2 & 0010 \\
+  3 & 0011 \\
+  4 & 0100 \\
+  $\vdots$ & $\vdots$ \\
+  14 & 1110 \\
+  15 & 1111
+ \end{tabular}
+\end{table}
+
+
+
+Dvodel"cni operator $U^{(j)}$ me"sa le koeficiente $\psibb$, katerih indeksi $b_i$ se razlikujejo kve"cjemu na mestih $j$ ali $j+1$.
+Ker $b_j$ in $b_{j+1}$ lahko zavzameta "stiri razli"cne vrednosti, so tak"sni koeficienti vedno v skupinah po 4. 
+V primeru $j=1$ in gornjega o"stevil"cenja je prevod na matriko enostaven: 
+V isti skupini so vedno "stirje zaporedni koeficienti, zato je celotna matrika blo"cno diagonalna, kjer je vsak blok $4\times 4$ matrika $U$. 
+
+\begin{equation}
+ \begin{bmatrix}
+  U_{11} & U_{12} & U_{13} & U_{14} \\
+  U_{21} & U_{22} & U_{23} & U_{24} \\
+  U_{31} & U_{32} & U_{33} & U_{34} \\
+  U_{41} & U_{42} & U_{43} & U_{44}
+  \end{bmatrix} \Rightarrow \begin{bmatrix}
+  U_{11} & U_{12} & U_{13} & U_{14} & & & \\
+  U_{21} & U_{22} & U_{23} & U_{24} & & &\\
+  U_{31} & U_{32} & U_{33} & U_{34} & & &  \\
+  U_{41} & U_{42} & U_{43} & U_{44} & & & \\
+  & & & & U_{11} & U_{12} & U_{13} & U_{14} \\
+  & & & & U_{21} & U_{22} & U_{23} & U_{24} \\
+  & & & & U_{31} & U_{32} & U_{33} & U_{34} \\
+  & & & & U_{41} & U_{42} & U_{43} & U_{44}
+  \end{bmatrix}
+\end{equation}
+
+Za $j>1$ je razmislek malo bolj zapleten. Operator $U^{(2)}$ sklaplja stanja, kjer so enaki vsi indeksi razen $b_2$ in $b_3$. Ena izmed tak"snih skupin je $(0, 2, 4, 6)$.
+Osnovno matriko za $U$ moramo torej ``napihniti'' na dimenzijo $8\times 8$, brez da bi delovala na ostale koeficiente. 
+"Ce upo"stevamo, da na enak na"cin sklaplja tudi stanja $(1, 3, 5, 7)$, vidimo, da mora biti ``napihnjena'' matrika enaka matriki za $U$, kjer vsak element $U_{ab}$ nadomestimo z matriko $U_{ab}\cdot \mathbb{1}_2$. 
+To je ekvivalentno Kroneckerjevemu direktnemu produktu $U \otimes \mathbb{1}_2$. 
+Stanja z vi"sjimi indeksi $J$ upo"stevamo enako kot prej, tako da bloke $U \otimes \mathbb{1}_2$ zlo"zimo po diagonali matrike. 
+
+\begin{equation}
+ \begin{bmatrix}
+  U_{11} & U_{12} & U_{13} & U_{14} \\
+  U_{21} & U_{22} & U_{23} & U_{24} \\
+  U_{31} & U_{32} & U_{33} & U_{34} \\
+  U_{41} & U_{42} & U_{43} & U_{44}
+  \end{bmatrix} \Rightarrow \begin{bmatrix}
+  U_{11} & & U_{12} & & U_{13} & & U_{14} & \\
+  & U_{11} & & U_{12} & & U_{13} & & U_{14} \\
+  U_{21} & & U_{22} & & U_{23} & & U_{24} & \\
+  & U_{21} & & U_{22} & & U_{23} & & U_{24} \\
+  U_{31} & & U_{32} & & U_{33} & & U_{34} &\\
+  & U_{31} & & U_{32} & & U_{33} & & U_{34} \\
+  U_{41} & & U_{42} & & U_{43} & & U_{44} & \\
+  & U_{41} & & U_{42} & & U_{43} & & U_{44}
+  \end{bmatrix}
+\end{equation}
+
+Dvodel"cni operator na poljubnem delcu $j$ lahko predstavimo z matriko $N\times N$, kjer najprej ustvarimo blok $U \otimes \mathbb{1}_{2^{j-1}}$ dimenzije $4\cdot 2^{j-1}\times 4\cdot 2^{j-1}$. Iz $2^{n-j-1}$ tak"snih blokov nato zlo"zimo blo"cno diagonalno matriko. 
+
+Na te"zave naletimo le pri upo"stevanju periodi"cnih robnih pogojev. Operator $U^{(n)}$ namre"c sklaplja koeficiente, kjer se lahko razlikujeta le $b_n$ in $b_1$. Primera tak"snih skupin sta $(0, 1, 8, 9)$ in $(6, 7, 14, 15)$. Torakt matrike na ``napihujemo'' enakomerno, ampak jo razdelimo na "stiri bloke $2\times 2$ in te "stiri bloke postavimo na ustrezna mesta, da sklapljajo koeficiente $(0, 1, 2^{j-1}, 2^{j-1}+1)$. Ostale skupine "stirih koeficientov dobimo tako, da vsem "stirim indeksom pri"stejemo poljuben ve"ckratnik 2. Celotno matriko $N\times N$ dobimo tako, da ``napihnjeno'' matriko direktno mno"zimo z diagonalno matriko $2^{j-2}\times 2^{j-2}$, ki ima na diagonali enke na lihih mestih in ni"cle na sodih. 
+
+\begin{equation}
+ \begin{bmatrix}[cc|cc]
+  U_{11} & U_{12} & U_{13} & U_{14} \\
+  U_{21} & U_{22} & U_{23} & U_{24} \\
+  \hline
+  U_{31} & U_{32} & U_{33} & U_{34} \\
+  U_{41} & U_{42} & U_{43} & U_{44}
+  \end{bmatrix} = \begin{bmatrix}[c|c]
+  A & B \\
+  \hline
+  C & D
+ \end{bmatrix} \Rightarrow \begin{bmatrix}
+  A & \cdots & B \\
+  \vdots & \ddots & \vdots \\
+  C & \cdots & D
+  \end{bmatrix} \Rightarrow \begin{bmatrix}
+  A & & & B & & \\
+  & A & & & B & \\
+  & & \ddots & & & \ddots \\
+  C & & & D & & \\
+  & C & & & D & \\
+  & & \ddots & & & \ddots \\
+  \end{bmatrix}
+\end{equation}
+
+Celotni propagator je produkt vseh dvodel"cnih propagatorjev. Ker ti med seboj ne komutirajo, smo produkt razcepili na produkta sodih in lihih "clenov. 
+
+\begin{align}
+\label{eq:produkti}
+ U_N^{(lih)} = \prod_{j=1}^{n-1} U_N^{(j)}, \qquad U_N^{(sod)} = \prod_{j=2}^{n} U_N^{(j)} 
+\end{align}
+
+"Cleni znotraj vsakega izmed zgornjih produktov med seboj komutirajo, zato vrstni red mno"zenja ni pomemben. 
+
+Na enak na"cin skonstruiramo tudi matriko Hamiltonovega operatorja, tako da namesto $U$ za za"cetno matriko uporabimo $h = \vec{\sigma} \stackrel{\cdot}{\otimes} \vec{\sigma}$. 
+Namesto produkta pa tam nastopa vsota, zato ne potrebujemo razcepa na sode in lihe "clene. 
+
+\begin{align}
+ H_N &= \sum_{j=1}^{n} h_N^{(j)}
+\end{align}
+
+Ko enkrat izberemo velikost koraka Trotter-Suzukijev razcep, potrebujemo le majhno "stevilo razli"cnih vrednosti $z$. 
+Matrike propagatorja lahko zato izra"cunamo vnaprej, "casovni razvoj posameznega stanja pa izra"cunamo kar z matri"cnim mno"zenjem
+
+\begin{align}
+ |\psi'\rangle &= U_N(z) |\psi\rangle
+\end{align}
+
+Matrike $U_N$ so redke, zato celoten postopek vzame manj kot $\mathcal{O}(N^2)$ "casa. 
+V praksi se produktov iz ena"cbe (\ref{eq:produkti}) ne spla"ca ra"cunati vnaprej, saj s tem izgubimo redkost matrik. 
+"Ce namesto tega $|\psi\rangle$ mno"zimo z vsako matriko posebej, porabimo za to ravno $\mathcal{O}(n2^n) = \mathcal{O}(N\log N)$ operacij. 
+Vsaka matrika ima najve"c $4N$ neni"celnih elementov, vseh matrik pa je $n$. 
+V na"sem primeru, ko je tudi sama matrika $U$ redka, je neni"celnih elementov "se manj. 
+
+\section{"Casovna zahtevnost}
+
+Ra"cunanje sem implementiral v programu \texttt{GNU Octave}, ki je posebej primeren za enostavno operiranje z redkimi matrikami. 
+Matrike $N \times N$ sem skonstruiral po zgornjem postopku, tako da sem ve"ckrat uporabil direktni produkt matrik namesto zank v programu. 
+Pri velikosti problema $n=16$ in $n=18$ je program za konstrukcijo matrik porabil pribli"zno toliko "casa, kot za dva koraka propagacije s shemo $S_4$, torej pribli"zno 15 mno"zenj s celotnim propagatorjem. 
+
+\begin{figure}[h]
+\centering
+\input{g_casovna_zahtevnost}
+ \caption{Trajanje ra"cunanja v odvisnosti od velikosti problema $n$. Podatki se dobro prilegajo krivulji $A + B n 2^n$. }
+\end{figure}
+
+Trajanje ra"cunanja se ujema s pri"cakovano odvisnostjo $\mathcal{O}(N \log N)$. 
+Odstopanje je le pri majhnih $n$, kjer moramo upo"stevati "se majhnen konstantni "clen za ``overhead''.
+
+\section{Termalno povpre"cje}
+
+Najprej sem z zgornjo metodo ra"cunal pri"cakovane vrednosti proste energije in energije. 
+Za to uporabimo realen $z$, ki je povezan s temperaturo prek zveze
+
+\begin{align}
+ z &= \frac{\beta}{2} = \frac{1}{2k_B T}
+\end{align}
+
+Fazna vsota $Z$ je enaka pri"cakovani normi vektorja $|\psi\rangle$, po tem ko smo ga propagirali z $U_N(z)$. Pri"cakovana energija $\langle H \rangle_\beta$ pa je enaka povpre"cju matri"cnega elementa $\langle \psi | H | \psi\rangle$, spet po propagaciji z $U_N(z)$. 
+
+Obe povpre"cji sem izra"cunal tako, da sem vzel $N_\psi$ naklju"cnih za"cetnih vektorjev, jih propagiral in nato izra"cunal "zeljeno vrednost. 
+S tem dobimo tako pri"cakovano vrednost kot tudi statistiko napak. 
+Vsaki"c sem $z$ razdelil na ve"cje "stevilo manj"sih korakov, ki so bili v brezdimenzijskih enotah veliki najve"c $10^{-3}$. 
+Velikosti koraka nisem prilagajal glede na vrednosti $z$, saj naj zanimajo "cimbolj natan"cne pri"cakovane vrednosti v nizkotemperaturni limiti, torej pri velikih $\beta$. 
+
+\section{"Casovna korelacija}
+
+Za simularanje "casovnega razvoja pri neskon"cni temperaturi uporabimo imaginaren $z$, ki je po kvantni mehaniki enak $z = it$. 
+
+
+\section{Difuzija}
+
+\end{document}

@@ -105,11 +105,10 @@ int odvod(double t, const double y[], double dydt[], void* param)
 
 void vse_metode(double T, int N, int n)
 {
-    const double p0 = 0.5;
-    X x2 = {1, 0, 0, p0};
-    X x4 = {1, 0, 0, p0};
+    X x2 = {0, 0.5, 1, 0};
+    X x4 = {0, 0.5, 1, 0};
         
-    double y[4] = {1, 0, 0, p0};
+    double y[4] = {0, 0.5, 1, 0};
     double t = 0;
     double step = T / (N * n);
     
@@ -138,7 +137,7 @@ void vse_metode(double T, int N, int n)
 
 void ekviparticija(double T, double N, int n)
 {
-    X x = {1, 0, 0, 2};
+    X x = {0, 0.5, 1, 0};
     shema s = s4();
     
     double pp1 = 0;

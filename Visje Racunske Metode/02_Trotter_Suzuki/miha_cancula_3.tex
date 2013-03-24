@@ -3,7 +3,7 @@
 \usepackage[slovene]{babel}
 \usepackage{graphicx}
 \usepackage{hyperref}
-\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}
 \usepackage{amsmath}
 \usepackage{float}
 
@@ -22,12 +22,84 @@ Izbral sem dve shemi, in sicer simetri"cni $S_2$ in $S_4$.
 Za primerjavo sem dodal "se znano metodo \texttt{RK4}. 
 V preizkusu sem za vse tri metode nastavil enako in nespremenljivo dol"zino koraka. 
 
-\input{g_energija_0.tex} \\
-\input{g_energija_01.tex} \\
+\begin{figure}[H]
+\input{g_energija_0.tex}
+\caption{Ohranitev energije v sistemu z $\lambda = 0$}
+\label{fig:ohranitev-lambda-0}
+\end{figure}
+
+\begin{figure}[H]
+\input{g_energija_01.tex}
+\caption{Ohranitev energije v sistemu z $\lambda = 0.1$}
+\label{fig:ohranitev-lambda-01}
+\end{figure}
+
+\begin{figure}[H]
 \input{g_energija_1.tex}
+\caption{Ohranitev energije v sistemu z $\lambda = 1$}
+\label{fig:ohranitev-lambda-1}
+\end{figure}
+
+Energijo najbolje ohranja metoda s simplekti"cnim integratorjem s shemo $S_4$. 
+Pri uporabljeni ra"cunalni"ski natan"cnosti sploh ne opazimo odstopanj od za"cetne vrednosti. 
+Pri ostalih dveh metodah se energija spreminja s "casom, je pa med njima pomembna razlika. 
+S simplekti"cno metodo s shemo $S_2$ energija le niha, medtem ko ne njena povpre"cna vrednost ne spreminja. 
+Pri metodi Runge-Kutta pa vidimo jasen trend, ki je "se izrazitej"si pri ve"cjih vrednostih $\lambda$. 
+
+Simplekti"cne metode poka"zejo veliko prednost pred metodo Runge-Kutta pri dolgih "casih integriranja in mo"cnim odstopanjem od harmonskega potenciala. 
 
 \section{Ekviparticijski izrek}
 
+Preverjal sem tudi veljavnost ekviparticijskega izreka. Do ekviparticije naj bi pri"slo, "ce je sistem ergodi"cen oz. kaoti"cen. 
+V primeru dvodimenzionalnega anharmonskega oscilatorja ekviparticija pomeni, da je pribli"zno enako energije v nihanji v $x$ smeri kot v $y$ smeri, seveda le v "casovnem povpre"cju po dolgem "casu. 
+Izbral sem za"cetni pogoj, kjer to ne dr"zi, in opazoval, po kolik"snem "casu se bo vzpostavila enakost energij.
 
+Kot kvantitativno merilo za ekviparticijo sem uporabil izraz v navodilih
+\begin{align}
+ \langle p_i^2\rangle &= \frac{1}{T} \int_0^T p_i^2(t) \; \mathrm{d}t
+\end{align}
+
+V primeru, da je sistem kaoti"cen, se morata izraza $\langle p_x^2\rangle$ in $\langle p_y^2\rangle$ po dovolj dolgem "casu izena"citi. 
+
+\begin{figure}[H]
+\input{g_ekviparticija_1.tex}
+\caption{Ekviparticija v sistemu z $\lambda = 1$}
+\label{fig:eq-lambda-1}
+\end{figure}
+
+\begin{figure}[H]
+\input{g_ekviparticija_low.tex}
+\caption{Ekviparticija v sistemu z $\lambda = 1.16$}
+\label{fig:eq-lambda-low}
+\end{figure}
+
+\begin{figure}[H]
+\input{g_ekviparticija_mid.tex}
+\caption{Ekviparticija v sistemu z $\lambda = 1.18$}
+\label{fig:eq-lambda-mid}
+\end{figure}
+
+\begin{figure}[H]
+\input{g_ekviparticija_high.tex}
+\caption{Ekviparticija v sistemu z $\lambda = 1.20$}
+\label{fig:eq-lambda-high}
+\end{figure}
+
+\begin{figure}[H]
+\input{g_ekviparticija_2.tex}
+\caption{Ekviparticija v sistemu z $\lambda = 2$}
+\label{fig:eq-lambda-2}
+\end{figure}
+
+\begin{figure}[H]
+\input{g_ekviparticija_10.tex}
+\caption{Ekviparticija v sistemu z $\lambda = 10$}
+\label{fig:eq-lambda-10}
+\end{figure}
+
+
+Za la"zjo primerjavo sem za"cetni pogoj vedno postavil na $(x, y, p_x, p_y) = (0, 1/2, 1, 0)$. S tak"sno izbiro dobimo ostro spremembo dinamike v bli"zini $\lambda_c = 1.18$. Pod to mejo (sliki \ref{fig:eq-lambda-1} in \ref{fig:eq-lambda-low}) vrednosti $\langle p_i^2 \rangle$ sicer oscilirata, ampak njuni dolgoro"cni povpre"cji konvergirata k razli"cnima vrednostma. Ko vrednost $\lambda$ prese"ze mejo, postane dinamika kaoti"cna, obe povpre"cji "se mo"cneje oscilirata, vendar sedaj obe povpre"cji oscilirata okrog iste vrednosti (sliki \ref{fig:eq-lambda-2} in \ref{fig:eq-lambda-10}). V tem primeru lahko re"cemo, da imamo ekviparticijo, saj je v vsakem izmed 1D nihanj enako energije. V bli"zini meje, torej okrog $\lambda = 1.2$ (sliki \ref{fig:eq-lambda-mid} in \ref{fig:eq-lambda-high}), opazimo nekako za"casno ekviparticijo. Nekaj "casa se sistem obna"sa integrabilno, tako da sta povpre"cji mo"cno razli"cni, nekaj "casa pa kaoti"cno. Z nadaljnjim zvi"sevanjem $\lambda$ je sistem vse bolj kaoti"cen. 
+
+S spreminjanjem za"cetnega pogoja se spremeni tudi mejna vrednost $\lambda_c$. Pri pove"cevanju $p_x$ ta meja pada, tako da z za"cetnim pogojem $p_x=2$ pade pod 1. Iz ostrine prehoda med nekaoti"cno in kaoti"cno dinamiko, ter iz odvisnosti prehoda od za"cetnega pogoja sklepam, da je v vsakem primeru del faznega prostora regularen, del pa kaoti"cen. Ko sistem enkrat zaide v kaoti"cni del, pride do ekviparticije. V bli"zine meje se lahko zgodi, da sistem za"casno preide iz kaoti"cnega dela nazaj v integrabilni del, kjer se povpre"cji razlikujeta. Po pri"cakovanje je ob ve"canju parametra $\lambda$ dele"z kaoti"cnega faznega prostora vedno ve"cji, in na neki to"cki ta dele"z zajame na"s za"cetni pogoj.  
 
 \end{document}
