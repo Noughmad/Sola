@@ -1,4 +1,6 @@
 global UU
+global UL
+global US
 
 function M = block_diagonal(block, m)
   [a,b] = size(block);
@@ -56,18 +58,31 @@ endfunction
 
 function make_matrices(n, shema)
   global UU
+  global UL
+  global US
 
   UU = {};
   
   for i = 1:length(shema)  
+    UL{i} = speye(2^n);
+    US{i} = speye(2^n);
     for j = 1:n
       UU{i}{j} = dvodelcni_cel(j, n, shema(i));
+      if mod(j,2)
+        UL{i} = UL{i} * UU{i}{j};
+      else
+        US{i} = US{i} * UU{i}{j};
+      endif
     endfor
   endfor
 endfunction
 
 function psiprime = lihi_korak(psi, n, i)
   global UU
+  global UL
+  
+  # psiprime = UL{i} * psi;
+  # return
 
   psiprime = psi;
   for j = 1:2:n-1
@@ -78,9 +93,13 @@ endfunction
 
 function psiprime = sodi_korak(psi, n, i)
   global UU
+  global US
+
+  # psiprime = US{i} * psi;
+  # return
 
   psiprime = psi;
-  for j = 2:2:n-1
+  for j = 2:2:n
     U = UU{i}{j};
     psiprime = U * psiprime;
   endfor
@@ -107,6 +126,14 @@ function s = shema_s4()
   s = [x1/2 x1 (x1+x0)/2 x0 (x1+x0)/2 x1 x1/2];
 endfunction
 
+function s = shema_s5()
+  p1 = 1/4 + i*sqrt(3)/12;
+  p2 = 2*p1;
+  p3 = 1/2;
+  
+  s = [p1, p2, p3, p2', p2', p2', p3', p2, p1] / 2;
+endfunction
+
 function H = hamiltonian(n, j)
   h = spalloc(4, 4, 6);
   h(1,1) = h(4,4) = 1;
@@ -117,43 +144,40 @@ function H = hamiltonian(n, j)
 endfunction
 
 function F, E = povprecna_energija(n, Npsi, Nkorakov, beta)
-  Z = zeros(1,Npsi);
-  E = zeros(1,Npsi);
-  
-  shema = shema_s4();
+  shema = shema_s5();
   z = beta / 2 / Nkorakov;
   make_matrices(n, shema .* z)
   s = length(shema);
   N = 2^n;
   
-  H = spalloc(N, N, 4*N);
-  for j = 1:n-1
+  H = spalloc(N, N, 2*N);
+  for j = 1:n
     H += hamiltonian(n, j);
   endfor
   H = sparse(H);
   
-  for p = 1:Npsi
-    psi = rand(N,1);
-    psi = psi / sqrt(psi' * psi);
+  psi = rand(N,Npsi);
+  psi = psi ./ norm(psi,2,"columns");
 
-    for k = 1:Nkorakov
-      psi = korak(psi, n, s);
-    endfor
-  
-    Z(p) = psi' * psi;
-    E(p) = psi' * H * psi / Z(p);
+  for k = 1:Nkorakov
+    psi = korak(psi, n, s);
   endfor
   
+  Z = diag(psi' * psi)';
+  E = real(diag(psi' * H * psi))';
+  
+  Zp = sum(Z) / Npsi;
   F = -log(Z) / beta;
+  E = E ./ Z;
 endfunction
 
 function R = prosta_energija_vse()
-  n = 16;
-  Npsi = 20;
+  n = 10;
+  Npsi = 50;
   N = 2^n;
   R = [];
-  for beta = [0.001 0.003 0.01 0.03 0.1 0.3 1 3 10 30]
-    Nkorakov = max(10, 1000 * beta);
+  for beta = [1e-4, 3e-4, 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10 30 100]
+    Nkorakov = max(10, 1000*beta);
     [F, E] = povprecna_energija(n, Npsi, Nkorakov, beta);
     avgF = sum(F) / Npsi;
     stdevF = sqrt(sumsq(F - avgF) / Npsi);
@@ -175,7 +199,7 @@ function vse_profile()
   profshow(T)
 endfunction
 
-function T = casovna_odvisnost()
+function T = casovna_odvisnost(name)
   T = [];
   for n = [6 8 10 12 14 16]
     t = time();
@@ -183,5 +207,104 @@ function T = casovna_odvisnost()
     T = [T; n, time() - t];
   endfor
   
-  dlmwrite("g_time.dat", T);
+  dlmwrite(["g_time_" name ".dat"], T);
+endfunction
+
+function M = magnetizacija_mat(n)
+  S = sparse([1, 0; 0 -1]);
+  M = kron(speye(2^(n-1)), S);
+endfunction
+
+function S,D = mag_korelacija(n, Npsi, Nkorakov, Nizmerkov, t)
+  
+  shema = shema_s5();
+  z = -i * t / Nkorakov;
+  make_matrices(n, shema .* z)
+  s = length(shema);
+  N = 2^n;
+  
+  M = magnetizacija_mat(n);
+  C = [];
+  
+  psi = rand(N,Npsi);
+  psi = psi ./ norm(psi,2,"columns");
+  chi = M * psi;
+  
+  C = [C; real(diag(psi' * M * chi))'];
+  
+  for i = 1:Nizmerkov
+    for k = 1:Nkorakov
+      psi = korak(psi, n, s);
+      chi = korak(chi, n, s);
+    endfor
+    
+    C = [C; real(diag(psi' * M * chi))'];
+    # dlmwrite("g_korelacija_raw.dat", C);
+  endfor
+  
+  T = (0:Nizmerkov) * t;
+  
+  S = sum(C,2) / Npsi;
+  D = sqrt(sumsq(C-S,2) / Npsi);
+  dlmwrite("g_korelacija.dat", [T', S, D]);
+endfunction
+
+function J = tok_mat_d(n, j)
+  sx = [0, 1; 1, 0];
+  sy = [0, -i; i, 0];
+  Jd = kron(sx, sy) - kron(sy, sx);
+  J = napihni(Jd, n, j);
+endfunction
+
+function J = tok_mat(n)
+  J = spalloc(2^n, 2^n, 2*2^n);
+  for j = 1:n
+    J += tok_mat_d(n, j);
+  endfor
+endfunction
+
+function S,D = tok_korelacija(n, Npsi, Nkorakov, Nizmerkov, t)
+  
+  shema = shema_s4();
+  z = -i * t / Nkorakov;
+  make_matrices(n, shema .* z)
+  s = length(shema);
+  N = 2^n;
+  
+  M = tok_mat(n);
+  C = [];
+  
+  psi = rand(N,Npsi);
+  psi = psi ./ norm(psi,2,"columns");
+  chi = tok_mat_d(n, 1) * psi;
+  
+  C = [C; real(diag(psi' * M * chi))'];
+  
+  for i = 1:Nizmerkov
+    for k = 1:Nkorakov
+      psi = korak(psi, n, s);
+      chi = korak(chi, n, s);
+    endfor
+    
+    C = [C; real(diag(psi' * M * chi))'];
+    # dlmwrite("g_tok_raw.dat", C);
+  endfor
+  
+  T = (0:Nizmerkov) * t;
+  
+  S = sum(C,2) / Npsi;
+  D = sqrt(sumsq(C-S,2) / Npsi);
+  dlmwrite("g_tok_long.dat", [T', S, D]);
+endfunction
+
+function C = komutator(A,B)
+  C = A*B - B*A;
+endfunction
+
+function F = four_trans(R)
+  C = R(:,2);
+  L = length(C);
+  t = R(2,1) * L;
+  
+  F = [(0:L-1)' / t, abs(fft(C))];
 endfunction

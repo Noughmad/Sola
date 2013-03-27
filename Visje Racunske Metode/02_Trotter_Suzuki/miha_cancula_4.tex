@@ -174,7 +174,7 @@ V na"sem primeru, ko je tudi sama matrika $U$ redka, je neni"celnih elementov "s
 
 Ra"cunanje sem implementiral v programu \texttt{GNU Octave}, ki je posebej primeren za enostavno operiranje z redkimi matrikami. 
 Matrike $N \times N$ sem skonstruiral po zgornjem postopku, tako da sem ve"ckrat uporabil direktni produkt matrik namesto zank v programu. 
-Pri velikosti problema $n=16$ in $n=18$ je program za konstrukcijo matrik porabil pribli"zno toliko "casa, kot za dva koraka propagacije s shemo $S_4$, torej pribli"zno 15 mno"zenj s celotnim propagatorjem. 
+Pri velikosti problema $n=16$ in $n=18$ je program za konstrukcijo matrik porabil pribli"zno toliko "casa, kot za dva koraka propagacije s shemo $S_4$, torej pribli"zno 15 mno"zenj s celotnim propagatorjem. Ve"cjih $n$ nisem mogel dose"ci, ker je ra"cunalniku zmanjkalo pomnilnika. 
 
 \begin{figure}[h]
 \centering
@@ -184,6 +184,10 @@ Pri velikosti problema $n=16$ in $n=18$ je program za konstrukcijo matrik porabi
 
 Trajanje ra"cunanja se ujema s pri"cakovano odvisnostjo $\mathcal{O}(N \log N)$. 
 Odstopanje je le pri majhnih $n$, kjer moramo upo"stevati "se majhnen konstantni "clen za ``overhead''.
+
+Na grafu vidimo tudi razliko med pristopom, ko sode in lihe napihnjene dvodel"cne propagatorje vnaprej zmo"zimo in tistim, ko stanje mno"zimo z vsakim posebej. 
+Velike razlike v trajanju ra"cuna ne opazimo, je pa predhodno mno"zenje ugodno predvsem pri majhnem "stevilu delcev, saj imamo manj knjigovodstva. 
+Pri ve"cjem "stevilu delcev pa se ve"ckratno mno"zenje izka"ze za hitrej"se, saj pri tem bolje izkoristimo redkost matrik. 
 
 \section{Termalno povpre"cje}
 
@@ -201,11 +205,85 @@ S tem dobimo tako pri"cakovano vrednost kot tudi statistiko napak.
 Vsaki"c sem $z$ razdelil na ve"cje "stevilo manj"sih korakov, ki so bili v brezdimenzijskih enotah veliki najve"c $10^{-3}$. 
 Velikosti koraka nisem prilagajal glede na vrednosti $z$, saj naj zanimajo "cimbolj natan"cne pri"cakovane vrednosti v nizkotemperaturni limiti, torej pri velikih $\beta$. 
 
+\begin{figure}[H]
+ \centering
+ \input{g_energija_obe}
+ \caption{Odvisnost proste energije $F$ in povpre"cne energije $\langle H\rangle$ od inverzne temperature $\beta$}
+\end{figure}
+
+Obe termodinamski spremenljivki se s temperaturo spreminjata kot
+
+\begin{align}
+ \{F,\langle H \rangle \} &= -A + \frac{B}{1 + C\beta}
+\end{align}
+
+Konstanti $B$ in $C$ sta razli"cni za vsako izmed spremenljivk, konstanta $A$ pa je v obeh primerih enaka "stevilu delcev $A = n$. 
+To je razumljivo, saj je v nizkotemperaturni limiti, ko gre $\beta \to \infty$, sistem vedno v osnovnem stanju. 
+Osnovno stanje antiferomagnetnega sistema s sodim "stevilom delcev je tak"sno, da imata vsaka dva soseda nasprotna spina, pri izbrani normalizaciji pa ima tak"sno stanje energijo $-n$. 
+Pri nizkih temperaturi gre tudi razlika $E-F = TS$, ki je sorazmerna s temperaturo, proti ni"c, kar vidimo tudi na zgornjem grafu. 
+
 \section{"Casovna korelacija}
 
 Za simularanje "casovnega razvoja pri neskon"cni temperaturi uporabimo imaginaren $z$, ki je po kvantni mehaniki enak $z = it$. 
 
+\subsection{Magnetizacija}
+Matrika enodel"cnega operatorja $\sigma_1^z$ je posebej enostavna v binarni bazi, saj bazna stanja s sodim $J$ mno"zi z 1, stanja z lihim $J$ pa z $-1$. 
+Matrika $X$ je torej diagonalna, po diagonali pa se izmenjujejo $1$ in $-1$. 
 
-\section{Difuzija}
+\begin{figure}[H]
+\centering
+ \input{g_korelacija_mag}
+ \caption{"Casovna korelacija enodel"cne magnetizacije $\sigma_1^z$}
+\end{figure}
+
+Opazimo, da korelacija mo"cno niha. Model je antiferomagneten, torej pri"cakujemo tudi negativno korelacijo. 
+Nihanje o"citno ni "cisto sinusno, vseeno pa izgleda kot vsota ve"cih sinusov. 
+Da bi to preveril sem naredil "se Fourierovo transformacijo avtokorelacijske funkcije, ki ji enaka kvadratu absolutne vrednosti Fourierove transformiranke magnetizacije. 
+
+\begin{figure}[H]
+\centering
+ \input{g_fft_mag}
+ \caption{Fourierova transformiranka "casovne korelacije enodel"cne magnetizacije $\sigma_1^z$}
+\end{figure}
+
+Vidimo "stiri jasno vrhove pri pribli"zno enakomerno razmaknjenih frekvencah $\omega = k \omega_0$. 
+Ostrina vrhov nam pove, da je korelacijska funkcija v dobrem pribli"zku periodi"cna in le po"casi pada proti 0. 
+
+\subsection{Spinski tok}
+
+Pri obravnavi spinskega toka $J$ si pomagamo z dejstvom, da je operator $J$ vsota dvodel"cnih operatorjev $J_j = \sigma_j^x \sigma_{j+1}^y - \sigma_j^y \sigma_{j+1}^x$. 
+Za"cnemo torej z matriko $J_0 = \sigma^x \otimes \sigma^y - \sigma^y \otimes \sigma^x$ dimenzije $4\times 4$, ki jo po zgoraj opisanem postopku ``napihnemo'' v matriko $N\times N$. 
+
+\begin{figure}[H]
+\centering
+ \input{g_korelacija_tok}
+ \caption{"Casovna korelacija spinskega toka $J$}
+\end{figure}
+
+V primerjavi z magnetizacijo pa avtokorelacijska funkcija spinskega toka pada vidno hitreje. 
+Za majhne "case jo lahko pribli"zamo z izrazom z du"senim nihanjem, $C(t) \propto \cos(\omega t) \exp(-t/\tau)$. 
+
+\begin{figure}[H]
+\centering
+ \input{g_fft_tok}
+ \caption{Fourierova transformiranka "casovne korelacije spinskega toka $J$}
+\end{figure}
+
+Na Fourierovi transformiranki je viden en sam vrh, ki je manj oster. Po dalj"sem "casu ($t\geq 10$) pa nihanje ne zamre popolnoma, ampak utripa, kar je bolje vidno na logaritemskem grafu spodaj. 
+
+\begin{figure}[H]
+ \centering
+\input{g_tok_log}
+\caption{Logaritemski graf korelacije spinskega toka v dalj"sem "casovnem intervalu}
+\end{figure}
+
+Tudi na logaritemskem grafu vidimo najprej hitro padanje ($\exp(-t/\tau)$ s $\tau\approx 5/3$), ki pa se ustavi pri amplitudi okrog $0.01$. 
+"Ce ta del zanemarimo, lahko difuzijsko konstanto izra"cunamo kot
+
+\begin{align}
+ D &= \int_0^{\infty} Ae^{-t/\tau} \; \mathrm{d}t = A\tau \approx \frac{3}{2} \cdot \frac{5}{3} = \frac{5}{2}
+\end{align}
+
+Z upo"stevanjem, da korelacija ne pade "cisto na ni"c, ampak se tudi po dolgem "casu ustali pri neki majhni a kon"cni vrednosti, zgornji integral divergira in je difuzijska konstanta neskon"cna. 
 
 \end{document}
