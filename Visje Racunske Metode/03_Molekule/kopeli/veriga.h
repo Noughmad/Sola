@@ -30,6 +30,10 @@ public:
     
     virtual void setup() = 0;
     virtual void step() = 0;
+    virtual size_t size() const;
+    
+    double Vprime(double current, double previous, double next);
+    double Vprime(double x);
     
     const int N;
     double lambda;
@@ -52,6 +56,7 @@ public:
     
     virtual void setup();
     virtual void step();
+    virtual size_t size() const;
     
     double t;
     
