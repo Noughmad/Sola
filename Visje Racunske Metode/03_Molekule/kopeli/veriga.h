@@ -21,6 +21,7 @@
 #define VERIGA_H
 
 #include <gsl/gsl_odeiv2.h>
+#include <gsl/gsl_rng.h>
 
 class Veriga
 {
@@ -65,6 +66,28 @@ public:
 private:
     gsl_odeiv2_system* sys;
     gsl_odeiv2_driver* driver;
+};
+
+class Maxwell : public Veriga
+{
+public:
+    Maxwell(int N, double T_L, double T_R);
+    virtual ~Maxwell();
+    
+    double T_L;
+    double T_R;
+    int resetInterval;
+    double h;
+    int stepNumber;
+    
+    virtual void setup();
+    virtual void step();
+    
+    void stepKinetic(double x);
+    void stepPotential(double x);
+    
+private:
+    gsl_rng* rng;
 };
 
 #endif // VERIGA_H

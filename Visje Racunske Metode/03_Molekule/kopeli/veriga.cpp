@@ -21,6 +21,7 @@
 
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_rng.h>
+#include <gsl/gsl_randist.h>
 
 Veriga::Veriga(int N) : N(N)
 {
@@ -110,6 +111,8 @@ void Hoover::setup()
     }
     y[2*n] = 0;
     y[2*n+1] = 0;
+    
+    gsl_rng_free(r);
 }
 
 void Hoover::step()
@@ -121,4 +124,62 @@ size_t Hoover::size() const
 {
     return N-1;
 }
+
+Maxwell::Maxwell(int N, double T_L, double T_R): Veriga(N)
+{
+    rng = gsl_rng_alloc(gsl_rng_default);
+}
+
+Maxwell::~Maxwell()
+{
+    gsl_rng_free(rng);
+}
+
+
+void Maxwell::setup()
+{
+    const int n = size();
+    rng = gsl_rng_alloc(gsl_rng_default);
+    for (int i = 0; i < n; ++i)
+    {
+        y[i] = 0;
+        y[n+i] = gsl_ran_chisq(rng, 3); // TODO: Normalization
+    }
+    
+    stepNumber = 0;
+}
+
+void Maxwell::step()
+{
+    // TODO: This is S2. Use S4 instead
+    stepKinetic(0.5 * h);
+    stepPotential(1 * h);
+    stepKinetic(0.5 * h);
+    
+    if ((stepNumber % resetInterval) == 0)
+    {
+        
+    }
+}
+
+void Maxwell::stepKinetic(double x)
+{
+    const int n = size();
+    for (int i = 0; i < n; ++i)
+    {
+        y[i] += x * y[i+n];
+    }
+}
+
+void Maxwell::stepPotential(double x)
+{
+    const int n = size();
+    y[n] -= x * (Vprime(y[n], 0, y[n+1] + Uprime(y[n]));
+    for (int i = 0; i < n; ++i)
+    {
+        y[n+i] -= x * (Vprime(y[n+i], y[n+i-1], y[n+i+1])  + Uprime(y[n]));
+    }
+    y[n] -= x * (Vprime(y[2*n-1], y[2*n-2], 0 + Uprime(y[2*n-1]));
+}
+
 
