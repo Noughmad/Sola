@@ -1,20 +1,26 @@
 #include <iostream>
+#include <cmath>
 #include "veriga.h"
 
 using namespace std;
 
 const int InitialSteps = 1e7;
-const int AverageSteps = 1e7;
-const int MeasureInterval = AverageSteps / 1;
+const int AverageSteps = 1e6;
+const int MeasureInterval = 10;
 
-const int N = 100;
+const int N = 30;
+
+inline double sqr(double x)
+{
+    return x*x;
+}
 
 int main(int argc, char **argv) {
     
     Hoover h(N, 1, 2);
     h.K = 1;
     h.Q = 1;
-    h.invTau = 1;
+    h.invTau = 10;
     h.lambda = 1;
         
     h.setup();
@@ -26,6 +32,9 @@ int main(int argc, char **argv) {
     
     double J[N];
     double T[N];
+    
+    double J2[N];
+    double T2[N];
     
     for (int j = 0; j < N; ++j)
     {
@@ -43,20 +52,26 @@ int main(int argc, char **argv) {
             for (int j = 0; j < N; ++j)
             {
                 T[j] = T[j] * d * f + h.y[N+j] * h.y[N+j] * f;
+                T2[j] = T2[j] * d * f + pow(h.y[N+j], 4) * f;
             }
-
+            
             J[0] = J[0] * d * f + h.y[N] * h.Vprime(h.y[0], 0, h.y[1]) * f;
-            for (int j = 0; j < N-1; ++j)
+            J2[0] = J2[0] * d * f + sqr(h.y[N] * h.Vprime(h.y[0], 0, h.y[1])) * f;
+            for (int j = 1; j < N-1; ++j)
             {
                 J[j] = J[j] * d * f + h.y[N+j] * h.Vprime(h.y[j], h.y[j-1], h.y[j+1]) * f;
+                J2[j] = J2[j] * d * f + sqr(h.y[N+j] * h.Vprime(h.y[j], h.y[j-1], h.y[j+1])) * f;
             }
             J[N-1] = J[N-1] * d * f + h.y[2*N-1] * h.Vprime(h.y[N-1], h.y[N-2], 0) * f;
+            J2[N-1] = J2[N-1] * d * f + sqr(h.y[2*N-1] * h.Vprime(h.y[N-1], h.y[N-2], 0)) * f;
         }
     }
+    
+    const double M = sqrt((double)AverageSteps / MeasureInterval);
         
     for (int j = 0; j < N; ++j)
     {
-        std::cout << J[j] << ", " << T[j] << ", " << h.y[j] << ", " << h.y[N+j] << endl;
+        std::cout << J[j] << ", " << sqrt(J2[j] - J[j] * J[j]) / M << ", " << T[j] << ", " << sqrt(T2[j] - T[j] * T[j]) / M << ", " << h.y[j] << ", " << h.y[N+j] << endl;
     }
         
     return 0;

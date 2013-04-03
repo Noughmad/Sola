@@ -35,6 +35,8 @@ public:
     double Vprime(double current, double previous, double next);
     double Vprime(double x);
     
+    double Uprime(double x);
+    
     const int N;
     double lambda;
 

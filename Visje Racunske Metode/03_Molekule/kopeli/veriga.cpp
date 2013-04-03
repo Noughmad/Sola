@@ -37,14 +37,19 @@ size_t Veriga::size() const
     return N;
 }
 
+double Veriga::Uprime(double x)
+{
+    return (Q + 4 * lambda * x * x) * x;
+}
+
 double Veriga::Vprime(double x)
 {
-    return (K + 4 * lambda * x * x) * x;
+    return K * x;
 }
 
 double Veriga::Vprime(double current, double previous, double next)
 {
-    return Vprime(current - previous) + Vprime(current - next);
+    return K * (2 * current - previous - next);
 }
 
 int odvod(double t, const double y[], double dydt[], void* params)
@@ -59,15 +64,15 @@ int odvod(double t, const double y[], double dydt[], void* params)
     }
     
     // p_1 ima zraven clen z zeta_L = y[2*n]
-    dydt[n] = -h->Vprime(y[0], 0, y[1]) - h->Q * y[0] - y[2*n]*y[n];
+    dydt[n] = -h->Vprime(y[0], 0, y[1]) - h->Uprime(y[0]) - y[2*n]*y[n];
     
     for (int i = 1; i < n-1; ++i)
     {
-        dydt[n+i] = -h->Vprime(y[i], y[i-1], y[i+1]) - h->Q * y[i];
+        dydt[n+i] = -h->Vprime(y[i], y[i-1], y[i+1]) - h->Uprime(y[i]);
     }
     
     // p_n ima zraven clen z zeta_R = y[2*n+1]
-    dydt[2*n-1] = -h->Vprime(y[n-1], y[n-2], 0) - h->Q * y[n-1] - y[2*n+1]*y[2*n-1];
+    dydt[2*n-1] = -h->Vprime(y[n-1], y[n-2], 0) - h->Uprime(y[n-1]) - y[2*n+1]*y[2*n-1];
     
     dydt[2*n] = h->invTau * (y[n]*y[n] - h->T_L);
     dydt[2*n+1] = h->invTau * (y[2*n-1]*y[2*n-1] - h->T_R);
@@ -93,7 +98,7 @@ void Hoover::setup()
 {
     t = 0;
     sys = new gsl_odeiv2_system {odvod, 0, 2*N, static_cast<void*>(this)};
-    driver = gsl_odeiv2_driver_alloc_y_new(sys, gsl_odeiv2_step_rk4, 1e-6, 1e-6, 1e-6);
+    driver = gsl_odeiv2_driver_alloc_y_new(sys, gsl_odeiv2_step_rk4, 1e-2, 1e-5, 0);
     
     gsl_rng* r = gsl_rng_alloc(gsl_rng_default);
     
@@ -109,7 +114,7 @@ void Hoover::setup()
 
 void Hoover::step()
 {
-    gsl_odeiv2_driver_apply(driver, &t, t + 1e-3, y);
+    gsl_odeiv2_driver_apply(driver, &t, t + 1, y);
 }
 
 size_t Hoover::size() const
