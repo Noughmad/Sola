@@ -4,8 +4,8 @@
 
 using namespace std;
 
-const int InitialSteps = 1e7;
-const int AverageSteps = 1e6;
+const int InitialSteps = 1e8;
+const int AverageSteps = 1e7;
 const int MeasureInterval = 10;
 
 const int N = 30;
@@ -15,13 +15,23 @@ inline double sqr(double x)
     return x*x;
 }
 
+typedef Maxwell V;
+
 int main(int argc, char **argv) {
     
+    /*
     Hoover h(N, 1, 2);
+    */
+    
+    V h(N, 6, 3);
+    
+    // h.invTau = 10;
+    h.resetInterval = 10;
+    h.h = 1e-2;
+    
     h.K = 1;
     h.Q = 1;
-    h.invTau = 10;
-    h.lambda = 1;
+    h.lambda = 100;
         
     h.setup();
     
@@ -49,6 +59,8 @@ int main(int argc, char **argv) {
         {
             const int d = i / MeasureInterval;
             const double f = 1.0 / (d+1);
+            
+#pragma omp parallel for
             for (int j = 0; j < N; ++j)
             {
                 T[j] = T[j] * d * f + h.y[N+j] * h.y[N+j] * f;
@@ -57,6 +69,8 @@ int main(int argc, char **argv) {
             
             J[0] = J[0] * d * f + h.y[N] * h.Vprime(h.y[0], 0, h.y[1]) * f;
             J2[0] = J2[0] * d * f + sqr(h.y[N] * h.Vprime(h.y[0], 0, h.y[1])) * f;
+            
+#pragma omp parallel for
             for (int j = 1; j < N-1; ++j)
             {
                 J[j] = J[j] * d * f + h.y[N+j] * h.Vprime(h.y[j], h.y[j-1], h.y[j+1]) * f;

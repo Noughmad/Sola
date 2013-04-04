@@ -23,6 +23,8 @@
 #include <gsl/gsl_rng.h>
 #include <gsl/gsl_randist.h>
 
+#include <cmath>
+
 Veriga::Veriga(int N) : N(N)
 {
     y = new double[2*N];
@@ -56,8 +58,9 @@ double Veriga::Vprime(double current, double previous, double next)
 int odvod(double t, const double y[], double dydt[], void* params)
 {
     Hoover* h = static_cast<Hoover*>(params);
-    int n = h->size();
+    const int n = h->size();
     
+#pragma omp parallel for
     for (int i = 0; i < n; ++i)
     {
         // Prvih n so q_i
@@ -67,6 +70,7 @@ int odvod(double t, const double y[], double dydt[], void* params)
     // p_1 ima zraven clen z zeta_L = y[2*n]
     dydt[n] = -h->Vprime(y[0], 0, y[1]) - h->Uprime(y[0]) - y[2*n]*y[n];
     
+#pragma omp parallel for
     for (int i = 1; i < n-1; ++i)
     {
         dydt[n+i] = -h->Vprime(y[i], y[i-1], y[i+1]) - h->Uprime(y[i]);
@@ -125,7 +129,10 @@ size_t Hoover::size() const
     return N-1;
 }
 
-Maxwell::Maxwell(int N, double T_L, double T_R): Veriga(N)
+Maxwell::Maxwell(int N, double T_L, double T_R)
+: Veriga(N)
+, Tsqrt_L(sqrt(T_L / 3))
+, Tsqrt_R(sqrt(T_R / 3))
 {
     rng = gsl_rng_alloc(gsl_rng_default);
 }
@@ -143,7 +150,7 @@ void Maxwell::setup()
     for (int i = 0; i < n; ++i)
     {
         y[i] = 0;
-        y[n+i] = gsl_ran_chisq(rng, 3); // TODO: Normalization
+        y[n+i] = gsl_ran_chisq(rng, 1) * 4; // TODO: Normalization
     }
     
     stepNumber = 0;
@@ -158,13 +165,19 @@ void Maxwell::step()
     
     if ((stepNumber % resetInterval) == 0)
     {
-        
+        int n = size();
+        y[n] = gsl_ran_chisq(rng, 1.0) * Tsqrt_L;
+        y[2*n-1] = gsl_ran_chisq(rng, 1.0) * Tsqrt_R;
     }
+    
+    stepNumber++;
 }
 
 void Maxwell::stepKinetic(double x)
 {
     const int n = size();
+
+#pragma omp parellel for
     for (int i = 0; i < n; ++i)
     {
         y[i] += x * y[i+n];
@@ -174,12 +187,12 @@ void Maxwell::stepKinetic(double x)
 void Maxwell::stepPotential(double x)
 {
     const int n = size();
-    y[n] -= x * (Vprime(y[n], 0, y[n+1] + Uprime(y[n]));
+
+#pragma omp parellel for
     for (int i = 0; i < n; ++i)
     {
-        y[n+i] -= x * (Vprime(y[n+i], y[n+i-1], y[n+i+1])  + Uprime(y[n]));
+        y[n+i] -= x * (Vprime(y[i], i > 0 ? y[i-1] : 0, i < n-1 ? y[i+1] : 0) + Uprime(y[i]));
     }
-    y[n] -= x * (Vprime(y[2*n-1], y[2*n-2], 0 + Uprime(y[2*n-1]));
 }
 
 

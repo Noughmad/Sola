@@ -74,8 +74,6 @@ public:
     Maxwell(int N, double T_L, double T_R);
     virtual ~Maxwell();
     
-    double T_L;
-    double T_R;
     int resetInterval;
     double h;
     int stepNumber;
@@ -88,6 +86,8 @@ public:
     
 private:
     gsl_rng* rng;
+    double Tsqrt_L;
+    double Tsqrt_R;
 };
 
 #endif // VERIGA_H
