@@ -55,12 +55,24 @@ double Veriga::Vprime(double current, double previous, double next)
     return K * (2 * current - previous - next);
 }
 
-double Veriga::flux(int n)
+double Veriga::flux(int i)
 {
-    if (n == 0)
+    const int n = size();
+    double v;
+    if (i == 0)
     {
-        return 
+        v = Vprime(y[0] - y[1]);
+    } 
+    else if (i == n-1)
+    {
+        v = Vprime(y[n-1] - y[n-2]) ;
     }
+    else
+    {
+        v = Vprime(y[i] - y[i-1]) + Vprime(y[i] - y[i+1]);
+    }
+    
+    return v * y[n+i];
 }
 
 
@@ -175,8 +187,11 @@ void Maxwell::step()
     if ((stepNumber % resetInterval) == 0)
     {
         int n = size();
-        y[n] = gsl_ran_chisq(rng, 1.0) * Tsqrt_L;
-        y[2*n-1] = gsl_ran_chisq(rng, 1.0) * Tsqrt_R;
+        for (int j = 0; j < 1; ++j)
+        {
+            y[n+j] = gsl_ran_chisq(rng, 1.0) * Tsqrt_L;
+            y[2*n-1-j] = gsl_ran_chisq(rng, 1.0) * Tsqrt_R;
+        }
     }
     
     stepNumber++;

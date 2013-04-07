@@ -4,11 +4,11 @@
 
 using namespace std;
 
-const int InitialSteps = 1e8;
+const int InitialSteps = 1e9;
 const int AverageSteps = 1e8;
 const int MeasureInterval = 10;
 
-const int N = 20;
+const int N = 30;
 
 inline double sqr(double x)
 {
