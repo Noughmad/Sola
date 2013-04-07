@@ -38,6 +38,8 @@ public:
     
     double Uprime(double x);
     
+    double flux(int i);
+    
     const int N;
     double lambda;
 

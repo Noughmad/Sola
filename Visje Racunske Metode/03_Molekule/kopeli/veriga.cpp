@@ -55,6 +55,15 @@ double Veriga::Vprime(double current, double previous, double next)
     return K * (2 * current - previous - next);
 }
 
+double Veriga::flux(int n)
+{
+    if (n == 0)
+    {
+        return 
+    }
+}
+
+
 int odvod(double t, const double y[], double dydt[], void* params)
 {
     Hoover* h = static_cast<Hoover*>(params);

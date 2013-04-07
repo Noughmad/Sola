@@ -5,10 +5,10 @@
 using namespace std;
 
 const int InitialSteps = 1e8;
-const int AverageSteps = 1e7;
+const int AverageSteps = 1e8;
 const int MeasureInterval = 10;
 
-const int N = 30;
+const int N = 20;
 
 inline double sqr(double x)
 {
@@ -18,20 +18,16 @@ inline double sqr(double x)
 typedef Maxwell V;
 
 int main(int argc, char **argv) {
-    
-    /*
-    Hoover h(N, 1, 2);
-    */
-    
-    V h(N, 6, 3);
+       
+    V h(N, 1, 2);
     
     // h.invTau = 10;
-    h.resetInterval = 10;
+    h.resetInterval = 1e4;
     h.h = 1e-2;
     
     h.K = 1;
     h.Q = 1;
-    h.lambda = 100;
+    h.lambda = 0;
         
     h.setup();
     
@@ -67,7 +63,7 @@ int main(int argc, char **argv) {
                 T2[j] = T2[j] * d * f + pow(h.y[N+j], 4) * f;
             }
             
-            J[0] = J[0] * d * f + h.y[N] * h.Vprime(h.y[0], 0, h.y[1]) * f;
+            J[0] = J[0] * d * f + h.flux(0) * f;
             J2[0] = J2[0] * d * f + sqr(h.y[N] * h.Vprime(h.y[0], 0, h.y[1])) * f;
             
 #pragma omp parallel for
