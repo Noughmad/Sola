@@ -96,7 +96,7 @@ int main(int argc, char **argv) {
         h.K = 1;
         h.Q = 1;
         h.lambda = lambda;
-        h.invTau = 1;
+        h.invTau = 1e-2;
         h.h = 1e-2;
         run_sim(h, InitialSteps, AverageSteps, MeasureInterval);
     }

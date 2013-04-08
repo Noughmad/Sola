@@ -124,7 +124,7 @@ void Hoover::setup()
 {
     t = 0;
     sys = new gsl_odeiv2_system {odvod, 0, 2*N, static_cast<void*>(this)};
-    driver = gsl_odeiv2_driver_alloc_y_new(sys, gsl_odeiv2_step_rk4, h, 1e-4, 0);
+    driver = gsl_odeiv2_driver_alloc_y_new(sys, gsl_odeiv2_step_rk4, h, 1e-3, 0);
     
     gsl_rng* r = gsl_rng_alloc(gsl_rng_default);
     

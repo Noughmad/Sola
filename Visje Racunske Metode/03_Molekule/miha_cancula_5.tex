@@ -31,6 +31,21 @@
 
 \maketitle
 
+\section{Transport toplote}
+
+Transport toplote sem preu"ceval z enodimenzionalno verigo oscilatorjev. 
+Delca na konceh verige sem sklopil s toplotnima kopelima z brezdimenzijskima temperaturama $T_L=1$ in $T_R=2$. 
+
+Zanimajo nas vrednosti v stacionarnem stanju, zato sem najprej napravil $N_I = 10^{8}$ korakov integracije dol"zine $h=10^{-2}$. 
+Nato sem izvedel "se $N_A=10^{7}$ korakov, med katerimi sem opravil $10^{5}$ meritev temperature in toplotnega toka. 
+Meritve sem na koncu popre"cil. 
+
+\section{Maxwellske kopeli}
+
+Najprej sem za modeliranje toplotnih kopeli uporabil Maxwellov algoritem, pri katerem gibalni koli"cini sklopljenih delcev resetiramo vsakih $R=100$ korakov. 
+Preizku"sal sem razli"cne vrednosti za $R$, najbolje pa se je izkazala tak"sna, pri kateri se reset zgodi enkrat vsako "casovno enoto, torej $Rh \sim 1$. 
+Med reseti sem stanje propagiral s simplekti"cnim integratorjem s simetri"cno shemo $S_2$. 
+
 \input{g_odv_lambda_30}
 
 \input{g_odv_lambda_100}
@@ -38,5 +53,7 @@
 \input{g_odv_velikost}
 
 \input{g_prehod}
+
+\section{Nos\'e-Hooverjeve kopeli}
 
 \end{document}
