@@ -42,6 +42,7 @@ public:
     
     const int N;
     double lambda;
+    double h;
 
     double K;
     double Q;
@@ -77,7 +78,6 @@ public:
     virtual ~Maxwell();
     
     int resetInterval;
-    double h;
     int stepNumber;
     
     virtual void setup();

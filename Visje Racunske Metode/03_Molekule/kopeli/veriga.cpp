@@ -124,7 +124,7 @@ void Hoover::setup()
 {
     t = 0;
     sys = new gsl_odeiv2_system {odvod, 0, 2*N, static_cast<void*>(this)};
-    driver = gsl_odeiv2_driver_alloc_y_new(sys, gsl_odeiv2_step_rk4, 1e-2, 1e-5, 0);
+    driver = gsl_odeiv2_driver_alloc_y_new(sys, gsl_odeiv2_step_rk4, h, 1e-4, 0);
     
     gsl_rng* r = gsl_rng_alloc(gsl_rng_default);
     
@@ -142,7 +142,7 @@ void Hoover::setup()
 
 void Hoover::step()
 {
-    gsl_odeiv2_driver_apply(driver, &t, t + 1, y);
+    gsl_odeiv2_driver_apply(driver, &t, t + h, y);
 }
 
 size_t Hoover::size() const
@@ -152,8 +152,8 @@ size_t Hoover::size() const
 
 Maxwell::Maxwell(int N, double T_L, double T_R)
 : Veriga(N)
-, Tsqrt_L(sqrt(T_L / 3))
-, Tsqrt_R(sqrt(T_R / 3))
+, Tsqrt_L(sqrt(T_L))
+, Tsqrt_R(sqrt(T_R))
 {
     rng = gsl_rng_alloc(gsl_rng_default);
 }
@@ -171,7 +171,8 @@ void Maxwell::setup()
     for (int i = 0; i < n; ++i)
     {
         y[i] = 0;
-        y[n+i] = gsl_ran_chisq(rng, 1) * 4; // TODO: Normalization
+        y[n+i] = 0;
+        y[n+i] = gsl_ran_gaussian(rng, Tsqrt_L + Tsqrt_R); // TODO: Normalization
     }
     
     stepNumber = 0;
@@ -189,8 +190,8 @@ void Maxwell::step()
         int n = size();
         for (int j = 0; j < 1; ++j)
         {
-            y[n+j] = gsl_ran_chisq(rng, 1.0) * Tsqrt_L;
-            y[2*n-1-j] = gsl_ran_chisq(rng, 1.0) * Tsqrt_R;
+            y[n+j] = gsl_ran_gaussian(rng, Tsqrt_L);
+            y[2*n-1-j] = gsl_ran_gaussian(rng, Tsqrt_R);
         }
     }
     
