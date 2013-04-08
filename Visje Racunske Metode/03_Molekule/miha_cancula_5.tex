@@ -1,0 +1,42 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{bbold}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+%opening
+\title{Modelekularna dinamika}
+\author{Miha \v Can\v cula}
+
+\newcommand{\uvec}[1]{\ensuremath{\underline{#1}}}
+\newcommand{\bb}{
+  \ensuremath{b_1 b_2 \ldots b_n}
+}
+\newcommand{\psibb}{
+  \ensuremath{\psi_{\bb}}
+}
+
+\begin{document}
+
+\maketitle
+
+\input{g_odv_lambda_30}
+
+\input{g_odv_lambda_100}
+
+\input{g_odv_velikost}
+
+\input{g_prehod}
+
+\end{document}
