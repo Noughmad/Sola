@@ -50,16 +50,16 @@ struct Spini
 	{
 	  r = rand();
 	}
-	s[i][j] = r & ( 1 << t );
+	s[i][j] = (r & ( 1 << t )) ? 1 : -1;
 	t = (t+1) & 31;
 #else
-	s[i][j] = false;
+	s[i][j] = -1;
 #endif
       }
   }
   
   
-  bool s[NS][NS];
+  short s[NS][NS];
   
   inline int sp(int i, int j) const
   {

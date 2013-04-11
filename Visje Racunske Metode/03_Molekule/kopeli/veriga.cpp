@@ -69,7 +69,7 @@ double Veriga::flux(int i)
     }
     else
     {
-        v = Vprime(y[i] - y[i-1]) + Vprime(y[i] - y[i+1]);
+        v = Vprime(y[i] - y[i-1]) - Vprime(y[i] - y[i+1]);
     }
     
     return v * y[n+i];
@@ -124,7 +124,7 @@ void Hoover::setup()
 {
     t = 0;
     sys = new gsl_odeiv2_system {odvod, 0, 2*N, static_cast<void*>(this)};
-    driver = gsl_odeiv2_driver_alloc_y_new(sys, gsl_odeiv2_step_rk4, h, 1e-3, 0);
+    driver = gsl_odeiv2_driver_alloc_y_new(sys, gsl_odeiv2_step_rk4, h, 1e-2, 1e-2);
     
     gsl_rng* r = gsl_rng_alloc(gsl_rng_default);
     

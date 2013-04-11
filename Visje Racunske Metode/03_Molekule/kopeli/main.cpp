@@ -48,17 +48,12 @@ void run_sim(Veriga& h, int InitialSteps, int AverageSteps, int MeasureInterval)
                 T2[j] = T2[j] * d * f + pow(h.y[N+j], 4) * f;
             }
             
-            J[0] = J[0] * d * f + h.flux(0) * f;
-            J2[0] = J2[0] * d * f + sqr(h.y[N] * h.Vprime(h.y[0], 0, h.y[1])) * f;
-            
             #pragma omp parallel for
-            for (int j = 1; j < N-1; ++j)
+            for (int j = 0; j < N; ++j)
             {
-                J[j] = J[j] * d * f + h.y[N+j] * h.Vprime(h.y[j], h.y[j-1], h.y[j+1]) * f;
-                J2[j] = J2[j] * d * f + sqr(h.y[N+j] * h.Vprime(h.y[j], h.y[j-1], h.y[j+1])) * f;
+                J[j] = J[j] * d * f + h.flux(j) * f;
+                J2[j] = J2[j] * d * f + sqr(h.flux(j)) * f;
             }
-            J[N-1] = J[N-1] * d * f + h.y[2*N-1] * h.Vprime(h.y[N-1], h.y[N-2], 0) * f;
-            J2[N-1] = J2[N-1] * d * f + sqr(h.y[2*N-1] * h.Vprime(h.y[N-1], h.y[N-2], 0)) * f;
         }
     }
 
@@ -96,7 +91,7 @@ int main(int argc, char **argv) {
         h.K = 1;
         h.Q = 1;
         h.lambda = lambda;
-        h.invTau = 1e-2;
+        h.invTau = 1;
         h.h = 1e-2;
         run_sim(h, InitialSteps, AverageSteps, MeasureInterval);
     }

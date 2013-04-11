@@ -46,14 +46,134 @@ Najprej sem za modeliranje toplotnih kopeli uporabil Maxwellov algoritem, pri ka
 Preizku"sal sem razli"cne vrednosti za $R$, najbolje pa se je izkazala tak"sna, pri kateri se reset zgodi enkrat vsako "casovno enoto, torej $Rh \sim 1$. 
 Med reseti sem stanje propagiral s simplekti"cnim integratorjem s simetri"cno shemo $S_2$. 
 
-\input{g_odv_lambda_30}
+\begin{figure}[H]
+ \centering
+ \input{g_odv_lambda_30}
+  \caption{Temperaturni profil v odvisnosti od parametra $\lambda$ za sistem s 30 delci}
+\end{figure}
 
-\input{g_odv_lambda_100}
 
-\input{g_odv_velikost}
+"Ze pri srednji velikosti sistema ($N=30$) opazimo odvisnost temperaturne porazdelitve od motnje $\lambda$. 
+Veriga povsem harmoni"cnih oscilatorjev ($\lambda=0$) ima povsod, razen na obeh konceh, povpre"cno temperaturo. 
+Pri $\lambda$ nad 1 temperatura med obema koncema nara"s"ca linearno, brez skokov. 
+Pri vmesnih vrednosti pa opazimo kombinacijo obeh pojavov: na konceh ima temperatura diskretne skoke, vmes pa nara"s"ca linearno. 
 
-\input{g_prehod}
+Zelo podoben pojav opazimo tudi z ve"cjim sistemom, na primer $N=100$ na spodnji sliki. 
+
+
+\begin{figure}[H]
+ \centering
+ \input{g_odv_lambda_100}
+  \caption{Temperaturni profil v odvisnosti od parametra $\lambda$ za sistem s 100 delci}
+\end{figure}
+
+Za oceno termodinamske limite je zanimiva tudi odvisnost od velikosti sistema. 
+Pri konstantnem parametru $\lambda = 0.6$ pri ve"cjem sistemu opazimo vedno manj"se robne skoke. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_odv_velikost}
+\caption{Temperaturni profil pri fiksnem $\lambda = 0.6$ in razli"cnih velikostih sistema}
+\end{figure}
+
+
+Na prej"snjih slikah smo videli, da je temperaturni profil odvisen predvsem od motnje $\lambda$. 
+Opazujemo lahko prehod med stanjem s konstantno temperaturo transportom ($\lambda=1$) in stanjem z linearnim profilom ($\lambda=1$). 
+Z ve"canjem velikosti sistema $N$ postanejo za"cetni skoki pri srednji $\lambda$ vedno manj izraziti, zato domnevam,
+da v limiti $N\to\infty$ nastane oster prehod med konstantnim in linearnim profilom. 
+
+Polo"zaj prehoda sem posku"sal najti tako, da sem opazoval temperaturo v to"cki na 1/5 verige v odvisnosti od $\lambda$ in $N$. 
+Rezultati so na spodnji sliki. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_prehod}
+  \caption{Iskanje faznega prehoda med konstantnim in linearnim profilom}
+\end{figure}
+
+Dokler je $\lambda$ manj"sa od neke kriti"cne vrednosti, ki je nekje okrog $0.01$, temperatura ni odvisna niti od $\lambda$ niti od $N$. 
+Nad to mejo pa temperatura pada z $\lambda$, in to hitreje pri ve"cjih $N$. 
+To se sklada z domnevo, da v termodinamski limiti dobimo oster prehod. 
+Na podlagi mojih izra"cunov mi ni uspelo dolo"citi natan"cnega polo"zaja prehoda, niti ne morem z gotovostjo trditi ali se ta zgodi pri $\lambda=0$ ali pri neki kon"cni vrednosti. 
+
+Pri velikostih sistema $N \leq 200$ je odvisnost od $\lambda$ zvezna. 
+Glede na to, da se z ve"canjem $N$ strmina pove"cuje, bi lahko pri"cakovali, da pri termodinamskem $N$ opazimo oster in nezvezen fazni prehod. 
 
 \section{Nos\'e-Hooverjeve kopeli}
+
+Pri uporabi Nos\'e-Hooverjevih kopeli sem imel te"zave predvsem pri iskanju pravega "casa $\tau$. 
+Pri enakem "stevilu in dol"zini korakov je bil ra"cun z NH kopelmi bolj ob"cutljiv glede na relaksacijski "cas $\tau$ kot Maxwellov glede na interval resetiranja.
+Posku"sal sem z razli"cnimi vrednostmi, najbolj"se rezultate pa sem dobil s $\tau \approx 1$. 
+"Casovni razvoj sem simuliral z integratorjem \texttt{RK4} knji"znice \texttt{GSL}. 
+
+\begin{figure}[H]
+\centering
+\input{g_hoover_lambda_10}
+\caption{Temperaturni profil v odvisnosti od parametra $\lambda$ za sistem z 10 delci in $\tau = 1$}
+\end{figure}
+
+Opazimo podoben vzorec kot z uporabo Maxwellskih kopeli. 
+Razlika je najve"cja pri majhnem $\lambda$, kjer sicer najdemo temperaturni plato, ki pa ima temperaturo ni"zjo od povpre"cja kopeli. 
+Pri dovolj velike $\lambda$ se vzpostavi pri"cakovan linearen profil temperature. 
+
+Rezultati za ve"cjih sistem ($N=50$) so zelo podobni, le da je temperaturni plato pri majhnem $\lambda$ "se hladnej"si. 
+
+\begin{figure}[H]
+\centering
+\input{g_hoover_lambda_50}
+\caption{Temperaturni profil v odvisnosti od parametra $\lambda$ za sistem s 50 delci in $\tau = 1$}
+\end{figure}
+
+Pri pri majhnem $\lambda$ opazimo tudi mo"cno odvisnost od izbire $\tau$. 
+Pri vrednosti $\tau = 3$, na primer, je plato dvignjen, medtem ko je pri $\tau = 1$ spu"s"cen. 
+Glede na te rezultate bi dosti bolj zaupal algoritmu z naklju"cnimi Maxwellskimi kopelmi. 
+
+\section{Toplotni tok}
+
+V vseh primerih sem poleg lokalne temperature ra"cunal tudi toplotni tok. 
+Uporabil sem le Maxwellske kopeli, ker so pri ra"cunanju temperature dale bolj"se rezultate. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_odv_lambda_100_tok}
+  \caption{Toplotni tok v odvisnosti od parametra $\lambda$ za sistem s 100 delci}
+\end{figure}
+
+Pri vseh vrednosti $\lambda$ opazimo konstanten tok po celotni verigi. 
+To je seveda pri"cakovano, saj se v stacionarnem stanju toplota nikjer ne zadr"zuje. 
+Je pa tok skozi sistem mo"cno odvisen od $\lambda$. 
+
+Ker je lokalni tok neodvisen od polo"zaja v verigi, so bolj nazorni grafi odvisnosti povpre"cnega toka od $\lambda$ in od $N$. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_tok_lambda}
+\caption{Odvisnost povpre"cnega toplotnega toka od $\lambda$ pri razli"cnih velikostih sistema}
+\end{figure}
+
+Po pri"cakovanju opazimo upadanje skupnega toka z ve"canjem $\lambda$. 
+Pri nelinearnem sistemu pride do sipanja med fononi, zaradi "cesar je transport manj u"cinkovit. 
+
+Bolj pomembna je verjetno odvisnost toka od velikosti sistema $\overline{J}(N)$, zlasti "ce je ta poten"cna $\overline{J} \propto N^{-p}$. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_tok_N}
+\caption{Odvisnost povpre"cnega toplotnega toka od velikosti sistema pri razli"cnih $\lambda$}
+\end{figure}
+
+Pri $\lambda = 0$ je tok neodvisen od velikosti, torej imamo balisti"cni transport z eksponentom $p=0$. 
+Z ve"canjem $\lambda$ pa za"cne tok padati z $N$, kar nakazuje difuzijski transport. 
+Vrednost eksponenta pa la"zje dolo"cimo z logaritemskim grafom. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_tok_N_log}
+\caption{Odvisnost povpre"cnega toplotnega toka od velikosti sistema pri razli"cnih $\lambda$}
+\end{figure}
+
+Prilagajanje premice da rezultat $p\approx 0.7$ za $\lambda=1$.
+To je "se vedno manj od vrednosti 1 pri normalnem difuzijskem transportu. 
+Pri nadaljnjem pove"cevanju $\lambda$, na primer do 2, pa eksponent $p$ dose"ze pri"cakovano vrednost 1. 
 
 \end{document}
