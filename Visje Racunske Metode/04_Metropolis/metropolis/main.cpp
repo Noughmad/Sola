@@ -4,6 +4,7 @@
 
 #include <cstdlib>
 #include <boost/graph/graph_concepts.hpp>
+#include "oscilator.h"
 
 using namespace std;
 
@@ -121,9 +122,44 @@ void racun(int N, int NMeasure, int NSteps)
     }
 }
 
+void oscilator()
+{
+    Oscilator O;
+    O.lambda = 1;
+    O.beta = 1000;
+    O.epsilon = 1;
+    
+    for (int i = 0; i < 3000; ++i)
+    {
+        int a = O.manySteps(100);
+        if (a > 70)
+        {
+            O.epsilon *= pow(2, (a-70) * 0.01);
+        }
+        else if (a < 30)
+        {
+            O.epsilon *= pow(2, (a-30) * 0.01);
+        }
+        cout << O.mPath << endl;
+        cout << "Adjusting epsilon to " << O.epsilon << endl;
+    }
+    
+    for (int i = 0; i < 3000; ++i)
+    {
+        O.manySteps(1000);
+        O.measure();
+    }
+    
+    cout << O.beta << ", " << O.E.average() << ", " << O.E.variance() << endl;
+    
+    cout << O.mPath << endl;
+};
+
 int main(int argc, char **argv) {
     
-    racun(128, 10000, 10000);
+    // racun(128, 10000, 10000);
+    oscilator();
+    
     
     return 0;
 }
