@@ -33,7 +33,7 @@ Oscilator::Oscilator()
     
     for (int j = 0; j < M; ++j)
     {
-        mPath[j] = 0;
+        mPath[j] = gsl_ran_gaussian(rng, 1);
     }
 }
 
@@ -51,9 +51,9 @@ bool Oscilator::step()
     State oldState = mPath[i];
     State newState = oldState + randomState();
     
-    double dE = energy(mPath[prev], newState) + energy(newState, mPath[next]) - energy(mPath[prev], oldState) - energy(oldState, mPath[next]);
+    double dE = logMatrixElement(mPath[prev], newState) + logMatrixElement(newState, mPath[next]) - logMatrixElement(mPath[prev], oldState) - logMatrixElement(oldState, mPath[next]);
      
-    if (dE <= 0 || gsl_rng_uniform(rng) < exp(-dE))
+    if (dE <= 0 || gsl_rng_uniform(rng) < exp(- M * dE))
     {
         mPath[i] = newState;
         return true;
@@ -88,6 +88,11 @@ double Oscilator::energy()
 
 double Oscilator::energy(Oscilator::State one, Oscilator::State two)
 {
+    return M * 0.5 / beta / beta * (one - two) * (one - two) + 1.0 / M * potential(one);
+}
+
+double Oscilator::logMatrixElement(Oscilator::State one, Oscilator::State two)
+{
     return  M * 0.5 / beta * (one - two) * (one - two) + beta / M * potential(one);
 }
     
@@ -104,7 +109,7 @@ double Oscilator::potential(State state)
 void Oscilator::measure()
 {
     
-    E.insertValue(0, energy() / beta);
+    E.insertValue(0, energy());
     
     double x = 0;
     for (int j = 0; j < M; ++j)

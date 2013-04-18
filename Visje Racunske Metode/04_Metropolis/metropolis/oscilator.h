@@ -26,7 +26,7 @@
 
 class Oscilator
 {
-    static const int M = 500;
+    static const int M = 50;
     
     typedef ::Observable<int, double, double> Observable;
     typedef double State;
@@ -38,7 +38,7 @@ public:
     
     double energy(State one, State two);
     double energy();
-    double matrixElement(State one, State two);
+    double logMatrixElement(State one, State two);
     
     double lambda;
     double beta;

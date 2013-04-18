@@ -128,7 +128,7 @@ void oscilator(double beta, double lambda, int InitialSteps, int AverageSteps, s
     Oscilator O;
     O.lambda = lambda;
     O.beta = beta;
-    O.epsilon = 1;
+    O.epsilon = 0.1;
         
     for (int i = 0; i < InitialSteps; ++i)
     {
@@ -151,13 +151,16 @@ int main(int argc, char **argv) {
     ofstream out_1("g_energija_1.dat");
     ofstream out_3("g_energija_3.dat");
     
+    const int I = 10000;
+    const int A = 1000;
+    
     const double F = sqrt(10);
     for (double beta = 1e-5; beta < 1e4; beta *= F)
     {
-        oscilator(beta, 0, 10000, 1000, out_0);
-        oscilator(beta, 0.3, 10000, 1000, out_03);
-        oscilator(beta, 100, 10000, 1000, out_1);
-        oscilator(beta, 3, 10000, 1000, out_3);
+        oscilator(beta, 0, I, A, out_0);
+        oscilator(beta, 0.3, I, A, out_03);
+        oscilator(beta, 1, I, A, out_1);
+        oscilator(beta, 3, I, A, out_3);
     }
     
     out_0.close();
