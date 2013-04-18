@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include <NUtils/observable.h>
 
@@ -122,44 +123,47 @@ void racun(int N, int NMeasure, int NSteps)
     }
 }
 
-void oscilator()
+void oscilator(double beta, double lambda, int InitialSteps, int AverageSteps, std::ostream& stream)
 {
     Oscilator O;
-    O.lambda = 1;
-    O.beta = 1000;
+    O.lambda = lambda;
+    O.beta = beta;
     O.epsilon = 1;
-    
-    for (int i = 0; i < 3000; ++i)
+        
+    for (int i = 0; i < InitialSteps; ++i)
     {
         int a = O.manySteps(100);
-        if (a > 70)
-        {
-            O.epsilon *= pow(2, (a-70) * 0.01);
-        }
-        else if (a < 30)
-        {
-            O.epsilon *= pow(2, (a-30) * 0.01);
-        }
-        cout << O.mPath << endl;
-        cout << "Adjusting epsilon to " << O.epsilon << endl;
     }
     
-    for (int i = 0; i < 3000; ++i)
-    {
+    for (int i = 0; i < AverageSteps; ++i)
+    {        
         O.manySteps(1000);
         O.measure();
     }
     
-    cout << O.beta << ", " << O.E.average() << ", " << O.E.variance() << endl;
-    
-    cout << O.mPath << endl;
+    stream << O.beta << ", " << O.lambda << ", " << O.epsilon << ", " << O.E.average() << ", " << sqrt(O.E.variance()) << ", " << O.X.average() << ", " << sqrt(O.X.variance()) << endl;
 };
 
 int main(int argc, char **argv) {
     
-    // racun(128, 10000, 10000);
-    oscilator();
+    ofstream out_0("g_energija_0.dat");
+    ofstream out_03("g_energija_0.3.dat");
+    ofstream out_1("g_energija_1.dat");
+    ofstream out_3("g_energija_3.dat");
     
+    const double F = sqrt(10);
+    for (double beta = 1e-5; beta < 1e4; beta *= F)
+    {
+        oscilator(beta, 0, 10000, 1000, out_0);
+        oscilator(beta, 0.3, 10000, 1000, out_03);
+        oscilator(beta, 100, 10000, 1000, out_1);
+        oscilator(beta, 3, 10000, 1000, out_3);
+    }
+    
+    out_0.close();
+    out_03.close();
+    out_1.close();
+    out_3.close();
     
     return 0;
 }

@@ -26,7 +26,7 @@
 
 class Oscilator
 {
-    static const int M = 50;
+    static const int M = 500;
     
     typedef ::Observable<int, double, double> Observable;
     typedef double State;
@@ -37,6 +37,7 @@ public:
     virtual ~Oscilator();
     
     double energy(State one, State two);
+    double energy();
     double matrixElement(State one, State two);
     
     double lambda;
@@ -44,6 +45,7 @@ public:
     double epsilon;
 
     Observable E;
+    Observable X;
     Path mPath;
     
     void setRandomPath();

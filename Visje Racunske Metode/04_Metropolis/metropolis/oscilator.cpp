@@ -42,14 +42,6 @@ Oscilator::~Oscilator()
     gsl_rng_free(rng);
 }
 
-void Oscilator::setRandomPath()
-{
-    for (int i = 0; i < M; ++i)
-    {
-        mPath[i] = randomState();
-    }
-}
-
 bool Oscilator::step()
 {
     int i = rand() % M;
@@ -57,11 +49,11 @@ bool Oscilator::step()
     int next = (i+1) % M;
 
     State oldState = mPath[i];
-    State newState = oldState + epsilon * randomState();
+    State newState = oldState + randomState();
     
-    double dE = energy(mPath[prev], newState) + energy(newState, mPath[next]) - energy(mPath[prev], oldState) - energy(mPath[prev], oldState);
+    double dE = energy(mPath[prev], newState) + energy(newState, mPath[next]) - energy(mPath[prev], oldState) - energy(oldState, mPath[next]);
      
-    if (dE <= 0 || (double)rand() / RAND_MAX < exp(-beta * dE))
+    if (dE <= 0 || gsl_rng_uniform(rng) < exp(-dE))
     {
         mPath[i] = newState;
         return true;
@@ -80,25 +72,28 @@ int Oscilator::manySteps(int steps)
         }
     }
     
-    cout << "Steps accepted: " << accepted << " out of " << steps << endl;
     return accepted;
 }
 
+double Oscilator::energy()
+{
+    double e = 0;
+    for (int j = 0; j < M; ++j)
+    {
+        int next = (j+1) % M;
+        e += energy(mPath[j], mPath[next]);
+    }
+    return e;
+}
 
 double Oscilator::energy(Oscilator::State one, Oscilator::State two)
 {
-    return + M / 2.0 / beta / beta * (one - two) * (one - two) + 1.0 / M * potential(one);
-}
-
-
-double Oscilator::matrixElement(Oscilator::State one, Oscilator::State two)
-{
-    return exp(-beta * energy(one, two));
+    return  M * 0.5 / beta * (one - two) * (one - two) + beta / M * potential(one);
 }
     
 Oscilator::State Oscilator::randomState()
 {
-    return gsl_ran_gaussian(rng, 1);
+    return gsl_ran_gaussian(rng, epsilon);
 }
 
 double Oscilator::potential(State state)
@@ -108,12 +103,14 @@ double Oscilator::potential(State state)
 
 void Oscilator::measure()
 {
-    double e = M / 2 / beta;
+    
+    E.insertValue(0, energy() / beta);
+    
+    double x = 0;
     for (int j = 0; j < M; ++j)
     {
-        int next = (j+1) % M;
-        e += energy(mPath[j], mPath[next]);
+        x += pow(mPath[j], 2);
     }
-    E.insertValue(0, e);
+    X.insertValue(0, x / M);
 }
 
