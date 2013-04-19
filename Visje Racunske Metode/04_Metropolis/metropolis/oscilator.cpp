@@ -33,7 +33,7 @@ Oscilator::Oscilator()
     
     for (int j = 0; j < M; ++j)
     {
-        mPath[j] = gsl_ran_gaussian(rng, 1);
+        mPath[j] = gsl_ran_gaussian(rng, 2);
     }
 }
 
@@ -44,21 +44,83 @@ Oscilator::~Oscilator()
 
 bool Oscilator::step()
 {
-    int i = rand() % M;
-    int prev = (i+M-1) % M;
-    int next = (i+1) % M;
-
-    State oldState = mPath[i];
-    State newState = oldState + randomState();
-    
-    double dE = logMatrixElement(mPath[prev], newState) + logMatrixElement(newState, mPath[next]) - logMatrixElement(mPath[prev], oldState) - logMatrixElement(oldState, mPath[next]);
-     
-    if (dE <= 0 || gsl_rng_uniform(rng) < exp(- M * dE))
+    int r = rand() % 10;
+    if (r == 0)
     {
-        mPath[i] = newState;
-        return true;
+        // Move ALL the points
+        
+        Path oldPath = mPath;
+        double oldEnergy = energy();
+        
+        double delta = randomState();
+        for (int j = 0; j < M; ++j)
+        {
+            mPath[j] += delta;
+        }
+        
+        double dE = energy() - oldEnergy;
+        if (dE <= 0 || gsl_rng_uniform(rng) < exp(-dE))
+        {
+            return true;
+        }
+        else
+        {
+            mPath = oldPath;
+            return false;
+        }
     }
-    return false;
+    else if (r == 1)
+    {
+        // Move some points
+        
+        Path oldPath = mPath;
+        double oldEnergy = energy();
+        
+        int start = rand() % M;
+        int end = rand() % M;
+        
+        if (end <= start)
+        {
+            end += M;
+        }
+            
+        
+        double delta = randomState();
+        for (int j = start; j < end; ++j)
+        {
+            mPath[j % M] += delta;
+        }
+        
+        double dE = energy() - oldEnergy;
+        if (dE <= 0 || gsl_rng_uniform(rng) < exp(-dE))
+        {
+            return true;
+        }
+        else
+        {
+            mPath = oldPath;
+            return false;
+        }
+    }
+    else 
+    {
+        // Move just one point
+        int i = rand() % M;
+        int prev = (i+M-1) % M;
+        int next = (i+1) % M;
+
+        State oldState = mPath[i];
+        State newState = oldState + randomState();
+        
+        double dE = logMatrixElement(mPath[prev], newState) + logMatrixElement(newState, mPath[next]) - logMatrixElement(mPath[prev], oldState) - logMatrixElement(oldState, mPath[next]);
+        
+        if (dE <= 0 || gsl_rng_uniform(rng) < exp(-dE))
+        {
+            mPath[i] = newState;
+            return true;
+        }
+        return false;
+    }
 }
 
 int Oscilator::manySteps(int steps)

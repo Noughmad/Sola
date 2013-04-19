@@ -128,11 +128,14 @@ void oscilator(double beta, double lambda, int InitialSteps, int AverageSteps, s
     Oscilator O;
     O.lambda = lambda;
     O.beta = beta;
-    O.epsilon = 0.1;
+    O.epsilon = min(0.1, beta);
+    
+    cout << endl;
+    cout << "Starting with beta = " << beta << endl;
         
     for (int i = 0; i < InitialSteps; ++i)
     {
-        int a = O.manySteps(100);
+        int a = O.manySteps(1000);
     }
     
     for (int i = 0; i < AverageSteps; ++i)
@@ -152,11 +155,15 @@ int main(int argc, char **argv) {
     ofstream out_3("g_energija_3.dat");
     
     const int I = 10000;
-    const int A = 1000;
+    const int A = 10000;
     
     const double F = sqrt(10);
-    for (double beta = 1e-5; beta < 1e4; beta *= F)
+    
+#pragma omp parallel for
+    for (int blog = -10; blog < 8; ++blog)
     {
+        double beta = pow(F, blog);
+        
         oscilator(beta, 0, I, A, out_0);
         oscilator(beta, 0.3, I, A, out_03);
         oscilator(beta, 1, I, A, out_1);

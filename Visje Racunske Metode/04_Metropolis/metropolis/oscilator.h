@@ -26,7 +26,7 @@
 
 class Oscilator
 {
-    static const int M = 50;
+    static const int M = 500;
     
     typedef ::Observable<int, double, double> Observable;
     typedef double State;
