@@ -23,6 +23,12 @@
 #include <NUtils/observable.h>
 #include <NUtils/vector.h>
 #include <gsl/gsl_rng.h>
+#include <stdlib.h>
+#include <gsl/gsl_randist.h>
+#include <iostream>
+
+
+using namespace std;
 
 template <int M>
 class Oscilator
@@ -52,7 +58,14 @@ public:
     Observable PotE;
     Path mPath;
     
-    void setRandomPath();
+    void setRandomPath()
+    {
+        for(int j = 0; j < M; ++j)
+        {
+            j = gsl_ran_gaussian(rng, epsilon);
+        }
+    }
+    
     bool step();
     int manySteps(int steps);
     void measure();
@@ -62,13 +75,6 @@ public:
     
     gsl_rng* rng;
 };
-
-
-#include <stdlib.h>
-#include <gsl/gsl_randist.h>
-#include <iostream>
-
-using namespace std;
 
 template <int M>
 Oscilator<M>::Oscilator()

@@ -45,25 +45,78 @@ V termodinamskih sistemih v bli"zini faznega prehoda specifi"cna toplota in susc
  \input{g_plot_ising_cv}
 \end{figure}
 
+Toplotna kapaciteta sistema je sorazmerna z varianco energije, $C_v \propto \langle E^2 \rangle - \langle E \rangle^2$. 
+"Ce izraz delimo s "stevilom delcev, torej $N^2$, dobimo do konstante natan"cno specifi"cno toploto, ki je prikazana na zgornji sliki. 
+Opazimo, da polo"zaj in ostrina vrha nista odvisna od $N$. 
+
 \begin{figure}[H]
  \centering
  \input{g_plot_ising_chi}
 \end{figure}
 
-\section{Kvantni harmoni"cni oscilator}
+Susceptibilnost sistema v odsotnosti zunanjega polja se s spreminjanjem $N$ obna"sa bolj nepredvidljivo. 
+Namesto vrha s poten"cnim padanjem na obe strani opazimo hiter skok v bli"zini $\beta_c$. 
+Dodatno opazimo precej"snje razlike v obna"sanju pri razli"cnih velikostih sistema. 
+Pri $N=256$ se pojavita celo dva vrha. 
+Pri zmanj"sanju "stevila korakov enak pojav vidimo tudi pri manj"sih $N$, tako da je to le posledica dejstva, da sistem "se ni v ravnovesju. 
+
+Za gornja grafa sem naredil po 1000 meritev vsake spremenjivke, med zaporednimi meritvami pa sem izvedel 10000 korakov Metropolisovega algoritma. 
+Najve"cji sistem je imel $256 \time 256 \approx 65000$ spinov, zato posamezne meritve niso ve"c korelirane, sistem pa tudi ne dose"ze ravnovesja. 
+
+\section{Kvantni harmonski oscilator}
+
+Simuliral sem tudi kvantni harmonskni oscilator. 
+Harmonski oscilator ima le eno prostostno stopnjo, to je polo"zaj $q$. 
+Ker pa operatorja kineti"cne in potencialne energije ne komutirata, sem izraz $e^{-\beta H}$ razcepil na produkt $M$ "clenov
+
+\begin{align}
+ e^{-\beta H} &= \left[e^{-\frac{\beta}{M}H}\right]^M = \exp\left(-{\frac{\beta}{M}V}\right) \exp\left(-{\frac{\beta}{M}T}\right) \exp\left(-{\frac{\beta}{M}V}\right) \exp\left(-{\frac{\beta}{M}T}\right) \cdots \\
+ Z &= \sum_{q} \left\langle q \left|\exp\left(-{\frac{\beta}{M}V}\right) \exp\left(-{\frac{\beta}{M}T}\right) \exp\left(-{\frac{\beta}{M}V}\right) \exp\left(-{\frac{\beta}{M}T}\right) \cdots \right| q \right\rangle \\
+ &= \sum_{q_1, q_2, \ldots} \left\langle q_1 \left|\exp\left(-{\frac{\beta}{M}V}\right) \right|q_1\right\rangle \left\langle q_1 \left| \exp\left(-{\frac{\beta}{M}T}\right) \right|q_2\right\rangle \cdots
+\end{align}
+
+
+Metropolisov algoritem je podoben kot v klasi"cnem primeru.
+Trenutno stanje namesto mre"ze spinov predstavlja $M$ skalarjev $q_j$, "clen fazne vsote pa je enak
+
+\begin{align}
+ \exp\left(-\beta E(q_1, q_2, \ldots, q_M)\right) &= \exp(-\sum_{j=1}^M \left( \frac{M}{2\beta} (q_{j+1} - q_j)^2 + \frac{\beta}{M} V(q_j) \right)
+\end{align}
+
+Poteza je bila sprememba enega izmed $q_j$, $q_j \to q_j + \varepsilon \xi$, kjer je $\xi$ normalno Gaussovo porazdeljeno "stevilo. 
+Parameter $\varepsilon$, ki dolo"ca povpre"cno velikost poteze, sem dinami"cno spreminjal v odvisnosti od $\beta$ in $M$, da je bil dele"z sprejetih potez vedno blizu 1/2. 
+
+S pomo"cjo Metropolisovega vzor"cenja sem opazoval odvisnost povpre"cne energije $\langle H \rangle$ od inverzne temperature $\beta$. 
+Rezultati so na spodnjem grafu. 
 
 \begin{figure}[H]
  \centering
  \input{g_plot_energy}
 \end{figure}
 
+Po pri"cakovanju povpre"cna energija pada z inverzno temperaturo, v limiti $\beta \to \infty$ pa se ustali pri kon"cni vrednosti. 
+Ta vrednost je mo"cno odvisna od vrednosti parametra $\lambda$, torej od oblike potenciala. Odvisna je tudi od izbire "stevila segmentov $M$. 
+"Ce je izbrani $M$ premajhen, potem Trotter-Suzukijev razcep ni ve"c dober pribli"zek za $e^{-\beta H}$, saj $\Delta\beta = \beta/M$ ni ve"c majhnen parameter. 
+Po drugi strani pa prevelik $M$ pomeni, da potrebujemo veliko "stevilo korakov, da sistem pride v ravnovesje. 
+Kon"cna limitna vrednost energije pri $\beta \to \infty$ je lahko posledica enega izmed teh dveh te"zav. 
+
+Pri majhni $\beta$ oz. visoki temperaturi opazimo "se en nenavaden pojav: skupna energija je negativna. 
+Na logaritemskem grafu je to vidno le kot manjkajo"ce to"cke, ki so bolje vidne, "ce graf primerjamo z naslednjim. 
+Harmonski potencial $V=\frac{1}{2}q^2$ je vedno pozitiven, negativen je lahko le kineti"cni del energije
+
+$$\langle H_k \rangle = \left\langle \frac{M}{2\beta} - \frac{M}{2\beta} \sum_{j=1}^{M}(q_{j+1} - q_j)^2 \right\rangle$$
+
+Ta "clen je negativen, "ce se zaporedni
+
+Za primerjavo sem dodatno opazoval samo potencialni del energije, torej $\langle V \rangle$. 
+Ta je diagonalen v $q$, zato je dovolj, da opazujemo le povpre"cje $V(q_1)$ po Metropolisovi porazdelitvi. 
+Rezultati so na spodnjem grafu. 
+
 \begin{figure}[H]
  \centering
  \input{g_plot_pot}
 \end{figure}
 
-
-
-
+Odvisnosti so precej podobna kot na prej"snji sliki, torej zlasti pri velikem $\beta$ k energiji prispeva predvsem potencialni "clen. 
 
 \end{document}

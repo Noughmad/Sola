@@ -130,13 +130,14 @@ void oscilatorImpl(double beta, double lambda, int InitialSteps, int AverageStep
     O.lambda = lambda;
     O.beta = beta;
     O.epsilon = min(1.0, sqrt(beta));
+    O.setRandomPath();
     
     cout << endl;
     cout << "Starting with beta = " << beta << endl;
         
     for (int i = 0; i < InitialSteps; ++i)
     {
-        int a = O.manySteps(10000);
+        int a = O.manySteps(1000);
     }
   
  
@@ -157,29 +158,28 @@ void oscilator(double beta, double lambda, int InitialSteps, int AverageSteps, s
 {
     if (beta < 1)
     {
-        oscilatorImpl<200>(beta, lambda, InitialSteps, AverageSteps, stream);
+        oscilatorImpl<20>(beta, lambda, InitialSteps, AverageSteps, stream);
     }
     else if (beta < 100)
     {
-        oscilatorImpl<200>(beta, lambda, InitialSteps, AverageSteps, stream);
+        oscilatorImpl<20>(beta, lambda, InitialSteps, AverageSteps, stream);
     }
     else
     {
-        oscilatorImpl<200>(beta, lambda, InitialSteps, AverageSteps, stream);
+        oscilatorImpl<20>(beta, lambda, InitialSteps, AverageSteps, stream);
     }
 }
 
 int main(int argc, char **argv)
 {
     
-    /*
     ofstream out_0("g_energija_0.dat");
     ofstream out_03("g_energija_0.3.dat");
     ofstream out_1("g_energija_1.dat");
     ofstream out_3("g_energija_3.dat");
     
-    const int I = 10000;
-    const int A = 10000;
+    const int I = 1000;
+    const int A = 1000;
     
     const double F = sqrt(10);
     
@@ -199,9 +199,8 @@ int main(int argc, char **argv)
     out_1.close();
     out_3.close();
     
-    */
     
-    racun(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
+    // racun(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
     
     return 0;
 }
