@@ -82,8 +82,8 @@ void Ising::measure()
         }
     }
     
-    E.insertValue(0, e / 2); // Because we counted every bond twice
-    M.insertValue(0, m);
+    E.insertValue(0, e / 2 / N / N); // Because we counted every bond twice
+    M.insertValue(0, m / N / N);
 }
 
 void Ising::step()
@@ -123,32 +123,56 @@ void racun(int N, int NMeasure, int NSteps)
     }
 }
 
-void oscilator(double beta, double lambda, int InitialSteps, int AverageSteps, std::ostream& stream)
+template <int M>
+void oscilatorImpl(double beta, double lambda, int InitialSteps, int AverageSteps, std::ostream& stream)
 {
-    Oscilator O;
+    Oscilator<M> O;
     O.lambda = lambda;
     O.beta = beta;
-    O.epsilon = min(0.1, beta);
+    O.epsilon = min(1.0, sqrt(beta));
     
     cout << endl;
     cout << "Starting with beta = " << beta << endl;
         
     for (int i = 0; i < InitialSteps; ++i)
     {
-        int a = O.manySteps(1000);
+        int a = O.manySteps(10000);
     }
-    
+  
+ 
     for (int i = 0; i < AverageSteps; ++i)
     {        
         O.manySteps(1000);
         O.measure();
     }
     
-    stream << O.beta << ", " << O.lambda << ", " << O.epsilon << ", " << O.E.average() << ", " << sqrt(O.E.variance()) << ", " << O.X.average() << ", " << sqrt(O.X.variance()) << endl;
-};
+    stream << O.beta << ", " << O.lambda << ", " << O.epsilon << ", " 
+        << O.E.average() << ", " << sqrt(O.E.variance()) << ", " 
+        << O.PotE.average() << ", " << sqrt(O.PotE.variance()) << ", " 
+        << O.X.average() << ", " << sqrt(O.X.variance()) << endl;
+}
 
-int main(int argc, char **argv) {
+
+void oscilator(double beta, double lambda, int InitialSteps, int AverageSteps, std::ostream& stream)
+{
+    if (beta < 1)
+    {
+        oscilatorImpl<200>(beta, lambda, InitialSteps, AverageSteps, stream);
+    }
+    else if (beta < 100)
+    {
+        oscilatorImpl<200>(beta, lambda, InitialSteps, AverageSteps, stream);
+    }
+    else
+    {
+        oscilatorImpl<200>(beta, lambda, InitialSteps, AverageSteps, stream);
+    }
+}
+
+int main(int argc, char **argv)
+{
     
+    /*
     ofstream out_0("g_energija_0.dat");
     ofstream out_03("g_energija_0.3.dat");
     ofstream out_1("g_energija_1.dat");
@@ -160,7 +184,7 @@ int main(int argc, char **argv) {
     const double F = sqrt(10);
     
 #pragma omp parallel for
-    for (int blog = -10; blog < 8; ++blog)
+    for (int blog = -8; blog < 8; ++blog)
     {
         double beta = pow(F, blog);
         
@@ -174,6 +198,10 @@ int main(int argc, char **argv) {
     out_03.close();
     out_1.close();
     out_3.close();
+    
+    */
+    
+    racun(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
     
     return 0;
 }

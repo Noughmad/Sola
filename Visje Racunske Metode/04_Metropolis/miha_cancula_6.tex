@@ -1,0 +1,69 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{bbold}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+%opening
+\title{Klasi\v cni in kvantni Monte Carlo}
+\author{Miha \v Can\v cula}
+
+\newcommand{\uvec}[1]{\ensuremath{\underline{#1}}}
+\newcommand{\bb}{
+  \ensuremath{b_1 b_2 \ldots b_n}
+}
+\newcommand{\psibb}{
+  \ensuremath{\psi_{\bb}}
+}
+
+\begin{document}
+
+\maketitle
+
+\section{Isingov model}
+
+Metropolisov algoritem sem uporabil na 2D Isingovem modelu. 
+Uporabil sem enostavno implementacijo, kjer ob vsaki potezi naklju"cno izberem en delec in mu z dolo"ceno verjetnostjo obrnem spin. 
+Kot za"cetni pogoj sem vsakih uporabil povsem naklju"cno mre"zo. 
+
+Kriti"cno temperaturo sem ocenil s pomo"cjo sprotnega merjenja energije, magnetizacije, specifi"cne toplote in magnetne susceptibilnosti. 
+V termodinamskih sistemih v bli"zini faznega prehoda specifi"cna toplota in susceptibilnost divergirata, zaradi prostorske omejitve ra"cunskega modela pa imata pri prehodu le vrhove. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_plot_ising_cv}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \input{g_plot_ising_chi}
+\end{figure}
+
+\section{Kvantni harmoni"cni oscilator}
+
+\begin{figure}[H]
+ \centering
+ \input{g_plot_energy}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \input{g_plot_pot}
+\end{figure}
+
+
+
+
+
+\end{document}
