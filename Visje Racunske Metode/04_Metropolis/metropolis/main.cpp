@@ -158,15 +158,15 @@ void oscilator(double beta, double lambda, int InitialSteps, int AverageSteps, s
 {
     if (beta < 1)
     {
-        oscilatorImpl<20>(beta, lambda, InitialSteps, AverageSteps, stream);
+        oscilatorImpl<5>(beta, lambda, InitialSteps, AverageSteps, stream);
     }
     else if (beta < 100)
     {
-        oscilatorImpl<20>(beta, lambda, InitialSteps, AverageSteps, stream);
+        oscilatorImpl<5>(beta, lambda, InitialSteps, AverageSteps, stream);
     }
     else
     {
-        oscilatorImpl<20>(beta, lambda, InitialSteps, AverageSteps, stream);
+        oscilatorImpl<5>(beta, lambda, InitialSteps, AverageSteps, stream);
     }
 }
 
@@ -187,6 +187,8 @@ int main(int argc, char **argv)
     for (int blog = -8; blog < 8; ++blog)
     {
         double beta = pow(F, blog);
+        
+        cout << "Beta = " << beta << endl;
         
         oscilator(beta, 0, I, A, out_0);
         oscilator(beta, 0.3, I, A, out_03);

@@ -16,14 +16,13 @@ plot for [N in "32 64 128 256"] sprintf("g_ising_%s.dat",N) u 1:5 t sprintf("$N 
 
 
 set logscale xy
-set style data points
 
 set ylabel "$\\langle H \\rangle$"
 
 set output "g_plot_energy.tex"
-plot for [l in "0 0.3 1 3"] sprintf("M_20/g_energija_%s.dat",l) u 1:4 t sprintf("$\\lambda = %s$", l)
+plot[0.001:] for [l in "0 0.3 1 3"] sprintf("< sort -g M_20/g_energija_%s.dat",l) u 1:4 t sprintf("$\\lambda = %s$", l)
 
 set ylabel "$\\langle V \\rangle$"
 
 set output "g_plot_pot.tex"
-plot for [l in "0 0.3 1 3"] sprintf("M_20/g_energija_%s.dat",l) u 1:6 t sprintf("$\\lambda = %s$", l)
+plot[0.001:] for [l in "0 0.3 1 3"] sprintf("< sort -g M_20/g_energija_%s.dat",l) u 1:6 t sprintf("$\\lambda = %s$", l)

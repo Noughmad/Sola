@@ -86,6 +86,9 @@ Trenutno stanje namesto mre"ze spinov predstavlja $M$ skalarjev $q_j$, "clen faz
 Poteza je bila sprememba enega izmed $q_j$, $q_j \to q_j + \varepsilon \xi$, kjer je $\xi$ normalno Gaussovo porazdeljeno "stevilo. 
 Parameter $\varepsilon$, ki dolo"ca povpre"cno velikost poteze, sem dinami"cno spreminjal v odvisnosti od $\beta$ in $M$, da je bil dele"z sprejetih potez vedno blizu 1/2. 
 
+Algoritem se ne spremeni, "ce uporabimo druga"cen potencial, ki je "se vedno diagonalen v bazi $|q\rangle$. 
+Zato sem isti ra"cun ponovil "se z anharmonskim oscilatorjem, $V(q) = \frac{1}{2}q^2 + \lambda q^4$, za nekaj razli"cnih vrednosti $\lambda$. 
+
 S pomo"cjo Metropolisovega vzor"cenja sem opazoval odvisnost povpre"cne energije $\langle H \rangle$ od inverzne temperature $\beta$. 
 Rezultati so na spodnjem grafu. 
 
@@ -106,9 +109,15 @@ Harmonski potencial $V=\frac{1}{2}q^2$ je vedno pozitiven, negativen je lahko le
 
 $$\langle H_k \rangle = \left\langle \frac{M}{2\beta} - \frac{M}{2\beta} \sum_{j=1}^{M}(q_{j+1} - q_j)^2 \right\rangle$$
 
-Ta "clen je negativen, "ce se zaporedni
+Ta "clen je negativen, "ce se zaporedni $q_j$ preve"c razlikujejo med seboj. 
+Za zgornji grafu sem uporabil $M=20$, ampak oba nepri"cakovana pojava, tako negativno energijo kot kon"cno limitno vrednost, opazimo pri vseh izbirah $M$ med 5 in 500. 
 
-Za primerjavo sem dodatno opazoval samo potencialni del energije, torej $\langle V \rangle$. 
+Izbira parametra $\varepsilon$ in za"cetnega pogoja (vsi $q_j = 0$, ali pa naklju"cne vrednosti) na odvisnost le malo vplivata. 
+Da sprejmemo pribli"zno polovico potez, je dobra izbira $\varepsilon \approx \sqrt{\beta}$, pri ve"cjih $\beta$ pa deluje pa tudi konstanten $\varepsilon \approx 1$. 
+"Ce izberemo $\varepsilon$, ki so mo"cno razlikuje od zgornjih ocen, sistem ne dose"ze ravnovesja. 
+Z dosti manj"sim $\varepsilon$ sem dobil rezultate, kjer povpre"cna energija ne nara"s"ca s temperaturo, kar ni fizikalno. 
+
+Za primerjavo sem posebej ra"cunal samo potencialni del energije, torej $\langle V \rangle$. 
 Ta je diagonalen v $q$, zato je dovolj, da opazujemo le povpre"cje $V(q_1)$ po Metropolisovi porazdelitvi. 
 Rezultati so na spodnjem grafu. 
 

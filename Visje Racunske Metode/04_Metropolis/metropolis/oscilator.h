@@ -62,7 +62,8 @@ public:
     {
         for(int j = 0; j < M; ++j)
         {
-            j = gsl_ran_gaussian(rng, epsilon);
+            // mPath[j] = gsl_ran_gaussian(rng, epsilon);
+            mPath[j] = 0;
         }
     }
     
