@@ -33,7 +33,13 @@
 
 \section{Isingov model}
 
-Metropolisov algoritem sem uporabil na 2D Isingovem modelu. 
+Metropolisov algoritem sem uporabil na 2D Isingovem modelu brez zunanjega polja
+
+\begin{align}
+ H &= -\sum_{\langle r, r' \rangle} \sigma_r \sigma_{r'} 
+\end{align}
+
+
 Uporabil sem enostavno implementacijo, kjer ob vsaki potezi naklju"cno izberem en delec in mu z dolo"ceno verjetnostjo obrnem spin. 
 Kot za"cetni pogoj sem vsakih uporabil povsem naklju"cno mre"zo. 
 
@@ -45,9 +51,19 @@ V termodinamskih sistemih v bli"zini faznega prehoda specifi"cna toplota in susc
  \input{g_plot_ising_cv}
 \end{figure}
 
-Toplotna kapaciteta sistema je sorazmerna z varianco energije, $C_v \propto \langle E^2 \rangle - \langle E \rangle^2$. 
-"Ce izraz delimo s "stevilom delcev, torej $N^2$, dobimo do konstante natan"cno specifi"cno toploto, ki je prikazana na zgornji sliki. 
-Opazimo, da polo"zaj in ostrina vrha nista odvisna od $N$. 
+Toplotna kapaciteta sistema je sorazmerna z varianco energije, $C_v = \beta^2 ( \langle E^2 \rangle - \langle E \rangle^2)$. 
+"Ce izraz delimo s "stevilom delcev, torej $N^2$, dobimo specifi"cno toploto, ki je prikazana na zgornji sliki. 
+Opazimo, da polo"zaj in ostrina vrha nista odvisna od $N$, vsaj pri dovolj majhnih $N$, kjer "se dose"zemo termalizacijo. 
+
+Z grafa lahko od"citamo temperaturo prehoda oz. $\beta_c$ kot najvi"sjo to"cko krivulje. 
+Tudi pri velikem $N$ vrh ni oster, zato lahko maksimum le ocenimo na $\beta_c \approx 0.5$. 
+Prava vrednosti je $\beta_c = \frac{1}{2} \log(1 + \sqrt{2}) \approx 0.44$, kar je precej blizu rezultatom simulacije. 
+
+Vidne so tudi mo"cne oscilacije specifi"cne toplote pri velikih $\beta$. 
+Pri manj"sem "stevilu korakov so oscilacije mo"cnej"se, zato domnevam, da se sistem tam "se ni termaliziral. 
+Zaradi nizke temperature zelo te"zko pride iz lokalnih minimumov energije. 
+Pri ve"cjem $N$, kjer za termalizacijo potrebujemo ustrezno ve"cje "stevilko korakov, so oscilacije izrazitej"se, 
+vseeno pa razlo"cimo vrh pri $\beta \approx 0.5$. 
 
 \begin{figure}[H]
  \centering
@@ -61,7 +77,8 @@ Pri $N=256$ se pojavita celo dva vrha.
 Pri zmanj"sanju "stevila korakov enak pojav vidimo tudi pri manj"sih $N$, tako da je to le posledica dejstva, da sistem "se ni v ravnovesju. 
 
 Za gornja grafa sem naredil po 1000 meritev vsake spremenjivke, med zaporednimi meritvami pa sem izvedel 10000 korakov Metropolisovega algoritma. 
-Najve"cji sistem je imel $256 \time 256 \approx 65000$ spinov, zato posamezne meritve niso ve"c korelirane, sistem pa tudi ne dose"ze ravnovesja. 
+Pre za"cetkom meritev sem napravil $10^7$ korakov, da je sistem pri"sel vsaj pribli"zno v ravnovesje. 
+Najve"cji sistem je imel $256 \time 256 \approx 65000$ spinov, zato posamezne meritve niso ve"c neodvisne, sistem pa ne dose"ze termi"cnega ravnovesja. 
 
 \section{Kvantni harmonski oscilator}
 
@@ -84,7 +101,10 @@ Trenutno stanje namesto mre"ze spinov predstavlja $M$ skalarjev $q_j$, "clen faz
 \end{align}
 
 Poteza je bila sprememba enega izmed $q_j$, $q_j \to q_j + \varepsilon \xi$, kjer je $\xi$ normalno Gaussovo porazdeljeno "stevilo. 
-Parameter $\varepsilon$, ki dolo"ca povpre"cno velikost poteze, sem dinami"cno spreminjal v odvisnosti od $\beta$ in $M$, da je bil dele"z sprejetih potez vedno blizu 1/2. 
+Parameter $\varepsilon$, ki dolo"ca povpre"cno velikost poteze, sem dinami"cno spreminjal v odvisnosti od $\beta$ in $M$, da je bil dele"z sprejetih potez vedno blizu 1/2.
+Za primerno vrednost se je izkazal izraz $\varepsilon = 0.1 \min\{1, \sqrt{\beta}\}$
+
+\subsection{Anharmonski oscilator}
 
 Algoritem se ne spremeni, "ce uporabimo druga"cen potencial, ki je "se vedno diagonalen v bazi $|q\rangle$. 
 Zato sem isti ra"cun ponovil "se z anharmonskim oscilatorjem, $V(q) = \frac{1}{2}q^2 + \lambda q^4$, za nekaj razli"cnih vrednosti $\lambda$. 
@@ -97,25 +117,19 @@ Rezultati so na spodnjem grafu.
  \input{g_plot_energy}
 \end{figure}
 
-Po pri"cakovanju povpre"cna energija pada z inverzno temperaturo, v limiti $\beta \to \infty$ pa se ustali pri kon"cni vrednosti. 
-Ta vrednost je mo"cno odvisna od vrednosti parametra $\lambda$, torej od oblike potenciala. Odvisna je tudi od izbire "stevila segmentov $M$. 
+V harmonskem primeru povpre"cna energija pri"cakovano pada z inverzno temperaturo, v limiti $\beta \to \infty$ pa se ustali pri kon"cni vrednosti $\frac{1}{2}$. 
+
+Nepri"cakovan in nefizikalen rezultat pa dobimo v nizkotemperaturni limiti z motenim potencialom, torej $\lambda > 0$. 
+V tem primeru povpre"cna energija naraste do neke kon"cne vrednosti, ki je odvisna od $\lambda$ in tudi od $\varepsilon$. 
+Padanje energije s temperaturo ni fizikalno, zato domnevam, da je posledica napak ra"cunanja. 
+V tem primeru je $\beta/M \gg 1$, torej Trotterjev razcep ne dr"zi ve"c. 
+Skok energije pri nizkih temperaturah je odvisen od vrednosti parametra $\lambda$, torej od oblike potenciala. 
+Odvisna je tudi od izbire "stevila segmentov $M$. 
 "Ce je izbrani $M$ premajhen, potem Trotter-Suzukijev razcep ni ve"c dober pribli"zek za $e^{-\beta H}$, saj $\Delta\beta = \beta/M$ ni ve"c majhnen parameter. 
 Po drugi strani pa prevelik $M$ pomeni, da potrebujemo veliko "stevilo korakov, da sistem pride v ravnovesje. 
-Kon"cna limitna vrednost energije pri $\beta \to \infty$ je lahko posledica enega izmed teh dveh te"zav. 
 
-Pri majhni $\beta$ oz. visoki temperaturi opazimo "se en nenavaden pojav: skupna energija je negativna. 
-Na logaritemskem grafu je to vidno le kot manjkajo"ce to"cke, ki so bolje vidne, "ce graf primerjamo z naslednjim. 
-Harmonski potencial $V=\frac{1}{2}q^2$ je vedno pozitiven, negativen je lahko le kineti"cni del energije
-
-$$\langle H_k \rangle = \left\langle \frac{M}{2\beta} - \frac{M}{2\beta} \sum_{j=1}^{M}(q_{j+1} - q_j)^2 \right\rangle$$
-
-Ta "clen je negativen, "ce se zaporedni $q_j$ preve"c razlikujejo med seboj. 
-Za zgornji grafu sem uporabil $M=20$, ampak oba nepri"cakovana pojava, tako negativno energijo kot kon"cno limitno vrednost, opazimo pri vseh izbirah $M$ med 5 in 500. 
-
-Izbira parametra $\varepsilon$ in za"cetnega pogoja (vsi $q_j = 0$, ali pa naklju"cne vrednosti) na odvisnost le malo vplivata. 
-Da sprejmemo pribli"zno polovico potez, je dobra izbira $\varepsilon \approx \sqrt{\beta}$, pri ve"cjih $\beta$ pa deluje pa tudi konstanten $\varepsilon \approx 1$. 
-"Ce izberemo $\varepsilon$, ki so mo"cno razlikuje od zgornjih ocen, sistem ne dose"ze ravnovesja. 
-Z dosti manj"sim $\varepsilon$ sem dobil rezultate, kjer povpre"cna energija ne nara"s"ca s temperaturo, kar ni fizikalno. 
+Za najbolj"se so se izkazale majhne vrednosti za $M$ nekje med 5 in 25. Za predstavitem na zgorjem grafu sem izbral $M=10$. 
+V tem primeru dobimo dobro ujemanje med teoreti"cno napovedjo $\langle H \rangle = \frac{1}{2}\coth\frac{\beta}{2}$ za harmonski oscilator in rezultati z $\lambda = 0$. 
 
 Za primerjavo sem posebej ra"cunal samo potencialni del energije, torej $\langle V \rangle$. 
 Ta je diagonalen v $q$, zato je dovolj, da opazujemo le povpre"cje $V(q_1)$ po Metropolisovi porazdelitvi. 
@@ -127,5 +141,7 @@ Rezultati so na spodnjem grafu.
 \end{figure}
 
 Odvisnosti so precej podobna kot na prej"snji sliki, torej zlasti pri velikem $\beta$ k energiji prispeva predvsem potencialni "clen. 
+Pri majhnem $\beta$ oz visoki temperaturi se pojavijo mo"cne oscilacije. 
+Oscilacije lahko razlo"zimo, saj se pri visoki temperaturi energija hitro pretvarja iz potencialne v kineti"cno in obratno. 
 
 \end{document}
