@@ -71,14 +71,15 @@ vseeno pa razlo"cimo vrh pri $\beta \approx 0.5$.
 \end{figure}
 
 Magnetna susceptibilnost sistema $\chi = \beta(\langle M^2 \rangle - \langle M \rangle^2)$ se obna"sa podobno kot specifi"cna toplota. 
-Pri majhnih $N$ je vrh bolj izrazit, z ve"canjem velikosti sistema in konstantnem "stevilu potez pa postaja vse manj viden. 
+Pri majhnih $N$ je vrh bolj izrazit, z ve"canjem velikosti sistema in konstantnem "stevilu potez pa postaja vse manj viden, pove"cujejo pa se tudi oscilacije pri velikih $\beta$. 
 Polo"zaj vrha je spet v bli"zini analiti"cne vrednosti. 
 
 Za gornja grafa sem naredil po 1000 meritev vsake spremenjivke, med zaporednimi meritvami pa sem izvedel 10000 korakov Metropolisovega algoritma. 
 Pre za"cetkom meritev sem napravil $10^7$ korakov, da je sistem pri"sel vsaj pribli"zno v ravnovesje. 
-Najve"cji sistem je imel $256 \time 256 \approx 65000$ spinov, tako da sem vsak spin posku"sal obrniti pribli"zno 150-krat. 
-Kljub temu pa sistem ne dose"ze termi"cnega ravnovesja. 
+Najve"cji sistem je imel $100 \time 100 = 10000$ spinov, tako da sem vsak spin posku"sal obrniti pribli"zno 1000-krat. 
+Kljub temu pa sistem ne dose"ze termi"cnega ravnovesja, zlasti pri nizki temperaturi. 
 Poleg tega ni dovolj korakov med posameznimi meritvami energije in magnetizacije, tako da te med seboj niso neodvisne. 
+V primeru najve"cjega obravnavanega sistema med dvema meritvama vsak spin v povpre"cju poskusim obrniti le enkrat, kar ni dovolj za neodvisnost meritev. 
 "Zal mi omejena ra"cunalni"ska zmogljivost ni dovoljevala obravnavanja sistemov z ve"cim "stevilom korakov. 
 
 \section{Kvantni harmonski oscilator}
