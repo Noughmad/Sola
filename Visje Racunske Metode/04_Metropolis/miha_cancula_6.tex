@@ -70,15 +70,16 @@ vseeno pa razlo"cimo vrh pri $\beta \approx 0.5$.
  \input{g_plot_ising_chi}
 \end{figure}
 
-Susceptibilnost sistema v odsotnosti zunanjega polja se s spreminjanjem $N$ obna"sa bolj nepredvidljivo. 
-Namesto vrha s poten"cnim padanjem na obe strani opazimo hiter skok v bli"zini $\beta_c$. 
-Dodatno opazimo precej"snje razlike v obna"sanju pri razli"cnih velikostih sistema. 
-Pri $N=256$ se pojavita celo dva vrha. 
-Pri zmanj"sanju "stevila korakov enak pojav vidimo tudi pri manj"sih $N$, tako da je to le posledica dejstva, da sistem "se ni v ravnovesju. 
+Magnetna susceptibilnost sistema $\chi = \beta(\langle M^2 \rangle - \langle M \rangle^2)$ se obna"sa podobno kot specifi"cna toplota. 
+Pri majhnih $N$ je vrh bolj izrazit, z ve"canjem velikosti sistema in konstantnem "stevilu potez pa postaja vse manj viden. 
+Polo"zaj vrha je spet v bli"zini analiti"cne vrednosti. 
 
 Za gornja grafa sem naredil po 1000 meritev vsake spremenjivke, med zaporednimi meritvami pa sem izvedel 10000 korakov Metropolisovega algoritma. 
 Pre za"cetkom meritev sem napravil $10^7$ korakov, da je sistem pri"sel vsaj pribli"zno v ravnovesje. 
-Najve"cji sistem je imel $256 \time 256 \approx 65000$ spinov, zato posamezne meritve niso ve"c neodvisne, sistem pa ne dose"ze termi"cnega ravnovesja. 
+Najve"cji sistem je imel $256 \time 256 \approx 65000$ spinov, tako da sem vsak spin posku"sal obrniti pribli"zno 150-krat. 
+Kljub temu pa sistem ne dose"ze termi"cnega ravnovesja. 
+Poleg tega ni dovolj korakov med posameznimi meritvami energije in magnetizacije, tako da te med seboj niso neodvisne. 
+"Zal mi omejena ra"cunalni"ska zmogljivost ni dovoljevala obravnavanja sistemov z ve"cim "stevilom korakov. 
 
 \section{Kvantni harmonski oscilator}
 
