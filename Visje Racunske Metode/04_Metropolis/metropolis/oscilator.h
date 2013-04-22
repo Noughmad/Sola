@@ -21,11 +21,12 @@
 #define OSCILATOR_H
 
 #include <NUtils/observable.h>
-#include <NUtils/vector.h>
 #include <gsl/gsl_rng.h>
 #include <stdlib.h>
 #include <gsl/gsl_randist.h>
 #include <iostream>
+
+#include <QVector>
 
 
 using namespace std;
@@ -36,7 +37,7 @@ class Oscilator
     
     typedef ::Observable<int, double, double> Observable;
     typedef double State;
-    typedef ::Vector<M, State> Path;
+    typedef QVector<State> Path;
 
 public:
     Oscilator();
@@ -80,6 +81,7 @@ public:
 template <int M>
 Oscilator<M>::Oscilator()
 {
+    mPath.resize(M);
     rng = gsl_rng_alloc(gsl_rng_default);
     // setRandomPath();
     

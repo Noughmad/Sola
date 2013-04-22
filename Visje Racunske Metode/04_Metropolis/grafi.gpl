@@ -19,10 +19,12 @@ set logscale xy
 
 set ylabel "$\\langle H \\rangle$"
 
+an(x) = 0.5 / tanh(x/2)
 set output "g_plot_energy.tex"
-plot[0.001:] for [l in "0 0.3 1 3"] sprintf("< sort -g M_20/g_energija_%s.dat",l) u 1:4 t sprintf("$\\lambda = %s$", l)
+plot[0.001:] for [l in "0 0.3 1 3"] sprintf("< sort -g g_energija_%s.dat",l) u 1:4 t sprintf("$\\lambda = %s$", l), \
+an(x) t "$\\frac{1}{2}\\coth\\frac{\\beta}{2}$"
 
 set ylabel "$\\langle V \\rangle$"
 
 set output "g_plot_pot.tex"
-plot[0.001:] for [l in "0 0.3 1 3"] sprintf("< sort -g M_20/g_energija_%s.dat",l) u 1:6 t sprintf("$\\lambda = %s$", l)
+plot[0.001:] for [l in "0 0.3 1 3"] sprintf("< sort -g g_energija_%s.dat",l) u 1:6 t sprintf("$\\lambda = %s$", l)

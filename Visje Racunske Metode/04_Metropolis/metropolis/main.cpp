@@ -172,7 +172,7 @@ void oscilator(double beta, double lambda, int InitialSteps, int AverageSteps, s
 
 int main(int argc, char **argv)
 {
-    
+    /*
     ofstream out_0("g_energija_0.dat");
     ofstream out_03("g_energija_0.3.dat");
     ofstream out_1("g_energija_1.dat");
@@ -200,9 +200,9 @@ int main(int argc, char **argv)
     out_03.close();
     out_1.close();
     out_3.close();
+    */
     
-    
-    // racun(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
+    racun(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
     
     return 0;
 }
