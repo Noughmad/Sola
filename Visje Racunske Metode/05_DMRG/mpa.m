@@ -1,5 +1,14 @@
+function i = psi_index(S, d)
+    i = 1;
+    j = 0;
+    for s = S'
+        i = i + (s-1)*d^j;
+        j = j + 1;
+    endfor
+endfunction
+
 function A = mpa(psi, d)
-    N, o = size(psi);
+    [N, o] = size(psi);
     if (N != 1 && o != 1)
         error("psi must be a vector");
     endif
@@ -9,16 +18,68 @@ function A = mpa(psi, d)
     endif
 
     n = log(N) / log(d);
-    if (floor(x) != x)
+    if (floor(n) != n)
         error("psi must be 2^d - dimensional");
     endif
+    
 
     A = {};
+    M = {};
+    
     psi = reshape(psi, d, d^(n-1));
-    U, S, V = svd(psi);
-    for i = 1:d
-        A{1, i} = U();
+    [U, S, V] = svd(psi);
+    M{1} = d;
+    for s = 1:d
+        A{1, s} = U(s,:);
     endfor
-    psi = neki(S, V);
+    psi = diag(S) .* V'(1:M{1},:);
+    
+    for j = 2:n-1
+        psi = reshape(psi, M{j-1}*d, d^(n-j));
+        [U, S, V] = svd(psi);
+        m = min(size(S));
+        M{j} = min(size(S));
+        
+        for s = 1:d
+            A{j, s} = U(M{j-1}*(s-1)+1:M{j-1}*s,1:m);
+        endfor
 
+        psi = diag(S) .* V'(1:M{j},:);
+    endfor
+    
+    psi = reshape(psi, M{n-1}, d);
+    for s = 1:d
+        A{n, s} = psi(:,s);
+    endfor
+endfunction
+
+function p = mpa_psi_element(A, S)
+    [n, d] = size(A);
+    p = 1;
+    for j = 1:n
+        p = p * A{j, S(j)};
+    endfor
+endfunction
+
+function Psi, Mpa = test_mpa(d, n)
+    psi = rand(d^n, 1);
+    A = mpa(psi, d);
+    
+    S = randi(d, n, 1);
+    i = psi_index(S, d);
+    
+    Psi = psi(i);
+    Mpa = mpa_psi_element(A, S);
+endfunction
+
+function test_many()
+    for n = [2 6 10]
+        for d = [2 4];
+            for i = 1:10
+                [p, m] = test_mpa(d, n);
+                NumError = log(abs(p/m - 1))
+                assert(NumError < -16);
+            endfor
+        endfor
+    endfor
 endfunction
