@@ -1,3 +1,5 @@
+warning ("off", "Octave:broadcast");
+
 function i = psi_index(S, d)
     i = 1;
     j = 0;
@@ -17,9 +19,10 @@ function A = mpa(psi, d)
         N, o = size(psi);
     endif
 
-    n = log(N) / log(d);
-    if (floor(n) != n)
-        error("psi must be 2^d - dimensional");
+    n = round(log(N) / log(d))
+    if (d^n != N)
+        N,n
+        error("psi must be d^n - dimensional");
     endif
     
 
@@ -73,13 +76,19 @@ function Psi, Mpa = test_mpa(d, n)
 endfunction
 
 function test_many()
-    for n = [2 6 10]
-        for d = [2 4];
-            for i = 1:10
-                [p, m] = test_mpa(d, n);
-                NumError = log(abs(p/m - 1))
-                assert(NumError < -16);
-            endfor
+    for n = [2 6 10 14]
+        for i = 1:10
+            [p, m] = test_mpa(2, n);
+            NumError = log(abs(p/m - 1));
+            assert(NumError < -16);
+        endfor
+    endfor
+    
+    for d = 2:6
+        for i = 1:10
+            [p, m] = test_mpa(d, 5);
+            NumError = log(abs(p/m - 1));
+            assert(NumError < -16);
         endfor
     endfor
 endfunction
