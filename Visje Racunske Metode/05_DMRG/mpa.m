@@ -75,7 +75,7 @@ function Psi, Mpa = test_mpa(d, n)
     Mpa = mpa_psi_element(A, S);
 endfunction
 
-function test_many()
+function test_mpa_many()
     for n = [2 6 10 14]
         for i = 1:10
             [p, m] = test_mpa(2, n);
