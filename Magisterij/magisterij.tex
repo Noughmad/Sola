@@ -35,15 +35,48 @@
 
 \section{Uvod} % 1.5 - 3 strani
 
+Strukture za usmerjanje svetlobe igrajo pomembno vlogo v sodobnih opti"cnih komunikacijskih sistemih\cite{ruetschi-1994}. 
+
 % Zakaj so valovodi dobri, uporaba v mehki snovi
 
+Valovodi so uporabni tudi kot resonatorji za laserje. 
+Teko"cekristalni laserji v zadnjem "casu prejemajo veliko pozornosti \cite{coles-morris, humar-musevic, humar-ravnik}. 
+Klju"cna dejavnika pri uporabi teko"cih kristalov v laserjih sta prisotnost fotonskega prepovedanega pasu (ang. photonic bandgap) in mo"znost zunanjega nadzora s spreminjanjem elektri"cnega polja ali temperature.
+
 % Na kratko o vseh valovodih
+
+
 
 % Tekoci kristali kot vir opticne anizotropije
 
 % Valovodi s tekocimi kristali (clanki, reference, literatura)
 
 % Opis EM valovanja, Maxwellove enacbe
+"Sirjenje svetlobe po snovi opisujejo "stiri Maxwellove ena"cbe
+
+\begin{equation}
+\begin{aligned}
+ \nabla \cdot \vec D = \rho_f & \qquad \nabla \cdot \vec B = 0 \\
+ \nabla \times \vec E = -\odvod{\vec B}{t} & \qquad \nabla \times \vec H = \vec J_f + \odvod{\vec D}{t}
+\end{aligned} 
+\end{equation}
+
+kjer veljata zvezi $\vec D = \varepsilon \varepsilon_0 \vec E$ in $\vec B = \mu \mu_0 \vec H$. 
+V teko"cih kristalih sta dielektri"cnost $\varepsilon$ in permeabilnost $\mu$ anizotropna tenzorja. 
+Obi"cajno pa je magnetna anizotropija mnogo "sibkej"sa od elektri"cne, zato jo lahko zanemarimo in privzamemo $\mu = 1$. 
+
+Izvori in ponori valovanja znotraj vzorca so posledica kon"cne neni"celne materiala.
+Zaradi prevodnosti $\sigma$ ob prisotnosti elektri"cnega polja v snovi te"ce tok, ki je enak $\vec J = \sigma \vec E$. 
+Prostih nabojev v vzorcu ni. Z upo"stevanjem zgornjih predpostavk lahko Maxwellove ena"cbe zapi"semo kotom
+
+\begin{equation}
+  \begin{aligned}
+  \nabla \cdot \vec E = 0 & \qquad \nabla \cdot \vec B = 0 \\
+  \nabla \times \vec E = -\odvod{\vec B}{t} & \qquad \nabla \times \vec B = \sigma \vec E + \varepsilon\varepsilon_0\mu\odvod{\vec E}{t}
+  \end{aligned}
+\end{equation}
+
+V zadnji ena"cbi smo privzeli, da se dielektri"cni tenzor $\varepsilon$ ne spreminja s "casom, zato nastopa izved "casovnega odvoda. 
 
 % Struktura diplome
 
@@ -194,7 +227,8 @@ Opti"cno anizotropna snov mora biti v celoti v notranjem obmo"cju. \todo{slikca}
 \subsection{Robni pogoji}
 
 "Ce imamo na robu celice Dirichletov, Neumannov ali me"sani robni pogoj, se bo celotno valovanje odbilo in vrnilo v celico. 
-To lahko prepre"cimo z uporabo absorbirajo"cega robnega pogoja (angl. Absorbing boundary condition -- ABC). 
+Tega si ne "zelimo, pri izvedbi ekperimentov obi"cajno svetloba najprej preide skozi vzorec, nato pa jo zajamemo in preu"cimo. 
+To lahko simuliramo z uporabo absorbirajo"cega robnega pogoja (angl. Absorbing boundary condition -- ABC). 
 Obstaja ve"c razli"cnih absorbirajo"cih robnih pogojev, v zadnjem "casu se najve"c uporablja t.i. popolnoma ujemajo"ca plast (angl. Perfectly matched layer -- PML)\cite{taflove}. 
 
 Material v plasti PML zagotavlja eksponentno pojemanje vpadnega vala, neodvisno od njegove frekvence in smeri "sirjenja. 
