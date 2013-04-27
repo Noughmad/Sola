@@ -36,31 +36,35 @@
 \section{Uvod} % 1.5 - 3 strani
 
 Strukture za usmerjanje svetlobe igrajo pomembno vlogo v sodobnih opti"cnih komunikacijskih sistemih\cite{ruetschi-1994}. 
+\todo{Zakaj so valovodi dobri}
 
 % Zakaj so valovodi dobri, uporaba v mehki snovi
 
-Valovodi so uporabni tudi kot resonatorji za laserje. 
-Teko"cekristalni laserji v zadnjem "casu prejemajo veliko pozornosti \cite{coles-morris, humar-musevic, humar-ravnik}. 
+
+% TODO: Na kratko o vseh valovodih
+
+Teko"ci kristali so mehke snovi, ki zdru"zujejo lastnosti kristalov in teko"cin\cite{degennes}. 
+Praviloma so teko"ci kristali sestavljeni iz pali"castih ali diskastih molekul, teko"cekristalne mezofaze pa tvorijo tudi segmenti DNK, molekule nekaterih virusov in primerni koloidni delci. 
+Polo"zaji gradnikov nimajo reda dolgega dosega, ali pa ta red ne dr"zi v vseh treh dimenzijah, zato se snov obna"sa kot teko"cina. 
+
+Orientacijski red v teko"cih kristalih lahko tak"sen red opi"semo s preferen"cno orientacijo oz. direktorjem $\mathbf{n}$ in stopnjo reda $S$. 
+Na prosto energijo in s tem na ureditev teko"cega kristala vplivajo krajevno spreminjanje direktorja, temperatura in dielektri"cna interakcija. 
+Za opti"cne lastnosti je pomembna predvsem dvolomnost, kar pomeni, da je lomni koli"cnik snovi odvisen od polarizacije svetlobe. 
+Ta anizotropija izhaja iz oblike gradnikov, ki so v ve"cini primerov pali"caste molekule. 
+V teko"cem kristalu z orientacijskim redom os dvolomnosti sledi orientaciji gradnikov. 
+
+% TODO: Valovodi s tekocimi kristali (clanki, reference, literatura)
+
+Teko"cekristalni laserji so v zadnjem "casu dele"zni veliko pozornosti \cite{coles-morris, humar-musevic, humar-ravnik}. 
 Klju"cna dejavnika pri uporabi teko"cih kristalov v laserjih sta prisotnost fotonskega prepovedanega pasu (ang. photonic bandgap) in mo"znost zunanjega nadzora s spreminjanjem elektri"cnega polja ali temperature.
 
-% Na kratko o vseh valovodih
-
-
-
-% Tekoci kristali kot vir opticne anizotropije
-
-% Valovodi s tekocimi kristali (clanki, reference, literatura)
-
-% Opis EM valovanja, Maxwellove enacbe
 "Sirjenje svetlobe po snovi opisujejo "stiri Maxwellove ena"cbe
-
 \begin{equation}
 \begin{aligned}
  \nabla \cdot \vec D = \rho_f & \qquad \nabla \cdot \vec B = 0 \\
  \nabla \times \vec E = -\odvod{\vec B}{t} & \qquad \nabla \times \vec H = \vec J_f + \odvod{\vec D}{t}
 \end{aligned} 
 \end{equation}
-
 kjer veljata zvezi $\vec D = \varepsilon \varepsilon_0 \vec E$ in $\vec B = \mu \mu_0 \vec H$. 
 V teko"cih kristalih sta dielektri"cnost $\varepsilon$ in permeabilnost $\mu$ anizotropna tenzorja. 
 Obi"cajno pa je magnetna anizotropija mnogo "sibkej"sa od elektri"cne, zato jo lahko zanemarimo in privzamemo $\mu = 1$. 
@@ -68,19 +72,25 @@ Obi"cajno pa je magnetna anizotropija mnogo "sibkej"sa od elektri"cne, zato jo l
 Izvori in ponori valovanja znotraj vzorca so posledica kon"cne neni"celne materiala.
 Zaradi prevodnosti $\sigma$ ob prisotnosti elektri"cnega polja v snovi te"ce tok, ki je enak $\vec J = \sigma \vec E$. 
 Prostih nabojev v vzorcu ni. Z upo"stevanjem zgornjih predpostavk lahko Maxwellove ena"cbe zapi"semo kotom
-
 \begin{equation}
   \begin{aligned}
   \nabla \cdot \vec E = 0 & \qquad \nabla \cdot \vec B = 0 \\
   \nabla \times \vec E = -\odvod{\vec B}{t} & \qquad \nabla \times \vec B = \sigma \vec E + \varepsilon\varepsilon_0\mu\odvod{\vec E}{t}
   \end{aligned}
 \end{equation}
-
 V zadnji ena"cbi smo privzeli, da se dielektri"cni tenzor $\varepsilon$ ne spreminja s "casom, zato nastopa izved "casovnega odvoda. 
 
 % Struktura diplome
+V teoreti"cnem delu te naloge je opisana osnovna teorija ureditve teko"cih kristalov, njihove opti"cne lastnosti in "sirjenje svetlobe skoznje. 
+Poudarek je na cilindri"cnih strukturah, ki so najbolj primerne za tvorbo valovodov. 
+Poleg tega so opisane splo"se lastnosti in uporabe valovodov in posebnosti teko"cekristalnih valovodov. 
+
+V tretjem poglavju je predstavljena numeri"cna metoda, s katero sem modeliral "sirjenje svetlobe skozi teko"cekristalne valovode, in nekaj preizkusov njene pravolnosti. 
+V "cetrem poglavju so rezultati \todo{kaj to"cno?}. 
 
 \section{Teoreti"cno ozadje}
+
+\subsection{Teko"ci kristali}
 
 \subsection{Direktor v cilindri"cni kapilari}
 
@@ -128,7 +138,7 @@ Pri tej metodi "casovno propagiramo elektri"cno in magnetno polje v vsaki to"cki
  \odvod{\vec{B}}{t} = -\nabla \times \vec{E}, \qquad \odvod{\vec{E}}{t} = \eps^{-1} \nabla \times \vec{B}
 \end{align}
 
-V zgornjih ena"cbah smo implicitno upo"stevali, da v celici ni izvorov, uporabili pa smo brezdimenzijske enote, zato je $c=0$.
+V zgornjih ena"cbah smo implicitno upo"stevali, da v celici ni izvorov, uporabili pa smo brezdimenzijske enote, zato je $c=1$.
 
 \subsection{Mre"za}
 
@@ -137,7 +147,7 @@ Za izra"cun "casovnega odvoda vsakega izmed polj $\vec{E}, \vec{B}$ potrebujemo 
 Poleg tega obe ena"cbi povezujeta "casovni odvod enega polja s krajevnim odvodom drugega. 
 Zaradi obeh opisanih lastnosti lahko dvignemo red metode, in s tem izbolj"samo natan"cnost, "ce vrednosti polj poznamo ob razli"cnih "casih in na razli"cnih mestih. 
 
-Obi"cajne implementacije metode FDTD gredo "se korak dlje, tako da so tudi posamezne komponente elektri"cnega in magnetnega polja definirane na razli"cih to"ckah\cite{taflove}.
+Obi"cajne implementacije metode FDTD gredo "se korak dlje, tako da so tudi posamezne komponente elektri"cnega in magnetnega polja definirane na razli"cih to"ckah\cite{yee, taflove, yee-lattice}.
 Tak"sno mre"zo je predlagal Yee in izkori"s"ca dejstvo, da pri "casovnem odvodu vsake komponente posameznega polja nastopata le krajevna odvoda ostalih dveh komponent drugega polja. 
 Z ustrezno izbiro to"ck, kjer so definirane posamezne komponente, so vsi krajevni odvodi izra"cunani ravno na sredini med ustreznima to"ckama mre"ze. 
 Za u"cinkovito delovanje pa tak"sna mre"za zahteva, da je dielektri"cni tenzor $\eps$ diagonalen, njegove komponente pa morajo biti znane na razli"cnih to"ckah mre"ze. 
@@ -152,7 +162,7 @@ Obe mre"zi prikazuje slika \ref{fig:lattice}.
 \begin{figure}[h]
 \centering
  \subfigure{\includegraphics[width=.5\textwidth]{./Slike/Yee-cube}}
- \subfigure{\begin{tikzpicture}[scale=1.1]
+ \subfigure{\begin{tikzpicture}[scale=1.4]
     
     \foreach \x in {0,1}{
       \foreach \y in {0,1}{
@@ -171,7 +181,7 @@ Obe mre"zi prikazuje slika \ref{fig:lattice}.
     \draw[egrid] (1.6-1.2,1.4-0.8) rectangle (3.6-1.2,3.4-0.8);
 
             \end{tikzpicture}}
-\caption{Levo: Yeejeva celica, pri kateri so komponente elektri"cnega polja znane na razpolovi"s"cih robov konce, komponente magnetnega polja pa v sredi"s"cih ploskev. Desno: Celica, ki sem jo uporabil pri izra"cunih. Komponente elektri"cnega polja so znane v ogli"s"cih kocke, komponente magnetnega polja pa v njenem sredi"s"cu. V obeh primerih sta elektri"cno in magnetno polje dolo"cena ob razli"cnih "casih, kar na sliki ni prikazano. \todo{citiraj za sliko, je z wikipedije}}
+\caption{Levo: Yeejeva celica, pri kateri so komponente elektri"cnega polja znane na razpolovi"s"cih robov konce, komponente magnetnega polja pa v sredi"s"cih ploskev\cite{yee-lattice}. Desno: Celica, ki sem jo uporabil pri izra"cunih. Komponente elektri"cnega polja so znane v ogli"s"cih kocke, komponente magnetnega polja pa v njenem sredi"s"cu. V obeh primerih sta elektri"cno in magnetno polje dolo"cena ob razli"cnih "casih, kar na sliki ni prikazano.}
 \label{fig:lattice}
 \end{figure}
 
