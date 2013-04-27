@@ -48,15 +48,18 @@ function test_entent_ground()
     
     nA_array = [];
     E_array = [];
+    I_array = [];
     
     for nA = 1:n-1
         psi = ground_state(n, d);
         E = entanglement_entropy(psi, d, nA);
+        I = qmi(psi, d, nA);
         nA_array = [nA_array; nA];
         E_array = [E_array; E];
+        I_array = [I_array; I];
     endfor
     
-    plot(nA_array, E_array);
+    plot(nA_array, E_array, nA_array, I_array);
 endfunction
 
 function UN = napihni(U, n, d, j)
@@ -110,4 +113,23 @@ function psi = ground_state(n, d, pbc = 1)
     H = hamiltonian(n, d, pbc);
     [V, D] = eigs(H, 6, "sa");
     psi = V(:,6);
+endfunction
+
+function S = neumann_entropy(rho)
+    S = -trace(rho * logm(rho));
+endfunction
+
+function I = qmi(psi, d, nA)
+    N = length(psi);
+    n = round(log(N) / log(d));
+    nB = n - nA;
+    Psi = reshape(psi, d^nA, d^nB);
+    
+    [U, S, V] = svd(Psi);
+    
+    rhoA = U*S*S'*U';
+    rhoB = V*S'*S*V';
+    rho = psi * psi';
+    
+    I = neumann_entropy(rhoA) + neumann_entropy(rhoB) - neumann_entropy(rho);
 endfunction
