@@ -60,28 +60,6 @@ V teko"cem kristalu z orientacijskim redom os dvolomnosti sledi orientaciji grad
 Teko"cekristalni laserji so v zadnjem "casu dele"zni veliko pozornosti \cite{coles-morris, humar-musevic, humar-ravnik}. 
 Klju"cna dejavnika pri uporabi teko"cih kristalov v laserjih sta prisotnost fotonskega prepovedanega pasu (ang. photonic bandgap) in mo"znost zunanjega nadzora s spreminjanjem elektri"cnega polja ali temperature.
 
-"Sirjenje svetlobe po snovi opisujejo "stiri Maxwellove ena"cbe
-\begin{equation}
-\begin{aligned}
- \nabla \cdot \vec D = \rho_f & \qquad \nabla \cdot \vec B = 0 \\
- \nabla \times \vec E = -\odvod{\vec B}{t} & \qquad \nabla \times \vec H = \vec J_f + \odvod{\vec D}{t}
-\end{aligned} 
-\end{equation}
-kjer veljata zvezi $\vec D = \varepsilon \varepsilon_0 \vec E$ in $\vec B = \mu \mu_0 \vec H$. 
-V teko"cih kristalih sta dielektri"cnost $\varepsilon$ in permeabilnost $\mu$ anizotropna tenzorja. 
-Obi"cajno pa je magnetna anizotropija mnogo "sibkej"sa od elektri"cne, zato jo lahko zanemarimo in privzamemo $\mu = 1$. 
-
-Izvori in ponori valovanja znotraj vzorca so posledica kon"cne neni"celne materiala.
-Zaradi prevodnosti $\sigma$ ob prisotnosti elektri"cnega polja v snovi te"ce tok, ki je enak $\vec J = \sigma \vec E$. 
-Prostih nabojev v vzorcu ni. Z upo"stevanjem zgornjih predpostavk lahko Maxwellove ena"cbe zapi"semo kotom
-\begin{equation}
-  \begin{aligned}
-  \nabla \cdot \vec E = 0 & \qquad \nabla \cdot \vec B = 0 \\
-  \nabla \times \vec E = -\odvod{\vec B}{t} & \qquad \nabla \times \vec B = \sigma \vec E + \varepsilon\varepsilon_0\mu\odvod{\vec E}{t}
-  \end{aligned}
-\end{equation}
-V zadnji ena"cbi smo privzeli, da se dielektri"cni tenzor $\varepsilon$ ne spreminja s "casom, zato nastopa izved "casovnega odvoda. 
-
 % Struktura diplome
 V teoreti"cnem delu te naloge je opisana osnovna teorija ureditve teko"cih kristalov, njihove opti"cne lastnosti in "sirjenje svetlobe skoznje. 
 Poudarek je na cilindri"cnih strukturah, ki so najbolj primerne za tvorbo valovodov. 
@@ -225,7 +203,35 @@ Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj
 \end{figure}
 
 \subsection{Maxwellove ena"cbe v neizotropnem sredstvu}
-% Predstavi ME v obliki, primerni za resevanje. 
+"Sirjenje svetlobe po snovi opisujejo "stiri Maxwellove ena"cbe
+\begin{equation}
+\begin{aligned}
+ \nabla \cdot \vec D = \rho_f & \qquad \nabla \cdot \vec B = 0 \\
+ \nabla \times \vec E = -\odvod{\vec B}{t} & \qquad \nabla \times \vec H = \vec J_f + \odvod{\vec D}{t}
+\end{aligned} 
+\end{equation}
+kjer veljata zvezi $\vec D = \varepsilon \varepsilon_0 \vec E$ in $\vec B = \mu \mu_0 \vec H$. 
+V teko"cih kristalih sta dielektri"cnost $\varepsilon$ in permeabilnost $\mu$ anizotropna tenzorja. 
+Obi"cajno pa je magnetna anizotropija mnogo "sibkej"sa od elektri"cne, zato jo lahko zanemarimo in privzamemo $\mu = 1$. 
+
+Izvori in ponori valovanja znotraj vzorca so posledica neni"celne elektri"cne prevodnosti materiala.
+Zaradi prevodnosti $\sigma$ ob prisotnosti elektri"cnega polja v snovi te"ce tok, ki je enak $\vec J = \sigma \vec E$. 
+Prostih nabojev v vzorcu ni. Z upo"stevanjem zgornjih predpostavk lahko Maxwellove ena"cbe zapi"semo kotom
+\begin{equation}
+  \begin{aligned}
+  \nabla \cdot \vec E = 0 & \qquad \nabla \cdot \vec B = 0 \\
+  \nabla \times \vec E = -\odvod{\vec B}{t} & \qquad \nabla \times \vec B = \sigma \vec E + \varepsilon\varepsilon_0\mu\odvod{\vec E}{t}
+  \end{aligned}
+\end{equation}
+V zadnji ena"cbi smo privzeli, da se dielektri"cni tenzor $\varepsilon$ ne spreminja s "casom, zato nastopa izved "casovnega odvoda. 
+Ta predpostavka je smiselna pri obravnavi opti"cnih polj, saj je relaksacija teko"cega kristala mnogo po"casnej"sa od sprememb elektri"cnega in magnetnega polja. 
+
+Pri re"sevanju z metodo FDTD potrebujemo le zadnji dve ena"cbi, ki vsebujeta "casovne odvode polje. 
+"Ce izrazimo "casovna odvoda in ena"cbi prepi"semo v brezdimenzijsko obliko ($c = \varepsilon_0 = \mu_0 = 1$), se glasita
+\begin{align}
+\label{eq:maxwell-base}
+ \odvod{\vec{B}}{t} = -\nabla \times \vec{E}, \qquad \odvod{\vec{E}}{t} = \eps^{-1} \nabla \times \vec{B}
+\end{align}
 
 \subsection{Teorija valovodov}
 \todo{Preberi "clanke}
