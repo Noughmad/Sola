@@ -9,6 +9,7 @@
 
 \usepackage{graphicx}
 \usepackage{subfigure}
+\usepackage{comment}
 
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -35,6 +36,7 @@
 
 \section{Uvod} % 1.5 - 3 strani
 
+
 Strukture za usmerjanje svetlobe igrajo pomembno vlogo v sodobnih opti"cnih komunikacijskih sistemih\cite{ruetschi-1994}. 
 \todo{Zakaj so valovodi dobri}
 
@@ -53,7 +55,7 @@ Za opti"cne lastnosti je pomembna predvsem dvolomnost, kar pomeni, da je lomni k
 Ta anizotropija izhaja iz oblike gradnikov, ki so v ve"cini primerov pali"caste molekule. 
 V teko"cem kristalu z orientacijskim redom os dvolomnosti sledi orientaciji gradnikov. 
 
-% TODO: Valovodi s tekocimi kristali (clanki, reference, literatura)
+% TODO: Valovodi s teko"cimi kristali (clanki, reference, literatura)
 
 Teko"cekristalni laserji so v zadnjem "casu dele"zni veliko pozornosti \cite{coles-morris, humar-musevic, humar-ravnik}. 
 Klju"cna dejavnika pri uporabi teko"cih kristalov v laserjih sta prisotnost fotonskega prepovedanega pasu (ang. photonic bandgap) in mo"znost zunanjega nadzora s spreminjanjem elektri"cnega polja ali temperature.
@@ -90,14 +92,106 @@ V "cetrem poglavju so rezultati \todo{kaj to"cno?}.
 
 \section{Teoreti"cno ozadje}
 
-\subsection{Teko"ci kristali}
+\subsection{Teko"ci kristal kot anizotropni dielektrik}
+% Tenzor Q, prosta energija
 
-\subsection{Direktor v cilindri"cni kapilari}
+V teko"cem kristalu imajo gradniki orientacijski red dolgega dosega. Definiramo lahko enotski vektor $\mathbf{n}$, ki dolo"ca povpre"cno smer gradnikov in ga imenujemo direktor. Direktor ni pravi vektor, saj v teko"cem kristalu ne lo"cime med smerjo $\mathbf{n}$ in $\mathbf{-n}$. Tudi "ce sami gradniki nimajo tak"sne simetrije, jo imajo njihove fluktuacije, zato lahko ureditev dobro opi"semo z direktorjem\cite{mermin}. 
+
+\begin{comment}
+\begin{figure}[h]
+\begin{center}
+\subfigure{\includegraphics[height=100pt]{./Slike/Nematic-Director}}
+\subfigure{\includegraphics[height=100pt]{./Slike/nematik-formuli}}
+ \caption{Levo: Gradniki imajo razli"cne orientacije, preferen"cno smer pa poda direktor. Desno: Strukturni formuli molekul 5CB (zgoraj) in 8CB (spodaj)\cite{wiki:lc}}
+ \label{fig:nematik-direktor}
+ \end{center}
+\end{figure}
+
+Orientacijski red dolgega dosega je tipi"cno realiziran s pali"castimi gradniki. Najpogosteje se uporabljajo organske molekule z dvema benzenovima obro"cema, na katera so vezane razli"cne skupine. Primera tak"snih molekul sta 4-ciano-4'-pentilbifenil (5CB) in 4-ciano-4'-oktilbifenil (8CB), katerih strukturni formuli sta prikazani na Sliki \ref{fig:nematik-direktor}. Velikosti tak"snih molekul so nekaj nanometrov. 
+
+\end{comment}
+
+Direktor $\mathbf{n}$ podaja povpre"cno smer gradnikov, ne pa dejanske orientacije posameznih gradnikov. 
+Zato uvedemo "se stopnjo reda $S$ (angl. degree of order), ki nam pove, koliko smeri molekul v povpre"cju odstopajo od direktorja. 
+Zaradi simetrije $\mathbf{n} \leftrightarrow -\mathbf{n}$ ne moremo vzeti kar povpre"cne vrednosti kota med gradnikom in direktorjem, saj je ta vrednost enaka ni"c. 
+Namesto tega uporabimo povpre"cni kvadrat kota, ki je ekvivalenten kvadrupolnemu momentu\cite{kleman}
+\begin{align}
+ S = \frac{1}{2}\left(3\langle\cos^2\vartheta\rangle-1\right),
+\end{align}
+kjer je $\vartheta$ kot med osjo gradnika in direktorjem, $\langle\rangle$ pa prostorsko ali "casovno povpre"cje. 
+Pri tak"sni definiciji ima popolnoma urejen teko"ci kristal, kjer so vsi gradniki vzporedni z direktorjem, vrednost $S=1$, povsem neurejen teko"ci kristal z naklju"cnimi orientacijami molekul pa $S=0$. 
+V Landauovi teoriji faznih prehodov je ureditveni parameter neka koli"cina, ki je v eni fazi enaka ni"c, v drugi pa od ni"c razli"cna. 
+Zgoraj definirana stopnja reda $S$ je tako primeren ureditveni parameter za prehod med izotropno teko"cino in teko"cekristalno fazo\cite{degennes}. 
+
+Direktor in nematsko stopnjo reda lahko hkrati opi"semo z eno tenzorsko koli"cino. V ta namen uvedemo tenzor ureditvenih parametrov $Q_{ij}$ kot
+\begin{align}
+  Q_{ij} = \frac{S}{2}(3n_i n_j - \delta_{ij}) + \frac{P}{2}(e^{(1)}_i e^{(1)}_j - e^{(2)}_i e^{(2)}_j)\,,
+\end{align}
+kjer sta $\mathbf{e}^{(1)}$ in $\mathbf{e}^{(2)}$ enotska vektorja, pravokotna na $\mathbf{n}$ in med seboj. Uvedli smo "se biaksialnost $P$, ki je neni"celna, "ce fluktuacije molekul niso simetri"cne na vrtenje okrog direktorja. V tem primeru imamo orientacijski red tudi v sekundarni osi, ki je pravokotna na direktor in jo imenujemo sekundarni direktor. Parameter $P$ ima podoben pomen kot $S$ in nam pove, kako dobro so gradniki urejeni glede na sekundarno direktor. Ker komponente $n_i$ nastopajo le v kvadratu, s tak"snim zapisom avtomatsko upo"stevamo simetrijo direktorja, saj zamenjava $\mathbf{n}$ z $-\mathbf{n}$ tenzorja $Q_{ij}$ ne spremeni. Ker je $\mathbf{n}$ enotski vektor, je tenzor $Q_{ij}$ brezsleden, zato so v izotropni snovi vse njegove komponente enake 0 in je primeren ureditveni parameter za opis faznih prehodov. 
+
+\subsubsection{Deformacije direktorja in prosta energija}
+
+Ureditev teko"cega kristala lahko opi"semo s tenzorskim poljem $Q_{ij}(\vec r)$, ki podaja tenzor ureditvenih parametrov v vsaki to"cki. 
+Skupno prosto energijo lahko izrazimo kot funkcional polja $Q_{ij}(\vec r)$, ki pa je odvisen od teko"cekristalne mezofaze. 
+V tej nalogi obravnavamo le dve izmed mnogih teko"cekritalnih mezofaz, in sicer nematsko in holesteri"cno. 
+K prosti energiji teh dveh mezofaz prispevajo elasti"cne deformacije, stopnja reda in dielektri"cna interakcija z elektri"cnim poljem. 
+Drugi prispevki, npr. magnetna interakcija in fleksoelektri"cnost, so pri obi"cajno uporabljanih snoveh in opti"cnem polju zanemarljivi.
+
+\begin{figure}[h]
+\begin{center}
+  \includegraphics[width=.7\textwidth]{./Slike/tsb_slo}
+  \caption{Trije na"cini elasti"cne deformacije direktorja. }
+\label{fig:tsb}
+\end{center}
+\end{figure}
+Posamezni gradniki imajo najve"cjo svobodo gibanja in s tem najve"cjo entropijo, "ce je direktor in s tem tudi teznor $Q_{ij}$ uniformen. 
+Krajevno spreminjanje ureditvenega parametra $Q_{ij}$ v katerikoli smeri povzro"ci, da sistemu prosta energija naraste. 
+To pove"canje je odvisno od smeri spreminjanja $Q_{ij}$ glede na smer direktorja. 
+Na sliki \ref{fig:tsb} so prikazani trije na"cini deformacije direktorja, s katerimi lahko lokalno opi"semo poljubno krajevno odvisnost. 
+Ti trije na"cini so pahlja"ca (angl. splay), zvoj (angl. twist) in upogib (angl. bend). 
+
+V splo"snem so elasti"cne konstante, ki pripadajo vsakemu izmed treh osnovnih na"cinom deformacije, med seboj razli"cne. 
+Prispevek k gostoti proste energije zaradi elasti"cnih deformacij nematskega teko"cega kristala je tako enak
+
+\begin{align}
+ f_{\mathrm{el}}^N &= \frac{K_1}{2} (\nabla \cdot \vec n)^2 + \frac{K_2}{2} (\vec n \cdot \nabla \times \vec n)^2 + \frac{K_3}{2} (\vec n \times \nabla \times \vec n)^2. 
+\end{align}
+
+\todo{tipi"cne vrednosti konstant}, \todo{izra"zava s $Q_{ij}$}
+
+V kiralnem nematiku oz. holesteriku pa ima stanje z najni"zjo prosto energijo konstanten zvoj s periodo $a = 2\pi / q$.
+Drugi "clen tako ni ve"c simetri"cen glede na smer deformacije, gostota proste energije v holesteriku pa je enaka
+
+\begin{align}
+ f_{\mathrm{el}}^{Ch} &= \frac{K_1}{2} (\nabla \cdot \vec n)^2 + \frac{K_2}{2} (\vec n \cdot \nabla \times \vec n - q)^2 + \frac{K_3}{2} (\vec n \times \nabla \times \vec n)^2. 
+\end{align}
+
+V teko"cih kristalih je stabilnost nematske mezofaze odvisna od temperature ali od koncentracije. 
+Za termotropske teko"ce kristale, kjer je mezofaza odvisna od temperature, lahko zapi"semo Landauov razvoj proste energije po ureditvenem parametru $Q_{ij}$ kot
+\begin{align}
+  f_{\mathrm{L}} = \frac{1}{2}a(T-T^*)Q_{ij}Q_{ji} + \frac{1}{3}BQ_{ij}Q_{jk}Q_{ki} + \frac{1}{4}C(Q_{ij}Q_{ji})^2,
+\end{align}
+kjer je $T$ temperatura, $T^*$ najni"zja mo"zna temperatura podhlajene izotropne faze, $a$, $B$ in $C$ pa "cleni Landauovega razvoja in so odvisni od snovi. 
+Ker sta konstanti $a$ in $C$ pozitivni, je pri temperaturi nad $T^*$ najugodnej"se stanje $Q_{ij}=0$ oz. $S=0$, kar ustreza izotropni snovi. 
+Pri temperaturi pod $T^*$ pa kvadratni "clen zamenja predznak, zaradi "cesar postane stabilno tudi stanje z neni"celnim ureditvenim parametrom, torej nematska mezofaza. 
+
+Na ureditev pa vpliva tudi zunanje elektri"cno polje. 
+Prispevek k prosti energiji lahko razdelimo na prispevek izotropnega dela dielektri"cnega tenzorja $\overline\varepsilon$, ki ni odvisen od ureditve teko"cega kristala, in prispevka dielektri"cne anizotropije, ki predstavlja sklopitev med ureditvijo in elektri"cnim poljem. 
+Skupna sprememba proste energije je enaka
+\begin{align}
+  f_{\mathrm{EM}} = -\frac{1}{2}\varepsilon_0 \left(\overline\varepsilon E_i E_i + \frac{2}{3}\varepsilon_a^{\mathrm{mol}} Q_{ij}E_iE_j \right),
+\end{align}
+kjer je $\overline{\varepsilon}$ povpre"cna dielektri"cna konstanta, $\varepsilon_a^{\mathrm{mol}} = \varepsilon_{\parallel}^{\mathrm{mol}} - \varepsilon_{\perp}^{\mathrm{mol}}$ dielektri"cna anizotropija posamezne molekule, $E_i$ pa zunanje elektri"cno polje. 
+"Ce na teko"ci kristal svetimo, ureditev molekul ne more slediti hitremu spreminjanju opti"cnega elektri"cnega polja, ampak nanj efektivno deluje povpre"cen kvadrat polja. 
+Ta sklopitev izhaja iz polarizabilnosti molekul, ki je odvisna od njihove oblike. 
+Zunanje polje v molekuli inducira elektri"cni dipolni moment, ki je sorazmeren z dol"zino molekule in je zato najve"cji, "ce je polje vzporedno z osjo molekule. 
+
+\subsubsection{Direktor v cilindri"cni kapilari}
 
 Nematski teko"ci kristal se spontano uredi tako, da minimizira prosto energijo. 
 V odsotnosti zunanjega polja je prosta energija najni"zja, "ce ni elasti"cnih deformacij, torej je direktor uniformen. 
 V cilindri"cni geometriji s homeotropnimi robnimi pogoji pa tak"sna ureditev ni mo"zna. 
-Glede na razmerja med elasti"cnimi konstantami se teko"ci kristal uredi v eno izmed treh konfiguracij na sliki \ref{fig:director-profiles}. 
+Glede na razmerja med elasti"cnimi konstantami se teko"ci kristal uredi v eno izmed konfiguracij na sliki \ref{fig:director-profiles}. 
 
 \begin{figure}[h]
 \centering
@@ -108,7 +202,8 @@ Razli"cne smeri pobega povzro"cija nastanek to"ckastih singularnosti (c). Desno:
  \label{fig:director-profiles}
 \end{figure}
 
-Do pobega pride, "ce je razmerje $K_3/K_1$ manj"se od 13, kar velja za ve"cino nematskih teko"cih kristalov. Z minimizacijo energije lahko izpeljemo ravnovesni radialni profil direktorja v cilindri"cnih koordinatah. V poenostavljenem primeru, ko sta elasti"cni konstanti $K_3$ in $K_1$ enaki, je energijsko najugodnje"se stanje\cite{kleman} 
+V profilu s singularno disklinacijo v osi valja je prisotna le pahlja"cna deformacija, zato je energija tega stanja odvisna od konstante $K_1$. 
+V pobeglem profilu pa sta prisotni tako pahlja"cna kot upogibna deformacija. Energija tega stanja je odvisna od konstant $K_1$ in $K_3$. Do pobega pride, "ce je razmerje $K_3/K_1$ manj"se od 13, kar velja za ve"cino nematskih teko"cih kristalov. Z minimizacijo energije lahko izpeljemo ravnovesni radialni profil direktorja v cilindri"cnih koordinatah. V poenostavljenem primeru, ko sta elasti"cni konstanti $K_3$ in $K_1$ enaki, je energijsko najugodnje"se stanje\cite{kleman} 
 \begin{align}
  \vec n &= (n_r, n_\phi, n_z) = (\cos \chi(r), 0, \sin \chi(r)) \\
  \chi(r) &= 2 \arctan \frac{R-r}{R+r}
@@ -117,9 +212,10 @@ kjer je $R$ polmer valja. Tak"sen profil je prikazan na sliki \ref{fig:director-
 
 V primeru pobega v tretjo dimenzijo je direktor povsod dobro definiran. "Ce pa do pobega ne pride, je tik ob osi valja obmo"cje zmanj"sanega reda, kjer ureditveni parameter $S$ pade na 0. 
 
-\subsection{Valj z dvojnim zvojem}
+\subsubsection{Valj z dvojnim zvojem}
 
 Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj. 
+\todo{Mogo"ce kaj vec o double-twist cylindrih}
 
 \begin{figure}
  \centering
@@ -127,13 +223,6 @@ Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj
  \caption{Shematski prikaz direktorja v valju z dvojnim zvojem. Na osi valja je direktor vzporeden z osjo, z oddaljenostjo od osi pa kot med osjo in direktorjem nara"s"ca linearno\cite{coles-morris}. }
  \label{fig:double-twist-cylinder}
 \end{figure}
-
-
-
-\subsection{TK kot anizotropni dielektrik}
-% Tenzor Q, prosta energija
-
-Slika pobega je v Kleman-Lavrentovich, stran 397. 
 
 \subsection{Maxwellove ena"cbe v neizotropnem sredstvu}
 % Predstavi ME v obliki, primerni za resevanje. 
