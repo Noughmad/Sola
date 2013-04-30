@@ -10,6 +10,7 @@
 \usepackage{graphicx}
 \usepackage{subfigure}
 \usepackage{comment}
+\usepackage[smaller]{acronym}
 
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -19,12 +20,19 @@
 \tikzset{epoint/.style={draw,circle,red,inner sep=2pt,fill}}
 \tikzset{mpoint/.style={draw,circle,blue,inner sep=2pt,fill}}
 
-\newcommand{\todo}[1]{(\textbf{\textsc{TODO}: #1})}
+\newcommand{\todo}[1]{(\textbf{\textsmaller{TODO}: #1})}
 \newcommand{\odvod}[2]{\frac{\partial #1}{\partial #2}}
 \renewcommand{\vec}{\mathbf}
 \newcommand{\eps}{\varepsilon}
 \newcommand{\E}{\vec E}
 \newcommand{\B}{\vec B}
+\newcommand{\angl}[1]{(\textit{angl. #1})}
+
+\acrodef{FDTD}{Finite-difference time-domain}
+\acrodef{ABC}{Absorbing boundary condition}
+\acrodef{PML}{Perfectly-matched layer}
+
+\renewcommand{\acf}[1]{\acl{#1} -- \acs{#1}}
 
 %opening
 \title{Magistrsko delo}
@@ -46,7 +54,7 @@ Strukture za usmerjanje svetlobe igrajo pomembno vlogo v sodobnih opti"cnih komu
 % TODO: Na kratko o vseh valovodih
 
 Teko"ci kristali so mehke snovi, ki zdru"zujejo lastnosti kristalov in teko"cin\cite{degennes}. 
-Praviloma so teko"ci kristali sestavljeni iz pali"castih ali diskastih molekul, teko"cekristalne mezofaze pa tvorijo tudi segmenti DNK, molekule nekaterih virusov in primerni koloidni delci. 
+Praviloma so teko"ci kristali sestavljeni iz pali"castih ali diskastih molekul, teko"cekristalne mezofaze pa tvorijo tudi segmenti \textsmaller{DNK}, molekule nekaterih virusov in primerni koloidni delci. 
 Polo"zaji gradnikov nimajo reda dolgega dosega, ali pa ta red ne dr"zi v vseh treh dimenzijah, zato se snov obna"sa kot teko"cina. 
 
 Orientacijski red v teko"cih kristalih lahko tak"sen red opi"semo s preferen"cno orientacijo oz. direktorjem $\mathbf{n}$ in stopnjo reda $S$. 
@@ -90,7 +98,7 @@ Orientacijski red dolgega dosega je tipi"cno realiziran s pali"castimi gradniki.
 \end{comment}
 
 Direktor $\mathbf{n}$ podaja povpre"cno smer gradnikov, ne pa dejanske orientacije posameznih gradnikov. 
-Zato uvedemo "se stopnjo reda $S$ (angl. degree of order), ki nam pove, koliko smeri molekul v povpre"cju odstopajo od direktorja. 
+Zato uvedemo "se stopnjo reda $S$ \angl{degree of order}, ki nam pove, koliko smeri molekul v povpre"cju odstopajo od direktorja. 
 Zaradi simetrije $\mathbf{n} \leftrightarrow -\mathbf{n}$ ne moremo vzeti kar povpre"cne vrednosti kota med gradnikom in direktorjem, saj je ta vrednost enaka ni"c. 
 Namesto tega uporabimo povpre"cni kvadrat kota, ki je ekvivalenten kvadrupolnemu momentu\cite{kleman}
 \begin{align}
@@ -126,7 +134,7 @@ Posamezni gradniki imajo najve"cjo svobodo gibanja in s tem najve"cjo entropijo,
 Krajevno spreminjanje ureditvenega parametra $Q_{ij}$ v katerikoli smeri povzro"ci, da sistemu prosta energija naraste. 
 To pove"canje je odvisno od smeri spreminjanja $Q_{ij}$ glede na smer direktorja. 
 Na sliki \ref{fig:tsb} so prikazani trije na"cini deformacije direktorja, s katerimi lahko lokalno opi"semo poljubno krajevno odvisnost. 
-Ti trije na"cini so pahlja"ca (angl. splay), zvoj (angl. twist) in upogib (angl. bend). 
+Ti trije na"cini so pahlja"ca \angl{splay}, zvoj \angl{twist} in upogib \angl{bend}. 
 
 V splo"snem so elasti"cne konstante, ki pripadajo vsakemu izmed treh osnovnih na"cinom deformacije, med seboj razli"cne. 
 Prispevek k gostoti proste energije zaradi elasti"cnih deformacij nematskega teko"cega kristala je tako enak
@@ -220,17 +228,17 @@ Prostih nabojev v vzorcu ni. Z upo"stevanjem zgornjih predpostavk lahko Maxwello
 \begin{equation}
   \begin{aligned}
   \nabla \cdot \vec E = 0 & \qquad \nabla \cdot \vec B = 0 \\
-  \nabla \times \vec E = -\odvod{\vec B}{t} & \qquad \nabla \times \vec B = \sigma \vec E + \varepsilon\varepsilon_0\mu\odvod{\vec E}{t}
+  \nabla \times \vec E = -\odvod{\vec B}{t} & \qquad \nabla \times \vec B = \sigma \vec E + \varepsilon\varepsilon_0\mu_0\odvod{\vec E}{t}
   \end{aligned}
 \end{equation}
 V zadnji ena"cbi smo privzeli, da se dielektri"cni tenzor $\varepsilon$ ne spreminja s "casom, zato nastopa izved "casovnega odvoda. 
 Ta predpostavka je smiselna pri obravnavi opti"cnih polj, saj je relaksacija teko"cega kristala mnogo po"casnej"sa od sprememb elektri"cnega in magnetnega polja. 
 
-Pri re"sevanju z metodo FDTD potrebujemo le zadnji dve ena"cbi, ki vsebujeta "casovne odvode polje. 
+Pri numeri"cnem re"sevanju potrebujemo le zadnji dve ena"cbi, ki vsebujeta "casovne odvode polj. 
 "Ce izrazimo "casovna odvoda in ena"cbi prepi"semo v brezdimenzijsko obliko ($c = \varepsilon_0 = \mu_0 = 1$), se glasita
 \begin{align}
 \label{eq:maxwell-base}
- \odvod{\vec{B}}{t} = -\nabla \times \vec{E}, \qquad \odvod{\vec{E}}{t} = \eps^{-1} \nabla \times \vec{B}
+ \odvod{\vec{B}}{t} = -\nabla \times \vec{E}, \qquad \odvod{\vec{E}}{t} = \eps^{-1} (\nabla \times \vec{B} - \sigma \vec E)
 \end{align}
 
 \subsection{Teorija valovodov}
@@ -238,7 +246,7 @@ Pri re"sevanju z metodo FDTD potrebujemo le zadnji dve ena"cbi, ki vsebujeta "ca
 
 \section{Numeri"cna metoda}
 
-Za samo ra"cunanje sem implementiral metodo kon"cnih diferenc v "casovni domeni (angl. Finite-difference time-domain -- FDTD). 
+Za samo ra"cunanje sem implementiral metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}}. 
 Pri tej metodi "casovno propagiramo elektri"cno in magnetno polje v vsaki to"cki po Maxwellovih ena"cbah
 
 \begin{align}
@@ -255,7 +263,7 @@ Za izra"cun "casovnega odvoda vsakega izmed polj $\vec{E}, \vec{B}$ potrebujemo 
 Poleg tega obe ena"cbi povezujeta "casovni odvod enega polja s krajevnim odvodom drugega. 
 Zaradi obeh opisanih lastnosti lahko dvignemo red metode, in s tem izbolj"samo natan"cnost, "ce vrednosti polj poznamo ob razli"cnih "casih in na razli"cnih mestih. 
 
-Obi"cajne implementacije metode FDTD gredo "se korak dlje, tako da so tudi posamezne komponente elektri"cnega in magnetnega polja definirane na razli"cih to"ckah\cite{yee, taflove, yee-lattice}.
+Obi"cajne implementacije metode \acs{FDTD} gredo "se korak dlje, tako da so tudi posamezne komponente elektri"cnega in magnetnega polja definirane na razli"cih to"ckah\cite{yee, taflove, yee-lattice}.
 Tak"sno mre"zo je predlagal Yee in izkori"s"ca dejstvo, da pri "casovnem odvodu vsake komponente posameznega polja nastopata le krajevna odvoda ostalih dveh komponent drugega polja. 
 Z ustrezno izbiro to"ck, kjer so definirane posamezne komponente, so vsi krajevni odvodi izra"cunani ravno na sredini med ustreznima to"ckama mre"ze. 
 Za u"cinkovito delovanje pa tak"sna mre"za zahteva, da je dielektri"cni tenzor $\eps$ diagonalen, njegove komponente pa morajo biti znane na razli"cnih to"ckah mre"ze. 
@@ -346,12 +354,12 @@ Opti"cno anizotropna snov mora biti v celoti v notranjem obmo"cju. \todo{slikca}
 
 "Ce imamo na robu celice Dirichletov, Neumannov ali me"sani robni pogoj, se bo celotno valovanje odbilo in vrnilo v celico. 
 Tega si ne "zelimo, pri izvedbi ekperimentov obi"cajno svetloba najprej preide skozi vzorec, nato pa jo zajamemo in preu"cimo. 
-To lahko simuliramo z uporabo absorbirajo"cega robnega pogoja (angl. Absorbing boundary condition -- ABC). 
-Obstaja ve"c razli"cnih absorbirajo"cih robnih pogojev, v zadnjem "casu se najve"c uporablja t.i. popolnoma ujemajo"ca plast (angl. Perfectly matched layer -- PML)\cite{taflove}. 
+To lahko simuliramo z uporabo absorbirajo"cega robnega pogoja \angl{\ac{ABC}}. 
+Obstaja ve"c razli"cnih implementacij absorbirajo"cih robnih pogojev, v zadnjem "casu se najve"c uporablja t.i. popolnoma ujemajo"ca plast \angl{\ac{PML}}\cite{taflove}. 
 
-Material v plasti PML zagotavlja eksponentno pojemanje vpadnega vala, neodvisno od njegove frekvence in smeri "sirjenja. 
-Absorpcijo valovanja dose"zemo z uporabo elektri"cne prevodnosti $\sigma$ in magnetnih izgub $\sigma*$. 
-Odboju na meji med notranjostjo celice in plastjo PML se izognemo, "ce izgube v robni plasti zado"s"cajo pogoju $\sigma/\sigma* = \eps_1/\mu_1$, kjer sta $\eps_1$ in $\mu_1$ dielektri"cnost in magnetna permeabilnost v notranjosti. 
+Material v plasti \acs{PML} zagotavlja eksponentno pojemanje vpadnega vala, neodvisno od njegove frekvence in smeri "sirjenja. 
+Absorpcijo valovanja dose"zemo z uporabo elektri"cne prevodnosti $\sigma$ in magnetnih izgub $\sigma^*$. 
+Odboju na meji med notranjostjo celice in plastjo \acs{PML} se izognemo, "ce izgube v robni plasti zado"s"cajo pogoju $\sigma/\sigma^* = \eps_1/\mu_1$, kjer sta $\eps_1$ in $\mu_1$ dielektri"cnost in magnetna permeabilnost v notranjosti. 
 To ujemanje izgub pa odpravi odboj na meji le za valovanje, ki vpada pravokotno na mejo. 
 Odboj valovanja pod poljubnim kotom pa prepre"cimo, "ce vsako komponento elektri"cnega in magnetnega polja razdelimo na dva prispevka. 
 Tak material je nefizikalen, saj imamo dodatne prostostne stopnje, polje pa ne sledi ve"c Maxwellovim ena"cbam. 
@@ -362,7 +370,7 @@ Komponenta $E_x$ elektri"cnega polja vala v obi"cajnem mediju z dielektri"cnostj
  \eps \odvod{E_x}{t} + \sigma E_x = \odvod{H_z}{y} - \odvod{H_y}{z}\;.
 \end{align}
 
-V plasti PML pa elektri"cno polje razdelimo na dva prispeka, $E_x = E_{xy} + E_{xz}$, ki zado"s"cata ena"cbam
+V plasti \acs{PML} pa elektri"cno polje razdelimo na dva prispeka, $E_x = E_{xy} + E_{xz}$, ki zado"s"cata ena"cbam
 
 \begin{align}
  \eps \odvod{E_{xy}}{t} + \sigma_y E_{xy} &= \odvod{}{y}(H_{zx} + H_{zy}) \\
@@ -414,7 +422,7 @@ Ujemanje rezultatov z napovedjo je prikazano na sliki \ref{fig:test-uniform}.
 
 %bandgap => prepovedani pas, energijska re"za
 Pri periodi"cni modulaciji lomnega koli"cnika opazimo pojav, da se svetloba dolo"cenih frekvenc ne more "siriti po mediju\cite{joannopoulos}. 
-Temu pojavu pravimo prepovedani pas (angl. band gap). 
+Temu pojavu pravimo prepovedani pas \angl{band gap}. 
 "Sirina in oblika tega pasu sta odvisni od obeh lomnih koli"cnikov, periode modulacije in velikosti kristala. 
 Za preverjanje metode sem modeliral kristal, kjer se izmenjujejo plasti z izotropno dielektri"cnostjo $\varepsilon_1$ in $\varepsilon_2$. 
 V smereh $x$ in $y$ sem uporabil periodi"cne robne pogoje, v smeri $z$ pa celico dol"zine 1024 enot z 20 enotami absorbirajo"ce plasti na vsakem koncu. 
@@ -441,7 +449,7 @@ Metoda torej pravilno napove polo"zaj in "sirino prepovedanih pasov.
 \subsection{Robni pogoji}
 
 Za prepre"cevanje odboja na stranskih ploskvah sem uporabil absorbirajo"ce robne pogoje. 
-Plast PML nam omogo"ca, da imamo material s poljubno velikimi izgubami, pa vseeno ne dobimo odboja na meji, vse dokler so elektri"cne in magnetne izgube v primernem razmerju. 
+Plast \acs{PML} nam omogo"ca, da imamo material s poljubno velikimi izgubami, pa vseeno ne dobimo odboja na meji, vse dokler so elektri"cne in magnetne izgube v primernem razmerju. 
 V praksi pa se zaradi diskretizacije vseeno nekaj valovanja odbije na meji med notranjostjo celice in robno plastjo. 
 Najti moramo torej ravnote"zje med dvema prispevkoma: "ce so izgube majhne, bo del valovanja pri"sel skozi robno plast in se odbil na zunanjem robu. 
 "Ce pa so izgube prevelike, se bo del valovanja odbil "ze na notranjem robu. 
