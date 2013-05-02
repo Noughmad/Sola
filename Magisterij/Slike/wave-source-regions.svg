@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="569.72656"
+   height="189.11299"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="wave-source-regions.svg">
+  <defs
+     id="defs4">
+    <pattern
+       inkscape:stockid="Wavy"
+       id="Wavy"
+       height="5.1805778"
+       width="30.066020"
+       patternUnits="userSpaceOnUse"
+       inkscape:collect="always">
+      <path
+         id="path5219"
+         d="M 7.597,0.061 C 5.079,-0.187 2.656,0.302 -0.01,1.788 L -0.01,3.061 C 2.773,1.431 5.173,1.052 7.472,1.280 C 9.770,1.508 11.969,2.361 14.253,3.218 C 18.820,4.931 23.804,6.676 30.066,3.061 L 30.062,1.788 C 23.622,5.497 19.246,3.770 14.691,2.061 C 12.413,1.207 10.115,0.311 7.597,0.061 z "
+         style="fill:black;stroke:none;" />
+    </pattern>
+    <linearGradient
+       id="linearGradient3866"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop3868" />
+    </linearGradient>
+    <filter
+       inkscape:collect="always"
+       id="filter5500"
+       x="-0.13157099"
+       width="1.263142"
+       y="-0.10828889"
+       height="1.2165778"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.9579018"
+         id="feGaussianBlur5502" />
+    </filter>
+    <filter
+       color-interpolation-filters="sRGB"
+       inkscape:collect="always"
+       id="filter5500-0"
+       x="-0.13157099"
+       width="1.263142"
+       y="-0.10828889"
+       height="1.2165778">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.9579018"
+         id="feGaussianBlur5502-5" />
+    </filter>
+    <pattern
+       inkscape:stockid="Wavy"
+       id="Wavy-9"
+       height="5.1805778"
+       width="30.066020"
+       patternUnits="userSpaceOnUse"
+       inkscape:collect="always">
+      <path
+         id="path5219-8"
+         d="M 7.597,0.061 C 5.079,-0.187 2.656,0.302 -0.01,1.788 L -0.01,3.061 C 2.773,1.431 5.173,1.052 7.472,1.280 C 9.770,1.508 11.969,2.361 14.253,3.218 C 18.820,4.931 23.804,6.676 30.066,3.061 L 30.062,1.788 C 23.622,5.497 19.246,3.770 14.691,2.061 C 12.413,1.207 10.115,0.311 7.597,0.061 z "
+         style="fill:black;stroke:none;" />
+    </pattern>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="273.95748"
+     inkscape:cy="51.343524"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1141"
+     inkscape:window-x="-2"
+     inkscape:window-y="-3"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-137.3909,-168.37147)">
+    <path
+       id="rect3759"
+       style="color:#000000;fill:none;stroke:#404040;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 138.3909,169.48886 259.60919,0 0,186.87821 -259.60919,0 z"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:type="inkscape:offset"
+       inkscape:radius="-14.142136"
+       inkscape:original="M 170.71875 201.8125 L 170.71875 324.0625 L 365.6875 324.0625 L 365.6875 201.8125 L 170.71875 201.8125 z "
+       style="opacity:0.20000000000000001;color:#000000;fill:url(#Wavy);fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path3806"
+       d="m 184.875,215.96875 0,93.9375 166.65625,0 0,-93.9375 -166.65625,0 z" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3833"
+       style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"><flowRegion
+         id="flowRegion3835"><rect
+           id="rect3837"
+           width="74.285713"
+           height="41.42857"
+           x="233.57143"
+           y="245.21933"
+           style="font-size:48px" /></flowRegion><flowPara
+         id="flowPara3839"></flowPara></flowRoot>    <path
+       transform="translate(0,2.6171874e-6)"
+       sodipodi:type="inkscape:offset"
+       inkscape:radius="-14.142136"
+       inkscape:original="M 170.71875 201.8125 L 170.71875 324.0625 L 365.6875 324.0625 L 365.6875 201.8125 L 170.71875 201.8125 z "
+       style="color:#000000;fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path3806-9"
+       d="m 184.875,215.96875 0,93.9375 166.65625,0 0,-93.9375 -166.65625,0 z" />
+    <rect
+       style="color:#000000;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter5500);enable-background:accumulate"
+       id="rect5494"
+       width="35.714287"
+       height="43.392857"
+       x="253.75"
+       y="238.43361" />
+    <text
+       xml:space="preserve"
+       style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="255.14285"
+       y="278.2193"
+       id="text3841"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3843"
+         x="255.14285"
+         y="278.2193">B</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="145.14285"
+       y="278.2193"
+       id="text3841-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3843-7"
+         x="145.14285"
+         y="278.2193">A</tspan></text>
+    <path
+       inkscape:connector-curvature="0"
+       id="rect3759-1"
+       style="color:#000000;fill:none;stroke:#404040;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 446.3909,169.48886 259.60919,0 0,186.87821 -259.60919,0 z" />
+    <text
+       xml:space="preserve"
+       style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="459.14285"
+       y="278.2193"
+       id="text3841-0-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3843-7-8"
+         x="459.14285"
+         y="278.2193">A</tspan></text>
+    <path
+       inkscape:connector-curvature="0"
+       id="rect3759-1-5"
+       style="color:#000000;fill:none;stroke:#404040;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 504.13066,169.37147 201.98682,0 0,187.11299 -201.98682,0 z" />
+    <path
+       inkscape:connector-curvature="0"
+       id="rect3759-1-5-9"
+       style="opacity:0.20000000000000001;color:#000000;fill:url(#Wavy-9);fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 504.13066,169.37147 201.98682,0 0,187.11299 -201.98682,0 z" />
+    <rect
+       style="color:#000000;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter5500-0);enable-background:accumulate"
+       id="rect5494-2"
+       width="35.714287"
+       height="43.392857"
+       x="581.75"
+       y="238.43361" />
+    <text
+       xml:space="preserve"
+       style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="583.14282"
+       y="278.2193"
+       id="text3841-00"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3843-2"
+         x="583.14282"
+         y="278.2193">B</tspan></text>
+  </g>
+</svg>

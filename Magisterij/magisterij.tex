@@ -350,18 +350,38 @@ Tak"sen razcep polja je mo"zen le, "ce je "sirjenje vpadnega valovanja dobro zna
 Mre"zo zato razdelimo na dve obmo"cji, v notranjem obmo"cju ra"cunamo s skupnim poljem, v zunanjem pa polje razcepimo in shranjujemo le sipani del.
 Opti"cno anizotropna snov mora biti v celoti v notranjem obmo"cju. \todo{slikca}
 
+Izvor valovanja modeliramo na prehodu med obmo"cjema. 
+
+Delitev na notranje in zunanje obmo"cje je u"cinkovita, "ce se efektivni lomni koli"cnik v notranem obmo"cju ne razlikuje mo"cno od zunanjega. 
+V tem primeru je fazna razlika na zadnji stranici notrenjega obmo"cja dovolj majhna, da pretvorba na sipano valovanje odstrani ve"cino valovanja. 
+"Ce pa je fazna razlika primerljiva s $\pi/2$ ali ve"cja, lahko odstranitev vpadnega vala celo pove"ca amplitudo valovanja. 
+To se zgodi npr. v teko"cekristalnem valovodu, ki je mnogo dalj"si od valovne dol"zine svetlobe. 
+Takrat je bolj u"cinkovito upo"stevati izvor valovanja le na vpadni strani. 
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[width=.8\textwidth]{./Slike/wave-source-regions}
+ \caption{Delitev mre"ze na dve obmo"cji. V obmo"cju \textbf{A} ra"cunamo le z sipanim valovanjem, v obmo"cju \textbf{B} pa s celotnim valovanjem. Delitev na levi sliki je primerna, "ce je razlika med lomnima koli"cnikoma \textbf{A} in \textbf{B} dovolj majhna. V nasprotnem primeru uporabimo delitev na desni sliki. }
+ \label{fig:wave-source-regions}
+\end{figure}
+
+Delitev na zunanje in notranje obmo"cji, ki je prikazana na levi strani slike \ref{fig:wave-source-regions}, sem uporabil le s preprostimi primeri za preverjanje delovanja metode. 
+Vse ostale izra"cune sem izvajal z delitvijo na desni strani. 
+Na sliki je velikost obmo"cja \textbf{A} pretirana zaradi preglednosti. 
+V vseh primerih je bila debelina obmo"cja \textbf{A} enaka dva koraka mre"ze. 
+
 \subsection{Robni pogoji}
 
 "Ce imamo na robu celice Dirichletov, Neumannov ali me"sani robni pogoj, se bo celotno valovanje odbilo in vrnilo v celico. 
 Tega si ne "zelimo, pri izvedbi ekperimentov obi"cajno svetloba najprej preide skozi vzorec, nato pa jo zajamemo in preu"cimo. 
 To lahko simuliramo z uporabo absorbirajo"cega robnega pogoja \angl{\ac{ABC}}. 
-Obstaja ve"c razli"cnih implementacij absorbirajo"cih robnih pogojev, v zadnjem "casu se najve"c uporablja t.i. popolnoma ujemajo"ca plast \angl{\ac{PML}}\cite{taflove}. 
+Obstaja ve"c razli"cnih implementacij absorbirajo"cih robnih pogojev, v zadnjem "casu se najve"c uporablja t.i. popolnoma ujemajo"ca plast \angl{\ac{PML}}\cite{taflove,berenger}. 
 
 Material v plasti \acs{PML} zagotavlja eksponentno pojemanje vpadnega vala, neodvisno od njegove frekvence in smeri "sirjenja. 
 Absorpcijo valovanja dose"zemo z uporabo elektri"cne prevodnosti $\sigma$ in magnetnih izgub $\sigma^*$. 
 Odboju na meji med notranjostjo celice in plastjo \acs{PML} se izognemo, "ce izgube v robni plasti zado"s"cajo pogoju $\sigma/\sigma^* = \eps_1/\mu_1$, kjer sta $\eps_1$ in $\mu_1$ dielektri"cnost in magnetna permeabilnost v notranjosti. 
-To ujemanje izgub pa odpravi odboj na meji le za valovanje, ki vpada pravokotno na mejo. 
-Odboj valovanja pod poljubnim kotom pa prepre"cimo, "ce vsako komponento elektri"cnega in magnetnega polja razdelimo na dva prispevka. 
+To ujemanje izgub odpravi odboj na meji le za valovanje, ki vpada pravokotno na mejo. 
+Odboj valovanja pod poljubnim kotom prepre"cimo, "ce vsako komponento elektri"cnega in magnetnega polja razdelimo na dva prispevka. 
 Tak material je nefizikalen, saj imamo dodatne prostostne stopnje, polje pa ne sledi ve"c Maxwellovim ena"cbam. 
 
 Komponenta $E_x$ elektri"cnega polja vala v obi"cajnem mediju z dielektri"cnostjo $\eps$ in elektri"cno prevodnostjo $\sigma$ zado"s"ca Maxwellovi ena"cbi
@@ -385,11 +405,9 @@ Na enak na"cin so razcepljene ostale komponente eletri"cnega in magnetnega polja
 \todo{Test z dejasnkim profilom, ki ga imajo v opti"cnih vodniki}
 
 \subsection{Prazen prostor}
-
 Prvi preizkus metode, ki sem ga opravil, je "sirjenje svetlobe skozi prazen prostor. 
 Prazen prostor sem modeliral kot snov, kjer je dielektri"cni tenzor uniformen in izotropen. 
 "Ce na eno stran celice postavimo planarni izvir ravnega valovanja, pri"cakujemo ravne valove po celotnem mediju. 
-
 \begin{figure}[h]
  \centering
  \subfigure{\includegraphics[width=.45\textwidth]{g_test_plane}} \,
@@ -397,6 +415,13 @@ Prazen prostor sem modeliral kot snov, kjer je dielektri"cni tenzor uniformen in
 \caption{Levo: Trenutna slika valovanja v celici. Desno: "Casovna in krajevna odvisnost valovanja. \todo{Bolj"si opis, pu"s"cice na slikah}}
 \label{fig:test-plane}
 \end{figure}
+Na obeh slikah opazimo rob, kjer ni valovanja. 
+To je posledica planarnega modeliranja izvora valovanja, kot je prikazano na sliki \ref{fig:wave-source-regions}. 
+Pri tem preizkusu sta lomna koli"cnika v obeh obmo"cjih enaka, zato sem mre"zo razdelil na notranje in zunanje obmo"cje. 
+
+\subsection{Lom in odboj}
+
+  
 
 \subsection{Uniformen direktor}
 
