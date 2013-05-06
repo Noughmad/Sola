@@ -43,7 +43,6 @@ kjer je $W(D)$ interakcijska energija med dvema ravnima povr"sinama na razdalji 
 
 V gornji izpeljavi smo dejstvo, da imamo opravka ravno s sferami in ne s kak"snimi drugimi zaobljenimi povr"sinami, upo"stevali le pri zvezi med $Z$ in $r$. 
 Zelo podobno izpeljavo lahko ponovimo tudi za druga"cne geometrije, na primer za interakcijo med sfero in ravno plo"s"co, ali pa med prekri"zanima valjema. 
-V tem primeru nimamo osne simetrije, zato integral $\int 2\pi r \dd r$ nadomestimo z $\int \dd x \dd y$. 
 
 \begin{table}[h]
 \begin{tabular}{c|c|c|c}
@@ -57,13 +56,34 @@ V tem primeru nimamo osne simetrije, zato integral $\int 2\pi r \dd r$ nadomesti
 \end{tabular}
 \end{table}
 
-\subsection{Prekri"zana valja}
+\subsection{Sfera in plo"s"ca}
+
+Silo med sfero in ravno plo"s"co lahko izra"cunamo kar kot limito, ko se polmer ene izmed sfer pribli"zuje neskon"cno. 
 
 \begin{align}
- F(D) &= \int_{-\infty}
+ F(D) &\approx 2\pi R\cdot W(D)
 \end{align}
 
 
+\subsection{Prekri"zana valja}
+
+V tem primeru nimamo osne simetrije, zato integral $\int 2\pi r \dd r$ nadomestimo z $\int \dd x \dd y$. 
+Razdalja med to"ckama na valjih $Z$ je odvisna od $x$ in $y$ posebej. 
+
+\begin{align}
+ F(D) &= \iint_{-\infty}^{\infty} f(Z) \dd x \dd y \\
+ Z &= D + \frac{x^2}{2R_1} + \frac{y^2}{2R_2}
+\end{align}
+
+Primer, ko imata oba valja enak polmer, je enostaven, saj je $Z = \frac{x^2 + y^2}{2R}$ odvisen le od oddaljenosti od zveznice, enako kot pri sferah. 
+Integral pa lahko izra"cunamo tudi za dva razli"cna valja s spretno zamenjavo spremenljivk, nampre"c $\tilde y = y\sqrt{R_1/R_2}$. 
+Sila med valjema lahko izra"cunamo kot prej
+\begin{align}
+ Z &= D + \frac{x^2 + \tilde y^2}{2R_1} = D + \frac{r^2}{2R_1} \\
+ \dd Z &= \frac{x \dd x}{R_1} + \frac{\tilde y \dd \tilde y}{R_1} = \frac{r \dd r}{R_1} \\
+ F(D) &\approx \int_D^{\infty} \sqrt{\frac{R_2}{R_1}} 2\pi R_1 f(Z) \dd Z = 2\pi \sqrt{R_1 R_2} W(D) 
+\end{align}
+kjer je faktor $\sqrt{R_2/R_1}$ Jacobijeva determinanta prehoda iz koordinate $(x, y)$ na $(x, \tilde y)$. 
 
 \begin{thebibliography}{10}
 
