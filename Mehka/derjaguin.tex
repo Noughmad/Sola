@@ -1,0 +1,80 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+%opening
+\title{Derjaguinov pribli\v zek}
+\author{Miha \v Can\v cula}
+
+\newcommand{\dd}{\;\mathrm{d}}
+
+\begin{document}
+
+\maketitle
+
+\section{Izpeljava}
+
+Vzemimo dve veliki krogli s polmeroma $R_1$ in $R_2$ na majhni medsebojni razdalji $D$. 
+"Ce sta oba polmera mnogo ve"cja od razdalje med sferama, k sili med njima prispeva le interakcija med tankimi obro"ci na obeh sferah, ki so od zveznice med sferama oddaljeni $x$ in imajo $2\pi x \dd x$. 
+Skupna sila med dvema sferama je torej enaka
+
+\begin{align}
+\label{eq:integral}
+ F(D) &= \int_{r=0}^{r=\infty} 2\pi r \dd r f(Z)
+\end{align}
+
+kjer je $Z$ razdalja med tankima obro"cema na oddaljenosti $x$ od zveznice, $f(Z)$ pa sila na enoto povr"sine med dvema ravnima povr"sinama. 
+Za majhne $r$ lahko kroglo pribli"zamo s parabolo in dobimo zvezo med $Z$ in $r$ kot
+
+\begin{align}
+ Z &= D + z_1 + z_2 = D + \frac{r^2}{2} \left(\frac{1}{R_1} + \frac{1}{R_2}\right) \\
+ \dd Z &= \frac{r^2}{2} \left(\frac{1}{R_1} + \frac{1}{R_2}\right)r \dd r
+\end{align}
+
+Izraza lahko vstavimo v ena"cbo (\ref{eq:integral}) in dobimo
+
+\begin{align}
+ F(D) &\approx \int_D^\infty 2\pi \left(\frac{1}{R_1} + \frac{1}{R_2}\right)^{-1}f(Z) \dd Z = 2\pi \left(\frac{R_1R_2}{R_1 + R_2}\right) W(D)
+\end{align}
+
+kjer je $W(D)$ interakcijska energija med dvema ravnima povr"sinama na razdalji $D$. Iz definicije $f(Z)$ sledi, da je $\int 2\pi x \dd x f(Z) = W(D)$. 
+
+\section{Druga"cne geometrije}
+
+V gornji izpeljavi smo dejstvo, da imamo opravka ravno s sferami in ne s kak"snimi drugimi zaobljenimi povr"sinami, upo"stevali le pri zvezi med $Z$ in $r$. 
+Zelo podobno izpeljavo lahko ponovimo tudi za druga"cne geometrije, na primer za interakcijo med sfero in ravno plo"s"co, ali pa med prekri"zanima valjema. 
+V tem primeru nimamo osne simetrije, zato integral $\int 2\pi r \dd r$ nadomestimo z $\int \dd x \dd y$. 
+
+\begin{table}[h]
+\begin{tabular}{c|c|c|c}
+ Geometrija & $Z - D$ & $\dd Z$ & $F(D) / W(D)$ \\
+ \hline
+ Dve sferi & $\frac{r^2}{2} \left(\frac{1}{R_1} + \frac{1}{R_2}\right)$ & $\left(\frac{1}{R_1} + \frac{1}{R_2}\right)r \dd r$ & $2\pi \left(\frac{R_1R_2}{R_1 + R_2}\right)$ \\
+ \hline
+ Sfera in plo"s"ca & $\frac{r^2}{2R}$ & $\frac{1}{R} r \dd r$ & $2\pi R$ \\
+ \hline
+ Prekri"zana valja & $\frac{x^2}{2R_1} + \frac{y^2}{2R_2}$ & $\frac{x \dd x}{R_1} + \frac{y \dd y}{R_2}$ & $2\pi \sqrt{R_1R_2}$
+\end{tabular}
+\end{table}
+
+\subsection{Prekri"zana valja}
+
+\begin{align}
+ F(D) &= \int_{-\infty}
+\end{align}
+
+
+
+\begin{thebibliography}{10}
+
+\bibitem{israelachvili}
+J.~N. Israelachvili.
+\newblock {\em Intermolecular and Surface Forces}.
+\newblock Academic Press (1992).
+
+
+
+\end{thebibliography}
+
+
+\end{document}
