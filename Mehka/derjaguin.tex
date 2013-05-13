@@ -37,8 +37,15 @@ Izraza lahko vstavimo v ena"cbo (\ref{eq:integral}) in dobimo
  F(D) &\approx \int_D^\infty 2\pi \left(\frac{1}{R_1} + \frac{1}{R_2}\right)^{-1}f(Z) \dd Z = 2\pi \left(\frac{R_1R_2}{R_1 + R_2}\right) W(D)
 \end{align}
 
-kjer je $W(D)$ interakcijska energija med dvema ravnima povr"sinama na razdalji $D$. Iz definicije $f(Z)$ sledi, da je $\int 2\pi x \dd x f(Z) = W(D)$. 
+kjer je $W(D)$ interakcijska energija na enoto povr"sine med dvema ravnima povr"sinama na razdalji $D$. Ker je $f(Z)$ sila na enoto povr"sine, je njen integral
+\begin{align}
+  W(D) = \int_D^{\infty} f(Z) \dd Z 
+\end{align}
+enak delu, ki ga moramo opraviti, da plo"s"ci z razdalje $D$ razmaknemo neskon"cno dale"c. 
+To delo pa je po definiciji enako interakcijski energiji med plo"s"cama. 
+Tu sta tako $f(Z)$ kot $W(D)$ sta definirani na enoto povr"sine. 
 
+\newpage
 \section{Druga"cne geometrije}
 
 V gornji izpeljavi smo dejstvo, da imamo opravka ravno s sferami in ne s kak"snimi drugimi zaobljenimi povr"sinami, upo"stevali le pri zvezi med $Z$ in $r$. 
@@ -50,10 +57,14 @@ Zelo podobno izpeljavo lahko ponovimo tudi za druga"cne geometrije, na primer za
  \hline
  Dve sferi & $\frac{r^2}{2} \left(\frac{1}{R_1} + \frac{1}{R_2}\right)$ & $\left(\frac{1}{R_1} + \frac{1}{R_2}\right)r \dd r$ & $2\pi \left(\frac{R_1R_2}{R_1 + R_2}\right)$ \\
  \hline
+ Enaki sferi & $\frac{r^2}{R}$ & $\frac{2}{R}r \dd r$ & $\pi R$ \\
+ \hline
  Sfera in plo"s"ca & $\frac{r^2}{2R}$ & $\frac{1}{R} r \dd r$ & $2\pi R$ \\
  \hline
  Prekri"zana valja & $\frac{x^2}{2R_1} + \frac{y^2}{2R_2}$ & $\frac{x \dd x}{R_1} + \frac{y \dd y}{R_2}$ & $2\pi \sqrt{R_1R_2}$
 \end{tabular}
+\label{tab:geometrije}
+\caption{Razmerje med silo med ukrivljenima povr"sinama $F(D)$ in energijo interakcije med ravnima povr"sinama $W(D)$ za nekaj zna"cilnih geometrij}
 \end{table}
 
 \subsection{Sfera in plo"s"ca}
@@ -85,12 +96,59 @@ Sila med valjema lahko izra"cunamo kot prej
 \end{align}
 kjer je faktor $\sqrt{R_2/R_1}$ Jacobijeva determinanta prehoda iz koordinate $(x, y)$ na $(x, \tilde y)$. 
 
+\section{Primer: Deplecijska interakcija}
+
+Deplecijsko silo med kroglicami smo pri tem predmetu "ze obravnavali, enaka je
+\begin{align}
+\label{eq:depl-sila}
+ \mathcal F(h) &= -\pi \frac{N}{\beta V} \left(R + \frac{2\sigma-h}{2}\right) \left(R + \frac{2\sigma + h}{2}\right)
+\end{align}
+kjer je $N/V$ "stevilska gostota kroglic, $R$ polmer sfer in $\sigma$ polmer kroglic. 
+Razdalja med sferama $h$ je definirana kot razdalja med sredi"s"ci sfer. 
+Izraz velja za $2R \leq h \leq 2R+2\sigma$, povsod drugje je sila enaka nic. 
+Za konsistenco z zapisom v prej"snjem poglavju sem raje uporabljal spremenljivko $D = h - 2R$, ki predstavlja razdaljo med povr"sinama sfer. 
+Sila je nine"celna, "ce je $D \leq 2\sigma$. 
+
+Deplecijsko interakcijo med ravnima izra"cunamo podobno, le da je izra"cun preseka prepovedanih prostornin enostavnej"si. 
+Ta je enak kar
+\begin{align}
+ V' = A (2\sigma - D)
+\end{align}
+iz "cesar dobimo izraz za prosto energijo (spet pi"sem le izraz za primer, ko je $V' > 0$)
+\begin{align}
+ F &= -\frac{1}{\beta} \ln C(T) + \frac{N}{\beta}(\ln V - \frac{V'}{V})
+\end{align}
+Tu je $V$ celotna prostornina posode, ki ni odvisna od $h$. 
+Odvisnost od razdalje med plo"scami se skriva le v $V'$. 
+Interakcijsko energijo med plo"s"cama lahko ena"cimo s "clenom, ki je odvisen od $h$, zanima nas pa le energija na enoto povr"sine. 
+
+\begin{align}
+\label{eq:depl-energija}
+ W(h) &= \frac{N}{\beta V} (D - 2\sigma)
+\end{align}
+
+Derjaguinov pribli"zek trdi, da se izra"za (\ref{eq:depl-sila}) in (\ref{eq:depl-energija}) razlikujeta le za multiplikativno konstanto $\pi R$. 
+Da to preverimo najprej zapi"semo silo med sferama z medsebojno razdaljo $D$
+
+\begin{align}
+ \mathcal F(D) &= -\pi \frac{N}{\beta V} \left(\sigma - \frac{D}{2} \right) \left(\sigma + \frac{D}{2} + 2R\right) \\
+  &\approx -\pi\frac{N}{\beta V} \left(\sigma - \frac{D}{2} \right) \cdot 2R \\
+  &= \pi R \frac{N}{\beta V}(D - 2\sigma) = \pi R\; W(D)
+\end{align}
+V drugi vrstici smo upo"stevali, da sta razdalja med sferama $D$ in polmer kroglic $\sigma$ mnogo manj"sa od polmera sfer $R$. 
+Zgornja zveza je enaka tisti za enaki sferi v Tabeli \ref{tab:geometrije}, kar potrjuje veljavnost Derjaguinovega pribli"zka. 
+
 \begin{thebibliography}{10}
 
 \bibitem{israelachvili}
 J.~N. Israelachvili.
 \newblock {\em Intermolecular and Surface Forces}.
 \newblock Academic Press (1992).
+
+\bibitem{evans}
+D.~F. Evans in H. Wennerstr\"om. 
+\newblock {\em The Colloidal Domain}.
+\newblock Wiley (1999).
 
 
 
