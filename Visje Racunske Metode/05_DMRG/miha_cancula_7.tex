@@ -39,9 +39,9 @@ Entropijo prepletenosti stanja $\Psi$ izra"cunamo tako, da vektor $\Psi$ pretvor
  E = -\sum_\mu \lambda_\mu^2 \log \lambda_\mu^2
 \end{align}
 
-"Ce je v obmo"cju $A$ prvih $n_A$ spinov, ostali pa v obmo"cju $B$, je pretvorba vektorja $\Psi$ v matriko enostavna. Vektor razdelimo na segmente dol"zine $N_A = 2^{n_A}$, nato pa ti segmenti postanejo stolpci matrike. V programu $\texttt{Octave}$ temu ustreza funkcija \texttt{reshape}. Operacija je te"zavnej"sa, "ce je obmo"cje $A$ bolj zapleteno, na primer "ce izberemo vsak drugi spin. 
+\subsection{Kompaktni obmo"cji}
 
-Zakon povr"sine trdi, da je entropija prepletenosti navzgor omejena z dol"zino meje med obmo"cjema. V primeru delitve na dve povezani obmo"cji je dol"zina meje enaka 2. Pravilnost tega zakona sem preverjal tako, da sem izbral razli"cne velikosti $n$ in $n_A$, nato pa izra"cunal entropijo prepletenosti za osnovno stanje in nekaj naklju"cnih stanj. Za vsako izbiro $n_A$ sem generiral 30 naklju"cnih stanj. 
+"Ce je v obmo"cju $A$ prvih $n_A$ spinov, ostali pa v obmo"cju $B$, je pretvorba vektorja $\Psi$ v matriko enostavna. Vektor razdelimo na segmente dol"zine $N_A = 2^{n_A}$, nato pa ti segmenti postanejo stolpci matrike. V programu $\texttt{Octave}$ temu ustreza funkcija \texttt{reshape}. Operacija je te"zavnej"sa, "ce je obmo"cje $A$ bolj zapleteno, na primer "ce izberemo vsak drugi spin. Entropijo prepletenosti sem ra"cunal za razli"cne particije, izbiral sem razli"cne velikosti za $n$ in $n_A$, nato pa izra"cunal entropijo prepletenosti za osnovno stanje in nekaj naklju"cnih stanj. Za vsako izbiro $n_A$ sem generiral 30 naklju"cnih stanj. 
 
 \begin{figure}[H]
  \centering
@@ -51,6 +51,13 @@ Zakon povr"sine trdi, da je entropija prepletenosti navzgor omejena z dol"zino m
 \end{figure}
 
 Ne glede na izbiro stanja je entropija prepletenosti najvi"sja, "ce sta obmo"cji $A$ in $B$ enako veliki, in je simetri"cna na zamenjavo obmo"cij. 
+
+\subsection{Odvisnost od velikosti sistema}
+
+Za oceno termodinamske limite je uporabna zlasti odvisnost od velikosti sistem $n$. 
+
+\subsection{Nekompaktni obmo"cji}
+
 
 \section{Razcep na produkt matrik}
 

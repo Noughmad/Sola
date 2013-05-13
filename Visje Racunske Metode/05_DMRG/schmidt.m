@@ -18,6 +18,32 @@ function E = entanglement_entropy(psi, d, nA)
     E = -sum(lmu .* log(lmu));
 endfunction
 
+function Psi = reshape_noncompact(psi, d, A)
+    N = length(psi);
+    n = round(log(N) / log(d));
+
+    nA = length(A);
+    nB = n - nA;
+    Psi = zeros(d^nA, d^nB);
+    
+    for i = 1:N
+      bits = dec2base(i-1, d, n)
+      row = base2dec(bits(A), d)+1
+      bits(A) = [q];
+      column = base2dec(bits, d)+1
+      Psi(row, column) = psi(i);
+    endfor
+endfunction
+
+function E = entanglement_entropy_noncompact(psi, d, A)
+    Psi = reshape_noncompact(psi, d, A);
+    
+    [U, S, V] = svd(Psi);
+    lmu = diag(S) .^ 2;
+    
+    E = -sum(lmu .* log(lmu));
+endfunction
+
 function test_entent_random()
     d = 2;
     n = 12;
@@ -131,4 +157,38 @@ function I = qmi(psi, d, nA)
     rho = psi * psi';
     
     I = neumann_entropy(rhoA) + neumann_entropy(rhoB) - neumann_entropy(rho);
+endfunction
+
+function velikost_sistema()
+  d = 2;
+  
+  nn = [8 10 12 14];
+  R = [];
+  
+  for n = nn
+    N = d^n;
+    nA = n/2;
+    
+    psi = ground_state(n, d);
+    E = entanglement_entropy(psi, d, 1);
+    En = entanglement_entropy(psi, d, n/2);
+    R = [R; n, E, En];
+  endfor
+
+  dlmwrite("g_entent_n.dat", R);
+endfunction
+
+function nekompaktna()
+  d = 2;
+  n = 12;
+  
+  R = [];
+  psi = ground_state(n, d);
+  for p = [2 3 4 6]
+    A = 1:p:N;
+    E = entanglement_entropy_noncompact(psi, d, A);
+    R = [R; p, E];
+  endfor
+  
+  dlmwrite("g_entent_nonc.dat", R);
 endfunction
