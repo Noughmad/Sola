@@ -23,22 +23,24 @@ function test_entent_random()
     n = 12;
     N = d^n;
     
-    nA_array = [];
+    nA_array = 1:n-1;
     E_array = [];
+    Sig_array = [];
     
-    for i = 1:100
-        nA = randi(n-1);
+    for nA = 1:n-1
+      v = [];
+      for i = 1:20
         psi = rand(N, 1);
         psi /= norm(psi);
         E = entanglement_entropy(psi, d, nA);
-        nA_array = [nA_array; nA];
-        E_array = [E_array; E];
+        v = [v; E];
+      endfor
+      E_array = [E_array; mean(v)];
+      Sig_array = [Sig_array; std(v)];
     endfor
     
-    [nA_array, I] = sort(nA_array);
-    E_array = E_array(I);
-    
-    plot(nA_array, E_array);
+    R = [nA_array' E_array Sig_array];
+    dlmwrite("g_entent_random.dat", R);
 endfunction
 
 function test_entent_ground()
@@ -46,20 +48,17 @@ function test_entent_ground()
     n = 12;
     N = d^n;
     
-    nA_array = [];
+    nA_array = 1:n-1;
     E_array = [];
     I_array = [];
     
-    for nA = 1:n-1
+    for nA = nA_array
         psi = ground_state(n, d);
         E = entanglement_entropy(psi, d, nA);
-        I = qmi(psi, d, nA);
-        nA_array = [nA_array; nA];
         E_array = [E_array; E];
-        I_array = [I_array; I];
     endfor
-    
-    plot(nA_array, E_array, nA_array, I_array);
+    R = [nA_array', E_array];
+    dlmwrite("g_entent_ground.dat", R);
 endfunction
 
 function UN = napihni(U, n, d, j)

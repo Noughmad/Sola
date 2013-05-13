@@ -36,11 +36,31 @@
 Entropijo prepletenosti stanja $\Psi$ izra"cunamo tako, da vektor $\Psi$ pretvorimo v matriko, kjer stanje spinov v obmo"cju $A$ indeksira stolpec matrike, stanje spinov v obmo"cju $B$ pa vrstico. Za tak"sno matriko lahko z razcepom \textsc{SVD} izra"cunamo singularne vrednosti oz. Schmidtove koeficiente $\lambda_\mu$. Entropija prepletenosti je tedaj enaka
 
 \begin{align}
- S = -\sum_\mu \lambda_\mu^2 \log \lambda_\mu^2
+ E = -\sum_\mu \lambda_\mu^2 \log \lambda_\mu^2
 \end{align}
 
 "Ce je v obmo"cju $A$ prvih $n_A$ spinov, ostali pa v obmo"cju $B$, je pretvorba vektorja $\Psi$ v matriko enostavna. Vektor razdelimo na segmente dol"zine $N_A = 2^{n_A}$, nato pa ti segmenti postanejo stolpci matrike. V programu $\texttt{Octave}$ temu ustreza funkcija \texttt{reshape}. Operacija je te"zavnej"sa, "ce je obmo"cje $A$ bolj zapleteno, na primer "ce izberemo vsak drugi spin. 
 
+Zakon povr"sine trdi, da je entropija prepletenosti navzgor omejena z dol"zino meje med obmo"cjema. V primeru delitve na dve povezani obmo"cji je dol"zina meje enaka 2. Pravilnost tega zakona sem preverjal tako, da sem izbral razli"cne velikosti $n$ in $n_A$, nato pa izra"cunal entropijo prepletenosti za osnovno stanje in nekaj naklju"cnih stanj. Za vsako izbiro $n_A$ sem generiral 30 naklju"cnih stanj. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_entropija}
+ \caption{Entropija prepletenosti v odvisnosti od velikosti obmo"cja $A$. Obe obmo"cji sta kompaktni. }
+ \label{fig:entropija}
+\end{figure}
+
+Ne glede na izbiro stanja je entropija prepletenosti najvi"sja, "ce sta obmo"cji $A$ in $B$ enako veliki, in je simetri"cna na zamenjavo obmo"cij. 
+
 \section{Razcep na produkt matrik}
+
+Implementiral sem tudi algoritem za razcep poljubnega stanja $\Psi$ na produkt matrik. 
+
+Pravilnost razcepa na matri"cni produkt je enostavno preverjati. 
+Treba je le zmno"ziti matrike med seboj in rezultat primerjati z ustreznim koeficientom stanja $\Psi$. 
+Za to"cen razcep, kjer velikost matrik ni omejena, mno"zenje matrik vrne rezultat, ki je pravilen do strojne natan"cnosti ra"cunalnika. 
+"Zal pa to"cen razcep porabi veliko ra"cunalni"skega spomina, zato je bolj u"cinkovito odstraniti najmanj"se Schmidtove koeficiente in s tem zmanj"sati matrike. 
+To sem naredil na dva na"cina: takoj sem zanemaril vse singularne vrednosti, manj"se $\varepsilon$, "ce je velikost matrik preve"c narasla pa sem upo"steval le prvih $M$ vrednosti. 
+Bele"zil sem vsoto kvadratov vseh ``odrezanih'' singularne vrednosti, saj je ta merilo za napako. 
 
 \end{document}
