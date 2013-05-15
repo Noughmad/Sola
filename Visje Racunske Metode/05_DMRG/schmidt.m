@@ -29,7 +29,7 @@ function Psi = reshape_noncompact(psi, d, A)
     for i = 1:N
       bits = dec2base(i-1, d, n)
       row = base2dec(bits(A), d)+1
-      bits(A) = [q];
+      bits(A) = [];
       column = base2dec(bits, d)+1
       Psi(row, column) = psi(i);
     endfor
@@ -162,7 +162,7 @@ endfunction
 function velikost_sistema()
   d = 2;
   
-  nn = [8 10 12 14];
+  nn = [8 10 12 14 16];
   R = [];
   
   for n = nn
@@ -185,7 +185,7 @@ function nekompaktna()
   R = [];
   psi = ground_state(n, d);
   for p = [2 3 4 6]
-    A = 1:p:N;
+    A = 1:p:n;
     E = entanglement_entropy_noncompact(psi, d, A);
     R = [R; p, E];
   endfor

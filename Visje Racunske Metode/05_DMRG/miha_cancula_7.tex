@@ -54,20 +54,44 @@ Ne glede na izbiro stanja je entropija prepletenosti najvi"sja, "ce sta obmo"cji
 
 \subsection{Odvisnost od velikosti sistema}
 
-Za oceno termodinamske limite je uporabna zlasti odvisnost od velikosti sistem $n$. 
+Za oceno termodinamske limite je uporabna zlasti odvisnost od velikosti sistem $n$. Pri nekaj razli"cnih velikostih sem izra"cunal entropije delitve na dve enaki polovici in delitve, kjer je v obmo"cju $A$ le en spin. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_velikost}
+ \caption{Entropija prepletenosti v odvisnosti od velikosti sistema $n$. Obe obmo"cji sta kompaktni in enako veliki. }
+ \label{fig:velikost}
+\end{figure}
+
+Entropija delitve z $n_A = 1$ ni odvisna od velikosti sistema, medtem ko entropije delitve na enaki obmo"cji opazno nara"s"ca z velikostjo. 
+V skladu s prej"snjim grafom lahko sklepamo, da je entropija prepletenosti odvisna predvsem od velikosti manj"sega izmed obmo"cij. 
 
 \subsection{Nekompaktni obmo"cji}
 
+Opazoval sem tudi obna"sanje entropije, ko ne vzamemo kompaktnih obmo"cji, ampak k $A$ "stejemo vsak $k$-ti spin. 
+S tem seveda spremenimo "stevilo vezi na meji, tak"snih vezi je to"cno $2/k$, "ce je $k \geq 2$. 
+
+\begin{figure}[H]
+ \centering
+ \input{g_nekompaktna}
+ \caption{Entropija prepletenosti med dvema nekompaktnima obmo"cjema.  }
+ \label{fig:nekompaktna}
+\end{figure}
+
+Uporabil sem sistem velikosti $n=12$, ki je precej deljivo "stevilo, zato da sem lahko za obmo"cje $A$ lahko "stel vsak drugi, vsak tretji, vsak "cetrti ali vsak "sesti spin. 
+Entropija prepletenosti ka"ze lepo odvisnost od "stevila vezi, $E \propto k^{-3/4}$. 
 
 \section{Razcep na produkt matrik}
 
 Implementiral sem tudi algoritem za razcep poljubnega stanja $\Psi$ na produkt matrik. 
+Uporabil sem programsko okolje \texttt{Octave}, ki je primerno za delo z matrikami. 
+Na vsakem koraku sem za preoblikovanje ``gosenice'' uporabil funkcijo \texttt{reshape}, tako da se mi ni bilo treba ukvarjati s preve"c zankami in indeksi. 
 
 Pravilnost razcepa na matri"cni produkt je enostavno preverjati. 
 Treba je le zmno"ziti matrike med seboj in rezultat primerjati z ustreznim koeficientom stanja $\Psi$. 
 Za to"cen razcep, kjer velikost matrik ni omejena, mno"zenje matrik vrne rezultat, ki je pravilen do strojne natan"cnosti ra"cunalnika. 
-"Zal pa to"cen razcep porabi veliko ra"cunalni"skega spomina, zato je bolj u"cinkovito odstraniti najmanj"se Schmidtove koeficiente in s tem zmanj"sati matrike. 
-To sem naredil na dva na"cina: takoj sem zanemaril vse singularne vrednosti, manj"se $\varepsilon$, "ce je velikost matrik preve"c narasla pa sem upo"steval le prvih $M$ vrednosti. 
-Bele"zil sem vsoto kvadratov vseh ``odrezanih'' singularne vrednosti, saj je ta merilo za napako. 
+
+Implementacija v \texttt{Octave} je dostopna na internetu na naslovu \url{https://github.com/Noughmad/Sola/blob/master/Visje%20Racunske%20Metode/05_DMRG/mpa.m}. 
+Prilo"zena je funkcija, ki preverja pravilno delovanje za naklju"cno stanje $\Psi$. 
 
 \end{document}

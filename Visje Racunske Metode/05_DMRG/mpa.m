@@ -1,5 +1,11 @@
 warning ("off", "Octave:broadcast");
 
+global MinSchmidt
+global MaxM
+
+MinSchmidt = 1e-3
+MaxM = 100
+
 function i = psi_index(S, d)
     i = 1;
     j = 0;
@@ -9,7 +15,26 @@ function i = psi_index(S, d)
     endfor
 endfunction
 
-function A = mpa(psi, d)
+function [U, S, V, e] = svd_limited(A)
+  global MinSchmidt
+  global MaxM
+
+  [U, S, V] = svd(A);
+  s = length(diag(S));
+  l = min([MaxM, sum(diag(S) > MinSchmidt)]);
+  if s > l
+    e = sumsq(diag(S)(l+1:s))
+  else
+    e = 0
+  endif
+  U = U(:,1:l);
+  S = S(1:l,1:l);
+  V = V(:,1:l);
+endfunction
+
+function [A, truncation_error] = mpa(psi, d)
+    truncation_error = 0
+
     [N, o] = size(psi);
     if (N != 1 && o != 1)
         error("psi must be a vector");
@@ -30,30 +55,33 @@ function A = mpa(psi, d)
     M = {};
     
     psi = reshape(psi, d, d^(n-1));
-    [U, S, V] = svd(psi);
-    M{1} = d;
+    [U, S, V, e] = svd_limited(psi);
+    truncation_error += e;
+    M{1} = length(S);
     for s = 1:d
         A{1, s} = U(s,:);
     endfor
-    psi = diag(S) .* V'(1:M{1},:);
+    psi = diag(S) .* V';
     
     for j = 2:n-1
         psi = reshape(psi, M{j-1}*d, d^(n-j));
-        [U, S, V] = svd(psi);
-        m = min(size(S));
-        M{j} = min(size(S));
+        [U, S, V, e] = svd_limited(psi);
+        truncation_error += e;
+        M{j} = length(S);
         
         for s = 1:d
-            A{j, s} = U(M{j-1}*(s-1)+1:M{j-1}*s,1:m);
+            A{j, s} = U(M{j-1}*(s-1)+1:M{j-1}*s,:);
         endfor
 
-        psi = diag(S) .* V'(1:M{j},:);
+        psi = diag(S) .* V';
     endfor
     
     psi = reshape(psi, M{n-1}, d);
     for s = 1:d
         A{n, s} = psi(:,s);
     endfor
+    
+    truncation_error
 endfunction
 
 function p = mpa_psi_element(A, S)
@@ -66,7 +94,7 @@ endfunction
 
 function Psi, Mpa = test_mpa(d, n)
     psi = rand(d^n, 1);
-    A = mpa(psi, d);
+    [A, e] = mpa(psi, d);
     
     S = randi(d, n, 1);
     i = psi_index(S, d);
