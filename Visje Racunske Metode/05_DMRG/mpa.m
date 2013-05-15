@@ -3,7 +3,7 @@ warning ("off", "Octave:broadcast");
 global MinSchmidt
 global MaxM
 
-MinSchmidt = 1e-6
+MinSchmidt = 1e-3
 MaxM = 100
 
 function i = psi_index(S, d)
@@ -19,12 +19,12 @@ function [U, S, V, e] = svd_limited(A)
   global MinSchmidt
   global MaxM
 
-  [U, S, V] = svd(A);
-  s = length(diag(S))
-  l = min([MaxM, sum(diag(S) > MinSchmidt)]);
+  [U, S, V] = svds(A, MaxM);
+  s = length(diag(S));
+  l = sum(diag(S) > MinSchmidt);
   if s > l
-    trunc = diag(S)(l+1:s)
-    e = sumsq(trunc)
+    trunc = diag(S)(l+1:s);
+    e = sumsq(trunc);
   else
     e = 0;
   endif
@@ -33,7 +33,7 @@ function [U, S, V, e] = svd_limited(A)
   V = V(:,1:l);
 endfunction
 
-function [A, truncation_error] = mpa(psi, d)
+function [A, M, truncation_error] = mpa(psi, d)
     truncation_error = 0
 
     [N, o] = size(psi);
