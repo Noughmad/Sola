@@ -33,7 +33,7 @@ function [U, S, V, e] = svd_limited(A)
   V = V(:,1:l);
 endfunction
 
-function [A, M, truncation_error] = mpa(psi, d)
+function [B, L, truncation_error] = mpa(psi, d)
     truncation_error = 0
 
     [N, o] = size(psi);
@@ -54,13 +54,15 @@ function [A, M, truncation_error] = mpa(psi, d)
 
     A = {};
     M = {};
+    L = {};
     
     psi = reshape(psi, d, d^(n-1));
     [U, S, V, e] = svd_limited(psi);
     truncation_error += e;
     M{1} = length(S);
+    L{1} = S;
     for s = 1:d
-        A{1, s} = U(s,:);
+        B{1, s} = U(s,:);
     endfor
     psi = diag(S) .* V';
     
@@ -70,8 +72,9 @@ function [A, M, truncation_error] = mpa(psi, d)
         truncation_error += e;
         M{j} = length(S);
         
+        L{j} = S;
         for s = 1:d
-            A{j, s} = U(M{j-1}*(s-1)+1:M{j-1}*s,:);
+            B{j, s} = U(M{j-1}*(s-1)+1:M{j-1}*s,:);
         endfor
 
         psi = diag(S) .* V';
@@ -79,30 +82,36 @@ function [A, M, truncation_error] = mpa(psi, d)
     
     psi = reshape(psi, M{n-1}, d);
     for s = 1:d
-        A{n, s} = psi(:,s);
+        B{n, s} = psi(:,s);
+    endfor
+    
+    for j = 2:n
+      for s = 1:d
+        B{j, s} = L{j-1} \ B{j, s};
+      endfor
     endfor
     
     truncation_error
 endfunction
 
-function p = mpa_psi_element(A, S)
-    [n, d] = size(A);
-    p = 1;
-    for j = 1:n
-        p = p * A{j, S(j)};
+function p = mpa_psi_element(B, L, S)
+    [n, d] = size(B);
+    p = B{1, S(1)};
+    for j = 2:n
+        p = p * L{j-1} * B{j, S(j)};
     endfor
 endfunction
 
 function Psi, Mpa = test_mpa(d, n)
     psi = rand(d^n, 1);
     psi /= norm(psi);
-    [A, e] = mpa(psi, d);
+    [B, L, e] = mpa(psi, d);
     
     S = randi(d, n, 1);
     i = psi_index(S, d);
     
     Psi = psi(i);
-    Mpa = mpa_psi_element(A, S);
+    Mpa = mpa_psi_element(B, L, S);
 endfunction
 
 function test_mpa_many()
