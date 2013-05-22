@@ -6,6 +6,7 @@ function S = didx(s1, s2, d)
 endfunction
 
 function U = dvodelcni(z)
+  z *= -1;
   U = spalloc(4, 4, 6);
   U(1,1) = exp(2*z);
   U(4,4) = exp(2*z);
@@ -14,14 +15,13 @@ function U = dvodelcni(z)
   U = exp(-z) * U;
 endfunction
 
-function propagate(A, j, U)
-  BB = {};
-  
-  d = sqrt(length(U));
+function Ap = propagate(A, j, U)
+  d = A.d;
   
   Mjm = size(A.B{j,1}, 1);
   Mjp = size(A.B{j+1,1}, 2);
   
+  BB = {};
   for sj = 1:d
     for sjp = 1:d
       BB{sj, sjp} = zeros(Mjm, Mjp);
@@ -58,31 +58,55 @@ function propagate(A, j, U)
     A.B{j, s} = lm \ U(Mjm*(s-1)+1:Mjm*s,:);
     A.B{j+1, s} = V(Mjp*(s-1)+1:Mjp*s,:)';
   endfor
+  
+  Ap = A;
 endfunction
 
-function step(A, j0, U, n)
+function Ap = step(A, j0, U, n)
   for j = j0:2:n-1
-    propagate(A, j, U);
+    A = propagate(A, j, U);
   endfor
+  Ap = A;
 endfunction
 
 function A = osnovno_stanje_heisenberg(n, beta)
   d = 2;
   N = d^n;
   psi = rand(N, 1);
+  psi /= norm(psi);
   
   [A, e] = mpa(psi, d);
   
-  P = 100;
+  P = 20;
+  B = 20;
   z = beta / P;
   U = dvodelcni(z);
   U2 = dvodelcni(z/2);
   
-  step(A, 1, U2, n);
-  step(A, 2, U, n);
+  Norm = [0, mpa_norm(A, d)];
+  
   for s = 1:P-1
-    step(A, 1, U, n);
-    step(A, 2, U, n);
+    A = step(A, 1, U2, n);
+    A = step(A, 2, U, n);
+    for b = 1:B
+      A = step(A, 1, U, n);
+      A = step(A, 2, U, n);
+    endfor
+    A = step(A, 1, U2, n);
+    Norm = [Norm; s, mpa_norm(A, d)];
   endfor
-  step(A, 1, U2, n);
+  
+  dlmwrite("g_tebd_norm.dat", Norm, " ")
+endfunction
+
+function n = mpa_norm(A, d)
+  n = 1;
+  for j = 1:A.n
+    t = 0;
+    for s = 1:d
+      t += kron(A.B{j,s}, A.B{j,s});
+    endfor
+    n *= t;
+  endfor
+  assert(size(n) == [1 1]);
 endfunction

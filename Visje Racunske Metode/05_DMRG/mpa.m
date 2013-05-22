@@ -4,7 +4,7 @@ global MinSchmidt
 global MaxM
 
 MinSchmidt = 1e-3
-MaxM = 100
+MaxM = 40
 
 function i = psi_index(S, d)
     i = 1;
@@ -86,6 +86,8 @@ function [MPA, truncation_error] = mpa(psi, d)
     endfor
     
     MPA = struct();
+    MPA.d = d;
+    MPA.n = n;
     MPA.B = B;
     MPA.L = L;
 endfunction
