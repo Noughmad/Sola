@@ -101,12 +101,31 @@ endfunction
 
 function n = mpa_norm(A, d)
   n = 1;
-  for j = 1:A.n
+
+  t = 0;
+  for s = 1:d
+    t += kron(A.B{1, s}, A.B{1, s});
+  endfor
+  n = t;
+
+  for j = 2:A.n
     t = 0;
     for s = 1:d
-      t += kron(A.B{j,s}, A.B{j,s});
+      t += kron(A.L{j-1} * A.B{j,s}, A.L{j-1} * A.B{j,s});
     endfor
     n *= t;
   endfor
-  assert(size(n) == [1 1]);
+  
+  n = sqrt(n);
 endfunction
+
+function test_mpa_norm(d, n)
+  for i = 1:10
+    psi = rand(d^n, 1);
+    [A, e] = mpa(psi, d);
+
+    assert(abs(Norm - norm(psi)) <= (1.0001 * e + 1e-12));
+  endfor
+endfunction
+
+

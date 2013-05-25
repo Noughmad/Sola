@@ -3,8 +3,8 @@ warning ("off", "Octave:broadcast");
 global MinSchmidt
 global MaxM
 
-MinSchmidt = 1e-3
-MaxM = 40
+MinSchmidt = 1e-6
+MaxM = 200
 
 function i = psi_index(S, d)
     i = 1;
@@ -19,22 +19,23 @@ function [U, S, V, e] = svd_limited(A)
   global MinSchmidt
   global MaxM
 
-  [U, S, V] = svds(A, MaxM);
+  [U, S, V] = svds(A, 2*MaxM);
   s = length(diag(S));
-  l = sum(diag(S) > MinSchmidt);
+  l = min([MaxM, sum(diag(S) > MinSchmidt)]);
   if s > l
     trunc = diag(S)(l+1:s);
     e = sumsq(trunc);
   else
     e = 0;
   endif
+
   U = U(:,1:l);
   S = S(1:l,1:l);
   V = V(:,1:l);
 endfunction
 
 function [MPA, truncation_error] = mpa(psi, d)
-    truncation_error = 0
+    truncation_error = 0;
 
     [N, o] = size(psi);
     if (N != 1 && o != 1)
@@ -45,7 +46,7 @@ function [MPA, truncation_error] = mpa(psi, d)
         N, o = size(psi);
     endif
 
-    n = round(log(N) / log(d))
+    n = round(log(N) / log(d));
     if (d^n != N)
         N,n
         error("psi must be d^n - dimensional");
@@ -100,7 +101,7 @@ function p = mpa_psi_element(B, L, S)
     endfor
 endfunction
 
-function Psi, Mpa = test_mpa(d, n)
+function [Psi, Mpa, e] = test_mpa(d, n)
     psi = rand(d^n, 1);
     psi /= norm(psi);
     [MPA, e] = mpa(psi, d);
@@ -115,7 +116,7 @@ endfunction
 function test_mpa_many()
     for n = [2 6 10 14]
         for i = 1:10
-            [p, m] = test_mpa(2, n);
+            [p, m, e] = test_mpa(2, n);
             NumError = log(abs(p/m - 1));
             assert(NumError < -16);
         endfor
