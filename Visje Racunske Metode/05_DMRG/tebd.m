@@ -79,7 +79,7 @@ function A = osnovno_stanje_heisenberg(n, beta)
   
   P = 20;
   B = 20;
-  z = beta / P;
+  z = beta / P / B;
   U = dvodelcni(z);
   U2 = dvodelcni(z/2);
   
