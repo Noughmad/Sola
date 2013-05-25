@@ -6,7 +6,6 @@ function S = didx(s1, s2, d)
 endfunction
 
 function U = dvodelcni(z)
-  z *= -1;
   U = spalloc(4, 4, 6);
   U(1,1) = exp(2*z);
   U(4,4) = exp(2*z);
@@ -69,7 +68,13 @@ function Ap = step(A, j0, U, n)
   Ap = A;
 endfunction
 
-function A = osnovno_stanje_heisenberg(n, beta)
+function [MA, factor] = mpa_normalize(A)
+  psi = mpa_reverse(A);
+  factor = norm(psi);
+  MA = mpa(psi / norm(psi), A.d);
+endfunction
+
+function Norm = osnovno_stanje_heisenberg(n, beta)
   d = 2;
   N = d^n;
   psi = rand(N, 1);
@@ -79,11 +84,12 @@ function A = osnovno_stanje_heisenberg(n, beta)
   
   P = 20;
   B = 20;
-  z = beta / P / B;
+  z = -beta / P / B;
   U = dvodelcni(z);
   U2 = dvodelcni(z/2);
+  logfactor = 1;
   
-  Norm = [0, mpa_norm(A, d)];
+  Norm = [0, 0, log(mpa_norm(A, d))];
   
   for s = 1:P-1
     A = step(A, 1, U2, n);
@@ -93,7 +99,10 @@ function A = osnovno_stanje_heisenberg(n, beta)
       A = step(A, 2, U, n);
     endfor
     A = step(A, 1, U2, n);
-    Norm = [Norm; s, mpa_norm(A, d)];
+    Norm = [Norm; s, s*B*z, logfactor + log(mpa_norm(A, d))];
+
+    [A, f] = mpa_normalize(A);
+    logfactor += log(f);
   endfor
   
   dlmwrite("g_tebd_norm.dat", Norm, " ")

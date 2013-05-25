@@ -7,12 +7,7 @@ MinSchmidt = 1e-6
 MaxM = 200
 
 function i = psi_index(S, d)
-    i = 1;
-    j = 0;
-    for s = S'
-        i = i + (s-1)*d^j;
-        j = j + 1;
-    endfor
+    i = base2dec(S, d);
 endfunction
 
 function [U, S, V, e] = svd_limited(A)
@@ -32,6 +27,18 @@ function [U, S, V, e] = svd_limited(A)
   U = U(:,1:l);
   S = S(1:l,1:l);
   V = V(:,1:l);
+endfunction
+
+function psi = mpa_reverse(A)
+  n = A.n;
+  d = A.d;
+  N = d^n;
+  psi = zeros(N, 1);
+
+  for i = 1:N
+    S = dec2base(i, d, n);
+    psi(i) = mpa_psi_element(A.B, A.L, S);
+  endfor
 endfunction
 
 function [MPA, truncation_error] = mpa(psi, d)
@@ -95,9 +102,9 @@ endfunction
 
 function p = mpa_psi_element(B, L, S)
     [n, d] = size(B);
-    p = B{1, S(1)};
+    p = B{1, 1+str2num(S(1))};
     for j = 2:n
-        p = p * L{j-1} * B{j, S(j)};
+        p = p * L{j-1} * B{j, 1+str2num(S(j))};
     endfor
 endfunction
 
@@ -106,8 +113,8 @@ function [Psi, Mpa, e] = test_mpa(d, n)
     psi /= norm(psi);
     [MPA, e] = mpa(psi, d);
     
-    S = randi(d, n, 1);
-    i = psi_index(S, d);
+    i = randi(N);
+    S = dec2base(i, d, n);
     
     Psi = psi(i);
     Mpa = mpa_psi_element(MPA.B, MPA.L, S);
