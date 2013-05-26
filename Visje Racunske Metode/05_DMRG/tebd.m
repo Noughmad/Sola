@@ -86,7 +86,7 @@ function Norm = osnovno_stanje_heisenberg(n, beta)
   z = -beta / P / B;
   U = dvodelcni(z);
   U2 = dvodelcni(z/2);
-  logfactor = 1;
+  logfactor = 0;
   
   SpinOp = [1, 0; 0, -1];
   Norm = [0, 0, log(mpa_norm(A, d)), exp_value_local(A, SpinOp, n/2)];
@@ -210,34 +210,27 @@ function casovni_razvoj(n, T)
     b = ["0" b "1"];
   endfor
   psi(bin2dec(b)) = 1;
-  A = mpa(psi, 2);
 
-  P = 20;
-  B = 20;
+  NormPsi = norm(psi)
+  A = mpa(psi, 2);
+  NormMpa = mpa_norm(A, 2)
+
+  P = 50;
 
   clear i;
-  z = i*T / P / B
+  z = -i*T / P;
 
   U = dvodelcni(z);
   U2 = dvodelcni(z/2);
-  full(U)
-  logfactor = 1;
   
   SpinOp = [1, 0; 0, -1];
-  Norm = [0, 0, log(mpa_norm(A, d)), exp_value_local(A, SpinOp, n/2)];
+  Norm = [0, 0, mpa_norm(A, d), exp_value_local(A, SpinOp, n/2)];
   
   for s = 1:P-1
     A = step(A, 1, U2, n);
     A = step(A, 2, U, n);
-    for b = 1:B
-      A = step(A, 1, U, n);
-      A = step(A, 2, U, n);
-    endfor
     A = step(A, 1, U2, n);
-    Norm = [Norm; s, abs(s*B*z), logfactor + log(mpa_norm(A, d)), exp_value_local(A, SpinOp, n/2)];
-
-    [A, f] = mpa_normalize(A);
-    logfactor += log(f);
+    Norm = [Norm; s, abs(s*z), mpa_norm(A, d), exp_value_local(A, SpinOp, n/2)];
   endfor
   
   dlmwrite("g_tebd_time.dat", Norm, " ")
