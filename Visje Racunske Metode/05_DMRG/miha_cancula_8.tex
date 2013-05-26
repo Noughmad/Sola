@@ -1,0 +1,91 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{bbold}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+%opening
+\title{Algoritem \textsc{TEBD}}
+\author{Miha \v Can\v cula}
+
+\newcommand{\uvec}[1]{\ensuremath{\underline{#1}}}
+\newcommand{\bb}{
+  \ensuremath{b_1 b_2 \ldots b_n}
+}
+\newcommand{\psibb}{
+  \ensuremath{\psi_{\bb}}
+}
+
+\begin{document}
+
+\maketitle
+
+\section{Algoritem}
+
+Algoritem \textsc{TEBD} sem implementiral v programskem jeziku \texttt{Octave}.
+Pri tem sem uporabil funkcijo za razcep na matri"cni produkt iz prej"snje naloge. 
+Uporabil sem tudi dvodel"cni propagator za Heisenbergove verige, ki smo ga uporabljali "ze pri nalogi o Trotter-Suzukijevem razcepu. 
+
+Algoritem je podrobno opisan v navodilih, kot implementacijski detajl lahko omenim le, da sem za razcep matrik namesto vgrajene metode \texttt{svg} uporabil metodo \texttt{svgs}, ki deluje iterativno in vrne le zahtevano "stevilo singularnih vrednosti. Dimenzijo vezi $M_j$ sem omejil tako, da sem uporabil najve"c $M = 200$ singularnih vrednosti, dodatno pa sem zavrgel "se vse tisto, ki so po absolutni vrednosti vsaj $10^6$-krat manj"se od najve"cje. 
+
+Pri propagaciji oz. iskanju termi"cnih stanj norma stanja nara"s"ca eksponentno, zato sem stanje po nekaj korakih ponovno normaliziral. 
+Za normalizacijo sem izra"cunal vse "clene vektorja stanja $\psi$, vektor normaliziral, nato pa zopet izvedel razcep na produkt matrik. 
+Tak"sen postopek je zamuden, zato ga nisem izvajal na vsakem koraku propagacije. 
+
+Vedno sem uporablja antiferomagneten Heisenbergov Hamiltonian. 
+
+\section{Osnovno stanje Heisenbergove verige}
+
+"Ce sem naklju"cno stanje propagiral z realnim $z = \beta$, kar ustreza iskanju termi"cnih stanj, pri dovolj velikem $\beta$ program vrne dober pribli"zek za osnovno stanje, v obliki matri"cnega produkta. Iz matri"cnega produkta bi lahko izra"cunali stanje $\psi$, ampak za predstavitev je bolj koristno ra"cunanje energije osnovnega stanja in korelacije v tem stanju. 
+
+Energijo stanja bi lahko izra"cunal z delovanjem Hamiltoniana na stanje, kot $E = \langle \psi |H|\psi\rangle$. 
+Ker pa je matrika $H$ lahko zelo velika, sem prihranil na ra"cunalni"skem spominu z uporabo enakosti 
+\begin{align}
+ E = -\lim_{\beta\to\infty} \frac{\|\exp(-\beta H)|\psi_i\rangle\|}{\beta}
+\end{align}
+ki velja, "ce je na za"cetno stanje $\psi_i$ normirano. Obstoj oz. konvergenca te limite je dobro viden na naslednji sliki. 
+
+\begin{figure}[H]
+\centering
+\input{g_osn_norma}
+\caption{Odvisnost norme $\langle \psi | \psi \rangle$ od inverzne temperature $\beta$}
+\label{fig:norma}
+\end{figure}
+
+Na grafu vidimo lepo eksponentno nara"s"canje norme, torej so prispevki vi"sjih stanj res zanemarljivi. 
+Naklon premice na logaritemskem grafu je odvisen od velikosti sistema. 
+
+\section{Spinske korelacije}
+
+Opazoval sem tudi korelacije med spini posameznih delcev. 
+Najbolj zanimiva je verjetno odvisnost korelacije $\langle \sigma_j^z \sigma_k^z \rangle$ od razdalje med $j$ in $k$. 
+To odvisnost za $j=1$ prikazuje slika \ref{fig:spin-1k}. 
+
+\begin{figure}[H]
+\centering
+\input{g_korelacija}
+\caption{Spinska korelacija delcev na razli"cnih razdaljah v osnovnem stanju}
+\label{fig:spin-1k}
+\end{figure}
+
+Ker sem uporabil odprte robne pogoje, stanje ni nujno odvisno le od razdalje med $j$ in $k$, ampak je lahko odvisno tudi od njunega absolutnega polo"zaja. 
+Zato sem dodatno ra"cunal odvisnost korelacije $\langle \sigma_j^z \sigma_{j+1}^z$ od $j$. 
+
+\begin{figure}[H]
+\centering
+\input{g_korelacija_soseda}
+\caption{Spinska korelacija dveh sosednjih delcev v osnovnem stanju}
+\label{fig:spin-jp}
+\end{figure}
+\end{document}

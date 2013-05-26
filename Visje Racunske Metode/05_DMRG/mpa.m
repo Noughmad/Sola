@@ -4,7 +4,7 @@ global MinSchmidt
 global MaxM
 
 MinSchmidt = 1e-6
-MaxM = 200
+MaxM = 100
 
 function i = psi_index(S, d)
     i = base2dec(S, d);
@@ -14,11 +14,7 @@ function [U, S, V, e] = svd_limited(A)
   global MinSchmidt
   global MaxM
  
-  if length(A) > 5
-    [U, S, V] = svds(A, 2*MaxM);
-  else
-    [U, S, V] = svd(A);
-  endif
+  [U, S, V] = svds(A, 2*MaxM);
   s = length(diag(S));
   l = max([min([MaxM, sum(diag(S) > MinSchmidt)]), 1]);
   if s > l

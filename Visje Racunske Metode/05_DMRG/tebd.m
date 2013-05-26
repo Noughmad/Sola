@@ -81,15 +81,15 @@ function Norm = osnovno_stanje_heisenberg(n, beta)
   
   [A, e] = mpa(psi, d);
   
-  P = 20;
+  P = 10;
   B = 20;
-  z = -beta / P / B;
+  z = beta / P / B;
   U = dvodelcni(z);
   U2 = dvodelcni(z/2);
   logfactor = 0;
   
   SpinOp = [1, 0; 0, -1];
-  Norm = [0, 0, log(mpa_norm(A, d)), exp_value_local(A, SpinOp, n/2)];
+  Norm = [0, 0, log(mpa_norm(A, d))];
   
   for s = 1:P-1
     A = step(A, 1, U2, n);
@@ -99,18 +99,18 @@ function Norm = osnovno_stanje_heisenberg(n, beta)
       A = step(A, 2, U, n);
     endfor
     A = step(A, 1, U2, n);
-    Norm = [Norm; s, s*B*z, logfactor + log(mpa_norm(A, d)), exp_value_local(A, SpinOp, n/2)];
+    Norm = [Norm; s, s*B*z, logfactor + log(mpa_norm(A, d))];
 
     [A, f] = mpa_normalize(A);
     logfactor += log(f);
   endfor
   
-  dlmwrite("g_tebd_norm_" num2str(n) ".dat", Norm, " ")
+  dlmwrite(["g_tebd_norm_" num2str(n) ".dat"], Norm, " ")
 endfunction
 
 function osnovno_stanje_vse()
   beta = 20;
-  for n = [8 12 16 20]
+  for n = [16 20]
     osnovno_stanje_heisenberg(n, beta);
   endfor
 endfunction
@@ -139,6 +139,7 @@ function test_mpa_norm(d, n)
   for i = 1:10
     psi = rand(d^n, 1);
     [A, e] = mpa(psi, d);
+
 
     assert(abs(Norm - norm(psi)) <= (1.0001 * e + 1e-12));
   endfor
@@ -242,4 +243,66 @@ function casovni_razvoj(n, T)
   
   dlmwrite("g_tebd_time.dat", Norm, " ")
 
+endfunction
+
+function C = korelacija(A, k, m)
+  
+  t = kron(A.B{1, 1}, A.B{1, 1}) + kron(A.B{1, 2}, A.B{1, 2});
+  C = t;
+
+  for j = 2:A.n
+    t1 = kron(A.L{j-1} * A.B{j,1}, A.L{j-1} * A.B{j,1});
+    t2 = kron(A.L{j-1} * A.B{j,2}, A.L{j-1} * A.B{j,2});
+    if j == k || j == m
+      C *= (t1-t2);
+    else
+      C *= (t1+t2);
+    endif
+  endfor
+endfunction
+
+function osnovno_stanje_korelacija(n)
+  d = 2;
+  N = 2^n;
+  psi = rand(N, 1);
+  psi /= norm(psi);
+  
+  A = mpa(psi, 2);
+  
+  beta = 10;
+  P = 20;
+  B = 20;
+  z = -beta / P;
+  U = dvodelcni(z);
+  U2 = dvodelcni(z/2);
+  logfactor = 0;
+  
+  SpinOp = [1, 0; 0, -1];
+  Norm = [0, 0, log(mpa_norm(A, d)), exp_value_local(A, SpinOp, n/2)];
+  
+  for s = 1:P-1
+    A = step(A, 1, U2, n);
+    A = step(A, 2, U, n);
+    for b = 1:B
+      A = step(A, 1, U, n);
+      A = step(A, 2, U, n);
+    endfor
+    A = step(A, 1, U2, n);
+
+    [A, f] = mpa_normalize(A);
+    logfactor += log(f);
+  endfor
+  
+  K = [];
+  for j=1:n
+    K = [K; korelacija(A, 1, j)];
+  endfor
+  
+  dlmwrite("g_tebd_cor_1j.dat", K)
+  
+  K = [];
+  for j=1:n-1
+    K = [K; korelacija(A, j, j+1)];
+  endfor
+  dlmwrite("g_tebd_soseda.dat", K);
 endfunction
