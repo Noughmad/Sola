@@ -6,15 +6,11 @@ function S = didx(s1, s2, d)
 endfunction
 
 function U = dvodelcni(z)
-  ## TODO: To ne dela cisto prav za imaginarne z   !!!
-  U(1,1) in U(4,4) na koncu nista enaka            !!!
-  
-  U = spalloc(4, 4, 6);
-  U(1,1) = exp(2*z);
-  U(4,4) = exp(2*z);
+  U = zeros(4, 4);
+  U(1,1) = U(4,4) = exp(2*z);
   U(2,2) = U(3,3) = cosh(2*z);
   U(2,3) = U(3,2) = sinh(2*z);
-  U = exp(-z) * U;
+  U = sparse(U * exp(-z));
 endfunction
 
 function Ap = propagate(A, j, U)
@@ -52,7 +48,7 @@ function Ap = propagate(A, j, U)
       endfor
     endfor
   endfor
-  
+
   [U, S, V, e] = svd_limited(Q);
   
   A.L{j} = S;

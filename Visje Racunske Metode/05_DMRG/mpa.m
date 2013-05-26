@@ -13,10 +13,14 @@ endfunction
 function [U, S, V, e] = svd_limited(A)
   global MinSchmidt
   global MaxM
-
-  [U, S, V] = svds(A, 2*MaxM);
+ 
+  if length(A) > 5
+    [U, S, V] = svds(A, 2*MaxM);
+  else
+    [U, S, V] = svd(A);
+  endif
   s = length(diag(S));
-  l = min([MaxM, sum(diag(S) > MinSchmidt)]);
+  l = max([min([MaxM, sum(diag(S) > MinSchmidt)]), 1]);
   if s > l
     trunc = diag(S)(l+1:s);
     e = sumsq(trunc);
