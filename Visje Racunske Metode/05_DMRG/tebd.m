@@ -6,6 +6,9 @@ function S = didx(s1, s2, d)
 endfunction
 
 function U = dvodelcni(z)
+  ## TODO: To ne dela cisto prav za imaginarne z   !!!
+  U(1,1) in U(4,4) na koncu nista enaka            !!!
+  
   U = spalloc(4, 4, 6);
   U(1,1) = exp(2*z);
   U(4,4) = exp(2*z);
@@ -89,7 +92,8 @@ function Norm = osnovno_stanje_heisenberg(n, beta)
   U2 = dvodelcni(z/2);
   logfactor = 1;
   
-  Norm = [0, 0, log(mpa_norm(A, d))];
+  SpinOp = [1, 0; 0, -1];
+  Norm = [0, 0, log(mpa_norm(A, d)), exp_value_local(A, SpinOp, n/2)];
   
   for s = 1:P-1
     A = step(A, 1, U2, n);
@@ -99,7 +103,7 @@ function Norm = osnovno_stanje_heisenberg(n, beta)
       A = step(A, 2, U, n);
     endfor
     A = step(A, 1, U2, n);
-    Norm = [Norm; s, s*B*z, logfactor + log(mpa_norm(A, d))];
+    Norm = [Norm; s, s*B*z, logfactor + log(mpa_norm(A, d)), exp_value_local(A, SpinOp, n/2)];
 
     [A, f] = mpa_normalize(A);
     logfactor += log(f);
@@ -137,4 +141,109 @@ function test_mpa_norm(d, n)
   endfor
 endfunction
 
+function o = exp_value_local(A, O, k)
+  d = A.d;
 
+  t = 0;
+  for s = 1:d
+    t += kron(A.B{1, s}, A.B{1, s});
+  endfor
+  o = t;
+
+  for j = 2:k-1
+    t = 0;
+    for s = 1:d
+      t += kron(A.L{j-1} * A.B{j,s}, A.L{j-1} * A.B{j,s});
+    endfor
+    o *= t;
+  endfor
+
+  n = o;
+
+  t = 0;
+  tn = 0;
+  j = k;
+  for s = 1:d
+    for sp = 1:d
+      t += O(s,sp) * kron(A.L{j-1} * A.B{j,s}, A.L{j-1} * A.B{j,s});
+    endfor
+    tn += kron(A.L{j-1} * A.B{j,s}, A.L{j-1} * A.B{j,s});
+  endfor
+  o *= t;
+  n *= tn;
+  
+  for j = k+1:A.n
+    t = 0;
+    for s = 1:d
+      t += kron(A.L{j-1} * A.B{j,s}, A.L{j-1} * A.B{j,s});
+    endfor
+    o *= t;
+    n *= t;
+  endfor
+
+  o /= n;
+endfunction
+
+function o = exp_value_global(A, O, k)
+  d = A.d;
+  t = 0;
+  for s = 1:d
+    t += kron(A.B{1, s}, A.B{1, s});
+  endfor
+  o = t;
+
+  for j = 2:A.n
+    t = 0;
+    for s = 1:d
+      for sp = 1:d
+        t += O(s,sp) * kron(A.L{j-1} * A.B{j,s}, A.L{j-1} * A.B{j,s});
+      endfor
+    endfor
+    o *= t;
+  endfor
+  
+  o = sqrt(n);  
+endfunction
+
+function casovni_razvoj(n, T)
+  d = 2;
+  N = d^n;
+  psi = zeros(N,1);
+  b = "";
+  for i=1:n/2
+    b = ["0" b "1"];
+  endfor
+  psi(bin2dec(b)) = 1;
+  A = mpa(psi, 2);
+
+  P = 20;
+  B = 20;
+
+  clear i;
+  z = i*T / P / B
+
+  U = dvodelcni(z);
+  U2 = dvodelcni(z/2);
+  full(U)
+  logfactor = 1;
+  
+  SpinOp = [1, 0; 0, -1];
+  Norm = [0, 0, log(mpa_norm(A, d)), exp_value_local(A, SpinOp, n/2)];
+  
+  for s = 1:P-1
+    A = step(A, 1, U2, n);
+    A = step(A, 2, U, n);
+    for b = 1:B
+      A = step(A, 1, U, n);
+      A = step(A, 2, U, n);
+    endfor
+    A = step(A, 1, U2, n);
+    Norm = [Norm; s, abs(s*B*z), logfactor + log(mpa_norm(A, d)), exp_value_local(A, SpinOp, n/2)];
+
+    [A, f] = mpa_normalize(A);
+    logfactor += log(f);
+  endfor
+  
+  dlmwrite("g_tebd_time.dat", Norm, " ")
+
+endfunction
