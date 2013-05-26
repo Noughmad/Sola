@@ -105,7 +105,14 @@ function Norm = osnovno_stanje_heisenberg(n, beta)
     logfactor += log(f);
   endfor
   
-  dlmwrite("g_tebd_norm.dat", Norm, " ")
+  dlmwrite("g_tebd_norm_" num2str(n) ".dat", Norm, " ")
+endfunction
+
+function osnovno_stanje_vse()
+  beta = 20;
+  for n = [8 12 16 20]
+    osnovno_stanje_heisenberg(n, beta);
+  endfor
 endfunction
 
 function n = mpa_norm(A, d)
