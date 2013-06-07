@@ -1,0 +1,54 @@
+\documentclass{beamer}
+
+\usetheme{Madrid}
+
+\usepackage[orientation=portrait,size=a1,scale=1]{beamerposter}
+\usepackage[overlay]{textpos}
+
+\usepackage[utf8]{inputenc}
+\usepackage{default}
+
+\setbeamertemplate{background canvas}[vertical shading][top=orange,bottom=yellow]
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamercolor{block body}{bg=yellow!30}
+
+\title{Modeling of light propagation through smectic waveguides}
+
+\author{\underline{Miha \v Can\v cula\inst{1}}\and Miha Ravnik\inst{1}}
+\institute{\inst{1}Faculty of Mathematics and Physics, University of Ljubljana}
+
+\begin{document}
+
+\begin{textblock}{18}(-1,0.25)
+\begin{block}{}
+\centering
+{\Huge \inserttitle} \\
+\vspace{1cm}
+{\LARGE \insertauthor} \\
+\vspace{1cm}
+\insertinstitute
+\end{block}
+\end{textblock}
+
+\begin{textblock}{5.5}(0.5,2.5)
+\begin{block}{Motivation}
+Liquid crystal waveguides are useful for Bla bla bla
+Slikca od Musevica s smekticnim vlaknom
+\end{block}
+\end{textblock}
+
+\begin{textblock}{5.5}(0.5,4)
+ \begin{block}{Methods}
+  We used \textsc{FDTD}, prilozi slikce (Yee lattice vs moj)
+ \end{block}
+
+\end{textblock}
+
+\begin{textblock}{8.5}(6.5,2.5)
+\begin{block}{Eigenmodes}
+We showed that a Gaussian beam entering a fibre quickly turns into a Laguerre-Gaussian beam, and then into something else. 
+\end{block}
+\end{textblock}
+
+\end{document}
