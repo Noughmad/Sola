@@ -9,9 +9,17 @@
 \usepackage{default}
 \usepackage{changepage}
 \usepackage{subfigure}
+\usepackage{graphicx}
 \usepackage[labelformat=empty]{caption}
 
 \setlength{\columnsep}{5cm}
+\setlength\labelsep{\dimexpr\labelsep + 0.6em\relax}  
+
+\newlength{\wideitemsep}
+\setlength{\wideitemsep}{\itemsep}
+\addtolength{\wideitemsep}{10pt}
+\let\olditem\item
+\renewcommand{\item}{\setlength{\itemsep}{\wideitemsep}\olditem}
 
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -43,7 +51,7 @@
   {\vspace{1ex} % Pads top of block
      % separates paragraphs in a block
    \setlength{\parskip}{24pt plus 1pt minus 1pt}%
-   \begin{adjustwidth}{1cm}{1cm}
+   \begin{adjustwidth}{5mm}{5mm}
 }
 \addtobeamertemplate{block end}
   {\end{adjustwidth}%
@@ -72,7 +80,6 @@
  \begin{column}{.36\textwidth}
 \begin{block}{\blockpadding Motivation}
 \begin{itemize}
-  \setlength{\itemsep}{20pt}
  \item Light guiding structure play an important role in modern communication systems
  \item Unique optical properties of liquid crystals make them extremely useful for guiding light
  \item Smectic fibres with radial director can be created in a laboratory using 8CB and a surfactant\cite{musevic-nekej}
@@ -82,9 +89,8 @@
 
 \begin{block}{\blockpadding Methods}
  \begin{itemize}
-   \setlength{\itemsep}{20pt}
-  \item FDTD method in 3D with anisotropic $\varepsilon$
-  \item PBC in $z$ direction -- infinite cylindrical waveguide
+  \item FDTD method -- direct time evolution of electromagnetic fields in 3D with fully anisotropic $\varepsilon$
+  \item Simulate ``infinite'' cylindrical waveguide with periodic boundary conditions in $z$ direction
   \item Observe propagation of Gaussian laser pulse
   \item Staggered grid, adapted for dielectric anisotropy
  \begin{figure}[h]
@@ -117,15 +123,38 @@
 \centering
 \includegraphics[width=.5\textwidth]{../Magisterij/Slike/director-profile-radial}
 \end{figure}
+In experiments, melting into the isotropic phase occurs around the disclination line. 
+The size of this melting is much smaller than the wavelength and was therefore neglected. 
 
  \end{itemize}
  \end{block}
+ 
+ \begin{block}{\blockpadding References}
+  
+ \end{block}
+
 
  \end{column}
  
  \begin{column}{0.596\textwidth}
-  \begin{block}{\blockpadding Results}
+  \begin{block}{\blockpadding Electric field}
 We showed that a Gaussian beam entering a fibre quickly turns into a Laguerre-Gaussian beam, and then into something else. 
+\begin{figure}[h]
+\centering
+ \subfigure{\includegraphics[trim=20mm 10mm 80mm 10mm,clip,height=300pt]{g_snap_gauss}}
+ \subfigure{\includegraphics[trim=25mm 10mm 60mm 10mm,clip,height=300pt]{g_snap_split}}
+ \subfigure{\includegraphics[trim=20mm 10mm 25mm 10mm,clip,height=300pt]{g_snap_inter}}
+ \caption{Snapshots of electric field $\vec E$ at three different times. Cylinder axis is marked with a dotted line, the top half shows a cross-section on the $yz$ plane, while the bottom half shows a cross-section on the $xz$ plane. Incident light is polarized along the $x$ axis. {\color{dark} Left:} The Gaussian pulse just after entering the waveguide. {\color{dark} Center:} After a short time, a dark spot forms near the axis. Light near the $xz$ and $yz$ plane differs both in phase and propagation velocity. {\color{dark} Right:} After a longer time, reflection from waveguide walls cause noticeable interferrence and waveforms lose clarity. }
+\end{figure}
+
+\end{block}
+\begin{block}{\blockpadding Field intensity and phase}
+\begin{itemize}
+ \item Using data for electric and magnetic fields we calculated the local energy density. This enabled us to determine the shape of the pulse after a long time in the waveguide. 
+ \item We were also interested in planes of constant phase. By calculating the wave phase at every grid point, we determined that the initially Gaussian pulse quickly transforms into [\v se vedno ne vem kaj]. 
+\end{itemize}
+
+
 \end{block}
  \end{column}
 
