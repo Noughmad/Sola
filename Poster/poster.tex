@@ -11,6 +11,8 @@
 \usepackage{subfigure}
 \usepackage[labelformat=empty]{caption}
 
+\setlength{\columnsep}{5cm}
+
 \usepackage{tikz}
 \usetikzlibrary{calc}
 \tikzset{egrid/.style={draw,help lines}}
@@ -20,7 +22,7 @@
 
 \definecolor{dark}{RGB}{0,105,0}
 
-\setbeamertemplate{background canvas}[vertical shading][top=green!50!yellow,bottom=yellow!70]
+\setbeamertemplate{background canvas}[vertical shading][top=yellow!80!dark,bottom=yellow!60!dark]
 \beamertemplatenavigationsymbolsempty
 \setbeamertemplate{blocks}[rounded][shadow=false]
 \setbeamercolor{block body}{bg=yellow!30}
@@ -37,7 +39,7 @@
 }
 
 \addtobeamertemplate{block begin}
-  {}
+  {\vspace{1ex}}
   {\vspace{1ex} % Pads top of block
      % separates paragraphs in a block
    \setlength{\parskip}{24pt plus 1pt minus 1pt}%
@@ -50,8 +52,9 @@
 
 \begin{document}
 
-\begin{textblock}{18}(-1,0)
-\begin{block}{}
+\begin{columns}
+ \begin{column}{.976\textwidth}
+  \begin{block}{}
 \vspace{0.5cm}
 \centering
 {\Huge \inserttitle} \\
@@ -61,9 +64,12 @@
 \insertinstitute
 \vspace{0.5cm}
 \end{block}
-\end{textblock}
 
-\begin{textblock}{5.5}(0.5,2.5)
+
+ \end{column}
+\end{columns}
+\begin{columns}[t]
+ \begin{column}{.36\textwidth}
 \begin{block}{\blockpadding Motivation}
 \begin{itemize}
   \setlength{\itemsep}{20pt}
@@ -73,10 +79,8 @@
  \item Point defect in a nematic droplet turns a Gaussian beam into Laguerre-Gaussian -- is there a similar effect caused by the line defect in a fibre?
 \end{itemize}
 \end{block}
-\end{textblock}
 
-\begin{textblock}{5.5}(0.5,6)
- \begin{block}{\blockpadding Methods}
+\begin{block}{\blockpadding Methods}
  \begin{itemize}
    \setlength{\itemsep}{20pt}
   \item FDTD method in 3D with anisotropic $\varepsilon$
@@ -117,12 +121,23 @@
  \end{itemize}
  \end{block}
 
+ \end{column}
+ 
+ \begin{column}{0.596\textwidth}
+  \begin{block}{\blockpadding Results}
+We showed that a Gaussian beam entering a fibre quickly turns into a Laguerre-Gaussian beam, and then into something else. 
+\end{block}
+ \end{column}
+
+\end{columns}
+
+\begin{textblock}{5.5}(0.5,5.75)
+ 
+
 \end{textblock}
 
 \begin{textblock}{8.5}(6.5,2.5)
-\begin{block}{\blockpadding Results}
-We showed that a Gaussian beam entering a fibre quickly turns into a Laguerre-Gaussian beam, and then into something else. 
-\end{block}
+
 \end{textblock}
 
 \end{document}
