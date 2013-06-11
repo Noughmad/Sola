@@ -12,7 +12,7 @@ camera {
 
 #declare F = function { 
   pattern {
-    density_file df3 "intensity_500.df3"
+    density_file df3 "intensity_0.df3"
     interpolate 1
   }
 }
