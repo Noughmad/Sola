@@ -1,45 +1,127 @@
-#include "colors.inc"    // The include files contain
-#include "stones.inc"    // pre-defined scene elements
+#include "colors.inc"
+#include "transforms.inc"
+
+#declare T = texture {
+  pigment { color Green }
+  finish { phong 0.3 }
+}
 
 background {
-  color rgb <0.75, 0.85, 0.0>
+  color rgb <0.5, 0.7, 0.0>
 }
 
 camera {
-  location <1.5, 1, 1.2>
-  look_at  <0.5, 0.5, 0.5>
+  location <3.5, 2, 6>
+  look_at  <0.5, 0.4, 2.5>
+  right x*3
+  angle 40
+  sky <-0.35, 1, 0>
 }
 
-#declare F = function { 
+#declare F0 = function { 
   pattern {
-    // Include all these (or only some) in the poster
-    // density_file df3 "intensity_1000.df3"
-    // density_file df3 "intensity_0.df3"
-    // density_file df3 "intensity_2200.df3"
-    // density_file df3 "intensity_500.df3"
+    density_file df3 "intensity_0.df3"
+    interpolate 1
+  }
+}
+
+#declare F1 = function { 
+  pattern {
+    density_file df3 "intensity_500.df3"
+    interpolate 1
+  }
+}
+
+#declare F9 = function { 
+  pattern {
+    density_file df3 "intensity_950.df3"
+    interpolate 1
+  }
+}
+
+#declare F4 = function { 
+  pattern {
     density_file df3 "intensity_1400.df3"
+    interpolate 1
+  }
+}
+
+#declare F2 = function { 
+  pattern {
+    density_file df3 "intensity_2200.df3"
     interpolate 1
   }
 }
 
 isosurface {
   function {
-    0.05 - F(x,y,z)
+    0.05 - F0(x,y,z-0.3)
   }
   contained_by { box { 0.1, 0.9 } }
+  texture { T }
+}
+
+isosurface {
+  function {
+    0.05 - F1(x,y,z-0.8)
+  }
+  contained_by { box { <0, 0, 0.5>, <1, 1, 1.5> } }
+  texture { T }
+}
+
+isosurface {
+  function {
+    0.05 - F9(x,y,z-1.4)
+  }
+  contained_by { box { <0, 0, 1.5>, <1, 1, 2.5> } }
+  texture { T }
+}
+
+isosurface {
+  function {
+    0.05 - F4(x,y,z-2.1)
+  }
+  contained_by { box { <0, 0, 2.2>, <1, 1, 3.5> } }
+  texture { T }
+}
+
+isosurface {
+  function {
+    0.05 - F2(x,y,z-3)
+  }
+  contained_by { box { <0, 0, 2.8>, <1, 1, 4> } }
+  texture { T }
+}
+
+isosurface {
+  function {
+    (x-0.5)*(x-0.5) + (y-0.5)*(y-0.5) - 0.12
+  }
+  contained_by { box {<0, 0, 0.019>, <1, 1, 3.981> } }
   texture {
-    pigment { color Green }
-    finish { phong 0.3 }
+    pigment { color Red transmit 0.8 }
   }
 }
 
 isosurface {
   function {
-    (x-0.5)*(x-0.5) + (y-0.5)*(y-0.5) - 0.16
+    (x-0.5)*(x-0.5) + (y-0.5)*(y-0.5) - 0.12
   }
-  contained_by { box {0, 1 } }
+  contained_by { box {<0, 0, 0>, <1, 1, 0.02> } }
+  open
   texture {
-    pigment { color Red transmit 0.7 }
+    pigment { color Red transmit 0.2 }
+  }
+}
+
+isosurface {
+  function {
+    (x-0.5)*(x-0.5) + (y-0.5)*(y-0.5) - 0.12
+  }
+  contained_by { box {<0, 0, 3.98>, <1, 1, 4> } }
+  open
+  texture {
+    pigment { color Red transmit 0.2 }
   }
 }
 
@@ -47,7 +129,7 @@ isosurface {
   function {
     (x-0.5)*(x-0.5) + (y-0.5)*(y-0.5) - 0.0001
   }
-  contained_by { box {0, 1 } }
+  contained_by { box {<0, 0, 0> <1, 1, 4> } }
   texture {
     pigment { color Black transmit 0.2 }
     finish { phong 0.7 }
