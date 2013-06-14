@@ -38,7 +38,7 @@
 \setbeamercolor{item}{fg=dark}
 \setbeamertemplate{footline}[page number]{}
 
-\title{Modelling light propagation through radial-director liquid crystal waveguides}
+\title{Modelling light propagation through \\ radial-director liquid crystal waveguides}
 
 \author{\underline{Miha \v Can\v cula\inst{1}}\and Miha Ravnik\inst{1,2}\and Slobodan \v Zumer\inst{1,2,3}}
 \institute{\inst{1}Faculty of Mathematics and Physics, University of Ljubljana, Slovenia\and\inst{2}Centre of excellence NAMASTE, Ljubljana, Slovenia\and\inst{3}Jo\v zef Stefan Institute, Ljubljana, Slovenia}
@@ -66,11 +66,15 @@
   \begin{block}{}
 \vspace{0.5cm}
 \centering
-{\Huge \inserttitle} \\
+{\fontsize{80}{96}\selectfont \inserttitle} \\
 \vspace{1cm}
-{\LARGE \insertauthor} \\
+{\LARGE \underline{Miha \v Can\v cula$^{1}$}, Miha Ravnik$^{1,2}$, Slobodan \v Zumer$^{1,2,3}$} \\
 \vspace{1cm}
-\insertinstitute
+{\large
+$^{1}$Faculty of Mathematics and Physics, University of Ljubljana, Slovenia\\
+$^{2}$Centre of excellence NAMASTE, Ljubljana, Slovenia \\
+$^{3}$Jo\v zef Stefan Institute, Ljubljana, Slovenia
+}
 \vspace{0.5cm}
 \end{block}
 
@@ -151,7 +155,7 @@ The core radius of the central +1 disclination line is much smaller than the wav
    \item We showed that a Gaussian beam entering a fibre quickly turns into a Laguerre-Gaussian beam, and then [into something else]. 
 \begin{figure}[h]
 \centering
- \includegraphics[width=.825\textwidth,clip,trim=0mm 50mm 0mm 80mm]{./render}
+ \includegraphics[width=.825\textwidth,clip,trim=0mm 50mm 0mm 80mm]{./render_t}
  \caption{Snapshots of electric field $\vec E$ at three different times. Incident light is polarized along the $x$ axis. {\color{dark} Left:} The Gaussian pulse just after entering the waveguide. {\color{dark} Center:} After a short time, a dark spot forms near the axis. Light near the $xz$ and $yz$ plane differs both in phase and propagation velocity. {\color{dark} Right:} After a longer time, the difference in velocity greatly distorts the pulse. Reflection from waveguide walls causes noticeable interferrence and waveforms lose clarity, although the pattern remains visible. }
 \end{figure}
 \end{itemize}
@@ -162,7 +166,7 @@ The core radius of the central +1 disclination line is much smaller than the wav
  \item Using data for electric and magnetic fields we calculated the local energy density. This enabled us to determine the shape of the pulse in time. 
  \begin{figure}[h]
   \centering
-  \includegraphics[width=.825\textwidth]{./Povray/intensity_gauss}
+  \includegraphics[width=.825\textwidth]{./intensity_gauss_t}
   \caption{Shape of the originally Gaussian pulse at different times after entering the waveguide. Plotted are the isosurfaces where local field amplitude is greater than 5\% of the maximum. At first, the pulse is roughly spherical. Soon a minimum forms at the axis, and the upper and lower parts start overtaking the left and right ones, due to the difference in refraction indexes. The pulse gradually splits into 8 parts, which appears to be a stable configuration. }
  \end{figure}
  \item The pulse splits into multiple intensity regions. Note that the regions are positioned diagonally to the incident light polarization. 
