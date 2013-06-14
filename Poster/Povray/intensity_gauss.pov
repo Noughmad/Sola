@@ -12,9 +12,9 @@ background {
 
 camera {
   location <3.5, 2, 6>
-  look_at  <0.5, 0.4, 2.5>
+  look_at  <0.5, 0.4, 3>
   right x*3
-  angle 40
+  angle 50
   sky <-0.35, 1, 0>
 }
 
@@ -49,6 +49,13 @@ camera {
 #declare F2 = function { 
   pattern {
     density_file df3 "intensity_2200.df3"
+    interpolate 1
+  }
+}
+
+#declare F3 = function { 
+  pattern {
+    density_file df3 "intensity_3000.df3"
     interpolate 1
   }
 }
@@ -95,9 +102,17 @@ isosurface {
 
 isosurface {
   function {
+    0.05 - F3(x,y,z-4)
+  }
+  contained_by { box { <0.25, 0.25, 3.5>, <0.75, 0.75, 5> } }
+  texture { T }
+}
+
+isosurface {
+  function {
     (x-0.5)*(x-0.5) + (y-0.5)*(y-0.5) - 0.12
   }
-  contained_by { box {<0, 0, 0.019>, <1, 1, 3.981> } }
+  contained_by { box {<0, 0, 0.019>, <1, 1, 4.781> } }
   texture {
     pigment { color Red transmit 0.8 }
   }
@@ -118,7 +133,7 @@ isosurface {
   function {
     (x-0.5)*(x-0.5) + (y-0.5)*(y-0.5) - 0.12
   }
-  contained_by { box {<0, 0, 3.98>, <1, 1, 4> } }
+  contained_by { box {<0, 0, 4.78>, <1, 1, 4.8> } }
   open
   texture {
     pigment { color Red transmit 0.2 }
@@ -129,7 +144,7 @@ isosurface {
   function {
     (x-0.5)*(x-0.5) + (y-0.5)*(y-0.5) - 0.0001
   }
-  contained_by { box {<0, 0, 0> <1, 1, 4> } }
+  contained_by { box {<0, 0, 0> <1, 1, 4.8> } }
   texture {
     pigment { color Black transmit 0.2 }
     finish { phong 0.7 }
