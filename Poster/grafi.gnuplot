@@ -1,7 +1,8 @@
 set terminal png size 2400, 1200
 set pm3d map interpolate 10,1
 set palette model RGB
-set palette model RGB defined (-1 "blue", 0 0.75 0.85 0, 1 "red")
+# set palette model RGB defined (-1 "blue", 0 0.75 0.85 0, 1 "red")
+set palette model RGB defined (-1 "blue", 0 0.8 0.8 0.8, 1 "red")
 
 unset tics
 unset border
