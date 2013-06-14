@@ -46,12 +46,12 @@ camera {
   }
 }
 
-// #declare F2 = function { 
-//  pattern {
-//    density_file df3 "intensity_2200.df3"
-//    interpolate 1
-//  }
-// }
+#declare F2 = function { 
+  pattern {
+    density_file df3 "intensity_2200.df3"
+    interpolate 1
+  }
+}
 
 isosurface {
   function {
@@ -85,7 +85,6 @@ isosurface {
   texture { T }
 }
 
-/*
 isosurface {
   function {
     0.05 - F2(x,y,z-3)
@@ -93,7 +92,7 @@ isosurface {
   contained_by { box { <0, 0, 2.8>, <1, 1, 4> } }
   texture { T }
 }
-*/
+
 isosurface {
   function {
     (x-0.5)*(x-0.5) + (y-0.5)*(y-0.5) - 0.12
