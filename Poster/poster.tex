@@ -38,10 +38,10 @@
 \setbeamercolor{item}{fg=dark}
 \setbeamertemplate{footline}[page number]{}
 
-\title{Modelling propagation of light through smectic waveguides}
+\title{Modelling light propagation through radial-director liquid crystal waveguides}
 
-\author{\underline{Miha \v Can\v cula\inst{1}}\and Miha Ravnik\inst{1}\and Slobodan \v Zumer\inst{1,2}}
-\institute{\inst{1}Faculty of Mathematics and Physics, University of Ljubljana\and\inst{2}Jo\v zef Stefan Institute, Ljubljana}
+\author{\underline{Miha \v Can\v cula\inst{1}}\and Miha Ravnik\inst{1,2}\and Slobodan \v Zumer\inst{1,2,3}}
+\institute{\inst{1}Faculty of Mathematics and Physics, University of Ljubljana, Slovenia\and\inst{2}Centre of excellence NAMASTE, Ljubljana, Slovenia\and\inst{3}Jo\v zef Stefan Institute, Ljubljana, Slovenia}
 
 \newcommand{\blockpadding}{
   \rule[-0.6ex]{0pt}{2.5ex}
@@ -81,9 +81,9 @@
  \begin{column}{.36\textwidth}
 \begin{block}{\blockpadding Motivation}
 \begin{itemize}
- \item Light guiding structure play an important role in modern communication systems
- \item Unique optical properties of liquid crystals make them extremely useful for guiding light
- \item Smectic fibres with radial director can be created in a laboratory using 8CB and a surfactant\cite{musevic-nekej}
+ \item Light guiding is central in complex optics and photonics, for example for efficient data transfer
+ \item Combined birefringence and response to external stimuli in liquid crystal structures could be used for directed guiding of light -- such as waveguides.
+ \item Smectic A fibres with radial director profile can be created using 8CB and a surfactant\cite{musevic-nekej}
  \item Point defect in a nematic droplet turns a Gaussian beam into Laguerre-Gaussian -- is there a similar effect caused by the line defect in a fibre?
 \end{itemize}
 \end{block}
@@ -91,7 +91,8 @@
 \begin{block}{\blockpadding Methods}
  \begin{itemize}
   \item FDTD method -- direct time evolution of electromagnetic fields in 3D with fully anisotropic $\varepsilon$
-  \item Simulate ``infinite'' cylindrical waveguide with periodic boundary conditions in $z$ direction
+  \item Assumed zero conductivity and vacuum permeability in bulk. 
+  \item Simulate long cylindrical waveguide with periodic boundary conditions in $z$ direction
   \item Observe propagation of Gaussian laser pulse
   \item Staggered grid, adapted for dielectric anisotropy
  \begin{figure}[h]
@@ -119,13 +120,12 @@
 \caption{{\color{dark} Left:} Yee lattice, optimized for diagonal dielectric tensor. \\{\color{dark} Right:} The lattice we used, suitable for full anisotropic $\varepsilon$. \\In both cases $\vec E$ and $\vec H$ are known at different times}
 \end{figure}
 
-\item Cylindrical waveguide with a radial director profile and a singular disclination line along its axis \\
+\item Cylindrical waveguide with a radial director profile and a singular disclination line along its axis [TODO: Prerez] \\
 \begin{figure}[h]
 \centering
 \includegraphics[width=.5\textwidth]{../Magisterij/Slike/director-profile-radial}
 \end{figure}
-In experiments, melting into the isotropic phase occurs around the disclination line. 
-The size of this melting is much smaller than the wavelength and was therefore neglected. 
+The core radius of the central +1 disclination line is much smaller than the wavelength and can therefore be neglected. 
 
  \end{itemize}
  \end{block}
@@ -153,13 +153,13 @@ The size of this melting is much smaller than the wavelength and was therefore n
 \end{block}
 \begin{block}{\blockpadding Field intensity and phase}
 \begin{itemize}
- \item Using data for electric and magnetic fields we calculated the local energy density. This enabled us to determine the shape of the pulse after a long time in the waveguide. 
+ \item Using data for electric and magnetic fields we calculated the local energy density. This enabled us to determine the shape of the pulse in time. 
  \begin{figure}[h]
   \centering
   \includegraphics[width=.825\textwidth]{./Povray/intensity_gauss}
-  \caption{Shape of the originally Gaussian pulse at different times after entering the smectic fibre. Plotted are the isosurfaces where local field amplitude is greater than 5\% of the maximum. At first, the pulse is roughly sferical. Soon a minimum forms at the axis, and the upper and lower parts start overtaking the left and right ones, due to the difference in refraction indexes. The pulse gradually splits into 8 parts, which appears to be a stable configuration. }
+  \caption{Shape of the originally Gaussian pulse at different times after entering the waveguide. Plotted are the isosurfaces where local field amplitude is greater than 5\% of the maximum. At first, the pulse is roughly spherical. Soon a minimum forms at the axis, and the upper and lower parts start overtaking the left and right ones, due to the difference in refraction indexes. The pulse gradually splits into 8 parts, which appears to be a stable configuration. }
  \end{figure}
- \item The pulse splits into two ranks of four parts. It is noteworthy that the four parts in each rank are positioned diagonally to the incident light polarization. 
+ \item The pulse splits into multiple intensity regions. Note that the regions are positioned diagonally to the incident light polarization. 
 
  \item We were also interested in planes of constant phase. By calculating the wave phase at every grid point, we determined that the initially Gaussian pulse quickly transforms into [\v se vedno ne vem kaj]. 
 \end{itemize}
