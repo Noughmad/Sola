@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[8pt]{beamer}
 
 \usetheme{Madrid}
 
@@ -10,6 +10,7 @@
 \usepackage{changepage}
 \usepackage{subfigure}
 \usepackage{graphicx}
+\usepackage[sort&compress,comma,super]{natbib}
 \usepackage[labelformat=empty]{caption}
 
 \setlength{\columnsep}{5cm}
@@ -36,7 +37,7 @@
 \setbeamercolor{block body}{bg=yellow!30}
 \setbeamercolor{block title}{bg=dark}
 \setbeamercolor{item}{fg=dark}
-\setbeamertemplate{footline}[page number]{}
+\setbeamertemplate{footline}{}
 
 \title{Modelling light propagation through\\radial-director liquid crystal waveguides}
 
@@ -86,15 +87,15 @@ $^{3}$Jo\v zef Stefan Institute, Ljubljana, Slovenia
 \begin{block}{\blockpadding Motivation}
 \begin{itemize}
  \item Light guiding is central in complex optics and photonics, for example for efficient data transfer
- \item Combined birefringence and response to external stimuli in liquid crystal structures could be used for directed guiding of light -- such as waveguides.
- \item Smectic A fibres with radial director profile can be created using 8CB and a surfactant\cite{musevic-nekej}
- \item Point defect in a nematic droplet turns a Gaussian beam into Laguerre-Gaussian -- is there a similar effect caused by the line defect in a fibre?
+ \item Combined birefringence and response to external stimuli in liquid crystal structures could be used for directed guiding of light -- such as in waveguides\citep{lasers}.
+ \item Smectic A fibres with radial director profile can be created using 8CB and a surfactant
+ \item Point defect in a nematic droplet turns a Gaussian beam into Laguerre-Gaussian\citep{brasselet} -- is there a similar effect caused by the line defect in a fibre?
 \end{itemize}
 \end{block}
 
 \begin{block}{\blockpadding Methods}
  \begin{itemize}
-  \item FDTD method -- direct time evolution of electromagnetic fields in 3D with fully anisotropic $\varepsilon$
+  \item FDTD method\citep{taflove} -- direct time evolution of electromagnetic fields in 3D with fully anisotropic $\varepsilon$
   \item Assumed zero conductivity and empty space permeability in bulk.
   \item Simulate long cylindrical waveguide with periodic boundary conditions in $z$ direction
   \item Staggered grid, adapted for dielectric anisotropy
@@ -123,27 +124,32 @@ $^{3}$Jo\v zef Stefan Institute, Ljubljana, Slovenia
 \caption{{\color{dark} Left:} Yee lattice, optimized for diagonal dielectric tensor. \\{\color{dark} Right:} The lattice we used, suitable for full anisotropic $\varepsilon$. \\In both cases $\vec E$ and $\vec H$ are known at different times}
 \end{figure}
   \item Tested with uniform director, refraction on interfaces, and periodic modulation of refraction index
-  \end{itemize}
+  \vspace{-2ex}
+  \begin{figure}[h]
+   \centering
+   \subfigure{\scalebox{0.77}{\input{refraction.tex}}}
+   \subfigure{\scalebox{0.7}{\input{g_test_uniform.tex}}}
+   \caption{{\color{dark} Left:} Refraction on an interface near Brewster's angle. \\{\color{dark} Right:} Intensity of light transimitted through a uniform-director liquid crystal between crossed polarizers}
+  \end{figure}
+  \vspace{-2ex}
+    \end{itemize}
   \end{block}
   
   \begin{block}{\blockpadding Parameters}
   \begin{itemize}
   \item Observe propagation of Gaussian laser pulse
 
-\item Cylindrical waveguide with a radial director profile and a singular disclination line along its axis [TODO: Prerez] \\
+\item Cylindrical waveguide with a radial director profile and a singular disclination line along its axis \\
 \begin{figure}[h]
 \centering
-\includegraphics[width=.5\textwidth]{../Magisterij/Slike/director-profile-radial}
+\subfigure{\includegraphics[height=.2\textwidth]{radial-cross}}
+\subfigure{\includegraphics[height=.2\textwidth]{../Magisterij/Slike/director-profile-radial}}
 \end{figure}
 The core radius of the central +1 disclination line is much smaller than the wavelength and can therefore be neglected. 
-\item Waveguide radius 10$\mu$m, inside 8CB with $n_o = 1.52$ and $n_e = 1.67$, surrounded by water with $n = 1.33$
-\item Mesh size $256 \times 256 \times 128$.
+\item Waveguide radius $5 - 20$ $\mu$m, inside 8CB with $n_o = 1.51$ and $n_e = 1.68$, surrounded by water with $n = 1.33$
+\item Mesh size $512 \times 512 \times 256$.
 
  \end{itemize}
- \end{block}
- 
- \begin{block}{\blockpadding References}
-  
  \end{block}
 
 
@@ -152,26 +158,29 @@ The core radius of the central +1 disclination line is much smaller than the wav
  \begin{column}{0.596\textwidth}
   \begin{block}{\blockpadding Electric field}
   \begin{itemize}
-   \item We showed that a Gaussian beam entering a fibre quickly turns into a Laguerre-Gaussian beam, and then [into something else]. 
+   \item A Gaussian beam entering a fibre turns into a Laguerre-Gaussian beam
+   \item The difference in refraction index deforms the beam
+   \vspace{1ex}
 \begin{figure}[h]
 \centering
  \includegraphics[width=.825\textwidth,clip,trim=0mm 50mm 0mm 80mm]{./render_t}
- \caption{Snapshots of electric field $\vec E$ at three different times. Incident light is polarized along the $x$ axis. {\color{dark} Left:} The Gaussian pulse just after entering the waveguide. {\color{dark} Center:} After a short time, a dark spot forms near the axis. Light near the $xz$ and $yz$ plane differs both in phase and propagation velocity. {\color{dark} Right:} After a longer time, the difference in velocity greatly distorts the pulse. Reflection from waveguide walls causes noticeable interferrence and waveforms lose clarity, although the pattern remains visible. }
+ \caption{Snapshots of electric field $\vec E$ at three different times. Incident light is polarized along the $x$ axis. {\color{dark} Left:} The Gaussian pulse just after entering the waveguide. {\color{dark} Center:} After a short time, a dark spot forms near the axis. Regions near the $xz$ and $yz$ planes differ in propagation velocity and have opposite phase. {\color{dark} Right:} After a longer time, the difference in velocity greatly distorts the pulse. Reflection from waveguide walls causes noticeable interferrence and waveforms lose clarity, although the pattern remains visible. }
 \end{figure}
 \end{itemize}
 
 \end{block}
 \begin{block}{\blockpadding Field intensity and phase}
 \begin{itemize}
- \item Using data for electric and magnetic fields we calculated the local energy density. This enabled us to determine the shape of the pulse in time. 
+\item The pulse deforms, then gradually splits into multiple intensity regions, positioned diagonally to the incident light polarization. 
+\vspace{.3ex}
  \begin{figure}[h]
   \centering
   \includegraphics[width=.825\textwidth]{./intensity_gauss_t}
   \caption{Shape of the originally Gaussian pulse at different times after entering the waveguide. Plotted are the isosurfaces where local field amplitude is greater than 5\% of the maximum. At first, the pulse is roughly spherical. Soon a minimum forms at the axis, and the upper and lower parts start overtaking the left and right ones, due to the difference in refraction indexes. The pulse gradually splits into 8 parts, which appears to be a stable configuration. }
  \end{figure}
- \item The pulse splits into multiple intensity regions. Note that the regions are positioned diagonally to the incident light polarization. 
 
- \item We were also interested in planes of constant phase. By calculating the wave phase at every grid point, we determined that the initially Gaussian pulse quickly transforms into [\v se vedno ne vem kaj]. 
+ \item At room temperature, the stable 8-region configuration only forms in fibres with diameter of at least 10$\mu$m. Thinner fibres do not guide light. 
+ \item TODO: Determine the polarization of light in each region. Probably each of the two ranks has different polarization. 
 \end{itemize}
 
 
@@ -179,12 +188,23 @@ The core radius of the central +1 disclination line is much smaller than the wav
 
 \begin{block}{\blockpadding Conclusions}
  \begin{itemize}
-  \item A method was developed to model the propagation of light through media with non-uniform anisotropic dielectric tensor
-  \item The method was tested to produce correct results for reflaction and reflection of light, as well as for the photonic band-gap in periodic structures
+  \item A method was developed to model the propagation of light through media with non-uniform fully-anisotropic dielectric tensor, such as liquid crystals
+  \item The method was tested to produce correct results for refraction and reflection on an interface, transimitivity of uniform-director liquid crystal between crossed polarizers, and for the photonic band-gap in periodic structures
   \item When applied to a radial-profile liquid crystal waveguide, the method predicts the splitting of a single pulse into eight intensity regions, aligned diagonally around the axis in two ranks
+  \item The stability of the 8-region configuration depends on waveguide size and birefringence, hinting at possibility of switching by changing the temperature
  \end{itemize}
 
 \end{block}
+
+
+ \begin{block}{\blockpadding References}
+  \begin{thebibliography}{6}
+\bibitem{lasers}M.~Humar, M.~Ravnik, S.~Pajk and I.~Mu\v sevi\v c. Nat. Photonics {\bf 3}, 595 - 600 (2009) 
+\bibitem{brasselet}E.~Brasselet~et al. Phys. Rev. Lett. {\bf 103}, 103903 (2005).
+\bibitem{taflove}A.~Taflove and S.~C. Hagness. {\em Computational Electrodynamics: The Finite-Difference Time-Domain Method}. Artech House (2005).
+\end{thebibliography}
+
+ \end{block}
 
  \end{column}
 
