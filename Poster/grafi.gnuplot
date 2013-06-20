@@ -7,14 +7,14 @@ set palette model RGB defined (-1 "blue", 0 0.8 0.8 0.8, 1 "red")
 unset tics
 unset border
 
-set xzeroaxis
-HalfWidth=264
+# set xzeroaxis
+HalfWidth=136
 
 set output "g_snap_gauss.png"
-splot "./Data/cross_1.dat" using 1:($2-HalfWidth):3 matrix
+splot "./Data/cross_0.dat" using 1:($2-HalfWidth):3 matrix
 
 set output "g_snap_split.png"
 splot "./Data/cross_500.dat" using 1:($2-HalfWidth):3 matrix
 
 set output "g_snap_inter.png"
-splot "./Data/cross_2300.dat" using 1:($2-HalfWidth):3 matrix
+splot "./Data/cross_1400.dat" using 1:($2-HalfWidth):3 matrix
