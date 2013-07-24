@@ -23,12 +23,12 @@ public:
   ~DFT();
 
   double getEnergy();
-  void getElectronDensity();
+    double getElectronDensity();
   void getPotential();
   
   void printElectronDensity(const char* file);
   void printPotential(const char* file);
-
+  
 private:
   gsl_root_fsolver *rootSolver;
   gsl_odeiv2_driver *poissonSolver;
@@ -83,7 +83,7 @@ DFT::~DFT()
 double DFT::getEnergy()
 {
   gsl_function f = {&numerov_end, this};
-  gsl_root_fsolver_set(rootSolver, &f, -2, -0);
+  gsl_root_fsolver_set(rootSolver, &f, -1, 2);
 
   int status, x_lo, x_hi;
   int iter = 0;
@@ -91,8 +91,7 @@ double DFT::getEnergy()
   
     x_lo = gsl_root_fsolver_x_lower(rootSolver);
     x_hi = gsl_root_fsolver_x_upper(rootSolver);
-      cout << x_hi << ", " << x_lo << endl;
-
+  
   double r, lr;
   lr = -1;
   
@@ -100,7 +99,6 @@ double DFT::getEnergy()
   {
     ++iter;
     status = gsl_root_fsolver_iterate(rootSolver);
-    cout << iter << ", " << status << endl;
     
     r = gsl_root_fsolver_root(rootSolver);
     status = gsl_root_test_delta(lr, r, 1e-12, 0);
@@ -108,13 +106,10 @@ double DFT::getEnergy()
   }
   while (status == GSL_CONTINUE);
   
-  cout << "Found energy after " << iter << " with status = " << status << endl;
-  cout << x_hi << ", " << x_lo << endl;
-
   return gsl_root_fsolver_root(rootSolver);
 }
 
-void DFT::getElectronDensity()
+double DFT::getElectronDensity()
 {
   double E = getEnergy();
   cout << "Energy is " << E << endl;
@@ -132,11 +127,13 @@ void DFT::getElectronDensity()
     sum += u[i] * u[i];
   }
 
-  sum = 1.0 / sqrt(sum);
+  const double f = 1.0 / sqrt(h * sum);
   for (int i = 0; i < N; ++i)
   {
-    u[i] *= sum;
+    u[i] *= f;
   }
+  
+  return E;
 }
 
 void DFT::getPotential()
@@ -147,7 +144,7 @@ void DFT::getPotential()
   for (int i = 1; i < N; ++i)
   {
     U[i] = U[i-1] + Uprime * h;
-    Uprime += (- u[i] * u[i]) / r(i);
+    Uprime += h * (- u[i] * u[i]) / r(i);
   }
 
   double adjust = (1 - U[N-1]) / (N-1);
@@ -157,9 +154,19 @@ void DFT::getPotential()
   }
 
   // Transform U to V = N*U/r
-  for (int i = 1; i < N; ++i)
+  if (n == 1)
   {
-    U[i] *= n / r(i);
+    for (int i = 0; i < N; ++i)
+    {
+      U[i] *= n / r(i);
+    }
+  }
+  else if (n == 2)
+  {
+    for (int i = 0; i < N; ++i)
+    {
+      U[i] = -2.0 / r(i) * (1 - U[i]) - pow((3 * u[i] * u[i]) / (2 * M_PI * M_PI * r(i) * r(i)), 1.0 / 3.0);
+    }
   }
 }
 
@@ -203,7 +210,46 @@ void test_vodik()
   dft.printPotential("g_test_vodik_potencial.dat");
 }
 
+void helij()
+{
+  DFT vodik(1);
+    for (int i = 0; i < N; ++i)
+  {
+    vodik.U[i] = -1.0 / r(i);
+  }
+
+  vodik.getElectronDensity();
+
+  DFT helij(2);
+  
+  for (int i = 0; i < N; ++i)
+  {
+    helij.u[i] = vodik.u[i];
+  }
+  helij.getPotential();
+  
+  double eLast = 0;
+  double e;
+  
+  for (int s = 0; s < 5000; ++s)
+  {
+    e = helij.getElectronDensity();
+    helij.getPotential();
+    
+    if (fabs(e - eLast) < 1e-8)
+    {
+      break;
+    }
+    
+    eLast = e;
+  }
+  
+  helij.printElectronDensity("g_helij_e.dat");
+  helij.printPotential("g_helij_pot.dat");
+}
+
 int main(int argc, char **argv) {
     test_vodik();
+    helij();
     return 0;
 }
