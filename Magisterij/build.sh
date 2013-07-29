@@ -13,4 +13,7 @@ done
 
 rm -f $TEMP
 
+# Generate line defect illustrations
+python Defekti/defects.py
+
 pdflatex magisterij.tex
