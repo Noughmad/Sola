@@ -66,7 +66,7 @@ V teko"cem kristalu z orientacijskim redom os dvolomnosti sledi orientaciji grad
 % TODO: Valovodi s teko"cimi kristali (clanki, reference, literatura)
 
 Teko"cekristalni laserji so v zadnjem "casu dele"zni veliko pozornosti \cite{coles-morris, humar-musevic, humar-ravnik}. 
-Klju"cna dejavnika pri uporabi teko"cih kristalov v laserjih sta prisotnost fotonskega prepovedanega pasu (ang. photonic bandgap) in mo"znost zunanjega nadzora s spreminjanjem elektri"cnega polja ali temperature.
+Klju"cna dejavnika pri uporabi teko"cih kristalov v laserjih sta prisotnost fotonskega prepovedanega pasu (ang. photonic bandgap) in mo"znost zunanjega nadzora s spreminjanjem elektri"cnega polja ali temperature. 
 
 % Struktura diplome
 V teoreti"cnem delu te naloge je opisana osnovna teorija ureditve teko"cih kristalov, njihove opti"cne lastnosti in "sirjenje svetlobe skoznje. 
@@ -181,11 +181,10 @@ Glede na razmerja med elasti"cnimi konstantami se teko"ci kristal uredi v eno iz
 
 \begin{figure}[h]
 \centering
-\subfigure{\includegraphics{./Slike/director-profile-cylinder-kleman}}
-\subfigure{\includegraphics{./Slike/director-profile-radial}}
-\subfigure{\includegraphics{./Slike/escaped-director-energy}}
+\subfigure{\includegraphics[height=150px]{./Slike/director-profile-cylinder-kleman}}
+\subfigure{\includegraphics[clip, trim=0cm -3mm 0cm 0cm]{./Slike/escaped-director-energy}}
 \caption{Levo: Prerezi valja s singularno (a) in nesingularno pobeglo disklinacijo (b). 
-Razli"cne smeri pobega povzro"cija nastanek to"ckastih singularnosti (c). Desno: Energija singularne in pobegle konfiguracije v odvisnosti od razmerja med elasti"cnima kostantama $K_1$ in $K_3$\cite{kleman}. }
+Razli"cne smeri pobega povzro"cijo nastanek to"ckastih singularnosti (c). Desno: Energija singularne in pobegle konfiguracije v odvisnosti od razmerja med elasti"cnima kostantama $K_1$ in $K_3$\cite{kleman}. }
  \label{fig:director-profiles}
 \end{figure}
 
@@ -195,9 +194,22 @@ V pobeglem profilu pa sta prisotni tako pahlja"cna kot upogibna deformacija. Ene
  \vec n &= (n_r, n_\phi, n_z) = (\cos \chi(r), 0, \sin \chi(r)) \\
  \chi(r) &= 2 \arctan \frac{R-r}{R+r}
 \end{align}
-kjer je $R$ polmer valja. Tak"sen profil je prikazan na sliki \ref{fig:director-profiles}b. 
+kjer je $R$ polmer valja. Tak"sen profil je prikazan na sliki \ref{fig:director-profiles}b. V primeru pobega v tretjo dimenzijo je direktor povsod dobro definiran. "Ce pa do pobega ne pride, je tik ob osi valja obmo"cje zmanj"sanega reda, kjer ureditveni parameter $S$ pade na 0. 
 
-V primeru pobega v tretjo dimenzijo je direktor povsod dobro definiran. "Ce pa do pobega ne pride, je tik ob osi valja obmo"cje zmanj"sanega reda, kjer ureditveni parameter $S$ pade na 0. 
+V ve"cino nematikov so vse tri konstante istega velikostnega reda, zato je stanje s pobegom v tretjo dimenzijo bolj ugodno. 
+Veliko razmerje $K_3/K_1$ pa opazimo blizu faznega prehoda v smekti"cno fazo. 
+Z uporabo 8CB, ki tvori tako nematsko kot tudi smekti"cno fazo, je mogo"ce v laboratoriju sintetizirati vlakna z radialnim profilom direktorja\cite{peddireddy}. 
+Primer tvorbe tak"snih vlaken je na sliki \ref{fig:tvorjenje}. 
+
+\begin{figure}[h]
+ \centering
+ \subfigure{\includegraphics[height=150px]{./Slike/tvorjenje}}
+ \subfigure{\includegraphics[height=150px]{./Slike/tvorjenje2}}
+ \caption{Rast vlaken z radialnim direktorjem na meji med teko"cim kristalom 8CB in vodo\cite{peddireddy}}
+ \label{fig:tvorjenje}
+\end{figure}
+
+
 
 \begin{comment}
  
@@ -214,6 +226,12 @@ Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj
 \end{figure}
 
 \end{comment}
+
+\subsection{Defekti}
+
+\todo{Opis defektov v nematskem direktorju} \\
+\todo{Opis defektov v polarizaciji svetlobe} \\
+\todo{Povezava med obema}
 
 \subsection{Maxwellove ena"cbe v neizotropnem sredstvu}
 "Sirjenje svetlobe po snovi opisujejo "stiri Maxwellove ena"cbe
@@ -249,9 +267,11 @@ Pri numeri"cnem re"sevanju potrebujemo le zadnji dve ena"cbi, ki vsebujeta "caso
 \subsection{Teorija valovodov}
 \todo{Preberi "clanke}
 
+\subsection{Defekti v opti"cnih poljih}
+
 \section{Numeri"cna metoda}
 
-Za samo ra"cunanje sem implementiral metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}}. 
+Za samo ra"cunanje sem implementiral metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}}\cite{taflove}. 
 Pri tej metodi "casovno propagiramo elektri"cno in magnetno polje v vsaki to"cki po Maxwellovih ena"cbah
 
 \begin{align}
@@ -260,15 +280,21 @@ Pri tej metodi "casovno propagiramo elektri"cno in magnetno polje v vsaki to"cki
 \end{align}
 
 V zgornjih ena"cbah smo implicitno upo"stevali, da v celici ni izvorov, uporabili pa smo brezdimenzijske enote, zato je $c=1$.
+V ena"cbah nastopajo le prvi odvodi, ki jih za numeri"cno ra"cunanje nadomestimo s kon"cnimi diferencami
+
+\begin{align}
+ \frac{\partial y}{\partial x} \rightarrow \frac{y(x+\delta) - y(x)}{\delta}
+\end{align}
+
 
 \subsection{Mre"za}
 
 Pri diskretizaciji si lahko pomagamo z obliko obeh ena"cb. 
 Za izra"cun "casovnega odvoda vsakega izmed polj $\vec{E}, \vec{B}$ potrebujemo le vrednosti drugega polja. 
 Poleg tega obe ena"cbi povezujeta "casovni odvod enega polja s krajevnim odvodom drugega. 
-Zaradi obeh opisanih lastnosti lahko dvignemo red metode, in s tem izbolj"samo natan"cnost, "ce vrednosti polj poznamo ob razli"cnih "casih in na razli"cnih mestih. 
+Zaradi obeh opisanih lastnosti lahko dvignemo red metode, in s tem izbolj"samo natan"cnost, "ce vrednosti polj poznamo ob razli"cnih "casih in na razli"cnih mestih\cite{taflove}. 
 
-Obi"cajne implementacije metode \acs{FDTD} gredo "se korak dlje, tako da so tudi posamezne komponente elektri"cnega in magnetnega polja definirane na razli"cih to"ckah\cite{yee, taflove, yee-lattice}.
+Obi"cajne implementacije metode \acs{FDTD} gredo "se korak dlje, tako da so tudi posamezne komponente elektri"cnega in magnetnega polja definirane na razli"cih to"ckah\cite{yee, yee-lattice}.
 Tak"sno mre"zo je predlagal Yee in izkori"s"ca dejstvo, da pri "casovnem odvodu vsake komponente posameznega polja nastopata le krajevna odvoda ostalih dveh komponent drugega polja. 
 Z ustrezno izbiro to"ck, kjer so definirane posamezne komponente, so vsi krajevni odvodi izra"cunani ravno na sredini med ustreznima to"ckama mre"ze. 
 Za u"cinkovito delovanje pa tak"sna mre"za zahteva, da je dielektri"cni tenzor $\eps$ diagonalen, njegove komponente pa morajo biti znane na razli"cnih to"ckah mre"ze. 
@@ -509,7 +535,7 @@ V zgornjem primeru se za najbolj"si profil izka"ze kvadratno nara"s"canje absorp
 
 \section{Rezultati}
 
-\subsection{Smekti"cni valood}
+\subsection{Valovod z radialnim profilom direktorja}
 
 
 
