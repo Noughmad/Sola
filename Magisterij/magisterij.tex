@@ -33,6 +33,7 @@
 \acrodef{PML}{Perfectly-matched layer}
 
 \renewcommand{\acf}[1]{\acl{#1} -- \acs{#1}}
+\newcommand{\dd}{\ensuremath{\;\mathrm{d}}}
 
 %opening
 \title{Magistrsko delo}
@@ -66,7 +67,7 @@ V teko"cem kristalu z orientacijskim redom os dvolomnosti sledi orientaciji grad
 % TODO: Valovodi s teko"cimi kristali (clanki, reference, literatura)
 
 Teko"cekristalni laserji so v zadnjem "casu dele"zni veliko pozornosti \cite{coles-morris, humar-musevic, humar-ravnik}. 
-Klju"cna dejavnika pri uporabi teko"cih kristalov v laserjih sta prisotnost fotonskega prepovedanega pasu (ang. photonic bandgap) in mo"znost zunanjega nadzora s spreminjanjem elektri"cnega polja ali temperature.
+Klju"cna dejavnika pri uporabi teko"cih kristalov v laserjih sta prisotnost fotonskega prepovedanega pasu (ang. photonic bandgap) in mo"znost zunanjega nadzora s spreminjanjem elektri"cnega polja ali temperature. 
 
 % Struktura diplome
 V teoreti"cnem delu te naloge je opisana osnovna teorija ureditve teko"cih kristalov, njihove opti"cne lastnosti in "sirjenje svetlobe skoznje. 
@@ -181,11 +182,10 @@ Glede na razmerja med elasti"cnimi konstantami se teko"ci kristal uredi v eno iz
 
 \begin{figure}[h]
 \centering
-\subfigure{\includegraphics{./Slike/director-profile-cylinder-kleman}}
-\subfigure{\includegraphics{./Slike/director-profile-radial}}
-\subfigure{\includegraphics{./Slike/escaped-director-energy}}
+\subfigure{\includegraphics[height=150px]{./Slike/director-profile-cylinder-kleman}}
+\subfigure{\includegraphics[clip, trim=0cm -3mm 0cm 0cm]{./Slike/escaped-director-energy}}
 \caption{Levo: Prerezi valja s singularno (a) in nesingularno pobeglo disklinacijo (b). 
-Razli"cne smeri pobega povzro"cija nastanek to"ckastih singularnosti (c). Desno: Energija singularne in pobegle konfiguracije v odvisnosti od razmerja med elasti"cnima kostantama $K_1$ in $K_3$\cite{kleman}. }
+Razli"cne smeri pobega povzro"cijo nastanek to"ckastih singularnosti (c). Desno: Energija singularne in pobegle konfiguracije v odvisnosti od razmerja med elasti"cnima kostantama $K_1$ in $K_3$\cite{kleman}. }
  \label{fig:director-profiles}
 \end{figure}
 
@@ -195,10 +195,25 @@ V pobeglem profilu pa sta prisotni tako pahlja"cna kot upogibna deformacija. Ene
  \vec n &= (n_r, n_\phi, n_z) = (\cos \chi(r), 0, \sin \chi(r)) \\
  \chi(r) &= 2 \arctan \frac{R-r}{R+r}
 \end{align}
-kjer je $R$ polmer valja. Tak"sen profil je prikazan na sliki \ref{fig:director-profiles}b. 
+kjer je $R$ polmer valja. Tak"sen profil je prikazan na sliki \ref{fig:director-profiles}b. V primeru pobega v tretjo dimenzijo je direktor povsod dobro definiran. "Ce pa do pobega ne pride, je tik ob osi valja obmo"cje zmanj"sanega reda, kjer ureditveni parameter $S$ pade na 0. 
 
-V primeru pobega v tretjo dimenzijo je direktor povsod dobro definiran. "Ce pa do pobega ne pride, je tik ob osi valja obmo"cje zmanj"sanega reda, kjer ureditveni parameter $S$ pade na 0. 
+V ve"cino nematikov so vse tri konstante istega velikostnega reda, zato je stanje s pobegom v tretjo dimenzijo bolj ugodno. 
+Veliko razmerje $K_3/K_1$ pa opazimo blizu faznega prehoda v smekti"cno fazo. 
+Z uporabo 8CB, ki tvori tako nematsko kot tudi smekti"cno fazo, je mogo"ce v laboratoriju sintetizirati vlakna z radialnim profilom direktorja\cite{peddireddy}. 
+Primer tvorbe tak"snih vlaken je na sliki \ref{fig:tvorjenje}. 
 
+\begin{figure}[h]
+ \centering
+ \subfigure{\includegraphics[height=150px]{./Slike/tvorjenje}}
+ \subfigure{\includegraphics[height=150px]{./Slike/tvorjenje2}}
+ \caption{Rast vlaken z radialnim direktorjem na meji med teko"cim kristalom 8CB in vodo\cite{peddireddy}}
+ \label{fig:tvorjenje}
+\end{figure}
+
+
+
+\begin{comment}
+ 
 \subsubsection{Valj z dvojnim zvojem}
 
 Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj. 
@@ -210,6 +225,89 @@ Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj
  \caption{Shematski prikaz direktorja v valju z dvojnim zvojem. Na osi valja je direktor vzporeden z osjo, z oddaljenostjo od osi pa kot med osjo in direktorjem nara"s"ca linearno\cite{coles-morris}. }
  \label{fig:double-twist-cylinder}
 \end{figure}
+
+\end{comment}
+
+\subsection{Defekti}
+
+\subsubsection{Disklinacije v nematiku}
+
+Ravnovesno stanje nematika je tak"sno, ki minimizira prosto energijo. 
+V odsotnosti zunanjih polj je to ureditev z uniformnim direktorjem, kjer je celotna elasti"cna prosta energija enaka 0. 
+Pod vplivom ograjenosti ali zunanjega polja pa lahko pride do stanja, kjer zvezno direktorsko polje ne more zadostiti robnim pogojem. 
+V tem primeru se pojavijo obmo"cja z nedifiniranim direktorjem. 
+Tak"snim obmo"cjem, kjer orientacijski red ne dr"zi, pravimo defekti oz. natan"cneje disklinacije. 
+
+V treh dimenzijah lahko obstajajo to"ckasti in linijski defekti\cite{degennes,kleman}. 
+V vlaknih nastopajo le linijski defekti, zato se bomo posvetili zlasti tistim. 
+Linijski defekti so la"zji za razvr"s"canje, saj se lahko omejimo na ravnino, pravokotno na linijo, in problem prevedemo na dve dimenziji. 
+
+Disklinacije v nematskem teko"cem kristalu delimo glede na to, kako se smer direktorja spreminja v okolici disklinacije. 
+Zanima nas zlasti, za koliko se obrne direktorsko polje, "ce defekt obkro"zimo. 
+
+\begin{figure}[h]
+ \centering
+ \subfigure{\includegraphics[height=100pt]{g_defect_2}}
+ \subfigure{\includegraphics[height=100pt]{g_defect_-2}}
+ \subfigure{\includegraphics[height=100pt]{g_defect_1}}
+ \subfigure{\includegraphics[height=100pt]{g_defect_-1}}
+ \caption{Nekaj mo"znih linijskih defektov. Mo"c defekta je odvisna od tega, kolikokrat se zavrti direktor (temno modre "crte), ko naredimo en krog po svetlo modrem krogu. Od leve proti desni so mo"ci 1, $-1$, $1/2$ in $-1/2$. Polcele vrednosti so mo"zne zaradi simetrije direktorja. }
+\end{figure}
+
+V dveh dimenzijah lahko nematski direktor zapi"semo kot $\vec n = (\cos\theta, \sin\theta, 0)$. 
+Definiramo lahko ovojno "stevilo oz. mo"c defekta kot
+\begin{align}
+ s = \frac{1}{2\pi}\int_0^{2\pi} \left(\frac{d\theta}{d\phi}\right) \dd \phi
+\end{align}
+kjer kot $\theta$ opisuje smer direktorja, $\phi$ pa polo"zaj na na svetlo modrem krogu. 
+
+Direktorsko polje je zvezno povsod razen v defektu, zato mora direktor pri $\phi = 0$ enak kot pri $\phi = 2\pi$. 
+Ta pogoj dolo"ca mo"zne vrednosti za $s$. 
+Za prava vektorska polja mora biti $s$ celo "stevilo, saj mora biti kot $\theta$ na koncu enak kot na za"cetku. 
+Nematski direktor pa ima dodatno simetrijo, saj stanji $\vec n$ in $-\vec n$ predstavljata enak red. 
+Zato je mo"zno, da pri obkro"zenju defekta direktor naredi le pol obrata, topolo"ski naboj $s$ pa je zato lahko tudi polcelo "stevilo. 
+
+Vsak defekt v teko"cem kristalu povzro"ci elasti"cno deformacijo direktorskega polja, kar pomeni zvi"sano prosto energijo sistema. 
+Za linijske defekte v enokonstantnem pribli"zku je gostota elasti"cna proste energije enaka $\frac{K}{2}(\nabla \theta)^2$. 
+V bli"zini defekta lahko privzamemo odvisnost $\theta(\phi) = s \phi + \theta_0$, iz "cesar sledi $\nabla\theta = \frac{k}{r}\hat e_\phi$. 
+Skupni prispevek enega defekta k prosti energiji na enoto dol"zine je tako
+\begin{align}
+ \frac{F_d}{L} &= \cdot \frac{K}{2} \int_{r_{min}}^{r_{max}} \frac{k^2}{r^2} 2\pi r \dd r = K s^2 \pi \ln{\frac{r_{max}}{r_{min}}}
+\end{align}
+Zgornji izraz divergira tako v bli"zini defekta kot tudi za velike oddaljenosti. 
+Velikostna skala $r_{max}$ je povezana z velikostjo sistema oz. z razdaljo do sosednjega defekta. 
+En sam izoliran defekt torej nosi zelo veliko energijo, zato ni stabilen, razen "ce ga vsiljujejo robni pogoji. 
+V neposredni bli"zini defekta pa je gostota proste energije tako velika, da je za teko"ci kristal bolj ugodno, da se stali v izotropno fazo. 
+Velikost staljenega dela opisuje $r_{min}$. 
+
+V zgornji enakosti je pomembna odvisnost od ovojnega "stevila. 
+Elasti"cna energija zaradi defekta je sorazmerna z $s^2$, zato je bolj ugodno, da se defekt z ve"cjim ovojnim "stevilom razcepi na ve"c manj"sih defektov. 
+
+\subsubsection{Defekti v polarizaciji svetlobe}
+Elektri"cno in magnetno polje sta prava vektorja, zato imata lahko le defekte s celo"stevilskim ovojnim "stevilom. 
+Za razliko od direktorskega polja v teko"cih kristalih pa deformacije elektromagnetih polj ne nosijo energije, zato so stabilne poljubne konfiguracije. 
+
+Defekt v elektromagnetnem polju je to"cka oz. obmo"cje, kjer polarizacija in faza valovanja nista definirani. 
+Amplituda valovanja v tak"sni to"cki mora biti enaka ni"c, zato se defekti izrazijo kot temne pege. 
+Primer so Laguerre-Gaussovi snopi, prikazani na sliki \ref{fig:laguerre-gauss}. 
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[width=.6\textwidth]{./Slike/LG-wiki}
+ \caption{Nekaj osnovnih Laguerre-Gaussovih na"cinov. Temne pege predstavljajo defekte. \cite{lg-wiki}}
+ \label{fig:laguerre-gauss}
+\end{figure}
+
+
+V opti"cnih poljih je nihanje elektri"cnega in magnetnega polja tako hitro, da z nobeno merilno napravo ne moremo izmeriti samega polja, ampak le njegovo "casovno povpre"cje. 
+Med polarizacijo svetlobe $\vec P$ in $-\vec P$ je razlika zgolj v fazi, zato ju lahko obravnavamo kot enaki. 
+V tem smislu je polarizacija svetlobe podobna nematskemu direktorju. 
+Kljub temu da z elektri"cnim poljem ne moremo skonstruirati pravega defekta s polcelim ovojnim "stevilom, imamo lahko na neki to"cki obrat polja, ki ne pove"ca proste energije. 
+
+\subsubsection{Povezava med defekti v teko"cem kristalu in defekti v opti"cnem polju}
+Orientacijski red v teko"cem kristalu je tesno povezani z opti"cnimi polji. 
+Med njimi obstaja dvosmerna povezava: zaradi dielektri"cne sklopitve svetloba vpliva na ureditev teko"cega kristala, zaradi opti"cne anizotropije pa teko"ci kristal vpliva na "sirjenje svetlobe po njem. 
+Podobno so med seboj povezani tudi defekti. 
 
 \subsection{Maxwellove ena"cbe v neizotropnem sredstvu}
 "Sirjenje svetlobe po snovi opisujejo "stiri Maxwellove ena"cbe
@@ -245,9 +343,11 @@ Pri numeri"cnem re"sevanju potrebujemo le zadnji dve ena"cbi, ki vsebujeta "caso
 \subsection{Teorija valovodov}
 \todo{Preberi "clanke}
 
+\subsection{Defekti v opti"cnih poljih}
+
 \section{Numeri"cna metoda}
 
-Za samo ra"cunanje sem implementiral metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}}. 
+Za samo ra"cunanje sem implementiral metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}}\cite{taflove}. 
 Pri tej metodi "casovno propagiramo elektri"cno in magnetno polje v vsaki to"cki po Maxwellovih ena"cbah
 
 \begin{align}
@@ -256,15 +356,21 @@ Pri tej metodi "casovno propagiramo elektri"cno in magnetno polje v vsaki to"cki
 \end{align}
 
 V zgornjih ena"cbah smo implicitno upo"stevali, da v celici ni izvorov, uporabili pa smo brezdimenzijske enote, zato je $c=1$.
+V ena"cbah nastopajo le prvi odvodi, ki jih za numeri"cno ra"cunanje nadomestimo s kon"cnimi diferencami
+
+\begin{align}
+ \frac{\partial y}{\partial x} \rightarrow \frac{y(x+\delta) - y(x)}{\delta}
+\end{align}
+
 
 \subsection{Mre"za}
 
 Pri diskretizaciji si lahko pomagamo z obliko obeh ena"cb. 
 Za izra"cun "casovnega odvoda vsakega izmed polj $\vec{E}, \vec{B}$ potrebujemo le vrednosti drugega polja. 
 Poleg tega obe ena"cbi povezujeta "casovni odvod enega polja s krajevnim odvodom drugega. 
-Zaradi obeh opisanih lastnosti lahko dvignemo red metode, in s tem izbolj"samo natan"cnost, "ce vrednosti polj poznamo ob razli"cnih "casih in na razli"cnih mestih. 
+Zaradi obeh opisanih lastnosti lahko dvignemo red metode, in s tem izbolj"samo natan"cnost, "ce vrednosti polj poznamo ob razli"cnih "casih in na razli"cnih mestih\cite{taflove}. 
 
-Obi"cajne implementacije metode \acs{FDTD} gredo "se korak dlje, tako da so tudi posamezne komponente elektri"cnega in magnetnega polja definirane na razli"cih to"ckah\cite{yee, taflove, yee-lattice}.
+Obi"cajne implementacije metode \acs{FDTD} gredo "se korak dlje, tako da so tudi posamezne komponente elektri"cnega in magnetnega polja definirane na razli"cih to"ckah\cite{yee, yee-lattice}.
 Tak"sno mre"zo je predlagal Yee in izkori"s"ca dejstvo, da pri "casovnem odvodu vsake komponente posameznega polja nastopata le krajevna odvoda ostalih dveh komponent drugega polja. 
 Z ustrezno izbiro to"ck, kjer so definirane posamezne komponente, so vsi krajevni odvodi izra"cunani ravno na sredini med ustreznima to"ckama mre"ze. 
 Za u"cinkovito delovanje pa tak"sna mre"za zahteva, da je dielektri"cni tenzor $\eps$ diagonalen, njegove komponente pa morajo biti znane na razli"cnih to"ckah mre"ze. 
@@ -498,14 +604,14 @@ Za nekaj vrednosti $p$ sem izra"cunal odbojnost robne plasti z debelino 10 enot 
 \end{figure}
 
 V primeru, da v plasti ni izgub, je njena odbojnost enaka 1, saj gre celotno valovanje skozi plast in se odbije na zunanji meji. 
-"Ce izgume malo pove"camo, odbojnost v vseh primerih strmo pade. 
+"Ce izgube malo pove"camo, odbojnost v vseh primerih strmo pade. 
 Pri profilih, kjer imamo nezveznost v izgubah ali v njihovem odvodu ($p<2$) pa odbojnost kmalu za"cne spet nara"s"cati, saj postane odboj na notranji meji "ze opazen.
 Pri ve"cjih potencah pa lahko izgube "se pove"camo in s tem dose"zemo ni"zjo odbojnost plasti. 
 V zgornjem primeru se za najbolj"si profil izka"ze kvadratno nara"s"canje absorpcije, zato sem za vse nadaljnje ra"cune uporabil tak"sno plast. 
 
 \section{Rezultati}
 
-\subsection{Smekti"cni valood}
+\subsection{Valovod z radialnim profilom direktorja}
 
 
 
