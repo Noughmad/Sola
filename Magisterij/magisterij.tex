@@ -378,7 +378,7 @@ V praznem prostoru ali v trdnih kristalih temu pogoju lahko zadostimo, po mo"zno
 
 V teko"cih kristalih je dielektri"cni tenzor anizotropen in se mo"cno spreminja s krajem. 
 Zaradi krajevnega spreminjanja ne moremo tako obrniti koordinatnega sistema, da bi bil tenzor diagonalen v vseh to"ckah. 
-Poleg tega obstoje"ce modeliranje ureditve teko"cih kristalov poda vse komponente dielektri"cnega tenzorja na istem mestu. 
+Poleg tega obstoje"ci programi za modeliranje ureditve teko"cih kristalov podajo vse komponente dielektri"cnega tenzorja na istem mestu\cite{ravnik-zumer-ldg}.
 Odlo"cil sem se za srednjo pot, kjer sta polji $\E$ in $\B$ definirani ob razli"cnih "casih in na razli"cnih to"ckah mre"ze, vse tri komponente vsakega izmed polj pa so podane na istem mestu. 
 Obe mre"zi prikazuje slika \ref{fig:lattice}. 
 
@@ -455,15 +455,7 @@ Poljubno vpadno valovanje lahko modeliramo z robnimi pogoji, "ce izkoristimo lin
 Elektri"cno in magnetno polje lahko namre"c razcepimo na vsoto vpadnega in sipanega valovanja\cite{taflove}. 
 Tak"sen razcep polja je mo"zen le, "ce je "sirjenje vpadnega valovanja dobro znano. 
 Mre"zo zato razdelimo na dve obmo"cji, v notranjem obmo"cju ra"cunamo s skupnim poljem, v zunanjem pa polje razcepimo in shranjujemo le sipani del.
-Opti"cno anizotropna snov mora biti v celoti v notranjem obmo"cju. \todo{slikca}
-
-Izvor valovanja modeliramo na prehodu med obmo"cjema. 
-
-Delitev na notranje in zunanje obmo"cje je u"cinkovita, "ce se efektivni lomni koli"cnik v notranem obmo"cju ne razlikuje mo"cno od zunanjega. 
-V tem primeru je fazna razlika na zadnji stranici notrenjega obmo"cja dovolj majhna, da pretvorba na sipano valovanje odstrani ve"cino valovanja. 
-"Ce pa je fazna razlika primerljiva s $\pi/2$ ali ve"cja, lahko odstranitev vpadnega vala celo pove"ca amplitudo valovanja. 
-To se zgodi npr. v teko"cekristalnem valovodu, ki je mnogo dalj"si od valovne dol"zine svetlobe. 
-Takrat je bolj u"cinkovito upo"stevati izvor valovanja le na vpadni strani. 
+Opti"cno anizotropna snov mora biti v celoti v notranjem obmo"cju, izvor valovanja modeliramo na prehodu med obmo"cjema. 
 
 \begin{figure}[h]
  \centering
@@ -471,6 +463,12 @@ Takrat je bolj u"cinkovito upo"stevati izvor valovanja le na vpadni strani.
  \caption{Delitev mre"ze na dve obmo"cji. V obmo"cju \textbf{A} ra"cunamo le z sipanim valovanjem, v obmo"cju \textbf{B} pa s celotnim valovanjem. Delitev na levi sliki je primerna, "ce je razlika med lomnima koli"cnikoma \textbf{A} in \textbf{B} dovolj majhna. V nasprotnem primeru uporabimo delitev na desni sliki. }
  \label{fig:wave-source-regions}
 \end{figure}
+
+Delitev na notranje in zunanje obmo"cje je u"cinkovita, "ce se efektivni lomni koli"cnik v notranem obmo"cju ne razlikuje mo"cno od zunanjega. 
+V tem primeru je fazna razlika na zadnji stranici notrenjega obmo"cja dovolj majhna, da pretvorba na sipano valovanje odstrani ve"cino valovanja. 
+"Ce pa je fazna razlika primerljiva s $\pi/2$ ali ve"cja, lahko odstranitev vpadnega vala celo pove"ca amplitudo valovanja. 
+To se zgodi npr. v teko"cekristalnem valovodu, ki je mnogo dalj"si od valovne dol"zine svetlobe. 
+Takrat je bolj u"cinkovito upo"stevati izvor valovanja le na vpadni strani. 
 
 Delitev na zunanje in notranje obmo"cji, ki je prikazana na levi strani slike \ref{fig:wave-source-regions}, sem uporabil le s preprostimi primeri za preverjanje delovanja metode. 
 Vse ostale izra"cune sem izvajal z delitvijo na desni strani. 
@@ -519,6 +517,10 @@ Na enak na"cin so razcepljene ostale komponente eletri"cnega in magnetnega polja
 Prvi preizkus metode, ki sem ga opravil, je "sirjenje svetlobe skozi prazen prostor. 
 Prazen prostor sem modeliral kot snov, kjer je dielektri"cni tenzor uniformen in izotropen. 
 "Ce na eno stran celice postavimo planarni izvir ravnega valovanja, pri"cakujemo ravne valove po celotnem mediju. 
+
+Pri tem preizkusu sta lomna koli"cnika v obeh obmo"cjih enaka, zato sem mre"zo razdelil na notranje in zunanje obmo"cje, izvor valovanja pa sem postavil po celotnem robu med obmo"cjema. 
+Prikaz valovanja na sliki \ref{fig:test-plane} potrjuje pravilnost metode, saj res vidimo ravne valove s konstantno frekvenco in valovno dol"zino. 
+
 \begin{figure}[h]
  \centering
  \subfigure{\includegraphics[width=.45\textwidth]{g_test_plane}} \,
@@ -526,20 +528,28 @@ Prazen prostor sem modeliral kot snov, kjer je dielektri"cni tenzor uniformen in
 \caption{Levo: Trenutna slika valovanja v celici. Desno: "Casovna in krajevna odvisnost valovanja. \todo{Bolj"si opis, pu"s"cice na slikah}}
 \label{fig:test-plane}
 \end{figure}
-Na obeh slikah opazimo rob, kjer ni valovanja. 
-To je posledica planarnega modeliranja izvora valovanja, kot je prikazano na sliki \ref{fig:wave-source-regions}. 
-Pri tem preizkusu sta lomna koli"cnika v obeh obmo"cjih enaka, zato sem mre"zo razdelil na notranje in zunanje obmo"cje. 
+
+Na obeh slikah opazimo notranjost celice z valovanje in rob, kjer valovanja ni.
+To je posledica modeliranja izvora valovanja okrog in okrog celice, kot je prikazano na levi strani slike \ref{fig:wave-source-regions}.
+Valovanje se si"ri od leve proti desni, tako si lahko predstavljamo izvir valovanja ne levi strani in ponor na desni. 
+Dejstvo, da ponor valovanja na desni strani uspe"sno pobere celotno valovanje potrjuje natan"cnost ra"cunanja. 
 
 \subsection{Lom in odboj}
 
   
 
 \subsection{Uniformen direktor}
-
 Za naslednji preizkus sem simuliral dvolomni kristal, torej snov, kjer je dielektri"cni tenzor uniformen, ne pa tudi izotropen. 
 Svetloba se je "sirila v smeri osi $z$, opti"cna os pa je oklepala kot $\theta$ z ravnino $x$-$y$ in kot $\beta$ s polarizacijo vpadne svetlobe. 
 Preu"ceval sem prepustnost tak"snega sistema, "ce za celico postavimo polarizator, ki je pravokoten na polarizacijo vpadne svetlobe. 
-Intenziteto prepu"s"cene svetlobe lahko izpeljemo analiti"cno\cite{kleman}, enaka je
+
+Ta preizkus temelji na najpogosteje uporabljani metodi za eksperimentalno opazivanje teko"cih kristalov. 
+Tanko plast teko"cega kristala postavimo med dva prekri"zana polarizatorja. 
+"Ce je med polarizatorjema opti"cno izotropna snov, ali pa je opti"cna os vzporedna z enim izmed polarizatorjev, sistem ne prepu"s"ca svetlobe. 
+V ostalih primerih pa vidimo nekaj prepu"s"cene svetlobe, njena intenziteta je odvisna od dvolomnosti in orientacije vmesne snovi. 
+Na ta na"cin se jasno vidijo defekti v teko"cem kristalu. 
+
+"Ce je direktor uniformen po celotni debelini vzorca, lahko intenziteto prepu"s"cene svetlobe izpeljemo analiti"cno\cite{kleman}. Enaka je
 \begin{align}
  I &= I_0 \sin^2 2\beta \sin^2 \left[ \frac{\pi d}{\lambda_0} \left( \frac{n_o n_e}{\sqrt{n_e^2 \cos^2 \theta + n_0^2 \sin^2 \theta}} - n_o \right)\right],
 \end{align}
@@ -553,15 +563,36 @@ Ujemanje rezultatov z napovedjo je prikazano na sliki \ref{fig:test-uniform}.
  \label{fig:test-uniform}
 \end{figure}
 
+Na sliki vidimo zelo dobro ujemanje med simulacijo in teoreti"cno napovedjo. 
+To potrjuje pravilno delovanje metode v opti"cno anizotropni snovi. 
+
 \newpage
 \subsection{Periodi"cna modulacija}
 
 %bandgap => prepovedani pas, energijska re"za
 Pri periodi"cni modulaciji lomnega koli"cnika opazimo pojav, da se svetloba dolo"cenih frekvenc ne more "siriti po mediju\cite{joannopoulos}. 
-Temu pojavu pravimo prepovedani pas \angl{band gap}. 
-"Sirina in oblika tega pasu sta odvisni od obeh lomnih koli"cnikov, periode modulacije in velikosti kristala. 
+Temu pojavu pravimo prepovedani pas \angl{band gap} in je soroden elektronski energijski re"zi pri molekulskih kristalih. 
+Za prisotnost fotonskega prepovedanega pasu pa potrebujemo kristal oz. periodi"cno strukturo, kjer je perioda primerljiva z valovno dol"zino svetlobe. 
+Fotonsko energijsko re"zo za vidno svetlobo zato opazimo pri koloidnih kristali, ki imajo periodo okrog 1 $\mu$m. 
+
+
+"Sirina in oblika prepovedanega pasu sta odvisni od obeh lomnih koli"cnikov, periode modulacije in velikosti kristala. 
 Za preverjanje metode sem modeliral kristal, kjer se izmenjujejo plasti z izotropno dielektri"cnostjo $\varepsilon_1$ in $\varepsilon_2$. 
-V smereh $x$ in $y$ sem uporabil periodi"cne robne pogoje, v smeri $z$ pa celico dol"zine 1024 enot z 20 enotami absorbirajo"ce plasti na vsakem koncu. 
+Teoreti"cen izra"cun odvisnosti frekvence $\omega$ od valovnega vektorj $k$ je prikazan na sliki \ref{fig:joannopoulos-crystal}. 
+"Ce se dielektri"cni konstanti obeh plasti razlikujeta, opazimo interval frekvenc, pri katerih ni mo"zen noben valovni vektor, torej se valovanje ne more "siriti skozi kristal. 
+S pove"cevanjem razlike v dielektri"cnosti plasti se prepovedani pas raz"siri. 
+
+\begin{figure}[h]
+\centering
+ \includegraphics[width=.8\textwidth]{./Slike/bandgap}
+ \caption{Pojav energijske re"za v fotonskem kristalu. Levo: celotna plast ima dielektri"cnost $\varepsilon = 13$. Sredina: Izmenjevanje plasti z dielektri"cnima konstantama 13 in 12. Desno: Izmenjevanje plasti z dielektri"cnima konstantama 13 in 1. \cite{joannopoulos}}
+ \label{fig:joannopoulos-crystal}
+\end{figure}
+
+Po napovedi naj bi bila spodnja meja prepovedani pasu okrog $\frac{\omega a}{2\pi c} \approx 0,\!15$, kjer je $a$ perioda kristala, $c$ pa hitrost svetlobe. 
+Zgornja meja je mo"cneje odvisna od razlike v dielektri"cnosti\cite{joannopoulos}. 
+
+Za modeliranje tak"snega kristala sem uporabil periodi"cne robne pogoje v smereh $x$ in $y$, v smeri $z$ pa celico dol"zine 1024 enot z 20 enotami absorbirajo"ce plasti na vsakem koncu. 
 Grafa prepustnosti kristalov z razli"cnimi izbirami za dielektri"cnosti sta na sliki \ref{fig:test-periodic}. 
 
 \begin{figure}[h]
@@ -570,16 +601,12 @@ Grafa prepustnosti kristalov z razli"cnimi izbirami za dielektri"cnosti sta na s
  \label{fig:test-periodic}
 \end{figure}
 
-Na sliki res opazimo oster padec prepustnosti v dolo"cenem frekven"cnem pasu. 
-Ta frekven"cni pas se dobro ujema s pri"cakovanim, ki je na sliki \ref{fig:joannopoulos-crystal}. 
+Na sliki res opazimo oster padec prepustnosti v dolo"cenem frekven"cnem pasu, ki se dobro ujema s pri"cakovanim na sliki \ref{fig:joannopoulos-crystal}. 
 Metoda torej pravilno napove polo"zaj in "sirino prepovedanih pasov. 
+Zlasti pri veliki razliki v dielektri"cnosti plasti meja prepovedanega pasu ni ostra, ampak krivulja postane zaobljena. 
+To je posledica kon"cne velikosti sistema, saj so teoreti"cni izra"cuni napravljeni za neskon"cen kristal, z metodo \acs{FDTD} pa lahko modeliramo le kon"cnega. 
+Kljub temu pa metoda da kvalitativno in kvantitativno pravilne rezultate za pojav fotonskega prepovedanega pasu. 
 
-\begin{figure}[h]
-\centering
- \includegraphics[width=.8\textwidth]{./Slike/bandgap}
- \caption{Pojav energijske re"za v fotonskem kristalu. Levo: celotna plast ima dielektri"cnost $\varepsilon = 13$. Sredina: Izmenjevanje plasti z dielektri"cnima konstantama 13 in 12. Desno: Izmenjevanje plasti z dielektri"cnima konstantama 13 in 1. \cite{joannopoulos}}
- \label{fig:joannopoulos-crystal}
-\end{figure}
 
 \newpage
 \subsection{Robni pogoji}
