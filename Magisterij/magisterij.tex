@@ -2,7 +2,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[slovene]{babel}
-\usepackage{amsmath}
+\usepackage[intlimits]{amsmath}
 \usepackage{hyperref}
 \usepackage[nottoc,numbib]{tocbibind}
 \usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
@@ -166,12 +166,41 @@ Na ureditev pa vpliva tudi zunanje elektri"cno polje.
 Prispevek k prosti energiji lahko razdelimo na prispevek izotropnega dela dielektri"cnega tenzorja $\overline\varepsilon$, ki ni odvisen od ureditve teko"cega kristala, in prispevka dielektri"cne anizotropije, ki predstavlja sklopitev med ureditvijo in elektri"cnim poljem. 
 Skupna sprememba proste energije je enaka
 \begin{align}
+\label{eq:dielektricna-sklopitev}
   f_{\mathrm{EM}} = -\frac{1}{2}\varepsilon_0 \left(\overline\varepsilon E_i E_i + \frac{2}{3}\varepsilon_a^{\mathrm{mol}} Q_{ij}E_iE_j \right),
 \end{align}
 kjer je $\overline{\varepsilon}$ povpre"cna dielektri"cna konstanta, $\varepsilon_a^{\mathrm{mol}} = \varepsilon_{\parallel}^{\mathrm{mol}} - \varepsilon_{\perp}^{\mathrm{mol}}$ dielektri"cna anizotropija posamezne molekule, $E_i$ pa zunanje elektri"cno polje. 
 "Ce na teko"ci kristal svetimo, ureditev molekul ne more slediti hitremu spreminjanju opti"cnega elektri"cnega polja, ampak nanj efektivno deluje povpre"cen kvadrat polja. 
 Ta sklopitev izhaja iz polarizabilnosti molekul, ki je odvisna od njihove oblike. 
 Zunanje polje v molekuli inducira elektri"cni dipolni moment, ki je sorazmeren z dol"zino molekule in je zato najve"cji, "ce je polje vzporedno z osjo molekule. 
+
+\subsubsection{Dielektri"cni tenzor v teko"cem kristalu}
+Oblika in polarizabilnost molekul v teko"cem kristalu vplivata na njegove opti"cne lastnosti. 
+Dielektri"cni tenzor v teko"cem kristalu je odvisen od molekularne anizotropije $\varepsilon_{a}^{\mathrm{mol}}$, direktorja in nematske stopnje reda $S$. 
+Odvisnost od direktorja in stopnje reda lahko opi"semo s tenzorskim ureditvenim parametrom $Q_{ij}$. 
+Ta je brezsleden, zato tudi dielektri"cni tenzor zapi"semo kot vsoto izotropnega in brezslednega tenzorja kot\cite{degennes, ravnik-zumer-ldg}
+
+\begin{align}
+\label{eq:dielektricni-tenzor}
+ \varepsilon_{ij} &= \overline\varepsilon + (\varepsilon_a)_{ij} = \overline\varepsilon + \frac{2}{3}\varepsilon_a^{\mathrm{mol}} Q_{ij}
+\end{align}
+
+Lastni vektorji tenzorja $Q_{ij}$ so direktor in dve pravokotni smeri, po zgornji zvezi pa so enake tudi lastne osi dielektri"cnega tenzorja. 
+V enoosnem teko"cem kristul je tako opti"cna os z izrednim lomnim koli"cnikom vzporedna z direktorjem. 
+
+"Ce primerjamo ena"cbi (\ref{eq:dielektricna-sklopitev}) in (\ref{eq:dielektricni-tenzor}) opazimo dvosmerno povezavo med ureditvijo teko"cega kristala in elektromagnetnim poljem. 
+Zaradi dielektri"cne sklopitve svetloba vpliva na ureditev teko"cega kristala, zaradi opti"cne anizotropije pa teko"ci kristal vpliva na "sirjenje svetlobe po njem. 
+Ra"cunsko orodje, ki naj bi natan"cno napovedalo direktorsko polje ob prisotnosti svetlobe ali "sirjenje svetlobe skozi teko"ci kristal, bi moralo upo"stevati to dvosmerno povezavo in hkrati ra"cunati oboje. 
+V praksi pa se pogosto zate"cemo k poenostavitvam oz. limitam mo"cnega ali "sibkega polja. 
+"Ce je elektromagnetno polje dovolj mo"cno, se bo direktor orientiral v smeri polja, torej svetloba vedno "cuti izredni lomni koli"cnik. 
+V tem re"zimu teko"ci kristal ne vpliva na "sirjenje svetlobe. 
+"Ce pa je svetloba zelo "sibka, ne spremeni orientacije molekul in lahko privzamemo, da je direktorsko polje fiksirano. 
+Mo"cno se razlikujeta tudi "casovni skali obeh pojavov, saj je karakteristi"cni "cas relaksacije teko"cega kristala velikostnega reda sekunde, opti"cna polja pa nihajo s periodo okrog femtosekunde. 
+Zato lahko preu"cujemo propagacijo svetlobe preden se teko"ci kristal lahko preuredi. 
+
+V tem magistrskem delu sem se omejil le na "sirjenje svetlobe, pri "cemer je direktorsko polje konstantno. 
+Sama ra"cunska metoda pa je zasnovana tako, da je kompatibilna z obstoje"cimi programi za izra"cun ureditve teko"cih kristalov\cite{ravnik-zumer-ldg}. 
+Z isto metodo bo v prihodnosti mogo"ce upo"stevati dvosmerno sklopitev med opti"cnim poljem in teko"cim kristalom, premostiti pa bo treba "se razliko v "casovnih skalah. 
 
 \subsubsection{Direktor v cilindri"cni kapilari}
 
@@ -209,8 +238,6 @@ Primer tvorbe tak"snih vlaken je na sliki \ref{fig:tvorjenje}.
  \caption{Rast vlaken z radialnim direktorjem na meji med teko"cim kristalom 8CB in vodo\cite{peddireddy}}
  \label{fig:tvorjenje}
 \end{figure}
-
-
 
 \begin{comment}
  
@@ -272,7 +299,7 @@ Za linijske defekte v enokonstantnem pribli"zku je gostota elasti"cna proste ene
 V bli"zini defekta lahko privzamemo odvisnost $\theta(\phi) = s \phi + \theta_0$, iz "cesar sledi $\nabla\theta = \frac{k}{r}\hat e_\phi$. 
 Skupni prispevek enega defekta k prosti energiji na enoto dol"zine je tako
 \begin{align}
- \frac{F_d}{L} &= \cdot \frac{K}{2} \int_{r_{min}}^{r_{max}} \frac{k^2}{r^2} 2\pi r \dd r = K s^2 \pi \ln{\frac{r_{max}}{r_{min}}}
+ \frac{F_d}{L} &= \frac{K}{2} \int_{r_{min}}^{r_{max}} \frac{k^2}{r^2} 2\pi r \dd r = K s^2 \pi \ln{\frac{r_{max}}{r_{min}}}
 \end{align}
 Zgornji izraz divergira tako v bli"zini defekta kot tudi za velike oddaljenosti. 
 Velikostna skala $r_{max}$ je povezana z velikostjo sistema oz. z razdaljo do sosednjega defekta. 
@@ -306,7 +333,7 @@ Kljub temu da z elektri"cnim poljem ne moremo skonstruirati pravega defekta s po
 
 \subsubsection{Povezava med defekti v teko"cem kristalu in defekti v opti"cnem polju}
 Orientacijski red v teko"cem kristalu je tesno povezani z opti"cnimi polji. 
-Med njimi obstaja dvosmerna povezava: zaradi dielektri"cne sklopitve svetloba vpliva na ureditev teko"cega kristala, zaradi opti"cne anizotropije pa teko"ci kristal vpliva na "sirjenje svetlobe po njem. 
+Med njimi obstaja dvosmerna povezava: 
 Podobno so med seboj povezani tudi defekti. 
 
 \subsection{Maxwellove ena"cbe v neizotropnem sredstvu}
@@ -585,7 +612,7 @@ S pove"cevanjem razlike v dielektri"cnosti plasti se prepovedani pas raz"siri.
 \begin{figure}[h]
 \centering
  \includegraphics[width=.8\textwidth]{./Slike/bandgap}
- \caption{Pojav energijske re"za v fotonskem kristalu. Levo: celotna plast ima dielektri"cnost $\varepsilon = 13$. Sredina: Izmenjevanje plasti z dielektri"cnima konstantama 13 in 12. Desno: Izmenjevanje plasti z dielektri"cnima konstantama 13 in 1. \cite{joannopoulos}}
+ \caption{Pojav energijske re"ze v fotonskem kristalu. Levo: celotna plast ima dielektri"cnost $\varepsilon = 13$. Sredina: Izmenjevanje plasti z dielektri"cnima konstantama 13 in 12. Desno: Izmenjevanje plasti z dielektri"cnima konstantama 13 in 1. \cite{joannopoulos}}
  \label{fig:joannopoulos-crystal}
 \end{figure}
 
