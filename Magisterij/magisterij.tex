@@ -33,6 +33,7 @@
 \acrodef{PML}{Perfectly-matched layer}
 
 \renewcommand{\acf}[1]{\acl{#1} -- \acs{#1}}
+\newcommand{\dd}{\ensuremath{\;\mathrm{d}}}
 
 %opening
 \title{Magistrsko delo}
@@ -228,6 +229,33 @@ Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj
 \end{comment}
 
 \subsection{Defekti}
+
+Ravnovesno stanje nematika je tak"sno, ki minimizira prosto energijo. 
+V odsotnosti zunanjih polj je to ureditev z uniformnim direktorjem, kjer je celotna elasti"cna prosta energija enaka 0. 
+Pod vplivom ograjenosti ali zunanjega polja pa lahko pride do stanja, kjer zvezno direktorsko polje ne more zadostiti robnim pogojem. 
+V tem primeru se pojavijo obmo"cja z nedifiniranim direktorjem. 
+Tak"snim obmo"cjem, kjer orientacijski red ne dr"zi, pravimo defekti oz. natan"cneje disklinacije. 
+
+V treh dimenzijah lahko obstajajo to"ckasti in linijski defekti. 
+V vlaknih nastopajo le linijski defekti, zato se bomo posvetili zlasti tistim. 
+Linijski defekti so la"zji za razvr"s"canje, saj se lahko omejimo na ravnino, pravokotno na linijo, in problem prevedemo na dve dimenziji. 
+
+Disklinacije v nematskem teko"cem kristalu delimo glede na to, kako se smer direktorja spreminja v okolici disklinacije. 
+Zanima nas zlasti, za koliko se obrne direktorsko polje, "ce defekt obkro"zimo. 
+\todo{Slikce tu, pred definicijo naboja} \\
+Definiramo lahko topolo"ski naboj oz. mo"c defekta kot
+
+\begin{align}
+ q = \frac{1}{2\pi}\int_0^{2\pi} \left(\frac{d\theta}{d\phi}\right) \dd \phi
+\end{align}
+
+Direktorsko polje je zvezno povsod razen v defektu, zato mora direktor pri $\phi = 0$ enak kot pri $\phi = 2\pi$. 
+Ta pogoj dolo"ca mo"zne vrednosti za $q$. 
+
+Za prava vektorska polja mora biti $q$ celo "stevilo. 
+Nematski direktor pa imam dodatno simetrijo, saj stanji $\vec n$ in $-\vec n$ predstavljata enak red. 
+Zato je mo"zno, da pri obkro"zenju defekta direktor naredi le pol obrata. 
+Topolo"ski naboj $q$ je zato lahko tudi polcelo "stevilo. 
 
 \todo{Opis defektov v nematskem direktorju} \\
 \todo{Opis defektov v polarizaciji svetlobe} \\
@@ -528,7 +556,7 @@ Za nekaj vrednosti $p$ sem izra"cunal odbojnost robne plasti z debelino 10 enot 
 \end{figure}
 
 V primeru, da v plasti ni izgub, je njena odbojnost enaka 1, saj gre celotno valovanje skozi plast in se odbije na zunanji meji. 
-"Ce izgume malo pove"camo, odbojnost v vseh primerih strmo pade. 
+"Ce izgube malo pove"camo, odbojnost v vseh primerih strmo pade. 
 Pri profilih, kjer imamo nezveznost v izgubah ali v njihovem odvodu ($p<2$) pa odbojnost kmalu za"cne spet nara"s"cati, saj postane odboj na notranji meji "ze opazen.
 Pri ve"cjih potencah pa lahko izgube "se pove"camo in s tem dose"zemo ni"zjo odbojnost plasti. 
 V zgornjem primeru se za najbolj"si profil izka"ze kvadratno nara"s"canje absorpcije, zato sem za vse nadaljnje ra"cune uporabil tak"sno plast. 
