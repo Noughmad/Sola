@@ -1,5 +1,5 @@
 from PyQt4.QtCore import QSize, Qt, QPointF
-from PyQt4.QtGui import QApplication, QPainter
+from PyQt4.QtGui import QApplication, QPainter, QPen
 from PyQt4.QtSvg import QSvgGenerator
 
 import random
@@ -32,13 +32,21 @@ def draw_defect(painter, q):
       
 def draw_circle(painter, q):
   oldpen = painter.pen()
-  painter.setPen(Qt.cyan)
+  
+  p = QPen(Qt.cyan)
+  p.setWidth(3)
+  painter.setPen(p)
   painter.drawEllipse(QPointF(IMAGE_SIZE/2, IMAGE_SIZE/2), 100, 100)
   
-  painter.setPen(Qt.blue)
+  
+  p = QPen(Qt.blue)
+  p.setWidth(5)
+  painter.setPen(p)
   for i in range(12):
     angle = i * 2 * math.pi / 12
     draw_molecule(painter, IMAGE_SIZE/2 + 100 * math.cos(angle), IMAGE_SIZE/2 + 100 * math.sin(angle), q, 3 * MOLECULE_SIZE)
+    
+  painter.setPen(oldpen)
     
 def draw_image(name, q):
   image = QSvgGenerator()
@@ -54,5 +62,5 @@ def draw_image(name, q):
 if __name__ == "__main__":
   app = QApplication(sys.argv)
   for i in [-1, -0.5, 0.5, 1]:
-    draw_image("g_defect_%g" % i, i)
-    subprocess.call(["inkscape", "--export-pdf=g_defect_%g.pdf" % i, "g_defect_%g.svg" % i, "--export-area-drawing"])
+    draw_image("g_defect_%g" % (2*i), i)
+    subprocess.call(["inkscape", "--export-pdf=g_defect_%g.pdf" % (2*i), "g_defect_%g.svg" % (2*i), "--export-area-drawing"])
