@@ -230,13 +230,15 @@ Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj
 
 \subsection{Defekti}
 
+\subsubsection{Disklinacije v nematiku}
+
 Ravnovesno stanje nematika je tak"sno, ki minimizira prosto energijo. 
 V odsotnosti zunanjih polj je to ureditev z uniformnim direktorjem, kjer je celotna elasti"cna prosta energija enaka 0. 
 Pod vplivom ograjenosti ali zunanjega polja pa lahko pride do stanja, kjer zvezno direktorsko polje ne more zadostiti robnim pogojem. 
 V tem primeru se pojavijo obmo"cja z nedifiniranim direktorjem. 
 Tak"snim obmo"cjem, kjer orientacijski red ne dr"zi, pravimo defekti oz. natan"cneje disklinacije. 
 
-V treh dimenzijah lahko obstajajo to"ckasti in linijski defekti. 
+V treh dimenzijah lahko obstajajo to"ckasti in linijski defekti\cite{degennes,kleman}. 
 V vlaknih nastopajo le linijski defekti, zato se bomo posvetili zlasti tistim. 
 Linijski defekti so la"zji za razvr"s"canje, saj se lahko omejimo na ravnino, pravokotno na linijo, in problem prevedemo na dve dimenziji. 
 
@@ -249,26 +251,63 @@ Zanima nas zlasti, za koliko se obrne direktorsko polje, "ce defekt obkro"zimo.
  \subfigure{\includegraphics[height=100pt]{g_defect_-2}}
  \subfigure{\includegraphics[height=100pt]{g_defect_1}}
  \subfigure{\includegraphics[height=100pt]{g_defect_-1}}
- \caption{Nekaj mo"znih linijskih defektov. Mo"c defekta je odvisna od tega, kolikokrat se zavrti direktor (temno modre "crte), ko naredimo en krog po svetlo modrem krogu. Od leve proti desni so mo"ci 1, $-1$, $1/2$ in $-1/2$. }
+ \caption{Nekaj mo"znih linijskih defektov. Mo"c defekta je odvisna od tega, kolikokrat se zavrti direktor (temno modre "crte), ko naredimo en krog po svetlo modrem krogu. Od leve proti desni so mo"ci 1, $-1$, $1/2$ in $-1/2$. Polcele vrednosti so mo"zne zaradi simetrije direktorja. }
 \end{figure}
 
-Definiramo lahko topolo"ski naboj oz. mo"c defekta kot
-
+V dveh dimenzijah lahko nematski direktor zapi"semo kot $\vec n = (\cos\theta, \sin\theta, 0)$. 
+Definiramo lahko ovojno "stevilo oz. mo"c defekta kot
 \begin{align}
- q = \frac{1}{2\pi}\int_0^{2\pi} \left(\frac{d\theta}{d\phi}\right) \dd \phi
+ s = \frac{1}{2\pi}\int_0^{2\pi} \left(\frac{d\theta}{d\phi}\right) \dd \phi
 \end{align}
+kjer kot $\theta$ opisuje smer direktorja, $\phi$ pa polo"zaj na na svetlo modrem krogu. 
 
 Direktorsko polje je zvezno povsod razen v defektu, zato mora direktor pri $\phi = 0$ enak kot pri $\phi = 2\pi$. 
-Ta pogoj dolo"ca mo"zne vrednosti za $q$. 
+Ta pogoj dolo"ca mo"zne vrednosti za $s$. 
+Za prava vektorska polja mora biti $s$ celo "stevilo, saj mora biti kot $\theta$ na koncu enak kot na za"cetku. 
+Nematski direktor pa ima dodatno simetrijo, saj stanji $\vec n$ in $-\vec n$ predstavljata enak red. 
+Zato je mo"zno, da pri obkro"zenju defekta direktor naredi le pol obrata, topolo"ski naboj $s$ pa je zato lahko tudi polcelo "stevilo. 
 
-Za prava vektorska polja mora biti $q$ celo "stevilo. 
-Nematski direktor pa imam dodatno simetrijo, saj stanji $\vec n$ in $-\vec n$ predstavljata enak red. 
-Zato je mo"zno, da pri obkro"zenju defekta direktor naredi le pol obrata. 
-Topolo"ski naboj $q$ je zato lahko tudi polcelo "stevilo. 
+Vsak defekt v teko"cem kristalu povzro"ci elasti"cno deformacijo direktorskega polja, kar pomeni zvi"sano prosto energijo sistema. 
+Za linijske defekte v enokonstantnem pribli"zku je gostota elasti"cna proste energije enaka $\frac{K}{2}(\nabla \theta)^2$. 
+V bli"zini defekta lahko privzamemo odvisnost $\theta(\phi) = s \phi + \theta_0$, iz "cesar sledi $\nabla\theta = \frac{k}{r}\hat e_\phi$. 
+Skupni prispevek enega defekta k prosti energiji na enoto dol"zine je tako
+\begin{align}
+ \frac{F_d}{L} &= \cdot \frac{K}{2} \int_{r_{min}}^{r_{max}} \frac{k^2}{r^2} 2\pi r \dd r = K s^2 \pi \ln{\frac{r_{max}}{r_{min}}}
+\end{align}
+Zgornji izraz divergira tako v bli"zini defekta kot tudi za velike oddaljenosti. 
+Velikostna skala $r_{max}$ je povezana z velikostjo sistema oz. z razdaljo do sosednjega defekta. 
+En sam izoliran defekt torej nosi zelo veliko energijo, zato ni stabilen, razen "ce ga vsiljujejo robni pogoji. 
+V neposredni bli"zini defekta pa je gostota proste energije tako velika, da je za teko"ci kristal bolj ugodno, da se stali v izotropno fazo. 
+Velikost staljenega dela opisuje $r_{min}$. 
 
-\todo{Opis defektov v nematskem direktorju} \\
-\todo{Opis defektov v polarizaciji svetlobe} \\
-\todo{Povezava med obema}
+V zgornji enakosti je pomembna odvisnost od ovojnega "stevila. 
+Elasti"cna energija zaradi defekta je sorazmerna z $s^2$, zato je bolj ugodno, da se defekt z ve"cjim ovojnim "stevilom razcepi na ve"c manj"sih defektov. 
+
+\subsubsection{Defekti v polarizaciji svetlobe}
+Elektri"cno in magnetno polje sta prava vektorja, zato imata lahko le defekte s celo"stevilskim ovojnim "stevilom. 
+Za razliko od direktorskega polja v teko"cih kristalih pa deformacije elektromagnetih polj ne nosijo energije, zato so stabilne poljubne konfiguracije. 
+
+Defekt v elektromagnetnem polju je to"cka oz. obmo"cje, kjer polarizacija in faza valovanja nista definirani. 
+Amplituda valovanja v tak"sni to"cki mora biti enaka ni"c, zato se defekti izrazijo kot temne pege. 
+Primer so Laguerre-Gaussovi snopi, prikazani na sliki \ref{fig:laguerre-gauss}. 
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[width=.6\textwidth]{./Slike/LG-wiki}
+ \caption{Nekaj osnovnih Laguerre-Gaussovih na"cinov. Temne pege predstavljajo defekte. \cite{lg-wiki}}
+ \label{fig:laguerre-gauss}
+\end{figure}
+
+
+V opti"cnih poljih je nihanje elektri"cnega in magnetnega polja tako hitro, da z nobeno merilno napravo ne moremo izmeriti samega polja, ampak le njegovo "casovno povpre"cje. 
+Med polarizacijo svetlobe $\vec P$ in $-\vec P$ je razlika zgolj v fazi, zato ju lahko obravnavamo kot enaki. 
+V tem smislu je polarizacija svetlobe podobna nematskemu direktorju. 
+Kljub temu da z elektri"cnim poljem ne moremo skonstruirati pravega defekta s polcelim ovojnim "stevilom, imamo lahko na neki to"cki obrat polja, ki ne pove"ca proste energije. 
+
+\subsubsection{Povezava med defekti v teko"cem kristalu in defekti v opti"cnem polju}
+Orientacijski red v teko"cem kristalu je tesno povezani z opti"cnimi polji. 
+Med njimi obstaja dvosmerna povezava: zaradi dielektri"cne sklopitve svetloba vpliva na ureditev teko"cega kristala, zaradi opti"cne anizotropije pa teko"ci kristal vpliva na "sirjenje svetlobe po njem. 
+Podobno so med seboj povezani tudi defekti. 
 
 \subsection{Maxwellove ena"cbe v neizotropnem sredstvu}
 "Sirjenje svetlobe po snovi opisujejo "stiri Maxwellove ena"cbe
