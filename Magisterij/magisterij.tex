@@ -36,6 +36,8 @@
 \renewcommand{\acf}[1]{\aclu{#1} -- \acs{#1}}
 \newcommand{\dd}{\ensuremath{\;\mathrm{d}}}
 
+\newcommand{\ticssize}{\small}
+
 %opening
 \title{Magistrsko delo}
 \author{Miha \v Can\v cula}
@@ -660,13 +662,23 @@ Fotonsko energijsko re"zo za vidno svetlobo zato opazimo pri koloidnih kristali,
 
 "Sirina in oblika prepovedanega pasu sta odvisni od obeh lomnih koli"cnikov, periode modulacije in velikosti kristala. 
 Za preverjanje metode sem modeliral kristal, kjer se izmenjujejo plasti z izotropno dielektri"cnostjo $\varepsilon_1$ in $\varepsilon_2$. 
+Tak"sna struktura je prikazana na sliki \ref{fig:periodic-structure}. 
+
+\begin{figure}[h]
+ \centering
+ \input{./Slike/periodic-structure.pdf_tex}
+ \caption{Periodi"cna struktura, kjer se izmenjujeta plasti z razli"cnima dielektri"cnima konstantama. 
+ Svetloba se "siri v smeri osi $z$\cite{joannopoulos}. }
+ \label{fig:periodic-structure}
+\end{figure}
+
 Teoreti"cen izra"cun odvisnosti frekvence $\omega$ od valovnega vektorj $k$ je prikazan na sliki \ref{fig:joannopoulos-crystal}. 
 "Ce se dielektri"cni konstanti obeh plasti razlikujeta, opazimo interval frekvenc, pri katerih ni mo"zen noben valovni vektor, torej se valovanje ne more "siriti skozi kristal. 
 S pove"cevanjem razlike v dielektri"cnosti plasti se prepovedani pas raz"siri. 
 
 \begin{figure}[h]
 \centering
- \includegraphics[width=.8\textwidth]{./Slike/bandgap}
+  \input{./Slike/bandgap.pdf_tex}
  \caption{Pojav energijske re"ze v fotonskem kristalu. Levo: celotna plast ima dielektri"cnost $\varepsilon = 13$. Sredina: Izmenjevanje plasti z dielektri"cnima konstantama 13 in 12. Desno: Izmenjevanje plasti z dielektri"cnima konstantama 13 in 1. \cite{joannopoulos}}
  \label{fig:joannopoulos-crystal}
 \end{figure}
@@ -677,7 +689,7 @@ Zgornja meja je mo"cneje odvisna od razlike v dielektri"cnosti\cite{joannopoulos
 Za modeliranje tak"snega kristala sem uporabil periodi"cne robne pogoje v smereh $x$ in $y$, v smeri $z$ pa celico dol"zine 1024 enot z 20 enotami absorbirajo"ce plasti na vsakem koncu. 
 Grafa prepustnosti kristalov z razli"cnimi izbirami za dielektri"cnosti sta na sliki \ref{fig:test-periodic}. 
 
-\begin{figure}[h]
+\begin{figure}[!h]
  \input{g_test_periodic}
  \caption{Rezultati preizkusa s periodi"cno modulacijo lomnega koli"cnika}
  \label{fig:test-periodic}
@@ -697,8 +709,6 @@ Polarizacija vpadne svetlobe je bila nagnjena za 45\degree~glede na opti"cno os,
 Zaradi dvolomnosti obe komponenti potujeta z razli"cnima hitrostma, tako da se laserski "zarek razdeli na dva dela. 
 Direktorsko polje je regularno, brez defektov, zato ne pri"cakujemo defektov v polarizaciji svetlobe. 
 
-
-\newpage
 \subsection{Robni pogoji}
 
 Za prepre"cevanje odboja na stranskih ploskvah sem uporabil absorbirajo"ce robne pogoje. 
