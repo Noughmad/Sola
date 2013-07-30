@@ -597,6 +597,27 @@ Tamu kotu re"cemo Brewsterjev kot in je enak
 "Ce propagacijo svetlobe simuliramo z metoda \ac{FDTD}, v sliki trenutnega elektri"cnega polja ne moremo lo"citi med vpadnim in odbitim valovanjem. 
 Za prikaz delovanja sem zato uporabil vpadni kot, ki je zelo blizu Brewsterjevemu. 
 Na ta na"cin opazimo le "sibko odbito valovanje, tako da lahko "se vedno preverimo, ali lomni zakon dr"zi. 
+Slika elektri"cnega polja ob prehodu meje v bli"zini Brewsterjevega kota je na sliki \ref{fig:refraction-test}. 
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[width=.6\textwidth]{refraction_p}
+ \caption{Preizkus veljavnosti lomnega zakona ob prehodu valovanja v medij z druga"cnim lomnim koli"cnikom}
+ \label{fig:refraction-test}
+\end{figure}
+
+Na sliki so jasno vidna "stiri obmo"cja. "Cisto na levi je rob z absorbirajo"cim robnim pogojem \ac{PML}, ki absorbira odbito valovanje in prepre"cuje nadaljnji odboj. 
+Naslednje je obmo"cje z dielektri"cnostjo $\varepsilon_1$, kjer je superpozicija vpadnega in odbitega valovanja. 
+Odbito valovanje je mnogo "sibkej"se od vpadnega, zato so valovi skoraj ravni. 
+Na sredini slike je meja med obmo"cjema, desno od nje je snov z dielektri"cnostjo $\varepsilon_2 > \varepsilon_1$.
+V tem delu je le prepu"s"ceno lomljeno valovanje, ki ima ustrezno manj"so valovno dol"zino. 
+Na desnem robu je prazno obmo"cje, ki ga valovanje "se ni doseglo. 
+
+Veljavnost lomnega zakona lahko preverimo, "ce primerjamo kota vpadnega in lomljenega valovanja. 
+Dol"zini stranic na sliki nista v enakem merilu, zato kotov ne moremo od"citati s slike. 
+
+\todo{Simuliraj lom na novo, izracunaj oba kota}
+
 
 \subsection{Uniformen direktor}
 Za naslednji preizkus sem simuliral dvolomni kristal, torej snov, kjer je dielektri"cni tenzor uniformen, ne pa tudi izotropen. 
