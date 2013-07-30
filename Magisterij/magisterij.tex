@@ -33,7 +33,7 @@
 \acrodef{ABC}{Absorbing boundary condition}
 \acrodef{PML}{Perfectly-matched layer}
 
-\renewcommand{\acf}[1]{\acl{#1} -- \acs{#1}}
+\renewcommand{\acf}[1]{\aclu{#1} -- \acs{#1}}
 \newcommand{\dd}{\ensuremath{\;\mathrm{d}}}
 
 %opening
@@ -83,7 +83,7 @@ V "cetrem poglavju so rezultati \todo{kaj to"cno?}.
 \subsection{Teko"ci kristal kot anizotropni dielektrik}
 % Tenzor Q, prosta energija
 
-V teko"cem kristalu imajo gradniki orientacijski red dolgega dosega. Definiramo lahko enotski vektor $\mathbf{n}$, ki dolo"ca povpre"cno smer gradnikov in ga imenujemo direktor. Direktor ni pravi vektor, saj v teko"cem kristalu ne lo"cime med smerjo $\mathbf{n}$ in $\mathbf{-n}$. Tudi "ce sami gradniki nimajo tak"sne simetrije, jo imajo njihove fluktuacije, zato lahko ureditev dobro opi"semo z direktorjem\cite{mermin}. 
+V teko"cem kristalu imajo gradniki orientacijski red dolgega dosega. Definiramo lahko enotski vektor $\mathbf{n}$, ki dolo"ca povpre"cno smer gradnikov in ga imenujemo direktor. Direktor ni pravi vektor, saj v teko"cem kristalu ne lo"cimo med smerjo $\mathbf{n}$ in $\mathbf{-n}$. Tudi "ce sami gradniki nimajo tak"sne simetrije, jo imajo njihove fluktuacije, zato lahko ureditev dobro opi"semo z direktorjem\cite{mermin}. 
 
 \begin{comment}
 \begin{figure}[h]
@@ -204,59 +204,6 @@ V tem magistrskem delu sem se omejil le na "sirjenje svetlobe, pri "cemer je dir
 Sama ra"cunska metoda pa je zasnovana tako, da je kompatibilna z obstoje"cimi programi za izra"cun ureditve teko"cih kristalov\cite{ravnik-zumer-ldg}. 
 Z isto metodo bo v prihodnosti mogo"ce upo"stevati dvosmerno sklopitev med opti"cnim poljem in teko"cim kristalom, premostiti pa bo treba "se razliko v "casovnih skalah. 
 
-\subsubsection{Direktor v cilindri"cni kapilari}
-
-Nematski teko"ci kristal se spontano uredi tako, da minimizira prosto energijo. 
-V odsotnosti zunanjega polja je prosta energija najni"zja, "ce ni elasti"cnih deformacij, torej je direktor uniformen. 
-V cilindri"cni geometriji s homeotropnimi robnimi pogoji pa tak"sna ureditev ni mo"zna. 
-Glede na razmerja med elasti"cnimi konstantami se teko"ci kristal uredi v eno izmed konfiguracij na sliki \ref{fig:director-profiles}. 
-
-\begin{figure}[h]
-\centering
-\subfigure{\includegraphics[height=150px]{./Slike/director-profile-cylinder-kleman}}
-\subfigure{\includegraphics[clip, trim=0cm -3mm 0cm 0cm]{./Slike/escaped-director-energy}}
-\caption{Levo: Prerezi valja s singularno (a) in nesingularno pobeglo disklinacijo (b). 
-Razli"cne smeri pobega povzro"cijo nastanek to"ckastih singularnosti (c). Desno: Energija singularne in pobegle konfiguracije v odvisnosti od razmerja med elasti"cnima kostantama $K_1$ in $K_3$\cite{kleman}. }
- \label{fig:director-profiles}
-\end{figure}
-
-V profilu s singularno disklinacijo v osi valja je prisotna le pahlja"cna deformacija, zato je energija tega stanja odvisna od konstante $K_1$. 
-V pobeglem profilu pa sta prisotni tako pahlja"cna kot upogibna deformacija. Energija tega stanja je odvisna od konstant $K_1$ in $K_3$. Do pobega pride, "ce je razmerje $K_3/K_1$ manj"se od 13, kar velja za ve"cino nematskih teko"cih kristalov. Z minimizacijo energije lahko izpeljemo ravnovesni radialni profil direktorja v cilindri"cnih koordinatah. V poenostavljenem primeru, ko sta elasti"cni konstanti $K_3$ in $K_1$ enaki, je energijsko najugodnje"se stanje\cite{kleman} 
-\begin{align}
- \vec n &= (n_r, n_\phi, n_z) = (\cos \chi(r), 0, \sin \chi(r)) \\
- \chi(r) &= 2 \arctan \frac{R-r}{R+r}
-\end{align}
-kjer je $R$ polmer valja. Tak"sen profil je prikazan na sliki \ref{fig:director-profiles}b. V primeru pobega v tretjo dimenzijo je direktor povsod dobro definiran. "Ce pa do pobega ne pride, je tik ob osi valja obmo"cje zmanj"sanega reda, kjer ureditveni parameter $S$ pade na 0. 
-
-V ve"cino nematikov so vse tri konstante istega velikostnega reda, zato je stanje s pobegom v tretjo dimenzijo bolj ugodno. 
-Veliko razmerje $K_3/K_1$ pa opazimo blizu faznega prehoda v smekti"cno fazo. 
-Z uporabo 8CB, ki tvori tako nematsko kot tudi smekti"cno fazo, je mogo"ce v laboratoriju sintetizirati vlakna z radialnim profilom direktorja\cite{peddireddy}. 
-Primer tvorbe tak"snih vlaken je na sliki \ref{fig:tvorjenje}. 
-
-\begin{figure}[h]
- \centering
- \subfigure{\includegraphics[height=150px]{./Slike/tvorjenje}}
- \subfigure{\includegraphics[height=150px]{./Slike/tvorjenje2}}
- \caption{Rast vlaken z radialnim direktorjem na meji med teko"cim kristalom 8CB in vodo\cite{peddireddy}}
- \label{fig:tvorjenje}
-\end{figure}
-
-\begin{comment}
- 
-\subsubsection{Valj z dvojnim zvojem}
-
-Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj. 
-\todo{Mogo"ce kaj vec o double-twist cylindrih}
-
-\begin{figure}
- \centering
- \includegraphics[width=.5\textwidth]{./Slike/double-twist-cylinder-coles-morris}
- \caption{Shematski prikaz direktorja v valju z dvojnim zvojem. Na osi valja je direktor vzporeden z osjo, z oddaljenostjo od osi pa kot med osjo in direktorjem nara"s"ca linearno\cite{coles-morris}. }
- \label{fig:double-twist-cylinder}
-\end{figure}
-
-\end{comment}
-
 \subsection{Defekti}
 
 \subsubsection{Disklinacije v nematiku}
@@ -345,6 +292,60 @@ Kljub temu da z elektri"cnim poljem ne moremo skonstruirati pravega defekta s po
 Orientacijski red v teko"cem kristalu je tesno povezani z opti"cnimi polji. 
 Med njimi obstaja dvosmerna povezava, opisana v poglavju \ref{sec:dielektricnost}. 
 Podobno so med seboj povezani tudi defekti. 
+
+
+\subsubsection{Direktor v cilindri"cni kapilari}
+
+Nematski teko"ci kristal se spontano uredi tako, da minimizira prosto energijo. 
+V odsotnosti zunanjega polja je prosta energija najni"zja, "ce ni elasti"cnih deformacij, torej je direktor uniformen. 
+V cilindri"cni geometriji s homeotropnimi robnimi pogoji pa tak"sna ureditev ni mo"zna. 
+Glede na razmerja med elasti"cnimi konstantami se teko"ci kristal uredi v eno izmed konfiguracij na sliki \ref{fig:director-profiles}. 
+
+\begin{figure}[h]
+\centering
+\subfigure{\includegraphics[height=150px]{./Slike/director-profile-cylinder-kleman}}
+\subfigure{\includegraphics[clip, trim=0cm -3mm 0cm 0cm]{./Slike/escaped-director-energy}}
+\caption{Levo: Prerezi valja s singularno (a) in nesingularno pobeglo disklinacijo (b). 
+Razli"cne smeri pobega povzro"cijo nastanek to"ckastih singularnosti (c). Desno: Energija singularne in pobegle konfiguracije v odvisnosti od razmerja med elasti"cnima kostantama $K_1$ in $K_3$\cite{kleman}. }
+ \label{fig:director-profiles}
+\end{figure}
+
+V profilu s singularno disklinacijo v osi valja je prisotna le pahlja"cna deformacija, zato je energija tega stanja odvisna od konstante $K_1$. 
+V pobeglem profilu pa sta prisotni tako pahlja"cna kot upogibna deformacija. Energija tega stanja je odvisna od konstant $K_1$ in $K_3$. Do pobega pride, "ce je razmerje $K_3/K_1$ manj"se od 13, kar velja za ve"cino nematskih teko"cih kristalov. Z minimizacijo energije lahko izpeljemo ravnovesni radialni profil direktorja v cilindri"cnih koordinatah. V poenostavljenem primeru, ko sta elasti"cni konstanti $K_3$ in $K_1$ enaki, je energijsko najugodnje"se stanje\cite{kleman} 
+\begin{align}
+ \vec n &= (n_r, n_\phi, n_z) = (\cos \chi(r), 0, \sin \chi(r)) \\
+ \chi(r) &= 2 \arctan \frac{R-r}{R+r}
+\end{align}
+kjer je $R$ polmer valja. Tak"sen profil je prikazan na sliki \ref{fig:director-profiles}b. V primeru pobega v tretjo dimenzijo je direktor povsod dobro definiran. "Ce pa do pobega ne pride, je tik ob osi valja defekt obmo"cje zmanj"sanega reda, kjer ureditveni parameter $S$ pade na 0. Okrog defekta je direktorsko polje radialno, torej je linijski defekt z ovojnim "stevilom $s=+1$. 
+
+V ve"cini nematikov so vse tri elasti"cne konstante istega velikostnega reda, zato je stanje s pobegom v tretjo dimenzijo bolj ugodno. 
+Veliko razmerje $K_3/K_1$ pa opazimo blizu faznega prehoda v smekti"cno fazo. 
+Z uporabo 8CB, ki tvori tako nematsko kot tudi smekti"cno fazo, je mogo"ce v laboratoriju sintetizirati vlakna z radialnim profilom direktorja\cite{peddireddy}. 
+Primer tvorbe tak"snih vlaken je na sliki \ref{fig:tvorjenje}. 
+
+\begin{figure}[h]
+ \centering
+ \subfigure{\includegraphics[height=150px]{./Slike/tvorjenje}}
+ \subfigure{\includegraphics[height=150px]{./Slike/tvorjenje2}}
+ \caption{Rast vlaken z radialnim direktorjem na meji med teko"cim kristalom 8CB in vodo\cite{peddireddy}}
+ \label{fig:tvorjenje}
+\end{figure}
+
+\begin{comment}
+ 
+\subsubsection{Valj z dvojnim zvojem}
+
+Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj. 
+\todo{Mogo"ce kaj vec o double-twist cylindrih}
+
+\begin{figure}
+ \centering
+ \includegraphics[width=.5\textwidth]{./Slike/double-twist-cylinder-coles-morris}
+ \caption{Shematski prikaz direktorja v valju z dvojnim zvojem. Na osi valja je direktor vzporeden z osjo, z oddaljenostjo od osi pa kot med osjo in direktorjem nara"s"ca linearno\cite{coles-morris}. }
+ \label{fig:double-twist-cylinder}
+\end{figure}
+
+\end{comment}
 
 \subsection{Maxwellove ena"cbe v neizotropnem sredstvu}
 "Sirjenje svetlobe po snovi opisujejo "stiri Maxwellove ena"cbe
@@ -577,8 +578,25 @@ Valovanje se "siri od leve proti desni, tako si lahko predstavljamo izvir valova
 Dejstvo, da ponor valovanja na desni strani uspe"sno pobere celotno valovanje potrjuje natan"cnost ra"cunanja. 
 
 \subsection{Lom in odboj}
+Enostaven preizkus za "sirjenje valovanja je prehod "cez mejo med medijema z razli"cnima lomnima koli"cnikoma. 
+Del valovanja se na meji odbije po odbojnem zakonu, tako da je odbojni kot enak vpadnemu. 
+Preostanek valovanja se na meji lomi, lomni kot pa je odvisen od lomnih koli"cnikov obeh snovi. 
+Izra"cunamo ga po lomnem zakonu
+\begin{align}
+ \frac{\sin\alpha}{\sin\beta} &= \frac{n_2}{n_1} = \sqrt{\frac{\varepsilon_2}{\varepsilon_1}}\;, 
+\end{align}
+kjer je $\alpha$ vpadni kot valovanja, $\beta$ pa lomni kot oz. kot med pravokotnico in smerjo "sirjenja lomljenega vala. 
 
-  
+Dele"za odbitega in prepu"s"cenega valovanja sta odvisna od vpadnega kota $\alpha$ in polarizacije svetlobe\cite{wiki:brewster}. 
+Pri dolo"cenem kotu $\alpha$ se komponenta svetlobe s polarizacijo v ravnini "zarka in normale na povr"sino ne odbije in se v celoti lomi. 
+Tamu kotu re"cemo Brewsterjev kot in je enak
+\begin{align}
+ \theta_B &= \arctan\left(\frac{n_2}{n_1}\right) = \arctan\sqrt{\frac{n_2}{n_1}}
+\end{align}
+
+"Ce propagacijo svetlobe simuliramo z metoda \ac{FDTD}, v sliki trenutnega elektri"cnega polja ne moremo lo"citi med vpadnim in odbitim valovanjem. 
+Za prikaz delovanja sem zato uporabil vpadni kot, ki je zelo blizu Brewsterjevemu. 
+Na ta na"cin opazimo le "sibko odbito valovanje, tako da lahko "se vedno preverimo, ali lomni zakon dr"zi. 
 
 \subsection{Uniformen direktor}
 Za naslednji preizkus sem simuliral dvolomni kristal, torej snov, kjer je dielektri"cni tenzor uniformen, ne pa tudi izotropen. 
