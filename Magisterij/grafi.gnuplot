@@ -54,3 +54,16 @@ splot "Podatki/cross_plane.dat" matrix notitle
 
 set output "g_test_plane_profile.png"
 splot[][0:150] "Podatki/profile.dat" matrix notitle
+
+reset
+set terminal epslatex color solid
+
+set output "g_refraction_test.tex"
+set pm3d map
+
+set xlabel "$z$" offset 0,1.8
+set ylabel "$x$" offset 0,0
+unset tics
+unset colorbox
+unset border
+splot "Podatki/brewster_refraction.dat" matrix notitle
