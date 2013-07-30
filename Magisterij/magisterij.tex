@@ -5,6 +5,7 @@
 \usepackage[intlimits]{amsmath}
 \usepackage{hyperref}
 \usepackage[nottoc,numbib]{tocbibind}
+\usepackage{gensymb}
 \usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
 
 \usepackage{graphicx}
@@ -175,6 +176,7 @@ Ta sklopitev izhaja iz polarizabilnosti molekul, ki je odvisna od njihove oblike
 Zunanje polje v molekuli inducira elektri"cni dipolni moment, ki je sorazmeren z dol"zino molekule in je zato najve"cji, "ce je polje vzporedno z osjo molekule. 
 
 \subsubsection{Dielektri"cni tenzor v teko"cem kristalu}
+\label{sec:dielektricnost}
 Oblika in polarizabilnost molekul v teko"cem kristalu vplivata na njegove opti"cne lastnosti. 
 Dielektri"cni tenzor v teko"cem kristalu je odvisen od molekularne anizotropije $\varepsilon_{a}^{\mathrm{mol}}$, direktorja in nematske stopnje reda $S$. 
 Odvisnost od direktorja in stopnje reda lahko opi"semo s tenzorskim ureditvenim parametrom $Q_{ij}$. 
@@ -260,17 +262,18 @@ Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj
 \subsubsection{Disklinacije v nematiku}
 
 Ravnovesno stanje nematika je tak"sno, ki minimizira prosto energijo. 
-V odsotnosti zunanjih polj je to ureditev z uniformnim direktorjem, kjer je celotna elasti"cna prosta energija enaka 0. 
+V odsotnosti zunanjih polj je to ureditev z uniformnim direktorjem, kjer je celotna elasti"cna prosta energija enaka 0\cite{mermin}. 
 Pod vplivom ograjenosti ali zunanjega polja pa lahko pride do stanja, kjer zvezno direktorsko polje ne more zadostiti robnim pogojem. 
 V tem primeru se pojavijo obmo"cja z nedifiniranim direktorjem. 
-Tak"snim obmo"cjem, kjer orientacijski red ne dr"zi, pravimo defekti oz. natan"cneje disklinacije. 
+Tak"snim obmo"cjem, kjer orientacijski red ne dr"zi, pravimo defekti. 
 
 V treh dimenzijah lahko obstajajo to"ckasti in linijski defekti\cite{degennes,kleman}. 
 V vlaknih nastopajo le linijski defekti, zato se bomo posvetili zlasti tistim. 
 Linijski defekti so la"zji za razvr"s"canje, saj se lahko omejimo na ravnino, pravokotno na linijo, in problem prevedemo na dve dimenziji. 
+V tem primeru lahko linijski defekt obravnavamo kot to"ckasti defekt v dveh dimenzijah. 
 
 Disklinacije v nematskem teko"cem kristalu delimo glede na to, kako se smer direktorja spreminja v okolici disklinacije. 
-Zanima nas zlasti, za koliko se obrne direktorsko polje, "ce defekt obkro"zimo. 
+Zanima nas zlasti, koliko obratov naredi direktorsko polje, "ce defekt obkro"zimo po zaklju"ceni zanki. 
 
 \begin{figure}[h]
  \centering
@@ -282,7 +285,7 @@ Zanima nas zlasti, za koliko se obrne direktorsko polje, "ce defekt obkro"zimo.
 \end{figure}
 
 V dveh dimenzijah lahko nematski direktor zapi"semo kot $\vec n = (\cos\theta, \sin\theta, 0)$. 
-Definiramo lahko ovojno "stevilo oz. mo"c defekta kot
+Definiramo lahko ovojno "stevilo \angl{winding number} oz. mo"c defekta kot
 \begin{align}
  s = \frac{1}{2\pi}\int_0^{2\pi} \left(\frac{d\theta}{d\phi}\right) \dd \phi
 \end{align}
@@ -294,10 +297,16 @@ Za prava vektorska polja mora biti $s$ celo "stevilo, saj mora biti kot $\theta$
 Nematski direktor pa ima dodatno simetrijo, saj stanji $\vec n$ in $-\vec n$ predstavljata enak red. 
 Zato je mo"zno, da pri obkro"zenju defekta direktor naredi le pol obrata, topolo"ski naboj $s$ pa je zato lahko tudi polcelo "stevilo. 
 
+Vsi defekti z enakim ovojnim "stevilom so si topolo"sko ekvivalentni, saj lahko enega zvezno transformiramo v drugega. 
+Zato mo"ci defekta pravimo tudi topol"ska invarianta oz. topolo"ski naboj. 
+Defekti se lahko zdru"zujejo in pretvarjajo eden v drugega, skupen topolo"ski naboj pa se ohranja. 
+Dva defekta z nasprotnim nabojem se lahko izni"cita, defekt z ve"cjim nabojem pa se lahko razcepi na dva defekta z manj"sim nabojem. 
+Pri tem velja omejitev, da je naboj vsakega defekta lahko le polcelo "stevilo. 
+
 Vsak defekt v teko"cem kristalu povzro"ci elasti"cno deformacijo direktorskega polja, kar pomeni zvi"sano prosto energijo sistema. 
 Za linijske defekte v enokonstantnem pribli"zku je gostota elasti"cna proste energije enaka $\frac{K}{2}(\nabla \theta)^2$. 
 V bli"zini defekta lahko privzamemo odvisnost $\theta(\phi) = s \phi + \theta_0$, iz "cesar sledi $\nabla\theta = \frac{k}{r}\hat e_\phi$. 
-Skupni prispevek enega defekta k prosti energiji na enoto dol"zine je tako
+Skupni prispevek enega defekta k prosti energiji na enoto dol"zine je tako\cite{degennes}
 \begin{align}
  \frac{F_d}{L} &= \frac{K}{2} \int_{r_{min}}^{r_{max}} \frac{k^2}{r^2} 2\pi r \dd r = K s^2 \pi \ln{\frac{r_{max}}{r_{min}}}
 \end{align}
@@ -309,6 +318,7 @@ Velikost staljenega dela opisuje $r_{min}$.
 
 V zgornji enakosti je pomembna odvisnost od ovojnega "stevila. 
 Elasti"cna energija zaradi defekta je sorazmerna z $s^2$, zato je bolj ugodno, da se defekt z ve"cjim ovojnim "stevilom razcepi na ve"c manj"sih defektov. 
+Stabilni defekti so le tisti z ovojnim "stevilom $s=\pm1/2$, vsi ostali razpadejo na ve"c defektov z manj"sim nabojem. 
 
 \subsubsection{Defekti v polarizaciji svetlobe}
 Elektri"cno in magnetno polje sta prava vektorja, zato imata lahko le defekte s celo"stevilskim ovojnim "stevilom. 
@@ -321,7 +331,7 @@ Primer so Laguerre-Gaussovi snopi, prikazani na sliki \ref{fig:laguerre-gauss}.
 \begin{figure}[h]
  \centering
  \includegraphics[width=.6\textwidth]{./Slike/LG-wiki}
- \caption{Nekaj osnovnih Laguerre-Gaussovih na"cinov. Temne pege predstavljajo defekte. \cite{lg-wiki}}
+ \caption{Nekaj osnovnih Laguerre-Gaussovih na"cinov. Temne pege v notranjosti snopov predstavljajo defekte v polarizaciji svetlobe. \cite{lg-wiki}}
  \label{fig:laguerre-gauss}
 \end{figure}
 
@@ -333,7 +343,7 @@ Kljub temu da z elektri"cnim poljem ne moremo skonstruirati pravega defekta s po
 
 \subsubsection{Povezava med defekti v teko"cem kristalu in defekti v opti"cnem polju}
 Orientacijski red v teko"cem kristalu je tesno povezani z opti"cnimi polji. 
-Med njimi obstaja dvosmerna povezava: 
+Med njimi obstaja dvosmerna povezava, opisana v poglavju \ref{sec:dielektricnost}. 
 Podobno so med seboj povezani tudi defekti. 
 
 \subsection{Maxwellove ena"cbe v neizotropnem sredstvu}
@@ -350,7 +360,7 @@ Obi"cajno pa je magnetna anizotropija mnogo "sibkej"sa od elektri"cne, zato jo l
 
 Izvori in ponori valovanja znotraj vzorca so posledica neni"celne elektri"cne prevodnosti materiala.
 Zaradi prevodnosti $\sigma$ ob prisotnosti elektri"cnega polja v snovi te"ce tok, ki je enak $\vec J = \sigma \vec E$. 
-Prostih nabojev v vzorcu ni. Z upo"stevanjem zgornjih predpostavk lahko Maxwellove ena"cbe zapi"semo kotom
+Prostih nabojev v vzorcu ni. Z upo"stevanjem zgornjih predpostavk lahko Maxwellove ena"cbe zapi"semo v poenostavljeni obliki
 \begin{equation}
   \begin{aligned}
   \nabla \cdot \vec E = 0 & \qquad \nabla \cdot \vec B = 0 \\
@@ -359,13 +369,7 @@ Prostih nabojev v vzorcu ni. Z upo"stevanjem zgornjih predpostavk lahko Maxwello
 \end{equation}
 V zadnji ena"cbi smo privzeli, da se dielektri"cni tenzor $\varepsilon$ ne spreminja s "casom, zato nastopa izved "casovnega odvoda. 
 Ta predpostavka je smiselna pri obravnavi opti"cnih polj, saj je relaksacija teko"cega kristala mnogo po"casnej"sa od sprememb elektri"cnega in magnetnega polja. 
-
-Pri numeri"cnem re"sevanju potrebujemo le zadnji dve ena"cbi, ki vsebujeta "casovne odvode polj. 
-"Ce izrazimo "casovna odvoda in ena"cbi prepi"semo v brezdimenzijsko obliko ($c = \varepsilon_0 = \mu_0 = 1$), se glasita
-\begin{align}
-\label{eq:maxwell-base}
- \odvod{\vec{B}}{t} = -\nabla \times \vec{E}, \qquad \odvod{\vec{E}}{t} = \eps^{-1} (\nabla \times \vec{B} - \sigma \vec E)
-\end{align}
+V tipi"cnem teko"cem kristalu in frekvencah vidne svetlobe je razlika v "casovni skali okrog 15 redov velikosti. 
 
 \subsection{Teorija valovodov}
 \todo{Preberi "clanke}
@@ -375,20 +379,31 @@ Pri numeri"cnem re"sevanju potrebujemo le zadnji dve ena"cbi, ki vsebujeta "caso
 \section{Numeri"cna metoda}
 
 Za samo ra"cunanje sem implementiral metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}}\cite{taflove}. 
-Pri tej metodi "casovno propagiramo elektri"cno in magnetno polje v vsaki to"cki po Maxwellovih ena"cbah
+Pri tej metodi "casovno propagiramo elektri"cno in magnetno polje v vsaki to"cki po Maxwellovih ena"cbah. 
 
+Pri numeri"cnem re"sevanju potrebujemo le zadnji dve ena"cbi, ki vsebujeta "casovne odvode polj. 
+Prvi dve ena"cbi bosta s tem avtomatsko izpolnjeni. 
+Izvore valovanja namesto z dodajanjem nabojev in tokov v vzorec raje simuliramo z robnimi pogoji, kot da valovanje prihaja od zunaj. 
+Ta pristop je smiseln, saj v eksperimentih teko"ci kristal opazujemo tako, da svetimo skozenj. 
+
+"Ce izrazimo "casovna odvoda in ena"cbi prepi"semo v brezdimenzijsko obliko ($c = \varepsilon_0 = \mu_0 = 1$), se glasita
 \begin{align}
 \label{eq:maxwell-base}
- \odvod{\vec{B}}{t} = -\nabla \times \vec{E}, \qquad \odvod{\vec{E}}{t} = \eps^{-1} \nabla \times \vec{B}
+ \odvod{\vec{B}}{t} = -\nabla \times \vec{E}, \qquad \odvod{\vec{E}}{t} = \eps^{-1} (\nabla \times \vec{B} - \sigma \vec E)\,.
 \end{align}
 
 V zgornjih ena"cbah smo implicitno upo"stevali, da v celici ni izvorov, uporabili pa smo brezdimenzijske enote, zato je $c=1$.
 V ena"cbah nastopajo le prvi odvodi, ki jih za numeri"cno ra"cunanje nadomestimo s kon"cnimi diferencami
-
 \begin{align}
  \frac{\partial y}{\partial x} \rightarrow \frac{y(x+\delta) - y(x)}{\delta}
 \end{align}
 
+Znotraj teko"cega kristala lahko elektri"cno prevodnost zanemarimo in izpustimo "clen $\sigma \vec E$. 
+Prevodnost pa je pomembna v robni plasti, kjer "zelimo absorpcijo valovanja. 
+
+Pri ra"cunih sem upo"steval le dielektri"cno anizotropijo teko"cega kristala, magnetno pa zanemaril. 
+Zaradi simetrije Maxwellovih ena"cb bi na enak na"cin kot dielektri"cnost $\varepsilon$ lahko upo"steval tudi magnetno permeabilnost $\mu$. 
+Podobno bi lahko poleg elektri"cne prevodnosti $\sigma$ upo"steval magnetne izgube $\sigma^*$. 
 
 \subsection{Mre"za}
 
@@ -558,7 +573,7 @@ Prikaz valovanja na sliki \ref{fig:test-plane} potrjuje pravilnost metode, saj r
 
 Na obeh slikah opazimo notranjost celice z valovanje in rob, kjer valovanja ni.
 To je posledica modeliranja izvora valovanja okrog in okrog celice, kot je prikazano na levi strani slike \ref{fig:wave-source-regions}.
-Valovanje se si"ri od leve proti desni, tako si lahko predstavljamo izvir valovanja ne levi strani in ponor na desni. 
+Valovanje se "siri od leve proti desni, tako si lahko predstavljamo izvir valovanja ne levi strani in ponor na desni. 
 Dejstvo, da ponor valovanja na desni strani uspe"sno pobere celotno valovanje potrjuje natan"cnost ra"cunanja. 
 
 \subsection{Lom in odboj}
@@ -633,6 +648,14 @@ Metoda torej pravilno napove polo"zaj in "sirino prepovedanih pasov.
 Zlasti pri veliki razliki v dielektri"cnosti plasti meja prepovedanega pasu ni ostra, ampak krivulja postane zaobljena. 
 To je posledica kon"cne velikosti sistema, saj so teoreti"cni izra"cuni napravljeni za neskon"cen kristal, z metodo \acs{FDTD} pa lahko modeliramo le kon"cnega. 
 Kljub temu pa metoda da kvalitativno in kvantitativno pravilne rezultate za pojav fotonskega prepovedanega pasu. 
+
+\subsection{Dvolomno vlakno}
+V magistrskem delu sem preu"ceval "sirjenje svetlobe po cilindri"cnih vlaknih z razli"cnimi profili direktorja. 
+Ra"cunsko metodo sem preizkusil na sistemu, ki je "cimbolj podoben obravnavanim, "se vedno pa lahko napovemo rezultat. 
+V ta namen sem modeliral cilindri"cno vlakno, v katerem je uniformen dvolomen kristal, vanj pa sem posvetim s kratkim laserskim sunkom. 
+Polarizacija vpadne svetlobe je bila nagnjena za 45\degree~glede na opti"cno os, tako da se je vpadni "zarek razcepil na redno in izredno komponento. 
+Zaradi dvolomnosti obe komponenti potujeta z razli"cnima hitrostma, tako da se laserski "zarek razdeli na dva dela. 
+Direktorsko polje je regularno, brez defektov, zato ne pri"cakujemo defektov v polarizaciji svetlobe. 
 
 
 \newpage
