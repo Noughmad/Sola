@@ -1,0 +1,7 @@
+Slike v tej mapi so narejene z Amiro, in sicer:
+
+ - Po 700 stopnjah simulacije (datoteke <s>_pulse_field_700.raw)
+ - Za vsak direktorski profil sta dva mode-a, in je pri polozaju ravnine 86.7 %, drugi pri 72.7 %. 
+ - Resolucija je 50x50, velkost puscic (scale) je 0.2, debelina crt pa 2 (v konzoli: "Vectors setLineWidth 2)
+ 
+To bi se verjetno dal poskriptat v Amiri, ampak se ne znam. 

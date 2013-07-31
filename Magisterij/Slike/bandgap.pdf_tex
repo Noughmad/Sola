@@ -49,7 +49,7 @@
   \global\let\svgscale\undefined%
   \makeatother%
   \begin{picture}(1,0.5)%
-    \put(0,0){\includegraphics[width=\unitlength]{bandgap.pdf}}%
+    \put(0,0){\includegraphics[width=\unitlength]{./Slike/bandgap.pdf}}%
     \put(0.67170898,0.058){\makebox(0,0)[lb]{\smash{\ticssize\hspace{2mm}-0.5\hspace{3mm}-0.25\hspace{4mm}0\hspace{4mm}0.25\hspace{3mm}0.5}}}%
     \put(0.72718895,0.45038479){\makebox(0,0)[lb]{\smash{Plasti GaAs/Zrak}}}%
     \put(0.732,0.33){\makebox(0,0)[lb]{\smash{Prepovedani pas}}}%
