@@ -37,6 +37,7 @@
 \newcommand{\dd}{\ensuremath{\;\mathrm{d}}}
 
 \newcommand{\ticssize}{\small}
+\newcommand{\qodv}[2]{\ensuremath{\frac{\partial Q_{#1}}{\partial x_{#2}}}}
 
 %opening
 \title{Magistrsko delo}
@@ -139,7 +140,22 @@ Direktor in nematsko stopnjo reda lahko hkrati opi"semo z eno tenzorsko koli"cin
 \begin{align}
   Q_{ij} = \frac{S}{2}(3n_i n_j - \delta_{ij}) + \frac{P}{2}(e^{(1)}_i e^{(1)}_j - e^{(2)}_i e^{(2)}_j)\,,
 \end{align}
-kjer sta $\mathbf{e}^{(1)}$ in $\mathbf{e}^{(2)}$ enotska vektorja, pravokotna na $\mathbf{n}$ in med seboj. Uvedli smo "se biaksialnost $P$, ki je neni"celna, "ce fluktuacije molekul niso simetri"cne na vrtenje okrog direktorja. V tem primeru imamo orientacijski red tudi v sekundarni osi, ki je pravokotna na direktor in jo imenujemo sekundarni direktor. Parameter $P$ ima podoben pomen kot $S$ in nam pove, kako dobro so gradniki urejeni glede na sekundarno direktor. Ker komponente $n_i$ nastopajo le v kvadratu, s tak"snim zapisom avtomatsko upo"stevamo simetrijo direktorja, saj zamenjava $\mathbf{n}$ z $-\mathbf{n}$ tenzorja $Q_{ij}$ ne spremeni. Ker je $\mathbf{n}$ enotski vektor, je tenzor $Q_{ij}$ brezsleden, zato so v izotropni snovi vse njegove komponente enake 0 in je primeren ureditveni parameter za opis faznih prehodov. 
+kjer sta $\mathbf{e}^{(1)}$ in $\mathbf{e}^{(2)}$ enotska vektorja, pravokotna na $\mathbf{n}$ in med seboj. Uvedli smo "se biaksialnost $P$, ki je neni"celna, "ce fluktuacije molekul niso simetri"cne na vrtenje okrog direktorja. V tem primeru imamo orientacijski red tudi v sekundarni osi, ki je pravokotna na direktor in jo imenujemo sekundarni direktor. Parameter $P$ ima podoben pomen kot $S$ in nam pove, kako dobro so gradniki urejeni glede na sekundarni direktor. Ker komponente $n_i$ nastopajo le v kvadratu, s tak"snim zapisom avtomatsko upo"stevamo simetrijo direktorja, saj zamenjava $\mathbf{n}$ z $-\mathbf{n}$ tenzorja $Q_{ij}$ ne spremeni. Ker je $\mathbf{n}$ enotski vektor, je tenzor $Q_{ij}$ brezsleden, zato so v izotropni snovi vse njegove komponente enake 0 in je primeren ureditveni parameter za opis faznih prehodov. 
+
+Tenzor ureditvenih parametrov $Q_{ij}$ lahko v vsaki to"cki predstavimo kot matriko velikosti $3\times 3$, ki je simetri"cna in zato diagonalizabilna. 
+V lastnem sistemu direktorja, kjer za osi koordinatnega sistema vzamemo $\vec n$, $\vec e^{(1)}$ in $\vec e^{(2)}$, lahko matriko zapi"semo kot
+
+\begin{equation}
+ Q = \begin{pmatrix}
+  S &   & \\
+  & \frac{-S+P}{2} & \\
+  & & \frac{-S-P}{2}
+ \end{pmatrix}
+\end{equation}
+
+S tak"snim zapisom je razvidno, kako lahko iz podanega tenzorja $Q_{ij}$ izra"cunamo direktor $\vec n$ in stopnjo reda $S$. 
+Stopnja reda je enaka najve"cji lastni vrednosti matrike $Q$, direktor pa je lastni vektor, ki ustreza tej lastni vrednosti. 
+Ra"cun lastnih vektorjev ne lo"ci med vektorji, ki se razlikujejo le za predznak, tako da na ta na"cin zadostimo simetriji direktorja. 
 
 \subsection{Deformacije direktorja in prosta energija}
 
@@ -177,6 +193,15 @@ Drugi "clen tako ni ve"c simetri"cen glede na smer deformacije, gostota proste e
 \begin{align}
  f_{\mathrm{el}}^{Ch} &= \frac{K_1}{2} (\nabla \cdot \vec n)^2 + \frac{K_2}{2} (\vec n \cdot \nabla \times \vec n - q)^2 + \frac{K_3}{2} (\vec n \times \nabla \times \vec n)^2. 
 \end{align}
+
+Razvoj elasti"cne proste energije po krajevnih odvodih direktorja je la"zja za predstavo, saj "clene lahko pove"zemo z na"cini deformacije na sliki \ref{fig:tsb}. 
+Za numeri"cno modeliranje pa je bolj ugodno, "ce jo izrazimo s komponentami tenzorja $Q$, ki poleg direktorja vklju"cuje tudi stopnjo redo in dvoosnost\cite{copar-phd}. 
+V tej sliki se izraz glasi
+\begin{align}
+ f_{\mathrm{el}} &= \frac{1}{2}L_1\qodv{ij}{k}\qodv{ij}{k} + \frac{1}{2}L_2 \qodv{ij}{j}\qodv{ik}{k} + \frac{L_3}Q_{ij}\qodv{kl}{i}\qodv{kl}{l} + 2Lq\epsilon_{ikl}Q_{ij}\qodv{lj}{k}
+\end{align}
+kjer je $\epsilon_{ijk}$ Levi-Civit'ajev popolnoma antisimetri"cni tenzor tretjega reda. 
+
 
 V teko"cih kristalih je stabilnost nematske mezofaze odvisna od temperature ali od koncentracije. 
 Za termotropske teko"ce kristale, kjer je mezofaza odvisna od temperature, lahko zapi"semo Landauov razvoj proste energije po ureditvenem parametru $Q_{ij}$ kot
@@ -349,7 +374,9 @@ V tem smislu je polarizacija svetlobe podobna nematskemu direktorju.
 Kljub temu da z elektri"cnim poljem ne moremo skonstruirati pravega defekta s polcelim ovojnim "stevilom, imamo lahko na neki to"cki obrat polja, ki ne pove"ca proste energije. 
 
 
-\section{Dielektri"cni tenzor v teko"cem kristalu}
+\section{Sklopitev teko"cega kristala s svetlobo}
+
+\subsection{Dielektri"cni tenzor v teko"cem kristalu}
 \label{sec:dielektricnost}
 Oblika in polarizabilnost molekul v teko"cem kristalu vplivata na njegove opti"cne lastnosti. 
 Dielektri"cni tenzor v teko"cem kristalu je odvisen od molekularne anizotropije $\varepsilon_{a}^{\mathrm{mol}}$, direktorja in nematske stopnje reda $S$. 
@@ -378,7 +405,7 @@ V tem magistrskem delu sem se omejil le na "sirjenje svetlobe, pri "cemer je dir
 Sama ra"cunska metoda pa je zasnovana tako, da je kompatibilna z obstoje"cimi programi za izra"cun ureditve teko"cih kristalov\cite{ravnik-zumer-ldg}. 
 Z isto metodo bo v prihodnosti mogo"ce upo"stevati dvosmerno sklopitev med opti"cnim poljem in teko"cim kristalom, premostiti pa bo treba "se razliko v "casovnih skalah. 
 
-\subsubsection{Povezava med defekti v teko"cem kristalu in defekti v opti"cnem polju}
+\subsection{Povezava med defekti v teko"cem kristalu in defekti v opti"cnem polju}
 Orientacijski red v teko"cem kristalu je tesno povezani z opti"cnimi polji. 
 Med njimi obstaja dvosmerna povezava, opisana v poglavju \ref{sec:dielektricnost}. 
 Podobno so med seboj povezani tudi defekti. 

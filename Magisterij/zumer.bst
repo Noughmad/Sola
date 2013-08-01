@@ -536,14 +536,13 @@ FUNCTION {book}
 { output.bibitem
   author empty$
     { format.editors "author and editor" output.check }
-    { format.authors output.nonnull
+    { format.authors "," * "author" output.check
       crossref missing$
         { "author and editor" editor either.or.check }
         'skip$
       if$
     }
   if$
-  new.block
   format.btitle "title" output.check
   crossref missing$
     { format.bvolume output
@@ -734,16 +733,10 @@ FUNCTION {misc}
 
 FUNCTION {phdthesis}
 { output.bibitem
-  format.authors "author" output.check
-  new.block
-  format.btitle "title" output.check
-  new.block
-  "PhD thesis" format.thesis.type output.nonnull
-  school "school" output.check
-  address output
+  format.authors "," * "author" output.check
+  format.btitle "," * "title" output.check
+  "disertacija" format.thesis.type output.check
   format.date "year" output.check
-  new.block
-  note output
   fin.entry
 }
 
