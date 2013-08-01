@@ -80,14 +80,38 @@ Poleg tega so opisane splo"se lastnosti in uporabe valovodov in posebnosti teko"
 V tretjem poglavju je predstavljena numeri"cna metoda, s katero sem modeliral "sirjenje svetlobe skozi teko"cekristalne valovode, in nekaj preizkusov njene pravolnosti. 
 V "cetrem poglavju so rezultati \todo{kaj to"cno?}. 
 
-\section{Teoreti"cno ozadje}
+\section{Teko"ci kristali}
 
-\subsection{Teko"ci kristal kot anizotropni dielektrik}
-% Tenzor Q, prosta energija
+\subsection{Teko"cekristalne mezofaze}
 
-V teko"cem kristalu imajo gradniki orientacijski red dolgega dosega. Definiramo lahko enotski vektor $\mathbf{n}$, ki dolo"ca povpre"cno smer gradnikov in ga imenujemo direktor. Direktor ni pravi vektor, saj v teko"cem kristalu ne lo"cimo med smerjo $\mathbf{n}$ in $\mathbf{-n}$. Tudi "ce sami gradniki nimajo tak"sne simetrije, jo imajo njihove fluktuacije, zato lahko ureditev dobro opi"semo z direktorjem\cite{mermin}. 
+Teko"ci kristali so mehke snovi, ki zdru"zujejo lastnosti kristalov in teko"cin\cite{degennes}. 
+Praviloma so teko"ci kristali sestavljeni iz pali"castih ali diskastih molekul, teko"cekristalne mezofaze pa tvorijo tudi segmenti DNK, molekule nekaterih virusov in primerni koloidni delci. 
+Polo"zaji gradnikov nimajo reda dolgega dosega v vseh smereh, zato se snov obna"sa kot teko"cina. 
+Teko"ci kristali imajo orientacijski red dolgega dosega, lahko pa imajo tudi delni pozicijski red, na primer ureditev molekul v plasti. 
+Teko"cekristalne mezofaze se pojavijo pri dolo"ceni temperaturi ali koncentraciji molekul. 
 
-\begin{comment}
+Teko"ce kristali delimo na ve"ce mezofaz glede na orientacijski in pozicijski red gradnikov. Nematski teko"ci kristali imajo orientacijski red dolgega dosega, ne pa tudi pozicijskega. 
+Matemati"cno lahko tak"sen red opi"semo z direktorjem $\mathbf{n}$ in stopnjo reda $S$. 
+Smektiki imajo pozicijski red v eni smeri, tako da se gradniki uredijo v plasti, znotraj katerih se snov obna"sa kot dvodimenzionalna teko"cina. 
+"Ce je direktor pravokoten na ravnino plasti, je to mezofaza Sm A, v nasprotnem primeru pa Sm C. 
+
+Teko"cekristalne mezofaze se med seboj razlikujejo tudi po orientacijskem redu. 
+Prisotnost kiralnih molekul teko"cemu kristalu vsili lasten zvoj, tako da se preferen"cna smer orientacijskega reda s krajem spreminja. 
+Glede na mo"c tega zvoja snov tvori kiralno nematsko fazo, kjer je zvoj le v eni smeri, ali modre faze, kjer je zvoj prisoten v vseh smereh. 
+Orientacija molekul v nekaj najpogostej"sih teko"cekristalnih mezofazah je prikazana na sliki \ref{fig:faze}. 
+Poleg na"stetih obstaja "se veliko razli"cnih mezofaz z razli"cnim orientacijskim in pozicijskim redom. 
+
+\begin{figure}[h]
+\centering
+  \includegraphics[width=.8\textwidth]{./Slike/faze}
+ \caption{Shematski prikaz treh najpogostej"sih teko"cekristalnih mezofaz: nematik (a), kiralni nematik ali holesterik (b) in smektik (c)\cite{wiki:lc}.}
+  \label{fig:faze}
+\end{figure}
+
+\subsection{Orientacijski red}
+
+V vseh teko"cekristalnih mezofazah imajo gradniki orientacijski red dolgega dosega. Definiramo lahko enotski vektor $\mathbf{n}$, ki dolo"ca povpre"cno smer gradnikov in ga imenujemo direktor. Direktor ni pravi vektor, saj v teko"cem kristalu ne lo"cimo med smerjo $\mathbf{n}$ in $\mathbf{-n}$. Tudi "ce sami gradniki nimajo tak"sne simetrije, jo imajo njihove fluktuacije, zato lahko ureditev dobro opi"semo z direktorjem\cite{mermin}. 
+
 \begin{figure}[h]
 \begin{center}
 \subfigure{\includegraphics[height=100pt]{./Slike/Nematic-Director}}
@@ -98,8 +122,6 @@ V teko"cem kristalu imajo gradniki orientacijski red dolgega dosega. Definiramo 
 \end{figure}
 
 Orientacijski red dolgega dosega je tipi"cno realiziran s pali"castimi gradniki. Najpogosteje se uporabljajo organske molekule z dvema benzenovima obro"cema, na katera so vezane razli"cne skupine. Primera tak"snih molekul sta 4-ciano-4'-pentilbifenil (5CB) in 4-ciano-4'-oktilbifenil (8CB), katerih strukturni formuli sta prikazani na Sliki \ref{fig:nematik-direktor}. Velikosti tak"snih molekul so nekaj nanometrov. 
-
-\end{comment}
 
 Direktor $\mathbf{n}$ podaja povpre"cno smer gradnikov, ne pa dejanske orientacije posameznih gradnikov. 
 Zato uvedemo "se stopnjo reda $S$ \angl{degree of order}, ki nam pove, koliko smeri molekul v povpre"cju odstopajo od direktorja. 
@@ -119,7 +141,7 @@ Direktor in nematsko stopnjo reda lahko hkrati opi"semo z eno tenzorsko koli"cin
 \end{align}
 kjer sta $\mathbf{e}^{(1)}$ in $\mathbf{e}^{(2)}$ enotska vektorja, pravokotna na $\mathbf{n}$ in med seboj. Uvedli smo "se biaksialnost $P$, ki je neni"celna, "ce fluktuacije molekul niso simetri"cne na vrtenje okrog direktorja. V tem primeru imamo orientacijski red tudi v sekundarni osi, ki je pravokotna na direktor in jo imenujemo sekundarni direktor. Parameter $P$ ima podoben pomen kot $S$ in nam pove, kako dobro so gradniki urejeni glede na sekundarno direktor. Ker komponente $n_i$ nastopajo le v kvadratu, s tak"snim zapisom avtomatsko upo"stevamo simetrijo direktorja, saj zamenjava $\mathbf{n}$ z $-\mathbf{n}$ tenzorja $Q_{ij}$ ne spremeni. Ker je $\mathbf{n}$ enotski vektor, je tenzor $Q_{ij}$ brezsleden, zato so v izotropni snovi vse njegove komponente enake 0 in je primeren ureditveni parameter za opis faznih prehodov. 
 
-\subsubsection{Deformacije direktorja in prosta energija}
+\subsection{Deformacije direktorja in prosta energija}
 
 Ureditev teko"cega kristala lahko opi"semo s tenzorskim poljem $Q_{ij}(\vec r)$, ki podaja tenzor ureditvenih parametrov v vsaki to"cki. 
 Skupno prosto energijo lahko izrazimo kot funkcional polja $Q_{ij}(\vec r)$, ki pa je odvisen od teko"cekristalne mezofaze. 
@@ -177,38 +199,7 @@ kjer je $\overline{\varepsilon}$ povpre"cna dielektri"cna konstanta, $\varepsilo
 Ta sklopitev izhaja iz polarizabilnosti molekul, ki je odvisna od njihove oblike. 
 Zunanje polje v molekuli inducira elektri"cni dipolni moment, ki je sorazmeren z dol"zino molekule in je zato najve"cji, "ce je polje vzporedno z osjo molekule. 
 
-\subsubsection{Dielektri"cni tenzor v teko"cem kristalu}
-\label{sec:dielektricnost}
-Oblika in polarizabilnost molekul v teko"cem kristalu vplivata na njegove opti"cne lastnosti. 
-Dielektri"cni tenzor v teko"cem kristalu je odvisen od molekularne anizotropije $\varepsilon_{a}^{\mathrm{mol}}$, direktorja in nematske stopnje reda $S$. 
-Odvisnost od direktorja in stopnje reda lahko opi"semo s tenzorskim ureditvenim parametrom $Q_{ij}$. 
-Ta je brezsleden, zato tudi dielektri"cni tenzor zapi"semo kot vsoto izotropnega in brezslednega tenzorja kot\cite{degennes, ravnik-zumer-ldg}
-
-\begin{align}
-\label{eq:dielektricni-tenzor}
- \varepsilon_{ij} &= \overline\varepsilon + (\varepsilon_a)_{ij} = \overline\varepsilon + \frac{2}{3}\varepsilon_a^{\mathrm{mol}} Q_{ij}
-\end{align}
-
-Lastni vektorji tenzorja $Q_{ij}$ so direktor in dve pravokotni smeri, po zgornji zvezi pa so enake tudi lastne osi dielektri"cnega tenzorja. 
-V enoosnem teko"cem kristul je tako opti"cna os z izrednim lomnim koli"cnikom vzporedna z direktorjem. 
-
-"Ce primerjamo ena"cbi (\ref{eq:dielektricna-sklopitev}) in (\ref{eq:dielektricni-tenzor}) opazimo dvosmerno povezavo med ureditvijo teko"cega kristala in elektromagnetnim poljem. 
-Zaradi dielektri"cne sklopitve svetloba vpliva na ureditev teko"cega kristala, zaradi opti"cne anizotropije pa teko"ci kristal vpliva na "sirjenje svetlobe po njem. 
-Ra"cunsko orodje, ki naj bi natan"cno napovedalo direktorsko polje ob prisotnosti svetlobe ali "sirjenje svetlobe skozi teko"ci kristal, bi moralo upo"stevati to dvosmerno povezavo in hkrati ra"cunati oboje. 
-V praksi pa se pogosto zate"cemo k poenostavitvam oz. limitam mo"cnega ali "sibkega polja. 
-"Ce je elektromagnetno polje dovolj mo"cno, se bo direktor orientiral v smeri polja, torej svetloba vedno "cuti izredni lomni koli"cnik. 
-V tem re"zimu teko"ci kristal ne vpliva na "sirjenje svetlobe. 
-"Ce pa je svetloba zelo "sibka, ne spremeni orientacije molekul in lahko privzamemo, da je direktorsko polje fiksirano. 
-Mo"cno se razlikujeta tudi "casovni skali obeh pojavov, saj je karakteristi"cni "cas relaksacije teko"cega kristala velikostnega reda sekunde, opti"cna polja pa nihajo s periodo okrog femtosekunde. 
-Zato lahko preu"cujemo propagacijo svetlobe preden se teko"ci kristal lahko preuredi. 
-
-V tem magistrskem delu sem se omejil le na "sirjenje svetlobe, pri "cemer je direktorsko polje konstantno. 
-Sama ra"cunska metoda pa je zasnovana tako, da je kompatibilna z obstoje"cimi programi za izra"cun ureditve teko"cih kristalov\cite{ravnik-zumer-ldg}. 
-Z isto metodo bo v prihodnosti mogo"ce upo"stevati dvosmerno sklopitev med opti"cnim poljem in teko"cim kristalom, premostiti pa bo treba "se razliko v "casovnih skalah. 
-
 \subsection{Defekti}
-
-\subsubsection{Disklinacije v nematiku}
 
 Ravnovesno stanje nematika je tak"sno, ki minimizira prosto energijo. 
 V odsotnosti zunanjih polj je to ureditev z uniformnim direktorjem, kjer je celotna elasti"cna prosta energija enaka 0\cite{mermin}. 
@@ -270,34 +261,7 @@ V zgornji enakosti je pomembna odvisnost od ovojnega "stevila.
 Elasti"cna energija zaradi defekta je sorazmerna z $s^2$, zato je bolj ugodno, da se defekt z ve"cjim ovojnim "stevilom razcepi na ve"c manj"sih defektov. 
 Stabilni defekti so le tisti z ovojnim "stevilom $s=\pm1/2$, vsi ostali razpadejo na ve"c defektov z manj"sim nabojem. 
 
-\subsubsection{Defekti v polarizaciji svetlobe}
-Elektri"cno in magnetno polje sta prava vektorja, zato imata lahko le defekte s celo"stevilskim ovojnim "stevilom. 
-Za razliko od direktorskega polja v teko"cih kristalih pa deformacije elektromagnetih polj ne nosijo energije, zato so stabilne poljubne konfiguracije. 
-
-Defekt v elektromagnetnem polju je to"cka oz. obmo"cje, kjer polarizacija in faza valovanja nista definirani. 
-Amplituda valovanja v tak"sni to"cki mora biti enaka ni"c, zato se defekti izrazijo kot temne pege. 
-Primer so Laguerre-Gaussovi snopi, prikazani na sliki \ref{fig:laguerre-gauss}. 
-
-\begin{figure}[h]
- \centering
- \includegraphics[width=.6\textwidth]{./Slike/LG-wiki}
- \caption{Nekaj osnovnih Laguerre-Gaussovih na"cinov. Temne pege v notranjosti snopov predstavljajo defekte v polarizaciji svetlobe. \cite{lg-wiki}}
- \label{fig:laguerre-gauss}
-\end{figure}
-
-
-V opti"cnih poljih je nihanje elektri"cnega in magnetnega polja tako hitro, da z nobeno merilno napravo ne moremo izmeriti samega polja, ampak le njegovo "casovno povpre"cje. 
-Med polarizacijo svetlobe $\vec P$ in $-\vec P$ je razlika zgolj v fazi, zato ju lahko obravnavamo kot enaki. 
-V tem smislu je polarizacija svetlobe podobna nematskemu direktorju. 
-Kljub temu da z elektri"cnim poljem ne moremo skonstruirati pravega defekta s polcelim ovojnim "stevilom, imamo lahko na neki to"cki obrat polja, ki ne pove"ca proste energije. 
-
-\subsubsection{Povezava med defekti v teko"cem kristalu in defekti v opti"cnem polju}
-Orientacijski red v teko"cem kristalu je tesno povezani z opti"cnimi polji. 
-Med njimi obstaja dvosmerna povezava, opisana v poglavju \ref{sec:dielektricnost}. 
-Podobno so med seboj povezani tudi defekti. 
-
-
-\subsubsection{Direktor v cilindri"cni kapilari}
+\subsection{Direktor v cilindri"cni kapilari}
 
 Nematski teko"ci kristal se spontano uredi tako, da minimizira prosto energijo. 
 V odsotnosti zunanjega polja je prosta energija najni"zja, "ce ni elasti"cnih deformacij, torej je direktor uniformen. 
@@ -334,21 +298,7 @@ Primer tvorbe tak"snih vlaken je na sliki \ref{fig:tvorjenje}.
  \label{fig:tvorjenje}
 \end{figure}
 
-\begin{comment}
- 
-\subsubsection{Valj z dvojnim zvojem}
-
-Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj. 
-\todo{Mogo"ce kaj vec o double-twist cylindrih}
-
-\begin{figure}
- \centering
- \includegraphics[width=.5\textwidth]{./Slike/double-twist-cylinder-coles-morris}
- \caption{Shematski prikaz direktorja v valju z dvojnim zvojem. Na osi valja je direktor vzporeden z osjo, z oddaljenostjo od osi pa kot med osjo in direktorjem nara"s"ca linearno\cite{coles-morris}. }
- \label{fig:double-twist-cylinder}
-\end{figure}
-
-\end{comment}
+\section{Elektromagnetno valovanje}
 
 \subsection{Maxwellove ena"cbe v neizotropnem sredstvu}
 "Sirjenje svetlobe po snovi opisujejo "stiri Maxwellove ena"cbe
@@ -375,7 +325,80 @@ V zadnji ena"cbi smo privzeli, da se dielektri"cni tenzor $\varepsilon$ ne sprem
 Ta predpostavka je smiselna pri obravnavi opti"cnih polj, saj je relaksacija teko"cega kristala mnogo po"casnej"sa od sprememb elektri"cnega in magnetnega polja. 
 V tipi"cnem teko"cem kristalu in frekvencah vidne svetlobe je razlika v "casovni skali okrog 15 redov velikosti. 
 
-\subsection{Defekti v opti"cnih poljih}
+\subsection{Dvolomnost}
+
+\subsection{Defekti v polarizaciji svetlobe}
+Elektri"cno in magnetno polje sta prava vektorja, zato imata lahko le defekte s celo"stevilskim ovojnim "stevilom. 
+Za razliko od direktorskega polja v teko"cih kristalih pa deformacije elektromagnetih polj ne nosijo energije, zato so stabilne poljubne konfiguracije. 
+
+Defekt v elektromagnetnem polju je to"cka oz. obmo"cje, kjer polarizacija in faza valovanja nista definirani. 
+Amplituda valovanja v tak"sni to"cki mora biti enaka ni"c, zato se defekti izrazijo kot temne pege. 
+Primer so Laguerre-Gaussovi snopi, prikazani na sliki \ref{fig:laguerre-gauss}. 
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[width=.6\textwidth]{./Slike/LG-wiki}
+ \caption{Nekaj osnovnih Laguerre-Gaussovih na"cinov. Temne pege v notranjosti snopov predstavljajo defekte v polarizaciji svetlobe. \cite{lg-wiki}}
+ \label{fig:laguerre-gauss}
+\end{figure}
+
+
+V opti"cnih poljih je nihanje elektri"cnega in magnetnega polja tako hitro, da z nobeno merilno napravo ne moremo izmeriti samega polja, ampak le njegovo "casovno povpre"cje. 
+Med polarizacijo svetlobe $\vec P$ in $-\vec P$ je razlika zgolj v fazi, zato ju lahko obravnavamo kot enaki. 
+V tem smislu je polarizacija svetlobe podobna nematskemu direktorju. 
+Kljub temu da z elektri"cnim poljem ne moremo skonstruirati pravega defekta s polcelim ovojnim "stevilom, imamo lahko na neki to"cki obrat polja, ki ne pove"ca proste energije. 
+
+
+\section{Dielektri"cni tenzor v teko"cem kristalu}
+\label{sec:dielektricnost}
+Oblika in polarizabilnost molekul v teko"cem kristalu vplivata na njegove opti"cne lastnosti. 
+Dielektri"cni tenzor v teko"cem kristalu je odvisen od molekularne anizotropije $\varepsilon_{a}^{\mathrm{mol}}$, direktorja in nematske stopnje reda $S$. 
+Odvisnost od direktorja in stopnje reda lahko opi"semo s tenzorskim ureditvenim parametrom $Q_{ij}$. 
+Ta je brezsleden, zato tudi dielektri"cni tenzor zapi"semo kot vsoto izotropnega in brezslednega tenzorja kot\cite{degennes, ravnik-zumer-ldg}
+
+\begin{align}
+\label{eq:dielektricni-tenzor}
+ \varepsilon_{ij} &= \overline\varepsilon + (\varepsilon_a)_{ij} = \overline\varepsilon + \frac{2}{3}\varepsilon_a^{\mathrm{mol}} Q_{ij}
+\end{align}
+
+Lastni vektorji tenzorja $Q_{ij}$ so direktor in dve pravokotni smeri, po zgornji zvezi pa so enake tudi lastne osi dielektri"cnega tenzorja. 
+V enoosnem teko"cem kristul je tako opti"cna os z izrednim lomnim koli"cnikom vzporedna z direktorjem. 
+
+"Ce primerjamo ena"cbi (\ref{eq:dielektricna-sklopitev}) in (\ref{eq:dielektricni-tenzor}) opazimo dvosmerno povezavo med ureditvijo teko"cega kristala in elektromagnetnim poljem. 
+Zaradi dielektri"cne sklopitve svetloba vpliva na ureditev teko"cega kristala, zaradi opti"cne anizotropije pa teko"ci kristal vpliva na "sirjenje svetlobe po njem. 
+Ra"cunsko orodje, ki naj bi natan"cno napovedalo direktorsko polje ob prisotnosti svetlobe ali "sirjenje svetlobe skozi teko"ci kristal, bi moralo upo"stevati to dvosmerno povezavo in hkrati ra"cunati oboje. 
+V praksi pa se pogosto zate"cemo k poenostavitvam oz. limitam mo"cnega ali "sibkega polja. 
+"Ce je elektromagnetno polje dovolj mo"cno, se bo direktor orientiral v smeri polja, torej svetloba vedno "cuti izredni lomni koli"cnik. 
+V tem re"zimu teko"ci kristal ne vpliva na "sirjenje svetlobe. 
+"Ce pa je svetloba zelo "sibka, ne spremeni orientacije molekul in lahko privzamemo, da je direktorsko polje fiksirano. 
+Mo"cno se razlikujeta tudi "casovni skali obeh pojavov, saj je karakteristi"cni "cas relaksacije teko"cega kristala velikostnega reda sekunde, opti"cna polja pa nihajo s periodo okrog femtosekunde. 
+Zato lahko preu"cujemo propagacijo svetlobe preden se teko"ci kristal lahko preuredi. 
+
+V tem magistrskem delu sem se omejil le na "sirjenje svetlobe, pri "cemer je direktorsko polje konstantno. 
+Sama ra"cunska metoda pa je zasnovana tako, da je kompatibilna z obstoje"cimi programi za izra"cun ureditve teko"cih kristalov\cite{ravnik-zumer-ldg}. 
+Z isto metodo bo v prihodnosti mogo"ce upo"stevati dvosmerno sklopitev med opti"cnim poljem in teko"cim kristalom, premostiti pa bo treba "se razliko v "casovnih skalah. 
+
+\subsubsection{Povezava med defekti v teko"cem kristalu in defekti v opti"cnem polju}
+Orientacijski red v teko"cem kristalu je tesno povezani z opti"cnimi polji. 
+Med njimi obstaja dvosmerna povezava, opisana v poglavju \ref{sec:dielektricnost}. 
+Podobno so med seboj povezani tudi defekti. 
+
+
+\begin{comment}
+ 
+\subsubsection{Valj z dvojnim zvojem}
+
+Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj. 
+\todo{Mogo"ce kaj vec o double-twist cylindrih}
+
+\begin{figure}
+ \centering
+ \includegraphics[width=.5\textwidth]{./Slike/double-twist-cylinder-coles-morris}
+ \caption{Shematski prikaz direktorja v valju z dvojnim zvojem. Na osi valja je direktor vzporeden z osjo, z oddaljenostjo od osi pa kot med osjo in direktorjem nara"s"ca linearno\cite{coles-morris}. }
+ \label{fig:double-twist-cylinder}
+\end{figure}
+
+\end{comment}
 
 \section{Numeri"cna metoda}
 
