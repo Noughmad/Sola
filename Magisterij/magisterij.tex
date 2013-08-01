@@ -351,6 +351,40 @@ Ta predpostavka je smiselna pri obravnavi opti"cnih polj, saj je relaksacija tek
 V tipi"cnem teko"cem kristalu in frekvencah vidne svetlobe je razlika v "casovni skali okrog 15 redov velikosti. 
 
 \subsection{Dvolomnost}
+Dvolomnost \angl{birefringence} je pojav, pri katerem je lomni koli"cnik snovi odvisen od polarizacije svetlobe\cite{landau-lifsic-optics, wiki:birefringence}. 
+Opazimo jo predvsem pri kristalih, kot sta kalcit in vodni led, pa tudi nekaterih vrstah plastike. 
+Lahko je posledica same strukture snovi, na primer pri kristalih, oblike gradnikov kot pri teko"cih kristalih, ali pa jo vsilimo z mehansko obremenitvijo. 
+
+V dvolomnih snoveh zveze med jakostjo elektri"cnega polja $E$ in gostoto elektri"cnega polja $D$ ne moremo opisati s skalarjem, ampak s tenzorjem
+\begin{align}
+  D_i &= \varepsilon_0 \varepsilon_{ij} E_j
+\end{align}
+Hitrost svetlobe v tak"sni snovi je enaka
+\begin{align}
+  c &= \sqrt{\frac{1}{\varepsilon_{\mathrm{eff}} \varepsilon_0 \mu_0}} = \frac{c_0}{\sqrt{\varepsilon_{\mathrm{eff}}}} = c_0\sqrt{\frac{E_iE_i}{E_i \varepsilon_{ij} E_j}}
+\end{align}
+in je odvisna od smeri elektri"cnega polja. 
+
+Dielektri"cni tenzor $\varepsilon_{ij}$ je linearna zveza med dvema vektorskima koli"cinama. 
+Predstavimo ga z matriko velikosti $3\times 3$, torej ima tri lastne smeri in tri lastne vrednosti.
+Najenostavnej"sa in najpogostej"sa vrsta dvolomnosti je tak"sna, pri katerem sta dve izmed lastnih vrednosti enaki, tretja je pa razli"cna. 
+Lastni smeri, ki ustreza razli"cni lastni vrednosti, pravimo opti"cna os. 
+V tak"sni snovi je le ena privilegirana os, zato re"cemo, da je snov opti"cno enoosna. 
+V lastnem sistemu lahko tenzor zapi"semo kot
+\begin{align}
+  \varepsilon = \begin{pmatrix}\varepsilon_\perp & & \\ & \varepsilon_\perp & \\ & & \varepsilon_\parallel \end{pmatrix}
+\end{align}
+Tu je $\varepsilon_\parallel$ lastna vrednost, ki ustreza polarizaciji svetlobe, vzporedni z opti"cno osjo. 
+Tej polarizaciji pravimo izredna \angl{extraordinary}, ustreznemo lomnemu koli"cniku $n_e = \sqrt{\varepsilon_\parallel}$ pa izredni lomni koli"cnik. 
+Polarizacija svetlobe, pravokotna na opti"cno os je redna \angl{ordinary}, ustreza pa ji redni lomni koli"cnik $n_o = \sqrt{\varepsilon_\perp}$. 
+Dvolomnost snovi lahko kvantitativno opi"semo z razliko med izrednim in rednim lomnim koli"cnikom
+\begin{align}
+  \Delta n = n_e - n_o\;,
+\end{align}
+ki je lahko pozitivna ali negativna. 
+
+Enako kot dielektri"cnost $\varepsilon$ lahko tudi anizotropna magnetna permeabilnost $\mu$ povzro"ci dvolomnost. 
+Pri opti"cnih frekvencah je magnetna anizotropija ve"cine snovi zanemarljiva, je dovolj obravnavati le elektri"cno. 
 
 \subsection{Defekti v polarizaciji svetlobe}
 Elektri"cno in magnetno polje sta prava vektorja, zato imata lahko le defekte s celo"stevilskim ovojnim "stevilom. 
