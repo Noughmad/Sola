@@ -61,6 +61,6 @@ def draw_image(name, q):
 
 if __name__ == "__main__":
   app = QApplication(sys.argv)
-  for i in [-1, -0.5, 0.5, 1]:
+  for i in [-1, -0.5, 0.5, 1, 1.5, 2, -2, -1.5, 0]:
     draw_image("g_defect_%g" % (2*i), i)
     subprocess.call(["inkscape", "--export-pdf=g_defect_%g.pdf" % (2*i), "g_defect_%g.svg" % (2*i), "--export-area-drawing"])
