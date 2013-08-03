@@ -314,6 +314,26 @@ V zgornji enakosti je pomembna odvisnost od ovojnega "stevila.
 Elasti"cna energija zaradi defekta je sorazmerna z $s^2$, zato je bolj ugodno, da se defekt z ve"cjim ovojnim "stevilom razcepi na ve"c manj"sih defektov. 
 Stabilni defekti so le tisti z ovojnim "stevilom $s=\pm1/2$, vsi ostali razpadejo na ve"c defektov z manj"sim nabojem. 
 
+\subsection{Simetrija defektov}
+Defekt v ureditvi teko"cega kristala ima dolo"ceno rotacijsko in zrcalno simetrijo, ki je odvisna od ovojnega "stevila defekta. 
+
+\begin{table}[h]
+ \centering
+ \begin{tabular}{|c|c|c|}
+ \hline
+  Ovojno "stevilo & Rotacijska simetrija & Zrcalne osi \\
+  \hline
+  0 & 2-"stevna & 2 \\
+  1/2 & ni & 1 \\
+  -1/2 & 3-"stevna & 3 \\
+  1 & zvezna & neskon"cno \\
+  -1 & 4-"stevna & 4 \\
+  \hline
+ \end{tabular}
+\caption{Rotacijska in zrcalna simetrija defektov z najni"zjimi ovojnimi "stevili. }
+\label{tab:simetrija}
+\end{table}
+
 \subsection{Direktor v cilindri"cni kapilari}
 
 Nematski teko"ci kristal se spontano uredi tako, da minimizira prosto energijo. 
@@ -975,6 +995,14 @@ V nasprotju z radialnim in hiperboli"cnim profilom pri propagaciji svetlobe skoz
 Znotraj vsakega lastnega na"cina je le eno intenzitetno obmo"cje. 
 
 \subsection{Splo"sne zakonitosti}
+Nekaj lastnosti lastnih na"cinov propagacije svetlobe lahko obrazlo"zimo s simetrijo. 
+Polarizacija vpadne svetlobe je linearna in uniformna. 
+Njeno ovojno "stevilo je enako 0, torej ima dvo"stevno rotacijsko os in dve zrcalni osi. 
+"Ce je svetloba polarizirana v smeri osi $x$, sta zrcalni osi os $x$ in os $y$. 
+Nekatere izmed teh "stirih zrcalnih osi so prisotne tudi v direktorskem defektu, ne pa nujno tudi vse. 
+Polarizacija svetlobe znotraj vlakna bo obdr"zala vse simetrijske osi, ki so prisotne tako v vpadni svetlobe kot tudi v teko"cem kristalu. 
+Vse zgornje slike elektri"cnega polja potrjujejo to trditev. 
+
 Na podlagi vseh zgorjih opa"zanj lahko najdemo podobnosti in izpeljemo splo"sne zakonitosti. 
 
 \begin{itemize}
@@ -982,6 +1010,7 @@ Na podlagi vseh zgorjih opa"zanj lahko najdemo podobnosti in izpeljemo splo"sne 
  \item Polarizacija svetlobe v obeh na"cinih tvori defekt z enakim ovojnim "stevilom kot defekt v teko"cem kristalu.
  \item V enem izmed na"cinov je polarizacija svetlobe vzporedna z direktorjem, v drugem pa je nanj pravokotna.
  \item V obmo"cjih, kjer bi po prej"snjem pravilu morala biti svetloba polarizirana pravokotna na vpadno polarizacijo, svetlobe ni. 
+ \item Lastna na"cina imata enako simetrijo, simetrijske ravnine pa so presek simetrijskih ravnin teko"cega kristala in polarizacije vpadne svetlobe. 
 \end{itemize}
 
 S pomo"cjo teh zakonitosti lahko napovemo, kako se bo svetloba "sirila po vlaknu s poljubnim linijskim defektom po sredini. 
@@ -1034,6 +1063,32 @@ Primer svetlobnega polja v tak"snem vlaknu je na sliki \ref{fig:m1-cont-snaps}
  \subfigure{\includegraphics[height=130pt]{g_defect_-2}}
  \subfigure{\includegraphics[height=130pt]{g_defect_-4}}
  \caption{Shematski prikaz defektov z ovojnimi "stevili (od leve proti desni) $0$, $-1$ in $-2$. }
+\end{figure}
+
+Nazadnje sem simulacijo ponovil tudi z vlaknom, v katerem ima ureditev teko"ci kristal defekt s polcelo mo"cjo. 
+Tak"sen primer je "se posebej zanimiv, ker imata lastna na"cina le eno simetrijsko ravnino, in sicer tisto, ki vsebuje polarizacijo vpadne svetlobe. 
+
+\begin{figure}[h]
+ \includegraphics[width=\textwidth]{./Rezultati/m12_cont_snaps}
+ \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna s hiperboli"cnim direktorskim profilom ob stalni osvetlitvi. Vidno je izmenjevanje konfiguracij z ovojnima "steviloma $s=0$ in $s=-1$.  }
+ \label{fig:m12-cont-snaps}
+\end{figure}
+
+Na slikah lahko prepoznamo uniformno polje brez defektov (skrajno levi presek) in polje z defektom mo"ci $-1$ (drugi presek z leve). 
+Za razlike od defekta mo"ci $1$, ki ga opazimo v vlaknu s hiperboli"cnim profilom, pa je na zgornji sliki jasno vidna tudi komponenta svetlobe s polarizacijo v smeri $y$. 
+Tak"sna polarizacija je v vlaknu ``prepovedana'', saj je pravokotna na vpadno polarizacijo. 
+"Cesto desen presek na sliki \ref{fig:m12-cont-snaps} prikazuje vmesno stanje z defektom mo"ci $-1/2$, kjer zopet manjka komponenta v smeri $y$. 
+
+Na podlagi rezultatov lahko zaklju"cimo, da ``prepovedana'' pravokotna polarizacija manjka le pri na"cinih oz. konfiguracijah polja, kjer polje tvori defekt z enako mo"cjo kot defekt v teko"cem kristalu. 
+S konstantnim laserskim "zarkom dose"zemo se"stevanje obeh propagacijskih na"cinov, ki na dolo"cenih mestih v vlaknu privede do komponente s pravokotno polarizacijo. 
+Tu je pomembno, da pri lastnih na"cinih ni vsa svetloba polarizirana v smeri $x$, le tam, kjer bi zaradi topologije defekta morala biti polarizirana v smeri $y$, intenziteta svetlobe mo"cno pade. 
+Pri konstantnim svetenjem pa se lastni na"cini se"stejejo tako, da imajo ombo"cja, kjer topologije defekta narekuje polarizacijo v smeri $y$, enako intenziteto svetlobe kot okolica. 
+
+\begin{figure}[h]
+ \subfigure{\includegraphics[height=130pt]{g_defect_0}}
+ \subfigure{\includegraphics[height=130pt]{g_defect_-1}}
+ \subfigure{\includegraphics[height=130pt]{g_defect_-2}}
+ \caption{Shematski prikaz defektov z ovojnimi "stevili (od leve proti desni) $0$, $-1/2$ in $-1$. }
 \end{figure}
 
 \section{Zaklju"cek}
