@@ -47,6 +47,34 @@
 
 \maketitle
 
+\begin{abstract}
+V nalogi je opisan razvoj numerične metode za modeliranje sirjenja svetlobe po optično anizotropnem mediju, kot je na primer teko"ci kristal. 
+Postopek reševanja temelji na metodi končnih diferenc v časovni domeni, ki podaja časovne odvode elektromagnetnih polj na podlagi Maxwellovih enačb. 
+Mreža za diskretizacijo je izbrana tako, da sta električno in magnetno polje znana ob različnih časih in na različnih položajih. 
+Za razliko od Yee-jeve mreže, ki je v literaturi najpogosteje uporabljena in privzame diagonalen dielektrični tenzor, so tu vse komponente električnega polja znane na istem mestu. 
+Taksna izbira omogoča računanje z anizotropnim in neuniformnim dielektričnim tenzorjem, hkrati pa je kompatibilna z obstoječimi programi za določanje ureditve tekočega kristala. 
+Priporočljiva krajevna in časovna resolucija mreže je taksna, da je znotraj ene periode valovanja vsaj 10 točk, kar pri optičnih frekvencah pomeni okrog 40 nanometrov oz 0.15 femtosekunde. 
+Pri dosegljivi računalniki zmogljivosti je možno modelirati sistem v obliki kocke s stranico okrog 10 mikrometrov.
+
+Medij je nematski tekoči kristal, ki je modeliran kot enoosno dvolomna snov s krajevno odvisnostjo optične osi. 
+Anizotropni del dielektričnega tenzorja je sorazmeren s tenzorjem ureditvenih parametrov Q v tekočem kristalu. 
+Na enem izmed robov celice je izvor valovanja, ki je lahko poljubne oblike, na vseh ostalih pa Berengerjeva absorbirajoča plast PML. 
+Absorbirajoč robni pogoj z uporabo nefizikalnih materialnih parametrov poskrbi, da na robovih celice ni odboja. 
+Natančnost metode je preizkušena na različnih testnih ureditvah tekočega kristala, za katere poznamo točne rešitve. 
+Preizkusi vključujejo lom in odboj na meji med sredstvi, prepustnost plasti tekočega kristala med prekrižanima polarizatorjema, pojav fotonskega prepovedanega pasu v periodičnih strukturah, ter razcep na redni in izredni žarek v dvolomni snovi.
+
+Uporaba metode na tekočekristalnem vlaknu z radialnim profilom direktorja napove razcep kratkega laserskega sunka v dva lastna načina propagacije. 
+Polarizacija svetlobe v obeh lastnih načinih tvori defekt z enakim ovojnim številom kot defekt v direktorskem polju. 
+Ta povezava med defekti v tekočem kristalu in optičnem polju je preizkušena še na vlaknih z različnimi direktorskimi profili, kjer v vseh obravnavanih primerih najdemo enako ujemanje v ovojnem številu defektov. 
+Iz natančnejšega opisa polja je mogoče izluščiti splošne zakonitosti propagacije laserskih pulzov po linijskih defektih. 
+Pri uporabi stalnega vira laserske svetlobe metoda napove obliko polja, kjer se moč defekta v polarizaciji spreminja s krajem. 
+Na ta način bi lahko generirali zapletena svetlobna polja z vsiljevanjem ureditve tekočemu kristalu.
+\end{abstract}
+
+\newpage
+\tableofcontents
+
+\newpage
 \section{Uvod} % 1.5 - 3 strani
 
 
