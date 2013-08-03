@@ -12,6 +12,7 @@
 \usepackage{subfigure}
 \usepackage{comment}
 \usepackage[smaller]{acronym}
+\usepackage[percent]{overpic}
 
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -1027,7 +1028,10 @@ Frekvenca svetlobe je nespremenjena in zato enaka po celotnem vlaknu, opazimo pa
 Trenutne slike elektri"cnega polja znotraj vsakna so prikazane na sliki \ref{fig:p1-cont-snaps}. 
 
 \begin{figure}[h]
- \includegraphics[width=\textwidth]{./Rezultati/p1_cont_snaps}
+\centering
+  \begin{overpic}[width=\textwidth]{./Rezultati/p1_cont_snaps}
+     \put(3,3){\includegraphics[height=2.5cm]{g_defect_2}}  
+  \end{overpic}
  \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna z radialnim direktorskim profilom ob stalni osvetlitvi. Vidno je izmenjevanje konfiguracij z ovojnima "steviloma $s=0$ in $s=+2$.  }
  \label{fig:p1-cont-snaps}
 \end{figure}
@@ -1053,7 +1057,10 @@ V tem primeru polarizacija svetlobe prehaja med na"cinoma z ovojnim "stevilom $0
 Primer svetlobnega polja v tak"snem vlaknu je na sliki \ref{fig:m1-cont-snaps}
 
 \begin{figure}[h]
- \includegraphics[width=\textwidth]{./Rezultati/m1_cont_snaps}
+
+  \begin{overpic}[width=\textwidth]{./Rezultati/m1_cont_snaps}
+     \put(3,3){\includegraphics[height=2.5cm]{g_defect_-2}}  
+  \end{overpic}
  \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna s hiperboli"cnim direktorskim profilom ob stalni osvetlitvi. Vidno je izmenjevanje konfiguracij z ovojnima "steviloma $s=0$ in $s=-2$.  }
  \label{fig:m1-cont-snaps}
 \end{figure}
@@ -1069,7 +1076,10 @@ Nazadnje sem simulacijo ponovil tudi z vlaknom, v katerem ima ureditev teko"ci k
 Tak"sen primer je "se posebej zanimiv, ker imata lastna na"cina le eno simetrijsko ravnino, in sicer tisto, ki vsebuje polarizacijo vpadne svetlobe. 
 
 \begin{figure}[h]
- \includegraphics[width=\textwidth]{./Rezultati/m12_cont_snaps}
+
+  \begin{overpic}[width=\textwidth]{./Rezultati/m12_cont_snaps}
+     \put(3,3){\includegraphics[height=2.5cm]{g_defect_-1}}  
+  \end{overpic}
  \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna s hiperboli"cnim direktorskim profilom ob stalni osvetlitvi. Vidno je izmenjevanje konfiguracij z ovojnima "steviloma $s=0$ in $s=-1$.  }
  \label{fig:m12-cont-snaps}
 \end{figure}

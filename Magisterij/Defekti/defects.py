@@ -1,5 +1,5 @@
 from PyQt4.QtCore import QSize, Qt, QPointF
-from PyQt4.QtGui import QApplication, QPainter, QPen
+from PyQt4.QtGui import QApplication, QPainter, QPen, QBrush
 from PyQt4.QtSvg import QSvgGenerator
 
 import random
@@ -55,6 +55,12 @@ def draw_image(name, q):
 
   painter = QPainter()
   painter.begin(image)
+  painter.setBrush(Qt.white)
+  painter.setPen(Qt.NoPen)
+  painter.drawEllipse(QPointF(IMAGE_SIZE/2, IMAGE_SIZE/2), IMAGE_SIZE/2, IMAGE_SIZE/2)
+  painter.setBrush(QBrush())
+  painter.setPen(QPen())
+  
   draw_defect(painter, q)
   draw_circle(painter, q)
   painter.end()
