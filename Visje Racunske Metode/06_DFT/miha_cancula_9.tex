@@ -1,0 +1,105 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{bbold}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+%opening
+  
+\title{Problem elektronske strukture: metode povprečnega polja in gostotnih funkcionalov}
+\author{Miha \v Can\v cula}
+
+\newcommand{\uvec}[1]{\ensuremath{\underline{#1}}}
+\newcommand{\bb}{
+  \ensuremath{b_1 b_2 \ldots b_n}
+}
+\newcommand{\psibb}{
+  \ensuremath{\psi_{\bb}}
+}
+
+\begin{document}
+
+\maketitle
+
+\section{Algoritem}
+
+Metoda \textsc{dft} je sestavljena iz hkratnega re"sevanje dveh ena"cb. 
+Prva je stacionarna Schr\"odingerjeva ena"cba, ki podaja valovno funkcijo delca v dolo"cene potencialu. 
+Druga ena"cba je Poissonova, ki ob dani gostoti naboja poda elektri"cni potencial.
+"Ce so obravnavani delci nabiti, kot na primer elektroni, sta ena"cbi sklopljeni. 
+
+Ena"cbi re"sujemo iterativno, tako od ob vsakem koraku najprej najdemo valovno funkcijo, ki ustreza trenutnemu pribli"zku za potencial. 
+Iz valovne funkcijo z re"sevanjem Poissonove ena"cbe izra"cunamo elektri"cni potencial. 
+
+\section{Vodikov atom}
+
+Vodikov atom lahko slu"zi za preverjanje posameznega re"sevanja vsake izmed obeh ena"cbe. 
+Edini elektron v vodikovem atomu namre"c ne interagira sam s sabo, ampak se giblje le v potencialu jedra, ki je znan in konstanten. 
+
+Za re"sevanje Schr\"odingerjeve ena"cbe sem izbral strelsko metodo z bisekcijo, za numeri"cno integracijo pa metodo Numerova. 
+Ta kombinacija se je izkazala za primerno v prvi nalogo pri tem predmetu. 
+Metoda posku"sa razli"cne vrednosti za energijo elektronskega stanja, dokler ne zadosti robnemu pogoju, da je elektron vezan, torej da gre $u(r)$ za velike $r$ proti 0. 
+
+Za re"sitev problema vodikovega atoma moramo metodo pognati le enkrat, saj se potencial ne spreminja. 
+Na ta na"cin lahko preverimo pravilnost re"sevanja Schr\"odingerjeve ena"cbe. 
+
+\begin{figure}[H]
+ \caption{Osnovno stanje elektrona v vodikovem atomu}
+ \label{fig:vodik-sch}
+\end{figure}
+
+Ko imamo podano osnovno stanje elektrona v vodikovem atomu lahko izra"cunamo tudi elektri"cni potencial elektrona. 
+Tak"sen potencial bi "cutil testni naboj, "ce bi ga pribli"zali atomu. 
+Ker je valovna funkcija in s tem gostota naboja sferi"cno simetri"cna, je tak"sen tudi potencial, zato lahko opazujemo le odvisnost $V(r)$. 
+
+\begin{figure}[H]
+ \caption{Elektri"cni potencial elektrona v vodikovem atomu}
+ \label{fig:vodik-potencial}
+\end{figure}
+
+\section{Helijev atom}
+
+V helijevem atomu sta dva elektrona, ki interagirata med seboj. 
+Za poenostavitev lahko predpostavimo, da sta krajevna dela valovne funkcije enaka za oba elektrona. 
+Schr\"odingerjevo ena"cbo moramo tako re"sevati le enkrat na vsakem koraku. 
+
+Vsak elektron "cuti elektri"cni potencial jedra in potencial drugega elektrona. 
+S privzetkom povpre"cnega polja, da sta valovni funkciji in s tem gostoti naboja obeh elektronov enaki, sta enaka tudi potenciala obeh elektronov. 
+Zato lahko tudi Poissonovo ena"cbe re"sujemo le enkrat na vsakem koraku. 
+
+Metoda povpre"cnega polja zanemari korelacije med elektronoma. 
+Pri izra"cunu potenciala, ki ga "cuti vsak izmed elektronov, zato dodamo dodaten "clen, ki opi"se te korelacije po Kohn-Shamovem modelu. 
+Celoten potencial sedaj sestavljajo trije prispevki:
+
+\begin{enumerate}
+ \item Potencial jedra, $V_j = -\frac{2}{r}$
+ \item Potencial drugega elektron, $V_{HF} = \frac{2U(r)}{r}$
+ \item Izmenjalno korelacijski potencial, ki opi"se kvante korelacije med elektronoma, $V_{xc} = -\left( \frac{3u^2(r)}{2\pi^2r^2} \right)^{1/3}$. 
+\end{enumerate}
+
+Prvi prispevek je konstanten, drugi prispevek izra"cunamo z re"sevanjem Poissonove ena"cbe in poznavanjem valovne funkcije $u(r)$, tretjega pa neposredno iz valovne funkcije. 
+Vsaka iteracija metode tako vsebuje tri dele:
+
+\begin{enumerate}
+ \item Re"sevanje Poissonove ena"cbe, dobimo potencialu $V_{HF}$. 
+ \item Potencialu pri"stejemo prispevek jedra in korelacij.
+ \item Re"sevanje Schr\"odingerjeve ena"cbe, dobimo nov pribli"zek za valovno funkcijo elektronov. 
+\end{enumerate}
+
+Iteracijo nadaljujemo, dokler se energija lastnega stanja ne neha spreminjati. 
+
+\end{document}
+
