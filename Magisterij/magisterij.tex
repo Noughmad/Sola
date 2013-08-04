@@ -744,6 +744,7 @@ Slika elektri"cnega polja ob prehodu meje v bli"zini Brewsterjevega kota je na s
 
 \begin{figure}[h]
  \centering
+ \vspace{-1.4cm}
  \input{g_refraction_test}
  \vspace{-1.7cm}
  \caption{Preizkus veljavnosti lomnega zakona ob prehodu valovanja v medij z druga"cnim lomnim koli"cnikom}
@@ -799,7 +800,6 @@ Temu pojavu pravimo prepovedani pas \angl{band gap} in je soroden elektronski en
 Za prisotnost fotonskega prepovedanega pasu pa potrebujemo kristal oz. periodi"cno strukturo, kjer je perioda primerljiva z valovno dol"zino svetlobe. 
 Fotonsko energijsko re"zo za vidno svetlobo zato opazimo pri koloidnih kristali, ki imajo periodo okrog 1 $\mu$m. 
 
-
 "Sirina in oblika prepovedanega pasu sta odvisni od obeh lomnih koli"cnikov, periode modulacije in velikosti kristala. 
 Za preverjanje metode sem modeliral kristal, kjer se izmenjujejo plasti z izotropno dielektri"cnostjo $\varepsilon_1$ in $\varepsilon_2$. 
 Tak"sna struktura je prikazana na sliki \ref{fig:periodic-structure}. 
@@ -829,7 +829,7 @@ Zgornja meja je mo"cneje odvisna od razlike v dielektri"cnosti\cite{joannopoulos
 Za modeliranje tak"snega kristala sem uporabil periodi"cne robne pogoje v smereh $x$ in $y$, v smeri $z$ pa celico dol"zine 1024 enot z 20 enotami absorbirajo"ce plasti na vsakem koncu. 
 Grafa prepustnosti kristalov z razli"cnimi izbirami za dielektri"cnosti sta na sliki \ref{fig:test-periodic}. 
 
-\begin{figure}[!h]
+\begin{figure}[!htbp]
  \input{g_test_periodic}
  \caption{Rezultati preizkusa s periodi"cno modulacijo lomnega koli"cnika}
  \label{fig:test-periodic}
@@ -840,6 +840,12 @@ Metoda torej pravilno napove polo"zaj in "sirino prepovedanih pasov.
 Zlasti pri veliki razliki v dielektri"cnosti plasti meja prepovedanega pasu ni ostra, ampak krivulja postane zaobljena. 
 To je posledica kon"cne velikosti sistema, saj so teoreti"cni izra"cuni napravljeni za neskon"cen kristal, z metodo \acs{FDTD} pa lahko modeliramo le kon"cnega. 
 Kljub temu pa metoda da kvalitativno in kvantitativno pravilne rezultate za pojav fotonskega prepovedanega pasu. 
+
+Periodi"cna modulacija lomnega koli"cnika je pomembna za tvorbo metamaterialov\cite{metamaterials}. 
+To so umetne snovi z nenavadnimi fizikalnimi lastnosti, ki jih ne najdemo v naravi. 
+Najve"c pozornosti na podro"cju metamaterialov je posve"cene snovem z negativnim lomnim koli"cnikom pri dolo"ceni valovni dol"zini svetlobe. 
+Tak"sni materiali so sestavljeni iz periodi"cnih struktur, manj"sih od valovne dol"zine svetlobe. 
+Dobro ujemanje med rezultati numeri"cne metode in napovedjo potrjuje, da je z isto metodo mogo"ce raziskovati tudi opti"cne lastnosti metamaterialov. 
 
 \subsection{Dvolomno vlakno}
 V magistrskem delu sem preu"ceval "sirjenje svetlobe po cilindri"cnih vlaknih z razli"cnimi profili direktorja. 
@@ -853,7 +859,7 @@ Simuliral sem zelo kratek laserski pulz, ki je trajal le nekaj valovnih dol"zin 
 Na ta na"cin sta se obe komponenti znotraj vlakna jasno lo"cili in sem ju lahko primerjal. 
 Ker se sunek hitro razcepi je tak"sen postopek primeren za iskanje lastnih na"cinov "sirjenja po valovodih\cite{taflove}. 
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
  \centering
  \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/0_mode1}}
  \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/0_mode2}}
@@ -878,7 +884,7 @@ V literaturi\cite{taflove} priporo"cajo poten"cno nara"s"canje izgub, $\sigma \p
 Za nekaj vrednosti $p$ sem izra"cunal odbojnost robne plasti z debelino 10 enot diskretizacije. 
 Rezultati so prikazani na sliki \ref{fig:test-absorption}. 
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
  \input{g_test_absorption}
  \caption{Odbojnost robne plasti debeline 10 enot pri razli"cnih profilih elektri"cnih in magnetnih izgub $\sigma$. Najbolje se izka"ze material, kjer izgube nara"s"cajo kvadratno z oddaljenostjo od roba celice ($p=2$). 
  \todo{Uporabi tako debelino, da bodo krivulje bolj razli"cne}
@@ -892,6 +898,7 @@ Pri profilih, kjer imamo nezveznost v izgubah ali v njihovem odvodu ($p<2$) pa o
 Pri ve"cjih potencah pa lahko izgube "se pove"camo in s tem dose"zemo ni"zjo odbojnost plasti. 
 V zgornjem primeru se za najbolj"si profil izka"ze kvadratno nara"s"canje absorpcije, zato sem za vse nadaljnje ra"cune uporabil tak"sno plast. 
 
+\newpage
 \section{Rezultati}
 
 \subsection{Radialni profil direktorja}
@@ -901,7 +908,7 @@ Najprej sem ugotavljal, kako defekt v sredici vlakna vpliva na "sirjenje svetlob
 
 Vrednosti parametrov, ki sem jih uporabil pri simulaciji, so na"steti v tabeli \ref{tab:parametri}. 
 
-\begin{table}[h]
+\begin{table}[!htbp]
 \centering
  \begin{tabular}{|c|c|}
   \hline
@@ -922,7 +929,7 @@ Podobno kot pri preizku"sanju z uniformnim direktorjem sem najprej v vlakno posl
 Zaradi dvolomnosti teko"cega kristala sem spet opazil razcep sunka na dve komponenti oz. dva lastna na"cina "sirjenja svetlobe. 
 Ker pa je direktorsko polje singularno, sta tudi polarizaciji obeh na"cinov singularni, kot prikazuje slika \ref{fig:pulse-p1-mode}. 
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
  \centering
  \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/p1_mode1}}
  \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/p1_mode2}}
@@ -953,7 +960,7 @@ Druga"cnih direktorskih polj, na primer tak"snega s hiperboli"cnim defektom, pa 
 Kratek laserski sunek se podobno kot pri radialnem profilu razdeli na dva na"cina, ki sta skladna s simetrijo direktorja. 
 Oba na"cina sta prikazana na sliki \ref{fig:pulse-m1-mode}. 
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
  \centering
  \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/m1_mode1}}
  \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/m1_mode2}}
@@ -976,7 +983,7 @@ Ti so "se posebej zanimivi za eksperimentalno delo, saj se zaradi ni"zje energij
 Simuliral sem "sirjenje svetlobe skozi teko"cekristalno vlakno, ki ima v osi linijski defekt z ovojnim "stevilom $s \pm 1/2$. 
 Izkazalo se je, da se tudi v tem primeru laserski sunek razcepi na dva dela, ki ustrezata redni in izredni polarizaciji. 
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
  \centering
  \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/p12_mode1}}
  \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/p12_mode2}}
@@ -984,7 +991,7 @@ Izkazalo se je, da se tudi v tem primeru laserski sunek razcepi na dva dela, ki 
  \label{fig:pulse-p12-mode}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
  \centering
  \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/m12_mode1}}
  \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/m12_mode2}}
@@ -1027,7 +1034,7 @@ Pri enakomernem laserskem "zarku je svetloba v vlaknu kombinacija obeh lastnih n
 Frekvenca svetlobe je nespremenjena in zato enaka po celotnem vlaknu, opazimo pa mo"cno krajevno odvisnost oblike polja. 
 Trenutne slike elektri"cnega polja znotraj vsakna so prikazane na sliki \ref{fig:p1-cont-snaps}. 
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
 \centering
   \begin{overpic}[width=\textwidth]{./Rezultati/p1_cont_snaps}
      \put(3,3){\includegraphics[height=2.5cm]{g_defect_2}}  
@@ -1036,7 +1043,7 @@ Trenutne slike elektri"cnega polja znotraj vsakna so prikazane na sliki \ref{fig
  \label{fig:p1-cont-snaps}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
  \subfigure{\includegraphics[height=130pt]{g_defect_0}}
  \subfigure{\includegraphics[height=130pt]{g_defect_2}}
  \subfigure{\includegraphics[height=130pt]{g_defect_4}}
@@ -1056,8 +1063,7 @@ Podobne obna"sanje opazimo tudi v vlakni s hiperboli"cnim direktorskim profilom,
 V tem primeru polarizacija svetlobe prehaja med na"cinoma z ovojnim "stevilom $0$ in $-2$, spet pa so opazna tudi vmesna stanja z ovojnim "stevilom $-1$. 
 Primer svetlobnega polja v tak"snem vlaknu je na sliki \ref{fig:m1-cont-snaps}
 
-\begin{figure}[h]
-
+\begin{figure}[!htbp]
   \begin{overpic}[width=\textwidth]{./Rezultati/m1_cont_snaps}
      \put(3,3){\includegraphics[height=2.5cm]{g_defect_-2}}  
   \end{overpic}
@@ -1065,7 +1071,7 @@ Primer svetlobnega polja v tak"snem vlaknu je na sliki \ref{fig:m1-cont-snaps}
  \label{fig:m1-cont-snaps}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
  \subfigure{\includegraphics[height=130pt]{g_defect_0}}
  \subfigure{\includegraphics[height=130pt]{g_defect_-2}}
  \subfigure{\includegraphics[height=130pt]{g_defect_-4}}
@@ -1075,12 +1081,12 @@ Primer svetlobnega polja v tak"snem vlaknu je na sliki \ref{fig:m1-cont-snaps}
 Nazadnje sem simulacijo ponovil tudi z vlaknom, v katerem ima ureditev teko"ci kristal defekt s polcelo mo"cjo. 
 Tak"sen primer je "se posebej zanimiv, ker imata lastna na"cina le eno simetrijsko ravnino, in sicer tisto, ki vsebuje polarizacijo vpadne svetlobe. 
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
 
   \begin{overpic}[width=\textwidth]{./Rezultati/m12_cont_snaps}
      \put(3,3){\includegraphics[height=2.5cm]{g_defect_-1}}  
   \end{overpic}
- \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna s hiperboli"cnim direktorskim profilom ob stalni osvetlitvi. Vidno je izmenjevanje konfiguracij z ovojnima "steviloma $s=0$ in $s=-1$.  }
+ \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna z direktorskim profilom z defektom mo"ci $-1/2$ ob stalni osvetlitvi. Vidno je izmenjevanje konfiguracij z ovojnima "steviloma $s=0$ in $s=-1$.  }
  \label{fig:m12-cont-snaps}
 \end{figure}
 
@@ -1091,11 +1097,11 @@ Tak"sna polarizacija je v vlaknu ``prepovedana'', saj je pravokotna na vpadno po
 
 Podobno velja za defekt z ovojnim "stevilom $+1/2$, ki je prikazan na sliki \ref{fig:p12-cont-snaps}. 
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
   \begin{overpic}[width=\textwidth]{./Rezultati/p12_cont_snaps}
      \put(3,3){\includegraphics[height=2.5cm]{g_defect_1}} 
   \end{overpic}
- \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna s hiperboli"cnim direktorskim profilom ob stalni osvetlitvi. Vidno je izmenjevanje konfiguracij z ovojnima "steviloma $s=0$ in $s=+1$.  }
+ \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna z direktorskim profilom z defektom mo"ci $+1/2$ ob stalni osvetlitvi. Vidno je izmenjevanje konfiguracij z ovojnima "steviloma $s=0$ in $s=+1$.  }
  \label{fig:p12-cont-snaps}
 \end{figure}
 
@@ -1108,7 +1114,7 @@ S konstantnim laserskim "zarkom dose"zemo se"stevanje obeh propagacijskih na"cin
 Tu je pomembno, da pri lastnih na"cinih ni vsa svetloba polarizirana v smeri $x$, le tam, kjer bi zaradi topologije defekta morala biti polarizirana v smeri $y$, intenziteta svetlobe mo"cno pade. 
 Pri konstantnim svetenjem pa se lastni na"cini se"stejejo tako, da imajo ombo"cja, kjer topologije defekta narekuje polarizacijo v smeri $y$, enako intenziteto svetlobe kot okolica. 
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
  \subfigure{\includegraphics[height=130pt]{g_defect_0}}
  \subfigure{\includegraphics[height=130pt]{g_defect_-1}}
  \subfigure{\includegraphics[height=130pt]{g_defect_-2}}
@@ -1138,7 +1144,6 @@ Dvolomnost teko"cega kristala je odvisna od stopnje reda $S$ in s tem tudi od te
 
 \section{Zaklju"cek}
 
-\newpage
 \bibliographystyle{zumer}
 \bibliography{magisterij}
 
