@@ -44,6 +44,16 @@ Druga ena"cba je Poissonova, ki ob dani gostoti naboja poda elektri"cni potencia
 Ena"cbi re"sujemo iterativno, tako od ob vsakem koraku najprej najdemo valovno funkcijo, ki ustreza trenutnemu pribli"zku za potencial. 
 Iz valovne funkcijo z re"sevanjem Poissonove ena"cbe izra"cunamo elektri"cni potencial. 
 
+Potencial jedra je sferi"cno simetri"cna, zato so tak"sna tudi osnovna elektronska stanja. 
+Valovna funkcija $\psi(\vec r)$ in elektri"cni potencial $V(\vec r)$ sta tako le funkciji oddaljenosti od jedra $r$. 
+Za la"zje ra"cunanje uporabimo "se substituciji
+\begin{align}
+ \psi(r) &= u(r)/r \\
+ V(r) &= NU(r)/r
+\end{align}
+kjer je $N$ naboj jedra in je enak "stevilu elektronov.
+S tak"sno substitucijo poenostavimo ena"cbe in se znebimo divergence potenciala v izhodi"s"cu. 
+
 \section{Vodikov atom}
 
 Vodikov atom lahko slu"zi za preverjanje posameznega re"sevanja vsake izmed obeh ena"cbe. 
@@ -57,6 +67,7 @@ Za re"sitev problema vodikovega atoma moramo metodo pognati le enkrat, saj se po
 Na ta na"cin lahko preverimo pravilnost re"sevanja Schr\"odingerjeve ena"cbe. 
 
 \begin{figure}[H]
+\input{g_test_vodik}
  \caption{Osnovno stanje elektrona v vodikovem atomu}
  \label{fig:vodik-sch}
 \end{figure}
@@ -66,9 +77,13 @@ Tak"sen potencial bi "cutil testni naboj, "ce bi ga pribli"zali atomu.
 Ker je valovna funkcija in s tem gostota naboja sferi"cno simetri"cna, je tak"sen tudi potencial, zato lahko opazujemo le odvisnost $V(r)$. 
 
 \begin{figure}[H]
+\input{g_test_vodik_pot}
  \caption{Elektri"cni potencial elektrona v vodikovem atomu}
  \label{fig:vodik-potencial}
 \end{figure}
+
+Tako valovna funkcija kot potencial elektrona v vodikovem atomu se odli"cno ujemata s teoreti"cno napovedjo. 
+Metoda izra"cuna tudi pravilno vrednost za energijo osnovnega stanja, ki je enaka $-1/2$. 
 
 \section{Helijev atom}
 
@@ -87,7 +102,7 @@ Celoten potencial sedaj sestavljajo trije prispevki:
 \begin{enumerate}
  \item Potencial jedra, $V_j = -\frac{2}{r}$
  \item Potencial drugega elektron, $V_{HF} = \frac{2U(r)}{r}$
- \item Izmenjalno korelacijski potencial, ki opi"se kvante korelacije med elektronoma, $V_{xc} = -\left( \frac{3u^2(r)}{2\pi^2r^2} \right)^{1/3}$. 
+ \item Izmenjalno-korelacijski potencial, ki opi"se kvante korelacije med elektronoma, $V_{xc} = -\left( \frac{3u^2(r)}{2\pi^2r^2} \right)^{1/3}$. 
 \end{enumerate}
 
 Prvi prispevek je konstanten, drugi prispevek izra"cunamo z re"sevanjem Poissonove ena"cbe in poznavanjem valovne funkcije $u(r)$, tretjega pa neposredno iz valovne funkcije. 
@@ -100,6 +115,31 @@ Vsaka iteracija metode tako vsebuje tri dele:
 \end{enumerate}
 
 Iteracijo nadaljujemo, dokler se energija lastnega stanja ne neha spreminjati. 
+Kon"cno stanje je prikazano na spodnjih slikah. 
+
+\begin{figure}[H]
+\input{g_helij_e}
+ \caption{Osnovno stanje elektrona v helijevem atomu}
+ \label{fig:helij-sch}
+\end{figure}
+
+Osnovno stanje elektrona v helijevem atomu je bolj lokalizirano okrog jedra kot v vodikovem atomu. 
+To je konsistentno s podatki\cite{wiki:radius}. 
+Iz podane valovne funkcije lahko izra"cunamo energijo osnovnega stanja, ki pa ni kar dvakratnik energije posameznega elektrona. 
+V izbranih brezdimenzijskih enotah je izra"cunana energija posameznega elektrona enaka $\varepsilon = -0,\!516809$, skupna energija pa $E = -2,\!72289$. 
+
+\begin{figure}[H]
+\input{g_helij_pot}
+ \caption{Elektri"cni potencial elektrona v helijevem atomu}
+ \label{fig:vodik-potencial}
+\end{figure}
+
+Podobno opazimo tudi pri elektri"cnem potencilu, ki se zasiti pri manj"si oddaljenosti od jedra kot pri vodiku. 
+
+\begin{thebibliography}{6}
+ \bibitem{wiki:radius} Atomic radius -- Wikipedia \\ \url{http://en.wikipedia.org/wiki/Atomic_radius#Calculated_atomic_radii}
+\end{thebibliography}
+
 
 \end{document}
 
