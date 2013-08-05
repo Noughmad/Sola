@@ -206,8 +206,8 @@ Ra"cun lastnih vektorjev ne lo"ci med vektorji, ki se razlikujejo le za predznak
 
 Ureditev teko"cega kristala lahko opi"semo s tenzorskim poljem $Q_{ij}(\vec r)$, ki podaja tenzor ureditvenih parametrov v vsaki to"cki. 
 Skupno prosto energijo lahko izrazimo kot funkcional polja $Q_{ij}(\vec r)$, ki pa je odvisen od teko"cekristalne mezofaze. 
-V tej nalogi obravnavamo le dve izmed mnogih teko"cekritalnih mezofaz, in sicer nematsko in holesteri"cno. 
-K prosti energiji teh dveh mezofaz prispevajo elasti"cne deformacije, stopnja reda in dielektri"cna interakcija z elektri"cnim poljem. 
+V tej nalogi obravnavamo le nematsko mezofazo, ki je najpogostej"sa in najbolj enostavna. 
+K prosti energiji nematika prispevajo elasti"cne deformacije, stopnja reda in dielektri"cna interakcija z elektri"cnim poljem. 
 Drugi prispevki, npr. magnetna interakcija in fleksoelektri"cnost, so pri obi"cajno uporabljanih snoveh in opti"cnem polju zanemarljivi.
 
 \begin{figure}[h]
@@ -535,7 +535,7 @@ Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj
 
 \section{Numeri"cna metoda}
 
-Za samo ra"cunanje sem implementiral metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}}\cite{taflove}. 
+Za samo ra"cunanje smo implementirali metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}}\cite{taflove}. 
 Pri tej metodi "casovno propagiramo elektri"cno in magnetno polje v vsaki to"cki po Maxwellovih ena"cbah. 
 
 Pri numeri"cnem re"sevanju potrebujemo le zadnji dve ena"cbi, ki vsebujeta "casovne odvode polj. 
@@ -558,9 +558,10 @@ V ena"cbah nastopajo le prvi odvodi, ki jih za numeri"cno ra"cunanje nadomestimo
 Znotraj teko"cega kristala lahko elektri"cno prevodnost zanemarimo in izpustimo "clen $\sigma \vec E$. 
 Prevodnost pa je pomembna v robni plasti, kjer "zelimo absorpcijo valovanja. 
 
-Pri ra"cunih sem upo"steval le dielektri"cno anizotropijo teko"cega kristala, magnetno pa zanemaril. 
+Pri ra"cunih smo upo"stevali le dielektri"cno anizotropijo teko"cega kristala, magnetno pa zanemarili. 
 Zaradi simetrije Maxwellovih ena"cb bi na enak na"cin kot dielektri"cnost $\varepsilon$ lahko upo"steval tudi magnetno permeabilnost $\mu$. 
 Podobno bi lahko poleg elektri"cne prevodnosti $\sigma$ upo"steval magnetne izgube $\sigma^*$. 
+V ve"cini teko"cih kristalov je pri opti"cnih frekvencah magnetna anizotropija zanemarljiva in lahko $\mu$ postavimo na 1. 
 
 \subsection{Mre"za}
 
@@ -571,14 +572,15 @@ Zaradi obeh opisanih lastnosti lahko dvignemo red metode, in s tem izbolj"samo n
 
 Obi"cajne implementacije metode \acs{FDTD} gredo "se korak dlje, tako da so tudi posamezne komponente elektri"cnega in magnetnega polja definirane na razli"cih to"ckah\cite{yee, yee-lattice}.
 Tak"sno mre"zo je predlagal Yee in izkori"s"ca dejstvo, da pri "casovnem odvodu vsake komponente posameznega polja nastopata le krajevna odvoda ostalih dveh komponent drugega polja. 
-Z ustrezno izbiro to"ck, kjer so definirane posamezne komponente, so vsi krajevni odvodi izra"cunani ravno na sredini med ustreznima to"ckama mre"ze. 
+Z ustrezno izbiro to"ck, kjer so definirane posamezne komponente, vse krajevni odvode potrebujemo ravno na sredini med ustreznima to"ckama mre"ze. 
 Za u"cinkovito delovanje pa tak"sna mre"za zahteva, da je dielektri"cni tenzor $\eps$ diagonalen, njegove komponente pa morajo biti znane na razli"cnih to"ckah mre"ze. 
 V praznem prostoru ali v trdnih kristalih temu pogoju lahko zadostimo, po mo"znosti z vrtenjem koordinatnega sistema.
 
 V teko"cih kristalih je dielektri"cni tenzor anizotropen in se mo"cno spreminja s krajem. 
 Zaradi krajevnega spreminjanja ne moremo tako obrniti koordinatnega sistema, da bi bil tenzor diagonalen v vseh to"ckah. 
 Poleg tega obstoje"ci programi za modeliranje ureditve teko"cih kristalov podajo vse komponente dielektri"cnega tenzorja na istem mestu\cite{ravnik-zumer-ldg}.
-Odlo"cil sem se za srednjo pot, kjer sta polji $\E$ in $\B$ definirani ob razli"cnih "casih in na razli"cnih to"ckah mre"ze, vse tri komponente vsakega izmed polj pa so podane na istem mestu. 
+Ta omejitev mo"cno zmanj"sa prednosti Yeejeve mre"ze, zato smo raje uporabili svojo. 
+Odlo"cili smo se za srednjo pot, kjer sta polji $\E$ in $\B$ definirani ob razli"cnih "casih in na razli"cnih to"ckah mre"ze, vse tri komponente vsakega izmed polj pa so podane na istem mestu. 
 Obe mre"zi prikazuje slika \ref{fig:lattice}. 
 
 \begin{figure}[h]
@@ -608,6 +610,7 @@ Obe mre"zi prikazuje slika \ref{fig:lattice}.
 \end{figure}
 
 Za ra"cun potrebujemo "se inverz dielektri"cnega tenzorja, ki pa se med propagacijo svetlobe ne spreminja, zato ga lahko izra"cunamo predhodno. 
+Lahko neposredno predpi"semo vse komponente tenzorja, bolj priro"cno pa je podati le direktor in stopnjo reda, iz katerih nato izra"cunamo dielektri"cni tenzor in njegov inverz. 
 Pomembno je le, da je znan na istem mestu kot $\E$ (rde"ce to"cke na sliki \ref{fig:lattice}), vendar ob "casu, ko je podan $\B$. 
 
 \subsection{Ena"cbe}
@@ -647,12 +650,13 @@ Na ta na"cin je "stevilo ra"cunskih operacij blizu tistemu, ki bi ga potrebovali
 
 \subsection{Izvor valovanja}
 
-V ena"cbah (\ref{eq:maxwell-base}) ne nastopajo izvori valovanja, zato jih moramo moramo modelirati z robnimi pogoji. 
+V ena"cbah (\ref{eq:maxwell-base}) ne nastopajo izvori valovanja, zato jih moramo modelirati z robnimi pogoji. 
 To je v skladu z eksperimenti, saj svetloba pride od zunaj, zanima pa nas predvsem njeno "sirjenje skozi snov. 
 
 Poljubno vpadno valovanje lahko modeliramo z robnimi pogoji, "ce izkoristimo linearnost Maxwellovih ena"cb. 
 Elektri"cno in magnetno polje lahko namre"c razcepimo na vsoto vpadnega in sipanega valovanja\cite{taflove}. 
 Tak"sen razcep polja je mo"zen le, "ce je "sirjenje vpadnega valovanja dobro znano. 
+To velja za ravne valove, pa tudi za bolj zapletene primere kot so Laguerre-Gaussovi snopi. 
 Mre"zo zato razdelimo na dve obmo"cji, v notranjem obmo"cju ra"cunamo s skupnim poljem, v zunanjem pa polje razcepimo in shranjujemo le sipani del.
 Opti"cno anizotropna snov mora biti v celoti v notranjem obmo"cju, izvor valovanja modeliramo na prehodu med obmo"cjema. 
 
@@ -667,18 +671,19 @@ Delitev na notranje in zunanje obmo"cje je u"cinkovita, "ce se efektivni lomni k
 V tem primeru je fazna razlika na zadnji stranici notrenjega obmo"cja dovolj majhna, da pretvorba na sipano valovanje odstrani ve"cino valovanja. 
 "Ce pa je fazna razlika primerljiva s $\pi/2$ ali ve"cja, lahko odstranitev vpadnega vala celo pove"ca amplitudo valovanja. 
 To se zgodi npr. v teko"cekristalnem valovodu, ki je mnogo dalj"si od valovne dol"zine svetlobe. 
-Takrat je bolj u"cinkovito upo"stevati izvor valovanja le na vpadni strani. 
+Takrat je bolj u"cinkovito upo"stevati izvor valovanja le na vpadni strani, na drugi strani pa postavimo plast, ki absorbira valovanje. 
 
-Delitev na zunanje in notranje obmo"cji, ki je prikazana na levi strani slike \ref{fig:wave-source-regions}, sem uporabil le s preprostimi primeri za preverjanje delovanja metode. 
-Vse ostale izra"cune sem izvajal z delitvijo na desni strani. 
+Delitev na zunanje in notranje obmo"cji, ki je prikazana na levi strani slike \ref{fig:wave-source-regions}, smo uporabili le s preprostimi primeri za preverjanje delovanja metode. 
+Vse ostale izra"cune smo izvedli z delitvijo na desni strani. 
 Na sliki je velikost obmo"cja \textbf{A} pretirana zaradi preglednosti. 
 V vseh primerih je bila debelina obmo"cja \textbf{A} enaka dva koraka mre"ze. 
 
 \subsection{Robni pogoji}
 
 "Ce imamo na robu celice Dirichletov, Neumannov ali me"sani robni pogoj, se bo celotno valovanje odbilo in vrnilo v celico. 
-Tega si ne "zelimo, pri izvedbi ekperimentov obi"cajno svetloba najprej preide skozi vzorec, nato pa jo zajamemo in preu"cimo. 
-To lahko simuliramo z uporabo absorbirajo"cega robnega pogoja \angl{\ac{ABC}}. 
+Tega si ne "zelimo, saj pri izvedbi ekperimentov obi"cajno svetloba najprej preide skozi vzorec, nato pa jo zajamemo in preu"cimo. 
+Za modeliranje tak"snega eksperimenta bi morali uporabiti zelo veliko prazno obmo"cje, v katerega bi se svetloba "sirila, kar pa mo"cno upo"casni delovanje metode. 
+"Sirjenje v prazen prostor brez odboja pa lahko simuliramo z uporabo absorbirajo"cega robnega pogoja \angl{\ac{ABC}}. 
 Obstaja ve"c razli"cnih implementacij absorbirajo"cih robnih pogojev, v zadnjem "casu se najve"c uporablja t.i. popolnoma ujemajo"ca plast \angl{\ac{PML}}\cite{taflove,berenger}. 
 
 Material v plasti \acs{PML} zagotavlja eksponentno pojemanje vpadnega vala, neodvisno od njegove frekvence in smeri "sirjenja. 
@@ -718,11 +723,11 @@ Primer postavitve plasti \acs{PML}, ki zadosti temu pogoju, je na sliki \ref{fig
 \section{Preverjanje metode}
 
 \subsection{Prazen prostor}
-Prvi preizkus metode, ki sem ga opravil, je "sirjenje svetlobe skozi prazen prostor. 
-Prazen prostor sem modeliral kot snov, kjer je dielektri"cni tenzor uniformen in izotropen. 
+Prvi preizkus metode, ki smo ga opravili, je "sirjenje svetlobe skozi prazen prostor. 
+Prazen prostor je modeliran kot snov, kjer je dielektri"cni tenzor uniformen in izotropen. 
 "Ce na eno stran celice postavimo planarni izvir ravnega valovanja, pri"cakujemo ravne valove po celotnem mediju. 
 
-Pri tem preizkusu sta lomna koli"cnika v obeh obmo"cjih enaka, zato sem mre"zo razdelil na notranje in zunanje obmo"cje, izvor valovanja pa sem postavil po celotnem robu med obmo"cjema. 
+Pri tem preizkusu sta lomna koli"cnika v obeh obmo"cjih enaka, zato smo mre"zo razdelili na notranje in zunanje obmo"cje, izvor valovanja pa smo postavili po celotnem robu med obmo"cjema. 
 Prikaz valovanja na sliki \ref{fig:test-plane} potrjuje pravilnost metode, saj res vidimo ravne valove s konstantno frekvenco in valovno dol"zino. 
 
 \begin{figure}[h]
@@ -735,7 +740,7 @@ Prikaz valovanja na sliki \ref{fig:test-plane} potrjuje pravilnost metode, saj r
 
 Na obeh slikah opazimo notranjost celice z valovanje in rob, kjer valovanja ni.
 To je posledica modeliranja izvora valovanja okrog in okrog celice, kot je prikazano na levi strani slike \ref{fig:wave-source-regions}.
-Valovanje se "siri od leve proti desni, tako si lahko predstavljamo izvir valovanja ne levi strani in ponor na desni. 
+Valovanje se "siri od leve proti desni, tako da si lahko predstavljamo izvir valovanja ne levi strani in ponor na desni. 
 Dejstvo, da ponor valovanja na desni strani uspe"sno pobere celotno valovanje potrjuje natan"cnost ra"cunanja. 
 
 \subsection{Lom in odboj}
@@ -750,12 +755,12 @@ kjer je $\alpha$ vpadni kot valovanja, $\beta$ pa lomni kot oz. kot med pravokot
 
 Dele"za odbitega in prepu"s"cenega valovanja sta odvisna od vpadnega kota $\alpha$ in polarizacije svetlobe\cite{wiki:brewster}. 
 Pri dolo"cenem kotu $\alpha$ se komponenta svetlobe s polarizacijo v ravnini "zarka in normale na povr"sino ne odbije in se v celoti lomi. 
-Tamu kotu re"cemo Brewsterjev kot in je enak
+Temu kotu re"cemo Brewsterjev kot in je enak
 \begin{align}
  \theta_B &= \arctan\left(\frac{n_2}{n_1}\right) = \arctan\sqrt{\frac{n_2}{n_1}}
 \end{align}
 
-"Ce propagacijo svetlobe simuliramo z metoda \ac{FDTD}, v sliki trenutnega elektri"cnega polja ne moremo lo"citi med vpadnim in odbitim valovanjem. 
+"Ce propagacijo svetlobe simuliramo z metodo \ac{FDTD}, v sliki trenutnega elektri"cnega polja ne moremo lo"citi med vpadnim in odbitim valovanjem. 
 Za prikaz delovanja sem zato uporabil vpadni kot, ki je zelo blizu Brewsterjevemu. 
 Na ta na"cin opazimo le "sibko odbito valovanje, tako da lahko "se vedno preverimo, ali lomni zakon dr"zi. 
 Slika elektri"cnega polja ob prehodu meje v bli"zini Brewsterjevega kota je na sliki \ref{fig:refraction-test}. 
@@ -769,7 +774,8 @@ Slika elektri"cnega polja ob prehodu meje v bli"zini Brewsterjevega kota je na s
  \label{fig:refraction-test}
 \end{figure}
 
-Na sliki so jasno vidna "stiri obmo"cja. "Cisto na levi je rob z absorbirajo"cim robnim pogojem \ac{PML}, ki absorbira odbito valovanje in prepre"cuje nadaljnji odboj. 
+Na sliki so jasno vidna "stiri obmo"cja. 
+"Cisto na levi je rob z absorbirajo"cim robnim pogojem \ac{PML}, ki absorbira odbito valovanje in prepre"cuje nadaljnji odboj. 
 Naslednje je obmo"cje z dielektri"cnostjo $\varepsilon_1$, kjer je superpozicija vpadnega in odbitega valovanja. 
 Odbito valovanje je mnogo "sibkej"se od vpadnega, zato so valovi skoraj ravni. 
 Na sredini slike je meja med obmo"cjema, desno od nje je snov z dielektri"cnostjo $\varepsilon_2 > \varepsilon_1$.
@@ -779,13 +785,10 @@ Na desnem robu je prazno obmo"cje, ki ga valovanje "se ni doseglo.
 Veljavnost lomnega zakona lahko preverimo, "ce primerjamo kota vpadnega in lomljenega valovanja. 
 Dol"zini stranic na sliki nista v enakem merilu, zato kotov ne moremo od"citati s slike. 
 
-\todo{Simuliraj lom na novo, izracunaj oba kota}
-
-
 \subsection{Uniformen direktor}
-Za naslednji preizkus sem simuliral dvolomni kristal, torej snov, kjer je dielektri"cni tenzor uniformen, ne pa tudi izotropen. 
-Svetloba se je "sirila v smeri osi $z$, opti"cna os pa je oklepala kot $\theta$ z ravnino $x$-$y$ in kot $\beta$ s polarizacijo vpadne svetlobe. 
-Preu"ceval sem prepustnost tak"snega sistema, "ce za celico postavimo polarizator, ki je pravokoten na polarizacijo vpadne svetlobe. 
+Za naslednji preizkus smo simulirali dvolomni kristal, torej snov, kjer je dielektri"cni tenzor uniformen, ne pa tudi izotropen. 
+Svetloba se "siri v smeri osi $z$, opti"cna os pa oklepa kot $\theta$ z ravnino $x$-$y$ in kot $\beta$ s polarizacijo vpadne svetlobe. 
+Zanima nas prepustnost tak"snega sistema, "ce za celico postavimo polarizator, ki je pravokoten na polarizacijo vpadne svetlobe. 
 
 Ta preizkus temelji na najpogosteje uporabljani metodi za eksperimentalno opazivanje teko"cih kristalov. 
 Tanko plast teko"cega kristala postavimo med dva prekri"zana polarizatorja. 
@@ -843,7 +846,7 @@ S pove"cevanjem razlike v dielektri"cnosti plasti se prepovedani pas raz"siri.
 Po napovedi naj bi bila spodnja meja prepovedani pasu okrog $\frac{\omega a}{2\pi c} \approx 0,\!15$, kjer je $a$ perioda kristala, $c$ pa hitrost svetlobe. 
 Zgornja meja je mo"cneje odvisna od razlike v dielektri"cnosti\cite{joannopoulos}. 
 
-Za modeliranje tak"snega kristala sem uporabil periodi"cne robne pogoje v smereh $x$ in $y$, v smeri $z$ pa celico dol"zine 1024 enot z 20 enotami absorbirajo"ce plasti na vsakem koncu. 
+Za modeliranje tak"snega kristala smo uporabili periodi"cne robne pogoje v smereh $x$ in $y$, v smeri $z$ pa celico dol"zine 1024 enot z 20 enotami absorbirajo"ce plasti na vsakem koncu. 
 Grafa prepustnosti kristalov z razli"cnimi izbirami za dielektri"cnosti sta na sliki \ref{fig:test-periodic}. 
 
 \begin{figure}[!htbp]
@@ -865,16 +868,16 @@ Tak"sni materiali so sestavljeni iz periodi"cnih struktur, manj"sih od valovne d
 Dobro ujemanje med rezultati numeri"cne metode in napovedjo potrjuje, da je z isto metodo mogo"ce raziskovati tudi opti"cne lastnosti metamaterialov. 
 
 \subsection{Dvolomno vlakno}
-V magistrskem delu sem preu"ceval "sirjenje svetlobe po cilindri"cnih vlaknih z razli"cnimi profili direktorja. 
-Ra"cunsko metodo sem preizkusil na sistemu, ki je "cimbolj podoben obravnavanim, "se vedno pa lahko napovemo rezultat. 
-V ta namen sem modeliral cilindri"cno vlakno, v katerem je uniformen dvolomen kristal, vanj pa sem posvetim s kratkim laserskim sunkom. 
-Polarizacija vpadne svetlobe je bila nagnjena za 45\degree~glede na opti"cno os, tako da se je vpadni "zarek razcepil na redno in izredno komponento. 
-Zaradi dvolomnosti obe komponenti potujeta z razli"cnima hitrostma, tako da se laserski "zarek razdeli na dva dela. 
+V magistrskem delu smo preu"cevali "sirjenje svetlobe po cilindri"cnih vlaknih z razli"cnimi profili direktorja. 
+Ra"cunsko metodo smo preizkusil na sistemu, ki je "cimbolj podoben obravnavanim, "se vedno pa lahko napovemo rezultat. 
+V ta namen smo modeliral cilindri"cno vlakno, v katerem je uniformen dvolomen kristal, vanj pa po"sljemo kratek laserski sunkom. 
+Polarizacija vpadne svetlobe je nagnjena za 45\degree~glede na opti"cno os, tako da se vpadni "zarek razcepi na redno in izredno komponento. 
+Zaradi dvolomnosti obe komponenti potujeta z razli"cnima hitrostma, laserski sunek pa se razdeli na dva dela. 
 Direktorsko polje je regularno, brez defektov, zato ne pri"cakujemo defektov v polarizaciji svetlobe. 
 
-Simuliral sem zelo kratek laserski pulz, ki je trajal le nekaj valovnih dol"zin svetlobe. 
-Na ta na"cin sta se obe komponenti znotraj vlakna jasno lo"cili in sem ju lahko primerjal. 
-Ker se sunek hitro razcepi je tak"sen postopek primeren za iskanje lastnih na"cinov "sirjenja po valovodih\cite{taflove}. 
+Simulirali smo zelo kratek laserski pulz, ki je trajal le nekaj valovnih dol"zin svetlobe. 
+Na ta na"cin sta se obe komponenti znotraj vlakna jasno lo"cili in smo ju lahko primerjali. 
+Ker se sunek hitro razcepi, je tak"sen postopek primeren za iskanje lastnih na"cinov "sirjenja po valovodih\cite{taflove}. 
 
 \begin{figure}[!htbp]
  \centering
@@ -889,7 +892,7 @@ Vpadnja svetloba se razcepi na komponenti z redno in izredno polarizacijo, ki se
 Redna komponenta, prikazana na levi sliki, ob"cuti manj"si lomni koli"cnik in je zato hitrej"sa. 
 
 \subsection{Robni pogoji}
-Za prepre"cevanje odboja na stranskih ploskvah sem uporabil absorbirajo"ce robne pogoje. 
+Za prepre"cevanje odboja na stranskih ploskvah smo uporabili absorbirajo"ce robne pogoje. 
 Plast \acs{PML} nam omogo"ca, da imamo material s poljubno velikimi izgubami, pa vseeno ne dobimo odboja na meji, vse dokler so elektri"cne in magnetne izgube v primernem razmerju. 
 V praksi pa se zaradi diskretizacije vseeno nekaj valovanja odbije na meji med notranjostjo celice in robno plastjo. 
 Najti moramo torej ravnote"zje med dvema prispevkoma: "ce so izgube majhne, bo del valovanja pri"sel skozi robno plast in se odbil na zunanjem robu. 
@@ -898,7 +901,7 @@ Oba prispevka lahko zmanj"samo, "ce pove"camo debelino robne plasti, ampak s tem
 Odboj na notranji steni pa lahko omilimo, "ce se izognemo ostri meji in izgube zvezno nara"s"cajo od notranjosti proti robu. 
 V literaturi\cite{taflove} priporo"cajo poten"cno nara"s"canje izgub, $\sigma \propto (d-d_0)^{p}$, kjer je $d$ oddaljenost od zunanjega roba, $d_0$ pa debelina plasti. 
 
-Za nekaj vrednosti $p$ sem izra"cunal odbojnost robne plasti z debelino 10 enot diskretizacije. 
+Za nekaj vrednosti $p$ smo izra"cunali odbojnost robne plasti z debelino 10 enot diskretizacije. 
 Rezultati so prikazani na sliki \ref{fig:test-absorption}. 
 
 \begin{figure}[!htbp]
@@ -913,7 +916,7 @@ V primeru, da v plasti ni izgub, je njena odbojnost enaka 1, saj gre celotno val
 "Ce izgube malo pove"camo, odbojnost v vseh primerih strmo pade. 
 Pri profilih, kjer imamo nezveznost v izgubah ali v njihovem odvodu ($p<2$) pa odbojnost kmalu za"cne spet nara"s"cati, saj postane odboj na notranji meji "ze opazen.
 Pri ve"cjih potencah pa lahko izgube "se pove"camo in s tem dose"zemo ni"zjo odbojnost plasti. 
-V zgornjem primeru se za najbolj"si profil izka"ze kvadratno nara"s"canje absorpcije, zato sem za vse nadaljnje ra"cune uporabil tak"sno plast. 
+V zgornjem primeru se za najbolj"si profil izka"ze kvadratno nara"s"canje absorpcije, zato smo za vse nadaljnje ra"cune uporabili tak"sno plast. 
 
 \newpage
 \section{"Sirjenje laserskega sunka}
@@ -921,9 +924,9 @@ V zgornjem primeru se za najbolj"si profil izka"ze kvadratno nara"s"canje absorp
 \subsection{Radialni profil direktorja}
 
 Teko"cekristalna vlakna, pridobljena v laboratoriju, imajo radialen direktorski profile. 
-Najprej sem ugotavljal, kako defekt v sredici vlakna vpliva na "sirjenje svetlobe. 
+Najprej smo ugotavljali, kako defekt v sredici vlakna vpliva na "sirjenje svetlobe. 
 
-Vrednosti parametrov, ki sem jih uporabil pri simulaciji, so na"steti v tabeli \ref{tab:parametri}. 
+Vrednosti parametrov, ki smo jih uporabili pri simulaciji, so na"steti v tabeli \ref{tab:parametri}. 
 
 \begin{table}[!htbp]
 \centering
@@ -942,8 +945,8 @@ Vrednosti parametrov, ki sem jih uporabil pri simulaciji, so na"steti v tabeli \
  \label{tab:parametri}
 \end{table}
 
-Podobno kot pri preizku"sanju z uniformnim direktorjem sem najprej v vlakno poslal zelo kratek laserski sunek. 
-Zaradi dvolomnosti teko"cega kristala sem spet opazil razcep sunka na dve komponenti oz. dva lastna na"cina "sirjenja svetlobe. 
+Podobno kot pri preizku"sanju z uniformnim direktorjem smo najprej v vlakno poslali zelo kratek laserski sunek. 
+Zaradi dvolomnosti teko"cega kristala smo spet opazili razcep sunka na dve komponenti oz. dva lastna na"cina "sirjenja svetlobe. 
 Ker pa je direktorsko polje singularno, sta tudi polarizaciji obeh na"cinov singularni, kot prikazuje slika \ref{fig:pulse-p1-mode}. 
 
 \begin{figure}[!htbp]
@@ -997,8 +1000,8 @@ Tak"sni defekti so kompatibilni z vektorskimi polji, kot je elektri"cno polje sv
 
 V teko"cem kristalu pa lahko ustvarimo tudi defekte s polcelo mo"cjo, ki jih prava vektorska polja ne morejo tvoriti. 
 Ti so "se posebej zanimivi za eksperimentalno delo, saj se zaradi ni"zje energije pogosto pojavljajo v razli"cnih vzorcih teko"cih kristalov, ne samo v vlaknih. 
-Simuliral sem "sirjenje svetlobe skozi teko"cekristalno vlakno, ki ima v osi linijski defekt z ovojnim "stevilom $s \pm 1/2$. 
-Izkazalo se je, da se tudi v tem primeru laserski sunek razcepi na dva dela, ki ustrezata redni in izredni polarizaciji. 
+Simulirali smo "sirjenje svetlobe skozi teko"cekristalno vlakno, ki ima v osi linijski defekt z ovojnim "stevilom $s \pm 1/2$. 
+Izka"ze se, da se tudi v tem primeru laserski sunek razcepi na dva dela, ki ustrezata redni in izredni polarizaciji. 
 
 \begin{figure}[!htbp]
  \centering
@@ -1106,7 +1109,7 @@ Primer svetlobnega polja v tak"snem vlaknu je na sliki \ref{fig:m1-cont-snaps}
 
 \subsection{Defekti z necelo mo"cjo}
 
-Nazadnje sem simulacijo ponovil tudi z vlaknom, v katerem ima ureditev teko"ci kristal defekt s polcelo mo"cjo. 
+Nazadnje smo simulacijo ponovili tudi z vlaknom, v katerem ima ureditev teko"ci kristal defekt s polcelo mo"cjo. 
 Tak"sen primer je "se posebej zanimiv, ker imata lastna na"cina le eno simetrijsko ravnino, in sicer tisto, ki vsebuje polarizacijo vpadne svetlobe. 
 
 \begin{figure}[!htbp]
