@@ -49,27 +49,28 @@
 \maketitle
 
 \begin{abstract}
-V nalogi je opisan razvoj numerične metode za modeliranje sirjenja svetlobe po optično anizotropnem mediju, kot je na primer teko"ci kristal. 
-Postopek reševanja temelji na metodi končnih diferenc v časovni domeni, ki podaja časovne odvode elektromagnetnih polj na podlagi Maxwellovih enačb. 
-Mreža za diskretizacijo je izbrana tako, da sta električno in magnetno polje znana ob različnih časih in na različnih položajih. 
-Za razliko od Yee-jeve mreže, ki je v literaturi najpogosteje uporabljena in privzame diagonalen dielektrični tenzor, so tu vse komponente električnega polja znane na istem mestu. 
-Taksna izbira omogoča računanje z anizotropnim in neuniformnim dielektričnim tenzorjem, hkrati pa je kompatibilna z obstoječimi programi za določanje ureditve tekočega kristala. 
-Priporočljiva krajevna in časovna resolucija mreže je taksna, da je znotraj ene periode valovanja vsaj 10 točk, kar pri optičnih frekvencah pomeni okrog 40 nanometrov oz 0.15 femtosekunde. 
-Pri dosegljivi računalniki zmogljivosti je možno modelirati sistem v obliki kocke s stranico okrog 10 mikrometrov.
+V nalogi je opisan razvoj numeri"cne metode za modeliranje sirjenja svetlobe po opti"cno anizotropnem mediju, kot je na primer teko"ci kristal. 
+Postopek re"sevanja temelji na metodi kon"cnih diferenc v "casovni domeni, ki podaja "casovne odvode elektromagnetnih polj na podlagi Maxwellovih ena"cb. 
+Mre"za za diskretizacijo je izbrana tako, da sta elektri"cno in magnetno polje znana ob razli"cnih "casih in na razli"cnih polo"zajih. 
+Za razliko od Yee-jeve mre"ze, ki je v literaturi najpogosteje uporabljena in privzame diagonalen dielektri"cni tenzor, so tu vse komponente elektri"cnega polja znane na istem mestu. 
+Taksna izbira omogo"ca ra"cunanje z anizotropnim in neuniformnim dielektri"cnim tenzorjem, hkrati pa je kompatibilna z obstoje"cimi programi za dolo"canje ureditve teko"cega kristala. 
+Priporo"cljiva krajevna in "casovna resolucija mre"ze je taksna, da je znotraj ene periode valovanja vsaj 10 to"ck, kar pri opti"cnih frekvencah pomeni okrog 40 nanometrov oz 0.15 femtosekunde. 
+Pri dosegljivi ra"cunalniki zmogljivosti je mo"zno modelirati sistem v obliki kocke s stranico okrog 10 mikrometrov.
 
-Medij je nematski tekoči kristal, ki je modeliran kot enoosno dvolomna snov s krajevno odvisnostjo optične osi. 
-Anizotropni del dielektričnega tenzorja je sorazmeren s tenzorjem ureditvenih parametrov Q v tekočem kristalu. 
-Na enem izmed robov celice je izvor valovanja, ki je lahko poljubne oblike, na vseh ostalih pa Berengerjeva absorbirajoča plast PML. 
-Absorbirajoč robni pogoj z uporabo nefizikalnih materialnih parametrov poskrbi, da na robovih celice ni odboja. 
-Natančnost metode je preizkušena na različnih testnih ureditvah tekočega kristala, za katere poznamo točne rešitve. 
-Preizkusi vključujejo lom in odboj na meji med sredstvi, prepustnost plasti tekočega kristala med prekrižanima polarizatorjema, pojav fotonskega prepovedanega pasu v periodičnih strukturah, ter razcep na redni in izredni žarek v dvolomni snovi.
+Medij je nematski teko"ci kristal, ki je modeliran kot enoosno dvolomna snov s krajevno odvisnostjo opti"cne osi. 
+Anizotropni del dielektri"cnega tenzorja je sorazmeren s tenzorjem ureditvenih parametrov Q v teko"cem kristalu. 
+Na enem izmed robov celice je izvor valovanja, ki je lahko poljubne oblike, na vseh ostalih pa Berengerjeva absorbirajo"ca plast PML. 
+Absorbirajo"c robni pogoj z uporabo nefizikalnih materialnih parametrov poskrbi, da na robovih celice ni odboja. 
+Natan"cnost metode je preizku"sena na razli"cnih testnih ureditvah teko"cega kristala, za katere poznamo to"cne re"sitve. 
+Preizkusi vklju"cujejo lom in odboj na meji med sredstvi, prepustnost plasti teko"cega kristala med prekri"zanima polarizatorjema, pojav fotonskega prepovedanega pasu v periodi"cnih strukturah, ter razcep na redni in izredni "zarek v dvolomni snovi.
 
-Uporaba metode na tekočekristalnem vlaknu z radialnim profilom direktorja napove razcep kratkega laserskega sunka v dva lastna načina propagacije. 
-Polarizacija svetlobe v obeh lastnih načinih tvori defekt z enakim ovojnim številom kot defekt v direktorskem polju. 
-Ta povezava med defekti v tekočem kristalu in optičnem polju je preizkušena še na vlaknih z različnimi direktorskimi profili, kjer v vseh obravnavanih primerih najdemo enako ujemanje v ovojnem številu defektov. 
-Iz natančnejšega opisa polja je mogoče izluščiti splošne zakonitosti propagacije laserskih pulzov po linijskih defektih. 
-Pri uporabi stalnega vira laserske svetlobe metoda napove obliko polja, kjer se moč defekta v polarizaciji spreminja s krajem. 
-Na ta način bi lahko generirali zapletena svetlobna polja z vsiljevanjem ureditve tekočemu kristalu.
+Uporaba metode na teko"cekristalnem vlaknu z radialnim profilom direktorja napove razcep kratkega laserskega sunka v dva lastna na"cina propagacije. 
+Polarizacija svetlobe v obeh lastnih na"cinih tvori defekt z enakim ovojnim "stevilom kot defekt v direktorskem polju. 
+Ta povezava med defekti v teko"cem kristalu in opti"cnem polju je preizku"sena "se na vlaknih z razli"cnimi direktorskimi profili, kjer v vseh obravnavanih primerih najdemo enako ujemanje v ovojnem "stevilu defektov. 
+Iz natan"cnej"sega opisa polja je mogo"ce izlu"s"citi splo"sne zakonitosti propagacije laserskih pulzov po linijskih defektih. 
+Pri uporabi stalnega vira laserske svetlobe metoda napove obliko polja, kjer se mo"c defekta v polarizaciji spreminja s krajem. 
+Na ta na"cin bi lahko generirali zapletena svetlobna polja z vsiljevanjem ureditve teko"cemu kristalu.
+Primer tak"snega polja je laserski "zarek z radialno polarizirano svetlobo. 
 \end{abstract}
 
 \newpage
@@ -78,37 +79,44 @@ Na ta način bi lahko generirali zapletena svetlobna polja z vsiljevanjem uredit
 \newpage
 \section{Uvod} % 1.5 - 3 strani
 
-
-Strukture za usmerjanje svetlobe igrajo pomembno vlogo v sodobnih opti"cnih komunikacijskih sistemih\cite{ruetschi-1994}. 
-\todo{Zakaj so valovodi dobri}
-
-% Zakaj so valovodi dobri, uporaba v mehki snovi
-
-
-% TODO: Na kratko o vseh valovodih
-
 Teko"ci kristali so mehke snovi, ki zdru"zujejo lastnosti kristalov in teko"cin\cite{degennes}. 
 Praviloma so teko"ci kristali sestavljeni iz pali"castih ali diskastih molekul, teko"cekristalne mezofaze pa tvorijo tudi segmenti \textsmaller{DNK}, molekule nekaterih virusov in primerni koloidni delci. 
 Polo"zaji gradnikov nimajo reda dolgega dosega, ali pa ta red ne dr"zi v vseh treh dimenzijah, zato se snov obna"sa kot teko"cina. 
+Glede na orientacijski in pozicijski red lo"cimo razli"cne teko"cekristalne mezofaze. 
+V nematski mezofazi imajo gradniki le orientacijski red dolgega dosega, v smekti"cni pa tudi pozicijski red v eni smeri. 
 
-Orientacijski red v teko"cih kristalih lahko tak"sen red opi"semo s preferen"cno orientacijo oz. direktorjem $\mathbf{n}$ in stopnjo reda $S$. 
+Orientacijski red v teko"cih kristalih makroskopsko opi"semo s preferen"cno orientacijo oz. direktorjem $\mathbf{n}$ in stopnjo reda $S$. 
 Na prosto energijo in s tem na ureditev teko"cega kristala vplivajo krajevno spreminjanje direktorja, temperatura in dielektri"cna interakcija. 
-Za opti"cne lastnosti je pomembna predvsem dvolomnost, kar pomeni, da je lomni koli"cnik snovi odvisen od polarizacije svetlobe. 
-Ta anizotropija izhaja iz oblike gradnikov, ki so v ve"cini primerov pali"caste molekule. 
+Teko"ci kristali se obna"sajo kot elasti"cni medij, na katerega lahko vplivamo z zunanjimi polji. 
+
+Z dolo"ceno izbiro robnih pogojev, zunanjih polj ali delcev v teko"cem kristalu lahko vsilimo defekte. 
+To so podro"cja zmanj"sanega reda, kjer direktor ni definiran. 
+V treh dimenzijah lo"cimo to"ckaste in linijske defekte. 
+
+
+Dvolomnost je lastnost snovi, v kateri je lomni koli"cnih odvisen od smeri polarizacije svetlobe\cite{dvolomnost}. 
+Ve"cina dvolomnih snovi je enoosnih, kar pomeni, da obstaja ena izredna os z razli"cnim lomnim koli"cnikom, ostali dve pravokotni smeri pa sta enakovredni. 
+Tipi"cne enoosne snovi so kristali s tetragonalno ali heksagonalno mre"zo, kjer opti"cna os enaka po celem kristalu. 
 V teko"cem kristalu z orientacijskim redom os dvolomnosti sledi orientaciji gradnikov. 
+Ti so "se posebej zanimivi, saj se direktor in s tem dvolomnost spreminja s krajem, nadzorujemo pa jo lahko tudi z zunanjimi vplivi. 
+Opti"cna anizotropija teko"cih kristalov izhaja iz oblike gradnikov, ki so v ve"cini primerov pali"caste molekule. 
 
-% TODO: Valovodi s teko"cimi kristali (clanki, reference, literatura)
 
-Teko"cekristalni laserji so v zadnjem "casu dele"zni veliko pozornosti \cite{coles-morris, humar-musevic, humar-ravnik}. 
-Klju"cna dejavnika pri uporabi teko"cih kristalov v laserjih sta prisotnost fotonskega prepovedanega pasu (ang. photonic bandgap) in mo"znost zunanjega nadzora s spreminjanjem elektri"cnega polja ali temperature. 
+V teoreti"cnem delu te naloge je razlo"zena osnovna teorija ureditve teko"cih kristalov in njihove opti"cne lastnosti. 
+Navedene so Maxwellove ena"cbe, ki opisujejo "sirjenje svetlobe skozi anizotropno snov. 
+Poseben poudarek je na dvolomnosti. 
+V tretjem poglavju je predstavljena numeri"cna metoda, s katero sem modeliral "sirjenje svetlobe skozi teko"cekristalne strukture. 
+Metoda temelji na direktnem "casovnem razvoju elektromagnetih polj po Maxwellovih ena"cbah. 
+Opisana je diskretizacijska mre"za, ki je primerna za obravavo opti"cno anizotropnih snovi. 
+V petem poglavju je na"stetih nekaj preizkusov pravilnosti izbrane metode. 
+Vklju"ceni so preizkusi od najbolj enostavnih, "sirjenje ravnega vala po praznem prostoru, do bolj zapletenih fotonskih kristalov in teko"cekristalnih vlaken. 
+Rezultati so v nalogi razdeljeni v dva dela. 
+V prvem delu je prikazana propagacija zelo kratkih laserskih sunkov skozi teko"cekristalna vlakna z razli"cnimi direktorskimi profili. 
+Z uporabo kratkih sunkov lahko najdemo lastne na"cine propagacije svetlobe po tak"snih vlaknih. 
+Metoda napove razcep sunka v dva lastna na"cina, ki zadostita tako simetriji direktorja kot tudi simetriji za"cetne polarizacije svetlobe. 
+V drugem delo je opisana propagacija stalne laserske svetlobe, ki je bolj primerna za eksperimentalno opazovanje. 
+Odvisno od dol"zine vlakna lahko dobimo razli"cne profile polarizacije svetlobe, na primer radialna polarizacija. 
 
-% Struktura diplome
-V teoreti"cnem delu te naloge je opisana osnovna teorija ureditve teko"cih kristalov, njihove opti"cne lastnosti in "sirjenje svetlobe skoznje. 
-Poudarek je na cilindri"cnih strukturah, ki so najbolj primerne za tvorbo valovodov. 
-Poleg tega so opisane splo"se lastnosti in uporabe valovodov in posebnosti teko"cekristalnih valovodov. 
-
-V tretjem poglavju je predstavljena numeri"cna metoda, s katero sem modeliral "sirjenje svetlobe skozi teko"cekristalne valovode, in nekaj preizkusov njene pravolnosti. 
-V "cetrem poglavju so rezultati \todo{kaj to"cno?}. 
 
 \section{Teko"ci kristali}
 
@@ -466,9 +474,6 @@ Med polarizacijo svetlobe $\vec P$ in $-\vec P$ je razlika zgolj v fazi, zato ju
 V tem smislu je polarizacija svetlobe podobna nematskemu direktorju. 
 Kljub temu da z elektri"cnim poljem ne moremo skonstruirati pravega defekta s polcelim ovojnim "stevilom, imamo lahko na neki to"cki obrat polja, ki ne pove"ca proste energije. 
 
-
-\section{Sklopitev teko"cega kristala s svetlobo}
-
 \subsection{Dielektri"cni tenzor v teko"cem kristalu}
 \label{sec:dielektricnost}
 Oblika in polarizabilnost molekul v teko"cem kristalu vplivata na njegove opti"cne lastnosti. 
@@ -676,28 +681,33 @@ Odboj valovanja pod poljubnim kotom prepre"cimo, "ce vsako komponento elektri"cn
 Tak material je nefizikalen, saj imamo dodatne prostostne stopnje, polje pa ne sledi ve"c Maxwellovim ena"cbam. 
 
 Komponenta $E_x$ elektri"cnega polja vala v obi"cajnem mediju z dielektri"cnostjo $\eps$ in elektri"cno prevodnostjo $\sigma$ zado"s"ca Maxwellovi ena"cbi
-
 \begin{align}
  \eps \odvod{E_x}{t} + \sigma E_x = \odvod{H_z}{y} - \odvod{H_y}{z}\;.
 \end{align}
-
 V plasti \acs{PML} pa elektri"cno polje razdelimo na dva prispeka, $E_x = E_{xy} + E_{xz}$, ki zado"s"cata ena"cbam
-
 \begin{align}
  \eps \odvod{E_{xy}}{t} + \sigma_y E_{xy} &= \odvod{}{y}(H_{zx} + H_{zy}) \\
  \eps \odvod{E_{xz}}{t} + \sigma_z E_{xz} &= -\odvod{}{z}(H_{yx} + H_{yz})\;,
 \end{align}
-
 kjer smo razcepljenima komponentoma pripisali razli"cni prevodnosti. 
 Na enak na"cin so razcepljene ostale komponente eletri"cnega in magnetnega polja. 
 
-\subsection{Opis valovoda}
+Razcep polj omogo"ca anizotropno absorpcijo v robni plasti. 
+Izberemo lahko tak"sne vrednosti za $\sigma_i$ in $\sigma^*_i$, da se absorbira le komponenta, ki se "siri pravokotno na plast. 
+Komponenta svetlobe, ki se "siri vzporedno s plastjo, se ohrani in potuje znotraj robne plasti, tako da ne zmoti valovanja v celici. 
+Na ta na"cin prepre"cimo odboj valovanja na meji med notranjostjo in plastjo \acs{PML} pri poljubnem vpadnem kotu valovanja. 
+Primer postavitve plasti \acs{PML}, ki zadosti temu pogoju, je na sliki \ref{fig:pml-shema}. 
 
+\begin{figure}[!htbp]
+ \centering
+ \def\svgwidth{.4\textwidth}
+ \input{./Slike/pml.pdf_tex}
+ \caption{Shema postavitve plasti \acs{PML} okrog ombo"cja, v katerem opazujemo propagacjo svetlobe. V rumenih obmo"cjih je neni"celna prevodnost $\sigma_x$, v modrih je neni"celna le $\sigma_y$, v zelenih obmo"cjih pa sta prisotni obe. Tak"sna postavitev prepre"cuje odboj svetlobe pri poljubnem vpadnem kotu\cite{taflove}. }
+ \label{fig:pml-shema}
+\end{figure}
 
 
 \section{Preverjanje metode}
-
-\todo{Test z dejasnkim profilom, ki ga imajo v opti"cnih vodniki}
 
 \subsection{Prazen prostor}
 Prvi preizkus metode, ki sem ga opravil, je "sirjenje svetlobe skozi prazen prostor. 
