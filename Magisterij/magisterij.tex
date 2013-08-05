@@ -711,7 +711,7 @@ Prikaz valovanja na sliki \ref{fig:test-plane} potrjuje pravilnost metode, saj r
  \centering
  \subfigure{\includegraphics[width=.45\textwidth]{g_test_plane}} \,
  \subfigure{\includegraphics[width=.45\textwidth]{g_test_plane_profile}}
-\caption{Levo: Trenutna slika valovanja v celici. Desno: "Casovna in krajevna odvisnost valovanja. \todo{Bolj"si opis, pu"s"cice na slikah}}
+\caption{Levo: Trenutna slika valovanja v celici. Desno: "Casovna in krajevna odvisnost valovanja. Barva predstavlja komponento elektri"cnega polja v smeri $x$, rumena je pozitivna, vijoli"cna pa negativna. \todo{pu"s"cice na slikah}}
 \label{fig:test-plane}
 \end{figure}
 
@@ -781,7 +781,6 @@ Na ta na"cin se jasno vidijo defekti v teko"cem kristalu.
 \end{align}
 kjer sta $I_0$ in $\lambda_0$ intenziteta in valovna dol"zina vpadne svetlobe, $d$ debelina vzorca, $n_o$ in $n_e$ pa redni in izredni lomni koli"cnik. 
 Ujemanje rezultatov z napovedjo je prikazano na sliki \ref{fig:test-uniform}.
-\todo{vnesi parametre v graf}
 
 \begin{figure}[h]
  \input{g_test_uniform}
@@ -899,7 +898,7 @@ Pri ve"cjih potencah pa lahko izgube "se pove"camo in s tem dose"zemo ni"zjo odb
 V zgornjem primeru se za najbolj"si profil izka"ze kvadratno nara"s"canje absorpcije, zato sem za vse nadaljnje ra"cune uporabil tak"sno plast. 
 
 \newpage
-\section{Rezultati}
+\section{"Sirjenje laserskega sunka}
 
 \subsection{Radialni profil direktorja}
 
@@ -1023,12 +1022,14 @@ Na podlagi vseh zgorjih opa"zanj lahko najdemo podobnosti in izpeljemo splo"sne 
 
 S pomo"cjo teh zakonitosti lahko napovemo, kako se bo svetloba "sirila po vlaknu s poljubnim linijskim defektom po sredini. 
 
-\subsection{Stalna laserska svetloba}
+\section{Stalna laserska svetloba}
 
 Zelo kratki laserski sunki so zanimivi za teoreti"cno obravnavo, ker lahko z njimi najdemo lastne na"cine "sirjenja svetlobe po snovi. 
 Z eksperimentalnega vidika pa so izjemno zahtevni, tako za ustvarjanje pulza kot za njegovo opazovanje. 
 Sunek, uporabljen na zgornjih slikah je trajal le okrog 40 fs, kar je sicer v dosegu ultrahitrih femtosekndnih laserjev. 
 Bolj enostavno je opazovanje z laserjem, ki sveti konstantno. 
+
+\subsection{Radialni profil direktorja}
 
 Pri enakomernem laserskem "zarku je svetloba v vlaknu kombinacija obeh lastnih na"cinov, ki se se"stejeta z razli"cnima hitrostma. 
 Frekvenca svetlobe je nespremenjena in zato enaka po celotnem vlaknu, opazimo pa mo"cno krajevno odvisnost oblike polja. 
@@ -1043,23 +1044,28 @@ Trenutne slike elektri"cnega polja znotraj vsakna so prikazane na sliki \ref{fig
  \label{fig:p1-cont-snaps}
 \end{figure}
 
+\begin{comment}
 \begin{figure}[!htbp]
  \subfigure{\includegraphics[height=130pt]{g_defect_0}}
  \subfigure{\includegraphics[height=130pt]{g_defect_2}}
  \subfigure{\includegraphics[height=130pt]{g_defect_4}}
  \caption{Shematski prikaz defektov z ovojnimi "stevili (od leve proti desni) $0$, $+1$ in $+2$. }
 \end{figure}
+\end{comment}
 
 Na sliki je dobro vidno izmenjevanje konfiguracij elektri"cnega polja z ovojnima "steviloma $s=0$ in $s=2$. 
 Zaradi razlike v hitrosti propagacije se na nekaterih mestih v vlaknu oba valovna na"cina se"stejeta, na drugih pa od"stejeta. 
 Rezultati nakazujejo, da se podobno zgodi tudi z defektom v polarizaciji svetlobe. 
-Na prvem in zadnjem preseku na sliki \ref{fig:p1-cont-snaps} lahko vidimo defekt mo"ci $s=2$, ki pa ni to"ckast, ampak razpade na dva defekta mo"ci $s=1$. 
-Na drugi sliki z desne je vidna uniformna konfiguracija elektri"cnega polja brez defektov. 
+Na prvem in zadnjem preseku na sliki \ref{fig:p1-cont-snaps} lahko vidimo defekt mo"ci $s=2$, na drugi sliki z desne pa je vidna uniformna konfiguracija elektri"cnega polja brez defektov. 
 Vmes, kot na primer na tretji sliki z desne, pa opazimo vmesno stanje. 
-Konfiguracija ustreza defektu z ovoj"nim "stevilom $+1$, kjer zaradi nekompatibilnosti s smerjo polarizacija manjka del, kjer bi moralo biti polje v smeri $y$. 
+Konfiguracija ustreza defektu z ovojnim "stevilom $+1$, kjer zaradi nekompatibilnosti s smerjo polarizacija manjka del, kjer bi moralo biti polje v smeri $y$. 
 Presek polja je zelo podoben lastnemu na"cinu vlakna, prikazanemu na desni strani slike \ref{fig:pulse-p1-mode}. 
 
-Podobne obna"sanje opazimo tudi v vlakni s hiperboli"cnim direktorskim profilom, ki ima v osi defekt z ovojnim "stevilom $-1$. 
+
+
+\section{Hiperboli"cni profil direktorja}
+
+Podobno obna"sanje opazimo tudi v vlaknu s hiperboli"cnim direktorskim profilom, ki ima v osi defekt z ovojnim "stevilom $-1$. 
 V tem primeru polarizacija svetlobe prehaja med na"cinoma z ovojnim "stevilom $0$ in $-2$, spet pa so opazna tudi vmesna stanja z ovojnim "stevilom $-1$. 
 Primer svetlobnega polja v tak"snem vlaknu je na sliki \ref{fig:m1-cont-snaps}
 
@@ -1071,12 +1077,16 @@ Primer svetlobnega polja v tak"snem vlaknu je na sliki \ref{fig:m1-cont-snaps}
  \label{fig:m1-cont-snaps}
 \end{figure}
 
+\begin{comment}
 \begin{figure}[!htbp]
  \subfigure{\includegraphics[height=130pt]{g_defect_0}}
  \subfigure{\includegraphics[height=130pt]{g_defect_-2}}
  \subfigure{\includegraphics[height=130pt]{g_defect_-4}}
  \caption{Shematski prikaz defektov z ovojnimi "stevili (od leve proti desni) $0$, $-1$ in $-2$. }
 \end{figure}
+\end{comment}
+
+\subsection{Defekti z necelo mo"cjo}
 
 Nazadnje sem simulacijo ponovil tudi z vlaknom, v katerem ima ureditev teko"ci kristal defekt s polcelo mo"cjo. 
 Tak"sen primer je "se posebej zanimiv, ker imata lastna na"cina le eno simetrijsko ravnino, in sicer tisto, ki vsebuje polarizacijo vpadne svetlobe. 
@@ -1112,16 +1122,18 @@ Z uporabo defekta s polovi"cno mo"cjo pa lahko "zarek linearno polarizirane lase
 Na podlagi rezultatov lahko zaklju"cimo, da ``prepovedana'' pravokotna polarizacija manjka le pri na"cinih oz. konfiguracijah polja, kjer polje tvori defekt z enako mo"cjo kot defekt v teko"cem kristalu. 
 S konstantnim laserskim "zarkom dose"zemo se"stevanje obeh propagacijskih na"cinov, ki na dolo"cenih mestih v vlaknu privede do komponente s pravokotno polarizacijo. 
 Tu je pomembno, da pri lastnih na"cinih ni vsa svetloba polarizirana v smeri $x$, le tam, kjer bi zaradi topologije defekta morala biti polarizirana v smeri $y$, intenziteta svetlobe mo"cno pade. 
-Pri konstantnim svetenjem pa se lastni na"cini se"stejejo tako, da imajo ombo"cja, kjer topologije defekta narekuje polarizacijo v smeri $y$, enako intenziteto svetlobe kot okolica. 
+Pri konstantnem svetenju pa se lastni na"cini se"stejejo tako, da imajo ombo"cja, kjer topologija defekta narekuje polarizacijo v smeri $y$, enako intenziteto svetlobe kot okolica. 
 
+\begin{comment}
 \begin{figure}[!htbp]
  \subfigure{\includegraphics[height=130pt]{g_defect_0}}
  \subfigure{\includegraphics[height=130pt]{g_defect_-1}}
  \subfigure{\includegraphics[height=130pt]{g_defect_-2}}
  \caption{Shematski prikaz defektov z ovojnimi "stevili (od leve proti desni) $0$, $-1/2$ in $-1$. }
 \end{figure}
+\end{comment}
 
-\subsection{Radialno polarizirana svetloba}
+\section{Radialno polarizirana svetloba}
 Radialno polarizirana svetloba je uporabna za laserske pasti. 
 Na ta na"cin lahko v past ujamemo tudi delce, ki jih z linearno polarizirano svetlobo zelo te"zko, na primer mikroskopske kovinske delce\cite{radial-trap}.
 Radialno polarizirano svetlobo je mo"zno fokusirati v piko velikosti $0,\!16\lambda^2$, kar je ob"cutno manj od meje $0,\!26\lambda^2$ za linearno polazirino svetlobo\cite{radial-focus}. 
@@ -1140,7 +1152,6 @@ kjer je $k$ poljubno celo "stevilo. Za tipi"cne vrednosti lomnih koli"cnikov v t
 "ce izberemo vrednosti $k=1$. Ker je "stevilo $k$ poljubno, lahko isto stvar dose"zemo tudi z dalj"simi vlakni. 
 Dol"zina, potrebna za pretvorbo iz linearne v radialno polarizacijo, se spremeni tudi ob uporabi teko"cega kristala z druga"cno dvolomnostjo ali laserja z drugo valovno dol"zino. 
 Dvolomnost teko"cega kristala je odvisna od stopnje reda $S$ in s tem tudi od temperature, kar omogo"ca uravnavanje delovanje tak"sne naprave. 
-
 
 \section{Zaklju"cek}
 
