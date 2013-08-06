@@ -635,7 +635,7 @@ Za ra"cun potrebujemo "se inverz dielektri"cnega tenzorja, ki pa se med propagac
 Lahko neposredno predpi"semo vse komponente tenzorja, bolj priro"cno pa je podati le direktor in stopnjo reda, iz katerih nato izra"cunamo dielektri"cni tenzor in njegov inverz. 
 Pomembno je le, da je znan na istem mestu kot $\E$ (rde"ce to"cke na sliki \ref{fig:lattice}), vendar ob "casu, ko je podan $\B$. 
 
-\subsection{Ena"cbe}
+\subsection{Postopek re"sevanja}
 
 Na izbrani mre"zi ne moremo neposredno izra"cunati rotorja polj, ker ta ni definiran v pravih to"ckah. 
 Elektri"cno polje je definirano na ogli"s"cih kocke, zato so krajevni odvodi tega polja definirani na razpolovi"s"cih robov, potrebujemo pa jih na mestu magnetnega polja, torej v sredi"s"cu kocke. 
@@ -668,7 +668,37 @@ V svoji metodi sem za odvod polja po vsaki koordinati v sredi"s"cu kocke uporabi
 
 V primerjavi z Yeejevo celico povpre"cenje pove"ca "cas ra"cunanja, saj moramo namesto vsakega krajevnega odvoda izra"cunati "stiri. 
 Na sre"co pa si vsah rob delijo "stiri kocke, tako da se s sprotnim shranjevanjem odvodov lahko izognemo ve"ckratnemu ra"cunanju istega odvoda. 
-Na ta na"cin je "stevilo ra"cunskih operacij blizu tistemu, ki bi ga potrebovali z uporabo Yeejeve mre"ze. 
+Na ta na"cin je "stevilo ra"cunskih operacij blizu tistemu, ki bi ga potrebovali z uporabo Yeejeve mre"ze. Na izbrani mre"zi so vse komponente elektri"cnega polja znane ob "casih $k\Delta t$, $k\in\mathbf{N}$, in sicer na polo"zajih, kjer so vse tri prostorske koordinate celo"stevilski ve"ckratniki enote diskretizacije $\Delta x$. 
+Magnetno polje je znano ob "casih $(k+1/2)\Delta t$ na polo"zajih, kjer so vse tri prostorske koordinate polcelo"stevilski ve"ckratniki $\Delta x$. 
+S poenostavljenim zapisom
+\begin{align}
+ E_\alpha|_{i,j,k}^n &= E_\alpha\Big(i\Delta x, j\Delta y, k\Delta z, n \Delta t\Big) \\
+ H_\alpha|_{i,j,k}^n &= H_\alpha\left(\left(i+\frac{1}{2}\right)\Delta x, \left(j+\frac{1}{2}\right)\Delta y, \left(k+\frac{1}{2}\right)\Delta z, \left(n+\frac{1}{2}\right) \Delta t\right)
+\end{align}
+lahko zapi"semo krajevne odvode elektromagnetnih polj
+\newcommand{\sumij}[2]{\substack{ #1' = #1,\, #1+1 \\ #2' = #2,\, #2+1}}
+\begin{align}
+ \label{eq:diskretni-odvodi}
+ (\nabla\times A)_x|_{i,j,k}^n &= \frac{1}{4\Delta y}\sum_{\sumij{i}{k}} A_z|_{i',j+1,k'}^{n} - A_z|_{i',j,k'}^{n} \\
+ (\nabla\times A)_y|_{i,j,k}^n &= \frac{1}{4\Delta z}\sum_{\sumij{j}{i}} A_x|_{i',j',k+1}^{n} - A_x|_{i',j',k}^{n} \\
+ (\nabla\times A)_z|_{i,j,k}^n &= \frac{1}{4\Delta x}\sum_{\sumij{k}{j}} A_y|_{i+1,j',k'}^{n} - A_y|_{i,j',k'}^{n}
+\end{align}
+kjer je $\vec A$ poljubno vektorsko polje. 
+Pri zgornjem zapisu je rotor polja definiran med to"ckami mre"ze, torej na mestih $A_\alpha|_{i+1/2,j+1/2,k+1/2}$. 
+Ker rotor polja potrebujemo pri "casovnem odvodu drugega opti"cnega polja, ki je definiran ravno na teh mestih, je zgornji zapis primeren za izbrano mre"zo. 
+V splo"snem je diskretizacija lahko anizotropna, v vseh nadaljnjih izra"cunih pa smo uporabili kvadratno mre"zo, kjer je $\Delta x = \Delta y = \Delta z$. 
+Maxwellove ena"cbe v tem zapisu se glasijo
+\begin{align}
+ E_\alpha|_{i,j,k}^{n+1} &= E_\alpha|_{i,j,k}^n + \Delta t \cdot (\varepsilon^{-1})_{\alpha\beta} (\nabla\times H)_\beta|_{i-1,j-1,k-1}^{n} \label{eq:disk-E}\\
+ H_\alpha|_{i,j,k}^{n+1} &= H_\alpha|_{i,j,k}^n + \Delta t \cdot (\nabla\times E)_\beta|_{i,j,k}^{n+1} \label{eq:disk-H}
+\end{align}
+Iz zgornjih dveh ena"cb je razvidno, da lahko obe polji ra"cunamo izmeni"cno. 
+"Ce poznamo elektri"cno polje ob "casu $n\Delta t$ in magnetno polje ob "casu $(n+1/2)\Delta t$, lahko po ena"cbi izra"cunamo (\ref{eq:disk-E}) izra"cunamo elektri"cno polje ob "casu $(n+1)\Delta t$, nato pa po ena"cbi (\ref{eq:disk-H}) "se magnetno polje ob "casu $(n+3/2)\Delta t$. Izmeni"cno ra"cunanje lahko ponavljamo poljubno dolgo. 
+
+Pomembna lastnost obeh zgornjih ena"cb je, da med ra"cunanje enega izmed polj potrebujemo le vrednosti drugega polja, ne pa tudi istega polja na sosednjih mesti. 
+"Casovni odvodi istega polja na razli"cnih mestih so med seboj popolnoma neodvisni. 
+Vsak korak metode, torej ra"cunanje enega izmed polj, lahko razdelimo na veliko "stevilo neodvisnih ra"cunskih enot. 
+To omogo"ca paralelno izvajanje programa na ra"cunalnikih z ve"c jedri, kot so ra"cunalni"ske gru"ce, pa tudi novej"si osebni ra"cunalniki. 
 
 \subsection{Izvor valovanja}
 
@@ -742,7 +772,7 @@ Primer postavitve plasti \acs{PML}, ki zadosti temu pogoju, je na sliki \ref{fig
 \end{figure}
 
 
-\section{Preverjanje metode}
+\section{Primeri uporabe metode}
 
 \subsection{Prazen prostor}
 Prvi preizkus metode, ki smo ga opravili, je "sirjenje svetlobe skozi prazen prostor. 
