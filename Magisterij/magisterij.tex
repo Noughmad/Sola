@@ -1,4 +1,5 @@
-\documentclass[a4paper,10pt]{article}
+\documentclass[12pt,twoside,openright,final]{report}
+\usepackage{StyleCent}
 
 \usepackage[utf8]{inputenc}
 \usepackage[slovene]{babel}
@@ -13,6 +14,7 @@
 \usepackage{comment}
 \usepackage[smaller]{acronym}
 \usepackage[percent]{overpic}
+\usepackage{titlesec}
 
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -48,38 +50,141 @@
 
 \begin{document}
 
-\maketitle
+\thispagestyle{empty}
+\begin{center}
+{\Large\sc Univerza v Ljubljani \\
+\medskip
+Fakulteta za matematiko in fiziko\\
+\medskip
+Oddelek za fiziko}\\
 
-\begin{abstract}
-V nalogi je opisan razvoj numeri"cne metode za modeliranje sirjenja svetlobe po opti"cno anizotropnem mediju, kot je na primer teko"ci kristal. 
-Postopek re"sevanja temelji na metodi kon"cnih diferenc v "casovni domeni, ki podaja "casovne odvode elektromagnetnih polj na podlagi Maxwellovih ena"cb. 
-Mre"za za diskretizacijo je izbrana tako, da sta elektri"cno in magnetno polje znana ob razli"cnih "casih in na razli"cnih polo"zajih. 
-Za razliko od Yee-jeve mre"ze, ki je v literaturi najpogosteje uporabljena in privzame diagonalen dielektri"cni tenzor, so tu vse komponente elektri"cnega polja znane na istem mestu. 
-Taksna izbira omogo"ca ra"cunanje z anizotropnim in neuniformnim dielektri"cnim tenzorjem, hkrati pa je kompatibilna z obstoje"cimi programi za dolo"canje ureditve teko"cega kristala. 
-Priporo"cljiva krajevna in "casovna resolucija mre"ze je taksna, da je znotraj ene periode valovanja vsaj 10 to"ck, kar pri opti"cnih frekvencah pomeni okrog 40 nanometrov oz 0.15 femtosekunde. 
-Pri dosegljivi ra"cunalniki zmogljivosti je mo"zno modelirati sistem v obliki kocke s stranico okrog 10 mikrometrov.
+\vfill
 
-Medij je nematski teko"ci kristal, ki je modeliran kot enoosno dvolomna snov s krajevno odvisnostjo opti"cne osi. 
-Anizotropni del dielektri"cnega tenzorja je sorazmeren s tenzorjem ureditvenih parametrov Q v teko"cem kristalu. 
-Na enem izmed robov celice je izvor valovanja, ki je lahko poljubne oblike, na vseh ostalih pa Berengerjeva absorbirajo"ca plast PML. 
-Absorbirajo"c robni pogoj z uporabo nefizikalnih materialnih parametrov poskrbi, da na robovih celice ni odboja. 
-Natan"cnost metode je preizku"sena na razli"cnih testnih ureditvah teko"cega kristala, za katere poznamo to"cne re"sitve. 
-Preizkusi vklju"cujejo lom in odboj na meji med sredstvi, prepustnost plasti teko"cega kristala med prekri"zanima polarizatorjema, pojav fotonskega prepovedanega pasu v periodi"cnih strukturah, ter razcep na redni in izredni "zarek v dvolomni snovi.
+\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip
+\bigskip\bigskip\bigskip
 
-Uporaba metode na teko"cekristalnem vlaknu z radialnim profilom direktorja napove razcep kratkega laserskega sunka v dva lastna na"cina propagacije. 
-Polarizacija svetlobe v obeh lastnih na"cinih tvori defekt z enakim ovojnim "stevilom kot defekt v direktorskem polju. 
-Ta povezava med defekti v teko"cem kristalu in opti"cnem polju je preizku"sena "se na vlaknih z razli"cnimi direktorskimi profili, kjer v vseh obravnavanih primerih najdemo enako ujemanje v ovojnem "stevilu defektov. 
-Iz natan"cnej"sega opisa polja je mogo"ce izlu"s"citi splo"sne zakonitosti propagacije laserskih pulzov po linijskih defektih. 
-Pri uporabi stalnega vira laserske svetlobe metoda napove obliko polja, kjer se mo"c defekta v polarizaciji spreminja s krajem. 
-Na ta na"cin bi lahko generirali zapletena svetlobna polja z vsiljevanjem ureditve teko"cemu kristalu.
-Primer tak"snega polja je laserski "zarek z radialno polarizirano svetlobo. 
-\end{abstract}
+{\Large Miha "Can"cula}\\
+
+\bigskip\bigskip\bigskip
+
+{\LARGE\sc {\bf Modeliranje "sirjenja svetlobe}}
+
+\bigskip
+
+{\LARGE\sc {\bf v teko"cekristalnih vlaknih}}
+
+\vskip 8mm \hrule height0.5mm \vskip 12mm
+
+%\bigskip\bigskip
+
+{\Large Magistrsko delo}\\
+
+\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip
+
+{\Large MENTOR: prof. dr. Slobodan "Zumer}\\ \smallskip\smallskip\smallskip
+
+{\Large SOMENTOR: doc. dr. Miha Ravnik}
+
+\bigskip\bigskip
+
+\vfill
+{\Large Ljubljana, 2013}
+\end{center}
 
 \newpage
+
+\newpage
+
+\thispagestyle{empty}
+
+\centerline{}
+
+\vfill
+
+\centerline{\bf Izjava}
+\bigskip\bigskip
+\noindent
+Podpisani Miha "Can"cula, rojen 10.~4.~1989 v Postojni, izjavljam, da sem avtor magistrskega dela z naslovom \emph{Modeliranje "sirjenja svetlobe v teko"cekristalnih vlaknih}, ki sem ga izdelal pod mentorstvom prof. dr. Slobodana "Zumra in doc. dr. Miha Ravnika.
+
+\bigskip
+\bigskip
+
+\noindent
+V Ljubljani, 4.~9.~2013 \hfill Miha "Can"cula
+
+\vfill
+
+\newpage
+
+\normalsize
+\thispagestyle{plain}
+
+\vfill
+\centerline{\bf Povzetek}
+\bigskip
+\noindent
+
+Magistrsko delo obravnava "sirjenje svetlobe po teko"cekristalnih vlaknih z razli"cnimi direktorskimi profili. 
+Opisan je razvoj nume"ricne metode za modeliranje propagacije elektromagnetnih polj skozi opti"cno anizotropna sredstva. 
+Postopek re"sevanja temelji na podlagi metode kon"cnih diferenc v "casovni domeni. 
+Teko"ci kristal je modeliran kot enoosno dvolomna snov s krajevno odvisnostjo opti"cne osi.
+Izra"cunana je prepustnost plasti teko"cega kristala med prekri"zanima polarizatorjema, fotonski prepovedani pas v periodi"cni strukturi in lastni na"cini "sirjenja svetlobe v opti"cno anizotropnem vlaknu. 
+Prepoznani so lastni na"cini valovanja v teko"cekristalnih vlaknih z razli"cnimi defekti vzdol"z osi. 
+Opisane so mo"zne polarizacije svetlobe, ki bi jih lahko dobili s svetenjem skozi tak"sna vlakna. 
+
+
+\bigskip
+\noindent
+{\bf Klju"cne besede:} nematski teko"ci kristal, elektromagnetno valovanje, dvolomnost, polarizacija svetlobe.
+
+\bigskip
+\bigskip
+
+\vfill
+\centerline{\bf Abstract}
+\bigskip
+\noindent
+
+Propagation of light through liquid crystal fibres with various director profiles is explored. 
+The development of a numerical method for modelling the propagation of electromagnetic fields through optically anisotropic media is described. 
+Solving is based on the finite-difference time-domain method. 
+The liquid crystal is modelled as a uniaxial birefringent material with a position-dependent optical axis. 
+Transmitivity of a liquid crystal layer between crossed polarizers, photonic band gap, and eigenmodes of an anisotropic fibre are calculated. 
+Eigenmodes of liquid crystal fibres with various defects along the axis are identified. 
+Possible polarizations of light that could be achieved by shining through such fibres are described. 
+
+\bigskip
+\noindent
+{\bf Keywords:} nematic liquid crystal, electromagnetic wave, birefringence, light polarization.
+
+\bigskip
+\vfill
+
+\noindent
+{\bf PACS:} \textit{
+42.70.Df, % liquid crystals as optical materials
+61.30.-v, %Liquid crystals
+61.30.Jf %defects in liquid crystals
+% 62.30.+d,   %Mechanical and elastic waves; vibration, 62:Mechanical and  acoustical properties of condensed matter
+% 64.70.pv %colloids
+% 64.75.Yz, ?%Self-assembly
+% 82.70.Dd? %Colloids 82.70: Disperse systems; complex fluids, 82.Physical chemistry and chemical physics
+% 61.30.Pq?  %Microconfined liquid crystals
+}
+
+\bigskip
+\vfill
+
+\noindent
+{\bf Smer "studija:} ra"cunalni"ska fizika
+\vfill
+
+\newpage
+\thispagestyle{empty}
+
 \tableofcontents
 
-\newpage
-\section{Uvod} % 1.5 - 3 strani
+\chapter{Uvod} % 1.5 - 3 strani
 
 Teko"ci kristali so mehke snovi, ki zdru"zujejo lastnosti kristalov in teko"cin\cite{degennes}. 
 Praviloma so teko"ci kristali sestavljeni iz pali"castih ali diskastih molekul, teko"cekristalne mezofaze pa tvorijo tudi segmenti \textsmaller{DNK}, molekule nekaterih virusov in primerni koloidni delci. 
@@ -116,7 +221,7 @@ V teoreti"cnem delu te naloge je razlo"zena osnovna teorija ureditve teko"cih kr
 Navedene so Maxwellove ena"cbe, ki opisujejo "sirjenje svetlobe skozi anizotropno snov. 
 Poseben poudarek je na dvolomnosti. 
 V tretjem poglavju je predstavljena numeri"cna metoda, s katero sem modeliral "sirjenje svetlobe skozi teko"cekristalne strukture. 
-Metoda temelji na direktnem "casovnem razvoju elektromagnetih polj po Maxwellovih ena"cbah. 
+Metoda temelji na direktnem "casovnem razvoju elektromagnetnih polj po Maxwellovih ena"cbah. 
 Opisana je diskretizacijska mre"za, ki je primerna za obravavo opti"cno anizotropnih snovi. 
 V petem poglavju je na"stetih nekaj preizkusov pravilnosti izbrane metode. 
 Vklju"ceni so preizkusi od najbolj enostavnih, "sirjenje ravnega vala po praznem prostoru, do bolj zapletenih fotonskih kristalov in teko"cekristalnih vlaken. 
@@ -128,9 +233,9 @@ V drugem delo je opisana propagacija stalne laserske svetlobe, ki je bolj primer
 Odvisno od dol"zine vlakna lahko dobimo razli"cne profile polarizacije svetlobe, na primer radialna polarizacija. 
 
 
-\section{Teko"ci kristali}
+\chapter{Teko"ci kristali}
 
-\subsection{Teko"cekristalne mezofaze}
+\section{Teko"cekristalne mezofaze}
 
 Teko"ci kristali so mehke snovi, ki zdru"zujejo lastnosti kristalov in teko"cin\cite{degennes}. 
 Praviloma so teko"ci kristali sestavljeni iz pali"castih ali diskastih molekul, teko"cekristalne mezofaze pa tvorijo tudi segmenti DNK, molekule nekaterih virusov in primerni koloidni delci. 
@@ -156,7 +261,7 @@ Poleg na"stetih obstaja "se veliko razli"cnih mezofaz z razli"cnim orientacijski
   \label{fig:faze}
 \end{figure}
 
-\subsection{Orientacijski red}
+\section{Orientacijski red}
 
 V vseh teko"cekristalnih mezofazah imajo gradniki orientacijski red dolgega dosega. Definiramo lahko enotski vektor $\mathbf{n}$, ki dolo"ca povpre"cno smer gradnikov in ga imenujemo direktor. Direktor ni pravi vektor, saj v teko"cem kristalu ne lo"cimo med smerjo $\mathbf{n}$ in $\mathbf{-n}$. Tudi "ce sami gradniki nimajo tak"sne simetrije, jo imajo njihove fluktuacije, zato lahko ureditev dobro opi"semo z direktorjem\cite{mermin}. 
 
@@ -204,7 +309,7 @@ S tak"snim zapisom je razvidno, kako lahko iz podanega tenzorja $Q_{ij}$ izra"cu
 Stopnja reda je enaka najve"cji lastni vrednosti matrike $Q$, direktor pa je lastni vektor, ki ustreza tej lastni vrednosti. 
 Ra"cun lastnih vektorjev ne lo"ci med vektorji, ki se razlikujejo le za predznak, tako da na ta na"cin zadostimo simetriji direktorja. 
 
-\subsection{Deformacije direktorja in prosta energija}
+\section{Deformacije direktorja in prosta energija}
 
 Ureditev teko"cega kristala lahko opi"semo s tenzorskim poljem $Q_{ij}(\vec r)$, ki podaja tenzor ureditvenih parametrov v vsaki to"cki. 
 Skupno prosto energijo lahko izrazimo kot funkcional polja $Q_{ij}(\vec r)$, ki pa je odvisen od teko"cekristalne mezofaze. 
@@ -214,8 +319,18 @@ Drugi prispevki, npr. magnetna interakcija in fleksoelektri"cnost, so pri obi"ca
 
 \begin{figure}[h]
 \begin{center}
-  \includegraphics[width=.7\textwidth]{tsb_slo}
-  \caption{Trije na"cini elasti"cne deformacije direktorja. }
+  \begin{picture}(400, 120)
+    \put(0,30){\includegraphics[height=80pt]{fig_frank_components_splay_s}}
+    \put(150,20){\includegraphics[height=100pt]{fig_frank_components_twist_s}}
+    \put(270,30){\includegraphics[height=80pt]{fig_frank_components_bend_s}}
+    \put(20, 110){(a)}
+    \put(170, 110){(b)}
+    \put(290, 110){(c)}
+    \put(45, 10){$\nabla \cdot \vec n \neq 0$}
+    \put(165, 10){$\vec n \cdot \nabla \times \vec n \neq 0$}
+    \put(300, 10){$\vec n \times \nabla \times \vec n \neq 0$}
+  \end{picture}
+  \caption{Trije na"cini elasti"cne deformacije direktorja: (a) pahlja"ca, (b) zvoj in (c) upogib\cite{copar-phd}. }
 \label{fig:tsb}
 \end{center}
 \end{figure}
@@ -225,16 +340,15 @@ To pove"canje je odvisno od smeri spreminjanja $Q_{ij}$ glede na smer direktorja
 Na sliki \ref{fig:tsb} so prikazani trije na"cini deformacije direktorja, s katerimi lahko lokalno opi"semo poljubno krajevno odvisnost. 
 Ti trije na"cini so pahlja"ca \angl{splay}, zvoj \angl{twist} in upogib \angl{bend}. 
 
-V splo"snem so elasti"cne konstante, ki pripadajo vsakemu izmed treh osnovnih na"cinom deformacije, med seboj razli"cne. 
+Vsi trije na"cini deformacije so ela"sti"cni, zato je prispevek v prosti energiji sorazmeren s kvadratom deformacije. 
+V splo"snem so elasti"cne konstante, ki pripadajo vsakemu izmed treh osnovnih na"cinom, med seboj razli"cne. 
 Prispevek k gostoti proste energije zaradi elasti"cnih deformacij nematskega teko"cega kristala je tako enak
 
 \begin{align}
  f_{\mathrm{el}}^N &= \frac{K_1}{2} (\nabla \cdot \vec n)^2 + \frac{K_2}{2} (\vec n \cdot \nabla \times \vec n)^2 + \frac{K_3}{2} (\vec n \times \nabla \times \vec n)^2. 
 \end{align}
 
-\todo{tipi"cne vrednosti konstant}, \todo{izra"zava s $Q_{ij}$}
-
-V kiralnem nematiku oz. holesteriku pa ima stanje z najni"zjo prosto energijo konstanten zvoj s periodo $a = 2\pi / q$.
+V kiralnem nematiku oz. holesteriku ima stanje z najni"zjo prosto energijo konstanten zvoj s periodo $a = 2\pi / q$.
 Drugi "clen tako ni ve"c simetri"cen glede na smer deformacije, gostota proste energije v holesteriku pa je enaka
 
 \begin{align}
@@ -256,6 +370,8 @@ Za termotropske teko"ce kristale, kjer je mezofaza odvisna od temperature, lahko
   f_{\mathrm{L}} = \frac{1}{2}a(T-T^*)Q_{ij}Q_{ji} + \frac{1}{3}BQ_{ij}Q_{jk}Q_{ki} + \frac{1}{4}C(Q_{ij}Q_{ji})^2,
 \end{align}
 kjer je $T$ temperatura, $T^*$ najni"zja mo"zna temperatura podhlajene izotropne faze, $a$, $B$ in $C$ pa "cleni Landauovega razvoja in so odvisni od snovi. 
+Zaradi definicije stopnje reda stanji s $S$ in $-S$ nista enakovredni, zato v razvoju nastopa tudi "clen tretjega reda v $S$ oz. v $Q_{ij}$. 
+
 Ker sta konstanti $a$ in $C$ pozitivni, je pri temperaturi nad $T^*$ najugodnej"se stanje $Q_{ij}=0$ oz. $S=0$, kar ustreza izotropni snovi. 
 Pri temperaturi pod $T^*$ pa kvadratni "clen zamenja predznak, zaradi "cesar postane stabilno tudi stanje z neni"celnim ureditvenim parametrom, torej nematska mezofaza. 
 
@@ -267,11 +383,11 @@ Skupna sprememba proste energije je enaka
   f_{\mathrm{EM}} = -\frac{1}{2}\varepsilon_0 \left(\overline\varepsilon E_i E_i + \frac{2}{3}\varepsilon_a^{\mathrm{mol}} Q_{ij}E_iE_j \right),
 \end{align}
 kjer je $\overline{\varepsilon}$ povpre"cna dielektri"cna konstanta, $\varepsilon_a^{\mathrm{mol}} = \varepsilon_{\parallel}^{\mathrm{mol}} - \varepsilon_{\perp}^{\mathrm{mol}}$ dielektri"cna anizotropija posamezne molekule, $E_i$ pa zunanje elektri"cno polje. 
-"Ce na teko"ci kristal svetimo, ureditev molekul ne more slediti hitremu spreminjanju opti"cnega elektri"cnega polja, ampak nanj efektivno deluje povpre"cen kvadrat polja. 
 Ta sklopitev izhaja iz polarizabilnosti molekul, ki je odvisna od njihove oblike. 
 Zunanje polje v molekuli inducira elektri"cni dipolni moment, ki je sorazmeren z dol"zino molekule in je zato najve"cji, "ce je polje vzporedno z osjo molekule. 
+"Ce na teko"ci kristal svetimo, ureditev molekul ne more slediti hitremu spreminjanju opti"cnega elektri"cnega polja, ampak nanj efektivno deluje povpre"cen kvadrat polja. 
 
-\subsection{Defekti}
+\section{Defekti}
 
 Ravnovesno stanje nematika je tak"sno, ki minimizira prosto energijo. 
 V odsotnosti zunanjih polj je to ureditev z uniformnim direktorjem, kjer je celotna elasti"cna prosta energija enaka 0\cite{mermin}. 
@@ -287,15 +403,6 @@ V tem primeru lahko linijski defekt obravnavamo kot to"ckasti defekt v dveh dime
 Disklinacije v nematskem teko"cem kristalu delimo glede na to, kako se smer direktorja spreminja v okolici disklinacije. 
 Zanima nas zlasti, koliko obratov naredi direktorsko polje, "ce defekt obkro"zimo po zaklju"ceni zanki. 
 
-\begin{figure}[h]
- \centering
- \subfigure{\includegraphics[height=100pt]{g_defect_2}}
- \subfigure{\includegraphics[height=100pt]{g_defect_-2}}
- \subfigure{\includegraphics[height=100pt]{g_defect_1}}
- \subfigure{\includegraphics[height=100pt]{g_defect_-1}}
- \caption{Nekaj mo"znih linijskih defektov. Mo"c defekta je odvisna od tega, kolikokrat se zavrti direktor (temno modre "crte), ko naredimo en krog po svetlo modrem krogu. Od leve proti desni so mo"ci 1, $-1$, $1/2$ in $-1/2$. Polcele vrednosti so mo"zne zaradi simetrije direktorja. }
-\end{figure}
-
 V dveh dimenzijah lahko nematski direktor zapi"semo kot $\vec n = (\cos\theta, \sin\theta, 0)$. 
 Definiramo lahko ovojno "stevilo \angl{winding number} oz. mo"c defekta kot
 \begin{align}
@@ -307,8 +414,31 @@ kjer kot $\theta$ opisuje smer direktorja, $\phi$ pa polo"zaj na na svetlo modre
 Direktorsko polje je zvezno povsod razen v defektu, zato mora direktor pri $\phi = 0$ enak kot pri $\phi = 2\pi$. 
 Ta pogoj dolo"ca mo"zne vrednosti za $s$. 
 Za prava vektorska polja mora biti $s$ celo "stevilo, saj mora biti kot $\theta$ na koncu enak kot na za"cetku. 
+Primeri tak"snih defektov so na sliki \ref{fig:defekti-celi}. 
+
+\begin{figure}[h]
+ \centering
+ \subfigure{\includegraphics[height=100pt]{g_defect_-4}}
+ \subfigure{\includegraphics[height=100pt]{g_defect_-2}}
+ \subfigure{\includegraphics[height=100pt]{g_defect_2}}
+ \subfigure{\includegraphics[height=100pt]{g_defect_4}}
+ \caption{Linijski defekti s celo"stevilosko mo"cjo. Mo"c defekta je odvisna od tega, kolikokrat se zavrti direktor (temno modre "crte), ko naredimo en krog po svetlo modrem krogu. Od leve proti desni so mo"ci $-2$, $-1$, $1$ in $2$. }
+ \label{fig:defekti-celi}
+\end{figure}
+
 Nematski direktor pa ima dodatno simetrijo, saj stanji $\vec n$ in $-\vec n$ predstavljata enak red. 
 Zato je mo"zno, da pri obkro"zenju defekta direktor naredi le pol obrata, topolo"ski naboj $s$ pa je zato lahko tudi polcelo "stevilo. 
+Primeri tak"snih defektov so na sliki \ref{fig:defekti-polceli}. 
+
+\begin{figure}[h]
+ \centering
+ \subfigure{\includegraphics[height=100pt]{g_defect_-3}}
+ \subfigure{\includegraphics[height=100pt]{g_defect_-1}}
+ \subfigure{\includegraphics[height=100pt]{g_defect_1}}
+ \subfigure{\includegraphics[height=100pt]{g_defect_3}}
+ \caption{Linijskih defekti s polcelo mo"cjo. Polcele vrednosti so mo"zne zaradi simetrije direktorja. Od leve proti desni so mo"ci $-3/2$, $-1/2$, $1/2$ in $3/2$. }
+ \label{fig:defekti-polceli}
+\end{figure}
 
 Vsi defekti z enakim ovojnim "stevilom so si topolo"sko ekvivalentni, saj lahko enega zvezno transformiramo v drugega. 
 Zato mo"ci defekta pravimo tudi topol"ska invarianta oz. topolo"ski naboj. 
@@ -333,27 +463,7 @@ V zgornji enakosti je pomembna odvisnost od ovojnega "stevila.
 Elasti"cna energija zaradi defekta je sorazmerna z $s^2$, zato je bolj ugodno, da se defekt z ve"cjim ovojnim "stevilom razcepi na ve"c manj"sih defektov. 
 Stabilni defekti so le tisti z ovojnim "stevilom $s=\pm1/2$, vsi ostali razpadejo na ve"c defektov z manj"sim nabojem. 
 
-\subsection{Simetrija defektov}
-Defekt v ureditvi teko"cega kristala ima dolo"ceno rotacijsko in zrcalno simetrijo, ki je odvisna od ovojnega "stevila defekta. 
-
-\begin{table}[h]
- \centering
- \begin{tabular}{|c|c|c|}
- \hline
-  Ovojno "stevilo & Rotacijska simetrija & Zrcalne osi \\
-  \hline
-  0 & 2-"stevna & 2 \\
-  1/2 & ni & 1 \\
-  -1/2 & 3-"stevna & 3 \\
-  1 & zvezna & neskon"cno \\
-  -1 & 4-"stevna & 4 \\
-  \hline
- \end{tabular}
-\caption{Rotacijska in zrcalna simetrija defektov z najni"zjimi ovojnimi "stevili. }
-\label{tab:simetrija}
-\end{table}
-
-\subsection{Direktor v cilindri"cni kapilari}
+\section{Direktor v cilindri"cni kapilari}
 
 Nematski teko"ci kristal se spontano uredi tako, da minimizira prosto energijo. 
 V odsotnosti zunanjega polja je prosta energija najni"zja, "ce ni elasti"cnih deformacij, torej je direktor uniformen. 
@@ -390,9 +500,9 @@ Primer tvorbe tak"snih vlaken je na sliki \ref{fig:tvorjenje}.
  \label{fig:tvorjenje}
 \end{figure}
 
-\section{Elektromagnetno valovanje}
+\chapter{Elektromagnetno valovanje}
 
-\subsection{Maxwellove ena"cbe v neizotropnem sredstvu}
+\section{Maxwellove ena"cbe v neizotropnem sredstvu}
 "Sirjenje svetlobe po snovi opisujejo "stiri Maxwellove ena"cbe
 \begin{equation}
 \begin{aligned}
@@ -417,7 +527,7 @@ V zadnji ena"cbi smo privzeli, da se dielektri"cni tenzor $\varepsilon$ ne sprem
 Ta predpostavka je smiselna pri obravnavi opti"cnih polj, saj je relaksacija teko"cega kristala mnogo po"casnej"sa od sprememb elektri"cnega in magnetnega polja. 
 V tipi"cnem teko"cem kristalu in frekvencah vidne svetlobe je razlika v "casovni skali okrog 15 redov velikosti. 
 
-\subsection{Dvolomnost}
+\section{Dvolomnost}
 Dvolomnost \angl{birefringence} je pojav, pri katerem je lomni koli"cnik snovi odvisen od polarizacije svetlobe\cite{landau-lifsic-optics, wiki:birefringence}. 
 Opazimo jo predvsem pri kristalih, kot sta kalcit in vodni led, pa tudi nekaterih vrstah plastike. 
 Lahko je posledica same strukture snovi, na primer pri kristalih, oblike gradnikov kot pri teko"cih kristalih, ali pa jo vsilimo z mehansko obremenitvijo. 
@@ -463,9 +573,9 @@ Zaradi razli"cnih polarizacij se "zarka razli"cno lomita. Desno: Pogled skozi dv
 Enako kot dielektri"cnost $\varepsilon$ lahko tudi anizotropna magnetna permeabilnost $\mu$ povzro"ci dvolomnost. 
 Pri opti"cnih frekvencah je magnetna anizotropija ve"cine snovi zanemarljiva, je dovolj obravnavati le elektri"cno. 
 
-\subsection{Defekti v polarizaciji svetlobe}
+\section{Defekti v polarizaciji svetlobe}
 Elektri"cno in magnetno polje sta prava vektorja, zato imata lahko le defekte s celo"stevilskim ovojnim "stevilom. 
-Za razliko od direktorskega polja v teko"cih kristalih pa deformacije elektromagnetih polj ne nosijo energije, zato so stabilne poljubne konfiguracije. 
+Za razliko od direktorskega polja v teko"cih kristalih pa deformacije elektromagnetnih polj ne nosijo energije, zato so stabilne poljubne konfiguracije. 
 
 Defekt v elektromagnetnem polju je to"cka oz. obmo"cje, kjer polarizacija in faza valovanja nista definirani. 
 Amplituda valovanja v tak"sni to"cki mora biti enaka ni"c, zato se defekti izrazijo kot temne pege. 
@@ -484,7 +594,7 @@ Med polarizacijo svetlobe $\vec P$ in $-\vec P$ je razlika zgolj v fazi, zato ju
 V tem smislu je polarizacija svetlobe podobna nematskemu direktorju. 
 Kljub temu da z elektri"cnim poljem ne moremo skonstruirati pravega defekta s polcelim ovojnim "stevilom, imamo lahko na neki to"cki obrat polja, ki ne pove"ca proste energije. 
 
-\subsection{Dielektri"cni tenzor v teko"cem kristalu}
+\section{Dielektri"cni tenzor v teko"cem kristalu}
 \label{sec:dielektricnost}
 Oblika in polarizabilnost molekul v teko"cem kristalu vplivata na njegove opti"cne lastnosti. 
 Dielektri"cni tenzor v teko"cem kristalu je odvisen od molekularne anizotropije $\varepsilon_{a}^{\mathrm{mol}}$, direktorja in nematske stopnje reda $S$. 
@@ -513,7 +623,7 @@ V tem magistrskem delu sem se omejil le na "sirjenje svetlobe, pri "cemer je dir
 Sama ra"cunska metoda pa je zasnovana tako, da je kompatibilna z obstoje"cimi programi za izra"cun ureditve teko"cih kristalov\cite{ravnik-zumer-ldg}. 
 Z isto metodo bo v prihodnosti mogo"ce upo"stevati dvosmerno sklopitev med opti"cnim poljem in teko"cim kristalom, premostiti pa bo treba "se razliko v "casovnih skalah. 
 
-\subsection{Povezava med defekti v teko"cem kristalu in defekti v opti"cnem polju}
+\section{Povezava med defekti v teko"cem kristalu in defekti v opti"cnem polju}
 Orientacijski red v teko"cem kristalu je tesno povezani z opti"cnimi polji. 
 Med njimi obstaja dvosmerna povezava, opisana v poglavju \ref{sec:dielektricnost}. 
 Podobno so med seboj povezani tudi defekti. 
@@ -543,7 +653,7 @@ Na ta na"cin lahko nastavljamo "stevilo in razporeditev defektov v svetlobnem po
 
 \begin{comment}
  
-\subsubsection{Valj z dvojnim zvojem}
+\subsection{Valj z dvojnim zvojem}
 
 Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj. 
 \todo{Mogo"ce kaj vec o double-twist cylindrih}
@@ -557,7 +667,7 @@ Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj
 
 \end{comment}
 
-\section{Numeri"cna metoda}
+\chapter{Numeri"cna metoda}
 
 Za samo ra"cunanje smo implementirali metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}}\cite{taflove}. 
 Pri tej metodi "casovno propagiramo elektri"cno in magnetno polje v vsaki to"cki po Maxwellovih ena"cbah. 
@@ -587,7 +697,7 @@ Zaradi simetrije Maxwellovih ena"cb bi na enak na"cin kot dielektri"cnost $\vare
 Podobno bi lahko poleg elektri"cne prevodnosti $\sigma$ upo"steval magnetne izgube $\sigma^*$. 
 V ve"cini teko"cih kristalov je pri opti"cnih frekvencah magnetna anizotropija zanemarljiva in lahko $\mu$ postavimo na 1. 
 
-\subsection{Mre"za}
+\section{Mre"za}
 
 Pri diskretizaciji si lahko pomagamo z obliko obeh ena"cb. 
 Za izra"cun "casovnega odvoda vsakega izmed polj $\vec{E}, \vec{B}$ potrebujemo le vrednosti drugega polja. 
@@ -637,7 +747,7 @@ Za ra"cun potrebujemo "se inverz dielektri"cnega tenzorja, ki pa se med propagac
 Lahko neposredno predpi"semo vse komponente tenzorja, bolj priro"cno pa je podati le direktor in stopnjo reda, iz katerih nato izra"cunamo dielektri"cni tenzor in njegov inverz. 
 Pomembno je le, da je znan na istem mestu kot $\E$ (rde"ce to"cke na sliki \ref{fig:lattice}), vendar ob "casu, ko je podan $\B$. 
 
-\subsection{Postopek re"sevanja}
+\section{Postopek re"sevanja}
 
 Na izbrani mre"zi ne moremo neposredno izra"cunati rotorja polj, ker ta ni definiran v pravih to"ckah. 
 Elektri"cno polje je definirano na ogli"s"cih kocke, zato so krajevni odvodi tega polja definirani na razpolovi"s"cih robov, potrebujemo pa jih na mestu magnetnega polja, torej v sredi"s"cu kocke. 
@@ -706,7 +816,7 @@ Pri zgornjem zapisu smo implicitno privzeli, da je dielektri"cne tenzor $\vareps
 Privzetek je smiseln v trdnih snoveh, pa tudi v teko"cih kristalih, saj je zna"cilen relaksacijski "cas snovi mnogo ve"cji od periode nihanja opti"cnih polj. 
 Ker nastopa pri "casovnem odvodu elektri"cnega polja, mora biti podan na istem mestih kot $E_\alpha$, torej v to"ckah s celo"stevilskimi koordinatami. 
 
-\subsection{Izvor valovanja}
+\section{Izvor valovanja}
 
 V ena"cbah (\ref{eq:maxwell-base}) ne nastopajo izvori valovanja, zato jih moramo modelirati z robnimi pogoji. 
 To je v skladu z eksperimenti, saj svetloba pride od zunaj, zanima pa nas predvsem njeno "sirjenje skozi snov. 
@@ -736,7 +846,7 @@ Vse ostale izra"cune smo izvedli z delitvijo na desni strani.
 Na sliki je velikost obmo"cja \textbf{A} pretirana zaradi preglednosti. 
 V vseh primerih je bila debelina obmo"cja \textbf{A} enaka dva koraka mre"ze. 
 
-\subsection{Robni pogoji}
+\section{Robni pogoji}
 
 "Ce imamo na robu celice Dirichletov, Neumannov ali me"sani robni pogoj, se bo celotno valovanje odbilo in vrnilo v celico. 
 Tega si ne "zelimo, saj pri izvedbi ekperimentov obi"cajno svetloba najprej preide skozi vzorec, nato pa jo zajamemo in preu"cimo. 
@@ -755,7 +865,7 @@ Komponenta $E_x$ elektri"cnega polja vala v obi"cajnem mediju z dielektri"cnostj
 \begin{align}
  \eps \odvod{E_x}{t} + \sigma E_x = \odvod{H_z}{y} - \odvod{H_y}{z}\;.
 \end{align}
-V plasti \acs{PML} pa elektri"cno polje razdelimo na dva prispeka, $E_x = E_{xy} + E_{xz}$, ki zado"s"cata ena"cbam
+V plasti \acs{PML} pa elektri"cno polje razdelimo na dva prispevka, $E_x = E_{xy} + E_{xz}$, ki zado"s"cata ena"cbam
 \begin{align}
  \eps \odvod{E_{xy}}{t} + \sigma_y E_{xy} &= \odvod{}{y}(H_{zx} + H_{zy}) \\
  \eps \odvod{E_{xz}}{t} + \sigma_z E_{xz} &= -\odvod{}{z}(H_{yx} + H_{yz})\;,
@@ -778,9 +888,9 @@ Primer postavitve plasti \acs{PML}, ki zadosti temu pogoju, je na sliki \ref{fig
 \end{figure}
 
 
-\section{Primeri uporabe metode}
+\chapter{Primeri uporabe metode}
 
-\subsection{Prazen prostor}
+\section{Prazen prostor}
 Prvi preizkus metode, ki smo ga opravili, je "sirjenje svetlobe skozi prazen prostor. 
 Prazen prostor je modeliran kot snov, kjer je dielektri"cni tenzor uniformen in izotropen. 
 "Ce na eno stran celice postavimo planarni izvir ravnega valovanja, pri"cakujemo ravne valove po celotnem mediju. 
@@ -801,7 +911,7 @@ To je posledica modeliranja izvora valovanja okrog in okrog celice, kot je prika
 Valovanje se "siri od leve proti desni, tako da si lahko predstavljamo izvir valovanja ne levi strani in ponor na desni. 
 Dejstvo, da ponor valovanja na desni strani uspe"sno pobere celotno valovanje potrjuje natan"cnost ra"cunanja. 
 
-\subsection{Lom in odboj}
+\section{Lom in odboj}
 Enostaven preizkus za "sirjenje valovanja je prehod "cez mejo med medijema z razli"cnima lomnima koli"cnikoma. 
 Del valovanja se na meji odbije po odbojnem zakonu, tako da je odbojni kot enak vpadnemu. 
 Preostanek valovanja se na meji lomi, lomni kot pa je odvisen od lomnih koli"cnikov obeh snovi. 
@@ -843,7 +953,7 @@ Na desnem robu je prazno obmo"cje, ki ga valovanje "se ni doseglo.
 Veljavnost lomnega zakona lahko preverimo, "ce primerjamo kota vpadnega in lomljenega valovanja. 
 Dol"zini stranic na sliki nista v enakem merilu, zato kotov ne moremo od"citati s slike. 
 
-\subsection{Uniformen direktor}
+\section{Uniformen direktor}
 Za naslednji preizkus smo simulirali dvolomni kristal, torej snov, kjer je dielektri"cni tenzor uniformen, ne pa tudi izotropen. 
 Svetloba se "siri v smeri osi $z$, opti"cna os pa oklepa kot $\theta$ z ravnino $x$-$y$ in kot $\beta$ s polarizacijo vpadne svetlobe. 
 Zanima nas prepustnost tak"snega sistema, "ce za celico postavimo polarizator, ki je pravokoten na polarizacijo vpadne svetlobe. 
@@ -870,7 +980,7 @@ Ujemanje rezultatov z napovedjo je prikazano na sliki \ref{fig:test-uniform}.
 Na sliki vidimo zelo dobro ujemanje med simulacijo in teoreti"cno napovedjo. 
 To potrjuje pravilno delovanje metode v opti"cno anizotropni snovi. 
 
-\subsection{Periodi"cna modulacija}
+\section{Periodi"cna modulacija}
 
 %bandgap => prepovedani pas, energijska re"za
 Pri periodi"cni modulaciji lomnega koli"cnika opazimo pojav, da se svetloba dolo"cenih frekvenc ne more "siriti po mediju\cite{joannopoulos}. 
@@ -925,7 +1035,7 @@ Najve"c pozornosti na podro"cju metamaterialov je posve"cene snovem z negativnim
 Tak"sni materiali so sestavljeni iz periodi"cnih struktur, manj"sih od valovne dol"zine svetlobe. 
 Dobro ujemanje med rezultati numeri"cne metode in napovedjo potrjuje, da je z isto metodo mogo"ce raziskovati tudi opti"cne lastnosti metamaterialov. 
 
-\subsection{Dvolomno vlakno}
+\section{Dvolomno vlakno}
 V magistrskem delu smo preu"cevali "sirjenje svetlobe po cilindri"cnih vlaknih z razli"cnimi profili direktorja. 
 Ra"cunsko metodo smo preizkusil na sistemu, ki je "cimbolj podoben obravnavanim, "se vedno pa lahko napovemo rezultat. 
 V ta namen smo modeliral cilindri"cno vlakno, v katerem je uniformen dvolomen kristal, vanj pa po"sljemo kratek laserski sunkom. 
@@ -949,7 +1059,7 @@ Rezultati na sliki \ref{fig:pulse-0-mode} potrjujejo pravilno delovanje metode.
 Vpadnja svetloba se razcepi na komponenti z redno in izredno polarizacijo, ki se "sirita z razli"cnima hitrostma. 
 Redna komponenta, prikazana na levi sliki, ob"cuti manj"si lomni koli"cnik in je zato hitrej"sa. 
 
-\subsection{Robni pogoji}
+\section{Robni pogoji}
 Za prepre"cevanje odboja na stranskih ploskvah smo uporabili absorbirajo"ce robne pogoje. 
 Plast \acs{PML} nam omogo"ca, da imamo material s poljubno velikimi izgubami, pa vseeno ne dobimo odboja na meji, vse dokler so elektri"cne in magnetne izgube v primernem razmerju. 
 V praksi pa se zaradi diskretizacije vseeno nekaj valovanja odbije na meji med notranjostjo celice in robno plastjo. 
@@ -975,9 +1085,9 @@ Pri ve"cjih potencah lahko izgube "se pove"camo in s tem dose"zemo ni"zjo odbojn
 V zgornjem primeru se za najbolj"si profil izka"ze kvadratno nara"s"canje absorpcije, zato smo za vse nadaljnje ra"cune uporabili tak"sno plast. 
 Z debelino robne plasti 16 enot in s primerno izbiro za prevodnost $\sigma$ v robnem pasu lahko dose"zemo, da je odbito valovanje za 5 velikostnih redov "sibkej"se od vpadnega. 
 
-\section{"Sirjenje laserskega sunka}
+\chapter{"Sirjenje laserskega sunka}
 
-\subsection{Radialni profil direktorja}
+\section{Radialni profil direktorja}
 
 Teko"cekristalna vlakna, pridobljena v laboratoriju, imajo radialen direktorski profile. 
 Najprej smo ugotavljali, kako defekt v sredici vlakna vpliva na "sirjenje svetlobe. 
@@ -995,6 +1105,9 @@ Vrednosti parametrov, ki smo jih uporabili pri simulaciji, so na"steti v tabeli 
   Redni lomni koli"cnik v vlaknu & 1,52 \\
   Izredni lomni koli"cnik v vlaknu & 1,68 \\
   Lomni koli"cni okoli"ske snovi & 1,33 \\
+  \hline
+  "Sirina grla laserskega sunka & 3 $\mu$m \\
+  Trajanje pulza & \\
   \hline
  \end{tabular}
  \caption{Materialni parametri, uporabljeni pri izra"cunih}
@@ -1024,7 +1137,7 @@ To simetrijo pa zlomi vpadna svetloba, ki uvede preferen"cno smer, in sicer smer
 Po dolgem "casu v vlaknu mora svetlobni "zarek zadostiti obem simetrijam. 
 Oba na"cina na sliki \ref{fig:pulse-p1-mode} si lahko predstavljamo kot defekta z ovojnim "stevilom $+1$, ki jim odstranimo vse tiste dele, kjer bi polarizacija morala kazati pravokotno na vpadno polarizacijo. 
 
-\subsection{Hiperboli"cni profil direktorja}
+\section{Hiperboli"cni profil direktorja}
 
 V vlaknu z radialnim direktorskim profilom opazimo tesno povezavo med simetrijo teko"cega kristala in polarizacijo svetlobe. 
 Na podlagi tega lahko pri"cakujemo podobno povezavo tudi, "ce namesto defekta z ovojnim "stevilom $+1$ v sredino vlakna postavimo drug defekt. 
@@ -1047,7 +1160,7 @@ Oba na"cina sta prikazana na sliki \ref{fig:pulse-m1-mode}.
 Obmo"cja z vi"sjo intenziteto svetlobe so razporejena enako kot na sliki \ref{fig:pulse-p1-mode}, polarizacijo svetlobe pa tvori defekt z ovojnim "stevilom $-1$. 
 Spet sta vidni ravnini brez svetlobe, kjer se smer polarizacije obrne. 
 
-\subsection{Defekti z necelo mo"cjo}
+\section{Defekti z necelo mo"cjo}
 
 Videli smo, da radialni in hiperboli"cni profil direktorja znotraj teko"cekristalnega vlakna vsili svojo simetrijo svetlobi. 
 Na mestih, kjer ta simetrija ni kompatibilna s polarizacijo vpadne svetlobe, svetlobe ni. 
@@ -1078,7 +1191,7 @@ Izka"ze se, da se tudi v tem primeru laserski sunek razcepi na dva dela, ki ustr
 V nasprotju z radialnim in hiperboli"cnim profilom pri propagaciji svetlobe skozi defekte z necelo mo"cjo ne opazimo ravnin brez svetlobe. 
 Znotraj vsakega lastnega na"cina je le eno intenzitetno obmo"cje. 
 
-\subsection{Splo"sne zakonitosti}
+\section{Splo"sne zakonitosti}
 Nekaj lastnosti lastnih na"cinov propagacije svetlobe lahko obrazlo"zimo s simetrijo. 
 Polarizacija vpadne svetlobe je linearna in uniformna. 
 Njeno ovojno "stevilo je enako 0, torej ima dvo"stevno rotacijsko os in dve zrcalni osi. 
@@ -1099,14 +1212,14 @@ Na podlagi vseh zgorjih opa"zanj lahko najdemo podobnosti in izpeljemo splo"sne 
 
 S pomo"cjo teh zakonitosti lahko napovemo, kako se bo svetloba "sirila po vlaknu s poljubnim linijskim defektom po sredini. 
 
-\section{Stalna laserska svetloba}
+\chapter{Stalna laserska svetloba}
 
 Zelo kratki laserski sunki so zanimivi za teoreti"cno obravnavo, ker lahko z njimi najdemo lastne na"cine "sirjenja svetlobe po snovi. 
 Z eksperimentalnega vidika pa so izjemno zahtevni, tako za ustvarjanje pulza kot za njegovo opazovanje. 
 Sunek, uporabljen na zgornjih slikah je trajal le okrog 40 fs, kar je sicer v dosegu ultrahitrih femtosekndnih laserjev. 
 Bolj enostavno je opazovanje z laserjem, ki sveti konstantno. 
 
-\subsection{Radialni profil direktorja}
+\section{Radialni profil direktorja}
 
 Pri enakomernem laserskem "zarku je svetloba v vlaknu kombinacija obeh lastnih na"cinov, ki se se"stejeta z razli"cnima hitrostma. 
 Frekvenca svetlobe je nespremenjena in zato enaka po celotnem vlaknu, opazimo pa mo"cno krajevno odvisnost oblike polja. 
@@ -1140,7 +1253,7 @@ Presek polja je zelo podoben lastnemu na"cinu vlakna, prikazanemu na desni stran
 
 
 
-\subsection{Hiperboli"cni profil direktorja}
+\section{Hiperboli"cni profil direktorja}
 
 Podobno obna"sanje opazimo tudi v vlaknu s hiperboli"cnim direktorskim profilom, ki ima v osi defekt z ovojnim "stevilom $-1$. 
 V tem primeru polarizacija svetlobe prehaja med na"cinoma z ovojnim "stevilom $0$ in $-2$, spet pa so opazna tudi vmesna stanja z ovojnim "stevilom $-1$. 
@@ -1163,7 +1276,7 @@ Primer svetlobnega polja v tak"snem vlaknu je na sliki \ref{fig:m1-cont-snaps}
 \end{figure}
 \end{comment}
 
-\subsection{Defekti z necelo mo"cjo}
+\section{Defekti z necelo mo"cjo}
 
 Nazadnje smo simulacijo ponovili tudi z vlaknom, v katerem ima ureditev teko"ci kristal defekt s polcelo mo"cjo. 
 Tak"sen primer je "se posebej zanimiv, ker imata lastna na"cina le eno simetrijsko ravnino, in sicer tisto, ki vsebuje polarizacijo vpadne svetlobe. 
@@ -1230,7 +1343,7 @@ kjer je $k$ poljubno celo "stevilo. Za tipi"cne vrednosti lomnih koli"cnikov v t
 Dol"zina, potrebna za pretvorbo iz linearne v radialno polarizacijo, se spremeni tudi ob uporabi teko"cega kristala z druga"cno dvolomnostjo ali laserja z drugo valovno dol"zino. 
 Dvolomnost teko"cega kristala je odvisna od stopnje reda $S$ in s tem tudi od temperature, kar omogo"ca uravnavanje delovanje tak"sne naprave. 
 
-\section{Zaklju"cek}
+\chapter{Zaklju"cek}
 
 \bibliographystyle{zumer}
 \bibliography{magisterij}
