@@ -49,42 +49,45 @@
   \global\let\svgscale\undefined%
   \makeatother%
   \begin{picture}(1,0.5)%
-    \put(0,0){\includegraphics[width=\unitlength]{./Slike/bandgap.pdf}}%
-    \put(0.67170898,0.058){\makebox(0,0)[lb]{\smash{\ticssize\hspace{2mm}-0.5\hspace{3mm}-0.25\hspace{4mm}0\hspace{4mm}0.25\hspace{3mm}0.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength]{bandgap.pdf}}%
+    \put(0.67170898,0.07885278){\makebox(0,0)[lb]{\smash{0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+0.30
+-0.5-0.2500.250.5}}}%
     \put(0.72718895,0.45038479){\makebox(0,0)[lb]{\smash{Plasti GaAs/Zrak}}}%
-    \put(0.732,0.33){\makebox(0,0)[lb]{\smash{Prepovedani pas}}}%
-    \put(0.37964653,0.058){\makebox(0,0)[lb]{\smash{\ticssize\hspace{2mm}-0.5\hspace{3mm}-0.25\hspace{4mm}0\hspace{4mm}0.25\hspace{3mm}0.5}}}%
-    \put(0.44,0.25){\makebox(0,0)[lb]{\smash{Prepovedani pas}}}%
+    \put(0.74404396,0.31277248){\makebox(0,0)[lb]{\smash{Prepovedani pas}}}%
+    \put(0.85472099,0.39194515){\makebox(0,0)[lb]{\smash{n}}}%
+    \put(0.86965401,0.39194515){\makebox(0,0)[lb]{\smash{=2}}}%
+    \put(0.37964653,0.07952523){\makebox(0,0)[lb]{\smash{0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+0.30
+-0.5-0.2500.250.5}}}%
+    \put(0.45220654,0.25670679){\makebox(0,0)[lb]{\smash{Prepovedani pas}}}%
     \put(0.42965267,0.45067303){\makebox(0,0)[lb]{\smash{Plasti GaAs/GaAlAs}}}%
-    \put(0.08674675,0.061){\makebox(0,0)[lb]{\smash{\ticssize\hspace{2mm}-0.5\hspace{3mm}-0.25\hspace{4mm}0\hspace{4mm}0.25\hspace{3mm}0.5}}}%
-    \put(0.12675302,0.028){\makebox(0,0)[lb]{\smash{Valovni vektor $ka/2\pi$}}}%
+    \put(0.08674675,0.08220773){\makebox(0,0)[lb]{\smash{0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+0.30
+-0.5-0.2500.250.5}}}%
+    \put(0.12675302,0.04109796){\makebox(0,0)[lb]{\smash{Valovni vektor ka/2}}}%
     \put(0.17833776,0.45026775){\makebox(0,0)[lb]{\smash{Samo GaAs}}}%
-    \put(0.06,0.16240044){\rotatebox{90}{\makebox(0,0)[lb]{\smash{Frekvenca $\omega a/2\pi c$}}}}%
-    \put(0.42528057,0.025){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Valovni vektor $ka/2\pi$}}}%
-    \put(0.71,0.025){\makebox(0,0)[lb]{\smash{Valovni vektor $ka/2\pi$}}}%
-
-    \put(0.075,0.418){\makebox(0,0)[lb]{\smash{\ticssize 0.30}}}%
-    \put(0.075,0.363){\makebox(0,0)[lb]{\smash{\ticssize 0.25}}}%
-    \put(0.075,0.308){\makebox(0,0)[lb]{\smash{\ticssize 0.20}}}%
-    \put(0.075,0.253){\makebox(0,0)[lb]{\smash{\ticssize 0.15}}}%
-    \put(0.075,0.195){\makebox(0,0)[lb]{\smash{\ticssize 0.10}}}%
-    \put(0.075,0.140){\makebox(0,0)[lb]{\smash{\ticssize 0.05}}}%
-    \put(0.075,0.085){\makebox(0,0)[lb]{\smash{\ticssize 0.00}}}%
-    
-    \put(0.3675,0.418){\makebox(0,0)[lb]{\smash{\ticssize 0.30}}}%
-    \put(0.370,0.363){\makebox(0,0)[lb]{\smash{\ticssize 0.25}}}%
-    \put(0.370,0.307){\makebox(0,0)[lb]{\smash{\ticssize 0.20}}}%
-    \put(0.370,0.251){\makebox(0,0)[lb]{\smash{\ticssize 0.15}}}%
-    \put(0.370,0.192){\makebox(0,0)[lb]{\smash{\ticssize 0.10}}}%
-    \put(0.370,0.136){\makebox(0,0)[lb]{\smash{\ticssize 0.05}}}%
-    \put(0.370,0.082){\makebox(0,0)[lb]{\smash{\ticssize 0.00}}}%
-    
-    \put(0.660,0.418){\makebox(0,0)[lb]{\smash{\ticssize 0.30}}}%
-    \put(0.660,0.363){\makebox(0,0)[lb]{\smash{\ticssize 0.25}}}%
-    \put(0.660,0.307){\makebox(0,0)[lb]{\smash{\ticssize 0.20}}}%
-    \put(0.660,0.251){\makebox(0,0)[lb]{\smash{\ticssize 0.15}}}%
-    \put(0.660,0.192){\makebox(0,0)[lb]{\smash{\ticssize 0.10}}}%
-    \put(0.660,0.136){\makebox(0,0)[lb]{\smash{\ticssize 0.05}}}%
-    \put(0.660,0.082){\makebox(0,0)[lb]{\smash{\ticssize 0.00}}}%
+    \put(0.07124752,0.16240044){\rotatebox{90}{\makebox(0,0)[lb]{\smash{Frekvenca}}}}%
+    \put(0.07124752,0.28207544){\rotatebox{90}{\makebox(0,0)[lb]{\smash{$\omega$}}}}%
+    \put(0.07124752,0.29796427){\rotatebox{90}{\makebox(0,0)[lb]{\smash{a/2}}}}%
+    \put(0.07124752,0.33438381){\rotatebox{90}{\makebox(0,0)[lb]{\smash{$\pi$}}}}%
+    \put(0.07124752,0.34709499){\rotatebox{90}{\makebox(0,0)[lb]{\smash{c}}}}%
+    \put(0.42528057,0.04039392){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Valovni vektor ka/2}}}%
+    \put(0.72128166,0.04039392){\makebox(0,0)[lb]{\smash{Valovni vektor ka/2}}}%
   \end{picture}%
 \endgroup%
