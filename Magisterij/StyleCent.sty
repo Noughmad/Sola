@@ -1,0 +1,133 @@
+%
+% pizek.sty <<PZ
+% popravljeno za pisanje v anglescini
+%
+
+\@ifundefined{slovensko}{\def\slovensko{}}{\endinput}
+
+\typeout{Document Style Option 'pizek/andreja' / 22-Oct-97 / <<PZ / June-01}
+
+% MOJA GLAVA
+\def\@makechapterhead#1{
+ \vspace*{63pt} {
+ \ifnum \c@secnumdepth >\m@ne
+% KER IMAM SAMO EN DODATEK, GA NOCEM OZNACITI Z A
+ \ifcat\thechapter 1 \centerline{\LARGE\bf\thechapter} %\Huge
+ \else \centerline{\LARGE\bf\@chapapp{}} \fi           %\Huge
+% ... SICER ZGORNJI VRSTICI NADOMESTITI S TEMLE
+% \centerline{\Huge\bf\@chapapp{}\thechapter}
+ \vskip 8mm \fi \centerline{\LARGE\bf #1}              %\Huge
+ \nobreak \vskip 8mm \hrule height0.5mm \vskip 12mm } }
+
+% MOJE KAZALO
+\def\tableofcontents{\@restonecolfalse
+ \if@twocolumn\@restonecoltrue\onecolumn\fi
+ \@ifundefined{chapter}{
+  \section*{\centerline{\contentsname}
+  \markboth{\centerline{\uppercase{\contentsname}}}
+           {\centerline{\uppercase{\contentsname}}}}
+ }{
+  \chapter*{\centerline{\LARGE\bf\contentsname}
+            \vskip 8mm \hrule height0.5mm \vskip -6.2mm
+  \@mkboth{\centerline{\uppercase{\contentsname}}}
+          {\centerline{\uppercase{\contentsname}}}}
+ }
+ \@starttoc{toc}\if@restonecol\twocolumn\fi}
+
+\def\listoffigures{\@restonecolfalse
+ \if@twocolumn\@restonecoltrue\onecolumn\fi
+ \@ifundefined{chapter}{
+  \section*{\figuresname
+  \markboth{\uppercase{\figuresname}}{\uppercase{\figuresname}}}
+ }{
+  \chapter*{\figuresname
+  \@mkboth{\uppercase{\figuresname}}{\uppercase{\figuresname}}}
+ }
+ \@starttoc{lof}\if@restonecol\twocolumn\fi}
+
+\def\listoftables{\@restonecolfalse
+ \if@twocolumn\@restonecoltrue\onecolumn\fi
+ \@ifundefined{chapter}{
+  \section*{\tablesname
+  \markboth{\uppercase{\tablesname}}{\uppercase{\tablesname}}}
+ }{
+  \chapter*{\tablesname
+  \@mkboth{\uppercase{\tablesname}}{\uppercase{\tablesname}}}
+ }
+ \@starttoc{lot}\if@restonecol\twocolumn\fi}
+
+% KONEC KOSA IZ prabib.sty
+
+\def\appendix{\par
+ \@ifundefined{chapter}{
+  \setcounter{section}{0} \setcounter{subsection}{0}
+  \def\thesection{\Alph{section}}
+ }{
+  \setcounter{chapter}{0} \setcounter{section}{0}
+  \def\@chapapp{\appendixname} \def\thechapter{\Alph{chapter}}
+ }}
+
+\@ifundefined{chapter}{
+ \def\thefigure{\@arabic\c@figure}
+ \def\theslika{\@arabic\c@slika}
+ \def\thetable{\@arabic\c@table}
+}{
+ \def\thefigure{\thechapter.\@arabic\c@figure}
+% \def\theslika{\thechapter.\@arabic\c@slika} % stevilka poglavja.stevilka slike
+ \def\theslika{\@arabic\c@slika} % stevilka slike
+ \def\thetable{\thechapter.\@arabic\c@table}
+% \def\theequation{\thechapter.\arabic{equation}}
+ \def\theequation{\ifnum \thechapter=0 \arabic{equation}\else \thechapter.\arabic{equation}\fi}
+}
+\def\fnum@figure{\figurename~\thefigure}
+\def\fnum@slika{\slikaname~\theslika}
+\def\fnum@table{\tablename~\thetable}
+
+\def\@thmcountersep{}
+
+% stevci enot
+\def\thepart           {\Roman{part}}
+\@ifundefined{chapter}{
+ \def\thesection       {\arabic{section}.}
+ \def\thesubsection    {\thesection\arabic{subsection}}
+}{
+ \def\thechapter       {\arabic{chapter}}
+ \def\thesection       {\thechapter.\arabic{section}}
+ \def\thesubsection    {\thesection.\arabic{subsection}}
+}
+\def\thesubsubsection {\thesubsection.\arabic{subsubsection}}
+\def\theparagraph     {\thesubsubsection.\arabic{paragraph}}
+\def\thesubparagraph  {\theparagraph.\arabic{subparagraph}}
+
+% MOJE SLIKE
+\def\fnum@figure{{\small\bf Slika}\ \thefigure}
+\def\fnum@slika{{\small\bf Slika}\ \theslika}
+
+% PRIPISI K SLIKAM V NEKAJ OZJEM STOLPCU
+\long\def\@makecaption#1#2{
+\setbox\@tempboxa\hbox{{\small\bf #1}\ {\small #2}}
+\ifdim \wd\@tempboxa >130mm \hskip 10mm\parbox[t]{130mm}{\unhbox\@tempboxa}
+\else\hbox to130mm{\hfil\box\@tempboxa\hfil}
+\fi}
+
+% NEKAJ MATEMATICNIH RELACIJ IZ revtex.sty
+\def\vereq#1#2{\lower3pt\vbox{\baselineskip1.5pt \lineskip1.5pt
+\ialign{$\m@th#1\hfill##\hfil$\crcr#2\crcr\sim\crcr}}}
+\def\lesssim{\mathrel{\mathpalette\vereq<}}
+\def\gtrsim{\mathrel{\mathpalette\vereq>}}
+
+% MOJE STEVILCENJE STRANI
+\mark{{}{}}
+\def\ps@headings{\let\@mkboth\markboth
+\def\@oddfoot{}
+\def\@evenfoot{}
+\def\@evenhead{\rm\thepage\hfil\sl\leftmark\hfil\phantom{\rm\thepage}}
+\def\@oddhead{\phantom{\rm\thepage}\hfil\sl\rightmark\hfil\rm\thepage}
+\def\chaptermark##1{\markboth{\ifcat\thechapter A {\@chapapp{}:\ }\fi ##1}
+{\ifcat\thechapter A {\@chapapp{}:\ }\fi ##1}}}
+
+\ps@headings\pagenumbering{arabic}\onecolumn
+
+\endinput
+
+
