@@ -67,11 +67,11 @@ Oddelek za fiziko}\\
 
 \bigskip\bigskip\bigskip
 
-{\LARGE\sc {\bf Modeliranje "sirjenja svetlobe}}
+{\LARGE\sc {\bf Modeliranje "sirjenja svetlobe vzdol"z}}
 
 \bigskip
 
-{\LARGE\sc {\bf v teko"cekristalnih vlaknih}}
+{\LARGE\sc {\bf ograjenih teko"cekristalnih defektnih linij}}
 
 \vskip 8mm \hrule height0.5mm \vskip 12mm
 
@@ -187,19 +187,23 @@ Possible polarizations of light that could be achieved by shining through such f
 \chapter{Uvod} % 1.5 - 3 strani
 
 Teko"ci kristali so mehke snovi, ki zdru"zujejo lastnosti kristalov in teko"cin\cite{degennes}. 
-Praviloma so teko"ci kristali sestavljeni iz pali"castih ali diskastih molekul, teko"cekristalne mezofaze pa tvorijo tudi segmenti \textsmaller{DNK}, molekule nekaterih virusov in primerni koloidni delci. 
+Njihova najpomembnej"sa opti"cna lastnost je dvolomnost, zaradi "cesar so osrednji opti"cno aktivni materiali v sodobni optiki in fototniki.
+
+Praviloma so teko"ci kristali sestavljeni iz pali"castih ali diskastih molekul. 
 Polo"zaji gradnikov nimajo reda dolgega dosega, ali pa ta red ne dr"zi v vseh treh dimenzijah, zato se snov obna"sa kot teko"cina. 
-Glede na orientacijski in pozicijski red lo"cimo razli"cne teko"cekristalne mezofaze. 
-V nematski mezofazi imajo gradniki le orientacijski red dolgega dosega, v smekti"cni pa tudi pozicijski red v eni smeri. 
+Imajo pa red dolgega dosega v orientaciji gradnikov. 
+
+Dvolomnost teko"cih kristalov izvira iz orientacijskega reda. 
+Preferen"cna orientacija gradnikov v teko"cem kristalu se spreminja na velikostnih skalah, mnogo ve"cjih od velikosti molekul, ampak primerljivih z valovno dol"zino vidne svetlobe. 
+Za razliko od obi"cajnih kristalov lahko orientacijski red vsilimo z obdelavo povr"sine ali zunanjimi polji. 
+Zaradi mo"znosti zunanjega nadzora so teko"ci kristali klju"cnega pomena v mnogih opti"cnih napravah. 
 
 Orientacijski red v teko"cih kristalih makroskopsko opi"semo s preferen"cno orientacijo oz. direktorjem $\mathbf{n}$ in stopnjo reda $S$. 
 Na prosto energijo in s tem na ureditev teko"cega kristala vplivajo krajevno spreminjanje direktorja, temperatura in dielektri"cna interakcija. 
 Teko"ci kristali se obna"sajo kot elasti"cni medij, na katerega lahko vplivamo z zunanjimi polji. 
-
 Z dolo"ceno izbiro robnih pogojev, zunanjih polj ali delcev v teko"cem kristalu lahko vsilimo defekte. 
 To so podro"cja zmanj"sanega reda, kjer direktor ni definiran. 
 V treh dimenzijah lo"cimo to"ckaste in linijske defekte. 
-
 
 Dvolomnost je lastnost snovi, v kateri je lomni koli"cnih odvisen od smeri polarizacije svetlobe\cite{dvolomnost}. 
 Ve"cina dvolomnih snovi je enoosnih, kar pomeni, da obstaja ena izredna os z razli"cnim lomnim koli"cnikom, ostali dve pravokotni smeri pa sta enakovredni. 
@@ -216,6 +220,16 @@ Sprememba temperature vpliva na koli"cino in barvo prepu"s"cene svetlobe, zato s
 V zadnjem "casu so veliko pozornosti dele"zni teko"cekristalni laserji, ki izkori"s"cajo pojav fotonskega prepovedanega pasu v periodi"cnih strukturah\cite{humar-musevic,coles-morris}. 
 Zanimiva je tudi uporaba teko"cih kristalov v napravah, ki spreminjanjo polarizacijo svetlobe. 
 Poleg linearne in elipti"cne polarizacije lahko z njimi dose"zemo tudi osno simetri"cno polarizacijo, torej radialno ali azimutalno\cite{polarization-converters-linear,polarization-converters-axial}. 
+
+Obstaja ve"c metod za modeliranje propagacije svetlobe skozi anizotropne snovi. 
+Jonesov vektor predstavi elektri"cno polje svetlobe, ki se "siri v smeri $z$, kot vektor s komponentama v smereh $x$ in $y$, med katerima je lahko tudi fazni zamik. 
+S tak"snim zapisom lahko opi"semo linearno, kro"zno ali elipti"cno polarizirano svetlobo. 
+Opti"cno aktivne snovi, kot so polarizatorji in plasti teko"cega kristala, so predstavljeni z matrikami velikosti $2\times 2$, ki delujejo na vektor $(E_x, E_y)$. 
+Za opis delno polarizirane svetlobe potrebujemo Stokesove vektorje, ki so posplo"sitev Jonesoving in imajo "stiri komponente, naprave pa so opisane z Muellerjevimi matrikami velikosti $4\times 4$.
+Vse te metode uporabljajo mo"cno poenostavljen opis svetlobe. 
+V zadnjem "casu so ra"cunalniki "ze dovolj zmogljivi, da lahko opi"semo svetlobo direktno z vektorjema elektri"cnega in magnetnim polja po celotnem prostoru. 
+"Casovni razvoj polj lahko simularimo z Maxwellovimi ena"cbami. 
+Tak"sen pristop je ra"cunsko mnogo bolj zahteven, omogo"ca pa modeliranje "sirjenja svetlobe po poljubno zapletenih strukturah. 
 
 V teoreti"cnem delu te naloge je razlo"zena osnovna teorija ureditve teko"cih kristalov in njihove opti"cne lastnosti. 
 Navedene so Maxwellove ena"cbe, ki opisujejo "sirjenje svetlobe skozi anizotropno snov. 
