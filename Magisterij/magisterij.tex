@@ -203,7 +203,7 @@ Z dolo"ceno izbiro robnih pogojev, zunanjih polj ali delcev v teko"cem kristalu 
 To so podro"cja zmanj"sanega reda, kjer direktor ni definiran. 
 V treh dimenzijah lo"cimo to"ckaste in linijske defekte. 
 
-Dvolomnost je lastnost snovi, v kateri je lomni koli"cnih odvisen od smeri polarizacije svetlobe\cite{dvolomnost}. 
+Dvolomnost je lastnost snovi, v kateri je lomni koli"cnih odvisen od smeri polarizacije svetlobe\cite{landau-lifsic-optics}. 
 Ve"cina dvolomnih snovi je enoosnih, kar pomeni, da obstaja ena izredna os z razli"cnim lomnim koli"cnikom, ostali dve pravokotni smeri pa sta enakovredni. 
 Tipi"cne enoosne snovi so kristali s tetragonalno ali heksagonalno mre"zo, kjer opti"cna os enaka po celem kristalu. 
 V teko"cem kristalu z orientacijskim redom os dvolomnosti sledi orientaciji gradnikov. 
@@ -223,26 +223,24 @@ Obstaja ve"c metod za modeliranje propagacije svetlobe skozi anizotropne snovi.
 Jonesov vektor predstavi elektri"cno polje svetlobe, ki se "siri v smeri $z$, kot vektor s komponentama v smereh $x$ in $y$, med katerima je lahko tudi fazni zamik. 
 S tak"snim zapisom lahko opi"semo linearno, kro"zno ali elipti"cno polarizirano svetlobo. 
 Opti"cno aktivne snovi, kot so polarizatorji in plasti teko"cega kristala, so predstavljeni z matrikami velikosti $2\times 2$, ki delujejo na vektor $(E_x, E_y)$. 
-Za opis delno polarizirane svetlobe potrebujemo Stokesove vektorje, ki so posplo"sitev Jonesoving in imajo "stiri komponente, naprave pa so opisane z Muellerjevimi matrikami velikosti $4\times 4$.
-Vse te metode uporabljajo mo"cno poenostavljen opis svetlobe. 
+Za opis delno polarizirane svetlobe moramo opis raz"siriti na Stokesove vektorje s "stirimi komponentami, naprave pa so opisane z Muellerjevimi matrikami velikosti $4\times 4$.
+Jonesova in Muellerjeva metoda sta uporabni v sistemih, kjer je os dvolomnosti pravokotna na smer "sirjenja valovanja, ne pa v teko"cih kristalih. 
+Za modeliranje anizotropnih snovi je primerna Berremanova metoda\cite{berreman,optics-lcd}. 
+
+Vse na"stete metode uporabljajo poenostavljen opis svetlobe. 
 V zadnjem "casu so ra"cunalniki "ze dovolj zmogljivi, da lahko opi"semo svetlobo direktno z vektorjema elektri"cnega in magnetnim polja po celotnem prostoru. 
 "Casovni razvoj polj lahko simularimo z Maxwellovimi ena"cbami. 
-Tak"sen pristop je ra"cunsko mnogo bolj zahteven, omogo"ca pa modeliranje "sirjenja svetlobe po poljubno zapletenih strukturah. 
+Tak"sen pristop je ra"cunsko mnogo bolj zahteven, omogo"ca pa modeliranje "sirjenja svetlobe po poljubno zapletenih strukturah\cite{taflove, hwang-rey}. 
 
 V teoreti"cnem delu te naloge je razlo"zena osnovna teorija ureditve teko"cih kristalov in njihove opti"cne lastnosti. 
 Navedene so Maxwellove ena"cbe, ki opisujejo "sirjenje svetlobe skozi anizotropno snov. 
 Poseben poudarek je na dvolomnosti. 
-V tretjem poglavju je predstavljena numeri"cna metoda, s katero sem modeliral "sirjenje svetlobe skozi teko"cekristalne strukture. 
-Metoda temelji na direktnem "casovnem razvoju elektromagnetnih polj po Maxwellovih ena"cbah. 
-Opisana je diskretizacijska mre"za, ki je primerna za obravavo opti"cno anizotropnih snovi. 
-V petem poglavju je na"stetih nekaj preizkusov pravilnosti izbrane metode. 
+V tretjem poglavju je predstavljena numeri"cna metoda, s katero sem modeliral "sirjenje svetlobe skozi teko"cekristalne strukture na podlagi Maxwellovih ena"cb. 
+Opisana je diskretizacijska mre"za, ki je primerna za obravavo opti"cno anizotropnih snovi, na"stetih je nekaj preizkusov pravilnosti izbrane metode. 
 Vklju"ceni so preizkusi od najbolj enostavnih, "sirjenje ravnega vala po praznem prostoru, do bolj zapletenih fotonskih kristalov in teko"cekristalnih vlaken. 
-Rezultati so v nalogi razdeljeni v dva dela. 
-V prvem delu je prikazana propagacija zelo kratkih laserskih sunkov skozi teko"cekristalna vlakna z razli"cnimi direktorskimi profili. 
-Z uporabo kratkih sunkov lahko najdemo lastne na"cine propagacije svetlobe po tak"snih vlaknih. 
+Rezultati prikazujejo propagacijo zelo kratkih laserskih sunkov skozi teko"cekristalna vlakna z razli"cnimi direktorskimi profili. 
 Metoda napove razcep sunka v dva lastna na"cina, ki zadostita tako simetriji direktorja kot tudi simetriji za"cetne polarizacije svetlobe. 
-V drugem delo je opisana propagacija stalne laserske svetlobe, ki je bolj primerna za eksperimentalno opazovanje. 
-Odvisno od dol"zine vlakna lahko dobimo razli"cne profile polarizacije svetlobe, na primer radialna polarizacija. 
+Opisana je tudi propagacija stalne laserske svetlobe, ki je bolj primerna za eksperimentalno opazovanje, s katero lahko pridobimo razli"cne profile polarizacije svetlobe, na primer radialno polarizacijo. 
 
 
 \chapter{Teko"ci kristali}
@@ -360,21 +358,12 @@ Prispevek k gostoti proste energije zaradi elasti"cnih deformacij nematskega tek
  f_{\mathrm{el}}^N &= \frac{K_1}{2} (\nabla \cdot \vec n)^2 + \frac{K_2}{2} (\vec n \cdot \nabla \times \vec n)^2 + \frac{K_3}{2} (\vec n \times \nabla \times \vec n)^2. 
 \end{align}
 
-V kiralnem nematiku oz. holesteriku ima stanje z najni"zjo prosto energijo konstanten zvoj s periodo $a = 2\pi / q$.
-Drugi "clen tako ni ve"c simetri"cen glede na smer deformacije, gostota proste energije v holesteriku pa je enaka
-
-\begin{align}
- f_{\mathrm{el}}^{Ch} &= \frac{K_1}{2} (\nabla \cdot \vec n)^2 + \frac{K_2}{2} (\vec n \cdot \nabla \times \vec n - q)^2 + \frac{K_3}{2} (\vec n \times \nabla \times \vec n)^2. 
-\end{align}
-
 Razvoj elasti"cne proste energije po krajevnih odvodih direktorja je la"zja za predstavo, saj "clene lahko pove"zemo z na"cini deformacije na sliki \ref{fig:tsb}. 
 Za numeri"cno modeliranje pa je bolj ugodno, "ce jo izrazimo s komponentami tenzorja $Q$, ki poleg direktorja vklju"cuje tudi stopnjo redo in dvoosnost\cite{copar-phd}. 
 V tej sliki se izraz glasi
 \begin{align}
- f_{\mathrm{el}} &= \frac{1}{2}L_1\qodv{ij}{k}\qodv{ij}{k} + \frac{1}{2}L_2 \qodv{ij}{j}\qodv{ik}{k} + \frac{L_3}Q_{ij}\qodv{kl}{i}\qodv{kl}{l} + 2Lq\epsilon_{ikl}Q_{ij}\qodv{lj}{k}
+ f_{\mathrm{el}} &= \frac{1}{2}L_1\qodv{ij}{k}\qodv{ij}{k} + \frac{1}{2}L_2 \qodv{ij}{j}\qodv{ik}{k} + \frac{L_3}Q_{ij}\qodv{kl}{i}\qodv{kl}{l}\;.
 \end{align}
-kjer je $\epsilon_{ijk}$ Levi-Civit'ajev popolnoma antisimetri"cni tenzor tretjega reda. 
-
 
 V teko"cih kristalih je stabilnost nematske mezofaze odvisna od temperature ali od koncentracije. 
 Za termotropske teko"ce kristale, kjer je mezofaza odvisna od temperature, lahko zapi"semo Landauov razvoj proste energije po ureditvenem parametru $Q_{ij}$ kot
@@ -401,7 +390,7 @@ Zunanje polje v molekuli inducira elektri"cni dipolni moment, ki je sorazmeren z
 
 \section{Defekti}
 
-Ravnovesno stanje nematika je tak"sno, ki minimizira prosto energijo. 
+Ravnovesno stanje nematika minimizira prosto energijo. 
 V odsotnosti zunanjih polj je to ureditev z uniformnim direktorjem, kjer je celotna elasti"cna prosta energija enaka 0\cite{mermin}. 
 Pod vplivom ograjenosti ali zunanjega polja pa lahko pride do stanja, kjer zvezno direktorsko polje ne more zadostiti robnim pogojem. 
 V tem primeru se pojavijo obmo"cja z nedifiniranim direktorjem. 
@@ -477,9 +466,7 @@ Stabilni defekti so le tisti z ovojnim "stevilom $s=\pm1/2$, vsi ostali razpadej
 
 \section{Direktor v cilindri"cni kapilari}
 
-Nematski teko"ci kristal se spontano uredi tako, da minimizira prosto energijo. 
-V odsotnosti zunanjega polja je prosta energija najni"zja, "ce ni elasti"cnih deformacij, torej je direktor uniformen. 
-V cilindri"cni geometriji s homeotropnimi robnimi pogoji pa tak"sna ureditev ni mo"zna. 
+V cilindri"cni geometriji s homeotropnimi robnimi pogoji ureditev z uniformnim direktorjem ni mo"zna. 
 Glede na razmerja med elasti"cnimi konstantami se teko"ci kristal uredi v eno izmed konfiguracij na sliki \ref{fig:director-profiles}. 
 
 \begin{figure}[h]
@@ -587,8 +574,6 @@ Pri opti"cnih frekvencah je magnetna anizotropija ve"cine snovi zanemarljiva, je
 
 \section{Defekti v polarizaciji svetlobe}
 Elektri"cno in magnetno polje sta prava vektorja, zato imata lahko le defekte s celo"stevilskim ovojnim "stevilom. 
-Za razliko od direktorskega polja v teko"cih kristalih pa deformacije elektromagnetnih polj ne nosijo energije, zato so stabilne poljubne konfiguracije. 
-
 Defekt v elektromagnetnem polju je to"cka oz. obmo"cje, kjer polarizacija in faza valovanja nista definirani. 
 Amplituda valovanja v tak"sni to"cki mora biti enaka ni"c, zato se defekti izrazijo kot temne pege. 
 Primer so Laguerre-Gaussovi snopi, prikazani na sliki \ref{fig:laguerre-gauss}. 
@@ -600,11 +585,9 @@ Primer so Laguerre-Gaussovi snopi, prikazani na sliki \ref{fig:laguerre-gauss}.
  \label{fig:laguerre-gauss}
 \end{figure}
 
-
-V opti"cnih poljih je nihanje elektri"cnega in magnetnega polja tako hitro, da z nobeno merilno napravo ne moremo izmeriti samega polja, ampak le njegovo "casovno povpre"cje. 
-Med polarizacijo svetlobe $\vec P$ in $-\vec P$ je razlika zgolj v fazi, zato ju lahko obravnavamo kot enaki. 
-V tem smislu je polarizacija svetlobe podobna nematskemu direktorju. 
-Kljub temu da z elektri"cnim poljem ne moremo skonstruirati pravega defekta s polcelim ovojnim "stevilom, imamo lahko na neki to"cki obrat polja, ki ne pove"ca proste energije. 
+Kljub topolo"ski podobnosti pa so defekti v polarizaciji svetlobe fizikalno zelo razli"cni od defektov v ureditvi teko"cega kristala. 
+Deformacije elektromagnetnega polja ne nosijo elasti"cne energije, ki bi jo ravnovesno stanje minimiziralo. 
+S primernimi opti"cnimi elementi lahko skonstruiramo svetlobo z defekti v polarizaciji, kot je npr. simetrijska ravnina z obratom polarizacije, ki bi v teko"cem kristalu razpadli zaradi previsoke energije. 
 
 \section{Dielektri"cni tenzor v teko"cem kristalu}
 \label{sec:dielektricnost}
@@ -819,14 +802,14 @@ Maxwellove ena"cbe v tem zapisu se glasijo
 Iz zgornjih dveh ena"cb je razvidno, da lahko obe polji ra"cunamo izmeni"cno. 
 "Ce poznamo elektri"cno polje ob "casu $n\Delta t$ in magnetno polje ob "casu $(n+1/2)\Delta t$, lahko po ena"cbi izra"cunamo (\ref{eq:disk-E}) izra"cunamo elektri"cno polje ob "casu $(n+1)\Delta t$, nato pa po ena"cbi (\ref{eq:disk-H}) "se magnetno polje ob "casu $(n+3/2)\Delta t$. Izmeni"cno ra"cunanje lahko ponavljamo poljubno dolgo. 
 
-Pomembna lastnost obeh zgornjih ena"cb je, da med ra"cunanje enega izmed polj potrebujemo le vrednosti drugega polja, ne pa tudi istega polja na sosednjih mesti. 
+Pomembna lastnost obeh zgornjih ena"cb je, da med ra"cunanje enega izmed polj potrebujemo le vrednosti drugega polja, ne pa tudi istega polja na sosednjih mestih. 
 "Casovni odvodi istega polja na razli"cnih mestih so med seboj popolnoma neodvisni. 
 Vsak korak metode, torej ra"cunanje enega izmed polj, lahko razdelimo na veliko "stevilo neodvisnih ra"cunskih enot. 
 To omogo"ca paralelno izvajanje programa na ra"cunalnikih z ve"c jedri, kot so ra"cunalni"ske gru"ce, pa tudi novej"si osebni ra"cunalniki. 
 
 Pri zgornjem zapisu smo implicitno privzeli, da je dielektri"cne tenzor $\varepsilon_{\alpha\beta}$ odvisen od kraja, ne pa od "casa. 
 Privzetek je smiseln v trdnih snoveh, pa tudi v teko"cih kristalih, saj je zna"cilen relaksacijski "cas snovi mnogo ve"cji od periode nihanja opti"cnih polj. 
-Ker nastopa pri "casovnem odvodu elektri"cnega polja, mora biti podan na istem mestih kot $E_\alpha$, torej v to"ckah s celo"stevilskimi koordinatami. 
+Ker nastopa pri "casovnem odvodu elektri"cnega polja, mora biti podan na istih mestih kot $E_\alpha$, torej v to"ckah s celo"stevilskimi koordinatami. 
 
 \section{Izvor valovanja}
 
@@ -995,7 +978,7 @@ To potrjuje pravilno delovanje metode v opti"cno anizotropni snovi.
 \section{Periodi"cna modulacija}
 
 %bandgap => prepovedani pas, energijska re"za
-Pri periodi"cni modulaciji lomnega koli"cnika opazimo pojav, da se svetloba dolo"cenih frekvenc ne more "siriti po mediju\cite{joannopoulos}. 
+Pri periodi"cni modulaciji lomnega koli"cnika opazimo pojav, da se svetloba dolo"cenih frekvenc ne more "siriti po mediju\cite{hecht-nano,joannopoulos}. 
 Temu pojavu pravimo prepovedani pas \angl{band gap} in je soroden elektronski energijski re"zi pri molekulskih kristalih. 
 Za prisotnost fotonskega prepovedanega pasu pa potrebujemo kristal oz. periodi"cno strukturo, kjer je perioda primerljiva z valovno dol"zino svetlobe. 
 Fotonsko energijsko re"zo za vidno svetlobo zato opazimo pri koloidnih kristali, ki imajo periodo okrog 1 $\mu$m. 
