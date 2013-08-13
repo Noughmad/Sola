@@ -21,7 +21,7 @@
 
 \graphicspath{{./Slike/}}
 
-\title{Modeling light propagation through nonuniform anisotropic materials}
+\title{Modelling light propagation through \\ non-uniform anisotropic materials}
 \author[1]{Miha \v Can\v cula\thanks{miha.cancula@student.fmf.uni-lj.si}}
 \author[1,2]{Miha Ravnik}
 \author[1,2,3]{Slobodan \v Zumer}
@@ -44,11 +44,10 @@
   {\endminipage\par\medskip}
   
 \begin{document}
-
 \maketitle
 \begin{abstract}
       Liquid crystals are central to modern optics and photonics due to their birefringence and the possibility of external control. 
-We present a method for modelling the propagation of light through nonuniform and optically anisotropic materials. 
+We present a method for modelling the propagation of light through non-uniform and optically anisotropic materials. 
 It is based on the finite-difference time-domain (\textsc{FDTD}) method which evolves electromagnetic fields according to Maxwell's equations. 
 Unlike other methods for modelling the flow of light, such as Jones' matrices or the Berreman method, it can describe arbitrarily complex structures which occur in liquid crystals. 
 With the newly-implemented method, we calculated the transmitivity of a liquid crystal layer between crossed polarizers, which agrees with observations and a theoretical treatment. 
@@ -136,6 +135,34 @@ Each of these components observes different electric and magnetic conductivity.
 
 \subsection{Refraction and reflection}
 
+When a light wave hits an interface between areas with different refractive indexes, a part of the wave is reflected and the rest is refracted. 
+The intensity of reflected light depends on the ratio of refractive indexes, the angle of incidence and the polarization of incident light. 
+At a certain angle, none of the light with polarization in the plane of the propagation direction and interface normal is reflected. 
+This is called Brewster's angle and is equal to
+\begin{align}
+ \theta_B &= \arctan\left(\frac{n_1}{n_2}\right)\,.
+\end{align}
+Near this angle, we observe a very weak reflection, while most of the light is refracted according to Snell's law. 
+A snapshot of a plane wave hitting an interface near Brewster's angle is presented on Figure \ref{fig:refraction-test}. 
+
+\begin{figure}
+ \centering
+  \vspace{-1.3cm}
+ \resizebox{\textwidth}{!}{
+  \input{g_refraction_test}
+ }
+  \vspace{-1.6cm}
+ \captionof{figure}{Reflection and refraction on an interface near Brewster's angle}
+ \label{fig:refraction-test}
+\end{figure}
+
+Four distinct regions are visible on the figure. 
+The red region on the left is the absorbing boundary. 
+Next to it is the region with incident and reflected light. 
+We can cleary see the interface near the middle of the figure. 
+On the right side of the interface is the region with a higher index of refraction and correspondingly shorter wavelength. 
+The light has not yet reached the rightmost boundary of the cell, so we see another empty region there. 
+
 \subsection{Uniform layer}
 
 A common method for observing liquid crystal and other anisotropic materials is to put a sample between crossed polarizers. 
@@ -153,15 +180,64 @@ We can see strong agreement, confirming the correctness of the method when using
 \begin{figure}
 \centering
  \resizebox{\textwidth}{!}{\input{g_test_uniform_en}}
- \captionof{figure}{Transmittance of a sample with a uniform and anisotropic dielectric tensor. }
+ \captionof{figure}{Transmittance of a sample with a uniform and anisotropic dielectric tensor between crossed polarizers}
  \label{fig:test-uniform}
 \end{figure}
 
+The setup of two crossed polarizers has a four-fold symmetry axis and four mirror planes. 
+The results shown above reproduce this symmetry. 
+
 \subsection{Photonic band gap}
 
+With a periodic modulation of refractive index, we observe that light of certain frequencies cannot propagate through the medium\cite{hecht-nano,joannopoulos}. 
+This phenomenon is called the photonic bang gap and is related to the electron band gap in molecular crystals. 
 
+We used a very simple periodic structure, as shown on Figure \ref{fig:periodic-structure}. 
+We repeated the simulation with various values of both refractive indexes. 
+
+\begin{figure}
+ \centering
+  \resizebox{\textwidth}{!}{\input{./Slike/periodic-structure.pdf_tex}}
+  \captionof{figure}{A periodic structure with alternating layers of different refractive indexes\cite{joannopoulos}}
+  \label{fig:periodic-structure}
+\end{figure}
+
+A plane wave was sent through the structure in the $z$ direction. 
+A theoretical treatment of such a structure predict the relation between light frequency and wave vector as shown on Figure \ref{fig:bandgap}. 
+
+When both dielectric constants are not equal, we find an interval of frequencies where no wave vector is possible. 
+Light with such frequencies cannot propagate through the medium and is thus totally reflected. 
+
+\begin{figure}
+ \centering
+ \includegraphics[width=\textwidth]{bandgap}
+  \captionof{figure}{Relations between light frequency and wave vector for alternating layers with different refractive indexes. The dielectric constant of one layer is 13, while the other is 13 (left), 12 (center) and 1 (right). Yellow regions are photonic band gaps. \cite{joannopoulos}}
+  \label{fig:bandgap}
+\end{figure}
+
+Using our numerical method, we sent a plane wave through the same structure and measure the intensity of light at the far end. 
+We used light of several different frequencies and expected to find very low intensity when the frequency is in the band gap. 
+The results are shown on Figure \ref{fig:test-periodic}. 
+
+\begin{figure}
+ \centering
+  \resizebox{\textwidth}{!}{\input{g_test_periodic}}
+  \captionof{figure}{Transmittance of periodic structures depending on their dielectric constants and the frequency of light. Regions with very low transimitivity correspond to the band gap. }
+  \label{fig:test-periodic}
+\end{figure}
+
+The lower boundary of the band gap is in all cases at normalized frequency $\frac{\omega a}{2\pi}$ just below $0.15$, while the upper boundary depends more strongly on the difference in dielectric constants. 
+This result shows strong agreement with the theoretical prediction on Figure \ref{fig:bandgap}. 
+The numerical method used gives correct results for the propagation of light through periodic structures. 
 
 \section{Conclusions}
+We have implemented a method for modelling the propagation of light through non-uniform and optically anisotropic media, such as liquid crystals. 
+This method has proved to correctly predict the phenomena of reflection and refraction on an interface, as well as photonic band gap in periodic structures, both qualitatively and quantitatively.  
+When applied to a layer of liquid crystal between crossed polarizers, its results closely matches the theoretical prediction. 
+
+The \textsc{FDTD} method works with arbitrary profiles of dielectric tensor. 
+In the light of this results we believe this method could be used to model various complicated profiles of the dielectric tensor. 
+We expect the most applications in liquid crystals, where the dielectric tensor is both non-uniform and fully anisotropic. 
 
 \bibliographystyle{zumer}
 \bibliography{magisterij}
