@@ -13,6 +13,13 @@ set ylabel "Prepustnost $I/I_0$"
 set yrange [0:0.4]
 plot uni(x) w l lw 5 lc 2 t "Napoved\\cite{kleman}", "Podatki/test_uniform.dat" w p pt 7 ps 1.2 lc 1 title "Rezultat simulacije"
 
+set xlabel "$\\beta$"
+set xtics ("0" 0, "$\\frac{\\pi}{2}$" PI/2, "$\\pi$" PI, "$\\frac{3\\pi}{2}$" 1.5*PI, "$2\\pi$" 2*PI)
+set ylabel "Transmittance $I/I_0$"
+set yrange [0:0.4]
+set output "g_test_uniform_en.tex"
+plot uni(x) w l lw 5 lc 2 t "Prediction\\cite{kleman}", "Podatki/test_uniform.dat" w p pt 7 ps 1.2 lc 1 title "Simulation"
+
 reset
 set output "g_test_periodic.tex"
 
