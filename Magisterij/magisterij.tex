@@ -39,7 +39,7 @@
 \renewcommand{\acf}[1]{\aclu{#1} -- \acs{#1}}
 \newcommand{\dd}{\ensuremath{\;\mathrm{d}}}
 
-\newcommand{\ticssize}{\small}
+\newcommand{\ticssize}{\fontsize{9}{10}\selectfont}
 \newcommand{\qodv}[2]{\ensuremath{\frac{\partial Q_{#1}}{\partial x_{#2}}}}
 \newcommand{\nodv}[2]{\ensuremath{\frac{\partial n_{#1}}{\partial x_{#2}}}}
 
@@ -197,7 +197,7 @@ We find an exciting coupling between the winding numbers of liquid crystal defec
 \chapter{Uvod} % 1.5 - 3 strani
 
 Teko"ci kristali so mehke snovi, ki zdru"zujejo lastnosti kristalov in teko"cin\cite{degennes}. 
-Njihova najpomembnej"sa opti"cna lastnost je dvolomnost, zaradi "cesar so osrednji opti"cno aktivni materiali v sodobni optiki in fototniki\cite{optics-lcd}.
+Njihova najpomembnej"sa opti"cna lastnost je dvolomnost, zaradi "cesar so osrednji opti"cno aktivni materiali v sodobni optiki in fotoniki\cite{optics-lcd}.
 
 Praviloma so teko"ci kristali sestavljeni iz pali"castih ali diskastih molekul. 
 Polo"zaji gradnikov nimajo reda dolgega dosega, ali pa je ta red samo v eni ali dveh prostorskih dimenzijah, zato se snov obna"sa kot teko"cina. 
@@ -997,11 +997,10 @@ Na sredini slike je meja med obmo"cjema, desno od nje je snov z dielektri"cnostj
 V tem delu je le prepu"s"ceno lomljeno valovanje, ki ima ustrezno manj"so valovno dol"zino. 
 Na desnem robu je prazno obmo"cje, ki ga valovanje "se ni doseglo. 
 
-Veljavnost lomnega zakona lahko preverimo, "ce primerjamo kota vpadnega in lomljenega valovanja. 
+Veljavnost lomnega zakona potrdimo, "ce primerjamo kota vpadnega in lomljenega valovanja. 
 
-\section{Uniformen direktor}
+\section{Uniformen dvolomni kristal}
 Modelirali smo dvolomni kristal, torej snov, kjer je dielektri"cni tenzor uniformen, ne pa tudi izotropen. 
-Svetloba se "siri v smeri osi $z$, opti"cna os pa oklepa kot $\theta$ z ravnino $x$-$y$ in kot $\beta$ s polarizacijo vpadne svetlobe. 
 Zanima nas prepustnost tak"snega sistema, "ce za celico postavimo polarizator, ki je pravokoten na polarizacijo vpadne svetlobe. 
 
 Ta preizkus temelji na najpogosteje uporabljani metodi za eksperimentalno opazivanje teko"cih kristalov. 
@@ -1010,30 +1009,30 @@ Tanko plast teko"cega kristala postavimo med dva prekri"zana polarizatorja.
 V ostalih primerih pa vidimo nekaj prepu"s"cene svetlobe, intenziteta pa je odvisna od dvolomnosti in orientacije vmesne snovi. 
 Na ta na"cin se jasno vidijo defekti v teko"cem kristalu. 
 
-"Ce je direktor uniformen po celotni debelini vzorca, lahko intenziteto prepu"s"cene svetlobe izpeljemo analiti"cno\cite{kleman}. Enaka je
+Svetloba se "siri v smeri osi $z$, opti"cna os pa oklepa kot $\theta$ z ravnino $x$-$y$ in kot $\beta$ s polarizacijo vpadne svetlobe. 
+"Ce je direktor uniformen po celotni debelini vzorca, lahko intenziteto prepu"s"cene svetlobe izpeljemo analiti"cno\cite{kleman}. 
+Enaka je
 \begin{align}
  I &= I_0 \sin^2 2\beta \sin^2 \left[ \frac{\pi d}{\lambda_0} \left( \frac{n_o n_e}{\sqrt{n_e^2 \cos^2 \theta + n_0^2 \sin^2 \theta}} - n_o \right)\right],
 \end{align}
 kjer sta $I_0$ in $\lambda_0$ intenziteta in valovna dol"zina vpadne svetlobe, $d$ debelina vzorca, $n_o$ in $n_e$ pa redni in izredni lomni koli"cnik. 
-Ujemanje rezultatov z napovedjo je prikazano na sliki \ref{fig:test-uniform}.
+Odlicno kvantitativno ujemanje z analiticno pricakovano odvisnostjo je prikazano na sliki \ref{fig:test-uniform}.
+To potrjuje pravilno delovanje metode v opti"cno anizotropni snovi. 
 
 \begin{figure}[h]
  \input{g_test_uniform}
- \caption{Rezultati preizkusa z uniformnim in anizotropnim dielektri"cnim tenzorjem}
+ \caption{Odvisnost prepustnosti uniformnega dvolomnega kristala od kota $\beta$ med opti"cno osjo kristala in vpadnim polarizatorjem. }
  \label{fig:test-uniform}
 \end{figure}
 
-Na sliki vidimo zelo dobro ujemanje med simulacijo in teoreti"cno napovedjo. 
-To potrjuje pravilno delovanje metode v opti"cno anizotropni snovi. 
-
-\section{Periodi"cna modulacija}
-Pri periodi"cni modulaciji lomnega koli"cnika opazimo pojav, da se svetloba dolo"cenih frekvenc ne more "siriti po mediju\cite{hecht-nano,joannopoulos}. 
-Temu pojavu pravimo prepovedani pas \angl{band gap} in je soroden elektronski energijski re"zi pri molekulskih kristalih. 
+\section{Eno-dimenzionalen fotonski kristal}
+V snoveh s periodi"cno modulacijo lomnega koli"cnika se svetloba dolo"cenih frekvenc ne more "siriti\cite{hecht-nano,joannopoulos}; tak"sne materiale imenujemo tudi fotonski kristali. 
+Temu pravimo pojav prepovedanega pasu \angl{band gap} in je soroden elektronski energijski re"zi pri molekulskih kristalih. 
 Za prisotnost fotonskega prepovedanega pasu potrebujemo kristal oz. periodi"cno strukturo, kjer je perioda primerljiva z valovno dol"zino svetlobe. 
-Fotonsko energijsko re"zo za vidno svetlobo zato opazimo pri koloidnih kristali, ki imajo periodo okrog 1 $\mu$m. 
+Fotonsko energijsko re"zo za vidno svetlobo lahko ustvarimo npr. v koloidnih kristalih z velikostjo osnovne celice okrog 1 $\mu$m. 
 
-"Sirina in oblika prepovedanega pasu sta odvisni od obeh lomnih koli"cnikov, periode modulacije in velikosti kristala. 
-Za preverjanje metode sem modeliral kristal, kjer se izmenjujejo plasti z izotropno dielektri"cnostjo $\varepsilon_1$ in $\varepsilon_2$. 
+"Sirina in oblika prepovedanega pasu sta odvisni od razmerja lomnih koli"cnikov oz. dielektri"cnega kontrasta, periode modulacije in velikosti kristala. 
+Za preverjanje metode smo modelirali enodimenzionalen fotonski kristal, kjer se izmenjujejo plasti z debelino $a/2$ in z izotropno dielektri"cnostjo $\varepsilon_1$ in $\varepsilon_2$. 
 Tak"sna struktura je prikazana na sliki \ref{fig:periodic-structure}. 
 
 \begin{figure}[h]
@@ -1044,13 +1043,13 @@ Tak"sna struktura je prikazana na sliki \ref{fig:periodic-structure}.
  \label{fig:periodic-structure}
 \end{figure}
 
-Teoreti"cen izra"cun odvisnosti frekvence $\omega$ od valovnega vektorj $k$ je prikazan na sliki \ref{fig:joannopoulos-crystal}. 
+V literaturi dolo"ceni fotonski pasovi, torej odvisnosti frekvence $\omega$ od valovnega vektorja $k$, so prikazani na sliki \ref{fig:joannopoulos-crystal}\cite{joannopoulos}. 
 "Ce se dielektri"cni konstanti obeh plasti razlikujeta, opazimo interval frekvenc, pri katerih ni mo"zen noben valovni vektor, torej se valovanje ne more "siriti skozi kristal. 
 S pove"cevanjem razlike v dielektri"cnosti plasti se prepovedani pas raz"siri. 
 
 \begin{figure}[h]
 \centering
-  \input{./Slike/bandgap.pdf_tex}
+  {\footnotesize \input{./Slike/bandgap.pdf_tex}}
  \caption{Pojav energijske re"ze v fotonskem kristalu. Levo: celotna plast ima dielektri"cnost $\varepsilon = 13$. Sredina: Izmenjevanje plasti z dielektri"cnima konstantama 13 in 12. Desno: Izmenjevanje plasti z dielektri"cnima konstantama 13 in 1. \cite{joannopoulos}}
  \label{fig:joannopoulos-crystal}
 \end{figure}
@@ -1058,7 +1057,7 @@ S pove"cevanjem razlike v dielektri"cnosti plasti se prepovedani pas raz"siri.
 Po napovedi naj bi bila spodnja meja prepovedani pasu okrog $\frac{\omega a}{2\pi c} \approx 0,\!15$, kjer je $a$ perioda kristala, $c$ pa hitrost svetlobe. 
 Zgornja meja je mo"cneje odvisna od razlike v dielektri"cnosti\cite{joannopoulos}. 
 
-Za modeliranje tak"snega kristala smo uporabili periodi"cne robne pogoje v smereh $x$ in $y$, v smeri $z$ pa celico dol"zine 1024 enot z 20 enotami absorbirajo"ce plasti na vsakem koncu. 
+Za modeliranje opisanega fotonskega kristala smo uporabili periodi"cne robne pogoje v smereh $x$ in $y$, v smeri $z$ pa celico dol"zine 1024 enot z 20 enotami absorbirajo"ce plasti na vsakem koncu. 
 Grafa prepustnosti kristalov z razli"cnimi izbirami za dielektri"cnosti sta na sliki \ref{fig:test-periodic}. 
 
 \begin{figure}[!htbp]
