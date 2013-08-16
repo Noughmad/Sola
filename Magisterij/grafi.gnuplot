@@ -31,6 +31,16 @@ set yrange [0:0.4]
 plot "Podatki/test_bandgap_12.dat" w l lw 5 title "$\\varepsilon_1 = 13,\\, \\varepsilon_2 = 12$", \
 "Podatki/test_bandgap_1.dat" w l lw 5 title "$\\varepsilon_1 = 13,\\, \\varepsilon_2 = 1$"
 
+set output "g_test_periodic_en.tex"
+
+set xtics
+set xlabel "Light frequency $\\omega a/2\\pi$"
+set ylabel "Transmittance $I/I_0$"
+set yrange [0:0.4]
+
+plot "Podatki/test_bandgap_12.dat" w l lw 5 title "$\\varepsilon_1 = 13,\\, \\varepsilon_2 = 12$", \
+"Podatki/test_bandgap_1.dat" w l lw 5 title "$\\varepsilon_1 = 13,\\, \\varepsilon_2 = 1$"
+
 reset
 set output "g_test_absorption.tex"
 set style data lines

@@ -134,17 +134,17 @@ Ljubljana, 4.~9.~2013 \hfill Miha "Can"cula
 \noindent
 
 Magistrsko delo obravnava "sirjenje svetlobe po teko"cekristalnih vlaknih z razli"cnimi direktorskimi profili. 
-Opisan je razvoj numeri"cne metode za modeliranje propagacije elektromagnetnih polj skozi opti"cno anizotropna sredstva. 
-Postopek re"sevanja temelji na podlagi metode kon"cnih diferenc v "casovni domeni. 
-Teko"ci kristal je modeliran kot enoosno dvolomna snov s krajevno odvisnostjo opti"cne osi.
-Izra"cunana je prepustnost plasti teko"cega kristala med prekri"zanima polarizatorjema, fotonski prepovedani pas v periodi"cni strukturi in lastni na"cini "sirjenja svetlobe v opti"cno anizotropnem vlaknu. 
-Prepoznani so lastni na"cini valovanja v teko"cekristalnih vlaknih z razli"cnimi defekti vzdol"z osi. 
-Opisane so mo"zne polarizacije svetlobe, ki bi jih lahko dobili s svetenjem skozi tak"sna vlakna. 
+Opisan je razvoj numeri"cne metode za modeliranje propagacije elektromagnetnih polj skozi opti"cno anizotropna sredstva, kjer se dielektri"cni tenzor poljubno spreminja po prostoru. 
+Postopek re"sevanja temelji na metodi kon"cnih diferenc v "casovni domeni. 
+Teko"ci kristal je modeliran kot enoosno dvolomna snov s krajevno odvisno opti"cno osjo.
+Izra"cunamo prepustnost plasti teko"cega kristala med prekri"zanima polarizatorjema, fotonski prepovedani pas v periodi"cni strukturi in lastne na"cine "sirjenja svetlobe v opti"cno anizotropnem vlaknu. 
+Prepoznamo lastne na"cine valovanja v teko"cekristalnih vlaknih z razli"cnimi defekti vzdol"z osi in mo"zne polarizacije svetlobe, ki bi jih lahko dobili s svetenjem skozi tak"sna vlakna. 
+Opazimo zanimivo povezavo med ovojnimi "stevili teko"cekristalinih defektov in defektov v polarizaciji svetlobe, kar je eden prvih korakov k raziskavam povezane topologije dveh sklopljenih prostorskih polj. 
 
 
 \bigskip
 \noindent
-{\bf Klju"cne besede:} nematski teko"ci kristal, elektromagnetno valovanje, dvolomnost, polarizacija svetlobe.
+{\bf Klju"cne besede:} nematski teko"ci kristal, elektromagnetno valovanje, dvolomnost, polarizacija svetlobe, metoda FDTD, topolo"ski defekti.
 
 \bigskip
 \bigskip
@@ -155,16 +155,16 @@ Opisane so mo"zne polarizacije svetlobe, ki bi jih lahko dobili s svetenjem skoz
 \noindent
 
 Propagation of light through liquid crystal fibres with various director profiles is explored. 
-The development of a numerical method for modelling the propagation of electromagnetic fields through optically anisotropic media is described. 
-Solving is based on the finite-difference time-domain method. 
+We develop a numerical method for modelling the propagation of electromagnetic fields through optically anisotropic media where the dielectric tensor is a general three-dimensional spatial field. 
+The method is based on the finite-difference time-domain method, adapted for the variability of the liquid crystalline profile. 
 The liquid crystal is modelled as a uniaxial birefringent material with a position-dependent optical axis. 
 Transmitivity of a liquid crystal layer between crossed polarizers, photonic band gap, and eigenmodes of an anisotropic fibre are calculated. 
-Eigenmodes of liquid crystal fibres with various defects along the axis are identified. 
-Possible polarizations of light that could be achieved by shining through such fibres are described. 
+We identify the eigenmodes of liquid crystal fibres with defect lines of various winding numbers along the axis and the possible polarizations of light that could be achieved by shining through such fibres. 
+We find an exciting coupling between the winding numbers of liquid crystal defects and the winding numbers of light polarization, which is a novel step towards a achieving a coupled topology of two different spatially varying fields.   
 
 \bigskip
 \noindent
-{\bf Keywords:} nematic liquid crystal, electromagnetic wave, birefringence, light polarization.
+{\bf Keywords:} nematic liquid crystal, electromagnetic wave, birefringence, light polarization, finite-difference time domain, topological defects.
 
 \bigskip
 \vfill
@@ -199,24 +199,25 @@ Teko"ci kristali so mehke snovi, ki zdru"zujejo lastnosti kristalov in teko"cin\
 Njihova najpomembnej"sa opti"cna lastnost je dvolomnost, zaradi "cesar so osrednji opti"cno aktivni materiali v sodobni optiki in fototniki\cite{optics-lcd}.
 
 Praviloma so teko"ci kristali sestavljeni iz pali"castih ali diskastih molekul. 
-Polo"zaji gradnikov nimajo reda dolgega dosega, ali pa ta red ne dr"zi v vseh treh dimenzijah, zato se snov obna"sa kot teko"cina. 
+Polo"zaji gradnikov nimajo reda dolgega dosega, ali pa je ta red samo v eni ali dveh prostorskih dimenzijah, zato se snov obna"sa kot teko"cina. 
 Imajo pa red dolgega dosega v orientaciji gradnikov, iz katerega izvira dvolomnost. 
-Preferen"cna orientacija gradnikov v teko"cem kristalu se spreminja na velikostnih skalah, mnogo ve"cjih od velikosti molekul, ampak primerljivih z valovno dol"zino vidne svetlobe. 
-Za razliko od obi"cajnih kristalov lahko orientacijski red vsilimo z obdelavo povr"sine ali zunanjimi polji. 
+Preferen"cna orientacija gradnikov v teko"cem kristalu se spreminja na velikostni skali, ki je tipi"cno med nekaj 10 nm in nekaj 10 $\mu$m.
+To je ve"cje od velikosti molekul, zato lahko govorimo o redu dolgega dosega, je pa primerljivo z valovno dol"zino vidne svetlobe\cite{kleman}. 
+Za razliko od obi"cajnih kristalov lahko orientacijski red vsilimo z obdelavo povr"sine ali z zunanjimi polji. 
 Zaradi mo"znosti zunanjega nadzora so teko"ci kristali klju"cnega pomena v mnogih opti"cnih napravah. 
 
-Orientacijski red v teko"cih kristalih makroskopsko opi"semo s preferen"cno orientacijo oz. direktorjem $\mathbf{n}$ in stopnjo reda $S$. 
-Na prosto energijo in s tem na ureditev teko"cega kristala vplivajo krajevno spreminjanje direktorja, temperatura in dielektri"cna interakcija. 
-Teko"ci kristali se obna"sajo kot elasti"cni medij, na katerega lahko vplivamo z zunanjimi polji. 
-Z dolo"ceno izbiro robnih pogojev, zunanjih polj ali delcev v teko"cem kristalu lahko vsilimo defekte. 
+Orientacijski red v teko"cih kristalih makroskopsko opi"semo s povpre"cno orientacijo molekul, t.j. direktorjem $\mathbf{n}$ in stopnjo reda $S$. 
+Na prosto energijo in s tem na ureditev teko"cega kristala v zunanjih elekricnih ali opticnih poljih klju"cno vplivajo predvsem krajevno spreminjanje direktorja, temperatura in dielektri"cna interakcija med molekulami in zunanjim poljem. 
+Teko"ci kristali se obna"sajo kot efektivno elasti"cni medij, kjer direktorju lahko pripi"semo tri osnovne deformacijske nacine: pahlja"co, zvoj in upogib.
+Z dolo"ceno izbiro robnih pogojev, zunanjimi polji ali dodatkom koloidnih delcev v teko"cem kristalu lahko vsilimo defekte. 
 To so podro"cja zmanj"sanega reda, kjer direktor ni definiran. 
 V treh dimenzijah lo"cimo to"ckaste in linijske defekte. 
 
-Dvolomnost je lastnost snovi, v kateri je lomni koli"cnih odvisen od smeri polarizacije svetlobe\cite{landau-lifsic-optics}. 
+Dvolomnost je lastnost snovi, v kateri je lomni koli"cnih odvisen od smeri polarizacije vpadne svetlobe\cite{landau-lifsic-optics}. 
 Ve"cina dvolomnih snovi je enoosnih, kar pomeni, da obstaja ena izredna os z razli"cnim lomnim koli"cnikom, ostali dve pravokotni smeri pa sta enakovredni. 
 Tipi"cne enoosne snovi so kristali s tetragonalno ali heksagonalno mre"zo, kjer opti"cna os enaka po celem kristalu. 
-V teko"cem kristalu z orientacijskim redom os dvolomnosti sledi orientaciji gradnikov. 
-Ti so "se posebej zanimivi, saj se direktor in s tem dvolomnost spreminja s krajem, nadzorujemo pa jo lahko tudi z zunanjimi vplivi. 
+V teko"cem kristalu z orientacijskim redom dvolomna os sledi povpre"cni orientaciji molekul, torej direktorju.
+% Ti so "se posebej zanimivi, saj se direktor in s tem dvolomnost spreminja s krajem, nadzorujemo pa jo lahko tudi z zunanjimi vplivi. 
 Opti"cna anizotropija teko"cih kristalov izhaja iz oblike gradnikov, ki so v ve"cini primerov pali"caste molekule. 
 
 Dvolomnost teko"cih kristalov ponuja "stevilne mo"znosti uporabe v opti"cnih napravah. 
@@ -228,14 +229,13 @@ V zadnjem "casu so veliko pozornosti dele"zni teko"cekristalni laserji, ki izkor
 Zanimiva je tudi uporaba teko"cih kristalov v napravah, ki spreminjanjo polarizacijo svetlobe. 
 Poleg linearne in elipti"cne polarizacije lahko z njimi dose"zemo tudi osno simetri"cno polarizacijo, torej radialno ali azimutalno\cite{polarization-converters-linear,polarization-converters-axial}. 
 
-Obstaja ve"c metod za modeliranje propagacije svetlobe skozi anizotropne snovi. 
+Obstaja ve"c metod za modeliranje propagacije svetlobe skozi opti"cno anizotropne snovi. 
 Jonesov vektor predstavi elektri"cno polje svetlobe, ki se "siri v smeri $z$, kot vektor s komponentama v smereh $x$ in $y$, med katerima je lahko tudi fazni zamik. 
 S tak"snim zapisom lahko opi"semo linearno, kro"zno ali elipti"cno polarizirano svetlobo\cite{optics-lcd}. 
 Opti"cno aktivne snovi, kot so polarizatorji in plasti teko"cega kristala, so predstavljeni z matrikami velikosti $2\times 2$, ki delujejo na vektor $(E_x, E_y)$. 
 Za opis delno polarizirane svetlobe moramo opis raz"siriti na Stokesove vektorje s "stirimi komponentami, naprave pa so opisane z Muellerjevimi matrikami velikosti $4\times 4$.
 Jonesova in Muellerjeva metoda sta uporabni v sistemih, kjer je os dvolomnosti pravokotna na smer "sirjenja valovanja, ne pa v teko"cih kristalih. 
-Za modeliranje anizotropnih snovi je bolj primerna Berremanova metoda\cite{berreman,stallinga-berreman}, ki prav tako opi"se valovanje kot vektor s "stirimi komponentami. 
-Pri tej metodi je svetloba predstavljena s transverzalnimi komponentami elektri"cnega in magnetnega polja. 
+Za modeliranje anizotropnih snovi je bolj primerna Berremanova metoda\cite{berreman,stallinga-berreman}, pri kateri je svetloba predstavljena s transverzalnimi komponentami elektri"cnega in magnetnega polja. 
 
 Vse na"stete metode uporabljajo poenostavljen opis svetlobe. 
 V zadnjem "casu so ra"cunalniki "ze dovolj zmogljivi, da lahko opi"semo svetlobo direktno z vektorjema elektri"cnega in magnetnim polja po celotnem prostoru. 

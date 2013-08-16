@@ -21,7 +21,7 @@
 
 \graphicspath{{./Slike/}}
 
-\title{Modelling light propagation through \\ non-uniform anisotropic materials}
+\title{Modelling light propagation through \\ optically non-uniform anisotropic materials}
 \author[1]{Miha \v Can\v cula\thanks{miha.cancula@student.fmf.uni-lj.si}}
 \author[1,2]{Miha Ravnik}
 \author[1,2,3]{Slobodan \v Zumer}
@@ -50,9 +50,9 @@
 We present a method for modelling the propagation of light through non-uniform and optically anisotropic materials. 
 It is based on the finite-difference time-domain (\textsc{FDTD}) method which evolves electromagnetic fields according to Maxwell's equations. 
 Unlike other methods for modelling the flow of light, such as Jones' matrices or the Berreman method, it can describe arbitrarily complex structures which occur in liquid crystals. 
-With the newly-implemented method, we calculated the transmitivity of a liquid crystal layer between crossed polarizers, which agrees with observations and a theoretical treatment. 
-The method correctly predicted the position of photonic band gap in periodic structures. 
-Additionally, eigenmodes of an anisotropic liquid crystal fibre are calculated. 
+With the newly-implemented method, we calculated the transmittance of a liquid crystal layer between crossed polarizers, which agrees with observations and theoretical predictions. 
+The method correctly predicted the position of photonic band gap in 1D photonic crystals. 
+Additionally, more optically complex liquid crystalline structures can be considered.
 \end{abstract}
 
 \begin{multicols}{2}
@@ -61,30 +61,32 @@ Additionally, eigenmodes of an anisotropic liquid crystal fibre are calculated.
 
 Combined birefringence and possibility of external control make liquid crystals uniquely useful for advanced optics and photonics\cite{optics-lcd}. 
 Their optical anisotropy is tied to the orientational order, which can be manipulated using confinement, electric or magnetic fields\cite{ravnik-zumer-ldg}. 
-Unlike in conventional crystals, birefringence $\Delta n$ and the optical axis in liquid crystals are spatially dependent. 
+Unlike in conventional solid-state birefringent crystals, the birefringence $\Delta n$ and the optical axis in liquid crystals can be spatially varied and manupilated in time. 
 Optical properties of liquid crystal are widely used in displays, waveguides, microresonators, and optical switches\cite{coles-morris,humar-musevic}. 
 Passing of light through a defect in the orientational order can produce an optical phase singularity, allowing for optical information processing and contactless manipulation of matter\cite{brasselet-droplet}. 
 
-Physically, light is described with an electric and magnetic field. 
-However, there are several methods of modelling light propagation using a simplified description of light. 
-Jones calculus, which treats light as a combination of two transversal components of the electric field, is practical only for materials with high symmetry\cite{berreman}. 
-The Berreman method, with treats transversal components of both electric and magnetic fields, is more commonly used for liquid crystals. 
-However, it is not suitable for areas with high lateral variations of dielectric tensor, such as around liquid crystal defects\cite{hwang-rey}. 
+At a classical yet wavelength level, light is described as an electromagnetic field. 
+There are several methods of modelling light propagation using a simplified description of light. 
+The Jones method treats light as a combination of two transversal components of the electric field and proves practical only for materials with high symmetry\cite{berreman}. 
+The Berreman method, with treats transversal components of both electric and magnetic fields, is more commonly used for liquid crystals;
+however, it is not suitable for areas with high lateral variations of dielectric tensor, such as around liquid crystal defects\cite{hwang-rey}. 
 
-In order to faithfully model the propagation of light through liquid crystals, all six components of electromagnetic fields have to be considered. 
-This can be done using the finite-difference time-domain (\textsc{FDTD}) method\cite{taflove,hwang-rey}. 
+Here, in order to model the propagation of light through liquid crystals, we go beyond these approxiamtions, and model light as a full electromagnetic field. All six components of electromagnetic fields are considered. 
+This is done using the finite-difference time-domain (\textsc{FDTD}) method\cite{taflove,hwang-rey}. 
 Note that this method requires large computational resources and is only feasible in recent years due to progress in computer technology. 
+In this contribution we present the recent development and application of the FDTD method in several chosen setups, 
+including refraction on an interface, a uniform-director liquid crystal cell, and a 1D photonic crystal. 
 
 \section{Methods}
 In the finite-difference time-domain method, the electric and magnetic fields are spatially discretized onto a lattice. 
 They are then time-evolved according to Maxwell's equations\cite{taflove}. 
 In a studied liquid crystal cell, there are no free charges and no currents. 
-Using dimensionless units, two of the equations can be written as
+Using dimensionless units ($c=\varepsilon_0=\mu_0=1$), two of the equations can be written as
 \begin{align}
 \label{eq:maxwell}
  \odvod{\vec{B}}{t} = -\nabla \times \vec{E}, \qquad \odvod{\vec{E}}{t} = \eps^{-1} (\nabla \times \vec{B})
 \end{align}
-and the other two equations hold automatically. 
+and the other two equations hold automatically\cite{taflove}. 
 It is therefore sufficient to only consider the above two equations. 
 
 \subsection{Lattice}
@@ -124,8 +126,8 @@ In a liquid crystal with spatially-dependent optical axis, this is not true, so 
 \subsection{Boundary conditions}
 
 Equations (\ref{eq:maxwell}) assume no sources inside the cell. 
-This is consistent with experimental observations, where light comes from outside, passes through the sample and is then studied. 
-In the numerical method, light from outside is modelled using boundary conditions. 
+This is consistent with experimental setups, where light is transmitted thorugh the sample and then studied. 
+In the numerical method, an external light source is modelled using boundary conditions. 
 
 At other walls of the studied cell, we simulate propagation into free space using an absorbing boundary condition. 
 The absorbing boundary used is the perfectly matched layer (\textsc{PML}), a non-physicial material where each component of electromagnetic fields is split into two parts. 
@@ -147,12 +149,8 @@ A snapshot of a plane wave hitting an interface near Brewster's angle is present
 
 \begin{figure}
  \centering
-  \vspace{-1.3cm}
- \resizebox{\textwidth}{!}{
-  \input{g_refraction_test}
- }
-  \vspace{-1.6cm}
- \captionof{figure}{Reflection and refraction on an interface near Brewster's angle}
+ \includegraphics[width=\textwidth]{refraction_t}
+ \captionof{figure}{Reflection and refraction on an interface near Brewster's angle. Colors show local electric field, while arrows show the direction of propagation of light. }
  \label{fig:refraction-test}
 \end{figure}
 
@@ -167,15 +165,15 @@ The light has not yet reached the rightmost boundary of the cell, so we see anot
 
 A common method for observing liquid crystal and other anisotropic materials is to put a sample between crossed polarizers. 
 If the sample is isotropic, no light passes through. 
-However, if the material is optically anisotropic, the intensity of transmitted light depends on the orientation of the optical axis. 
+However, if the material is optically anisotropic, the intensity of transmitted light depends on the orientation of the optical axis, light wavelength $\lambda_0$ and cell thickness $d$. 
 If the optical axis is uniform, forming an angle $\theta$ with the transversal plane and $\beta$ with the first polarizer, it is equal to\cite{kleman}
 \begin{align}
  I &= I_0 \sin^2 2\beta \sin^2 \left[ \frac{\pi d}{\lambda_0} \left( \frac{n_o n_e}{\sqrt{n_e^2 \cos^2 \theta + n_0^2 \sin^2 \theta}} - n_o \right)\right] \nonumber
 \end{align}
-where $n_o$ and $n_e$ are the ordinary and extraordinary refractive indices. 
+where $n_o$ and $n_e$ are the ordinary and extraordinary refractive indices and $I_0$ is the incident light intensity. 
 
 The results of the simulation, compared with the theoretical prediction, are shown on Figure \ref{fig:test-uniform}. 
-We can see strong agreement, confirming the correctness of the method when using an anisotropic material. 
+We can see full agreement, confirming the performance of the method when using an anisotropic material. 
 
 \begin{figure}
 \centering
@@ -187,12 +185,12 @@ We can see strong agreement, confirming the correctness of the method when using
 The setup of two crossed polarizers has a four-fold symmetry axis and four mirror planes. 
 The results shown above reproduce this symmetry. 
 
-\subsection{Photonic band gap}
+\subsection{1D photonic crystals}
 
-With a periodic modulation of refractive index, we observe that light of certain frequencies cannot propagate through the medium\cite{hecht-nano,joannopoulos}. 
-This phenomenon is called the photonic bang gap and is related to the electron band gap in molecular crystals. 
+With a periodic modulation of refractive index, we observe that light of distinct frequencies cannot propagate through the medium\cite{hecht-nano,joannopoulos}. 
+This phenomenon is called the photonic bang gap and is related to the electron band gap in semiconductors. 
 
-We used a very simple periodic structure, as shown on Figure \ref{fig:periodic-structure}. 
+We used a simple periodic structure -- a 1D photonic crystal made from a stack of different dielectric layers -- as shown on Figure \ref{fig:periodic-structure}. 
 We repeated the simulation with various values of both refractive indexes. 
 
 \begin{figure}
@@ -211,17 +209,17 @@ Light with such frequencies cannot propagate through the medium and is thus tota
 \begin{figure}
  \centering
  \includegraphics[width=\textwidth]{bandgap}
-  \captionof{figure}{Relations between light frequency and wave vector for alternating layers with different refractive indexes. The dielectric constant of one layer is 13, while the other is 13 (left), 12 (center) and 1 (right). Yellow regions are photonic band gaps. \cite{joannopoulos}}
+  \captionof{figure}{Relations between light frequency and wave vector for alternating layers with different refractive indexes\cite{joannopoulos}. The dielectric constant of one layer is 13, while the other is 13 (left), 12 (center) and 1 (right). Yellow regions are photonic band gaps.}
   \label{fig:bandgap}
 \end{figure}
 
 Using our numerical method, we sent a plane wave through the same structure and measure the intensity of light at the far end. 
 We used light of several different frequencies and expected to find very low intensity when the frequency is in the band gap. 
-The results are shown on Figure \ref{fig:test-periodic}. 
+The results are shown in Figure \ref{fig:test-periodic}. 
 
 \begin{figure}
  \centering
-  \resizebox{\textwidth}{!}{\input{g_test_periodic}}
+  \resizebox{\textwidth}{!}{\input{g_test_periodic_en}}
   \captionof{figure}{Transmittance of periodic structures depending on their dielectric constants and the frequency of light. Regions with very low transimitivity correspond to the band gap. }
   \label{fig:test-periodic}
 \end{figure}
