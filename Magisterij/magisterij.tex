@@ -41,6 +41,7 @@
 
 \newcommand{\ticssize}{\small}
 \newcommand{\qodv}[2]{\ensuremath{\frac{\partial Q_{#1}}{\partial x_{#2}}}}
+\newcommand{\nodv}[2]{\ensuremath{\frac{\partial n_{#1}}{\partial x_{#2}}}}
 
 \graphicspath{{./Slike/}}
 
@@ -370,30 +371,34 @@ To pove"canje je odvisno od smeri spreminjanja $Q_{ij}$ glede na smer direktorja
 Na sliki \ref{fig:tsb} so prikazani trije na"cini deformacije direktorja, s katerimi lahko lokalno opi"semo poljubno krajevno odvisnost. 
 Ti trije na"cini so pahlja"ca \angl{splay}, zvoj \angl{twist} in upogib \angl{bend}. 
 
-Vsi trije na"cini deformacije so elasti"cni, zato je prispevek v prosti energiji sorazmeren s kvadratom deformacije. 
-V splo"snem so elasti"cne konstante, ki pripadajo vsakemu izmed treh osnovnih na"cinom, med seboj razli"cne. 
-Prispevek k gostoti proste energije zaradi elasti"cnih deformacij nematskega teko"cega kristala je tako enak
+\todo{Mapping med na"cini deformacije in odvodi direktorja}
 
+Vsi trije na"cini deformacije so elasti"cni, zato je prispevek v prosti energiji sorazmeren s kvadratom deformacije. 
+V teko"cih kristalih so v splo"snem elasti"cne konstante, ki pripadajo vsakemu izmed treh osnovnih na"cinom, med seboj razli"cne. 
+Prispevek k gostoti proste energije zaradi elasti"cnih deformacij nematskega teko"cega kristala je tako enak
 \begin{align}
  f_{\mathrm{el}}^N &= \frac{K_1}{2} (\nabla \cdot \vec n)^2 + \frac{K_2}{2} (\vec n \cdot \nabla \times \vec n)^2 + \frac{K_3}{2} (\vec n \times \nabla \times \vec n)^2. 
 \end{align}
-
-Razvoj elasti"cne proste energije po krajevnih odvodih direktorja je la"zji za predstavo, saj "clene lahko pove"zemo z na"cini deformacije na sliki \ref{fig:tsb}. 
-Za numeri"cno modeliranje pa je bolj ugodno, "ce jo izrazimo s komponentami tenzorja $Q$, ki poleg direktorja vklju"cuje tudi stopnjo reda in dvoosnost\cite{copar-phd}. 
-V tej sliki se izraz glasi
-\begin{align}
- f_{\mathrm{el}} &= \frac{1}{2}L_1\qodv{ij}{k}\qodv{ij}{k} + \frac{1}{2}L_2 \qodv{ij}{j}\qodv{ik}{k} + \frac{L_3}{2}Q_{ij}\qodv{kl}{i}\qodv{kl}{l}\;,
-\end{align}
-kjer so $L_i$ ela"sti"cne konstante, enake $L_i = $
 
 Tri elasti"cne konstante $K_i$ so v splo"snem razli"cne. Tipi"cno je konstanta $K_3$, ki ustreza upogibni deformaciji, mnogo ve"cja od ostalih dveh, konstanta $K_2$, ki ustreza zvoju, pa malo manj"sa od $K_1$. 
 Kljub temu pa so v ve"cini nematikov vse tri konstante istega velikostnega reda\cite{degennes}. 
 Modeliranje teko"cega kristala lahko poenostavimo, "ce privzamemo, da so vse tri konstante enake. 
 V t. i. enokonstantnem pribli"zku je gostota elasti"cne proste energije enaka
 \begin{align}
- f_{\mathrm{el}} &= \frac{1}{2}L \qodv{ij}{k}\qodv{ij}{k}
+ f_{\mathrm{el}} &= \frac{K}{2} \left[(\nabla \cdot \vec n)^2 + (\nabla \times \vec n)^2\right] = \frac{K}{2} \cdot \nodv{i}{j}\nodv{j}{i}
 \end{align}
-kjer je $L$ edina elasti"cna konstanta\cite{ravnik-zumer-ldg}.
+kjer je $K$ edina elasti"cna konstanta.
+Razvoj elasti"cne proste energije po krajevnih odvodih direktorja je la"zji za predstavo, saj "clene lahko pove"zemo z na"cini deformacije na sliki \ref{fig:tsb}. 
+Za numeri"cno modeliranje pa je bolj ugodno, "ce jo izrazimo s komponentami tenzorja $Q$, ki poleg direktorja vklju"cuje tudi stopnjo reda in dvoosnost\cite{copar-phd}. 
+V tej sliki se izraz glasi
+\begin{align}
+ f_{\mathrm{el}} &= \frac{1}{2}L_1\qodv{ij}{k}\qodv{ij}{k} + \frac{1}{2}L_2 \qodv{ij}{j}\qodv{ik}{k} + \frac{L_3}{2}Q_{ij}\qodv{kl}{i}\qodv{kl}{j}\;,
+\end{align}
+kjer so $L_i$ elasti"cne konstante. V enokonstantnem pribli"zku se zgornji izraz poenostavi v 
+\begin{align}
+f_{\mathrm{el}} &= \frac{L}{2} \cdot \qodv{ij}{k}\qodv{ij}{k} 
+\end{align}
+kjer je elasti"cna konstanta enaka $L = 2K/9S^2$\cite{ravnik-zumer-ldg}. 
 
 Stabilnost nematske mezofaze je odvisna od temperature ali od koncentracije. 
 Za termotropske teko"ce kristale, kjer je mezofaza odvisna od temperature, lahko zapi"semo Landauov razvoj proste energije po ureditvenem parametru $Q_{ij}$ kot
@@ -419,31 +424,28 @@ V snovi s pozitivno dielektri"cno anizotropijo je najugodnj"sa
 Zunanje polje v molekuli inducira elektri"cni dipolni moment, ki je sorazmeren z dol"zino molekule in je zato najve"cji, "ce je polje vzporedno z osjo molekule. 
 "Ce na teko"ci kristal svetimo, ureditev molekul ne more slediti hitremu spreminjanju opti"cnega elektri"cnega polja, ampak nanj efektivno deluje povpre"cen kvadrat polja. 
 
-\section{Defekti}
+\section{Topolo"ski defekti}
 
-Ravnovesno stanje nematika minimizira prosto energijo. 
-V odsotnosti zunanjih polj je to ureditev z uniformnim direktorjem, kjer je celotna elasti"cna prosta energija enaka 0\cite{mermin}. 
-Pod vplivom ograjenosti ali zunanjega polja pa lahko pride do stanja, kjer zvezno direktorsko polje ne more zadostiti robnim pogojem. 
+Pod vplivom ograjenosti ali zunanjega polja se lahko v nematiku pojavi orientacijsko polje, kjer zvezno direktorsko polje ne more zadostiti robnim pogojem. 
 V tem primeru se pojavijo obmo"cja z nedifiniranim direktorjem. 
-Tak"snim obmo"cjem, kjer orientacijski red ne dr"zi, pravimo defekti ali disklinacije. 
+Tak"snim obmo"cjem pravimo topolo"ski defekti. 
 
 V treh dimenzijah lahko obstajajo to"ckasti in linijski defekti\cite{degennes,kleman}. 
-V vlaknih nastopajo le linijski defekti, zato se bomo posvetili zlasti tistim. 
+V vlaknih nastopajo le linijski defekti, imenovani tudi disklinacije, zato se bomo posvetili zlasti tistim. 
 Linijski defekti so la"zji za razvr"s"canje, saj se lahko omejimo na ravnino, pravokotno na linijo, in problem prevedemo na dve dimenziji. 
-V tem primeru lahko linijski defekt obravnavamo kot to"ckasti defekt v dveh dimenzijah. 
+V tem primeru lahko praviloma linijski defekt obravnavamo kot to"ckasti defekt v dveh dimenzijah. 
 
 Disklinacije v nematskem teko"cem kristalu delimo glede na to, kako se smer direktorja spreminja v okolici disklinacije. 
 Zanima nas zlasti, koliko obratov naredi direktorsko polje, "ce defekt obkro"zimo po zaklju"ceni zanki. 
-
 V dveh dimenzijah lahko nematski direktor zapi"semo kot $\vec n = (\cos\theta, \sin\theta, 0)$. 
 Definiramo lahko ovojno "stevilo \angl{winding number} oz. mo"c defekta kot
 \begin{align}
 \label{eq:winding-number}
  s = \frac{1}{2\pi}\int_0^{2\pi} \left(\frac{d\theta}{d\phi}\right) \dd \phi
 \end{align}
-kjer kot $\theta$ opisuje smer direktorja, $\phi$ pa polo"zaj na na svetlo modrem krogu. 
+kjer kot $\theta$ opisuje smer direktorja, $\phi$ pa polo"zaj na zanki (svetlo modra na slikah \ref{fig:defekti-celi} in \ref{fig:defekti-polceli}). 
 
-Direktorsko polje je zvezno povsod razen v defektu, zato mora direktor pri $\phi = 0$ enak kot pri $\phi = 2\pi$. 
+Direktorsko polje je zvezno povsod razen v jedru defekta, zato mora direktor pri $\phi = 0$ enak kot pri $\phi = 2\pi$, seveda ko upo"stevamo se simetrijo $\vec n \leftrightarrow -\vec n$.
 Ta pogoj dolo"ca mo"zne vrednosti za $s$. 
 Za prava vektorska polja mora biti $s$ celo "stevilo, saj mora biti kot $\theta$ na koncu enak kot na za"cetku. 
 Primeri tak"snih defektov so na sliki \ref{fig:defekti-celi}. 
@@ -458,8 +460,7 @@ Primeri tak"snih defektov so na sliki \ref{fig:defekti-celi}.
  \label{fig:defekti-celi}
 \end{figure}
 
-Nematski direktor pa ima dodatno simetrijo, saj stanji $\vec n$ in $-\vec n$ predstavljata enak red. 
-Zato je mo"zno, da pri obkro"zenju defekta direktor naredi le pol obrata, ovojno "stevilo $s$ pa je zato lahko tudi polcelo "stevilo. 
+Nematski direktor pa ima dodatno simetrijo, zaradi katere lahko direktor pri obkro"zenju defekta naredi le pol obrata, ovojno "stevilo $s$ pa je zato lahko tudi polcelo "stevilo. 
 Primeri tak"snih defektov so na sliki \ref{fig:defekti-polceli}. 
 
 \begin{figure}[h]
@@ -477,18 +478,18 @@ Mo"ci defekta pravimo tudi topolo"ska invarianta, saj se defekti lahko zdru"zuje
 Dva defekta z nasprotno mo"cjo se lahko izni"cita, defekt z ve"cjo mo"cjo pa se lahko razcepi na dva defekta z manj"so mo"cjo. 
 Pri tem velja omejitev, da je mo"c vsakega defekta lahko le polcelo "stevilo. 
 
-Vsak defekt v teko"cem kristalu povzro"ci elasti"cno deformacijo direktorskega polja, kar pomeni zvi"sano prosto energijo sistema. 
+Vsak defekt v teko"cem kristalu povzro"ci elasti"cno deformacijo direktorskega polja, kar pomeni lokalno veliko gostoto proste energije na mestu defekta. 
 Za linijske defekte v enokonstantnem pribli"zku je gostota elasti"cna proste energije enaka $\frac{K}{2}(\nabla \theta)^2$. 
-V bli"zini defekta lahko privzamemo odvisnost $\theta(\phi) = s \phi + \theta_0$, iz "cesar sledi $\nabla\theta = \frac{k}{r}\hat e_\phi$. 
-Skupni prispevek enega defekta k prosti energiji na enoto dol"zine je tako\cite{degennes}
+V bli"zini defekta lahko privzamemo odvisnost $\theta(\phi) = s \phi + \theta_0$, iz "cesar sledi $\nabla\theta = \frac{s}{r}\hat e_\phi$. 
+Skupni prispevek enega defekta k prosti energiji na enoto dol"zine $l$ je enak\cite{degennes}
 \begin{align}
- \frac{F_d}{L} &= \frac{K}{2} \int_{r_{min}}^{r_{max}} \frac{k^2}{r^2} 2\pi r \dd r = K s^2 \pi \ln{\frac{r_{max}}{r_{min}}}
+ \frac{F_d}{l} &= \frac{K}{2} \int_{r_{min}}^{r_{max}} \frac{s^2}{r^2} 2\pi r \dd r = K s^2 \pi \ln{\frac{r_{max}}{r_{min}}}
 \end{align}
 Zgornji izraz divergira tako v bli"zini defekta kot tudi za velike oddaljenosti. 
 Velikostna skala $r_{max}$ je povezana z velikostjo sistema oz. z razdaljo do sosednjega defekta. 
-En sam izoliran defekt torej nosi zelo veliko energijo, zato ni stabilen, razen "ce ga vsiljujejo robni pogoji. 
-V neposredni bli"zini defekta pa je gostota proste energije tako velika, da je za teko"ci kristal bolj ugodno, da se stali v izotropno fazo. 
-Velikost staljenega dela opisuje $r_{min}$. 
+En sam izoliran defekt ni stabilen, razen "ce ga vsiljujejo robni pogoji. 
+Jedro defekta se pogosto obravnava kot obmo"cje izotropne faze z S=0.
+Velikost staljenega dela opisuje $r_{min}$ in je tipi"cno okrog 10 nm. 
 
 V zgornji enakosti je pomembna odvisnost od ovojnega "stevila. 
 Elasti"cna energija zaradi defekta je sorazmerna z $s^2$, zato je bolj ugodno, da se defekt z ve"cjim ovojnim "stevilom razcepi na ve"c manj"sih defektov. 
@@ -498,27 +499,35 @@ Stabilni defekti so le tisti z ovojnim "stevilom $s=\pm1/2$, vsi ostali razpadej
 
 V cilindri"cni geometriji s homeotropnimi robnimi pogoji ureditev z uniformnim direktorjem ni mo"zna. 
 Glede na razmerja med elasti"cnimi konstantami se teko"ci kristal uredi v eno izmed konfiguracij na sliki \ref{fig:director-profiles}. 
-
-\begin{figure}[h]
-\centering
-\subfigure{\includegraphics[height=150px]{director-profile-cylinder-kleman}}
-\subfigure{\includegraphics[clip, trim=0cm -3mm 0cm 0cm]{escaped-director-energy}}
-\caption{Levo: Prerezi valja s singularno (a) in nesingularno pobeglo defektno linijo (b). 
-Razli"cne smeri pobega povzro"cijo nastanek to"ckastih defektov (c). Desno: Energija singularne in pobegle konfiguracije v odvisnosti od razmerja med elasti"cnima kostantama $K_1$ in $K_3$\cite{kleman}. }
- \label{fig:director-profiles}
-\end{figure}
-
-V profilu s singularno disklinacijo v osi valja je prisotna le pahlja"cna deformacija, zato je energija tega stanja odvisna od konstante $K_1$. 
-V pobeglem profilu pa sta prisotni tako pahlja"cna kot upogibna deformacija. Energija tega stanja je odvisna od konstant $K_1$ in $K_3$. Do pobega pride, "ce je razmerje $K_3/K_1$ manj"se od 13, kar velja za ve"cino nematskih teko"cih kristalov. Z minimizacijo energije lahko izpeljemo ravnovesni radialni profil direktorja v cilindri"cnih koordinatah. V poenostavljenem primeru, ko sta elasti"cni konstanti $K_3$ in $K_1$ enaki, je energijsko najugodneje"se stanje\cite{kleman} 
+V profilu s singularno disklinacijo v osi kapilare je prisotna le pahlja"cna deformacija, zato je energija tega stanja odvisna od konstante $K_1$. 
+V pobeglem profilu pa sta prisotni tako pahlja"cna kot upogibna deformacija.
+Energija tega stanja je odvisna od konstant $K_1$ in $K_3$. 
+Do pobega pride, "ce je razmerje $K_3/K_1$ manj"se od 13\cite{kleman}, kar velja za ve"cino nematskih teko"cih kristalov. 
+Z minimizacijo energije lahko izpeljemo ravnovesni radialni profil direktorja v cilindri"cnih koordinatah. 
+V poenostavljenem primeru, ko sta elasti"cni konstanti $K_3$ in $K_1$ enaki, je energijsko najugodneje"se stanje 
 \begin{align}
  \vec n &= (n_r, n_\phi, n_z) = (\cos \chi(r), 0, \sin \chi(r)) \\
  \chi(r) &= 2 \arctan \frac{R-r}{R+r}
 \end{align}
-kjer je $R$ polmer valja. Tak"sen profil je prikazan na sliki \ref{fig:director-profiles}b. V primeru pobega v tretjo dimenzijo je direktor povsod dobro definiran. "Ce pa do pobega ne pride, je tik ob osi valja defekt. Okrog defekta je direktorsko polje radialno, torej je to linijski defekt z ovojnim "stevilom $s=+1$. 
+kjer je $R$ polmer kapilare. 
+Tak"sen profil je prikazan na sliki \ref{fig:director-profiles}b. 
+V primeru pobega v tretjo dimenzijo je direktor povsod dobro definiran. 
+"Ce pa do pobega ne pride, je tik ob osi kapilare defekt. Okrog defekta je direktorsko polje radialno, torej je to linijski defekt z ovojnim "stevilom $s=+1$. 
+
+\begin{figure}[!htbp]
+\centering
+\subfigure{\includegraphics[height=150px]{director-profile-cylinder-kleman}}
+\subfigure{\includegraphics[clip, trim=0cm -3mm 0cm 0cm]{escaped-director-energy}}
+\caption{Levo: Prerezi kapilare s singularno (a) in nesingularno pobeglo defektno linijo (b). 
+Razli"cne smeri pobega povzro"cijo nastanek to"ckastih defektov (c). Desno: Energija singularne in pobegle konfiguracije v odvisnosti od razmerja med elasti"cnima kostantama $K_1$ in $K_3$\cite{kleman}. }
+ \label{fig:director-profiles}
+\end{figure}
 
 V ve"cini nematikov so vse tri elasti"cne konstante istega velikostnega reda, zato je stanje s pobegom v tretjo dimenzijo bolj ugodno. 
 Veliko razmerje $K_3/K_1$ pa opazimo blizu faznega prehoda v smekti"cno fazo. 
+
 Z uporabo 8CB, ki tvori tako nematsko kot tudi smekti"cno fazo, je mogo"ce v laboratoriju sintetizirati vlakna z radialnim profilom direktorja\cite{peddireddy}. 
+\todo{Napisi, kako to naredijo}
 Primer tvorbe tak"snih vlaken je na sliki \ref{fig:tvorjenje}. 
 
 \begin{figure}[h]
@@ -531,7 +540,7 @@ Primer tvorbe tak"snih vlaken je na sliki \ref{fig:tvorjenje}.
 
 \chapter{Elektromagnetno valovanje}
 
-\section{Maxwellove ena"cbe v neizotropnem sredstvu}
+\section{Maxwellove ena"cbe v opti"cno anizotropnem mediju}
 "Sirjenje svetlobe po snovi opisujejo "stiri Maxwellove ena"cbe\cite{taflove}
 \begin{equation}
 \begin{aligned}
@@ -539,13 +548,16 @@ Primer tvorbe tak"snih vlaken je na sliki \ref{fig:tvorjenje}.
  \nabla \times \vec E = -\odvod{\vec B}{t} & \qquad \nabla \times \vec H = \vec J_f + \odvod{\vec D}{t}
 \end{aligned} 
 \end{equation}
-kjer veljata zvezi $\vec D = \varepsilon \varepsilon_0 \vec E$ in $\vec B = \mu \mu_0 \vec H$. 
+kjer sta $\vec E$ in $\vec D$ jakost in gostota elektri"cnega polja, $\vec H$ in $\vec B$ pa jakost in gostota magnetnega polja. 
+Med njimi veljata konstitutivni zvezi $\vec D = \varepsilon \varepsilon_0 \vec E$ in $\vec B = \mu \mu_0 \vec H$. 
+V ena"cbah nastopata izvora elektromagnetn	ih polj, in sicer gostota prostih nabojev $\rho_f$ in gostota prostega toka $J_f$. 
+
 V teko"cih kristalih sta dielektri"cnost $\varepsilon$ in permeabilnost $\mu$ anizotropna tenzorja. 
 Obi"cajno je pri opti"cnih frekvencah magnetna anizotropija mnogo "sibkej"sa od elektri"cne, zato jo lahko zanemarimo in privzamemo $\mu = 1$. 
 
 Izvori in ponori valovanja znotraj vzorca so posledica neni"celne elektri"cne prevodnosti materiala.
 Zaradi prevodnosti $\sigma$ ob prisotnosti elektri"cnega polja v snovi te"ce tok, ki je enak $\vec J = \sigma \vec E$. 
-Prostih nabojev v vzorcu ni. 
+Prostih nabojev tipcno v tekocekristlaih sistemih ni, zato je $\rho_f=0$. 
 Z upo"stevanjem zgornjih predpostavk lahko Maxwellove ena"cbe zapi"semo v poenostavljeni obliki
 \begin{equation}
   \begin{aligned}
@@ -553,7 +565,7 @@ Z upo"stevanjem zgornjih predpostavk lahko Maxwellove ena"cbe zapi"semo v poenos
   \nabla \times \vec E = -\odvod{\vec B}{t} & \qquad \nabla \times \vec B = \sigma \vec E + \varepsilon\varepsilon_0\mu_0\odvod{\vec E}{t}
   \end{aligned}
 \end{equation}
-V zadnji ena"cbi smo privzeli, da se dielektri"cni tenzor $\varepsilon$ ne spreminja s "casom, zato nastopa izved "casovnega odvoda. 
+V zadnji ena"cbi smo privzeli, da se dielektri"cni tenzor $\varepsilon$ ne spreminja s "casom, zato nastopa izven "casovnega odvoda. 
 Ta predpostavka je smiselna pri obravnavi opti"cnih polj, saj je relaksacija teko"cega kristala mnogo po"casnej"sa od sprememb elektri"cnega in magnetnega polja. 
 V tipi"cnem teko"cem kristalu in frekvencah vidne svetlobe je razlika v "casovni skali okrog 15 redov velikosti. 
 
@@ -566,11 +578,6 @@ V dvolomnih snoveh zveze med jakostjo elektri"cnega polja $E$ in gostoto elektri
 \begin{align}
   D_i &= \varepsilon_0 \varepsilon_{ij} E_j
 \end{align}
-Hitrost svetlobe v tak"sni snovi je enaka
-\begin{align}
-  c &= \sqrt{\frac{1}{\varepsilon_{\mathrm{eff}} \varepsilon_0 \mu_0}} = \frac{c_0}{\sqrt{\varepsilon_{\mathrm{eff}}}} = c_0\sqrt{\frac{E_iE_i}{E_i \varepsilon_{ij} E_j}}
-\end{align}
-in je odvisna od smeri elektri"cnega polja. 
 
 Dielektri"cni tenzor $\varepsilon_{ij}$ je linearna zveza med dvema vektorskima koli"cinama. 
 Predstavimo ga z matriko velikosti $3\times 3$, torej ima tri lastne smeri in tri lastne vrednosti.
@@ -599,9 +606,14 @@ Zaradi razli"cnih polarizacij se "zarka razli"cno lomita. Desno: Pogled skozi dv
   \label{fig:dvolomnost}
 \end{figure}
 
-
 Enako kot dielektri"cnost $\varepsilon$ lahko tudi anizotropna magnetna permeabilnost $\mu$ povzro"ci dvolomnost. 
 Pri opti"cnih frekvencah je magnetna anizotropija ve"cine snovi zanemarljiva, zato je dovolj obravnavati le elektri"cno. 
+
+Hitrost svetlobe v tak"sni snovi je enaka
+\begin{align}
+  c &= \sqrt{\frac{1}{\varepsilon_{\mathrm{eff}} \varepsilon_0 \mu_0}} = \frac{c_0}{\sqrt{\varepsilon_{\mathrm{eff}}}} = c_0\sqrt{\frac{E_iE_i}{E_i \varepsilon_{ij} E_j}}
+\end{align}
+in je odvisna od smeri elektri"cnega polja. 
 
 \section{Defekti v polarizaciji svetlobe}
 Elektri"cno in magnetno polje sta prava vektorja, zato imata lahko le defekte s celo"stevilskim ovojnim "stevilom. 
@@ -623,17 +635,14 @@ S primernimi opti"cnimi elementi lahko skonstruiramo svetlobo z defekti v polari
 \section{Dielektri"cni tenzor v teko"cem kristalu}
 \label{sec:dielektricnost}
 Oblika in polarizabilnost molekul v teko"cem kristalu vplivata na njegove opti"cne lastnosti. 
-Dielektri"cni tenzor v teko"cem kristalu je odvisen od molekularne anizotropije $\varepsilon_{a}^{\mathrm{mol}}$, direktorja in nematske stopnje reda $S$. 
-Odvisnost od direktorja in stopnje reda lahko opi"semo s tenzorskim ureditvenim parametrom $Q_{ij}$. 
-Ta je brezsleden, zato tudi dielektri"cni tenzor zapi"semo kot vsoto izotropnega in brezslednega dela\cite{degennes, ravnik-zumer-ldg}
-
+Dielektri"cni tenzor v teko"cem kristalu je odvisen od molekularne anizotropije $\varepsilon_{a}^{\mathrm{mol}}$, direktorja in nematske stopnje reda $S$ in je neposredno povezan z nematskim tenzorjem ureditvenega paramtera $Q_{ij}$.
+Dielektri"cni tenzor pogosto zapi"semo kot vsoto izotropnega in brezslednega dela\cite{degennes, ravnik-zumer-ldg}
 \begin{align}
 \label{eq:dielektricni-tenzor}
- \varepsilon_{ij} &= \overline\varepsilon + (\varepsilon_a)_{ij} = \overline\varepsilon + \frac{2}{3}\varepsilon_a^{\mathrm{mol}} Q_{ij}
+ \varepsilon_{ij} &= \overline\varepsilon \delta_{ij} + (\varepsilon_a)_{ij} = \overline\varepsilon\delta_{ij} + \frac{2}{3}\varepsilon_a^{\mathrm{mol}} Q_{ij}
 \end{align}
-
 Lastni vektorji tenzorja $Q_{ij}$ so direktor in dve pravokotni smeri, po zgornji zvezi pa so enake tudi lastne osi dielektri"cnega tenzorja. 
-V enoosnem teko"cem kristul je tako opti"cna os z izrednim lomnim koli"cnikom vzporedna z direktorjem. 
+V enoosnem teko"cem kristalu je tako opti"cna os z izrednim lomnim koli"cnikom vzporedna z direktorjem. 
 
 "Ce primerjamo ena"cbi (\ref{eq:dielektricna-sklopitev}) in (\ref{eq:dielektricni-tenzor}) opazimo dvosmerno povezavo med ureditvijo teko"cega kristala in elektromagnetnim poljem. 
 Zaradi dielektri"cne sklopitve svetloba vpliva na ureditev teko"cega kristala, zaradi opti"cne anizotropije pa teko"ci kristal vpliva na "sirjenje svetlobe po njem. 
@@ -641,11 +650,11 @@ Ra"cunsko orodje, ki naj bi natan"cno napovedalo direktorsko polje ob prisotnost
 V praksi pa se pogosto zate"cemo k poenostavitvam oz. limitam mo"cnega ali "sibkega polja. 
 "Ce je elektromagnetno polje dovolj mo"cno, se bo direktor orientiral v smeri polja, torej svetloba vedno "cuti izredni lomni koli"cnik. 
 V tem re"zimu teko"ci kristal ne vpliva na "sirjenje svetlobe. 
-"Ce pa je svetloba zelo "sibka, ne spremeni orientacije molekul in lahko privzamemo, da je direktorsko polje fiksirano. 
-Mo"cno se razlikujeta tudi "casovni skali obeh pojavov, saj je karakteristi"cni "cas relaksacije teko"cega kristala velikostnega reda sekunde, opti"cna polja pa nihajo s periodo okrog femtosekunde. 
-Zato lahko preu"cujemo propagacijo svetlobe preden se teko"ci kristal lahko preuredi. 
+"Ce pa je svetloba zelo "sibka, ne spremeni orientacije molekul in lahko privzamemo, da je direktorsko polje doloceno z drugimi mehanizmi, tipi"cno s povr"sinskim pogoji.. 
+Mo"cno se razlikujeta tudi "casovni skali obeh pojavov, saj je karakteristi"cni "cas relaksacije teko"cega kristala velikostnega reda milisekunde, opti"cna polja pa nihajo s periodo okrog femtosekunde. 
+Zato lahko preu"cujemo tudi propagacijo svetlobe preden se teko"ci kristal lahko preuredi. 
 
-V tem magistrskem delu sem se omejil le na "sirjenje svetlobe, pri "cemer je direktorsko polje konstantno. 
+V tem magistrskem delu sem se omejil le na "sirjenje svetlobe, pri "cemer je direktorsko polje dolo"ceno in "casovno nespremenljivo. 
 Sama ra"cunska metoda pa je zasnovana tako, da je kompatibilna z obstoje"cimi programi za izra"cun ureditve teko"cih kristalov\cite{ravnik-zumer-ldg}. 
 Z isto metodo bo v prihodnosti mogo"ce upo"stevati dvosmerno sklopitev med opti"cnim poljem in teko"cim kristalom, premostiti pa bo treba "se razliko v "casovnih skalah. 
 
@@ -697,11 +706,11 @@ Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj
 
 \chapter{Numeri"cna metoda}
 
-Za samo ra"cunanje smo implementirali metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}}\cite{taflove}. 
+Za izracun propagacije svetlobe skozi mocno opticno aniztorpne tekocekristalne vzorce smo implementirali metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}}\cite{taflove}. 
 Pri tej metodi "casovno propagiramo elektri"cno in magnetno polje v vsaki to"cki po Maxwellovih ena"cbah. 
 
-Pri numeri"cnem re"sevanju potrebujemo le zadnji dve ena"cbi, ki vsebujeta "casovne odvode polj. 
-Prvi dve ena"cbi bosta s tem avtomatsko izpolnjeni. 
+Pri numeri"cnem re"sevanju potrebujemo le tisti dve Maxwellovi ena"cbi, ki vsebujeta "casovne odvode polj. 
+Prvi dve ena"cbi bosta s tem avtomatsko izpolnjeni\todo{REF}. 
 Izvore valovanja namesto z dodajanjem nabojev in tokov v vzorec raje simuliramo z robnimi pogoji, kot da valovanje prihaja od zunaj. 
 Ta pristop je smiseln, saj v eksperimentih teko"ci kristal opazujemo tako, da svetimo skozenj. 
 
@@ -711,16 +720,17 @@ Ta pristop je smiseln, saj v eksperimentih teko"ci kristal opazujemo tako, da sv
  \odvod{\vec{B}}{t} = -\nabla \times \vec{E}, \qquad \odvod{\vec{E}}{t} = \eps^{-1} (\nabla \times \vec{B} - \sigma \vec E)\,.
 \end{align}
 
-V zgornjih ena"cbah smo implicitno upo"stevali, da v celici ni izvorov, uporabili pa smo brezdimenzijske enote, zato je $c=1$.
-V ena"cbah nastopajo le prvi odvodi, ki jih za numeri"cno ra"cunanje nadomestimo s kon"cnimi diferencami
+V zgornjih ena"cbah smo implicitno upo"stevali, da v celici ni prostih nabojev.
+V ena"cbah nastopajo le prvi odvodi, ki jih za numeri"cno ra"cunanje nadomestimo s simetri"cnimi kon"cnimi diferencami
 \begin{align}
- \frac{\partial y}{\partial x} \rightarrow \frac{y(x+\delta) - y(x)}{\delta}
+ \frac{\partial y}{\partial x} \rightarrow \frac{y(x+\delta/2) - y(x-\delta/2)}{\delta}\,
 \end{align}
+kjer je $\delta$ korak diskretizacije, $y(x)$ pa poljubna skalarna funkcija. 
+Na ta na"cin diskretiziramo krajevno in "casovno odvisnost vseh komponent elektromagnetnih polj. 
 
-Znotraj teko"cega kristala lahko elektri"cno prevodnost zanemarimo in izpustimo "clen $\sigma \vec E$. 
+Znotraj teko"cega kristala lahko obi"cajno elektri"cno prevodnost zanemarimo in zato izpustimo "clen $\sigma \vec E$. 
 Prevodnost pa je pomembna v robni plasti, kjer "zelimo absorpcijo valovanja. 
 
-Pri ra"cunih smo upo"stevali le dielektri"cno anizotropijo teko"cega kristala, magnetno pa zanemarili. 
 Zaradi simetrije Maxwellovih ena"cb bi na enak na"cin kot dielektri"cnost $\varepsilon$ lahko upo"stevali tudi magnetno permeabilnost $\mu$. 
 Podobno bi lahko poleg elektri"cne prevodnosti $\sigma$ upo"stevali magnetne izgube $\sigma^*$. 
 
@@ -805,23 +815,32 @@ V svoji metodi sem za odvod polja po vsaki koordinati v sredi"s"cu kocke uporabi
 \end{figure}
 
 V primerjavi z Yeejevo celico povpre"cenje pove"ca "cas ra"cunanja, saj moramo namesto vsakega krajevnega odvoda izra"cunati "stiri. 
-Na sre"co pa si vsah rob delijo "stiri kocke, tako da se s sprotnim shranjevanjem odvodov lahko izognemo ve"ckratnemu ra"cunanju istega odvoda. 
+Na sre"co pa si vsak rob delijo "stiri kocke, tako da se s sprotnim shranjevanjem odvodov lahko izognemo ve"ckratnemu ra"cunanju istega odvoda. 
 Na ta na"cin je "stevilo ra"cunskih operacij blizu tistemu, ki bi ga potrebovali z uporabo Yeejeve mre"ze. Na izbrani mre"zi so vse komponente elektri"cnega polja znane ob "casih $k\Delta t$, $k\in\mathbf{N}$, in sicer na polo"zajih, kjer so vse tri prostorske koordinate celo"stevilski ve"ckratniki enote diskretizacije $\Delta x$. 
 Magnetno polje je znano ob "casih $(k+1/2)\Delta t$ na polo"zajih, kjer so vse tri prostorske koordinate polcelo"stevilski ve"ckratniki $\Delta x$. 
-S poenostavljenim zapisom
+V kompoktnem zapisu ozna"cimo
 \begin{align}
  E_\alpha|_{i,j,k}^n &= E_\alpha\Big(i\Delta x, j\Delta y, k\Delta z, n \Delta t\Big) \\
- H_\alpha|_{i,j,k}^n &= H_\alpha\left(\left(i+\frac{1}{2}\right)\Delta x, \left(j+\frac{1}{2}\right)\Delta y, \left(k+\frac{1}{2}\right)\Delta z, \left(n+\frac{1}{2}\right) \Delta t\right)
+ H_\alpha|_{i,j,k}^n &= H_\alpha\left(\left(i+1/2\right)\Delta x, \left(j+1/2\right)\Delta y, \left(k+1/2\right)\Delta z, \left(n+1/2\right) \Delta t\right)
 \end{align}
-lahko zapi"semo krajevne odvode elektromagnetnih polj
+in zapi"semo krajevne odvode vsake komponente elektromagnetnih polj
 \newcommand{\sumij}[2]{\substack{ #1' = #1,\, #1+1 \\ #2' = #2,\, #2+1}}
 \begin{align}
  \label{eq:diskretni-odvodi}
- (\nabla\times \vec A)_x|_{i,j,k}^n &= \frac{1}{4\Delta y}\sum_{\sumij{i}{k}} A_z|_{i',j+1,k'}^{n} - A_z|_{i',j,k'}^{n} \\
- (\nabla\times \vec A)_y|_{i,j,k}^n &= \frac{1}{4\Delta z}\sum_{\sumij{j}{i}} A_x|_{i',j',k+1}^{n} - A_x|_{i',j',k}^{n} \\
- (\nabla\times \vec A)_z|_{i,j,k}^n &= \frac{1}{4\Delta x}\sum_{\sumij{k}{j}} A_y|_{i+1,j',k'}^{n} - A_y|_{i,j',k'}^{n}
+ \left.\frac{\partial \phi}{\partial x}\right|_{i,j,k}^n &= \frac{1}{4\Delta x}\sum_{\sumij{k}{j}} \phi|_{i+1,j',k'}^{n} - \phi|_{i,j',k'}^{n} \\
+ \left.\frac{\partial \phi}{\partial y}\right|_{i,j,k}^n &= \frac{1}{4\Delta y}\sum_{\sumij{i}{k}} \phi|_{i',j+1,k'}^{n} - \phi|_{i',j,k'}^{n} \\
+ \left.\frac{\partial \phi}{\partial z}\right|_{i,j,k}^n &= \frac{1}{4\Delta z}\sum_{\sumij{j}{i}} \phi|_{i',j',k+1}^{n} - \phi|_{i',j',k}^{n}	
 \end{align}
-kjer je $\vec A$ poljubno vektorsko polje. 
+kjer je $\phi$ poljubna komponenta elektri"cnega ali magnetnega polja.
+Rotorje polj, ki nastopajo v Maxwellovih ena"cbah, izrazimo z odvodi
+\begin{align}
+ \label{eq:diskretni-rotor}
+ (\nabla\times\vec A)_x|_{i,j,k}^n &= \left.\frac{\partial A_z}{\partial y}\right|_{i,j,k}^n - \left.\frac{\partial A_y}{\partial z}\right|_{i,j,k}^n\\
+ (\nabla\times\vec A)_y|_{i,j,k}^n &= \left.\frac{\partial A_x}{\partial z}\right|_{i,j,k}^n - \left.\frac{\partial A_z}{\partial x}\right|_{i,j,k}^n\\
+ (\nabla\times\vec A)_z|_{i,j,k}^n &= \left.\frac{\partial A_y}{\partial x}\right|_{i,j,k}^n - \left.\frac{\partial A_x}{\partial y}\right|_{i,j,k}^n
+\end{align}
+kjer je $\vec A$ elektri"cno ali magnetno polje. 
+
 Pri zgornjem zapisu je rotor polja definiran med to"ckami mre"ze, torej na mestih $A_\alpha|_{i+1/2,j+1/2,k+1/2}$. 
 Ker rotor polja potrebujemo pri "casovnem odvodu drugega opti"cnega polja, ki je definiran ravno na teh mestih, je zgornji zapis primeren za izbrano mre"zo. 
 V splo"snem je diskretizacija lahko anizotropna, v vseh nadaljnjih izra"cunih pa smo uporabili kvadratno mre"zo, kjer je $\Delta x = \Delta y = \Delta z$. 
@@ -874,7 +893,8 @@ V vseh primerih je bila debelina obmo"cja \textbf{A} enaka dva koraka mre"ze.
 
 \section{Robni pogoji}
 
-"Ce imamo na robu celice Dirichletov, Neumannov ali me"sani robni pogoj, se bo celotno valovanje odbilo in vrnilo v celico. 
+"Ce imamo na robu celice dolo"ceno vrednost elektri"cnega in magnetnega polja, se bo celotno valovanje odbilo in vrnilo v celico. 
+"Ce so dolo"ceni odvodi polj, ali pa linearna kombinacija vrednosti in odvodov, se bo valovanje odbilo z dolo"cenim faznim zamikom. 
 Tega si ne "zelimo, saj pri izvedbi ekperimentov obi"cajno svetloba najprej preide skozi vzorec, nato pa jo zajamemo in preu"cimo. 
 Odbita svetloba, ki bi se vrnila v vzorec, bi zmotila svetlobno polje in ote"zila opazovanje. 
 Za modeliranje tak"snega eksperimenta bi morali uporabiti zelo veliko prazno obmo"cje, v katerega bi se svetloba "sirila, kar pa mo"cno upo"casni delovanje metode. 
@@ -888,14 +908,14 @@ To ujemanje izgub odpravi odboj na meji le za valovanje, ki vpada pravokotno na 
 Odboj valovanja pod poljubnim kotom prepre"cimo, "ce vsako komponento elektri"cnega in magnetnega polja razdelimo na dva prispevka. 
 Tak material je nefizikalen, saj imamo dodatne prostostne stopnje, polje pa ne sledi ve"c Maxwellovim ena"cbam. 
 
-Komponenta $E_x$ elektri"cnega polja vala v obi"cajnem mediju z dielektri"cnostjo $\eps$ in elektri"cno prevodnostjo $\sigma$ zado"s"ca Maxwellovi ena"cbi
+Komponenta $E_x$ elektri"cnega polja vala v obi"cajnem izotropnem mediju z dielektri"cnostjo $\eps$ in elektri"cno prevodnostjo $\sigma$ zado"s"ca Maxwellovi ena"cbi
 \begin{align}
  \eps \odvod{E_x}{t} + \sigma E_x = \odvod{H_z}{y} - \odvod{H_y}{z}\;.
 \end{align}
 V plasti \acs{PML} pa elektri"cno polje razdelimo na dva prispevka, $E_x = E_{xy} + E_{xz}$, ki zado"s"cata ena"cbam
 \begin{align}
- \eps \odvod{E_{xy}}{t} + \sigma_y E_{xy} &= \odvod{}{y}(H_{zx} + H_{zy}) \\
- \eps \odvod{E_{xz}}{t} + \sigma_z E_{xz} &= -\odvod{}{z}(H_{yx} + H_{yz})\;,
+ \eps \odvod{E_{xy}}{t} + \sigma_y E_{xy} &= \odvod{H_z}{y} = \odvod{}{y}(H_{zx} + H_{zy}) \\
+ \eps \odvod{E_{xz}}{t} + \sigma_z E_{xz} &= -\odvod{H_y}{z} = -\odvod{}{z}(H_{yx} + H_{yz});,
 \end{align}
 kjer smo razcepljenima komponentoma pripisali razli"cni prevodnosti. 
 Na enak na"cin so razcepljene ostale komponente eletri"cnega in magnetnega polja. 
@@ -917,8 +937,8 @@ Primer postavitve plasti \acs{PML}, ki zadosti temu pogoju, je na sliki \ref{fig
 
 \chapter{Primeri uporabe metode}
 
-\section{Prazen prostor}
-Prvi preizkus metode, ki smo ga opravili, je "sirjenje svetlobe skozi prazen prostor. 
+\section{Izotropen dielektrik}
+Prvi preizkus metode, ki smo ga opravili, je "sirjenje svetlobe skozi izotropen dielektrik, kot je npr. prazen prostor. 
 Prazen prostor je modeliran kot snov, kjer je dielektri"cni tenzor uniformen in izotropen. 
 "Ce na eno stran celice postavimo planarni izvir ravnega valovanja, pri"cakujemo ravne valove po celotnem mediju. 
 
@@ -933,10 +953,10 @@ Prikaz valovanja na sliki \ref{fig:test-plane} potrjuje pravilnost metode, saj r
 \label{fig:test-plane}
 \end{figure}
 
-Na obeh slikah opazimo notranjost celice z valovanje in rob, kjer valovanja ni.
+Na obeh slikah opazimo notranjost celice z valovanjem in rob, kjer valovanja ni.
 To je posledica modeliranja izvora valovanja okrog in okrog celice, kot je prikazano na levi strani slike \ref{fig:wave-source-regions}.
 Valovanje se "siri od leve proti desni, tako da si lahko predstavljamo izvir valovanja ne levi strani in ponor na desni. 
-Dejstvo, da ponor valovanja na desni strani uspe"sno pobere celotno valovanje potrjuje natan"cnost ra"cunanja. 
+Dejstvo, da ponor valovanja na desni strani uspe"sno pobere celotno valovanje potrjuje natan"cnost ra"cunanja in ustrezno implementirane robne pogoje. 
 
 \section{Lom in odboj}
 Enostaven preizkus za "sirjenje valovanja je prehod "cez mejo med medijema z razli"cnima lomnima koli"cnikoma. 
@@ -946,7 +966,7 @@ Izra"cunamo ga po lomnem zakonu
 \begin{align}
  \frac{\sin\alpha}{\sin\beta} &= \frac{n_2}{n_1} = \sqrt{\frac{\varepsilon_2}{\varepsilon_1}}\;, 
 \end{align}
-kjer je $\alpha$ vpadni kot valovanja, $\beta$ pa lomni kot oz. kot med pravokotnico in smerjo "sirjenja lomljenega vala. 
+kjer je $\alpha$ vpadni kot valovanja, $\beta$ pa lomni kot oz. kot med pravokotnico in smerjo "sirjenja lomljenega vala, $n_1$ in $n_2$ pa sta lomna koli"cnika obeh medijev. 
 
 Dele"za odbitega in prepu"s"cenega valovanja sta odvisna od vpadnega kota $\alpha$ in polarizacije svetlobe\cite{hecht-optics}. 
 Pri dolo"cenem kotu $\alpha$ se komponenta svetlobe s polarizacijo v ravnini "zarka in normale na povr"sino ne odbije in se v celoti lomi. 
