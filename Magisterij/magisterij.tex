@@ -240,35 +240,34 @@ Za modeliranje anizotropnih snovi je bolj primerna Berremanova metoda\cite{berre
 Vse na"stete metode uporabljajo poenostavljen opis svetlobe. 
 V zadnjem "casu so ra"cunalniki "ze dovolj zmogljivi, da lahko opi"semo svetlobo direktno z vektorjema elektri"cnega in magnetnim polja po celotnem prostoru. 
 Opis polja vsebuje vseh "sest komponent elektri"cnega in magnetnega polja, "casovni razvoj pa podajajo Maxwellove ena"cbe. 
-Tak"sen pristop je ra"cunsko mnogo bolj zahteven, omogo"ca pa modeliranje "sirjenja svetlobe po zapletenih strukturah\cite{taflove, hwang-rey}. 
+Tak"sen pristop je ra"cunsko mnogo bolj zahteven, omogo"ca pa modeliranje "sirjenja svetlobe po poljubno opti"cno zapletenih strukturah\cite{taflove, hwang-rey}. 
 
-V teoreti"cnem delu te naloge je razlo"zena osnovna teorija ureditve teko"cih kristalov in njihove opti"cne lastnosti. 
-Navedene so Maxwellove ena"cbe, ki opisujejo "sirjenje svetlobe skozi anizotropno snov. 
+Magistrsko delo je organizirano v sedem vsebinskih sklopov. 
+V drugem poglavju je razlo"zena osnovna teorija ureditve teko"cih kristalov in njihove opti"cne lastnosti. 
+V tretjem poglavju so navedene Maxwellove ena"cbe, ki opisujejo "sirjenje svetlobe skozi anizotropno snov. 
 Poseben poudarek je na dvolomnosti. 
-V tretjem poglavju je predstavljena numeri"cna metoda, s katero sem modeliral "sirjenje svetlobe skozi teko"cekristalne strukture na podlagi Maxwellovih ena"cb. 
+V "cetrtem poglavju je predstavljena numeri"cna metoda, s katero smo modelirali "sirjenje svetlobe skozi teko"cekristalne strukture na podlagi Maxwellovih ena"cb. 
 Opisana je diskretizacijska mre"za, ki je primerna za obravavo opti"cno anizotropnih snovi, na"stetih je nekaj preizkusov pravilnosti izbrane metode. 
-Vklju"ceni so preizkusi od najbolj enostavnih, "sirjenje ravnega vala po praznem prostoru, do bolj zapletenih fotonskih kristalov in teko"cekristalnih vlaken. 
-Rezultati prikazujejo propagacijo zelo kratkih laserskih sunkov skozi teko"cekristalna vlakna z razli"cnimi direktorskimi profili. 
-Metoda napove razcep sunka v dva lastna na"cina, ki zadostita tako simetriji direktorja kot tudi simetriji za"cetne polarizacije svetlobe. 
-Opisana je tudi propagacija stalne laserske svetlobe, ki je bolj primerna za eksperimentalno opazovanje, s katero lahko pridobimo razli"cne profile polarizacije svetlobe, na primer radialno polarizacijo. 
+V petem poglavju so opisani preizkusi metode, vklju"cno z "sirjenjem ravnega vala po praznem prostoru, fotonskim kristalom in teko"cekristalnim vlaknom. 
+V "sestem poglavju prikazani rezultati propagacije zelo kratkih laserskih sunkov skozi teko"cekristalna vlakna z razli"cnimi direktorskimi profili. 
+V sedmem poglavju je opisana propagacija stalne laserske svetlobe, ki je bolj primerna za eksperimentalno opazovanje, s katero lahko pridobimo razli"cne profile polarizacije svetlobe, na primer radialno polarizacijo. 
 
 
-\chapter{Teko"ci kristali}
+\chapter{Teko"ci kristali kot opti"cni materiali}
 
 \section{Teko"cekristalne mezofaze}
 
 Teko"ci kristali so mehke snovi, ki zdru"zujejo lastnosti kristalov in teko"cin\cite{degennes}. 
 Praviloma so teko"ci kristali sestavljeni iz pali"castih ali diskastih molekul, teko"cekristalne mezofaze pa tvorijo tudi segmenti DNK, molekule nekaterih virusov in primerni koloidni delci. 
 Polo"zaji gradnikov nimajo reda dolgega dosega v vseh smereh, zato se snov obna"sa kot teko"cina. 
-Teko"ci kristali imajo orientacijski red dolgega dosega, lahko pa imajo tudi delni pozicijski red, na primer ureditev molekul v plasti. 
+% Teko"ci kristali imajo orientacijski red dolgega dosega, lahko pa imajo tudi delni pozicijski red, na primer ureditev molekul v plasti. 
 Teko"cekristalne mezofaze se pojavijo pri dolo"ceni temperaturi ali koncentraciji molekul. 
 
-Teko"ce kristali delimo na ve"ce mezofaz glede na orientacijski in pozicijski red gradnikov. Nematski teko"ci kristali imajo orientacijski red dolgega dosega, ne pa tudi pozicijskega. 
-Matemati"cno lahko tak"sen red opi"semo z direktorjem $\mathbf{n}$ in stopnjo reda $S$. 
-Smektiki imajo pozicijski red v eni smeri, tako da se gradniki uredijo v plasti, znotraj katerih se snov obna"sa kot dvodimenzionalna teko"cina. 
-"Ce je direktor pravokoten na ravnino plasti, je to mezofaza Sm A, v nasprotnem primeru pa Sm C. 
-
-Teko"cekristalne mezofaze se med seboj razlikujejo tudi po orientacijskem redu. 
+Teko"ce kristali delimo na ve"ce mezofaz glede na orientacijski in pozicijski red gradnikov. 
+Molekule nematskih teko"cih kristalov imajo samo orientacijski red dolgega dosega. 
+Smektiki imajo pozicijski red v eni smeri, tako da se gradniki uredijo v plasti, znotraj katerih se snov obna"sa kot teko"cina. 
+% "Ce je direktor pravokoten na ravnino plasti, je to mezofaza Sm A, v nasprotnem primeru pa Sm C. 
+% Teko"cekristalne mezofaze se med seboj razlikujejo tudi po orientacijskem redu. 
 Prisotnost kiralnih molekul teko"cemu kristalu vsili lasten zvoj, tako da se preferen"cna smer orientacijskega reda s krajem spreminja. 
 Glede na mo"c tega zvoja snov tvori kiralno nematsko fazo, kjer je zvoj le v eni smeri, ali modre faze, kjer je zvoj prisoten v vseh smereh. 
 Orientacija molekul v nekaj najpogostej"sih teko"cekristalnih mezofazah je prikazana na sliki \ref{fig:faze}. 
@@ -283,7 +282,10 @@ Poleg na"stetih obstaja "se veliko razli"cnih mezofaz z razli"cnim orientacijski
 
 \section{Orientacijski red}
 
-V vseh teko"cekristalnih mezofazah imajo gradniki orientacijski red dolgega dosega. Definiramo lahko enotski vektor $\mathbf{n}$, ki dolo"ca povpre"cno smer gradnikov in ga imenujemo direktor. Direktor ni pravi vektor, saj v teko"cem kristalu ne lo"cimo med smerjo $\mathbf{n}$ in $\mathbf{-n}$. Tudi "ce sami gradniki nimajo tak"sne simetrije, jo imajo njihove fluktuacije, zato lahko ureditev dobro opi"semo z direktorjem\cite{mermin}. 
+V vseh teko"cekristalnih mezofazah imajo gradniki orientacijski red dolgega dosega. 
+Definiramo lahko enotski vektor $\mathbf{n}$, ki dolo"ca povpre"cno smer gradnikov in ga imenujemo direktor. 
+Direktor ni pravi vektor, saj v teko"cem kristalu ne lo"cimo med smerjo $\mathbf{n}$ in $\mathbf{-n}$. 
+Tudi "ce sami gradniki nimajo tak"sne simetrije, jo imajo njihove fluktuacije\cite{mermin}. 
 
 \begin{figure}[h]
 \begin{center}
@@ -294,25 +296,33 @@ V vseh teko"cekristalnih mezofazah imajo gradniki orientacijski red dolgega dose
  \end{center}
 \end{figure}
 
-Orientacijski red dolgega dosega je tipi"cno realiziran s pali"castimi gradniki. Najpogosteje se uporabljajo organske molekule z dvema benzenovima obro"cema, na katera so vezane razli"cne skupine. Primera tak"snih molekul sta 4-ciano-4'-pentilbifenil (5CB) in 4-ciano-4'-oktilbifenil (8CB), katerih strukturni formuli sta prikazani na Sliki \ref{fig:nematik-direktor}. Velikosti tak"snih molekul so nekaj nanometrov. 
+Orientacijski red dolgega dosega je tipi"cno realiziran s pali"castimi gradniki. 
+Najpogosteje se uporabljajo organske molekule z dvema benzenovima obro"cema, na katera so vezane razli"cne skupine. 
+Primera tak"snih molekul sta 4-ciano-4'-pentilbifenil (5CB) in 4-ciano-4'-oktilbifenil (8CB), katerih strukturni formuli sta prikazani na Sliki \ref{fig:nematik-direktor}. 
+Tipi"cna dol"zina tak"snih molekul je nekaj nanometrov. 
 
-Direktor $\mathbf{n}$ podaja povpre"cno smer gradnikov, ne pa dejanske orientacije posameznih gradnikov. 
+Direktor $\mathbf{n}$ podaja povpre"cno smer gradnikov, ne pa dejanske orientacije posameznih gradnikov, t.i. molekularnih direktrojev. 
 Zato uvedemo "se stopnjo reda $S$ \angl{degree of order}, ki nam pove, koliko smeri molekul v povpre"cju odstopajo od direktorja. 
 Zaradi simetrije $\mathbf{n} \leftrightarrow -\mathbf{n}$ ne moremo vzeti kar povpre"cne vrednosti kota med gradnikom in direktorjem, saj je ta vrednost enaka ni"c. 
 Namesto tega uporabimo povpre"cni kvadrat kota, ki je ekvivalenten kvadrupolnemu momentu\cite{kleman}
 \begin{align}
  S = \frac{1}{2}\left(3\langle\cos^2\vartheta\rangle-1\right),
 \end{align}
-kjer je $\vartheta$ kot med osjo gradnika in direktorjem, $\langle\rangle$ pa prostorsko ali "casovno povpre"cje. 
+kjer je $\vartheta$ kot med osjo gradnika in direktorjem, $\langle\rangle$ pa ansambelsko ali "casovno povpre"cje. 
 Pri tak"sni definiciji ima popolnoma urejen teko"ci kristal, kjer so vsi gradniki vzporedni z direktorjem, vrednost $S=1$, povsem neurejen teko"ci kristal z naklju"cnimi orientacijami molekul pa $S=0$. 
-V Landauovi teoriji faznih prehodov je ureditveni parameter neka koli"cina, ki je v eni fazi enaka ni"c, v drugi pa od ni"c razli"cna. 
-Zgoraj definirana stopnja reda $S$ je tako primeren ureditveni parameter za prehod med izotropno teko"cino in teko"cekristalno fazo\cite{degennes}. 
+V Landauovi teoriji faznih prehodov je ureditveni parameter koli"cina, ki je v eni fazi tipi"cno enaka ni"c, v drugi pa od ni"c razli"cna. 
+Zgoraj definirana stopnja reda $S$ je tako primeren ureditveni parameter za opis prehoda med izotropno teko"cino in teko"cekristalno fazo\cite{degennes}. 
 
 Direktor in nematsko stopnjo reda lahko hkrati opi"semo z eno tenzorsko koli"cino. V ta namen uvedemo tenzor ureditvenih parametrov $Q_{ij}$ kot
 \begin{align}
   Q_{ij} = \frac{S}{2}(3n_i n_j - \delta_{ij}) + \frac{P}{2}(e^{(1)}_i e^{(1)}_j - e^{(2)}_i e^{(2)}_j)\,,
 \end{align}
-kjer sta $\mathbf{e}^{(1)}$ in $\mathbf{e}^{(2)}$ enotska vektorja, pravokotna na $\mathbf{n}$ in med seboj. Uvedli smo "se biaksialnost $P$, ki je neni"celna, "ce fluktuacije molekul niso simetri"cne na vrtenje okrog direktorja. V tem primeru imamo orientacijski red tudi v sekundarni osi, ki je pravokotna na direktor in jo imenujemo sekundarni direktor. Parameter $P$ ima podoben pomen kot $S$ in nam pove, kako dobro so gradniki urejeni glede na sekundarni direktor. Ker komponente $n_i$ nastopajo le v kvadratu, s tak"snim zapisom avtomatsko upo"stevamo simetrijo direktorja, saj zamenjava $\mathbf{n}$ z $-\mathbf{n}$ tenzorja $Q_{ij}$ ne spremeni. Ker je $\mathbf{n}$ enotski vektor, je tenzor $Q_{ij}$ brezsleden, zato so v izotropni snovi vse njegove komponente enake 0 in je primeren ureditveni parameter za opis faznih prehodov. 
+kjer sta $\mathbf{e}^{(1)}$ in $\mathbf{e}^{(2)}$ enotska vektorja, pravokotna na $\mathbf{n}$ in med seboj. 
+Uvedli smo "se biaksialnost $P$, ki je neni"celna, "ce fluktuacije molekul niso simetri"cne na vrtenje okrog direktorja. 
+V tem primeru imamo orientacijski red tudi vzdol"z osi $e^{(1)}$, ki je pravokotna na direktor in jo imenujemo sekundarni direktor. 
+Parameter $P$ ima podoben pomen kot $S$ in nam pove, kako dobro so gradniki urejeni glede na sekundarni direktor. 
+Ker komponente $n_i$ nastopajo le v kvadratu, s tak"snim zapisom avtomatsko upo"stevamo simetrijo direktorja, saj zamenjava $\mathbf{n}$ z $-\mathbf{n}$ tenzorja $Q_{ij}$ ne spremeni. 
+Ker je $\mathbf{n}$ enotski vektor, je tenzor $Q_{ij}$ brezsleden, zato so v izotropni snovi vse njegove komponente enake 0 in je primeren ureditveni parameter za opis faznih prehodov. 
 
 Tenzor ureditvenih parametrov $Q_{ij}$ lahko v vsaki to"cki predstavimo kot matriko velikosti $3\times 3$, ki je simetri"cna in zato diagonalizabilna. 
 V lastnem sistemu direktorja, kjer za osi koordinatnega sistema vzamemo $\vec n$, $\vec e^{(1)}$ in $\vec e^{(2)}$, lahko matriko zapi"semo kot
@@ -360,7 +370,7 @@ To pove"canje je odvisno od smeri spreminjanja $Q_{ij}$ glede na smer direktorja
 Na sliki \ref{fig:tsb} so prikazani trije na"cini deformacije direktorja, s katerimi lahko lokalno opi"semo poljubno krajevno odvisnost. 
 Ti trije na"cini so pahlja"ca \angl{splay}, zvoj \angl{twist} in upogib \angl{bend}. 
 
-Vsi trije na"cini deformacije so ela"sti"cni, zato je prispevek v prosti energiji sorazmeren s kvadratom deformacije. 
+Vsi trije na"cini deformacije so elasti"cni, zato je prispevek v prosti energiji sorazmeren s kvadratom deformacije. 
 V splo"snem so elasti"cne konstante, ki pripadajo vsakemu izmed treh osnovnih na"cinom, med seboj razli"cne. 
 Prispevek k gostoti proste energije zaradi elasti"cnih deformacij nematskega teko"cega kristala je tako enak
 
@@ -368,12 +378,14 @@ Prispevek k gostoti proste energije zaradi elasti"cnih deformacij nematskega tek
  f_{\mathrm{el}}^N &= \frac{K_1}{2} (\nabla \cdot \vec n)^2 + \frac{K_2}{2} (\vec n \cdot \nabla \times \vec n)^2 + \frac{K_3}{2} (\vec n \times \nabla \times \vec n)^2. 
 \end{align}
 
-Razvoj elasti"cne proste energije po krajevnih odvodih direktorja je la"zja za predstavo, saj "clene lahko pove"zemo z na"cini deformacije na sliki \ref{fig:tsb}. 
+Razvoj elasti"cne proste energije po krajevnih odvodih direktorja je la"zji za predstavo, saj "clene lahko pove"zemo z na"cini deformacije na sliki \ref{fig:tsb}. 
 Za numeri"cno modeliranje pa je bolj ugodno, "ce jo izrazimo s komponentami tenzorja $Q$, ki poleg direktorja vklju"cuje tudi stopnjo reda in dvoosnost\cite{copar-phd}. 
 V tej sliki se izraz glasi
 \begin{align}
- f_{\mathrm{el}} &= \frac{1}{2}L_1\qodv{ij}{k}\qodv{ij}{k} + \frac{1}{2}L_2 \qodv{ij}{j}\qodv{ik}{k} + \frac{L_3}{2}Q_{ij}\qodv{kl}{i}\qodv{kl}{l}\;.
+ f_{\mathrm{el}} &= \frac{1}{2}L_1\qodv{ij}{k}\qodv{ij}{k} + \frac{1}{2}L_2 \qodv{ij}{j}\qodv{ik}{k} + \frac{L_3}{2}Q_{ij}\qodv{kl}{i}\qodv{kl}{l}\;,
 \end{align}
+kjer so $L_i$ ela"sti"cne konstante, enake $L_i = $
+
 Tri elasti"cne konstante $K_i$ so v splo"snem razli"cne. Tipi"cno je konstanta $K_3$, ki ustreza upogibni deformaciji, mnogo ve"cja od ostalih dveh, konstanta $K_2$, ki ustreza zvoju, pa malo manj"sa od $K_1$. 
 Kljub temu pa so v ve"cini nematikov vse tri konstante istega velikostnega reda\cite{degennes}. 
 Modeliranje teko"cega kristala lahko poenostavimo, "ce privzamemo, da so vse tri konstante enake. 
@@ -399,10 +411,11 @@ Prispevek k prosti energiji lahko razdelimo na prispevek izotropnega dela dielek
 Skupna sprememba proste energije je enaka
 \begin{align}
 \label{eq:dielektricna-sklopitev}
-  f_{\mathrm{EM}} = -\frac{1}{2}\varepsilon_0 \left(\overline\varepsilon E_i E_i + \frac{2}{3}\varepsilon_a^{\mathrm{mol}} Q_{ij}E_iE_j \right),
+  f_{\mathrm{EM}} = -\frac{1}{2}\varepsilon_0 \left(\overline\varepsilon E_i E_i + \frac{2}{3}\varepsilon_a^{\mathrm{mol}} E_iQ_{ij}E_j \right),
 \end{align}
 kjer je $\overline{\varepsilon}$ povpre"cna dielektri"cna konstanta, $\varepsilon_a^{\mathrm{mol}} = \varepsilon_{\parallel}^{\mathrm{mol}} - \varepsilon_{\perp}^{\mathrm{mol}}$ dielektri"cna anizotropija posamezne molekule, $E_i$ pa zunanje elektri"cno polje. 
 Ta sklopitev izhaja iz polarizabilnosti molekul, ki je odvisna od njihove oblike. 
+V snovi s pozitivno dielektri"cno anizotropijo je najugodnj"sa 
 Zunanje polje v molekuli inducira elektri"cni dipolni moment, ki je sorazmeren z dol"zino molekule in je zato najve"cji, "ce je polje vzporedno z osjo molekule. 
 "Ce na teko"ci kristal svetimo, ureditev molekul ne more slediti hitremu spreminjanju opti"cnega elektri"cnega polja, ampak nanj efektivno deluje povpre"cen kvadrat polja. 
 
@@ -496,7 +509,7 @@ Razli"cne smeri pobega povzro"cijo nastanek to"ckastih defektov (c). Desno: Ener
 \end{figure}
 
 V profilu s singularno disklinacijo v osi valja je prisotna le pahlja"cna deformacija, zato je energija tega stanja odvisna od konstante $K_1$. 
-V pobeglem profilu pa sta prisotni tako pahlja"cna kot upogibna deformacija. Energija tega stanja je odvisna od konstant $K_1$ in $K_3$. Do pobega pride, "ce je razmerje $K_3/K_1$ manj"se od 13, kar velja za ve"cino nematskih teko"cih kristalov. Z minimizacijo energije lahko izpeljemo ravnovesni radialni profil direktorja v cilindri"cnih koordinatah. V poenostavljenem primeru, ko sta elasti"cni konstanti $K_3$ in $K_1$ enaki, je energijsko najugodnje"se stanje\cite{kleman} 
+V pobeglem profilu pa sta prisotni tako pahlja"cna kot upogibna deformacija. Energija tega stanja je odvisna od konstant $K_1$ in $K_3$. Do pobega pride, "ce je razmerje $K_3/K_1$ manj"se od 13, kar velja za ve"cino nematskih teko"cih kristalov. Z minimizacijo energije lahko izpeljemo ravnovesni radialni profil direktorja v cilindri"cnih koordinatah. V poenostavljenem primeru, ko sta elasti"cni konstanti $K_3$ in $K_1$ enaki, je energijsko najugodneje"se stanje\cite{kleman} 
 \begin{align}
  \vec n &= (n_r, n_\phi, n_z) = (\cos \chi(r), 0, \sin \chi(r)) \\
  \chi(r) &= 2 \arctan \frac{R-r}{R+r}
