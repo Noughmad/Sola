@@ -15,6 +15,7 @@
 \usepackage[smaller]{acronym}
 \usepackage[percent]{overpic}
 \usepackage{titlesec}
+\usepackage{setspace}
 
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -208,7 +209,7 @@ Za razliko od obi"cajnih kristalov lahko orientacijski red vsilimo z obdelavo po
 Zaradi mo"znosti zunanjega nadzora so teko"ci kristali klju"cnega pomena v mnogih opti"cnih napravah. 
 
 Orientacijski red v teko"cih kristalih makroskopsko opi"semo s povpre"cno orientacijo molekul, t.j. direktorjem $\mathbf{n}$ in stopnjo reda $S$. 
-Na prosto energijo in s tem na ureditev teko"cega kristala v zunanjih elekricnih ali opticnih poljih klju"cno vplivajo predvsem krajevno spreminjanje direktorja, temperatura in dielektri"cna interakcija med molekulami in zunanjim poljem. 
+Na prosto energijo in s tem na ureditev teko"cega kristala v zunanjih elektri"cnih ali opti"cnih poljih klju"cno vplivajo predvsem krajevno spreminjanje direktorja, temperatura in dielektri"cna interakcija med molekulami in zunanjim poljem. 
 Teko"ci kristali se obna"sajo kot efektivno elasti"cni medij, kjer direktorju lahko pripi"semo tri osnovne deformacijske nacine: pahlja"co, zvoj in upogib.
 Z dolo"ceno izbiro robnih pogojev, zunanjimi polji ali dodatkom koloidnih delcev v teko"cem kristalu lahko vsilimo defekte. 
 To so podro"cja zmanj"sanega reda, kjer direktor ni definiran. 
@@ -982,14 +983,12 @@ Slika elektri"cnega polja ob prehodu meje v bli"zini Brewsterjevega kota je na s
 
 \begin{figure}[h]
  \centering
- \vspace{-1.4cm}
- \input{g_refraction_test}
- \vspace{-1.7cm}
- \caption{Preizkus veljavnosti lomnega zakona ob prehodu valovanja v medij z druga"cnim lomnim koli"cnikom}
+ \includegraphics[width=.8\textwidth]{refraction_t}
+ \caption{Preizkus veljavnosti lomnega zakona ob prehodu valovanja v medij z druga"cnim lomnim koli"cnikom. Barva predstavlja lokalno elektri"cno polje, pu"s"cice pa smer "sirjena valovanja. Lomna koli"cnik na levi je enak $n_1 = 1$, na desni pa $n_2 = $ \todo{koliko je bil $n_2$?}}
  \label{fig:refraction-test}
 \end{figure}
 
-Na sliki so jasno vidna "stiri obmo"cja. 
+Na sliki \ref{fig:refraction-test} so jasno vidna "stiri obmo"cja. 
 "Cisto na levi je rob z absorbirajo"cim robnim pogojem \ac{PML}, ki absorbira odbito valovanje in prepre"cuje nadaljnji odboj. 
 Naslednje je obmo"cje z dielektri"cnostjo $\varepsilon_1$, kjer je superpozicija vpadnega in odbitega valovanja. 
 Odbito valovanje je mnogo "sibkej"se od vpadnega, zato so valovi skoraj ravni. 
@@ -997,7 +996,7 @@ Na sredini slike je meja med obmo"cjema, desno od nje je snov z dielektri"cnostj
 V tem delu je le prepu"s"ceno lomljeno valovanje, ki ima ustrezno manj"so valovno dol"zino. 
 Na desnem robu je prazno obmo"cje, ki ga valovanje "se ni doseglo. 
 
-Veljavnost lomnega zakona potrdimo, "ce primerjamo kota vpadnega in lomljenega valovanja. 
+Veljavnost lomnega zakona potrdimo, "ce primerjamo kota vpadnega in lomljenega valovanja. \todo{Oba kota in oba lomna kolicnika?}
 
 \section{Uniformen dvolomni kristal}
 Modelirali smo dvolomni kristal, torej snov, kjer je dielektri"cni tenzor uniformen, ne pa tudi izotropen. 
@@ -1017,7 +1016,7 @@ Enaka je
 \end{align}
 kjer sta $I_0$ in $\lambda_0$ intenziteta in valovna dol"zina vpadne svetlobe, $d$ debelina vzorca, $n_o$ in $n_e$ pa redni in izredni lomni koli"cnik. 
 Odlicno kvantitativno ujemanje z analiticno pricakovano odvisnostjo je prikazano na sliki \ref{fig:test-uniform}.
-To potrjuje pravilno delovanje metode v opti"cno anizotropni snovi. 
+To nadalje potrjuje pravilno delovanje metode v opti"cno anizotropni snovi. 
 
 \begin{figure}[h]
  \input{g_test_uniform}
@@ -1028,8 +1027,8 @@ To potrjuje pravilno delovanje metode v opti"cno anizotropni snovi.
 \section{Eno-dimenzionalen fotonski kristal}
 V snoveh s periodi"cno modulacijo lomnega koli"cnika se svetloba dolo"cenih frekvenc ne more "siriti\cite{hecht-nano,joannopoulos}; tak"sne materiale imenujemo tudi fotonski kristali. 
 Temu pravimo pojav prepovedanega pasu \angl{band gap} in je soroden elektronski energijski re"zi pri molekulskih kristalih. 
-Za prisotnost fotonskega prepovedanega pasu potrebujemo kristal oz. periodi"cno strukturo, kjer je perioda primerljiva z valovno dol"zino svetlobe. 
-Fotonsko energijsko re"zo za vidno svetlobo lahko ustvarimo npr. v koloidnih kristalih z velikostjo osnovne celice okrog 1 $\mu$m. 
+Za pojav fotonskega prepovedanega pasu potrebujemo kristal oz. periodi"cno strukturo, kjer je perioda primerljiva z valovno dol"zino svetlobe. 
+Fotonsko energijsko re"zo za vidno svetlobo lahko ustvarimo npr. v koloidnih kristalih z velikostjo osnovne celice okrog 1 $\mu$m\cite{colloidal-photonic-crystals}. 
 
 "Sirina in oblika prepovedanega pasu sta odvisni od razmerja lomnih koli"cnikov oz. dielektri"cnega kontrasta, periode modulacije in velikosti kristala. 
 Za preverjanje metode smo modelirali enodimenzionalen fotonski kristal, kjer se izmenjujejo plasti z debelino $a/2$ in z izotropno dielektri"cnostjo $\varepsilon_1$ in $\varepsilon_2$. 
@@ -1062,7 +1061,7 @@ Grafa prepustnosti kristalov z razli"cnimi izbirami za dielektri"cnosti sta na s
 
 \begin{figure}[!htbp]
  \input{g_test_periodic}
- \caption{Rezultati preizkusa s periodi"cno modulacijo lomnega koli"cnika}
+ \caption{Rezultati preizkusa s periodi"cno modulacijo lomnega koli"cnika. Prikazana je odvisnost prepustnosti enodimenzionalnega fotonskega kristala v odvisnosti od frekvence vpadne svetlobe pri razli"cnih razmerjih dielektri"cnih konstant. }
  \label{fig:test-periodic}
 \end{figure}
 
@@ -1078,13 +1077,14 @@ Najve"c pozornosti na podro"cju metamaterialov je posve"cene snovem z negativnim
 Tak"sni materiali so sestavljeni iz periodi"cnih struktur, manj"sih od valovne dol"zine svetlobe. 
 Dobro ujemanje med rezultati numeri"cne metode in napovedjo potrjuje, da je z isto metodo mogo"ce raziskovati tudi opti"cne lastnosti metamaterialov. 
 
-\section{Dvolomno vlakno}
-V magistrskem delu smo preu"cevali "sirjenje svetlobe po cilindri"cnih vlaknih z razli"cnimi profili direktorja. 
-Ra"cunsko metodo smo preizkusil na sistemu, ki je podoben obravnavanim, "se vedno pa lahko napovemo rezultat. 
-V ta namen smo modeliral cilindri"cno vlakno, v katerem je uniformen dvolomen kristal, vanj pa po"sljemo kratek laserski sunkek. 
-Polarizacija vpadne svetlobe je nagnjena za 45\degree~glede na opti"cno os, tako da se vpadni "zarek razcepi na redno in izredno komponento. 
-Zaradi dvolomnosti obe komponenti potujeta z razli"cnima hitrostma, laserski sunek pa se razdeli na dva dela. 
-Direktorsko polje je regularno, brez defektov, zato ne pri"cakujemo defektov v polarizaciji svetlobe. 
+\section{Uniformno nematsko vlakno}
+V delu bomo v nadaljevanju smo preu"cevali "sirjenje svetlobe po cilindri"cnih vlaknih z razli"cnimi profili direktorja. 
+Ra"cunsko metodo smo preizkusil na sistemu, ki je podoben obravnavanim, "se vedno pa toliko poenostavljen, da lahko napovemo rezultat. 
+V ta namen smo modeliral cilindri"cno vlakno, v katerem je uniformen nematik, direktor pa je pravokoten na os vlakna. 
+Vanj po"sljemo kratek laserski sunkek, tako da je polarizacija vpadne svetlobe nagnjena za 45\degree~glede na direktor. 
+V vlaknu se se vpadni "zarek razcepi na redno in izredno komponento. 
+Zaradi dvolomnosti obe komponenti polarizacije potujeta z razli"cnima hitrostma, laserski sunek pa se razdeli na dva dela. 
+Direktorsko polje je uniformno in homogeno, zato ne pri"cakujemo defektov v polarizaciji svetlobe. 
 
 Simulirani laserski pulz je trajal le nekaj valovnih dol"zin svetlobe. 
 Na ta na"cin sta se obe komponenti znotraj vlakna jasno lo"cili in smo ju lahko primerjali. 
@@ -1117,7 +1117,7 @@ Rezultati so prikazani na sliki \ref{fig:test-absorption}.
 
 \begin{figure}[!htbp]
  \input{g_test_absorption}
- \caption{Odbojnost robne plasti debeline 10 enot pri razli"cnih profilih elektri"cnih in magnetnih izgub $\sigma$. Najbolje se izka"ze material, kjer izgube nara"s"cajo kvadratno z oddaljenostjo od roba celice ($p=2$).}
+ \caption{Odbojnost robne plasti v odvisnosti od povpre"cne prevodnosti $\overline{\sigma}$ pri razli"cnih profilih elektri"cnih in magnetnih izgub. Najbolje se izka"ze material, kjer izgube nara"s"cajo kvadratno z oddaljenostjo od roba celice ($p=2$). Debelina robnega sloja je 16 enot diskretizacije, valovna dol"zina svetlobe pa 10 enot. Pri tej debelini dose"zemo, da je intenziteta odbitega "zarka pet velikostnih redov ni"zja od intenzitete vpadnega "zarka. }
  \label{fig:test-absorption}
 \end{figure}
 
@@ -1129,12 +1129,22 @@ V zgornjem primeru se za najbolj"si profil izka"ze kvadratno nara"s"canje absorp
 Z debelino robne plasti 16 enot in s primerno izbiro za prevodnost $\sigma$ v robnem pasu lahko dose"zemo, da je odbito valovanje za 5 velikostnih redov "sibkej"se od vpadnega. 
 Pri uporabljeni lo"cljivosti metode je debelina plasti med eno in dvema valovnima dol"zinama svetlobe. 
 
-\chapter{"Sirjenje laserskega sunka}
+\chapter["Sirjenje laserskega sunka vzdol"z nematskih defektnih linij]{\texorpdfstring{"Sirjenje laserskega sunka \\[.3cm] vzdol"z nematskih defektnih linij}{"Sirjenje laserskega sunka vzdol"z nematskih defektnih linij}}
 
 \section{Radialni profil direktorja}
 
-Teko"cekristalna vlakna, pridobljena v laboratoriju, imajo radialen direktorski profile\cite{peddireddy}. 
-Ugotavljali, kako defekt v sredici vlakna vpliva na "sirjenje svetlobe. 
+Teko"cekristalna vlakna na osnovi sklenjenih smekticnih A slojev, ki so jih nedavno izdelali v laboratorijih prof I. Musevica (IJS) in pfrc C. Bahra (Max Planck Instiut for Fluid Dynamics), imajo radialne direktorske profile\cite{peddireddy}. 
+Shema tak"snega vlakna je prikazana na sliki \ref{fig:fibre-radial-profile}. 
+Kot eden prvih problemov tega dela nas bo zanimalo, kako defekt v sredici vlakna z radialnim profilom direktroja vpliva na "sirjenje svetlobe. 
+
+\begin{figure}[h]
+\centering
+\subfigure{\includegraphics[height=.2\textwidth]{radial-cross}}
+\subfigure{\includegraphics[height=.2\textwidth]{director-profile-radial}}
+\caption{"Celni in stranski prerez nematskega vlakna z radialnim direktorskim profilom. }
+\label{fig:fibre-radial-profile}
+\end{figure}
+
 Vrednosti parametrov, ki smo jih uporabili pri simulaciji, so na"steti v tabeli \ref{tab:parametri}. 
 
 \begin{table}[!htbp]
@@ -1157,8 +1167,8 @@ Vrednosti parametrov, ki smo jih uporabili pri simulaciji, so na"steti v tabeli 
  \label{tab:parametri}
 \end{table}
 
-Podobno kot pri preizku"sanju z uniformnim direktorjem smo najprej v vlakno poslali zelo kratek laserski sunek. 
-Zaradi dvolomnosti teko"cega kristala smo spet opazili razcep sunka na dve komponenti oz. dva lastna na"cina "sirjenja svetlobe. 
+Najprej smo v vlakno poslali kratek laserski sunek vidne svetlobe z valovno dol"zino 480 nm in trajanjem sunka 40 fs. 
+Zaradi dvolomnosti teko"cega kristala smo opazili razcep sunka na dve komponenti oz. dva lastna na"cina "sirjenja svetlobe. 
 Ker pa je direktorsko polje singularno, sta tudi polarizaciji obeh na"cinov singularni, kot prikazuje slika \ref{fig:pulse-p1-mode}. 
 
 \begin{figure}[!htbp]
@@ -1170,25 +1180,25 @@ Ker pa je direktorsko polje singularno, sta tudi polarizaciji obeh na"cinov sing
 \end{figure}
 
 S slike takoj opazimo podobnost med polarizacijo svetlobe, zlasti pri po"casnej"sem nihajnem na"cinu (slika \ref{fig:pulse-p1-mode} desno), in direktorskim poljem. 
-"Ce na polarizacijo gledamo kot na vektor z direktorsko simetrijo, lahko z ena"cbo (\ref{eq:winding-number}) obema na"cinoma priredimo ovojno "stevilo $+1$. 
-Dodatno pa imata oba na"cina "se defektno ravnino, kjer se polarizacija svetlobe obrne, intenziteta svetlobe pa je enaka 0. 
+"Ce na polarizacijo $\vec P$ gledamo kot na enotski vektor z direktorsko simetrijo, lahko z ena"cbo (\ref{eq:winding-number}) obema na"cinoma priredimo ovojno "stevilo $+1$. 
+Dodatno pa ima vsak izmed na"cinov po eno ravnino ravnino ni"celne intenzitete, kjer se polarizacija svetlobe obrne. 
 V enem izmed na"cinov je ta ravnina navpi"cna, v drugem pa vodoravna. 
 "Ce polarizacijo svetlobe na eni strani te ravnine obrnemo, dobimo pravi linijski defekt mo"ci $+1$. 
 
 Direktorsko polje znotraj vlakna ima radialno simetrijo, saj se ne spremeni "ce vlakno vrtimo okrog svoje osi. 
 To simetrijo pa zlomi vpadna svetloba, ki uvede preferen"cno smer, in sicer smer polarizacije. 
-Po dolgem "casu v vlaknu mora svetlobni "zarek zadostiti obem simetrijam. 
-Oba na"cina na sliki \ref{fig:pulse-p1-mode} si lahko predstavljamo kot defekta z ovojnim "stevilom $+1$, ki jim odstranimo vse tiste dele, kjer bi polarizacija morala kazati pravokotno na vpadno polarizacijo. 
+Po dolgem "casu v vlaknu mora svetlobni "zarek zadostiti obema simetrijama. 
+Efektivno si oba na"cina na sliki \ref{fig:pulse-p1-mode} lahko predstavljamo kot defekta v polarizaciji z ovojnim "stevilom $+1$, ki jim odstranimo vse tiste dele, kjer bi polarizacija morala kazati pravokotno na vpadno polarizacijo. 
 
 \section{Hiperboli"cni profil direktorja}
 
 V vlaknu z radialnim direktorskim profilom opazimo tesno povezavo med simetrijo teko"cega kristala in polarizacijo svetlobe. 
 Na podlagi tega lahko pri"cakujemo podobno povezavo tudi, "ce namesto defekta z ovojnim "stevilom $+1$ v sredino vlakna postavimo drug defekt. 
-Z vektorskim poljem so kompatibilni le tak"sni s celo"stevilsko mo"cjo, zato sem izbraj hiperboli"cni defekt z $s=-1$. 
+Z vektorskim poljem so kompatibilni le tak"sni s celo"stevilsko mo"cjo, zato smo najprej izbrali hiperboli"cni defekt z mo"cjo $s=-1$. 
 
-Radialni direktoski profil znotraj vlakna opazimo eksperimentalno, ker povr"sinsko aktivna snov na robu vlakna vsiljuje pravokotno smer direktorja. 
+Radialni direktoski profil znotraj vlakna opazimo eksperimentalno, ker sidranje na robu vlakna vsiljuje pravokotno smer direktorja. 
 Druga"cnih direktorskih polj, na primer tak"snega s hiperboli"cnim defektom, pa ne moremo ustvariti samo z izbiro robnih pogojev. 
-Poljuben direktorski profil je mogo"ce teko"cemu kristalu vsiliti z zunanjim poljem, nato pa ga stabilizirati s polimerizacijo. 
+Poljuben direktorski profil je mogo"ce teko"cemu kristalu vsiliti z zunanjim poljem, nato pa ga stabilizirati s polimerizacijo. \todo{Najdi clanek, npr kaj na \url{http://reynolds.ph.man.ac.uk/people/staff/dierking/publications/}}
 
 Kratek laserski sunek se podobno kot pri radialnem profilu razdeli na dva na"cina, ki sta skladna s simetrijo direktorja. 
 Oba na"cina sta prikazana na sliki \ref{fig:pulse-m1-mode}. 
@@ -1202,19 +1212,23 @@ Oba na"cina sta prikazana na sliki \ref{fig:pulse-m1-mode}.
 \end{figure}
 
 Obmo"cja z vi"sjo intenziteto svetlobe so razporejena enako kot na sliki \ref{fig:pulse-p1-mode}, polarizacijo svetlobe pa tvori defekt z ovojnim "stevilom $-1$. 
-Spet sta vidni ravnini brez svetlobe, kjer se smer polarizacije obrne. 
+Spet sta vidni ravnini ni"celne intenzitete, kjer se smer polarizacije obrne. 
 
 \section{Defekti s polovi"cno mo"cjo}
 
-Videli smo, da radialni in hiperboli"cni profil direktorja znotraj teko"cekristalnega vlakna vsili svojo simetrijo svetlobi. 
-Na mestih, kjer ta simetrija ni kompatibilna s polarizacijo vpadne svetlobe, svetlobe ni. 
+Radialni in hiperboli"cni profil direktorja znotraj teko"cekristalnega vlakna vsili svojo simetrijo polarizaciji svetlobe. 
+Na mestih, kjer ta simetrija ni kompatibilna s polarizacijo vpadne svetlobe, pa se pojavijo obmo"cja ni"celne intenzitete svetlobe. 
 V obeh primerih bi lahko z obratom polarizacije na delu vlakna dosegli, da polarizacija svetlobe tvori defekt s celo"stevilsko mo"cjo. 
 Tak"sni defekti so kompatibilni z vektorskimi polji, kot je elektri"cno polje svetlobe. 
-
 V teko"cem kristalu pa lahko ustvarimo tudi defekte s polcelo mo"cjo, ki jih prava vektorska polja ne morejo tvoriti. 
 Ti so "se posebej zanimivi za eksperimentalno delo, saj se zaradi ni"zje energije pogosto pojavljajo v razli"cnih vzorcih teko"cih kristalov, ne samo v vlaknih. 
-Simulirali smo "sirjenje svetlobe skozi teko"cekristalno vlakno, ki ima v osi linijski defekt z ovojnim "stevilom $s \pm 1/2$. 
+
+Simulirali smo "sirjenje svetlobe skozi teko"cekristalno vlakno, ki ima v osi linijski defekt z ovojnim "stevilom $s =\pm 1/2$. 
 Izka"ze se, da se tudi v tem primeru laserski sunek razcepi na dva dela, ki ustrezata redni in izredni polarizaciji. 
+V nasprotju z radialnim in hiperboli"cnim profilom pri propagaciji svetlobe skozi defekte z necelo mo"cjo ne opazimo ravnin brez svetlobe. 
+Znotraj vsakega lastnega na"cina je le eno intenzitetno obmo"cje. 
+Simetrijski ravnini, opa"zeni pri celo"stevilskih defektih, nista kompatibilni s simetrijo defekta s polcelim ovojnim "stevilom. 
+Spet pa so opazna temna obmo"cja, kjer bi morala biti polarizacija svetlobe pravokotna na vpadno polarizacijo. 
 
 \begin{figure}[!htbp]
  \centering
@@ -1232,42 +1246,38 @@ Izka"ze se, da se tudi v tem primeru laserski sunek razcepi na dva dela, ki ustr
  \label{fig:pulse-m12-mode}
 \end{figure}
 
-V nasprotju z radialnim in hiperboli"cnim profilom pri propagaciji svetlobe skozi defekte z necelo mo"cjo ne opazimo ravnin brez svetlobe. 
-Znotraj vsakega lastnega na"cina je le eno intenzitetno obmo"cje. 
-Simetrijski ravnini, opa"zeni pri celo"stevilskih defektih, nista kompatibilni s simetrijo defekta s polcelim ovojnim "stevilom. 
-Spet pa so opazna temna obmo"cja, kjer bi morala biti polarizacija svetlobe pravokotna na vpadno polarizacijo. 
 
-\section{Splo"sne zakonitosti}
+\section{Posplo"sitev in splo"sne zna"cilnosti}
 Nekaj lastnosti lastnih na"cinov propagacije svetlobe lahko obrazlo"zimo s simetrijo. 
 Polarizacija vpadne svetlobe je linearna in uniformna. 
 Njeno ovojno "stevilo je enako 0, torej ima dvo"stevno rotacijsko os in dve zrcalni osi. 
 "Ce je svetloba polarizirana v smeri osi $x$, sta zrcalni osi os $x$ in os $y$. 
-Kak"sna izmed teh dve zrcalnih osi je prisotne tudi v direktorskem defektu, ne pa nujno obe. 
+Kak"sna izmed teh dve zrcalnih osi je prisotna tudi v direktorskem defektu, ne pa nujno obe. 
 Polarizacija svetlobe znotraj vlakna bo obdr"zala vse simetrijske osi, ki so prisotne tako v vpadni svetlobe kot tudi v teko"cem kristalu. 
 
-V zgorjih opa"zanjih lahko najdemo podobnosti in izpeljemo splo"sne zakonitosti. 
+V zgorjih opa"zanjih lahko najdemo podobnosti; za propagacijo linearno polarizirane svetlobe vzdol"z nematskih defektnih linij velja:
 \begin{itemize}
  \item Sunek linearno polarizirane svetlobe se vedno razdeli na dva lastna na"cina, ki ustrezata redni in izredni polarizaciji.
- \item Polarizacija svetlobe v obeh na"cinih tvori defekt z enakim ovojnim "stevilom kot defekt v teko"cem kristalu.
+ \item Polarizacija svetlobe v obeh na"cinih tvori defekt z enakim ovojnim "stevilom kot defekt v teko"cem kristalu, "ce pri dolocitvi ovojnega stevila polarizacije predpostavimo simetrijo $\vec P \rightleftarrow -\vec P$ in gladek prehod cez mesta z nice"lno intenziteto svetlobe. 
  \item V enem izmed na"cinov je polarizacija svetlobe vzporedna z direktorjem, v drugem pa je nanj pravokotna.
- \item V obmo"cjih, kjer bi po prej"snjem pravilu morala biti svetloba polarizirana pravokotna na vpadno polarizacijo, svetlobe ni. 
- \item Lastna na"cina imata enako simetrijo, simetrijske ravnine pa so presek simetrijskih ravnin teko"cega kristala in polarizacije vpadne svetlobe. 
+ \item V obmo"cjih, kjer bi po prej"snjem pravilu morala biti svetloba polarizirana pravokotna na vpadno polarizacijo, se pojavijo ``temna'' obmo"cja -- obmo"cja ni"celne intenzitete svetlobe.
+ \item Lastna na"cina imata iste simetrijske ravnine, ki so presek simetrijskih ravnin teko"cega kristala in polarizacije vpadne svetlobe. 
 \end{itemize}
 
-S pomo"cjo teh zakonitosti lahko napovemo, kako se bo svetloba "sirila po vlaknu s poljubnim linijskim defektom po sredini. 
+S temi posplositvami lahko napovemo, kako se bo svetloba "sirila vzdolz nematskega vlakna s poljubnim linijskim defektom vzdol"z osi. 
 
 \chapter{Stalna laserska svetloba}
 
 Zelo kratki laserski sunki so zanimivi za teoreti"cno obravnavo, ker lahko z njimi najdemo lastne na"cine "sirjenja svetlobe po snovi. 
 Z eksperimentalnega vidika pa so izjemno zahtevni, tako za ustvarjanje pulza kot za njegovo opazovanje. 
 Sunek, uporabljen na zgornjih slikah je trajal le okrog 40 fs, kar je sicer v dosegu ultrahitrih femtosekundnih laserjev. 
-Mnogo bolj enostavno pa je opazovanje z laserjem, ki sveti konstantno. 
+Mnogo bolj enostavno pa je opazovanje z laserjem, ki sveti stalno s konstantno intenziteto. 
 
 \section{Radialni profil direktorja}
 
-Pri enakomernem laserskem "zarku je svetloba v vlaknu kombinacija obeh lastnih na"cinov, ki se "sirita z razli"cnima hitrostma. 
+Pri enakomernem laserskem "zarku je svetloba v vlaknu z radialnim profilom direktorja kombinacija obeh lastnih na"cinov, ki se "sirita z razli"cnima hitrostma. 
 Frekvenca svetlobe je nespremenjena in zato enaka po celotnem vlaknu, opazimo pa mo"cno krajevno odvisnost oblike polja. 
-Trenutne slike elektri"cnega polja znotraj vsakna so prikazane na sliki \ref{fig:p1-cont-snaps}. 
+Trenutne slike elektri"cnega polja znotraj vlakna so prikazane na sliki \ref{fig:p1-cont-snaps}. 
 
 \begin{figure}[!htbp]
 \centering
@@ -1386,6 +1396,11 @@ Dol"zina, potrebna za pretvorbo iz linearne v radialno polarizacijo, se spremeni
 Dvolomnost teko"cega kristala je odvisna od stopnje reda $S$ in s tem tudi od temperature, kar omogo"ca uravnavanje delovanja tak"sne naprave. 
 
 \chapter{Zaklju"cek}
+
+Implementirali smo numeri"cno metodo za modeliranje "sirjena svetlobe po opti"cno anizotropnih sredstvih, kot so teko"ci kristali. 
+Metoda temelji na metodi kon"cnih diferenc v "casovni domeni (FDTD), ki svetlobo opi"se s "sestimi komponentami elektromagnetih polj, njihov "casovni razvoj pa z Maxwellovimi ena"cbami. 
+Izbrali smo diskretizacijsko mre"zo, ki omogo"ca optimalno natan"cnost metode pri dolo"ceni ra"cunski zahtevnosti, hkrati pa omogo"ca modeliranje opti"cno anizotropnih snovi. 
+
 
 \bibliographystyle{zumer}
 \bibliography{magisterij}

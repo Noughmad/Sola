@@ -24,7 +24,7 @@ reset
 set output "g_test_periodic.tex"
 
 set xtics
-set xlabel "Frekvenca svetlobe $\\omega a/2\\pi$"
+set xlabel "Frekvenca svetlobe $\\omega a/2\\pi c$"
 set ylabel "Prepustnost $I/I_0$"
 set yrange [0:0.4]
 
@@ -34,7 +34,7 @@ plot "Podatki/test_bandgap_12.dat" w l lw 5 title "$\\varepsilon_1 = 13,\\, \\va
 set output "g_test_periodic_en.tex"
 
 set xtics
-set xlabel "Light frequency $\\omega a/2\\pi$"
+set xlabel "Light frequency $\\omega a/2\\pi c$"
 set ylabel "Transmittance $I/I_0$"
 set yrange [0:0.4]
 
