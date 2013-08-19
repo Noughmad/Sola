@@ -1419,7 +1419,7 @@ S primerno dvolomnostjo teko"cega kristala in dol"zino vlakna lahko linijski def
 V vlaknu z dol"zino $d$ bo redni "zarek naredil $d/\lambda_o = d n_o/\lambda$ nihajev, izredni pa $d/\lambda_e = Ln_e/\lambda$ nihajev, kjer je $\lambda$ valovna dol"zina svetlobe v vakuumu. 
 "Zeleno radialno polarizacijo bomo dobili, "ce bo razlika med "steviloma nihajev polcelo "stevilo. 
 \begin{align}
-  k + \frac{1}{2} &= \frac{d}{\lambda} \left( n_e - n_o 	\right) = \frac{d}{\lambda} \Delta n
+  k + \frac{1}{2} &= \frac{d}{\lambda} \left( n_e - n_o \right) = \frac{d}{\lambda} \Delta n
 \end{align}
 kjer je $k$ poljubno celo "stevilo. Za tipi"cne vrednosti lomnih koli"cnikov v teko"cih kristalih in valovne dol"zine svetlobe lahko izra"cunamo optimalno dol"zino vlakna kot
 \begin{align}
@@ -1432,14 +1432,25 @@ Dvolomnost teko"cega kristala je odvisna od stopnje reda $S$ in s tem tudi od te
 \chapter{Zaklju"cek}
 
 Implementirali smo numeri"cno metodo za modeliranje "sirjena svetlobe po opti"cno anizotropnih sredstvih, kot so teko"ci kristali. 
-Metoda temelji na metodi kon"cnih diferenc v "casovni domeni (FDTD), ki svetlobo opi"se s "sestimi komponentami elektromagnetih polj, njihov "casovni razvoj pa z Maxwellovimi ena"cbami. 
+Metoda temelji na metodi kon"cnih diferenc v "casovni domeni (FDTD), ki svetlobo opi"se s "sestimi komponentami elektromagnetnih polj, njihov "casovni razvoj pa z Maxwellovimi ena"cbami. 
 Izvori svetlobe so modelirani z robnim pogojem, na ostalih robovih pa je absorbirajo"ca plast, ki prepre"cuje odboj valovanja. 
 Izbrali smo diskretizacijsko mre"zo, ki omogo"ca optimalno natan"cnost metode pri dolo"ceni ra"cunski zahtevnosti, hkrati pa omogo"ca modeliranje opti"cno anizotropnih snovi. 
+Metodo smo uporabili na primerih, ki so dovolj zapleteni, da dajo netrivialne rezultate, hkrati pa so dovolj enostavni, da poznamo to"cne re"sitve. 
+Pravilno napove odboj in lom valovanja ob prehodu v medij z druga"cnim lomnim koli"cnikom, prepustnost uniformne dvolomne plasti in prepovedani pas v enodimenzionalnem fotonskem kristalu. 
+Kratek laserski sunek se v uniformnem nematskem vlaknu razdeli na dva dela, ki ustrezata redni in izredni polarizaciji svetlobe. 
 
-Metodo smo uporabili na primerih, ki so dovolj zapleteni, da dajo netrivialne rezultate, hkrati pa dovol enostavni, da poznamo to"cne re"sitve. 
+Pri uporabi metode za modeliranje "sirjenja svetlobe po vlaknu z teko"cekristalno defektno linijo smo opazili zanimivo povezavo med topolo"skim defektom v teko"cem kristalu in topolo"skem defektu v polarizaciji svetlobe. 
+Laserski sunek, ki ima na za"cetku linearno polarizacijo, razpade na dva lastna na"cina "sirjenja. 
+Polarizacija svetlobe v vsakem izmed na"cinov tvori defekt, ki je po ovojnem "stevilu enak defektu v teko"cem kristalu. 
+Na mestih, kjer simetrija defekta dolo"ca, da mora biti polarizacija svetlobe pravokotna na za"cetno polarizacijo, se pojavijo obmo"cja z ni"celno intenziteto. 
+Tesna povezava med teko"cekristalnim direktorskim poljem in elektromagnetnim poljem velja tudi v primeru, ko je znotraj vlakna defekt s polovi"cno mo"cjo, ki ga polarizacija svetlobe kot pravi vektor ne more tvoriti. 
 
-
-
+Opisana numeri"cna metoda je primerna za modeliranje opti"cno poljubno zapletenih snovi. 
+Ker upo"steva vseh "sest komponent elektromagnetnih polj, pravilno deluje tudi v teko"cih kristalih z mo"cno krajevno odvisnostjo dvolomnosti, na primer v bli"zini defektov, kjer druge metode odpovejo. 
+Ta metoda ponuja mnoge mo"znosti za nadaljnje raziskave, zlasti na podro"cju teko"cih kristalov. 
+Med elektromagnetnim poljem in teko"cimi kristali velja dvosmerna sklopitev, ki jo bo mogo"ce upo"stevati s kombinacijo zgoraj opisane metode z obstoje"cimi programi za izra"cun ureditve teko"cih kristalov v prisotnosti zunanjih polj. 
+Vsaj nekatere rezultate numeri"cne metode bo mo"zno eksperimentalno preveriti, npr. s tvorbo teko"cekristalnih vlaken z radialnim direktorskim profilom. 
+Zanimiv rezultat je tudi napoved novega na"cina za pretvarjanje polarizacije svetlobe iz linearne v radialno, ki predstavlja nov izziv za eksperimentalno delo. 
 
 \bibliographystyle{zumer}
 \bibliography{magisterij}
