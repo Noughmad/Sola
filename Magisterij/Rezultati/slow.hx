@@ -1,13 +1,13 @@
 # Amira Script
 remove -all
-remove physics.icol p1_cont_field_2000.raw EmptyPlane Vectors EmptyPlane2 Vectors2 EmptyPlane3 Vectors3 EmptyPlane4 Vectors4
+remove physics.icol p1_cont_field_2000.raw EmptyPlane Vectors EmptyPlane2 Vectors2 EmptyPlane3 Vectors3 EmptyPlane4 Vectors4 GlobalAxis
 
 # Create viewers
 viewer setVertical 0
 
 viewer 0 setBackgroundMode 1
-viewer 0 setBackgroundColor 0 0 0
-viewer 0 setBackgroundColor2 0 0 0
+viewer 0 setBackgroundColor 0.06 0.13 0.24
+viewer 0 setBackgroundColor2 0.72 0.72 0.78
 viewer 0 setTransparencyType 5
 viewer 0 setAutoRedraw 0
 viewer 0 show
@@ -130,13 +130,12 @@ Vectors phase setValue 0
 Vectors phase setSubMinMax 0 360
 Vectors fire
 Vectors setViewerMask 16383
-Vectors select
 Vectors setShadowStyle 0
 Vectors setPickable 1
 
 set hideNewModules 0
 create HxArbitraryCut {EmptyPlane2}
-EmptyPlane2 setIconPosition 516 111
+EmptyPlane2 setIconPosition 377 201
 EmptyPlane2 data connect p1_cont_field_2000.raw
 EmptyPlane2 fire
 EmptyPlane2 origin  setBoundingBox -1e+08 1e+08 -1e+08 1e+08 -1e+08 1e+08
@@ -147,7 +146,7 @@ EmptyPlane2 origin  showPoints 0
 EmptyPlane2 origin  setPointScale 1
 EmptyPlane2 origin  showOptionButton 1
 EmptyPlane2 origin  setNumPoints 1 1 1
-EmptyPlane2 origin  setValue 0 71.5 71.5 299.034
+EmptyPlane2 origin  setValue 0 71.5 71.5 231.905
 EmptyPlane2 normal  setBoundingBox -1e+08 1e+08 -1e+08 1e+08 -1e+08 1e+08
 EmptyPlane2 normal  setImmediate 0
 EmptyPlane2 normal  setOrtho 0
@@ -169,7 +168,7 @@ EmptyPlane2 options setToggleVisible 3 1
 EmptyPlane2 translate setMinMax 0 100
 EmptyPlane2 translate setButtons 1
 EmptyPlane2 translate setIncrement 1
-EmptyPlane2 translate setValue 29
+EmptyPlane2 translate setValue 22.4876
 EmptyPlane2 translate setSubMinMax 0 100
 EmptyPlane2 orientation untouch
 EmptyPlane2 setMinPlanePoint -1e+15 -1e+15 -1e+15
@@ -177,12 +176,13 @@ EmptyPlane2 setMaxPlanePoint 1e+15 1e+15 1e+15
 EmptyPlane2 setTranslateRange 101.000000
 EmptyPlane2 fire
 EmptyPlane2 setViewerMask 16382
+EmptyPlane2 select
 EmptyPlane2 setPickable 1
 
 set hideNewModules 0
 create HxVectors {Vectors2}
-Vectors2 setIconPosition 516 131
-Vectors2 setLineWidth 2
+Vectors2 setIconPosition 377 221
+Vectors2 setLineWidth 3
 Vectors2 setLogScale 0
 Vectors2 data connect p1_cont_field_2000.raw
 Vectors2 module connect EmptyPlane2
@@ -200,7 +200,7 @@ Vectors2 resolution setValue 1 150
 Vectors2 scale setMinMax 0 5
 Vectors2 scale setButtons 0
 Vectors2 scale setIncrement 0.333333
-Vectors2 scale setValue 0.3
+Vectors2 scale setValue 0.68323
 Vectors2 scale setSubMinMax 0 5
 Vectors2 scaleZ setMinMax 0 1
 Vectors2 scaleZ setButtons 0
@@ -211,7 +211,7 @@ Vectors2 mode setValue 0 0
 Vectors2 mode setToggleVisible 0 1
 Vectors2 mode setValue 1 0
 Vectors2 mode setToggleVisible 1 1
-Vectors2 mode setValue 2 1
+Vectors2 mode setValue 2 0
 Vectors2 mode setToggleVisible 2 1
 Vectors2 mode setValue 3 0
 Vectors2 mode setToggleVisible 3 1
@@ -225,12 +225,13 @@ Vectors2 phase setValue 0
 Vectors2 phase setSubMinMax 0 360
 Vectors2 fire
 Vectors2 setViewerMask 16383
+Vectors2 select
 Vectors2 setShadowStyle 0
 Vectors2 setPickable 1
 
 set hideNewModules 0
 create HxArbitraryCut {EmptyPlane3}
-EmptyPlane3 setIconPosition 480 60
+EmptyPlane3 setIconPosition 164 75
 EmptyPlane3 data connect p1_cont_field_2000.raw
 EmptyPlane3 fire
 EmptyPlane3 origin  setBoundingBox -1e+08 1e+08 -1e+08 1e+08 -1e+08 1e+08
@@ -275,7 +276,7 @@ EmptyPlane3 setPickable 1
 
 set hideNewModules 0
 create HxVectors {Vectors3}
-Vectors3 setIconPosition 480 80
+Vectors3 setIconPosition 164 95
 Vectors3 setLineWidth 3
 Vectors3 setLogScale 0
 Vectors3 data connect p1_cont_field_2000.raw
@@ -324,7 +325,7 @@ Vectors3 setPickable 1
 
 set hideNewModules 0
 create HxArbitraryCut {EmptyPlane4}
-EmptyPlane4 setIconPosition 504 10
+EmptyPlane4 setIconPosition 379 75
 EmptyPlane4 data connect p1_cont_field_2000.raw
 EmptyPlane4 fire
 EmptyPlane4 origin  setBoundingBox -1e+08 1e+08 -1e+08 1e+08 -1e+08 1e+08
@@ -335,7 +336,7 @@ EmptyPlane4 origin  showPoints 0
 EmptyPlane4 origin  setPointScale 1
 EmptyPlane4 origin  showOptionButton 1
 EmptyPlane4 origin  setNumPoints 1 1 1
-EmptyPlane4 origin  setValue 0 71.5 71.5 494.203
+EmptyPlane4 origin  setValue 0 71.5 71.5 434.57
 EmptyPlane4 normal  setBoundingBox -1e+08 1e+08 -1e+08 1e+08 -1e+08 1e+08
 EmptyPlane4 normal  setImmediate 0
 EmptyPlane4 normal  setOrtho 0
@@ -357,7 +358,7 @@ EmptyPlane4 options setToggleVisible 3 1
 EmptyPlane4 translate setMinMax 0 100
 EmptyPlane4 translate setButtons 1
 EmptyPlane4 translate setIncrement 1
-EmptyPlane4 translate setValue 47.9339
+EmptyPlane4 translate setValue 42.1488
 EmptyPlane4 translate setSubMinMax 0 100
 EmptyPlane4 orientation untouch
 EmptyPlane4 setMinPlanePoint -1e+15 -1e+15 -1e+15
@@ -369,7 +370,7 @@ EmptyPlane4 setPickable 1
 
 set hideNewModules 0
 create HxVectors {Vectors4}
-Vectors4 setIconPosition 504 30
+Vectors4 setIconPosition 379 95
 Vectors4 setLineWidth 3
 Vectors4 setLogScale 0
 Vectors4 data connect p1_cont_field_2000.raw
@@ -417,15 +418,53 @@ Vectors4 setShadowStyle 0
 Vectors4 setPickable 1
 
 set hideNewModules 0
+create HxAxis {GlobalAxis}
+GlobalAxis setIconPosition 171 231
+GlobalAxis fire
+GlobalAxis axis setValue 0 1
+GlobalAxis axis setToggleVisible 0 1
+GlobalAxis axis setValue 1 1
+GlobalAxis axis setToggleVisible 1 1
+GlobalAxis axis setValue 2 1
+GlobalAxis axis setToggleVisible 2 1
+GlobalAxis options setValue 0 1
+GlobalAxis options setToggleVisible 0 1
+GlobalAxis options setValue 1 0
+GlobalAxis options setToggleVisible 1 1
+GlobalAxis options setValue 2 0
+GlobalAxis options setToggleVisible 2 1
+GlobalAxis thickness setMinMax 1 15
+GlobalAxis thickness setButtons 0
+GlobalAxis thickness setIncrement 0.933333
+GlobalAxis thickness setValue 15
+GlobalAxis thickness setSubMinMax 1 15
+GlobalAxis color setColor 0 1 0 0
+GlobalAxis color setColor 1 0 1 0
+GlobalAxis color setColor 2 0 0 1
+GlobalAxis color setColor 3 1 0.8 0.5
+GlobalAxis axisNames setState text 0 x text 1 y text 2 z 
+GlobalAxis font setState name: {Helvetica} size: 10 bold: 0 italic: 0 color: 0.8 0.8 0.8
+GlobalAxis fire
+GlobalAxis setBoundingBox 10 30 -50 -30 130 170
+{GlobalAxis} setDelta 0 
+{GlobalAxis} setLocalMode 0 
+{GlobalAxis} setFlip 0 0 
+{GlobalAxis} setFlip 1 0 
+{GlobalAxis} setFlip 2 0 
+GlobalAxis fire
+GlobalAxis setViewerMask 16383
+GlobalAxis setPickable 1
+
+set hideNewModules 0
 
 
-viewer 0 setCameraOrientation 0.320948 -0.0829651 0.943456 3.1008
-viewer 0 setCameraPosition 248.913 30.9796 690.084
-viewer 0 setCameraFocalDistance 253.75
-viewer 0 setCameraNearDistance 151.999
-viewer 0 setCameraFarDistance 693.93
-viewer 0 setCameraType perspective
-viewer 0 setCameraHeightAngle 44.9023
+viewer 0 setCameraOrientation 0.955073 -0.0159039 -0.295943 3.00324
+viewer 0 setCameraPosition -99.0904 7.82669 47.5772
+viewer 0 setCameraFocalDistance 302.02
+viewer 0 setCameraNearDistance 24.1403
+viewer 0 setCameraFarDistance 580.471
+viewer 0 setCameraType orthographic
+viewer 0 setCameraHeight 226.722
 viewer 0 setAutoRedraw 1
 viewer 0 redraw
 
