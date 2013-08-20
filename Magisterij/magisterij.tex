@@ -1313,12 +1313,16 @@ Pri enakomernem laserskem "zarku je svetloba v vlaknu z radialnim profilom direk
 Frekvenca svetlobe je nespremenjena in zato enaka po celotnem vlaknu, opazimo pa mo"cno krajevno odvisnost oblike polja. 
 Trenutne slike elektri"cnega polja znotraj vlakna so prikazane na sliki \ref{fig:p1-cont-snaps}. 
 
-\begin{figure}[!htbp]
+\begin{figure}[!ht]
 \centering
-  \begin{overpic}[width=\textwidth]{./Rezultati/p1_cont}
-     \put(25,1){\includegraphics[height=2.5cm]{g_defect_2}}  
-  \end{overpic}
- \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna z radialnim direktorskim profilom ob stalni osvetlitvi. Vidno je izmenjevanje konfiguracij z ovojnima "steviloma $s=0$ in $s=+2$.  }
+  \begin{overpic}[width=.4\textwidth]{./Rezultati/lic_p1_0_lin}\put(2,90){\color{white} \Large \bf (a)}\end{overpic} \hspace{1mm}
+  \begin{overpic}[width=.4\textwidth]{./Rezultati/lic_p1_37_rad}\put(2,90){\color{white} \Large \bf (b)}\end{overpic} \\[3mm]
+  \begin{overpic}[width=.4\textwidth]{./Rezultati/lic_p1_51_p2}\put(2,90){\color{white} \Large \bf (c)}\end{overpic} \hspace{.5mm}
+  \begin{overpic}[width=.4\textwidth,trim=-1cm -1cm -1cm -1cm]{g_defect_2}\put(2,90){\Large \bf (d)}\end{overpic}
+ \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna z radialnim direktorskim profilom ob stalni osvetlitvi. 
+ Vidno je izmenjevanje konfiguracij z ovojnima "steviloma $s=0$ (a) in $s=+2$ (c). 
+ Na sliki (b) je vmesno stanje, kjer je elektri"cno polje podobno kot pri defektu mo"ci $s=+1$.
+ Direktorsko polje v vlaknu je prikazano na sliki (d).}
  \label{fig:p1-cont-snaps}
 \end{figure}
 
@@ -1339,18 +1343,24 @@ Vmes, kot na primer na tretji sliki z desne, pa opazimo vmesno stanje.
 Konfiguracija ustreza defektu z ovojnim "stevilom $+1$, kjer zaradi nekompatibilnosti s smerjo polarizacija manjka del, kjer bi moralo biti polje v smeri $y$. 
 Presek polja je zelo podoben lastnemu na"cinu vlakna, prikazanemu na desni strani slike \ref{fig:pulse-p1-mode}. 
 
+\cleardoublepage
 \section{Hiperboli"cni profil direktorja}
 
 Podobno obna"sanje opazimo tudi v vlaknu s hiperboli"cnim direktorskim profilom, ki ima v osi defekt z ovojnim "stevilom $-1$. 
 V tem primeru polarizacija svetlobe prehaja med na"cinoma z ovojnim "stevilom $0$ in $-2$, spet pa so opazna tudi vmesna stanja z ovojnim "stevilom $-1$. 
 Primer svetlobnega polja v tak"snem vlaknu je na sliki \ref{fig:m1-cont-snaps}
 
-\begin{figure}[!htbp]
-  \begin{overpic}[width=\textwidth]{./Rezultati/m1_cont_snaps}
-     \put(3,3){\includegraphics[height=2.5cm]{g_defect_-2}}  
-  \end{overpic}
- \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna s hiperboli"cnim direktorskim profilom ob stalni osvetlitvi. Vidno je izmenjevanje konfiguracij z ovojnima "steviloma $s=0$ in $s=-2$.  }
- \label{fig:m1-cont-snaps}
+\begin{figure}[!ht]
+\centering
+  \begin{overpic}[width=.4\textwidth]{./Rezultati/lic_m1_0_lin}\put(2,90){\color{white} \Large \bf (a)}\end{overpic} \hspace{1mm}
+  \begin{overpic}[width=.4\textwidth]{./Rezultati/lic_m1_37_hyp}\put(2,90){\color{white} \Large \bf (b)}\end{overpic} \\[3mm]
+  \begin{overpic}[width=.4\textwidth]{./Rezultati/lic_m1_51_m2}\put(2,90){\color{white} \Large \bf (c)}\end{overpic} \hspace{.5mm}
+  \begin{overpic}[width=.4\textwidth,trim=-1cm -1cm -1cm -1cm]{g_defect_-2}\put(2,90){\Large \bf (d)}\end{overpic}
+ \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna s hiperboli"cnim direktorskim profilom ob stalni osvetlitvi. 
+ Vidno je izmenjevanje konfiguracij z ovojnima "steviloma $s=0$ (a) in $s=-2$ (c). 
+ Na sliki (b) je vmesno stanje, kjer je elektri"cno polje podobno kot pri defektu mo"ci $s=-1$.
+ Direktorsko polje v vlaknu je prikazano na sliki (d).}
+ \label{fig:p1-cont-snaps}
 \end{figure}
 
 \begin{comment}
@@ -1367,7 +1377,7 @@ Primer svetlobnega polja v tak"snem vlaknu je na sliki \ref{fig:m1-cont-snaps}
 Nazadnje smo simulacijo ponovili tudi z vlaknom, v katerem ima ureditev teko"cega kristala defekt s polcelo mo"cjo. 
 Tak"sen primer je "se posebej zanimiv, ker imata lastna na"cina le eno simetrijsko ravnino, in sicer tisto, ki vsebuje polarizacijo vpadne svetlobe. 
 
-\begin{figure}[!htbp]
+\begin{figure}[!ht]
 \centering
   \begin{overpic}[width=.4\textwidth]{./Rezultati/lic_p12_0_lin}\put(2,90){\color{white} \Large \bf (a)}\end{overpic} \hspace{1mm}
   \begin{overpic}[width=.4\textwidth]{./Rezultati/lic_p12_83_rad_n2}\put(2,90){\color{white} \Large \bf (b)}\end{overpic} \\[3mm]
@@ -1376,6 +1386,7 @@ Tak"sen primer je "se posebej zanimiv, ker imata lastna na"cina le eno simetrijs
   \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna z direktorskim profilom z defektom mo"ci $+1/2$ ob stalni osvetlitvi. 
   Vidno je izmenjevanje konfiguracij z ovojnimi "stevili $s=0$ (a), $s=+1/2$ (b) in $s=+1$ (c). 
   Z belo barvo so prikazane silnice elektri"cnega polja, njihova svetlost pa je sorazmerna z intenziteto svetlobe. 
+  Rde"ce pu"s"cice prikazujejo trenutno elektri"cno polje. 
   Direktorsko polje v vlaknu je prikazano na sliki (d). }
  \label{fig:m12-cont-snaps}
 \end{figure}
@@ -1386,12 +1397,18 @@ Za razlike od defekta mo"ci $1$, ki ga opazimo v vlaknu s hiperboli"cnim profilo
 
 Podobno velja za defekt z ovojnim "stevilom $+1/2$, ki je prikazan na sliki \ref{fig:p12-cont-snaps}. 
 
-\begin{figure}[!htbp]
-  \begin{overpic}[width=\textwidth]{./Rezultati/p12_cont_snaps}
-     \put(3,3){\includegraphics[height=2.5cm]{g_defect_1}} 
-  \end{overpic}
- \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna z direktorskim profilom z defektom mo"ci $+1/2$ ob stalni osvetlitvi. Vidno je izmenjevanje konfiguracij z ovojnima "steviloma $s=0$ in $s=+1$.  }
- \label{fig:p12-cont-snaps}
+\begin{figure}[!ht]
+\centering
+  \begin{overpic}[width=.4\textwidth]{./Rezultati/lic_m12_0_lin}\put(2,90){\color{white} \Large \bf (a)}\end{overpic} \hspace{1mm}
+  \begin{overpic}[width=.4\textwidth]{./Rezultati/lic_m12_37}\put(2,90){\color{white} \Large \bf (b)}\end{overpic} \\[3mm]
+  \begin{overpic}[width=.4\textwidth]{./Rezultati/lic_m12_50}\put(2,90){\color{white} \Large \bf (c)}\end{overpic} \hspace{.5mm}
+  \begin{overpic}[width=.4\textwidth,trim=-1cm -1cm -1cm -1cm]{g_defect_-1}\put(2,90){\Large \bf (d)}\end{overpic}
+  \caption{Posnetki elektri"cnega polja na razli"cnih mestih znotraj vlakna z direktorskim profilom z defektom mo"ci $-1/2$ ob stalni osvetlitvi. 
+  Vidno je izmenjevanje konfiguracij z ovojnimi "stevili $s=0$ (a), $s=-1/2$ (b) in $s=-1$ (c). 
+  Z belo barvo so prikazane silnice elektri"cnega polja, njihova svetlost pa je sorazmerna z intenziteto svetlobe. 
+  Rde"ce pu"s"cice prikazujejo trenutno elektri"cno polje. 
+  Direktorsko polje v vlaknu je prikazano na sliki (d). }
+ \label{fig:m12-cont-snaps}
 \end{figure}
 
 Na drugi sliki z leve je lepo viden radialen profil polarizacije svetlobe. 
