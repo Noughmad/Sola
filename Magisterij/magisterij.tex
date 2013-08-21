@@ -265,8 +265,8 @@ V teko"cem kristalu z orientacijskim redom dvolomna os sledi povpre"cni orientac
 Opti"cna anizotropija teko"cih kristalov izhaja iz oblike gradnikov, ki so v ve"cini primerov pali"caste molekule. 
 
 Dvolomnost teko"cih kristalov ponuja "stevilne mo"znosti uporabe v opti"cnih napravah. 
-Najbolj znani so teko"cekristalni zasloni, kjer z zunanjim elektri"cnim poljem spreminjamo orientacijski red in s tem prepustnost vsake to"cke na zaslonu. 
-Zaradi ob"cutljivosti na elektri"cno polje se teko"ci kristali uporabljajo v razli"cnih elektroopti"cnih napravah, na primer v nastavljivih filtrih. 
+Najbolj znani so teko"cekristalni zasloni, kjer z zunanjim elektri"cnim poljem spreminjamo orientacijski red in s tem prepustnost vsake to"cke na zaslonu \cite{optics-lcd}. 
+Zaradi ob"cutljivosti na elektri"cno polje se teko"ci kristali uporabljajo v razli"cnih elektroopti"cnih napravah, na primer v nastavljivih filtrih \cite{filters-sneh}.
 Ob"cutljivost orientacijskega reda na temperaturo omogo"ca uporabo v termometrih. 
 Sprememba temperature vpliva na koli"cino in barvo prepu"s"cene svetlobe, zato so tak"sni termometri primerni za iskanje vro"cih to"ck v industrijskih napravah \cite{hot-spots}. 
 V zadnjem "casu so veliko pozornosti dele"zni teko"cekristalni laserji, ki izkori"s"cajo pojav fotonskega prepovedanega pasu v periodi"cnih strukturah \cite{humar-musevic,coles-morris}. 
@@ -278,13 +278,13 @@ Jonesov vektor predstavi elektri"cno polje svetlobe, ki se "siri v smeri $z$, ko
 S tak"snim zapisom lahko opi"semo linearno, kro"zno ali elipti"cno polarizirano svetlobo \cite{optics-lcd}. 
 Opti"cno aktivne snovi, kot so polarizatorji in plasti teko"cega kristala, so predstavljeni z matrikami velikosti $2\times 2$, ki delujejo na vektor $(E_x, E_y)$. 
 Za opis delno polarizirane svetlobe moramo opis raz"siriti na Stokesove vektorje s "stirimi komponentami, naprave pa so opisane z Muellerjevimi matrikami velikosti $4\times 4$.
-Jonesova in Muellerjeva metoda sta uporabni v sistemih, kjer je os dvolomnosti pravokotna na smer "sirjenja valovanja, ne pa v teko"cih kristalih. 
-Za modeliranje anizotropnih snovi je bolj primerna Berremanova metoda \cite{berreman,stallinga-berreman}, pri kateri je svetloba predstavljena s transverzalnimi komponentami elektri"cnega in magnetnega polja. 
+Jonesova in Muellerjeva metoda sta uporabni v sistemih z visoko simetrijo, ne pa v teko"cih kristalih, kjer je dvolomna os krajevno odvisna. 
+Za modeliranje anizotropnih snovi je bolj primerna Berremanova metoda \cite{berreman,stallinga-berreman}, pri kateri je svetloba predstavljena s "stirimi transverzalnimi komponentami elektri"cnega in magnetnega polja. Berremanova metoda zataji v prisotnosti nezveznosti dielektri"cnega tenzorja, kot na primer v okolici teko"cekristalnih defektov \cite{metode-kriezis, hwang-rey}. 
 
 Vse na"stete metode uporabljajo poenostavljen opis svetlobe. 
 V zadnjem "casu so ra"cunalniki "ze dovolj zmogljivi, da lahko opi"semo svetlobo direktno z vektorjema elektri"cnega in magnetnim polja po celotnem prostoru. 
 Opis polja vsebuje vseh "sest komponent elektri"cnega in magnetnega polja, "casovni razvoj pa podajajo Maxwellove ena"cbe. 
-Tak"sen pristop je ra"cunsko mnogo bolj zahteven, omogo"ca pa modeliranje "sirjenja svetlobe po poljubno opti"cno zapletenih strukturah \cite{taflove, hwang-rey}. 
+Tak"sen pristop je ra"cunsko mnogo bolj zahteven, omogo"ca pa modeliranje "sirjenja svetlobe po poljubno opti"cno zapletenih strukturah \cite{taflove}. 
 
 Magistrsko delo je organizirano v sedem vsebinskih sklopov. 
 V drugem poglavju je razlo"zena osnovna teorija ureditve teko"cih kristalov in njihove opti"cne lastnosti. 
@@ -439,7 +439,7 @@ V tej sliki se izraz glasi
 \end{align}
 kjer so $L_i$ elasti"cne konstante. V enokonstantnem pribli"zku se zgornji izraz poenostavi v 
 \begin{align}
-f_{\mathrm{el}} &= \frac{L}{2} \cdot \qodv{ij}{k}\qodv{ij}{k} 
+f_{\mathrm{el}} &= \frac{L}{2} \times \qodv{ij}{k}\qodv{ij}{k} 
 \end{align}
 kjer je elasti"cna konstanta enaka $L = 2K/9S^2$ \cite{ravnik-zumer-ldg}. 
 
@@ -465,6 +465,23 @@ kjer je $\overline{\varepsilon}$ povpre"cna dielektri"cna konstanta, $\varepsilo
 Ta sklopitev izhaja iz polarizabilnosti molekul, ki je odvisna od njihove oblike. 
 V snovi s pozitivno dielektri"cno anizotropijo je najugodnj"sa 
 Zunanje polje v molekuli inducira elektri"cni dipolni moment, ki je sorazmeren z dol"zino molekule in je zato najve"cji, "ce je polje vzporedno z osjo molekule. 
+
+
+Tipi"cen relaksacijski "cas lahko ocenimo s primerjavo viskoznosti ter elasti"cne in dielektri"cne proste energije
+\begin{align}
+ \frac{1}{\tau} \approx \frac{f_\mathrm{el} + f_\mathrm{EM}}{\gamma_1}\,.
+\end{align}
+Ker nas zanima le red velikosti, lahko uporabimo enokonstantni pribli"zek, krajevni odvod direktorja pa zamenjamo z obratno vrednostjo dol"zinske skale $l$, na kateri se direktor spreminja. 
+Ta dol"znina je tipi"cno velikostnega reda mikrometra \cite{kleman}. 
+V elektri"cnem prispevku za oceno velikostnega reda privzamemo popolnoma urejen nematik in elektri"cno polje, vzporedno z direktorjem. 
+S temi predpostavkami lahko ocenimo relaksacijski "cas teko"cega kristala v elektri"cnem polju
+\begin{align}
+% za v KRunner: 0.06 Pas / (6*10^(-12)N / (1um)^2 + 8.86*10^(-12) As/Vm * 0.5 * (3V/um)^2 ) =
+ \tau \approx \frac{\gamma_1}{K/l^2 + \varepsilon_0 \varepsilon_a^{\mathrm{mol}} E^2 } \approx 1\;\mathrm{ms}\,.
+\end{align}
+kjer je $\gamma_1$ rotacijska viskoznost. 
+Pri vrednosti viskoznosti, elasti"cne konstante in dielektri"cne anizotropije za 5CB \cite{diploma-miha,kolicniki} in jakosti elektri"cnega polja $E = 1\mathrm{V}/\mu\mathrm{m}$, tipi"cni za opti"cne pincete, relaksacijski "cas zna"sa pribli"zno 1 ms \cite{diploma-miha}. 
+Ta vrednost je odvisna od jakosti elektri"cnega polja, ampak preureditev teko"cega kristala je tudi pri zelo mo"cnem polju ve"c velikostnih redov po"casnej"sa od nihanja opti"cnega polja s periodo velikostnega reda femtosekunde. 
 "Ce na teko"ci kristal svetimo, ureditev molekul ne more slediti hitremu spreminjanju opti"cnega elektri"cnega polja, ampak nanj efektivno deluje povpre"cen kvadrat polja. 
 
 \section{Topolo"ski defekti}
@@ -694,8 +711,7 @@ V praksi pa se pogosto zate"cemo k poenostavitvam oz. limitam mo"cnega ali "sibk
 "Ce je elektromagnetno polje dovolj mo"cno, se bo direktor orientiral v smeri polja, torej svetloba vedno "cuti izredni lomni koli"cnik. 
 V tem re"zimu teko"ci kristal ne vpliva na "sirjenje svetlobe. 
 "Ce pa je svetloba zelo "sibka, ne spremeni orientacije molekul in lahko privzamemo, da je direktorsko polje doloceno z drugimi mehanizmi, tipi"cno s povr"sinskim pogoji.. 
-Mo"cno se razlikujeta tudi "casovni skali obeh pojavov, saj je karakteristi"cni "cas relaksacije teko"cega kristala velikostnega reda milisekunde, opti"cna polja pa nihajo s periodo okrog femtosekunde. 
-Zato lahko preu"cujemo tudi propagacijo svetlobe preden se teko"ci kristal lahko preuredi. 
+Mo"cno se razlikujeta tudi "casovni skali obeh pojavov, saj opti"cna polja pa nihajo s periodo okrog femtosekunde, metdem ko je tipi"cen relaksacijski "cas teko"cega kristala nekaj milisekund. 
 
 V tem magistrskem delu sem se omejil le na "sirjenje svetlobe, pri "cemer je direktorsko polje dolo"ceno in "casovno nespremenljivo. 
 Sama ra"cunska metoda pa je zasnovana tako, da je kompatibilna z obstoje"cimi programi za izra"cun ureditve teko"cih kristalov \cite{ravnik-zumer-ldg}. 
@@ -753,7 +769,7 @@ Za izracun propagacije svetlobe skozi mocno opticno aniztorpne tekocekristalne v
 Pri tej metodi "casovno propagiramo elektri"cno in magnetno polje v vsaki to"cki po Maxwellovih ena"cbah. 
 
 Pri numeri"cnem re"sevanju potrebujemo le tisti dve Maxwellovi ena"cbi, ki vsebujeta "casovne odvode polj. 
-Prvi dve ena"cbi bosta s tem avtomatsko izpolnjeni\todo{REF}. 
+Konsistenca Maxwellovih ena"cb zagotavlja, da "ce prvi dve ena"cbi dr"zita na za"cetku, bosta avtomatsko izpolnjeni ob vsakem "casu\cite{taflove}. 
 Izvore valovanja namesto z dodajanjem nabojev in tokov v vzorec raje simuliramo z robnimi pogoji, kot da valovanje prihaja od zunaj. 
 Ta pristop je smiseln, saj v eksperimentih teko"ci kristal opazujemo tako, da svetimo skozenj. 
 
