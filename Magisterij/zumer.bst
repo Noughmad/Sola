@@ -720,7 +720,7 @@ FUNCTION {phdthesis}
 { output.bibitem
   format.authors "," * "author" output.check
   format.btitle "," * "title" output.check
-  "disertacija" format.thesis.type output.check
+  "disertacija" output
   format.date "year" output.check
   fin.entry
 }
@@ -729,7 +729,7 @@ FUNCTION {mastersthesis}
 { output.bibitem
   format.authors "," * "author" output.check
   format.btitle "," * "title" output.check
-  "diplomsko delo" format.thesis.type output.check
+  "diplomsko delo" output
   format.date "year" output.check
   fin.entry
 }
