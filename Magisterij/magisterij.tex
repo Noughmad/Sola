@@ -56,6 +56,11 @@
   \begin{overpic}[width=.4\textwidth,trim=-1cm -1cm -1cm -1cm]{g_defect_#2}\put(2,90){\large \bf (d)}\end{overpic}
 }
 
+\newcommand{\sunek}[1]{
+  \begin{overpic}[width=.4\textwidth]{licp_#1_74}\put(2,90){\color{white} \large \bf (a)}\end{overpic} \hspace{1mm}
+  \begin{overpic}[width=.4\textwidth]{licp_#1_82}\put(2,90){\color{white} \large \bf (b)}\end{overpic}
+}
+
 %opening
 \title{Magistrsko delo}
 \author{Miha \v Can\v cula}
@@ -1173,7 +1178,7 @@ Redna komponenta, prikazana na levi sliki, ob"cuti manj"si lomni koli"cnik in je
 
 \section{Radialni profil direktorja}
 
-Teko"cekristalna vlakna na osnovi sklenjenih smekticnih A slojev, ki so jih nedavno izdelali v laboratorijih prof I. Musevica (IJS) in pfrc C. Bahra (Max Planck Instiut for Fluid Dynamics), imajo radialne direktorske profile \cite{peddireddy}. 
+Teko"cekristalna vlakna na osnovi sklenjenih smekticnih A slojev, ki so jih nedavno izdelali v laboratorijih prof I. Mu"sevi"ca (IJS) in prof. C. Bahra (Max Planck Institut for Fluid Dynamics), imajo radialne direktorske profile \cite{peddireddy}. 
 Shema tak"snega vlakna je prikazana na sliki \ref{fig:fibre-radial-profile}. 
 Kot eden prvih problemov tega dela nas bo zanimalo, kako defekt v sredici vlakna z radialnim profilom direktroja vpliva na "sirjenje svetlobe. 
 
@@ -1214,8 +1219,7 @@ Ker pa je direktorsko polje singularno, sta tudi polarizaciji obeh na"cinov sing
 
 \begin{figure}[!htb]
  \centering
- \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/p1_mode1}}
- \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/p1_mode2}}
+ \sunek{p1}
  \caption{Lastna na"cina "sirjenja svetlobe skozi vlakno z radialnim profilom direktorja ($s=+1$)}
  \label{fig:pulse-p1-mode}
 \end{figure}
@@ -1246,8 +1250,7 @@ Oba na"cina sta prikazana na sliki \ref{fig:pulse-m1-mode}.
 
 \begin{figure}[!htbp]
  \centering
- \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/m1_mode1}}
- \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/m1_mode2}}
+  \sunek{m1}
  \caption{Lastna na"cina "sirjenja svetlobe skozi vlakno s hiperboli"cnim profilom direktorja ($s=-1$)}
  \label{fig:pulse-m1-mode}
 \end{figure}
@@ -1299,7 +1302,7 @@ Polarizacija svetlobe znotraj vlakna bo obdr"zala vse simetrijske osi, ki so pri
 V zgorjih opa"zanjih lahko najdemo podobnosti; za propagacijo linearno polarizirane svetlobe vzdol"z nematskih defektnih linij velja:
 \begin{itemize}
  \item Sunek linearno polarizirane svetlobe se vedno razdeli na dva lastna na"cina, ki ustrezata redni in izredni polarizaciji.
- \item Polarizacija svetlobe v obeh na"cinih tvori defekt z enakim ovojnim "stevilom kot defekt v teko"cem kristalu, "ce pri dolocitvi ovojnega stevila polarizacije predpostavimo simetrijo $\vec P \leftrightarrow -\vec P$ in gladek prehod cez mesta z ni"celno intenziteto svetlobe. 
+ \item Polarizacija svetlobe v obeh na"cinih tvori defekt z enakim ovojnim "stevilom kot defekt v teko"cem kristalu, "ce pri dolocitvi ovojnega stevila polarizacije predpostavimo simetrijo $\vec P \leftrightarrow -\vec P$ in gladek prehod "cez mesta z ni"celno intenziteto svetlobe. 
  \item V enem izmed na"cinov je polarizacija svetlobe vzporedna z direktorjem, v drugem pa je nanj pravokotna.
  \item V obmo"cjih, kjer bi po prej"snjem pravilu morala biti svetloba polarizirana pravokotna na vpadno polarizacijo, se pojavijo ``temna'' obmo"cja -- obmo"cja ni"celne intenzitete svetlobe.
  \item Lastna na"cina imata iste simetrijske ravnine, ki so presek simetrijskih ravnin teko"cega kristala in polarizacije vpadne svetlobe. 
