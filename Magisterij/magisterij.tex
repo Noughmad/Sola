@@ -135,7 +135,7 @@ Podpisani Miha "Can"cula, rojen 10.~4.~1989 v Postojni, izjavljam:
 \bigskip
 
 \noindent
-Ljubljana, 4.~9.~2013 \hfill Miha "Can"cula
+Ljubljana, 26.~8.~2013 \hfill Miha "Can"cula
 
 \vfill
 
@@ -370,13 +370,13 @@ Ker komponente $n_i$ nastopajo le v kvadratu, s tak"snim zapisom avtomatsko upo"
 Ker je $\mathbf{n}$ enotski vektor, je tenzor $Q_{ij}$ brezsleden, zato so v izotropni snovi vse njegove komponente enake 0 in je primeren ureditveni parameter za opis faznih prehodov. 
 
 Tenzor ureditvenih parametrov $Q_{ij}$ lahko v vsaki to"cki predstavimo kot matriko velikosti $3\times 3$, ki je simetri"cna in zato diagonalizabilna. 
-V lastnem sistemu direktorja, kjer za osi koordinatnega sistema vzamemo $\vec n$, $\vec e^{(1)}$ in $\vec e^{(2)}$, lahko matriko zapi"semo kot
+V lastnem sistemu direktorja, kjer za osi koordinatnega sistema vzamemo $\vec e^{(1)}$, $\vec e^{(2)}$ in $\vec n$, lahko matriko zapi"semo kot
 
 \begin{equation}
  Q = \begin{pmatrix}
-  S &   & \\
+   \frac{-S-P}{2} & & \\
   & \frac{-S+P}{2} & \\
-  & & \frac{-S-P}{2}
+    &   & S
  \end{pmatrix}
 \end{equation}
 
@@ -415,8 +415,8 @@ To pove"canje je odvisno od smeri spreminjanja $Q_{ij}$ glede na smer direktorja
 Na sliki \ref{fig:tsb} so prikazani trije na"cini deformacije direktorja, s katerimi lahko lokalno opi"semo poljubno krajevno odvisnost. 
 Ti trije na"cini so pahlja"ca \angl{splay}, zvoj \angl{twist} in upogib \angl{bend}. 
 
-\todo{Mapping med na"cini deformacije in odvodi direktorja}
-
+Pri pahlja"cni deformaciji je neni"celna divergenca direktorja, pri zvoju komponenta rotorja, vzporedna z direktorjem, pri upogibu pa pravokotna komponenta rotorja. 
+Deformacijo zato kvantiziramo s temi tremi koli"cinami. 
 Vsi trije na"cini deformacije so elasti"cni, zato je prispevek v prosti energiji sorazmeren s kvadratom deformacije. 
 V teko"cih kristalih so v splo"snem elasti"cne konstante, ki pripadajo vsakemu izmed treh osnovnih na"cinom, med seboj razli"cne. 
 Prispevek k gostoti proste energije zaradi elasti"cnih deformacij nematskega teko"cega kristala je tako enak
@@ -585,10 +585,10 @@ Razli"cne smeri pobega povzro"cijo nastanek to"ckastih defektov (c). Desno: Ener
 \end{figure}
 
 V ve"cini nematikov so vse tri elasti"cne konstante istega velikostnega reda, zato je stanje s pobegom v tretjo dimenzijo bolj ugodno. 
-Veliko razmerje $K_3/K_1$ pa opazimo blizu faznega prehoda v smekti"cno fazo. 
-
+V smekti"cni fazi pa pahlja"cna deformacija nosi mnogo manj"so energijo kot ostala dva na"cina, saj je edina kompatibilna z ureditvijo v plasti. 
+V cilindri"cni kapilari se smektik zato uredi v radialen profil. 
+Veliko razmerje $K_3/K_1$ pa opazimo tudi v nematikih blizu faznega prehoda v smekti"cno fazo. 
 Z uporabo 8CB, ki tvori tako nematsko kot tudi smekti"cno fazo, je mogo"ce v laboratoriju sintetizirati vlakna z radialnim profilom direktorja \cite{peddireddy}. 
-\todo{Napisi, kako to naredijo}
 Primer tvorbe tak"snih vlaken je na sliki \ref{fig:tvorjenje}. 
 
 \begin{figure}[h]
@@ -681,6 +681,8 @@ Elektri"cno in magnetno polje sta prava vektorja, zato imata lahko le defekte s 
 Defekt v elektromagnetnem polju je to"cka oz. obmo"cje, kjer polarizacija in faza valovanja nista definirani. 
 Amplituda valovanja v tak"sni to"cki mora biti enaka ni"c, zato se defekti izrazijo kot temne pege. 
 Primer so Laguerre-Gaussovi snopi, prikazani na sliki \ref{fig:laguerre-gauss}. 
+Poleg tistih na sliki so mo"zne se druga"cne polarizacije snopov z istim ovojnim "stevilom. 
+Snop z ovojnim "stevilom 1 ima lahko azimutalno polarizacijo, kot na sliki \ref{fig:laguerre-gauss}a, ali pa radialno \cite{porenta,tovar}. 
 
 \begin{figure}[!ht]
  \centering
@@ -928,28 +930,25 @@ To je v skladu z eksperimenti, saj svetloba pride od zunaj, zanima pa nas predvs
 
 Poljubno vpadno valovanje lahko modeliramo z robnimi pogoji, "ce izkoristimo linearnost Maxwellovih ena"cb. 
 Elektri"cno in magnetno polje lahko namre"c razcepimo na vsoto vpadnega in sipanega valovanja \cite{taflove}. 
-Tak"sen razcep polja je mo"zen le, "ce je "sirjenje vpadnega valovanja dobro znano. 
-To velja za ravne valove, pa tudi za bolj zapletene primere kot so Laguerre-Gaussovi snopi. 
+Tak"sen razcep polja je mo"zen le, "ce je "sirjenje vpadnega valovanja dobro znano in enostavno izra"cunamo. 
+Najpogosteje uporabimo ravne valove ali Laguerre-Gaussove snope. 
 Mre"zo zato razdelimo na dve obmo"cji, v notranjem obmo"cju ra"cunamo s skupnim poljem, v zunanjem pa polje razcepimo in shranjujemo le sipani del.
-Opti"cno anizotropna snov mora biti v celoti v notranjem obmo"cju, izvor valovanja modeliramo na prehodu med obmo"cjema. 
+Opti"cno anizotropna snov mora biti v celoti v notranjem obmo"cju, izvor valovanja pa modeliramo na celotni meji med obmo"cjema. 
 
 \begin{figure}[h]
  \centering
  \includegraphics[width=.8\textwidth]{wave-source-regions}
- \caption{Delitev mre"ze na dve obmo"cji. V obmo"cju \textbf{A} ra"cunamo le z sipanim valovanjem, v obmo"cju \textbf{B} pa s celotnim valovanjem. Delitev na levi sliki je primerna, "ce je razlika med lomnima koli"cnikoma \textbf{A} in \textbf{B} dovolj majhna. V nasprotnem primeru uporabimo delitev na desni sliki. }
+ \caption{Delitev mre"ze na dve obmo"cji. V obmo"cju \textbf{A} ra"cunamo le z sipanim valovanjem, v obmo"cju \textbf{B} pa s celotnim valovanjem. Na sliki je velikost obmo"cja \textbf{A} pretirana zaradi preglednosti, v vseh primerih je bila debelina obmo"cja \textbf{A} enaka dva koraka mre"ze. }
  \label{fig:wave-source-regions}
 \end{figure}
 
 Delitev na notranje in zunanje obmo"cje je u"cinkovita, "ce se efektivni lomni koli"cnik v notranem obmo"cju ne razlikuje mo"cno od zunanjega. 
-V tem primeru je fazna razlika na zadnji stranici notrenjega obmo"cja dovolj majhna, da pretvorba na sipano valovanje odstrani ve"cino valovanja. 
-"Ce pa je fazna razlika primerljiva s $\pi/2$ ali ve"cja, lahko odstranitev vpadnega vala celo pove"ca amplitudo valovanja. 
-To se zgodi npr. v teko"cekristalnem valovodu, ki je mnogo dalj"si od valovne dol"zine svetlobe. 
-Takrat je bolj u"cinkovito upo"stevati izvor valovanja le na vpadni strani, na drugi strani pa postavimo plast, ki absorbira valovanje. 
-
-Delitev na zunanje in notranje obmo"cji, ki je prikazana na levi strani slike \ref{fig:wave-source-regions}, smo uporabili le s preprostimi primeri za preverjanje delovanja metode. 
+Na ta na"cin lahko modeliramo poljuben izvor valovanja iz katerekoli smeri. 
+Velikokrat pa "zelimo imeti izvor valovanja le na eni strani, na ostalih pa "sirjenja svetlobe ne "zelimo motiti. 
+V tem primeru razdelimo prostor kot na desni strani slike \ref{fig:wave-source-regions}, tako da je izvor le na eni izmed sten. 
+Tak"sen pristop je smeselen za obravnavo valovodov, kjer svetloba prihaja le z ene strani. 
+Delitev na zunanje in notranje obmo"cje, ki je prikazana na levi strani slike \ref{fig:wave-source-regions}, smo uporabili le s preprostimi primeri za preverjanje delovanja metode. 
 Vse ostale izra"cune smo izvedli z delitvijo na desni strani. 
-Na sliki je velikost obmo"cja \textbf{A} pretirana zaradi preglednosti. 
-V vseh primerih je bila debelina obmo"cja \textbf{A} enaka dva koraka mre"ze. 
 
 \section{Robni pogoji}
 
@@ -1110,12 +1109,12 @@ Slika elektri"cnega polja ob prehodu meje v bli"zini Brewsterjevega kota je na s
 \end{figure}
 
 Na sliki \ref{fig:refraction-test} so jasno vidna "stiri obmo"cja. 
-"Cisto na levi je rob z absorbirajo"cim robnim pogojem \ac{PML}, ki absorbira odbito valovanje in prepre"cuje nadaljnji odboj. 
-Naslednje je obmo"cje z dielektri"cnostjo $\varepsilon_1$, kjer je superpozicija vpadnega in odbitega valovanja. 
+"Cisto na levi (I) je rob z absorbirajo"cim robnim pogojem \ac{PML}, ki absorbira odbito valovanje in prepre"cuje nadaljnji odboj. 
+Naslednje (II) je obmo"cje z dielektri"cnostjo $\varepsilon_1$, kjer je superpozicija vpadnega in odbitega valovanja. 
 Odbito valovanje je mnogo "sibkej"se od vpadnega, zato so valovi skoraj ravni. 
-Na sredini slike je meja med obmo"cjema, desno od nje je snov z dielektri"cnostjo $\varepsilon_2 > \varepsilon_1$.
+Na sredini slike je meja med obmo"cjema, desno od nje (III) je snov z dielektri"cnostjo $\varepsilon_2 > \varepsilon_1$.
 V tem delu je le prepu"s"ceno lomljeno valovanje, ki ima ustrezno manj"so valovno dol"zino. 
-Na desnem robu je prazno obmo"cje, ki ga valovanje "se ni doseglo. 
+Na desnem robu (IV) je prazno obmo"cje, ki ga valovanje "se ni doseglo. 
 
 Veljavnost lomnega zakona potrdimo, "ce primerjamo kota vpadnega in lomljenega valovanja. 
 Lomni zakon trdi, da je lomni kot enak
@@ -1186,6 +1185,7 @@ Zgornja meja je mo"cneje odvisna od razlike v dielektri"cnosti \cite{joannopoulo
 
 Za modeliranje opisanega fotonskega kristala smo uporabili periodi"cne robne pogoje v smereh $x$ in $y$, v smeri $z$ pa celico dol"zine 1024 enot z 20 enotami absorbirajo"ce plasti na vsakem koncu. 
 Grafa prepustnosti kristalov z razli"cnimi izbirami za dielektri"cnosti sta na sliki \ref{fig:test-periodic}. 
+Valovanje, ki se je od periodi"cne strukture zaradi prepovedanega pasu odbilo, smo zajeli v absorbirajo"ci plasti okrog in okrog celice. 
 
 \begin{figure}[!htbp]
  \input{g_test_periodic}
@@ -1240,8 +1240,9 @@ Redna komponenta, prikazana na sliki \ref{fig:pulse-0-mode}b, ob"cuti manj"si lo
 
 Teko"cekristalna vlakna na osnovi sklenjenih smekticnih A slojev, ki so jih nedavno izdelali v laboratorijih prof I. Mu"sevi"ca in prof. C. Bahra\cite{peddireddy}, imajo radialne direktorske profile. 
 Shema tak"snega vlakna je prikazana na sliki \ref{fig:fibre-radial-profile}. 
+Vzdol"z osi vlakna je defektna linija, okrog katere je obmo"cje zmanj"sanega reda, t.i. jedro defekta, s stopnjo reda $S=0$. 
+Polmer tega obmo"cja je mnogo manj"si od valovne dol"zine svetlobe, zato ga pri modeliranju nismo upo"stevali. 
 Kot eden prvih problemov tega dela nas bo zanimalo, kako defekt v sredici vlakna z radialnim profilom direktroja vpliva na "sirjenje svetlobe. 
-
 \begin{figure}[!ht]
 \centering
 \subfigure{\includegraphics[height=.2\textwidth]{radial-cross}}
@@ -1251,7 +1252,8 @@ Kot eden prvih problemov tega dela nas bo zanimalo, kako defekt v sredici vlakna
 \end{figure}
 
 Vrednosti parametrov, ki smo jih uporabili pri simulaciji, so na"steti v tabeli \ref{tab:parametri}. 
-
+Obravnavali smo vlakno s premerom 3 $\mu$m, obkro"zeno z vodo in zaprto v celico s kvadratnim presekom 5 $\mu$m $\times$ 5 $\mu$m. 
+Del valovanja potuje tudi izven vlakna, zato smo vedno zagotovili dovolj prostora med vlaknom in zunanjim robom celice. 
 \begin{table}[!htb]
 \centering
  \begin{tabular}{|c|c|}
@@ -1269,21 +1271,19 @@ Vrednosti parametrov, ki smo jih uporabili pri simulaciji, so na"steti v tabeli 
   \hline
  \end{tabular}
  \vspace{2mm}
- \caption{Parametri materiala in laserskega sunka, uporabljeni pri izra"cunih}
+ \caption{Parametri snovi in laserskega sunka, uporabljeni pri izra"cunih}
  \label{tab:parametri}
 \end{table}
 
 Najprej smo v vlakno poslali kratek laserski sunek vidne svetlobe z valovno dol"zino 480 nm in trajanjem sunka 40 fs. 
 Zaradi dvolomnosti teko"cega kristala smo opazili razcep sunka na dve komponenti oz. dva lastna na"cina "sirjenja svetlobe. 
 Ker pa je direktorsko polje singularno, sta tudi polarizaciji obeh na"cinov singularni, kot prikazuje slika \ref{fig:pulse-p1-mode}. 
-
 \begin{figure}[!htb]
  \centering
  \sunek{p1}
  \caption{Lastna na"cina "sirjenja svetlobe skozi vlakno z radialnim profilom direktorja ($s=+1$)}
  \label{fig:pulse-p1-mode}
 \end{figure}
-
 S slike takoj opazimo podobnost med polarizacijo svetlobe, zlasti pri po"casnej"sem nihajnem na"cinu (slika \ref{fig:pulse-p1-mode} desno), in direktorskim poljem. 
 "Ce na polarizacijo $\vec P$ gledamo kot na enotski vektor z direktorsko simetrijo, lahko z ena"cbo (\ref{eq:winding-number}) obema na"cinoma priredimo ovojno "stevilo $+1$. 
 Dodatno pa ima vsak izmed na"cinov po eno ravnino ravnino ni"celne intenzitete, kjer se polarizacija svetlobe obrne. 
