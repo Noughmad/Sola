@@ -85,6 +85,6 @@ set pm3d map
 set xlabel "$z$" offset 0,1.8
 set ylabel "$x$" offset 0,0
 unset tics
-unset colorbox
 unset border
+unset colorbox
 splot "Podatki/brewster_refraction.dat" matrix notitle
