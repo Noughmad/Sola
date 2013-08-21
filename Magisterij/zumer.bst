@@ -702,21 +702,6 @@ FUNCTION {manual}
   fin.entry
 }
 
-FUNCTION {mastersthesis}
-{ output.bibitem
-  format.authors "author" output.check
-  new.block
-  format.title "title" output.check
-  new.block
-  "Master's thesis" format.thesis.type output.nonnull
-  school "school" output.check
-  address output
-  format.date "year" output.check
-  new.block
-  note output
-  fin.entry
-}
-
 FUNCTION {format.url}
 { url empty$
     { "" }
@@ -736,6 +721,15 @@ FUNCTION {phdthesis}
   format.authors "," * "author" output.check
   format.btitle "," * "title" output.check
   "disertacija" format.thesis.type output.check
+  format.date "year" output.check
+  fin.entry
+}
+
+FUNCTION {mastersthesis}
+{ output.bibitem
+  format.authors "," * "author" output.check
+  format.btitle "," * "title" output.check
+  "diplomsko delo" format.thesis.type output.check
   format.date "year" output.check
   fin.entry
 }

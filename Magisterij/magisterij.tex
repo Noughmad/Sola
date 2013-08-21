@@ -469,7 +469,7 @@ Zunanje polje v molekuli inducira elektri"cni dipolni moment, ki je sorazmeren z
 
 Tipi"cen relaksacijski "cas lahko ocenimo s primerjavo viskoznosti ter elasti"cne in dielektri"cne proste energije
 \begin{align}
- \frac{1}{\tau} \approx \frac{f_\mathrm{el} + f_\mathrm{EM}}{\gamma_1}\,.
+ \frac{1}{\tau} \sim \frac{f_\mathrm{el} + f_\mathrm{EM}}{\gamma_1}\,.
 \end{align}
 Ker nas zanima le red velikosti, lahko uporabimo enokonstantni pribli"zek, krajevni odvod direktorja pa zamenjamo z obratno vrednostjo dol"zinske skale $l$, na kateri se direktor spreminja. 
 Ta dol"znina je tipi"cno velikostnega reda mikrometra \cite{kleman}. 
@@ -477,10 +477,10 @@ V elektri"cnem prispevku za oceno velikostnega reda privzamemo popolnoma urejen 
 S temi predpostavkami lahko ocenimo relaksacijski "cas teko"cega kristala v elektri"cnem polju
 \begin{align}
 % za v KRunner: 0.06 Pas / (6*10^(-12)N / (1um)^2 + 8.86*10^(-12) As/Vm * 0.5 * (3V/um)^2 ) =
- \tau \approx \frac{\gamma_1}{K/l^2 + \varepsilon_0 \varepsilon_a^{\mathrm{mol}} E^2 } \approx 1\;\mathrm{ms}\,.
+ \tau \sim \frac{\gamma_1}{K/l^2 + \varepsilon_0 \varepsilon_a^{\mathrm{mol}} E^2 } \sim 1\;\mathrm{ms}\,.
 \end{align}
 kjer je $\gamma_1$ rotacijska viskoznost. 
-Pri vrednosti viskoznosti, elasti"cne konstante in dielektri"cne anizotropije za 5CB \cite{diploma-miha,kolicniki} in jakosti elektri"cnega polja $E = 1\mathrm{V}/\mu\mathrm{m}$, tipi"cni za opti"cne pincete, relaksacijski "cas zna"sa pribli"zno 1 ms \cite{diploma-miha}. 
+Pri vrednosti viskoznosti $\gamma_1 \approx 0,\!06 \; \mathrm{Pa\,s}$, elasti"cne konstante $K \approx 6\times 10^{-12} \; \mathrm{N}$ in dielektri"cne anizotropije $\varepsilon_a^{\mathrm{mol}} \approx 0,\!4$ za 5CB \cite{diploma-miha,kolicniki} in jakosti elektri"cnega polja $E = 1\mathrm{V}/\mu\mathrm{m}$, tipi"cni za opti"cne pincete, relaksacijski "cas zna"sa pribli"zno 1 ms. 
 Ta vrednost je odvisna od jakosti elektri"cnega polja, ampak preureditev teko"cega kristala je tudi pri zelo mo"cnem polju ve"c velikostnih redov po"casnej"sa od nihanja opti"cnega polja s periodo velikostnega reda femtosekunde. 
 "Ce na teko"ci kristal svetimo, ureditev molekul ne more slediti hitremu spreminjanju opti"cnega elektri"cnega polja, ampak nanj efektivno deluje povpre"cen kvadrat polja. 
 
@@ -1180,8 +1180,8 @@ Ker se sunek hitro razcepi, je tak"sen postopek primeren za iskanje lastnih na"c
 
 \begin{figure}[!htbp]
  \centering
- \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/0_mode1}}
- \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/0_mode2}}
+  \begin{overpic}[width=.4\textwidth]{licp_0_68}\put(2,90){\color{white} \large \bf (a)}\end{overpic} \hspace{1mm}
+  \begin{overpic}[width=.4\textwidth]{licp_0_78}\put(2,90){\color{white} \large \bf (b)}\end{overpic}
  \caption{Lastna na"cina "sirjenja svetlobe skozi vlakno z uniformnim profilom direktorja. Vpadna svetloba je polarizirana vodoravno, opti"cna os pa z vodoravnico oklepa kot 45\degree. }
  \label{fig:pulse-0-mode}
 \end{figure}
@@ -1292,16 +1292,16 @@ Spet pa so opazna temna obmo"cja, kjer bi morala biti polarizacija svetlobe prav
 
 \begin{figure}[!htbp]
  \centering
- \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/p12_mode1}}
- \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/p12_mode2}}
+  \begin{overpic}[width=.4\textwidth]{licp_p12_68}\put(2,90){\color{white} \large \bf (a)}\end{overpic} \hspace{1mm}
+  \begin{overpic}[width=.4\textwidth]{licp_p12_78}\put(2,90){\color{white} \large \bf (b)}\end{overpic}
  \caption{Lastna na"cina "sirjenja svetlobe skozi vlakno z defektom z necelim ovojnim "stevilom $s=+1/2$}
  \label{fig:pulse-p12-mode}
 \end{figure}
 
 \begin{figure}[!htbp]
  \centering
- \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/m12_mode1}}
- \subfigure{\includegraphics[width=.48\textwidth,clip,trim=5.5cm 1cm 5.5cm 1cm]{./Rezultati/m12_mode2}}
+  \begin{overpic}[width=.4\textwidth]{licp_m12_68}\put(2,90){\color{white} \large \bf (a)}\end{overpic} \hspace{1mm}
+  \begin{overpic}[width=.4\textwidth]{licp_m12_78}\put(2,90){\color{white} \large \bf (b)}\end{overpic}
  \caption{Lastna na"cina "sirjenja svetlobe skozi vlakno z defektom z necelim ovojnim "stevilom $s=-1/2$}
  \label{fig:pulse-m12-mode}
 \end{figure}
@@ -1405,7 +1405,7 @@ Tak"sen primer je "se posebej zanimiv, ker imata lastna na"cina le eno simetrijs
   Z belo barvo so prikazane silnice elektri"cnega polja, njihova svetlost pa je sorazmerna z intenziteto svetlobe. 
   Rde"ce pu"s"cice prikazujejo trenutno elektri"cno polje. 
   Direktorsko polje v vlaknu je prikazano na sliki (d). }
- \label{fig:m12-cont-snaps}
+ \label{fig:p12-cont-snaps}
 \end{figure}
 
 Na slikah lahko prepoznamo uniformno polje brez defektov (skrajno levi presek) in polje z defektom mo"ci $-1$ (drugi presek z leve). 
