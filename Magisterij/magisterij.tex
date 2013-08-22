@@ -1260,6 +1260,7 @@ Del valovanja potuje tudi izven vlakna, zato smo vedno zagotovili dovolj prostor
   \hline
   Valovna dol"zina svetlobe & 480 nm \\
   Premer vlakna & 3 $\mu$m \\
+  Dol"zina vlakna & 40 $\mu$m \\
   Enota diskretizacije & 40 nm \\
   \hline
   Redni lomni koli"cnik v vlaknu & 1,52 \\
@@ -1277,7 +1278,7 @@ Del valovanja potuje tudi izven vlakna, zato smo vedno zagotovili dovolj prostor
 
 Najprej smo v vlakno poslali kratek laserski sunek vidne svetlobe z valovno dol"zino 480 nm in trajanjem sunka 40 fs. 
 Zaradi dvolomnosti teko"cega kristala smo opazili razcep sunka na dve komponenti oz. dva lastna na"cina "sirjenja svetlobe. 
-Ker pa je direktorsko polje singularno, sta tudi elektri"cni polji v obeh na"cinih singularni, kot prikazuje slika \ref{fig:pulse-p1-mode}. 
+Ker je direktorsko polje singularno, sta tudi elektri"cni polji v obeh na"cinih singularni, kot prikazuje slika \ref{fig:pulse-p1-mode}. 
 \begin{figure}[!htb]
  \centering
  \sunek{p1}
@@ -1356,7 +1357,6 @@ Spet so opazna temna obmo"cja, kjer bi morala biti polarizacija svetlobe pravoko
  \label{fig:pulse-m12-mode}
 \end{figure}
 
-
 \section{Posplo"sitev in splo"sne zna"cilnosti}
 Nekaj lastnosti lastnih na"cinov propagacije svetlobe lahko obrazlo"zimo s simetrijo. 
 Polarizacija vpadne svetlobe je linearna in uniformna. 
@@ -1377,17 +1377,19 @@ V zgorjih opa"zanjih lahko najdemo podobnosti; za propagacijo linearno polarizir
 V vseh primerih opazimo ob osi vlakna, torej v jedru teko"cekristalnega defekta, temno pego z ni"celno intenziteto svetlobe. 
 Ta temna pega je posledica prisotnosti defekta v vlaknu. 
 Zaradi vzbujanja pa opazime "se dodatne ravnine ni"celne intenzitete, ki se pojavijo na mestih, kjer je polarizacija vpadnega valovanja enaka redni ali izredni polarizaciji. 
-Pojav teh ravnine je pogojen z izvorom vpadnega valovanja in ne samo z ureditvijo teko"cega kristala. 
-S temi posplositvami lahko napovemo, kako se bo svetloba "sirila vzdol"z nematskega vlakna s poljubnim linijskim defektom vzdol"z osi. 
+Pojav teh ravnin je pogojen z izvorom vpadnega valovanja in ne samo z ureditvijo teko"cega kristala. 
+Lastni na"cini "sirjenja valovanja, ki smo jih prepoznali v tem poglavju, torej niso odvisni le od ureditve teko"cega kristala, ampak tudi od polarizacije vpadne svetlobe. 
+Modelirali smo "sirjenje svetlobe po vlaknu, dolgem pribli"zno 100 valovnih dol"zin svetlobe, in na tej razdalji se vsi prikazani na"cini "sirjena zdijo stabilni. 
+Zato jih lahko upravi"ceno poimenujemo lastni na"cini, kljub temu da je povsem mo"zno, da so v resnici sestavljeni iz kombinacije ve"c osnovnih na"cinov, ki potujejo z enako hitrostjo. 
 
 \chapter{Stalna laserska svetloba}
 
+\section{Radialni profil direktorja}
+
 Zelo kratki laserski sunki so zanimivi za teoreti"cno obravnavo, ker lahko z njimi najdemo lastne na"cine "sirjenja svetlobe po snovi. 
 Z eksperimentalnega vidika pa so izjemno zahtevni, tako za ustvarjanje pulza kot za njegovo opazovanje. 
-Sunek, uporabljen na zgornjih slikah je trajal le okrog 40 fs, kar je sicer v dosegu ultrahitrih femtosekundnih laserjev. 
+Sunek, uporabljen v prej"snjem poglavju je trajal le okrog 40 fs, kar je sicer v dosegu ultrahitrih femtosekundnih laserjev. 
 Mnogo bolj enostavno pa je opazovanje z laserjem, ki sveti stalno s konstantno intenziteto. 
-
-\section{Radialni profil direktorja}
 
 Pri enakomernem laserskem "zarku je svetloba v vlaknu z radialnim profilom direktorja kombinacija obeh lastnih na"cinov, ki se "sirita z razli"cnima hitrostma. 
 Frekvenca svetlobe je nespremenjena in zato enaka po celotnem vlaknu, opazimo pa mo"cno krajevno odvisnost oblike polja. 
@@ -1423,8 +1425,8 @@ Konfiguracija pribli"zno ustreza defektu z ovojnim "stevilom $+1$, presek polja 
 Zanimivo je tudi spreminjanje polarizacije svetlobe vzdol"z vlakna. 
 V obeh lastnih na"cinih je svetloba polarizirana linearno, kar opazimo tudi na mestih, kjer se na"cina se"stejeta z enako ali nasprotno fazo. 
 V vmesnih stanjih, kot npr. na sliki \ref{fig:p1-cont-snaps}b, pa je polarizacija svetlobe elipti"cna. 
-Tam je med redno in izredno komponento fazni zamik, ki ni celo"stevilski ve"ckratnik $\pi$. 
-Polarizacija svetlobe torej je odvisna od polo"zaja znotraj vlakna in je ne moremo ena"citi z elektri"cnim poljem. 
+Tam je med redno in izredno komponento fazni zamik, ki ni celo"stevilski ve"ckratnik $\pi$, smer elektri"cnega polje pa se s premikanjem v kraju in "casu vrti. 
+Polarizacija svetlobe torej je odvisna od polo"zaja znotraj vlakna in je ne moremo opisati le s trenutno sliko elektri"cnega polja. 
 
 \cleardoublepage
 \section{Hiperboli"cni profil direktorja}
@@ -1523,7 +1525,7 @@ kjer je $k$ poljubno celo "stevilo. Za tipi"cne vrednosti lomnih koli"cnikov v t
 \end{align}
 "ce izberemo vrednosti $k=1$. Ker je "stevilo $k$ poljubno, lahko isto stvar dose"zemo tudi z dalj"simi vlakni. 
 Dol"zina, potrebna za pretvorbo iz linearne v radialno polarizacijo, se spremeni tudi ob uporabi teko"cega kristala z druga"cno dvolomnostjo ali laserja z drugo valovno dol"zino. 
-Dvolomnost teko"cega kristala je odvisna od stopnje reda $S$ in s tem tudi od temperature, kar omogo"ca uravnavanje delovanja tak"sne naprave. 
+Dvolomnost teko"cega kristala je odvisna tudi od stopnje reda $S$ in s tem od temperature, kar omogo"ca uravnavanje delovanja tak"sne naprave. 
 
 \chapter{Zaklju"cek}
 V nalogi smo preu"cili "sirjenje kratkih sunkov in stalne laserske svetlobe po teko"cekristalnih vlaknih z defektnimi linijami vzdol"z osi. 
