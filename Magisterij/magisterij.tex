@@ -695,6 +695,7 @@ Hitrost svetlobe v tak"sni snovi je enaka
 \end{align}
 in je odvisna od smeri elektri"cnega polja. 
 
+\newpage
 \section{Defekti v polarizaciji svetlobe}
 Elektri"cno in magnetno polje sta prava vektorja, zato imata lahko le defekte s celo"stevilskim ovojnim "stevilom. 
 Defekt v elektromagnetnem polju je to"cka oz. obmo"cje, kjer polarizacija in faza valovanja nista definirani. 
@@ -929,8 +930,8 @@ Ker rotor polja potrebujemo pri "casovnem odvodu drugega opti"cnega polja, ki je
 V splo"snem je diskretizacija lahko anizotropna, v vseh nadaljnjih izra"cunih pa smo uporabili kvadratno mre"zo, kjer je $\Delta x = \Delta y = \Delta z$. 
 Maxwellove ena"cbe v tem zapisu se glasijo
 \begin{align}
- E_\alpha|_{i,j,k}^{n+1} &= E_\alpha|_{i,j,k}^n + \Delta t \times (\varepsilon^{-1})_{\alpha\beta}|_{i,j,k} \times (\nabla\times \vec H)_\beta|_{i-1,j-1,k-1}^{n} \label{eq:disk-E}\\
- H_\alpha|_{i,j,k}^{n+1} &= H_\alpha|_{i,j,k}^n + \Delta t \times (\nabla\times \vec E)_\beta|_{i,j,k}^{n+1} \label{eq:disk-H}
+ E_\alpha|_{i,j,k}^{n+1} &= E_\alpha|_{i,j,k}^n + \Delta t \cdot (\varepsilon^{-1})_{\alpha\beta}|_{i,j,k} \cdot (\nabla\times \vec H)_\beta|_{i-1,j-1,k-1}^{n} \label{eq:disk-E}\\
+ H_\alpha|_{i,j,k}^{n+1} &= H_\alpha|_{i,j,k}^n + \Delta t \cdot (\nabla\times \vec E)_\beta|_{i,j,k}^{n+1} \label{eq:disk-H}
 \end{align}
 Iz zgornjih dveh ena"cb je razvidno, da lahko obe polji ra"cunamo izmeni"cno. 
 "Ce poznamo elektri"cno polje ob "casu $n\Delta t$ in magnetno polje ob "casu $(n+1/2)\Delta t$, lahko po ena"cbi izra"cunamo (\ref{eq:disk-E}) izra"cunamo elektri"cno polje ob "casu $(n+1)\Delta t$, nato pa po ena"cbi (\ref{eq:disk-H}) "se magnetno polje ob "casu $(n+3/2)\Delta t$. Izmeni"cno ra"cunanje lahko ponavljamo poljubno dolgo. 
@@ -1060,11 +1061,11 @@ Prikaz valovanja na sliki \ref{fig:test-plane} potrjuje pravilnost metode, saj r
   \put(2,10){\color{white} \large \bf $\mathbf{y}$}
   \put(0,37){\color{black} \hdashrule{0.46\textwidth}{1pt}{4pt 2pt}}
  \end{overpic}
- \hspace{-2mm}
- \begin{picture}(10,75)
+ \hspace{-2.5mm}
+ \begin{picture}(10,140)
  \thicklines
-  \put(0,74){\line(1,6){12}}
-  \put(0,74){\line(1,-6){12}}
+  \put(0,71){\line(1,6){12}}
+  \put(0,71){\line(1,-6){12}}
  \end{picture}
  \hspace{-2mm}
  \begin{overpic}[width=.45\textwidth]{g_test_plane_profile}
@@ -1073,7 +1074,7 @@ Prikaz valovanja na sliki \ref{fig:test-plane} potrjuje pravilnost metode, saj r
   \put(2,37){\color{white} \large \bf $\mathbf{\uparrow}$}
   \put(2,30){\color{white} \large \bf $\mathbf{t}$}
  \end{overpic}
-\caption{Levo: Trenutna slika valovanja v celici. Vidni so ravni valovi, rumena barva prikazujejo obmo"cja s pozitivno komponento $E_x$, modra z negativno, rde"ca pa obmo"cja brez elektri"cnega polja. Desno: Presek po "crtkani "crt	i ob razli"cnih "casih. Navpi"cna os predstavlja "cas; valovi potujejo v desno s konstantno hitrostjo, na levi je izvor valovanja, na desni pa ponor. }
+\caption{Levo: Trenutna slika valovanja v celici. Vidni so ravni valovi, rumena barva prikazujejo obmo"cja s pozitivno komponento $E_x$, modra z negativno, rde"ca pa obmo"cja brez elektri"cnega polja. Desno: Presek po "crtkani "crti ob razli"cnih "casih. Navpi"cna os predstavlja "cas; valovi potujejo v desno s konstantno hitrostjo, na levi je izvor valovanja, na desni pa ponor. }
 \label{fig:test-plane}
 \end{figure}
 
@@ -1569,7 +1570,8 @@ Zanimiv rezultat je tudi napoved novega na"cina za pretvarjanje polarizacije sve
 Opisana numeri"cna metoda je primerna za modeliranje opti"cno poljubno zapletenih snovi. 
 Ker upo"steva vseh "sest komponent elektromagnetnih polj, pravilno deluje tudi v teko"cih kristalih z mo"cno krajevno odvisnostjo dvolomnosti, na primer v bli"zini defektov, kjer druge metode odpovejo, s "cimer ponuja mnoge mo"znosti za nadaljnje raziskave. 
 Med elektromagnetnim poljem in teko"cimi kristali velja dvosmerna sklopitev, ki jo bo mogo"ce upo"stevati s kombinacijo zgoraj opisane metode z obstoje"cimi programi za izra"cun ureditve teko"cih kristalov v prisotnosti zunanjih polj. 
-Z isto metodo lahko raziskujemo zanivime pojave, ki so jih opazili v laboratorijih, npr.~lasersko svetenje teko"cekristalnih kapljic in vlaken. 
+Z isto metodo lahko ustvarimo natan"cne transmisijske slike razli"cnih direktorskih profilov, s pomo"cjo katerih lahko prepoznamo ureditev teko"cega kristala v laboratoriju. 
+Ob dodatku opti"cno aktivnih barvil lahko raziskujemo zanivime pojave, ki so jih opazili v laboratorijih, npr.~lasersko svetenje teko"cekristalnih kapljic in vlaken. 
 Nadalje bi lahko preu"cevali materiale z zapleteno strukturo, kot so samourejeni metamateriali in fotonski kristali. 
 Zanimiva mo"znost uporabe je tudi pri iskanju novih teko"cekristalnih struktur za vodenje svetlobe. 
 
