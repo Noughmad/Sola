@@ -1,4 +1,4 @@
-\documentclass[12pt,twoside,openright,final]{report}
+\documentclass[12pt,twoside,openright,final,a4paper]{report}
 \usepackage{StyleCent}
 
 \usepackage[utf8]{inputenc}
@@ -111,6 +111,9 @@ Oddelek za fiziko}\\
 
 \newpage
 
+\thispagestyle{empty}
+\quad
+
 \newpage
 
 \thispagestyle{empty}
@@ -141,6 +144,12 @@ Ljubljana, 26.~8.~2013 \hfill Miha "Can"cula
 
 \newpage
 
+\thispagestyle{empty}
+\quad
+
+\newpage
+
+
 \normalsize
 \thispagestyle{empty}
 \centerline{}
@@ -170,8 +179,14 @@ Zahvala gre tudi Davidu Se"cu, dr.~Tinetu Porenti in dr.~Simonu "Coparju, ki so 
 
 \newpage
 
+\thispagestyle{empty}
+\quad
+
+\newpage
+
+
 \normalsize
-\thispagestyle{plain}
+\thispagestyle{empty}
 
 \vfill
 \centerline{\bf Povzetek}
@@ -234,7 +249,11 @@ We find an exciting coupling between the winding numbers of liquid crystal defec
 \vfill
 
 \newpage
+
 \thispagestyle{empty}
+\quad
+
+\newpage
 
 \tableofcontents
 
@@ -550,7 +569,7 @@ Zgornji izraz divergira tako v bli"zini defekta kot tudi za velike oddaljenosti.
 Velikostna skala $r_{max}$ je povezana z velikostjo sistema oz. z razdaljo do sosednjega defekta. 
 En sam izoliran defekt ni stabilen, razen "ce ga vsiljujejo robni pogoji. 
 Jedro defekta se pogosto obravnava kot obmo"cje izotropne faze z S=0.
-Velikost staljenega dela opisuje $r_{min}$ in je tipi"cno okrog 10 nm. 
+Velikost jedra opisuje $r_{min}$ in je tipi"cno okrog 10 nm. 
 
 V zgornji enakosti je pomembna odvisnost od ovojnega "stevila. 
 Elasti"cna energija zaradi defekta je sorazmerna z $s^2$, zato je bolj ugodno, da se defekt z ve"cjim ovojnim "stevilom razcepi na ve"c manj"sih defektov. 
@@ -577,8 +596,8 @@ V primeru pobega v tretjo dimenzijo je direktor povsod dobro definiran.
 
 \begin{figure}[!htbp]
 \centering
-\subfigure{\includegraphics[height=150px]{director-profile-cylinder-kleman}}
-\subfigure{\includegraphics[clip, trim=0cm -3mm 0cm 0cm]{escaped-director-energy}}
+\subfigure{\includegraphics[height=130px]{director-profile-cylinder-kleman}}
+\subfigure{\includegraphics[height=130px,clip, trim=0cm -3mm 0cm 0cm]{escaped-director-energy}}
 \caption{Levo: Prerezi kapilare s singularno (a) in nesingularno pobeglo defektno linijo (b). 
 Razli"cne smeri pobega povzro"cijo nastanek to"ckastih defektov (c). Desno: Energija singularne in pobegle konfiguracije v odvisnosti od razmerja med elasti"cnima kostantama $K_1$ in $K_3$ \cite{kleman}. }
  \label{fig:director-profiles}
@@ -587,14 +606,14 @@ Razli"cne smeri pobega povzro"cijo nastanek to"ckastih defektov (c). Desno: Ener
 V ve"cini nematikov so vse tri elasti"cne konstante istega velikostnega reda, zato je stanje s pobegom v tretjo dimenzijo bolj ugodno. 
 V smekti"cni fazi pa pahlja"cna deformacija nosi mnogo manj"so energijo kot ostala dva na"cina, saj je edina kompatibilna z ureditvijo v plasti. 
 V cilindri"cni kapilari se smektik zato uredi v radialen profil. 
-Veliko razmerje $K_3/K_1$ pa opazimo tudi v nematikih blizu faznega prehoda v smekti"cno fazo. 
+Veliko razmerje $K_3/K_1$ opazimo tudi v nematikih blizu faznega prehoda v smekti"cno fazo. 
 Z uporabo 8CB, ki tvori tako nematsko kot tudi smekti"cno fazo, je mogo"ce v laboratoriju sintetizirati vlakna z radialnim profilom direktorja \cite{peddireddy}. 
 Primer tvorbe tak"snih vlaken je na sliki \ref{fig:tvorjenje}. 
 
-\begin{figure}[h]
+\begin{figure}[!ht]
  \centering
- \subfigure{\includegraphics[height=150px]{tvorjenje}}
- \subfigure{\includegraphics[height=150px]{tvorjenje2}}
+ \subfigure{\includegraphics[height=140px]{tvorjenje}}
+ \subfigure{\includegraphics[height=140px]{tvorjenje2}}
  \caption{Rast vlaken z radialnim direktorjem na meji med teko"cim kristalom 8CB in vodo \cite{peddireddy}}
  \label{fig:tvorjenje}
 \end{figure}
@@ -1542,13 +1561,15 @@ Metoda pravilno napove odboj in lom valovanja ob prehodu v medij z druga"cnim lo
 Kratek laserski sunek se v uniformnem nematskem vlaknu razdeli na dva dela, ki ustrezata redni in izredni polarizaciji svetlobe. 
 
 Vsaj nekatere rezultate v tej nalogi bo mo"zno eksperimentalno preveriti, npr. s tvorbo teko"cekristalnih vlaken z radialnim direktorskim profilom. 
+Povezavo med topologijo defektov v teko"cem kristalu in v polarizaciji svetlobe lahko opazujemo tudi v tankem filmu, kjer je defektna linija vsiljena z robnimi pogoji. 
 Zanimiv rezultat je tudi napoved novega na"cina za pretvarjanje polarizacije svetlobe iz linearne v radialno, ki predstavlja nov izziv za eksperimentalno delo. 
 
 Opisana numeri"cna metoda je primerna za modeliranje opti"cno poljubno zapletenih snovi. 
 Ker upo"steva vseh "sest komponent elektromagnetnih polj, pravilno deluje tudi v teko"cih kristalih z mo"cno krajevno odvisnostjo dvolomnosti, na primer v bli"zini defektov, kjer druge metode odpovejo, s "cimer ponuja mnoge mo"znosti za nadaljnje raziskave. 
 Med elektromagnetnim poljem in teko"cimi kristali velja dvosmerna sklopitev, ki jo bo mogo"ce upo"stevati s kombinacijo zgoraj opisane metode z obstoje"cimi programi za izra"cun ureditve teko"cih kristalov v prisotnosti zunanjih polj. 
-Z isto metodo bi lahko preu"cevali materiale z zapleteno strukturo, kot so samourejeni metamateriali in fotonski kristali. 
-Zanimiva mo"znost uporabe je tudi pri iskanju teko"cekristalnih struktur za vodenje svetlobe. 
+Z isto metodo lahko raziskujemo zanivime pojave, ki so jih opazili v laboratorijih, npr.~lasersko svetenje teko"cekristalnih kapljic in vlaken. 
+Nadalje bi lahko preu"cevali materiale z zapleteno strukturo, kot so samourejeni metamateriali in fotonski kristali. 
+Zanimiva mo"znost uporabe je tudi pri iskanju novih teko"cekristalnih struktur za vodenje svetlobe. 
 
 \bibliographystyle{zumer}
 \bibliography{magisterij}
