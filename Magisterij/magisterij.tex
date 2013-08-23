@@ -7,7 +7,7 @@
 \usepackage{hyperref}
 \usepackage[nottoc,numbib]{tocbibind}
 \usepackage{gensymb}
-\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[inner=3.5cm,outer=2.5cm,top=3cm,bottom=3cm]{geometry}
 \usepackage{microtype}
 
 \usepackage{graphicx}
@@ -637,7 +637,7 @@ Obi"cajno je pri opti"cnih frekvencah magnetna anizotropija mnogo "sibkej"sa od 
 
 Izvori in ponori valovanja znotraj vzorca so posledica neni"celne elektri"cne prevodnosti materiala.
 Zaradi prevodnosti $\sigma$ ob prisotnosti elektri"cnega polja v snovi te"ce tok, ki je enak $\vec J = \sigma \vec E$. 
-Prostih nabojev tipcno v tekocekristlaih sistemih ni, zato je $\rho_f=0$. 
+Prostih nabojev tipcno v teko"cekristlaih sistemih ni, zato je $\rho_f=0$. 
 Z upo"stevanjem zgornjih predpostavk lahko Maxwellove ena"cbe zapi"semo v poenostavljeni obliki
 \begin{equation}
   \begin{aligned}
@@ -789,7 +789,7 @@ Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj
 
 \chapter{Numeri"cna metoda}
 
-Za izracun propagacije svetlobe skozi mocno opticno aniztorpne tekocekristalne vzorce smo implementirali metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}} \cite{taflove}. 
+Za izracun propagacije svetlobe skozi mocno opticno aniztorpne teko"cekristalne vzorce smo implementirali metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}} \cite{taflove}. 
 Pri tej metodi "casovno propagiramo elektri"cno in magnetno polje v vsaki to"cki po Maxwellovih ena"cbah. 
 
 Pri numeri"cnem re"sevanju potrebujemo le tisti dve Maxwellovi ena"cbi, ki vsebujeta "casovne odvode polj. 
@@ -1398,6 +1398,8 @@ Ta temna pega je posledica prisotnosti defekta v vlaknu.
 Zaradi vzbujanja pa opazime "se dodatne ravnine ni"celne intenzitete, ki se pojavijo na mestih, kjer je polarizacija vpadnega valovanja enaka redni ali izredni polarizaciji. 
 Pojav teh ravnin je pogojen z izvorom vpadnega valovanja in ne samo z ureditvijo teko"cega kristala. 
 Lastni na"cini "sirjenja valovanja, ki smo jih prepoznali v tem poglavju, torej niso odvisni le od ureditve teko"cega kristala, ampak tudi od polarizacije vpadne svetlobe. 
+To tudi niso nujno vsi lastni na"cini, saj je npr. v vlaknu z radialnim profilom direktorja mo"zno tudi "sirjenje valovanja z radialno polarizacijo svetlobe, seveda ob primernem vzbujanju. 
+Analiza vseh lastnih na"cinov valovanja v teko"cekristalnih vlaknih presega okvire tega dela. 
 Modelirali smo "sirjenje svetlobe po vlaknu, dolgem pribli"zno 100 valovnih dol"zin svetlobe, in na tej razdalji se vsi prikazani na"cini "sirjena zdijo stabilni. 
 Zato jih lahko upravi"ceno poimenujemo lastni na"cini, kljub temu da je povsem mo"zno, da so v resnici sestavljeni iz kombinacije ve"c osnovnih na"cinov, ki potujejo z enako hitrostjo. 
 
