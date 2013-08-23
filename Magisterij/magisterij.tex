@@ -695,6 +695,7 @@ Hitrost svetlobe v tak"sni snovi je enaka
 \end{align}
 in je odvisna od smeri elektri"cnega polja. 
 
+\newpage
 \section{Defekti v polarizaciji svetlobe}
 Elektri"cno in magnetno polje sta prava vektorja, zato imata lahko le defekte s celo"stevilskim ovojnim "stevilom. 
 Defekt v elektromagnetnem polju je to"cka oz. obmo"cje, kjer polarizacija in faza valovanja nista definirani. 
@@ -929,8 +930,8 @@ Ker rotor polja potrebujemo pri "casovnem odvodu drugega opti"cnega polja, ki je
 V splo"snem je diskretizacija lahko anizotropna, v vseh nadaljnjih izra"cunih pa smo uporabili kvadratno mre"zo, kjer je $\Delta x = \Delta y = \Delta z$. 
 Maxwellove ena"cbe v tem zapisu se glasijo
 \begin{align}
- E_\alpha|_{i,j,k}^{n+1} &= E_\alpha|_{i,j,k}^n + \Delta t \times (\varepsilon^{-1})_{\alpha\beta}|_{i,j,k} \times (\nabla\times \vec H)_\beta|_{i-1,j-1,k-1}^{n} \label{eq:disk-E}\\
- H_\alpha|_{i,j,k}^{n+1} &= H_\alpha|_{i,j,k}^n + \Delta t \times (\nabla\times \vec E)_\beta|_{i,j,k}^{n+1} \label{eq:disk-H}
+ E_\alpha|_{i,j,k}^{n+1} &= E_\alpha|_{i,j,k}^n + \Delta t \cdot (\varepsilon^{-1})_{\alpha\beta}|_{i,j,k} \cdot (\nabla\times \vec H)_\beta|_{i-1,j-1,k-1}^{n} \label{eq:disk-E}\\
+ H_\alpha|_{i,j,k}^{n+1} &= H_\alpha|_{i,j,k}^n + \Delta t \cdot (\nabla\times \vec E)_\beta|_{i,j,k}^{n+1} \label{eq:disk-H}
 \end{align}
 Iz zgornjih dveh ena"cb je razvidno, da lahko obe polji ra"cunamo izmeni"cno. 
 "Ce poznamo elektri"cno polje ob "casu $n\Delta t$ in magnetno polje ob "casu $(n+1/2)\Delta t$, lahko po ena"cbi izra"cunamo (\ref{eq:disk-E}) izra"cunamo elektri"cno polje ob "casu $(n+1)\Delta t$, nato pa po ena"cbi (\ref{eq:disk-H}) "se magnetno polje ob "casu $(n+3/2)\Delta t$. Izmeni"cno ra"cunanje lahko ponavljamo poljubno dolgo. 
