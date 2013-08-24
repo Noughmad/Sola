@@ -632,14 +632,14 @@ Primer tvorbe tak"snih vlaken je na sliki \ref{fig:tvorjenje}.
 \end{equation}
 kjer sta $\vec E$ in $\vec D$ jakost in gostota elektri"cnega polja, $\vec H$ in $\vec B$ pa jakost in gostota magnetnega polja. 
 Med njimi veljata konstitutivni zvezi $\vec D = \varepsilon \varepsilon_0 \vec E$ in $\vec B = \mu \mu_0 \vec H$. 
-V ena"cbah nastopata izvora elektromagnetn	ih polj, in sicer gostota prostih nabojev $\rho_f$ in gostota prostega toka $J_f$. 
+V ena"cbah nastopata izvora elektromagnetnih polj, in sicer gostota prostih nabojev $\rho_f$ in gostota prostega toka $J_f$. 
 
 V teko"cih kristalih sta dielektri"cnost $\varepsilon$ in permeabilnost $\mu$ anizotropna tenzorja. 
 Obi"cajno je pri opti"cnih frekvencah magnetna anizotropija mnogo "sibkej"sa od elektri"cne, zato jo lahko zanemarimo in privzamemo $\mu = 1$. 
 
 Izvori in ponori valovanja znotraj vzorca so posledica neni"celne elektri"cne prevodnosti materiala.
 Zaradi prevodnosti $\sigma$ ob prisotnosti elektri"cnega polja v snovi te"ce tok, ki je enak $\vec J = \sigma \vec E$. 
-Prostih nabojev tipcno v teko"cekristlaih sistemih ni, zato je $\rho_f=0$. 
+Prostih nabojev tipi"cno v teko"cekristlaih sistemih ni, zato je $\rho_f=0$. 
 Z upo"stevanjem zgornjih predpostavk lahko Maxwellove ena"cbe zapi"semo v poenostavljeni obliki
 \begin{equation}
   \begin{aligned}
@@ -702,8 +702,8 @@ in je odvisna od smeri elektri"cnega polja.
 Elektri"cno in magnetno polje sta prava vektorja, zato imata lahko le defekte s celo"stevilskim ovojnim "stevilom. 
 Defekt v elektromagnetnem polju je to"cka oz. obmo"cje, kjer polarizacija in faza valovanja nista definirani. 
 Amplituda valovanja v tak"sni to"cki mora biti enaka ni"c, zato se defekti izrazijo kot temne pege. 
-Primer so Laguerre-Gaussovi snopi, prikazani na sliki \ref{fig:laguerre-gauss}. 
-Poleg tistih na sliki so mo"zne se druga"cne polarizacije snopov z istim ovojnim "stevilom. 
+Primer so temne pege v osi Laguerre-Gaussovih snopov, prikazanih na sliki \ref{fig:laguerre-gauss}. 
+Poleg tistih na sliki so mo"zne "se druga"cne polarizacije snopov z istim ovojnim "stevilom. 
 Snop z ovojnim "stevilom 1 ima lahko azimutalno polarizacijo, kot na sliki \ref{fig:laguerre-gauss}a, ali pa radialno \cite{porenta,tovar}. 
 
 \begin{figure}[!ht]
@@ -735,7 +735,7 @@ Ra"cunsko orodje, ki naj bi natan"cno napovedalo direktorsko polje ob prisotnost
 V praksi pa se pogosto zate"cemo k poenostavitvam oz. limitam mo"cnega ali "sibkega polja. 
 "Ce je elektromagnetno polje dovolj mo"cno, se bo direktor orientiral v smeri polja, torej svetloba vedno "cuti izredni lomni koli"cnik. 
 V tem re"zimu teko"ci kristal ne vpliva na "sirjenje svetlobe. 
-"Ce pa je svetloba zelo "sibka, ne spremeni orientacije molekul in lahko privzamemo, da je direktorsko polje doloceno z drugimi mehanizmi, tipi"cno s povr"sinskim pogoji.. 
+"Ce pa je svetloba zelo "sibka, ne spremeni orientacije molekul in lahko privzamemo, da je direktorsko polje dolo"ceno z drugimi mehanizmi, tipi"cno s povr"sinskim pogoji.
 Mo"cno se razlikujeta tudi "casovni skali obeh pojavov, saj opti"cna polja pa nihajo s periodo okrog femtosekunde, metdem ko je tipi"cen relaksacijski "cas teko"cega kristala nekaj milisekund. 
 
 V tem magistrskem delu sem se omejil le na "sirjenje svetlobe, pri "cemer je direktorsko polje dolo"ceno in "casovno nespremenljivo. 
@@ -792,7 +792,7 @@ Holesteri"cni teko"ci kristal ima najni"zjo prosto energijo, "ce ima stalen zvoj
 
 \chapter{Numeri"cna metoda}
 
-Za izracun propagacije svetlobe skozi mocno opticno aniztorpne teko"cekristalne vzorce smo implementirali metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}} \cite{taflove}. 
+Za izra"cun propagacije svetlobe skozi mo"cno opti"cno aniztropne teko"cekristalne vzorce smo implementirali metodo kon"cnih diferenc v "casovni domeni \angl{\acf{FDTD}} \cite{taflove}. 
 Pri tej metodi "casovno propagiramo elektri"cno in magnetno polje v vsaki to"cki po Maxwellovih ena"cbah. 
 
 Pri numeri"cnem re"sevanju potrebujemo le tisti dve Maxwellovi ena"cbi, ki vsebujeta "casovne odvode polj. 
@@ -819,7 +819,7 @@ Prevodnost pa je pomembna v robni plasti, kjer "zelimo absorpcijo valovanja.
 
 Zaradi simetrije Maxwellovih ena"cb bi na enak na"cin kot dielektri"cnost $\varepsilon$ lahko upo"stevali tudi magnetno permeabilnost $\mu$. 
 Podobno bi lahko poleg elektri"cne prevodnosti $\sigma$ upo"stevali magnetne izgube $\sigma^\ast$. 
-
+\newpage
 \section{Mre"za}
 
 Pri diskretizaciji si lahko pomagamo z obliko obeh ena"cb. 
@@ -862,7 +862,7 @@ Obe mre"zi prikazuje slika \ref{fig:lattice}.
     \draw[egrid] (1.6-1.2,1.4-0.8) rectangle (3.6-1.2,3.4-0.8);
 
             \end{tikzpicture}}
-\caption{Levo: Yeejeva celica, pri kateri so komponente elektri"cnega polja znane na razpolovi"s"cih robov konce, komponente magnetnega polja pa v sredi"s"cih ploskev \cite{yee-lattice}. Desno: Celica, ki smo jo uporabili pri izra"cunih. Komponente elektri"cnega polja so znane v ogli"s"cih kocke, komponente magnetnega polja pa v njenem sredi"s"cu. V obeh primerih sta elektri"cno in magnetno polje dolo"cena ob razli"cnih "casih, kar na sliki ni prikazano.}
+\caption{Levo: Yeejeva celica, pri kateri so komponente elektri"cnega polja znane na razpolovi"s"cih robov kocke, komponente magnetnega polja pa v sredi"s"cih ploskev \cite{yee-lattice}. Desno: Celica, ki smo jo uporabili pri izra"cunih. Komponente elektri"cnega polja so znane v ogli"s"cih kocke, komponente magnetnega polja pa v njenem sredi"s"cu. V obeh primerih sta elektri"cno in magnetno polje dolo"cena ob razli"cnih "casih, kar na sliki ni prikazano.}
 \label{fig:lattice}
 \end{figure}
 
@@ -873,7 +873,7 @@ Pomembno je le, da je znan na istem mestu kot $\E$ (rde"ce to"cke na sliki \ref{
 \section{Postopek re"sevanja}
 Na izbrani mre"zi ne moremo neposredno izra"cunati rotorja polj, ker ta ni definiran v pravih to"ckah. 
 Elektri"cno polje je definirano na ogli"s"cih kocke, zato so krajevni odvodi tega polja definirani na razpolovi"s"cih robov, potrebujemo pa jih na mestu magnetnega polja, torej v sredi"s"cu kocke. 
-V svoji metodi sem za odvod polja po vsaki koordinati v sredi"s"cu kocke uporabil povpre"cje odvodov na vseh "stirih robovih, ki potekajo v smeri izbrane koordinate, kot prikazuje slika \ref{fig:lattice-derivatives}. 
+V svoji metodi smo za odvod polja po vsaki koordinati v sredi"s"cu kocke uporabili povpre"cje odvodov na vseh "stirih robovih, ki potekajo v smeri izbrane koordinate, kot prikazuje slika \ref{fig:lattice-derivatives}. 
 
 \begin{figure}[h]
 \centering
@@ -895,7 +895,7 @@ V svoji metodi sem za odvod polja po vsaki koordinati v sredi"s"cu kocke uporabi
  \end{tikzpicture}
  \caption{
  Krajevni odvodi komponent polja $\E$ v smeri $x$ so definirani na "stirih robovih, ozna"cenih s pu"s"cicami. 
- Vrednost potrebujemo v sredi"s"cu kocke (modra pika), zato sem uporabil povpre"cje "stirih vrednosti na robu. 
+ Vrednost potrebujemo v sredi"s"cu kocke (modra pika), zato smo uporabili povpre"cje "stirih vrednosti na robu. 
  }
  \label{fig:lattice-derivatives}
 \end{figure}
@@ -938,7 +938,7 @@ Maxwellove ena"cbe v tem zapisu se glasijo
 Iz zgornjih dveh ena"cb je razvidno, da lahko obe polji ra"cunamo izmeni"cno. 
 "Ce poznamo elektri"cno polje ob "casu $n\Delta t$ in magnetno polje ob "casu $(n+1/2)\Delta t$, lahko po ena"cbi izra"cunamo (\ref{eq:disk-E}) izra"cunamo elektri"cno polje ob "casu $(n+1)\Delta t$, nato pa po ena"cbi (\ref{eq:disk-H}) "se magnetno polje ob "casu $(n+3/2)\Delta t$. Izmeni"cno ra"cunanje lahko ponavljamo poljubno dolgo. 
 
-Pomembna lastnost obeh zgornjih ena"cb je, da med ra"cunanje enega izmed polj potrebujemo le vrednosti drugega polja, ne pa tudi istega polja na sosednjih mestih. 
+Pomembna lastnost obeh zgornjih ena"cb je, da med ra"cunanjem enega izmed polj potrebujemo le vrednosti drugega polja, ne pa tudi istega polja na sosednjih mestih. 
 "Casovni odvodi istega polja na razli"cnih mestih so med seboj popolnoma neodvisni. 
 Vsak korak metode, torej ra"cunanje enega izmed polj, lahko razdelimo na veliko "stevilo neodvisnih ra"cunskih enot. 
 To omogo"ca paralelno izvajanje programa na ra"cunalnikih z ve"c jedri, kot so ra"cunalni"ske gru"ce, pa tudi novej"si osebni ra"cunalniki. 
@@ -989,9 +989,9 @@ Absorpcijo valovanja dose"zemo z uporabo elektri"cne prevodnosti $\sigma$ in mag
 Odboju na meji med notranjostjo celice in plastjo \acs{PML} se izognemo, "ce izgube v robni plasti zado"s"cajo pogoju $\sigma/\sigma^\ast = \eps_1/\mu_1$, kjer sta $\eps_1$ in $\mu_1$ dielektri"cnost in magnetna permeabilnost v notranjosti. 
 To ujemanje izgub odpravi odboj na meji le za valovanje, ki vpada pravokotno na mejo. 
 Odboj valovanja pod poljubnim kotom prepre"cimo, "ce vsako komponento elektri"cnega in magnetnega polja razdelimo na dva prispevka. 
-Tak material je nefizikalen, saj imamo dodatne prostostne stopnje, polje pa ne sledi ve"c Maxwellovim ena"cbam. 
+Tak material je nefizikalen, saj ima elektromagnetno polje v njem dodatne prostostne stopnje, polje pa ne sledi ve"c Maxwellovim ena"cbam. 
 
-Komponenta $E_x$ elektri"cnega polja vala v obi"cajnem izotropnem mediju z dielektri"cnostjo $\eps$ in elektri"cno prevodnostjo $\sigma$ zado"s"ca Maxwellovi ena"cbi
+Komponenta $E_x$ elektri"cnega polja v obi"cajnem izotropnem mediju z dielektri"cnostjo $\eps$ in elektri"cno prevodnostjo $\sigma$ zado"s"ca Maxwellovi ena"cbi
 \begin{align}
  \eps \odvod{E_x}{t} + \sigma E_x = \odvod{H_z}{y} - \odvod{H_y}{z}\;.
 \end{align}
@@ -1023,16 +1023,16 @@ Plast \acs{PML} nam omogo"ca, da imamo material s poljubno velikimi izgubami, pa
 V praksi pa se zaradi diskretizacije vseeno nekaj valovanja odbije na meji med notranjostjo celice in robno plastjo. 
 Najti moramo torej ravnote"zje med dvema prispevkoma: "ce so izgube majhne, bo del valovanja pri"sel skozi robno plast in se odbil na zunanjem robu. 
 "Ce pa so izgube prevelike, se bo del valovanja odbil "ze na notranjem robu. 
-Oba prispevka lahko zmanj"samo, "ce pove"camo debelino robne plasti, ampak s tem se pove"ca tudi "cas ra"cunanja. 
+Oba prispevka lahko zmanj"samo, "ce pove"camo debelino robne plasti, s "cimer se pove"ca tudi "cas ra"cunanja. 
 Odboj na notranji steni pa lahko omilimo, "ce se izognemo ostri meji in izgube zvezno nara"s"cajo od notranjosti proti robu. 
 V literaturi \cite{taflove} priporo"cajo poten"cno nara"s"canje izgub, $\sigma \propto (d-d_0)^{p}$, kjer je $d$ oddaljenost od zunanjega roba, $d_0$ pa debelina plasti. 
 
-Za nekaj vrednosti $p$ smo izra"cunali odbojnost robne plasti z debelino 10 enot diskretizacije. 
+Za nekaj vrednosti $p$ smo izra"cunali odbojnost robne plasti z debelino 16 enot diskretizacije. 
 Rezultati so prikazani na sliki \ref{fig:test-absorption}. 
 
 \begin{figure}[!ht]
  \input{g_test_absorption}
- \caption{Odbojnost robne plasti v odvisnosti od povpre"cne prevodnosti $\overline{\sigma}$ pri razli"cnih profilih elektri"cnih in magnetnih izgub. Najbolje se izka"ze material, kjer izgube nara"s"cajo kvadratno z oddaljenostjo od roba celice ($p=2$). Debelina robnega sloja je 16 enot diskretizacije, valovna dol"zina svetlobe pa 10 enot. Pri tej debelini dose"zemo, da je intenziteta odbitega "zarka pet velikostnih redov ni"zja od intenzitete vpadnega "zarka. }
+ \caption{Odbojnost robne plasti v odvisnosti od povpre"cne prevodnosti $\overline{\sigma}$ pri razli"cnih profilih elektri"cnih in magnetnih izgub. Najbolje se izka"ze material, kjer izgube nara"s"cajo kvadratno z oddaljenostjo od roba celice ($p=2$). Debelina robnega sloja je 16 enot diskretizacije, valovna dol"zina svetlobe pa 12 enot. Pri tej debelini dose"zemo, da je intenziteta odbitega "zarka pet velikostnih redov ni"zja od intenzitete vpadnega "zarka. }
  \label{fig:test-absorption}
 \end{figure}
 

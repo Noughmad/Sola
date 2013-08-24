@@ -53,11 +53,11 @@ set ylabel "Odbojnost plasti"
 set logscale xy
 set key at 0.002,0.002
 
-plot "Podatki/absorption_0.dat" lw 5 t "$p=0$", \
-"Podatki/absorption_1.dat" u 1:2 lw 5 t "$p=1$", \
-"Podatki/absorption_2.dat" u 1:2 lw 5 t "$p=2$", \
-"Podatki/absorption_3.dat" u 1:2 lw 5 t "$p=3$", \
-"Podatki/absorption_4.dat" u 1:2 lw 5 t "$p=4$"
+plot "Podatki/absorption_0.dat" u 1:($2*2) lw 5 t "$p=0$", \
+"Podatki/absorption_1.dat" u 1:($2*2) lw 5 t "$p=1$", \
+"Podatki/absorption_2.dat" u 1:($2*2) lw 5 t "$p=2$", \
+"Podatki/absorption_3.dat" u 1:($2*2) lw 5 t "$p=3$", \
+"Podatki/absorption_4.dat" u 1:($2*2) lw 5 t "$p=4$"
 
 reset
 set terminal png size 800,600 crop
