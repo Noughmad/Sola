@@ -61,7 +61,7 @@ plot "Podatki/absorption_0.dat" u 1:($2*2) lw 5 t "$p=0$", \
 
 reset
 set terminal png size 800,600 crop
-set pm3d map
+set pm3d map interpolate 2,1
 unset colorbox
 unset tics
 
@@ -80,7 +80,7 @@ reset
 set terminal epslatex color solid
 
 set output "g_refraction_test.tex"
-set pm3d map
+set pm3d map interpolate 2,1
 
 set xlabel "$z$" offset 0,1.8
 set ylabel "$x$" offset 0,0
