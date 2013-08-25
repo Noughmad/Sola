@@ -51,12 +51,12 @@
   \begin{picture}(1,1)%
     \put(0,0){\includegraphics[width=\unitlength]{./Slike/pml.pdf}}%
     \put(0.23613388,0.52584137){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.52428574\unitlength}\centering Izvor \end{minipage}}}%
-    \put(0.808,0.85285705){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{x,y}}}%
-    \put(0.072,0.85285705){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{x,y}}}%
-    \put(0.808,0.11285705){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{x,y}}}%
-    \put(0.072,0.11285705){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{x,y}}}%
+    \put(0.825,0.86){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{x,y}}}%
+    \put(0.08,0.86){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{x,y}}}%
+    \put(0.825,0.11285705){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{x,y}}}%
+    \put(0.08,0.11285705){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{x,y}}}%
     \put(0.10857143,0.48628576){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{x}}}%
-    \put(0.84057141,0.48628576){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{x}}}%
+    \put(0.855,0.48628576){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{x}}}%
     \put(0.47542859,0.85885717){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{y}}}%
     \put(0.47542859,0.11085717){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{y}}}%
   \end{picture}%
