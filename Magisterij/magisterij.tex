@@ -386,7 +386,7 @@ kjer sta $\mathbf{e}^{(1)}$ in $\mathbf{e}^{(2)}$ enotska vektorja, pravokotna n
 Uvedli smo "se biaksialnost $P$, ki je neni"celna, "ce fluktuacije molekul niso simetri"cne na vrtenje okrog direktorja. 
 V tem primeru imamo orientacijski red tudi vzdol"z osi $e^{(1)}$, ki je pravokotna na direktor in jo imenujemo sekundarni direktor. 
 Parameter $P$ ima podoben pomen kot $S$ in nam pove, kako dobro so gradniki urejeni glede na sekundarni direktor. 
-Ker komponente $n_i$ nastopajo le v kvadratu, s tak"snim zapisom avtomatsko upo"stevamo simetrijo direktorja, saj zamenjava $\mathbf{n}$ z $-\mathbf{n}$ tenzorja $Q_{ij}$ ne spremeni. 
+V izrazu za $Q_{ij}$ nastopajo le produkti dveh komponent $n_i$, zato s tak"snim zapisom avtomatsko upo"stevamo simetrijo direktorja, saj zamenjava $\mathbf{n}$ z $-\mathbf{n}$ tenzorja $Q_{ij}$ ne spremeni. 
 Ker je $\mathbf{n}$ enotski vektor, je tenzor $Q_{ij}$ brezsleden, zato so v izotropni snovi vse njegove komponente enake 0 in je primeren ureditveni parameter za opis faznih prehodov. 
 
 Tenzor ureditvenih parametrov $Q_{ij}$ lahko v vsaki to"cki predstavimo kot matriko velikosti $3\times 3$, ki je simetri"cna in zato diagonalizabilna. 
@@ -709,7 +709,9 @@ Snop z ovojnim "stevilom 1 ima lahko azimutalno polarizacijo, kot na sliki \ref{
 \begin{figure}[!ht]
  \centering
  \includegraphics[width=.8\textwidth]{1_v6}
- \caption{Intenziteta in polarizacija v nekaterih Laguerre-Gaussovih na"cinih. Slike (a), (b), (c) in (d) prikazujejo snope z ovojnimi "stevili $l = 0,1,2,3$. Bela barva predstavlja obmo"cja z visoko intenziteto svetlobe v dveh ravninah, pravokotni in vzporedni s snopom. Rde"ce pu"s"cice prikazujejo polarizacijo svetlobe v ravnini grla snopa. \cite{porenta}}
+ \caption{Intenziteta in polarizacija v nekaterih Laguerre-Gaussovih na"cinih. Slike (a), (b), (c) in (d) prikazujejo snope z ovojnimi "stevili $l = 0,1,2,3$. 
+ Bela barva predstavlja obmo"cja z visoko intenziteto svetlobe v dveh ravninah, pravokotni in vzporedni s snopom. 
+ Rde"ce pu"s"cice prikazujejo elektri"cno polje v ravnini grla snopa. \cite{porenta}}
  \label{fig:laguerre-gauss}
 \end{figure}
 
@@ -1119,11 +1121,9 @@ Slika elektri"cnega polja ob prehodu meje v bli"zini Brewsterjevega kota je na s
   \put(20,29.5){\color{white}\line(1,0){50}}
   \thicklines
   \put(25,20){\line(2,1){19}}
-  \put(25,20){\vector(2,1){15}}
-  \put(44,29.5){\vector(-2,1){5}}
+  \put(25,50){\line(1,-2){15}}
   \put(44,29.5){\vector(3,1){16}}
   \put(37,27.6){$\boldsymbol\alpha$}
-  \put(37,29.9){$\boldsymbol\alpha$}
   \put(53,30){$\boldsymbol\beta$}
  \end{overpic}
  \vspace{-1.4cm}
@@ -1302,12 +1302,13 @@ Del valovanja potuje tudi izven vlakna, zato smo vedno zagotovili dovolj prostor
 \end{table}
 
 Najprej smo v vlakno poslali kratek laserski sunek vidne svetlobe z valovno dol"zino 480 nm in trajanjem sunka 40 fs. 
-Zaradi dvolomnosti teko"cega kristala smo opazili razcep sunka na dve komponenti oz. dva lastna na"cina "sirjenja svetlobe. 
+Zaradi dvolomnosti teko"cega kristala smo opazili razcep sunka na dve komponenti oz. dva stacionarna na"cina "sirjenja svetlobe. 
+Obe komponenti sunka potujeta po vlaknu, polarizacija svetlobe znotraj vsakega na"cina pa ostaja nespremenjena. 
 Ker je direktorsko polje singularno, sta tudi elektri"cni polji v obeh na"cinih singularni, kot prikazuje slika \ref{fig:pulse-p1-mode}. 
 \begin{figure}[!htb]
  \centering
  \sunek{p1}
- \caption{Lastna na"cina "sirjenja svetlobe skozi vlakno z radialnim profilom direktorja ($s=+1$)}
+ \caption{Stacionarna na"cina "sirjenja svetlobe skozi vlakno z radialnim profilom direktorja ($s=+1$)}
  \label{fig:pulse-p1-mode}
 \end{figure}
 S slike takoj opazimo podobnost med elektri"cnim poljem, zlasti pri po"casnej"sem nihajnem na"cinu (slika \ref{fig:pulse-p1-mode} desno), in direktorskim poljem. 
@@ -1316,7 +1317,7 @@ Polarizacijo smo dolo"cili z ogledom polja vzdol"z sunka svetlobe.
 Znotraj posameznega na"cina je v vsaki to"cki svetloba polarizirana linearno, tako da je profil polarizacije enak trenutni sliki polja. 
 "Ce na polarizacijo $\vec P$ gledamo kot na enotski vektor z direktorsko simetrijo, lahko z ena"cbo (\ref{eq:winding-number}) obema na"cinoma priredimo ovojno "stevilo $+1$. 
 Dodatno pa ima vsak izmed na"cinov po eno ravnino ravnino ni"celne intenzitete, kjer se smer elektri"cnega polja obrne. 
-V enem izmed na"cinov je ta ravnina navpi"cna, v drugem pa vodoravna. 
+Pri vodoravno polarizirani vpadni svetlobi je v enem izmed na"cinov ta ravnina navpi"cna, v drugem pa vodoravna. 
 "Ce elektri"cno polje na eni strani te ravnine obrnemo, dobimo pravi linijski defekt mo"ci $+1$. 
 
 Direktorsko polje znotraj vlakna ima radialno simetrijo, saj se ne spremeni, "ce vlakno vrtimo okrog svoje osi. 
@@ -1335,19 +1336,19 @@ Druga"cnih direktorskih polj, na primer tak"snega s hiperboli"cnim defektom, pa 
 Nedavno pa je raziskovalni skupini z Univerze v Bordeauxu uspelo sintetizirati direktorska polja z defekti mo"ci do $|s| \leq 3/2$ v tankem filmu \cite{brasselet-film}. 
 V nematskem filmu defektni obi"cajno hitro razpadejo do tak"snih z mo"cjo $\pm 1/2$, z dodatkom primesi pa so lahko v"sji defekti stabilni tudi do nekaj dni. 
 
-Kratek laserski sunek se podobno kot pri radialnem profilu razdeli na dva na"cina, ki sta skladna s simetrijo direktorja. 
+Kratek laserski sunek se podobno kot pri radialnem profilu razdeli na dva na"cina, rednega in izrednega, ki sta skladna s simetrijo direktorja. 
 Oba na"cina sta prikazana na sliki \ref{fig:pulse-m1-mode}. 
 
 \begin{figure}[!htbp]
  \centering
   \sunek{m1}
- \caption{Lastna na"cina "sirjenja svetlobe skozi vlakno s hiperboli"cnim profilom direktorja ($s=-1$)}
+ \caption{Stacionarna na"cina "sirjenja svetlobe skozi vlakno s hiperboli"cnim profilom direktorja ($s=-1$)}
  \label{fig:pulse-m1-mode}
 \end{figure}
 
 Obmo"cja z vi"sjo intenziteto svetlobe so razporejena enako kot na sliki \ref{fig:pulse-p1-mode}. 
 Svetloba je v vseh to"ckah polarizirana linearno, polarizacija svetlobe pa tvori defekt z ovojnim "stevilom $-1$. 
-Spet sta vidni ravnini ni"celne intenzitete, kjer se smer elektri"cnega polja obrne. 
+Spet sta vidni ravnini ni"celne intenzitete, kjer se smer elektri"cnega polja obrne, ki sta posledica polarizacije vpadne svetlobe. 
 
 \section{Defekti s polovi"cno mo"cjo}
 
@@ -1370,7 +1371,7 @@ Spet so opazna temna obmo"cja, kjer bi morala biti polarizacija svetlobe pravoko
  \centering
   \begin{overpic}[width=.4\textwidth]{licp_p12_68}\put(2,90){\color{white} \large \bf (a)}\end{overpic} \hspace{1mm}
   \begin{overpic}[width=.4\textwidth]{licp_p12_78}\put(2,90){\color{white} \large \bf (b)}\end{overpic}
- \caption{Lastna na"cina "sirjenja svetlobe skozi vlakno z defektom z necelim ovojnim "stevilom $s=+1/2$}
+ \caption{Stacionarna na"cina "sirjenja svetlobe skozi vlakno z defektom z necelim ovojnim "stevilom $s=+1/2$}
  \label{fig:pulse-p12-mode}
 \end{figure}
 
@@ -1378,7 +1379,7 @@ Spet so opazna temna obmo"cja, kjer bi morala biti polarizacija svetlobe pravoko
  \centering
   \begin{overpic}[width=.4\textwidth]{licp_m12_68}\put(2,90){\color{white} \large \bf (a)}\end{overpic} \hspace{1mm}
   \begin{overpic}[width=.4\textwidth]{licp_m12_78}\put(2,90){\color{white} \large \bf (b)}\end{overpic}
- \caption{Lastna na"cina "sirjenja svetlobe skozi vlakno z defektom z necelim ovojnim "stevilom $s=-1/2$}
+ \caption{Stacionarna na"cina "sirjenja svetlobe skozi vlakno z defektom z necelim ovojnim "stevilom $s=-1/2$}
  \label{fig:pulse-m12-mode}
 \end{figure}
 
@@ -1392,18 +1393,18 @@ Polarizacija svetlobe znotraj vlakna bo obdr"zala vse simetrijske osi, ki so pri
 
 V zgorjih opa"zanjih lahko najdemo podobnosti; za propagacijo linearno polarizirane svetlobe vzdol"z nematskih defektnih linij velja:
 \begin{itemize}
- \item Sunek linearno polarizirane svetlobe se vedno razdeli na dva lastna na"cina, ki ustrezata redni in izredni polarizaciji.
- \item Svetloba v obeh na"cini je linearno polarizirana
+ \item Sunek linearno polarizirane svetlobe se vedno razdeli na dva stacionarna na"cina, ki ustrezata redni in izredni polarizaciji.
+ \item Svetloba v obeh na"cinih je lokalno linearno polarizirana
  \item Polarizacija svetlobe v obeh na"cinih tvori defekt z enakim ovojnim "stevilom kot defekt v teko"cem kristalu, "ce pri dolocitvi ovojnega stevila polarizacije predpostavimo simetrijo $\vec P \leftrightarrow -\vec P$ in gladek prehod "cez mesta z ni"celno intenziteto svetlobe. 
  \item V obmo"cjih, kjer topologija defekta narekuje, da je svetloba polarizirana pravokotna na vpadno polarizacijo, se pojavijo ``temna'' obmo"cja -- obmo"cja ni"celne intenzitete svetlobe.
- \item Lastna na"cina imata iste simetrijske ravnine, ki so presek simetrijskih ravnin teko"cega kristala in polarizacije vpadne svetlobe. 
+ \item Stacionarna na"cina imata iste simetrijske ravnine, ki so presek simetrijskih ravnin teko"cega kristala in polarizacije vpadne svetlobe. 
 \end{itemize}
 
 V vseh primerih opazimo ob osi vlakna, torej v jedru teko"cekristalnega defekta, temno pego z ni"celno intenziteto svetlobe. 
 Ta temna pega je posledica prisotnosti defekta v vlaknu. 
 Zaradi vzbujanja pa opazime "se dodatne ravnine ni"celne intenzitete, ki se pojavijo na mestih, kjer je polarizacija vpadnega valovanja enaka redni ali izredni polarizaciji. 
 Pojav teh ravnin je pogojen z izvorom vpadnega valovanja in ne samo z ureditvijo teko"cega kristala. 
-Lastni na"cini "sirjenja valovanja, ki smo jih prepoznali v tem poglavju, torej niso odvisni le od ureditve teko"cega kristala, ampak tudi od polarizacije vpadne svetlobe. 
+Stacionarni na"cini "sirjenja valovanja, ki smo jih prepoznali v tem poglavju, torej niso odvisni le od ureditve teko"cega kristala, ampak tudi od polarizacije vpadne svetlobe. 
 To tudi niso nujno vsi lastni na"cini, saj je npr. v vlaknu z radialnim profilom direktorja mo"zno tudi "sirjenje valovanja z radialno polarizacijo svetlobe, seveda ob primernem vzbujanju. 
 Analiza vseh lastnih na"cinov valovanja v teko"cekristalnih vlaknih presega okvire tega dela. 
 Modelirali smo "sirjenje svetlobe po vlaknu, dolgem pribli"zno 100 valovnih dol"zin svetlobe, in na tej razdalji se vsi prikazani na"cini "sirjena zdijo stabilni. 
@@ -1418,7 +1419,7 @@ Z eksperimentalnega vidika pa so izjemno zahtevni, tako za ustvarjanje pulza kot
 Sunek, uporabljen v prej"snjem poglavju je trajal le okrog 40 fs, kar je sicer v dosegu ultrahitrih femtosekundnih laserjev. 
 Mnogo bolj enostavno pa je opazovanje z laserjem, ki sveti stalno s konstantno intenziteto. 
 
-Pri enakomernem laserskem "zarku je svetloba v vlaknu z radialnim profilom direktorja kombinacija obeh lastnih na"cinov, ki se "sirita z razli"cnima hitrostma. 
+Pri enakomernem laserskem "zarku je svetloba v vlaknu z radialnim profilom direktorja kombinacija obeh lastnih na"cinov, prepoznanih v prej"snjem poglavju, ki se "sirita z razli"cnima hitrostma. 
 Frekvenca svetlobe je nespremenjena in zato enaka po celotnem vlaknu, opazimo pa mo"cno krajevno odvisnost oblike polja. 
 Trenutne slike elektri"cnega polja znotraj vlakna so prikazane na sliki \ref{fig:p1-cont-snaps}. 
 Zaradi jasnosti smo uporabili vlakno z ni"zjo dvolomnostjo kot v pulznem na"cinu; tu je bila razlika med izrednim in rednim lomnim koli"cnikom le $\Delta n = 0,\!04$. 
@@ -1459,7 +1460,7 @@ Zaradi razlike v hitrosti propagacije se na nekaterih mestih v vlaknu oba valovn
 Rezultati nakazujejo, da se podobno zgodi tudi z mo"cjo defekta v polarizaciji svetlobe. 
 Na prvem in zadnjem preseku na sliki \ref{fig:p1-cont-snaps} lahko vidimo defekt mo"ci $s=+2$, na drugi sliki z desne pa je vidna uniformna konfiguracija elektri"cnega polja brez defektov. 
 Vmes, kot na primer na tretji sliki z desne, pa opazimo vmesno stanje. 
-Konfiguracija pribli"zno ustreza defektu z ovojnim "stevilom $+1$, presek polja pa je podoben lastnemu na"cinu vlakna, prikazanemu na desni strani slike \ref{fig:pulse-p1-mode}. 
+Konfiguracija pribli"zno ustreza defektu z ovojnim "stevilom $+1$, presek polja pa je podoben stacionarnemu na"cinu vlakna, prikazanemu na desni strani slike \ref{fig:pulse-p1-mode}. 
 
 Zanimivo je tudi spreminjanje polarizacije svetlobe vzdol"z vlakna. 
 V obeh lastnih na"cinih je svetloba polarizirana linearno, kar opazimo tudi na mestih, kjer se na"cina se"stejeta z enako ali nasprotno fazo. 
@@ -1535,7 +1536,7 @@ Na podlagi rezultatov lahko zaklju"cimo, da komponenta elektri"cnega polja, prav
 S konstantnim laserskim "zarkom dose"zemo se"stevanje obeh propagacijskih na"cinov, ki na dolo"cenih mestih v vlaknu privede do komponente s pravokotno polarizacijo. 
 Tu je pomembno, da pri lastnih na"cinih ni vsa svetloba polarizirana vzporedno z vpadno polarizacijo.
 Le tam, kjer bi zaradi topologije defekta svetloba morala biti polarizirana v pravokotni smeri, intenziteta svetlobe mo"cno pade. 
-Pri konstantnem svetenju pa se lastni na"cini se"stejejo tako, da imajo ombo"cja, kjer topologija defekta narekuje polarizacijo v smeri, pravokotni na vpadno polarizacijo, enako intenziteto svetlobe kot okolica. 
+Pri konstantnem svetenju pa se lastni na"cini se"stejejo tako, da imajo obmo"cja, kjer topologija defekta narekuje polarizacijo v smeri, pravokotni na vpadno polarizacijo, enako intenziteto svetlobe kot okolica. 
 
 \begin{comment}
 \begin{figure}[!htbp]
@@ -1552,7 +1553,7 @@ Z radialno polariziranim "zarkom lahko ujamemo tudi delce, ki jih z linearno pol
 Radialno polarizirano svetlobo je mo"zno fokusirati v piko velikosti $0,\!16\lambda^2$, kar je ob"cutno manj od meje $0,\!26\lambda^2$ za linearno polazirino svetlobo \cite{radial-focus, kozawa-sato-focal-spot}. 
 S primerno dvolomnostjo teko"cega kristala in dol"zino vlakna lahko linijski defekt z ovojnim "stevilom $s=1/2$ slu"zi kot pretvornik med linearno in radialno polarizacijo svetlobe. 
 
-"Ce "zelimo, da se lastna na"cina propagacije svetlobe po vlaknu z defektom mo"ci $1/2$ (na sliki \ref{fig:pulse-p12-mode}) se"stejeta v radialno polarizacijo, mora biti fazna razlika med njima pol nihaja. 
+"Ce "zelimo, da se stacionarna na"cina propagacije svetlobe po vlaknu z defektom mo"ci $1/2$ (na sliki \ref{fig:pulse-p12-mode}) se"stejeta v radialno polarizacijo, mora biti fazna razlika med njima pol nihaja. 
 V vlaknu z dol"zino $d$ bo redni "zarek naredil $d/\lambda_o = d n_o/\lambda$ nihajev, izredni pa $d/\lambda_e = Ln_e/\lambda$ nihajev, kjer je $\lambda$ valovna dol"zina svetlobe v vakuumu. 
 "Zeleno radialno polarizacijo bomo dobili, "ce bo razlika med "steviloma nihajev polcelo "stevilo. 
 \begin{align}
@@ -1567,9 +1568,9 @@ Dol"zina, potrebna za pretvorbo iz linearne v radialno polarizacijo, se spremeni
 Dvolomnost teko"cega kristala je odvisna tudi od stopnje reda $S$ in s tem od temperature, kar omogo"ca uravnavanje delovanja tak"sne naprave. 
 
 \chapter{Zaklju"cek}
-V nalogi smo preu"cili "sirjenje kratkih sunkov in stalne laserske svetlobe po teko"cekristalnih vlaknih z defektnimi linijami vzdol"z osi. 
+V nalogi smo preu"cili "sirjenje kratkih sunkov in stalne laserske svetlobe po te\-ko\-"ce\-kris\-tal\-nih vlaknih z defektnimi linijami vzdol"z osi. 
 Opazili smo zanimivo povezavo med topolo"skim defektom v teko"cem kristalu in topolo"skem defektu v polarizaciji svetlobe. 
-Laserski sunek, ki ima na za"cetku linearno polarizacijo, razpade na dva lastna na"cina "sirjenja, znotraj katerih polarizacija svetloba tvori defekt, ki je po ovojnem "stevilu enak defektu v teko"cem kristalu. 
+Laserski sunek, ki ima na za"cetku linearno polarizacijo, razpade na dva stacionarna na"cina "sirjenja, znotraj katerih polarizacija svetloba tvori defekt, ki je po ovojnem "stevilu enak defektu v teko"cem kristalu. 
 Tesna povezava med teko"cekristalnim direktorskim poljem in elektromagnetnim poljem velja tudi v primeru, ko je znotraj vlakna defekt s polovi"cno mo"cjo, ki ga polarizacija svetlobe kot pravi vektor ne more tvoriti. 
 Napovedali smo, da lahko s stalnim svetenjem skozi defektne linije spremenimo polarizacijo svetlobe iz linearne v radialno, hiperboli"cno, ali tak"sno z vi"sjimi ovojnimi "stevili. 
 
@@ -1591,6 +1592,7 @@ Z isto metodo lahko ustvarimo natan"cne transmisijske slike razli"cnih direktors
 Pravilno modeliranje in prepoznavanje zapletenih struktur olaj"sa povezovanje med teoreti"cnimi in eksperimentalnimi raziskavami. 
 Ob dodatku opti"cno aktivnih barvil lahko raziskujemo zanivime pojave, ki so jih opazili v laboratorijih, npr.~lasersko svetenje teko"cekristalnih kapljic in vlaken. 
 Nadalje bi lahko preu"cevali materiale z zapleteno strukturo, kot so samourejeni metamateriali in fotonski kristali. 
+Raziskovali bi lahko tudi in prehod svetlobe med sklopljenimi resonatorji, valovodi in drugimi opti"cnimi elementi. 
 Zanimiva mo"znost uporabe je tudi pri iskanju novih teko"cekristalnih struktur za vodenje svetlobe. 
 
 \bibliographystyle{zumer}
