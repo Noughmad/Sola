@@ -354,9 +354,9 @@ Tudi "ce sami gradniki nimajo tak"sne simetrije, jo imajo njihove fluktuacije \c
 
 \begin{figure}[h]
 \begin{center}
-\subfigure{\includegraphics[height=100pt]{Nematic-Director}}
+\subfigure{\begin{overpic}[height=100pt]{Nematic-Director} \put(86,46.5){\Large $\vec n$} \end{overpic}}
 \subfigure{\includegraphics[height=100pt]{nematik-formuli}}
- \caption{Levo: Gradniki imajo razli"cne orientacije, preferen"cno smer pa poda direktor. Desno: Strukturni formuli molekul 5CB (zgoraj) in 8CB (spodaj) \cite{wiki:lc}}
+ \caption{Levo: Gradniki imajo razli"cne orientacije, povpre"cno orientacijo pa poda direktor $\vec n$. Desno: Strukturni formuli molekul 5CB (zgoraj) in 8CB (spodaj) \cite{wiki:lc}}
  \label{fig:nematik-direktor}
  \end{center}
 \end{figure}
@@ -1087,8 +1087,8 @@ To je posledica modeliranja izvora valovanja okrog in okrog celice, kot je prika
 Valovanje se "siri od leve proti desni, tako da si lahko predstavljamo izvir valovanja ne levi strani in ponor na desni. 
 Dejstvo, da ponor valovanja na desni strani uspe"sno pobere celotno valovanje potrjuje natan"cnost ra"cunanja in ustrezno implementirane robne pogoje. 
 
-\section{Lom in odboj}
-Enostaven preizkus za "sirjenje valovanja je prehod "cez mejo med medijema z razli"cnima lomnima koli"cnikoma. 
+\section{Lom valovanja}
+Enostaven preizkus metode za modeliranje "sirjenja valovanja je prehod "cez mejo med medijema z razli"cnima lomnima koli"cnikoma. 
 Del valovanja se na meji odbije po odbojnem zakonu, tako da je odbojni kot enak vpadnemu. 
 Preostanek valovanja se na meji lomi, lomni kot pa je odvisen od lomnih koli"cnikov obeh snovi. 
 Izra"cunamo ga po lomnem zakonu
@@ -1101,54 +1101,47 @@ Dele"za odbitega in prepu"s"cenega valovanja sta odvisna od vpadnega kota $\alph
 Pri dolo"cenem kotu $\alpha$ se komponenta svetlobe s polarizacijo v ravnini "zarka in normale na povr"sino ne odbije in se v celoti lomi. 
 Temu kotu re"cemo Brewsterjev kot in je enak
 \begin{align}
- \theta_B &= \arctan\left(\frac{n_2}{n_1}\right) = \arctan\sqrt{\frac{n_2}{n_1}}
+ \theta_B &= \arctan\left(\frac{n_2}{n_1}\right) = \arctan\sqrt{\frac{\varepsilon_2}{\varepsilon_1}}
 \end{align}
 
 "Ce propagacijo svetlobe simuliramo z metodo \ac{FDTD}, v sliki trenutnega elektri"cnega polja ne moremo lo"citi med vpadnim in odbitim valovanjem. 
-Za prikaz delovanja sem zato uporabil vpadni kot, ki je zelo blizu Brewsterjevemu. 
-Na ta na"cin opazimo le "sibko odbito valovanje, tako da lahko "se vedno preverimo, ali lomni zakon dr"zi. 
-Slika elektri"cnega polja ob prehodu meje v bli"zini Brewsterjevega kota je na sliki \ref{fig:refraction-test}. 
+Za prikaz delovanja sem zato uporabil vpadni kot, ki je enak Brewsterjevemu. 
+Na ta na"cin opazimo le vpadno in lomljeno valovanje, tako da lahko vedno preverimo, metoda izpolnjuje lomni zakon. 
+Prikaz elektri"cnega polja ob prehodu meje, kjer je vpadni kot enak Brewsterjevemu, je na sliki \ref{fig:refraction-test}. 
 
 \begin{figure}[h]
  \centering
- \vspace{-1.2cm}
- \begin{overpic}[width=.9\textwidth]{g_refraction_test}
-  \put(16.4,40){\color{white} \large \bf I}
-  \put(27,40){\color{white} \large \bf II}
-  \put(53,40){\color{white} \large \bf III}
-  \put(75,40){\color{white} \large \bf IV}
-  \thinlines
-  \put(20,29.5){\color{white}\line(1,0){50}}
-  \thicklines
-  \put(25,20){\line(2,1){19}}
-  \put(25,50){\line(1,-2){15}}
-  \put(44,29.5){\vector(3,1){16}}
-  \put(37,27.6){$\boldsymbol\alpha$}
-  \put(53,30){$\boldsymbol\beta$}
+ \begin{overpic}[width=.8\textwidth,clip,trim=2cm 2cm 2cm 2cm]{g_refraction_test}
+  \put(3.4,36){\color{white} \large \bf I}
+  \put(28,36){\color{white} \large \bf II}
+  \put(70,36){\color{white} \large \bf III}
+  \put(94,36){\color{white} \large \bf IV}
+  \put(43,17.6){$\boldsymbol\alpha$}
+  \put(58,22.5){$\boldsymbol\beta$}
  \end{overpic}
- \vspace{-1.4cm}
  \caption{Trenutna slika elektri"cnega polja ob prehodu valovanja v medij z druga"cnim lomnim koli"cnikom. 
- Barva predstavlja lokalno elektri"cno polje, bela "crta lomno pravokotnico, "crne pu"s"cice pa smer "sirjena valovanja. 
- Lomni koli"cnik na levi je enak $n_1 = 1$, na desni pa $n_2 = 3,\!41$. }
+ Barva predstavlja lokalno elektri"cno polje, "crna "crta lomno pravokotnico, bele pu"s"cice pa smer "sirjena valovanja. 
+ Lomni koli"cnik na levi je enak $n_1 = 1$, na desni pa $n_2 = 1,\!594$. }
  \label{fig:refraction-test}
 \end{figure}
 
 Na sliki \ref{fig:refraction-test} so jasno vidna "stiri obmo"cja. 
 "Cisto na levi (I) je rob z absorbirajo"cim robnim pogojem \ac{PML}, ki absorbira odbito valovanje in prepre"cuje nadaljnji odboj. 
 Naslednje (II) je obmo"cje z dielektri"cnostjo $\varepsilon_1$, kjer je superpozicija vpadnega in odbitega valovanja. 
-Odbito valovanje je mnogo "sibkej"se od vpadnega, zato so valovi skoraj ravni. 
+Pri Brewsterjevem kotu odbitega valovanja ni, zato so valovi ravni. 
 Na sredini slike je meja med obmo"cjema, desno od nje (III) je snov z dielektri"cnostjo $\varepsilon_2 > \varepsilon_1$.
 V tem delu je le prepu"s"ceno lomljeno valovanje, ki ima ustrezno manj"so valovno dol"zino. 
-Na desnem robu (IV) je prazno obmo"cje, ki ga valovanje "se ni doseglo. 
+Na desnem robu (IV) je absorbirajo"ca plast, kjer je vidna postopna absorpcija lomljenega valovanja. 
+Absorpcija je tako dobra, da odbito valovanje na sliki ni vidno. 
+Uporabljena metoda pravilno napove, da se svetloba s polarizacijo v ravnini "zarka in normale na povr"sino ob vpadu pod Brewsterjevim kotom ne odbije. 
 
 Veljavnost lomnega zakona potrdimo, "ce primerjamo kota vpadnega in lomljenega valovanja. 
 Lomni zakon trdi, da je lomni kot enak
 \begin{align}
- \beta &= \arcsin \left(\frac{n_1}{n_2} \sin \alpha \right) = \arcsin \left( \frac{1}{3,\!41} \times \sin 16\degree \right) \approx 4,\!7\degree
+ \beta &= \arcsin \left(\frac{n_1}{n_2} \sin \alpha \right) = \arcsin \left( \frac{1}{1,\!594} \times \sin 58\degree \right) \approx 32\degree
 \end{align}
 kjer je $\beta$ lomni kot, $\alpha$ vpadni kot, $n_1/n_2$ pa razmerje lomnih koli"cnikov. 
 Z opazovanjem valovanja na desnem delu slike \ref{fig:refraction-test} lahko potrdimo, da metoda pravilno napove lomni kot. 
-Slika je zaradi jasnej"sega prikaza raztegnjena v vodoravni smeri, tako da se la"zje vidi oblika valov, koti na sliki pa niso pravilni. 
 
 \section{Uniformen dvolomni kristal}
 Modelirali smo dvolomni kristal, torej snov, kjer je dielektri"cni tenzor uniformen, ne pa tudi izotropen. 
@@ -1167,11 +1160,12 @@ Enaka je
  I &= I_0 \sin^2 2\beta \sin^2 \left[ \frac{\pi d}{\lambda_0} \left( \frac{n_o n_e}{\sqrt{n_e^2 \cos^2 \theta + n_0^2 \sin^2 \theta}} - n_o \right)\right],
 \end{align}
 kjer sta $I_0$ in $\lambda_0$ intenziteta in valovna dol"zina vpadne svetlobe, $d$ debelina vzorca, $n_o$ in $n_e$ pa redni in izredni lomni koli"cnik. 
-Odlicno kvantitativno ujemanje z analiticno pricakovano odvisnostjo je prikazano na sliki \ref{fig:test-uniform}.
+Odli"cno kvantitativno ujemanje z analiticno pri"cakovano odvisnostjo je prikazano na sliki \ref{fig:test-uniform}.
 To nadalje potrjuje pravilno delovanje metode v opti"cno anizotropni snovi. 
 
 \begin{figure}[h]
- \input{g_test_uniform}
+\centering
+\resizebox{.7\textwidth}{!}{\input{g_test_uniform}}
  \caption{Odvisnost prepustnosti uniformnega dvolomnega kristala od kota $\beta$ med opti"cno osjo kristala in vpadnim polarizatorjem. }
  \label{fig:test-uniform}
 \end{figure}
@@ -1183,12 +1177,10 @@ Za pojav fotonskega prepovedanega pasu potrebujemo kristal oz. periodi"cno struk
 Fotonsko energijsko re"zo za vidno svetlobo lahko ustvarimo npr. v koloidnih kristalih z velikostjo osnovne celice okrog 1 $\mu$m \cite{colloidal-photonic-crystals}. 
 
 "Sirina in oblika prepovedanega pasu sta odvisni od razmerja lomnih koli"cnikov oz. dielektri"cnega kontrasta, periode modulacije in velikosti kristala. 
-Za preverjanje metode smo modelirali enodimenzionalen fotonski kristal, kjer se izmenjujejo plasti z debelino $a/2$ in z izotropno dielektri"cnostjo $\varepsilon_1$ in $\varepsilon_2$. 
-Tak"sna struktura je prikazana na sliki \ref{fig:periodic-structure}. 
-
+Za preverjanje metode smo modelirali enodimenzionalen fotonski kristal, kjer se izmenjujejo plasti z debelino $a/2$ in z izotropno dielektri"cnostjo $\varepsilon_1$ in $\varepsilon_2$, kot je prikazano na sliki \ref{fig:periodic-structure}. 
 \begin{figure}[h]
  \centering
- \input{./Slike/periodic-structure.pdf_tex}
+ \resizebox{.52\textwidth}{!}{\large \input{./Slike/periodic-structure.pdf_tex}}
  \caption{Periodi"cna struktura, kjer se izmenjujeta plasti z razli"cnima dielektri"cnima konstantama. 
  Svetloba se "siri v smeri osi $z$ \cite{joannopoulos}. }
  \label{fig:periodic-structure}
@@ -1200,7 +1192,7 @@ S pove"cevanjem razlike v dielektri"cnosti plasti se prepovedani pas raz"siri.
 
 \begin{figure}[h]
 \centering
-  {\footnotesize \input{./Slike/bandgap.pdf_tex}}
+  \resizebox{.9\textwidth}{!}{\footnotesize \input{./Slike/bandgap.pdf_tex}}
  \caption{Pojav energijske re"ze v fotonskem kristalu. Levo: celotna plast ima dielektri"cnost $\varepsilon = 13$. Sredina: Izmenjevanje plasti z dielektri"cnima konstantama 13 in 12. Desno: Izmenjevanje plasti z dielektri"cnima konstantama 13 in 1. \cite{joannopoulos}}
  \label{fig:joannopoulos-crystal}
 \end{figure}
@@ -1213,7 +1205,8 @@ Grafa prepustnosti kristalov z razli"cnimi izbirami za dielektri"cnosti sta na s
 Valovanje, ki se je od periodi"cne strukture zaradi prepovedanega pasu odbilo, smo zajeli v absorbirajo"ci plasti okrog in okrog celice. 
 
 \begin{figure}[!htbp]
- \input{g_test_periodic}
+\centering
+\resizebox{.7\textwidth}{!}{\input{g_test_periodic}}
  \caption{Rezultati preizkusa s periodi"cno modulacijo lomnega koli"cnika. Prikazana je odvisnost prepustnosti enodimenzionalnega fotonskega kristala v odvisnosti od frekvence vpadne svetlobe pri razli"cnih razmerjih dielektri"cnih konstant. }
  \label{fig:test-periodic}
 \end{figure}
@@ -1221,7 +1214,7 @@ Valovanje, ki se je od periodi"cne strukture zaradi prepovedanega pasu odbilo, s
 Na sliki res opazimo oster padec prepustnosti v dolo"cenem frekven"cnem pasu, ki se dobro ujema s pri"cakovanim na sliki \ref{fig:joannopoulos-crystal}. 
 Metoda torej pravilno napove polo"zaj in "sirino prepovedanih pasov. 
 Zlasti pri veliki razliki v dielektri"cnosti plasti meja prepovedanega pasu ni ostra, ampak krivulja postane zaobljena. 
-To je posledica kon"cne velikosti sistema, saj so teoreti"cni izra"cuni napravljeni za neskon"cen kristal, z metodo \acs{FDTD} pa lahko modeliramo le kon"cnega. 
+To je posledica velikosti sistema, saj so teoreti"cni izra"cuni napravljeni za neskon"cen kristal, z metodo \acs{FDTD} pa lahko modeliramo le kon"cnega. 
 Kljub temu pa metoda da kvalitativno in kvantitativno pravilne rezultate za pojav fotonskega prepovedanega pasu. 
 
 Periodi"cna modulacija lomnega koli"cnika je pomembna za tvorbo metamaterialov \cite{metamaterials}. 
@@ -1245,8 +1238,8 @@ Ker se sunek hitro razcepi, je tak"sen postopek primeren za iskanje lastnih na"c
 
 \begin{figure}[!ht]
  \centering
-  \begin{overpic}[width=.4\textwidth]{licp_0_68}\put(2,90){\color{white} \large \bf (a)}\end{overpic} \hspace{1mm}
-  \begin{overpic}[width=.4\textwidth]{licp_0_78}\put(2,90){\color{white} \large \bf (b)}\end{overpic}
+  \begin{overpic}[width=.38\textwidth]{licp_0_68}\put(2,90){\color{white} \large \bf (a)}\end{overpic} \hspace{1mm}
+  \begin{overpic}[width=.38\textwidth]{licp_0_78}\put(2,90){\color{white} \large \bf (b)}\end{overpic}
  \caption{Lastna na"cina "sirjenja svetlobe skozi vlakno z uniformnim profilom direktorja. 
   Vpadna svetloba je polarizirana vodoravno, opti"cna os pa z vodoravnico oklepa kot 45\degree. 
   Z belo barvo so prikazane silnice elektri"cnega polja, njihova svetlost pa je sorazmerna z intenziteto svetlobe. 

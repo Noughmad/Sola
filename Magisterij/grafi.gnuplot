@@ -77,14 +77,34 @@ set output "g_test_plane_profile.png"
 splot[][0:150] "Podatki/profile.dat" matrix notitle
 
 reset
-set terminal epslatex color solid
+set terminal eps color
 
-set output "g_refraction_test.tex"
+set output "g_refraction_test.eps"
 set pm3d map interpolate 2,1
 
-set xlabel "$z$" offset 0,1.8
-set ylabel "$x$" offset 0,0
 unset tics
 unset border
 unset colorbox
+
+I = 170.0
+angle = asin(6.0 * 24.0 / I)
+EMF_K = 300.0 + 34.0 + 34.0
+LINE_X = EMF_K * 0.5
+LINE_Y = 80
+ARROW_SIZE = 80
+refracted = asin(cos(angle))
+
+set size ratio I*1.0/EMF_K
+
+set obj 5 circle arc [180:180+angle*180/3.141592] fs transparent solid 0 fc rgb "black" lw 3
+set obj 5 circle at LINE_X,LINE_Y size 37.7 front
+set obj 6 circle arc [0:refracted*180/3.141592] fs transparent solid 0 fc rgb "black" lw 3
+set obj 6 circle at LINE_X,LINE_Y size 50 front
+
+
+set arrow 3 from EMF_K/2-100,LINE_Y to EMF_K/2+100,LINE_Y lw 4 front nohead
+set arrow 1 from (EMF_K/2-ARROW_SIZE*cos(angle)),(LINE_Y-ARROW_SIZE*sin(angle)) to EMF_K/2,LINE_Y lw 6 lc rgb "white" front
+set arrow 2 from EMF_K/2,LINE_Y to (EMF_K/2+ARROW_SIZE*cos(refracted)),(LINE_Y+ARROW_SIZE*sin(refracted)) lw 6 lc rgb "white" front
+show arrow
+
 splot "Podatki/brewster_refraction.dat" matrix notitle
