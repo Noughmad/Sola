@@ -1103,9 +1103,7 @@ Temu kotu re"cemo Brewsterjev kot in je enak
 \begin{align}
  \theta_B &= \arctan\left(\frac{n_2}{n_1}\right) = \arctan\sqrt{\frac{\varepsilon_2}{\varepsilon_1}}
 \end{align}
-
-"Ce propagacijo svetlobe simuliramo z metodo \ac{FDTD}, v sliki trenutnega elektri"cnega polja ne moremo lo"citi med vpadnim in odbitim valovanjem. 
-Za prikaz delovanja sem zato uporabil vpadni kot, ki je enak Brewsterjevemu. 
+Za prikaz delovanja smo uporabili vpadni kot, enak Brewsterjevemu. 
 Na ta na"cin opazimo le vpadno in lomljeno valovanje, tako da lahko vedno preverimo, metoda izpolnjuje lomni zakon. 
 Prikaz elektri"cnega polja ob prehodu meje, kjer je vpadni kot enak Brewsterjevemu, je na sliki \ref{fig:refraction-test}. 
 
@@ -1140,8 +1138,8 @@ Lomni zakon trdi, da je lomni kot enak
 \begin{align}
  \beta &= \arcsin \left(\frac{n_1}{n_2} \sin \alpha \right) = \arcsin \left( \frac{1}{1,\!594} \times \sin 58\degree \right) \approx 32\degree
 \end{align}
-kjer je $\beta$ lomni kot, $\alpha$ vpadni kot, $n_1/n_2$ pa razmerje lomnih koli"cnikov. 
-Z opazovanjem valovanja na desnem delu slike \ref{fig:refraction-test} lahko potrdimo, da metoda pravilno napove lomni kot. 
+kjer je $\beta$ lomni kot, $\alpha$ pa vpadni kot. 
+Z opazovanjem valovanja na desnem delu slike \ref{fig:refraction-test} lahko potrdimo, da metoda pravilno opi"se lom svetlobe. 
 
 \section{Uniformen dvolomni kristal}
 Modelirali smo dvolomni kristal, torej snov, kjer je dielektri"cni tenzor uniformen, ne pa tudi izotropen. 
@@ -1165,7 +1163,7 @@ To nadalje potrjuje pravilno delovanje metode v opti"cno anizotropni snovi.
 
 \begin{figure}[h]
 \centering
-\resizebox{.7\textwidth}{!}{\input{g_test_uniform}}
+\resizebox{.75\textwidth}{!}{\input{g_test_uniform}}
  \caption{Odvisnost prepustnosti uniformnega dvolomnega kristala od kota $\beta$ med opti"cno osjo kristala in vpadnim polarizatorjem. }
  \label{fig:test-uniform}
 \end{figure}
@@ -1200,11 +1198,11 @@ Zgornja meja je mo"cneje odvisna od razlike v dielektri"cnosti \cite{joannopoulo
 
 Za modeliranje opisanega fotonskega kristala smo uporabili periodi"cne robne pogoje v smereh $x$ in $y$, v smeri $z$ pa celico dol"zine 1024 enot z 20 enotami absorbirajo"ce plasti na vsakem koncu. 
 Grafa prepustnosti kristalov z razli"cnimi izbirami za dielektri"cnosti sta na sliki \ref{fig:test-periodic}. 
-Valovanje, ki se je od periodi"cne strukture zaradi prepovedanega pasu odbilo, smo zajeli v absorbirajo"ci plasti okrog in okrog celice. 
+Valovanje, ki se je od periodi"cne strukture zaradi prepovedanega pasu odbilo, smo zajeli v absorbirajo"ci plasti okrog celice. 
 
 \begin{figure}[!htbp]
 \centering
-\resizebox{.7\textwidth}{!}{\input{g_test_periodic}}
+\resizebox{.75\textwidth}{!}{\input{g_test_periodic}}
  \caption{Rezultati preizkusa s periodi"cno modulacijo lomnega koli"cnika. Prikazana je odvisnost prepustnosti enodimenzionalnega fotonskega kristala v odvisnosti od frekvence vpadne svetlobe pri razli"cnih razmerjih dielektri"cnih konstant. }
  \label{fig:test-periodic}
 \end{figure}
@@ -1248,7 +1246,7 @@ Ker se sunek hitro razcepi, je tak"sen postopek primeren za iskanje lastnih na"c
 
 Rezultati na sliki \ref{fig:pulse-0-mode} potrjujejo pravilno delovanje metode. 
 Vpadnja svetloba se razcepi na komponenti z redno in izredno polarizacijo, ki se "sirita z razli"cnima hitrostma. 
-Redna komponenta, prikazana na sliki \ref{fig:pulse-0-mode}b, ob"cuti manj"si lomni koli"cnik in je zato hitrej"sa. 
+Redna komponenta, prikazana na sliki \ref{fig:pulse-0-mode}b, ob"cuti manj"si lomni koli"cnik in se zato "siri hitreje kot izredna. 
 
 \chapter["Sirjenje laserskega sunka vzdol"z nematskih defektnih linij]{\texorpdfstring{"Sirjenje laserskega sunka \\[.3cm] vzdol"z nematskih defektnih linij}{"Sirjenje laserskega sunka vzdol"z nematskih defektnih linij}}
 
@@ -1412,9 +1410,13 @@ Mnogo bolj enostavno pa je opazovanje z laserjem, ki sveti stalno s konstantno i
 
 Pri enakomernem laserskem "zarku je svetloba v vlaknu z radialnim profilom direktorja kombinacija obeh lastnih na"cinov, prepoznanih v prej"snjem poglavju, ki se "sirita z razli"cnima hitrostma. 
 Frekvenca svetlobe je nespremenjena in zato enaka po celotnem vlaknu, opazimo pa mo"cno krajevno odvisnost oblike polja. 
+Za razliko od sunkovnega vzbujanja, kjer valovni paketi potujejo stran od izvora, pa se pri stalni svetlobi vzpostavi stacionarno stanje. 
+Na vsakem mestu v vlaknu elektri"cno polje niha, njegova amplituda in polarizacija pa ostajata nespremenjeni. 
+Strukture v elektri"cnem polju, prikazane na slikah v tem poglavju, se s "casom ne premikajo, zato jih lahko natan"cneje opazujemo. 
+
 Trenutne slike elektri"cnega polja znotraj vlakna so prikazane na sliki \ref{fig:p1-cont-snaps}. 
-Zaradi jasnosti smo uporabili vlakno z ni"zjo dvolomnostjo kot v pulznem na"cinu; tu je bila razlika med izrednim in rednim lomnim koli"cnikom le $\Delta n = 0,\!04$. 
-Zna"cilno dol"zino pojavov v dvolomnem vlaknu lahko ocenimo kotNa ta na"cin je bila zna"cilna dol"zina pojavov
+Zaradi jasnosti smo uporabili vlakno z ni"zjo dvolomnostjo kot v sunkovnem na"cinu; tu je bila razlika med izrednim in rednim lomnim koli"cnikom le $\Delta n = 0,\!04$. 
+Zna"cilno dol"zino pojavov v dvolomnem vlaknu lahko ocenimo kot
 \begin{align}
  d_1 \sim \frac{\lambda}{\Delta n} 
 \end{align}
@@ -1459,7 +1461,6 @@ V vmesnih stanjih, kot npr. na sliki \ref{fig:p1-cont-snaps}b, pa je polarizacij
 Tam je med redno in izredno komponento fazni zamik, ki ni celo"stevilski ve"ckratnik $\pi$, smer elektri"cnega polje pa se s premikanjem v kraju in "casu vrti. 
 Polarizacija svetlobe torej je odvisna od polo"zaja znotraj vlakna in je ne moremo opisati le s trenutno sliko elektri"cnega polja. 
 
-\cleardoublepage
 \section{Hiperboli"cni profil direktorja}
 
 Podobno obna"sanje opazimo tudi v vlaknu s hiperboli"cnim direktorskim profilom, ki ima v osi defekt z ovojnim "stevilom $-1$. 
@@ -1489,6 +1490,7 @@ Primer slike elektri"cnega polja v tak"snem vlaknu je na sliki \ref{fig:m1-cont-
 
 Nazadnje smo simulacijo ponovili tudi z vlaknom, v katerem ima ureditev teko"cega kristala defekt s polcelo mo"cjo. 
 Tak"sen primer je "se posebej zanimiv, ker imata lastna na"cina le eno simetrijsko ravnino, in sicer tisto, ki vsebuje polarizacijo vpadne svetlobe. 
+Posnetki elektri"cnega polja v vlaknu z defektom mo"ci $s=+1/2$ so prikazani na sliki \ref{fig:p12-cont-snaps}. 
 
 \begin{figure}[!ht]
 \centering
@@ -1501,12 +1503,17 @@ Tak"sen primer je "se posebej zanimiv, ker imata lastna na"cina le eno simetrijs
  \label{fig:p12-cont-snaps}
 \end{figure}
 
-Na slikah lahko prepoznamo uniformno polje brez defektov, ki postopoma preide v polje z defektom mo"ci $-1$. 
-Za razlike od defekta mo"ci $-1$, ki ga opazimo v vlaknu s hiperboli"cnim profilom, pa je na zgornji sliki jasno vidna tudi komponenta svetlobe s polarizacijo, ki je pravokotna na vpadno polarizacijo. 
-Direktor tam oklepa kot 45\degree s polaraziracijo vpadne svetlobe, zato ureditev teko"cega kristala lokalno deluje kot plo"s"cica $\lambda/2$, ki polarizacijo svetlobe zavrti za 90\degree. 
-Presek na sliki \ref{fig:m12-cont-snaps}b prikazuje vmesno stanje z defektom mo"ci $-1/2$, kjer zopet manjka komponenta v smeri $y$. 
+Na slikah lahko prepoznamo uniformno polje brez defektov, ki postopoma preide v polje z defektom mo"ci $+1$. 
+Za razlike od defekta mo"ci $+1$, ki ga opazimo v vlaknu z radialnim profilom, pa je na zgornji sliki jasno vidna tudi komponenta svetlobe s polarizacijo, ki je pravokotna na vpadno polarizacijo. 
+Direktor tam oklepa kot 45\degree~s polaraziracijo vpadne svetlobe, zato ureditev teko"cega kristala lokalno deluje kot plo"s"cica $\lambda/2$, ki polarizacijo svetlobe zavrti za 90\degree. 
+V vsaki to"cki je polarizacija svetlobe linearna, smer polarizacije pa je odvisna od polo"zaja na preseku vlakna. 
+Presek na sliki \ref{fig:m12-cont-snaps}b prikazuje vmesno stanje z defektom mo"ci $+1/2$, kjer zopet manjka komponenta v smeri $y$. 
+Tako enakomerne radialne polarizacije ne moremo dobiti z radialnim profilom teko"cekristalnega direktorja in z linearno polariziro vpadno svetlobo. 
+Z uporabo defekta s polovi"cno mo"cjo pa lahko "zarek linearno polarizirane laserske svetlobe pretvorimo v "zarek z radialno polarizacijo. 
 
-Podobno velja za defekt z ovojnim "stevilom $+1/2$, ki je prikazan na sliki \ref{fig:p12-cont-snaps}. 
+Podobno velja za defekt z ovojnim "stevilom $-1/2$, ki je prikazan na sliki \ref{fig:p12-cont-snaps}. 
+V tem primeru opazimo izmenjevanje uniformnega elektri"cnega polja in polja z defektom mo"ci $-1$, pojavi pa se tudi vmesno stanje z defektom mo"ci $-1/2$. 
+Na sliki \ref{fig:p12-cont-snaps}c je lepo viden hiperboli"cen profil polarizacije svetlobe. 
 
 \begin{figure}[!ht]
 \centering
@@ -1519,14 +1526,9 @@ Podobno velja za defekt z ovojnim "stevilom $+1/2$, ki je prikazan na sliki \ref
  \label{fig:m12-cont-snaps}
 \end{figure}
 
-Na sliki \ref{fig:p12-cont-snaps}c je lepo viden radialen profil polarizacije svetlobe. 
-Tako enakomerne radialne polarizacije ne moremo dobiti z radialnim profilom teko"cekristalnega direktorja in z linearno polariziro vpadno svetlobo. 
-V vsaki to"cki je polarizacija svetlobe linearna, smer polarizacije pa je odvisna od polo"zaja na preseku vlakna. 
-Z uporabo defekta s polovi"cno mo"cjo pa lahko "zarek linearno polarizirane laserske svetlobe pretvorimo v "zarek z radialno polarizacijo. 
-
 Na podlagi rezultatov lahko zaklju"cimo, da komponenta elektri"cnega polja, pravokotna na vpadno polarizacijo, manjka le pri na"cinih oz. konfiguracijah polja, kjer polje tvori defekt z enako mo"cjo kot defekt v teko"cem kristalu. 
 S konstantnim laserskim "zarkom dose"zemo se"stevanje obeh propagacijskih na"cinov, ki na dolo"cenih mestih v vlaknu privede do komponente s pravokotno polarizacijo. 
-Tu je pomembno, da pri lastnih na"cinih ni vsa svetloba polarizirana vzporedno z vpadno polarizacijo.
+Tu je pomembno, da pri stacionarnih na"cinih ni vsa svetloba polarizirana vzporedno z vpadno polarizacijo.
 Le tam, kjer bi zaradi topologije defekta svetloba morala biti polarizirana v pravokotni smeri, intenziteta svetlobe mo"cno pade. 
 Pri konstantnem svetenju pa se lastni na"cini se"stejejo tako, da imajo obmo"cja, kjer topologija defekta narekuje polarizacijo v smeri, pravokotni na vpadno polarizacijo, enako intenziteto svetlobe kot okolica. 
 
