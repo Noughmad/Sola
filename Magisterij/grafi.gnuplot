@@ -60,27 +60,31 @@ plot "Podatki/absorption_0.dat" u 1:($2*2) lw 5 t "$p=0$", \
 "Podatki/absorption_4.dat" u 1:($2*2) lw 5 t "$p=4$"
 
 reset
-set terminal png size 800,600 crop
-set pm3d map interpolate 2,1
+set terminal eps color
+
+set size ratio 3.0/4.0
+
+set pm3d map interpolate 4,4
 unset colorbox
 unset tics
+unset border
 
 set lmargin 0
 set rmargin 0
 set bmargin 0
 set tmargin 0
 
-set output "g_test_plane.png"
+set output "g_test_plane.eps"
 splot "Podatki/cross_plane.dat" matrix notitle
 
-set output "g_test_plane_profile.png"
+set output "g_test_plane_profile.eps"
 splot[][0:150] "Podatki/profile.dat" matrix notitle
 
 reset
 set terminal eps color
 
 set output "g_refraction_test.eps"
-set pm3d map interpolate 2,1
+set pm3d map interpolate 4,4
 
 unset tics
 unset border
@@ -96,13 +100,13 @@ refracted = asin(cos(angle))
 
 set size ratio I*1.0/EMF_K
 
-set obj 5 circle arc [180:180+angle*180/3.141592] fs transparent solid 0 fc rgb "black" lw 3
+set obj 5 circle arc [180:180+angle*180/3.141592] fs transparent solid 0 fc rgb "black" lw 5
 set obj 5 circle at LINE_X,LINE_Y size 37.7 front
-set obj 6 circle arc [0:refracted*180/3.141592] fs transparent solid 0 fc rgb "black" lw 3
+set obj 6 circle arc [0:refracted*180/3.141592] fs transparent solid 0 fc rgb "black" lw 5
 set obj 6 circle at LINE_X,LINE_Y size 50 front
 
 
-set arrow 3 from EMF_K/2-100,LINE_Y to EMF_K/2+100,LINE_Y lw 4 front nohead
+set arrow 3 from EMF_K/2-100,LINE_Y to EMF_K/2+100,LINE_Y lw 5 front nohead
 set arrow 1 from (EMF_K/2-ARROW_SIZE*cos(angle)),(LINE_Y-ARROW_SIZE*sin(angle)) to EMF_K/2,LINE_Y lw 6 lc rgb "white" front
 set arrow 2 from EMF_K/2,LINE_Y to (EMF_K/2+ARROW_SIZE*cos(refracted)),(LINE_Y+ARROW_SIZE*sin(refracted)) lw 6 lc rgb "white" front
 show arrow
