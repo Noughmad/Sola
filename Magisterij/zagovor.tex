@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{overpic}
+\usepackage{geometry}
 
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -23,6 +24,13 @@
 \newcommand{\E}{\vec E}
 \newcommand{\B}{\vec B}
 \newcommand{\angl}[1]{(\textit{angl. #1})}
+
+\newcommand{\stalno}[2]{
+  \begin{overpic}[width=.23\textwidth,trim=-1cm -1cm -1cm -1cm]{g_defect_#2}\end{overpic} 
+  \begin{overpic}[width=.23\textwidth]{./Slike/lic_#1_1}\put(2,88){\color{white} \large \bf 1 $\boldsymbol\mu$m}\end{overpic} 
+  \begin{overpic}[width=.23\textwidth]{./Slike/lic_#1_37}\put(2,88){\color{white} \large \bf 10 $\boldsymbol\mu$m}\end{overpic} 	
+  \begin{overpic}[width=.23\textwidth]{./Slike/lic_#1_50}\put(2,88){\color{white} \large \bf 15 $\boldsymbol\mu$m}\end{overpic}
+}
 
 \begin{document}
 \title[Zagovor magisterija]{Modeliranje \v sirjenja svetlobe vzdol\v z ograjenih teko\v cekristalnih defektnih linij}
@@ -51,12 +59,21 @@
     \item Dvolomnost
     \item Delni pozicijski red
     \item Nadzor z zunanjimi polji
-    \item Prosta energija deformacij direktorja
+    \item Elasti"cne deformacije direktorja
    \end{itemize}
   \end{column}
 
   \begin{column}{.5\textwidth}
-    \includegraphics[width=.9\textwidth]{./Slike/tvorjenje2}
+    \includegraphics[width=\textwidth]{./Slike/faze_brez_crk} \\
+
+  \resizebox{\textwidth}{!}{\begin{picture}(400, 120)
+    \put(0,30){\includegraphics[height=80pt]{./Slike/fig_frank_components_splay_s}}
+    \put(150,20){\includegraphics[height=100pt]{./Slike/fig_frank_components_twist_s}}
+    \put(270,30){\includegraphics[height=80pt]{./Slike/fig_frank_components_bend_s}}
+    \put(50, 10){\LARGE $\nabla \cdot \vec n$}
+    \put(170, 10){\LARGE $\vec n \cdot \nabla \times \vec n$}
+    \put(300, 10){\LARGE $\vec n \times \nabla \times \vec n$}
+  \end{picture}}
   \end{column}
     
   \end{columns}
@@ -188,7 +205,7 @@
 
 \section{Rezultati}
 
-\begin{frame}{Vlakno z radialnim direktorskim profilom}
+\begin{frame}{Sunek v vlaknu z radialnim direktorskim profilom}
  \begin{center}
 \includegraphics[height=.2\textwidth]{./Slike/radial-cross} \quad
 \includegraphics[height=.2\textwidth]{./Slike/director-profile-radial}
@@ -199,7 +216,69 @@
   \includegraphics[width=.4\textwidth]{./Slike/licp_p1_82}
 \end{center}
 
+\end{frame}
 
+\begin{frame}{Sunek v vlaknu z radialnim direktorskim profilom}
+
+ \begin{center}
+ \includegraphics[width=.4\textwidth]{./Slike/licp_p1_74}\quad
+  \includegraphics[width=.4\textwidth]{./Slike/licp_p1_82}
+\end{center}
+
+\begin{itemize}
+ \item Sunek razpade na dva stacionarna na"cina -- redni in izredni
+ \item Temna obmo"cja zaradi vpadne polarizacije
+ \item ``Neprava'' defekta z ovojnim "stevilom $+1$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Sunek v vlaknih z razli"cnimi defekti}
+
+ \begin{center}
+  \includegraphics[height=.35\textheight]{./Slike/licp_m1_74} \quad
+  \includegraphics[height=.35\textheight]{./Slike/licp_p12_68} \quad
+  \includegraphics[height=.35\textheight]{./Slike/licp_m12_68} \\
+  \includegraphics[height=.35\textheight]{./Slike/licp_m1_82} \quad
+  \includegraphics[height=.35\textheight]{./Slike/licp_p12_78} \quad
+  \includegraphics[height=.35\textheight]{./Slike/licp_m12_78}
+\end{center}
+
+\end{frame}
+
+\begin{frame}{Stalna laserska svetloba}
+  \stalno{p1}{2} \\[-3.3mm]
+  \hrulefill \\[1mm]
+  \stalno{p12}{1}
+\end{frame}
+
+
+\begin{frame}{Stalna laserska svetloba}
+ \begin{itemize}
+  \item Kombinacija dveh stacionarnih na"cinov, razli"cni hitrosti
+  \item Stacionarno stanje, polje na vsakem mestu niha
+  \item Pretvorba v radialno polarizirano svetlobo
+ \end{itemize}
+\end{frame}
+
+\section{Zaklju"cek}
+
+\begin{frame}{Nadaljnje raziskave}
+ \begin{block}{Numeri"cna metoda}
+  \begin{itemize}
+   \item Sklopitev med svetlobo in teko"cim kristalom
+   \item Teko"cekristalne kapljice in vlakna kot laserji
+   \item Poljubno zapletene strukture -- metamateriali
+   \item Natan"cne transmisijske slike
+  \end{itemize}
+ \end{block}
+ 
+ \begin{block}{Teko"cekristalna vlakna}
+  \begin{itemize}
+    \item Defekti v teko"cem kristalu 
+  \end{itemize}
+ \end{block}
+ 
 \end{frame}
 
 
