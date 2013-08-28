@@ -7,6 +7,16 @@
 \usepackage{amsmath}
 \usepackage{overpic}
 
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\tikzset{egrid/.style={draw,help lines}}
+\tikzset{mgrid/.style={draw,help lines,dashed}}
+\tikzset{epoint/.style={draw,circle,red,inner sep=2pt,fill}}
+\tikzset{mpoint/.style={draw,circle,blue,inner sep=2pt,fill}}
+
+\usetheme{Madrid}
+
 \newcommand{\odvod}[2]{\frac{\partial #1}{\partial #2}}
 \renewcommand{\vec}{\mathbf}
 \newcommand{\eps}{\varepsilon}
@@ -15,19 +25,21 @@
 \newcommand{\angl}[1]{(\textit{angl. #1})}
 
 \begin{document}
-\title{Modeliranje \v sirjenja svetlobe vzdol\v z ograjenih teko\v cekristalnih defektnih linij}
-\author{\begin{tabular}{rl}Avtor & Miha \v Can\v cula \\ Mentor & prof. dr. Slobodan \v Zumer \\ Somentor & doc. dr. Miha Ravnik\end{tabular}}
+\title[Zagovor magisterija]{Modeliranje \v sirjenja svetlobe vzdol\v z ograjenih teko\v cekristalnih defektnih linij}
+\author[Miha \v Can\v cula]{\begin{tabular}{rl}Avtor & Miha \v Can\v cula \\ Mentor & prof. dr. Slobodan \v Zumer \\ Somentor & doc. dr. Miha Ravnik\end{tabular}}
+
 \date{3. september 2013}
+
+\section{Uvod}
 
 \begin{frame}
  \titlepage
 \end{frame}
 
 \begin{frame}{Teko"ci kristali}
- \begin{columns}[t]
-  \column{.5\textwidth}
+ \begin{columns}[c]
+  \begin{column}{.5\textwidth}
   
-  \begin{block}{Teko"ci kristali}
    \begin{itemize}
     \item Lastnosti teko"cin in kristalov
     \item Orientacijski red
@@ -36,20 +48,16 @@
 	\item Stopnja reda $S$
 	\item Simetrija $\vec n \leftrightarrow -\vec n$
       \end{itemize}
-      
-    \item Delni pozicijski red
-   \end{itemize}
-  \end{block}
-  
-  \begin{block}{Opti"cne lastnosti}
-   \begin{itemize}
     \item Dvolomnost
+    \item Delni pozicijski red
     \item Nadzor z zunanjimi polji
+    \item Prosta energija deformacij direktorja
    \end{itemize}
-  \end{block}
+  \end{column}
 
-  \column[T]{.5\textwidth}
-    \includegraphics[width=\textwidth]{./Slike/tvorjenje2}
+  \begin{column}{.5\textwidth}
+    \includegraphics[width=.9\textwidth]{./Slike/tvorjenje2}
+  \end{column}
     
   \end{columns}
 \end{frame}
@@ -92,8 +100,14 @@
   \item Ovojno "stevilo -- celo za vektorska polja, polcelo za direktor
  \end{itemize}
  
+ \begin{center}
+ \includegraphics[height=100pt]{./Slike/1_v6} \qquad
+ \includegraphics[height=100pt]{./Slike/defekt-kapljica.png}
+ \end{center}
+ 
 \end{frame}
 
+\section{Metoda}
 
 \begin{frame}{Numeri"cna metoda}
  \begin{block}{Metoda kon"cnih diferenc v "casovni domeni -- FDTD}
@@ -103,10 +117,40 @@
    \begin{equation*}
      \odvod{\vec{B}}{t} = -\nabla \times \vec{E} \qquad \odvod{\vec{E}}{t} = \eps^{-1} (\nabla \times \vec{B} - \sigma \vec E)
    \end{equation*}
-    \item Komponente polj znane na razli"cnih krajih ob razli"cnih "casih
-    \item Izvor in absorpcija valovanja na robu
   \end{itemize}
  \end{block}
+ 
+ \begin{columns}
+  \column{.65\textwidth}
+   \begin{block}{Diskretizacija na mre"zi}
+    \begin{itemize}
+	\item Komponente polj znane na razli"cnih krajih ob razli"cnih "casih
+	\item Izvor in absorpcija valovanja na robu
+      \end{itemize}
+    \end{block}
+    
+    \column{.3\textwidth}
+    \begin{tikzpicture}[scale=0.8]
+    
+    \foreach \x in {0,1}{
+      \foreach \y in {0,1}{
+        \node[mpoint] at (2*\x,2*\y) {}; 
+        \node[mpoint] at (2*\x+1.2,2*\y+0.8) {}; 
+        \node[epoint] at (2*\x+1.6,2*\y+1.4) {};
+        \node[epoint] at (2*\x+1.6-1.2,2*\y+1.4-0.8) {};
+        \draw[mgrid] (2*\x,2*\y) -- (2*\x+1.2,2*\y+0.8);
+        \draw[egrid] (2*\x+1.6,2*\y+1.4) -- (2*\x+1.6-1.2,2*\y+1.4-0.8);
+      }
+    }
+    
+    \draw[mgrid] (0,0) rectangle (2,2);
+    \draw[mgrid] (1.2,0.8) rectangle (3.2,2.8);
+    \draw[egrid] (1.6,1.4) rectangle (3.6,3.4);
+    \draw[egrid] (1.6-1.2,1.4-0.8) rectangle (3.6-1.2,3.4-0.8);
+
+            \end{tikzpicture}
+
+ \end{columns}
 \end{frame}
 
 \begin{frame}{Primeri uporabe metode}
@@ -139,6 +183,22 @@
 \end{column}
 
 \end{columns}
+
+\end{frame}
+
+\section{Rezultati}
+
+\begin{frame}{Vlakno z radialnim direktorskim profilom}
+ \begin{center}
+\includegraphics[height=.2\textwidth]{./Slike/radial-cross} \quad
+\includegraphics[height=.2\textwidth]{./Slike/director-profile-radial}
+\end{center}
+
+ \begin{center}
+ \includegraphics[width=.4\textwidth]{./Slike/licp_p1_74}\quad
+  \includegraphics[width=.4\textwidth]{./Slike/licp_p1_82}
+\end{center}
+
 
 \end{frame}
 
