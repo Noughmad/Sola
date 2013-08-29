@@ -7,6 +7,9 @@
 \usepackage{amsmath}
 \usepackage{overpic}
 \usepackage{geometry}
+\usepackage{subfigure}
+
+\renewcommand{\thesubfigure}{}
 
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -77,6 +80,15 @@
   \end{column}
     
   \end{columns}
+  
+  \begin{center}
+   \includegraphics[height=60pt]{./Slike/cp-1} \,
+   \includegraphics[height=60pt]{./Slike/tvorjenje} \,
+   \includegraphics[height=60pt]{./Slike/ilcs_03} \,
+   \includegraphics[height=60pt]{./Slike/Flat-panel-display-lcd-monitor}
+  \end{center}
+
+  
 \end{frame}
 
 \begin{frame}{Elektromagnetno valovanje}
@@ -258,27 +270,52 @@
   \item Kombinacija dveh stacionarnih na"cinov, razli"cni hitrosti
   \item Stacionarno stanje, polje na vsakem mestu niha
   \item Pretvorba v radialno polarizirano svetlobo
+  \item Brez temnih ravnin -- obrat polarizacije za 90$^{\circ}$
  \end{itemize}
+ 
+ \begin{figure}[h]
+ \centering
+    \subfigure[sunek]{\includegraphics[width=.3\textwidth]{./Slike/licp_p1_82}} \hspace{.3cm}
+    \raisebox{.13\textwidth}{\Huge $\boldsymbol\neq$} \hspace{.2cm}
+    \subfigure[stalna svetloba]{\includegraphics[width=.3\textwidth]{./Slike/lic_p12_50}}
+
+    
+ \end{figure}
+ 
 \end{frame}
 
 \section{Zaklju"cek}
 
 \begin{frame}{Nadaljnje raziskave}
+\begin{columns}
+
+\column{.65\textwidth}
+ 
  \begin{block}{Numeri"cna metoda}
   \begin{itemize}
    \item Sklopitev med svetlobo in teko"cim kristalom
    \item Teko"cekristalne kapljice in vlakna kot laserji
    \item Poljubno zapletene strukture -- metamateriali
    \item Natan"cne transmisijske slike
+   \item Povezava med teorijo in eksperimenti
   \end{itemize}
  \end{block}
  
  \begin{block}{Teko"cekristalna vlakna}
   \begin{itemize}
-    \item Defekti v teko"cem kristalu 
+    \item Pretvorba polarizacije svetlobe
+    \item Nove strukture za vodenje svetlobe
+    \item Izotropna laserska svetloba
   \end{itemize}
  \end{block}
  
+ 
+\column{.22\textwidth}
+
+\includegraphics[width=\textwidth]{./Slike/holesterik-resonator} \\[3mm]
+\includegraphics[width=\textwidth]{./Slike/largecover}
+ 
+\end{columns}
 \end{frame}
 
 
