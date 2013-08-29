@@ -92,7 +92,10 @@
 \end{frame}
 
 \begin{frame}{Elektromagnetno valovanje}
+\begin{columns}
 
+\column{.6\textwidth}
+ 
 \begin{block}{Maxwellove ena"cbe}
 \begin{equation*}
 \begin{aligned}
@@ -114,8 +117,22 @@
  \item $\boldsymbol\eps$ in $\boldsymbol\mu$ sta anizotropna tenzorja
  \item Ohmov zakon $\vec J = \sigma \vec E$
  \item V vzorcu ni prostih nabojev ($\rho_f = 0$)
+ \item Izredna os vzporedna z direktorjem
 \end{itemize}
 
+\column{.35\textwidth}
+\begin{block}{Dvolomnost}
+\begin{itemize}
+ \item Lomni koli"cnik odvisen od polarizacije svetlobe
+ \item Ena izredna os z $n_e$ pravokotne smeri $n_o$
+\end{itemize}
+\end{block}
+
+\begin{center}
+\includegraphics[width=.8\textwidth]{./Slike/Rays_passing_through_birefringent_material}
+\end{center}
+
+\end{columns}
 \end{frame}
 
 \begin{frame}{Defekti}
@@ -131,7 +148,11 @@
  
  \begin{center}
  \includegraphics[height=100pt]{./Slike/1_v6} \qquad
- \includegraphics[height=100pt]{./Slike/defekt-kapljica.png}
+ \begin{overpic}[height=100pt]{./Slike/defekt-kapljica.png}
+  \put(-80,4) {\rotatebox{90}{\tiny Porenta et al., Soft Matter (2012)}}
+  \put(10,15) {\tiny Brasselet et al., PRL (2009)}
+  \end{overpic}
+
  \end{center}
  
 \end{frame}
@@ -202,7 +223,7 @@
 \begin{column}[T]{.5\textwidth}
 \begin{itemize}
   \item Uniformen dvolomni kristal \\
-  \hspace{-.5cm}\resizebox{.9\textwidth}{!}{\input{g_test_uniform}}
+  \hspace{-.5cm}\resizebox{.9\textwidth}{!}{\input{g_test_uniform_nocite}}
   
  \item Dvolomno vlakno
   \includegraphics[width=.41\textwidth]{./Slike/licp_0_68} \hspace{2pt}
@@ -295,7 +316,7 @@
   \begin{itemize}
    \item Sklopitev med svetlobo in teko"cim kristalom
    \item Teko"cekristalne kapljice in vlakna kot laserji
-   \item Poljubno zapletene strukture -- metamateriali
+   \item Metamateriali -- zapletene strukture
    \item Natan"cne transmisijske slike
    \item Povezava med teorijo in eksperimenti
   \end{itemize}
@@ -305,15 +326,18 @@
   \begin{itemize}
     \item Pretvorba polarizacije svetlobe
     \item Nove strukture za vodenje svetlobe
-    \item Izotropna laserska svetloba
+    \item Laserska svetloba v vse smeri
   \end{itemize}
  \end{block}
  
  
-\column{.22\textwidth}
+\column{.25\textwidth}
 
-\includegraphics[width=\textwidth]{./Slike/holesterik-resonator} \\[3mm]
-\includegraphics[width=\textwidth]{./Slike/largecover}
+\includegraphics[width=\textwidth, clip, trim=0 22pt 0pt 50pt]{./Slike/CoverIssue48.jpeg} \\[5mm]
+\begin{overpic}[angle=90,width=\textwidth]{./Slike/laser-droplet}
+\put(70,8) {\rotatebox{90}{\tiny Humar, Mu"sevi"c, Optics Express (2010)}}
+\put(70,109) {\rotatebox{90}{\tiny Se"c et al., Soft Matter (2012)}}
+\end{overpic}
  
 \end{columns}
 \end{frame}
