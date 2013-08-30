@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from PyQt4.QtCore import QSize, Qt, QPointF
 from PyQt4.QtGui import QApplication, QPainter, QPen, QBrush
 from PyQt4.QtSvg import QSvgGenerator
@@ -10,9 +12,13 @@ import subprocess
 IMAGE_SIZE = 400
 NUM_MOLECULES = 600
 MOLECULE_SIZE = 6
+ARROW_SIZE = 160
 
 def draw_molecule(painter, x, y, q, length):
-  angle = math.atan2(y - IMAGE_SIZE/2,x - IMAGE_SIZE/2) * q
+  if q:
+    angle = math.atan2(y - IMAGE_SIZE/2,x - IMAGE_SIZE/2) * q
+  else:
+    angle = math.pi / 4
   
   dx = length * math.cos(angle)
   dy = length * math.sin(angle)
@@ -63,10 +69,26 @@ def draw_image(name, q):
   
   draw_defect(painter, q)
   draw_circle(painter, q)
+  
+  pen = QPen()
+  pen.setWidth(7)
+  pen.setColor(Qt.red)
+  painter.setPen(pen)
+  
+  painter.drawLine(IMAGE_SIZE/2 - ARROW_SIZE, IMAGE_SIZE/2, IMAGE_SIZE/2 + ARROW_SIZE, IMAGE_SIZE/2)
+  painter.drawLine(IMAGE_SIZE/2 + ARROW_SIZE, IMAGE_SIZE/2, IMAGE_SIZE/2 + ARROW_SIZE - 30, IMAGE_SIZE/2 + 20)
+  painter.drawLine(IMAGE_SIZE/2 + ARROW_SIZE, IMAGE_SIZE/2, IMAGE_SIZE/2 + ARROW_SIZE - 30, IMAGE_SIZE/2 - 20)
+  
+  font = painter.font()
+  font.setPixelSize(40)
+  font.setBold(True)
+  painter.setFont(font)
+  painter.drawText(QPointF(IMAGE_SIZE/2 + ARROW_SIZE - 30, IMAGE_SIZE/2 - 30), "E")
+  
   painter.end()
 
 if __name__ == "__main__":
   app = QApplication(sys.argv)
   for i in [-1, -0.5, 0.5, 1, 1.5, 2, -2, -1.5, 0]:
-    draw_image("g_defect_%g" % (2*i), i)
-    subprocess.call(["inkscape", "--export-pdf=g_defect_%g.pdf" % (2*i), "g_defect_%g.svg" % (2*i), "--export-area-drawing"])
+    draw_image("g_defect_light_%g" % (2*i), i)
+    subprocess.call(["inkscape", "--export-pdf=g_defect_light_%g.pdf" % (2*i), "g_defect_light_%g.svg" % (2*i), "--export-area-drawing"])

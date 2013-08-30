@@ -8,8 +8,10 @@
 \usepackage{overpic}
 \usepackage{geometry}
 \usepackage{subfigure}
+\usepackage{calc}
 
 \renewcommand{\thesubfigure}{}
+\setbeamertemplate{navigation symbols}{}
 
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -27,6 +29,7 @@
 \newcommand{\E}{\vec E}
 \newcommand{\B}{\vec B}
 \newcommand{\angl}[1]{(\textit{angl. #1})}
+\newcommand{\ticssize}{\fontsize{9}{10}\selectfont}
 
 \newcommand{\stalno}[2]{
   \begin{overpic}[width=.23\textwidth,trim=-1cm -1cm -1cm -1cm]{g_defect_#2}\end{overpic} 
@@ -59,8 +62,8 @@
 	\item Stopnja reda $S$
 	\item Simetrija $\vec n \leftrightarrow -\vec n$
       \end{itemize}
-    \item Dvolomnost
     \item Delni pozicijski red
+    \item Dvolomnost
     \item Nadzor z zunanjimi polji
     \item Elasti"cne deformacije direktorja
    \end{itemize}
@@ -115,9 +118,8 @@
 
 \begin{itemize}
  \item $\boldsymbol\eps$ in $\boldsymbol\mu$ sta anizotropna tenzorja
- \item Ohmov zakon $\vec J = \sigma \vec E$
- \item V vzorcu ni prostih nabojev ($\rho_f = 0$)
- \item Izredna os vzporedna z direktorjem
+ \item V vzorcu ni prostih nabojev ali tokov
+ \item Izredna os v TK krajevno odvisna
 \end{itemize}
 
 \column{.35\textwidth}
@@ -135,14 +137,19 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}{Defekti}
- \includegraphics[width=.25\textwidth]{g_defect_2}
- \includegraphics[width=.25\textwidth]{g_defect_-2}
- \includegraphics[width=.25\textwidth]{g_defect_1}
- \includegraphics[width=.25\textwidth]{g_defect_-1}
+\begin{frame}{Topolo"ski defekti}
+\begin{figure}
+ \centering
+ \subfigure[$s = +1$]{\includegraphics[width=.18\textwidth]{g_defect_2} \vspace{-2mm}}\,
+ \subfigure[$s = -1$]{\includegraphics[width=.18\textwidth]{g_defect_-2} \vspace{-2mm}}\,
+ \subfigure[$s = +1/2$]{\includegraphics[width=.18\textwidth]{g_defect_1} \vspace{-2mm}}\,
+ \subfigure[$s = -1/2$]{\includegraphics[width=.18\textwidth]{g_defect_-1} \vspace{-2mm}}
+ \end{figure}
+ 
+ \vspace{-3mm}
 
  \begin{itemize}
-  \item Obmo"cje zmanj"sanega reda
+  \item To"cka z nedefinirano smerjo direktorja ali elektri"cnega polja
   \item Ovojno "stevilo -- celo za vektorska polja, polcelo za direktor
  \end{itemize}
  
@@ -165,7 +172,7 @@
    \item "Casovni razvoj vseh 6 komponent $\vec E$ in $\vec B$
    \item Dinami"cni Maxwellovi ena"cbi na diskretni mre"zi
    \begin{equation*}
-     \odvod{\vec{B}}{t} = -\nabla \times \vec{E} \qquad \odvod{\vec{E}}{t} = \eps^{-1} (\nabla \times \vec{B} - \sigma \vec E)
+     \odvod{\vec{B}}{t} = -\left(\nabla \times \vec{E}\right) \qquad \odvod{\vec{E}}{t} = \boldsymbol\eps^{-1} \, \left(\nabla \times \vec{B}\right)
    \end{equation*}
   \end{itemize}
  \end{block}
@@ -206,15 +213,17 @@
 \begin{frame}{Primeri uporabe metode}
 \begin{columns}[c]
 
-\begin{column}[T]{.5\textwidth}
+\begin{column}[T]{.46\textwidth}
 \begin{itemize}
  \item "Sirjenje po praznem prostoru
- \includegraphics[width=.9\textwidth]{./Slike/empty}
+ \includegraphics[width=.6\textwidth]{./Slike/empty}
  
  \item Lom pri Brewsterjevem kotu
- \includegraphics[width=.9\textwidth]{./Slike/refraction}
-
- \item Fotonski kristal
+ \includegraphics[width=.6\textwidth]{./Slike/refraction}
+ 
+ 
+  \item Dvolomni kristal med prekri"zanima polarizatorjema\\
+  \resizebox{.65\textwidth}{!}{\input{g_test_uniform}}
 
 \end{itemize}
 
@@ -222,12 +231,18 @@
 
 \begin{column}[T]{.5\textwidth}
 \begin{itemize}
-  \item Uniformen dvolomni kristal \\
-  \hspace{-.5cm}\resizebox{.9\textwidth}{!}{\input{g_test_uniform_nocite}}
+ \item Fotonski prepovedani pas
+ \begin{center}
+   \resizebox{.7\textwidth}{!}{\footnotesize \input{./Slike/bandgap.pdf_tex}} \\
+    \hspace{-1cm} \raisebox{5mm}{\includegraphics[width=.3\textwidth]{./Slike/periodic-structure-p}} \;	
+  \resizebox{.6\textwidth}{!}{\input{g_test_periodic}}
+  \end{center}
   
- \item Dvolomno vlakno
-  \includegraphics[width=.41\textwidth]{./Slike/licp_0_68} \hspace{2pt}
-  \includegraphics[width=.41\textwidth]{./Slike/licp_0_78}
+ \item Dvolomno vlakno \\
+  \hspace{-0.6cm}
+  \includegraphics[width=.29\textwidth]{./Defekti/g_defect_light_0} \,
+  \includegraphics[width=.29\textwidth]{./Slike/licp_0_68} \,
+  \includegraphics[width=.29\textwidth]{./Slike/licp_0_78}
 \end{itemize}
 
 \end{column}
@@ -256,34 +271,73 @@
 \begin{frame}{Sunek v vlaknu z radialnim direktorskim profilom}
 
  \begin{center}
- \includegraphics[width=.4\textwidth]{./Slike/licp_p1_74}\quad
-  \includegraphics[width=.4\textwidth]{./Slike/licp_p1_82}
+ \raisebox{.075\textwidth}{\includegraphics[width=.2\textwidth]{./Defekti/g_defect_light_2}} \,
+ \includegraphics[width=.35\textwidth]{./Slike/licp_p1_74}\,
+  \includegraphics[width=.35\textwidth]{./Slike/licp_p1_82}
 \end{center}
 
 \begin{itemize}
  \item Sunek razpade na dva stacionarna na"cina -- redni in izredni
  \item Temna obmo"cja zaradi vpadne polarizacije
- \item ``Neprava'' defekta z ovojnim "stevilom $+1$
+ \item ``Neprava'' defekta v $\vec E$ z ovojnim "stevilom $+1$
 \end{itemize}
 
 \end{frame}
 
 \begin{frame}{Sunek v vlaknih z razli"cnimi defekti}
 
- \begin{center}
-  \includegraphics[height=.35\textheight]{./Slike/licp_m1_74} \quad
-  \includegraphics[height=.35\textheight]{./Slike/licp_p12_68} \quad
-  \includegraphics[height=.35\textheight]{./Slike/licp_m12_68} \\
-  \includegraphics[height=.35\textheight]{./Slike/licp_m1_82} \quad
-  \includegraphics[height=.35\textheight]{./Slike/licp_p12_78} \quad
-  \includegraphics[height=.35\textheight]{./Slike/licp_m12_78}
-\end{center}
+\begin{columns}
 
+\column{.2\textwidth}
+  \centering
+  \includegraphics[width=.7\textwidth]{./Defekti/g_defect_light_-2} \\[2mm]
+  \includegraphics[width=\textwidth]{./Slike/licp_m1_74} \\[2mm]
+  \includegraphics[width=\textwidth]{./Slike/licp_m1_82}
+    
+  \column{.2\textwidth}  
+\centering
+  \includegraphics[width=.7\textwidth]{./Defekti/g_defect_light_1} \\[2mm]
+  \includegraphics[width=\textwidth]{./Slike/licp_p12_68} \\[2mm]
+  \includegraphics[width=\textwidth]{./Slike/licp_p12_78}
+    
+    \column{.2\textwidth}
+\centering
+  \includegraphics[width=.7\textwidth]{./Defekti/g_defect_light_-1} \\[2mm]
+  \includegraphics[width=\textwidth]{./Slike/licp_m12_68} \\[2mm]
+  \includegraphics[width=\textwidth]{./Slike/licp_m12_78}
+  
+  \column{.35\textwidth}
+  \begin{block}{Parametri}
+  \begin{itemize}
+   \item   $\lambda = 480$ nm
+    \item $\Delta n = 0,\!16$
+    \item Premer vlakna 5 $\mu$m
+    \item Pot sunka $\sim 40$ $\mu$m
+  \end{itemize}
+    \end{block}
+    
+    \begin{block}{Opa"zanja}
+     
+\begin{itemize}
+    \item 2 stacionarna na"cina
+    \item Enako ovojno "stevilo kot defekt v TK
+    \item Temna pega v osi
+    \item Temne ravnine
+  \end{itemize}
+    \end{block}
+
+
+
+  \end{columns}
 \end{frame}
 
 \begin{frame}{Stalna laserska svetloba}
-  \stalno{p1}{2} \\[-3.3mm]
-  \hrulefill \\[1mm]
+\begin{itemize}
+ \item Dvolomnost $\Delta n = 0,\!01$ $\Rightarrow$ ve"cja zna"cilna dol"zina pojavov
+ \item Stacionarno stanje s krajevno odvisnostjo polarizacije
+ \item Defekt z dvakratnim ovojnim "stevilom
+\end{itemize}
+  \stalno{p1}{2} \\[1mm]
   \stalno{p12}{1}
 \end{frame}
 
@@ -304,7 +358,7 @@
 
     
  \end{figure}
- 
+  
 \end{frame}
 
 \section{Zaklju"cek}
@@ -335,7 +389,7 @@
  
 \column{.25\textwidth}
 
-\includegraphics[width=\textwidth, clip, trim=0 22pt 0pt 50pt]{./Slike/CoverIssue48.jpeg} \\[5mm]
+\includegraphics[width=\textwidth]{./Slike/s2-trans-noglare-noshine} \\[5mm]
 \begin{overpic}[angle=90,width=\textwidth]{./Slike/laser-droplet}
 \put(70,8) {\rotatebox{90}{\tiny Humar, Mu"sevi"c, Optics Express (2010)}}
 \put(70,109) {\rotatebox{90}{\tiny Se"c et al., Soft Matter (2012)}}
