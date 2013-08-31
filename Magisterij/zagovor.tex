@@ -63,9 +63,9 @@
 	\item Simetrija $\vec n \leftrightarrow -\vec n$
       \end{itemize}
     \item Delni pozicijski red
-    \item Dvolomnost
-    \item Nadzor z zunanjimi polji
-    \item Elasti"cne deformacije direktorja
+    \item<2-> Dvolomnost
+    \item<2-> Nadzor z zunanjimi polji
+    \item<2-> Elasti"cne deformacije direktorja
    \end{itemize}
   \end{column}
 
@@ -73,22 +73,24 @@
     \includegraphics[width=\textwidth]{./Slike/faze_brez_crk} \\
 
   \resizebox{\textwidth}{!}{\begin{picture}(400, 120)
-    \put(0,30){\includegraphics[height=80pt]{./Slike/fig_frank_components_splay_s}}
-    \put(150,20){\includegraphics[height=100pt]{./Slike/fig_frank_components_twist_s}}
-    \put(270,30){\includegraphics[height=80pt]{./Slike/fig_frank_components_bend_s}}
-    \put(50, 10){\LARGE $\nabla \cdot \vec n$}
-    \put(170, 10){\LARGE $\vec n \cdot \nabla \times \vec n$}
-    \put(300, 10){\LARGE $\vec n \times \nabla \times \vec n$}
+    \put(0,30){\includegraphics<2->[height=80pt]{./Slike/fig_frank_components_splay_s}}
+    \put(150,20){\includegraphics<2->[height=100pt]{./Slike/fig_frank_components_twist_s}}
+    \put(270,30){\includegraphics<2->[height=80pt]{./Slike/fig_frank_components_bend_s}}
+    \put(50, 10){\only<2->{\LARGE $\nabla \cdot \vec n$}}
+    \put(170, 10){\only<2->{\LARGE $\vec n \cdot \nabla \times \vec n$}}
+    \put(300, 10){\only<2->{\LARGE $\vec n \times \nabla \times \vec n$}}
   \end{picture}}
   \end{column}
     
   \end{columns}
   
+  \only<-2>{\vspace{54.5pt}}
+  
   \begin{center}
-   \includegraphics[height=60pt]{./Slike/cp-1} \,
-   \includegraphics[height=60pt]{./Slike/tvorjenje} \,
-   \includegraphics[height=60pt]{./Slike/ilcs_03} \,
-   \includegraphics[height=60pt]{./Slike/Flat-panel-display-lcd-monitor}
+   \includegraphics<3->[height=60pt]{./Slike/cp-1} \,
+   \includegraphics<3->[height=60pt]{./Slike/tvorjenje} \,
+   \includegraphics<3->[height=60pt]{./Slike/ilcs_03} \,
+   \includegraphics<3->[height=60pt]{./Slike/Flat-panel-display-lcd-monitor}
   \end{center}
 
   
@@ -234,12 +236,12 @@
  \column{.45\textwidth}
 
  \begin{center}
- \includegraphics[width=.9\textwidth]{./Slike/celica}
+ \includegraphics<2->[width=.9\textwidth]{./Slike/celica}
  \end{center}
 
   \column{.5\textwidth}
 
- \begin{block}{Absorpcija na robu}
+ \begin{block}<2->{Absorpcija na robu}
   \begin{itemize}
    \item Elektri"cna prevodnost in magnetne izgube
    \item Nefizikalen material -- \\ dodatne prostostne stopnje
@@ -254,7 +256,7 @@
 \begin{columns}[c]
 
 \begin{column}[T]{.46\textwidth}
-\begin{itemize}
+\begin{itemize}[<+->]
  \item "Sirjenje po praznem prostoru
  \includegraphics[width=.6\textwidth]{./Slike/empty}
  
@@ -270,7 +272,7 @@
 \end{column}
 
 \begin{column}[T]{.5\textwidth}
-\begin{itemize}
+\begin{itemize}[<+->]
  \item Fotonski prepovedani pas
  \begin{center}
    \resizebox{.7\textwidth}{!}{\footnotesize \input{./Slike/bandgap.pdf_tex}} \\
@@ -302,12 +304,12 @@
 \end{center}
 
 \begin{columns}
- \column{.45\textwidth}
+ \column{.55\textwidth}
  
 \includegraphics[height=.22\textwidth]{./Slike/radial-cross} \quad
 \includegraphics[height=.22\textwidth]{./Slike/director-profile-radial} 
 
- \column{.5\textwidth}
+ \column{.3\textwidth}
  
 \begin{itemize}
  \item Rast vlaken iz 8CB v vodi
@@ -328,8 +330,8 @@
 
 \begin{itemize}
  \item Sunek razpade na dva stacionarna na"cina -- redni in izredni
- \item Temna obmo"cja zaradi vpadne polarizacije
  \item ``Neprava'' defekta v $\vec E$ z ovojnim "stevilom $+1$
+ \item Temna obmo"cja zaradi vpadne polarizacije
 \end{itemize}
 
 \end{frame}
