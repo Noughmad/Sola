@@ -119,7 +119,7 @@
 \begin{itemize}
  \item $\boldsymbol\eps$ in $\boldsymbol\mu$ sta anizotropna tenzorja
  \item V vzorcu ni prostih nabojev ali tokov
- \item Izredna os v TK krajevno odvisna
+ \item Izredna os in dvolomnost $\Delta n$ \\ v TK krajevno odvisna
 \end{itemize}
 
 \column{.35\textwidth}
@@ -210,6 +210,46 @@
  \end{columns}
 \end{frame}
 
+\begin{frame}{Simulacijska celica}
+\begin{columns}
+ 
+ \column{.5\textwidth}
+ 
+ \begin{block}{Izvor valovanja}
+ \begin{itemize}
+  \item Delitev na dve obmo"cji
+  \item Linearne ena"cbe $\rightarrow$ \\ vpadno + sipano valovanje
+  \item Zunaj samo sipano valovanje
+  \item Izvor modeliran na meji
+ \end{itemize}
+ \end{block}
+
+ \column{.45\textwidth}
+ \begin{center}
+ \includegraphics[width=.8\textwidth]{./Slike/wave-source-regions-one}
+ \end{center}
+ \end{columns}
+ \begin{columns}
+
+ \column{.45\textwidth}
+
+ \begin{center}
+ \includegraphics[width=.9\textwidth]{./Slike/celica}
+ \end{center}
+
+  \column{.5\textwidth}
+
+ \begin{block}{Absorpcija na robu}
+  \begin{itemize}
+   \item Elektri"cna prevodnost in magnetne izgube
+   \item Nefizikalen material -- \\ dodatne prostostne stopnje
+  \end{itemize}
+ \end{block}
+
+\end{columns}
+\end{frame}
+
+
 \begin{frame}{Primeri uporabe metode}
 \begin{columns}[c]
 
@@ -223,7 +263,7 @@
  
  
   \item Dvolomni kristal med prekri"zanima polarizatorjema\\
-  \resizebox{.65\textwidth}{!}{\input{g_test_uniform}}
+  \resizebox{.65\textwidth}{!}{\input{g_test_uniform_nocite}}
 
 \end{itemize}
 
@@ -255,16 +295,26 @@
 
 \begin{frame}{Vlakno z radialnim direktorskim profilom}
  \begin{center}
-\includegraphics[height=.2\textwidth]{./Slike/radial-cross} \quad
-\includegraphics[height=.2\textwidth]{./Slike/director-profile-radial}
-\end{center}
-
- \begin{center}
  \includegraphics[height=.35\textwidth]{./Slike/tvorjenje}\,
  \begin{overpic}[height=.35\textwidth]{./Slike/tvorjenje2}
      \put(103, 10) {\rotatebox{90}{\tiny Peddireddy et al., Langmuir (2012)}}
 \end{overpic}
 \end{center}
+
+\begin{columns}
+ \column{.45\textwidth}
+ 
+\includegraphics[height=.22\textwidth]{./Slike/radial-cross} \quad
+\includegraphics[height=.22\textwidth]{./Slike/director-profile-radial} 
+
+ \column{.5\textwidth}
+ 
+\begin{itemize}
+ \item Rast vlaken iz 8CB v vodi
+ \item Delujejo kot valovodi
+\end{itemize}
+
+\end{columns}
 
 \end{frame}
 
@@ -368,21 +418,21 @@
 
 \column{.65\textwidth}
  
- \begin{block}{Numeri"cna metoda}
+ \begin{block}{Teko"cekristalne strukture}
   \begin{itemize}
-   \item Sklopitev med svetlobo in teko"cim kristalom
-   \item Teko"cekristalne kapljice in vlakna kot laserji
-   \item Metamateriali -- zapletene strukture
    \item Natan"cne transmisijske slike
    \item Povezava med teorijo in eksperimenti
+   \item Pretvorba polarizacije svetlobe
+   \item Teko"cekristalne kapljice in vlakna kot laserji
+   \item Mikroskopija z bli"znjim poljem (\textit{near-field})
+   \item Metamateriali, fotonski kristali, \ldots
   \end{itemize}
  \end{block}
  
- \begin{block}{Teko"cekristalna vlakna}
+ \begin{block}{Raz"siritev metode}
   \begin{itemize}
-    \item Pretvorba polarizacije svetlobe
-    \item Opti"cne komunikacije
-    \item Laserska svetloba v vse smeri
+    \item Sklopitev med svetlobo in teko"cim kristalom
+    \item Stimulirana emisija, fluorescenca
   \end{itemize}
  \end{block}
  
