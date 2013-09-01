@@ -56,15 +56,10 @@
   \begin{itemize}
    \item Teko"ci kristali
    \item Elektromagnetno valovanje
-   \item Topolo"ski defekti
   \end{itemize}
   \item Numeri"cna metoda
   \item Rezultati
-  \begin{itemize}
-   \item Preizkusi metode
-   \item Teko"cekristalna vlakna
-  \end{itemize}
-  \item Zaklju"cek
+  \item Nadaljnje raziskave
  \end{itemize}
 \end{frame}
 
@@ -76,13 +71,7 @@
    \begin{itemize}
     \item Lastnosti teko"cin in kristalov
     \item Orientacijski red
-      \begin{itemize}
-	\item Direktor $\vec n$
-	\item Stopnja reda $S$
-	\item Simetrija $\vec n \leftrightarrow -\vec n$
-      \end{itemize}
-    \item Delni pozicijski red
-    \item<2-> Dvolomnost
+    \item Delni pozicijski red\\[1em]
     \item<2-> Nadzor z zunanjimi polji
     \item<2-> Elasti"cne deformacije direktorja
    \end{itemize}
@@ -90,6 +79,10 @@
 
   \begin{column}{.5\textwidth}
     \includegraphics[width=\textwidth]{./Slike/faze_brez_crk} \\
+
+  \end{column}
+    
+  \end{columns}
 
   \resizebox{\textwidth}{!}{\begin{picture}(400, 120)
     \put(0,30){\includegraphics<2->[height=80pt]{./Slike/fig_frank_components_splay_s}}
@@ -99,24 +92,11 @@
     \put(170, 10){\only<2->{\LARGE $\vec n \cdot \nabla \times \vec n$}}
     \put(300, 10){\only<2->{\LARGE $\vec n \times \nabla \times \vec n$}}
   \end{picture}}
-  \end{column}
-    
-  \end{columns}
-  
-  \only<-2>{\vspace{54.5pt}}
-  
-  \begin{center}
-   \includegraphics<3->[height=60pt]{./Slike/Flat-panel-display-lcd-monitor}\, 
-   \includegraphics<3->[height=60pt]{./Slike/cp-1} \,
-   \includegraphics<3->[height=60pt]{./Slike/dierking_june2013} \,
-   \includegraphics<3->[height=60pt]{./Slike/tvorjenje}
-  \end{center}
-
   
 \end{frame}
 
 \begin{frame}{Elektromagnetno valovanje}
-\begin{columns}
+\begin{columns}[t]
 
 \column{.6\textwidth}
  
@@ -129,30 +109,27 @@
 \end{equation*}
 \end{block}
 
-\begin{block}{Konstitutivni zvezi}
-\begin{equation*}
-\begin{aligned}
-\vec D = \boldsymbol\varepsilon \varepsilon_0 \vec E \qquad \vec B = \boldsymbol \mu \mu_0 \vec H
-\end{aligned} 
-\end{equation*}
+\begin{block}<2->{Dvolomnost}
+\begin{itemize}
+ \item Lomni koli"cnik odvisen od polarizacije
+ \item Izredna os z $n_e$, pravokotne smeri $n_o$
+  \item Izredna os v TK krajevno odvisna
+\end{itemize}
 \end{block}
 
-\begin{itemize}
- \item $\boldsymbol\eps$ in $\boldsymbol\mu$ sta anizotropna tenzorja
- \item V vzorcu ni prostih nabojev ali tokov
- \item Izredna os in dvolomnost $\Delta n$ \\ v TK krajevno odvisna
-\end{itemize}
+\only<1-1>{\vspace{25pt}}
 
 \column{.35\textwidth}
-\begin{block}{Dvolomnost}
-\begin{itemize}
- \item Lomni koli"cnik odvisen od polarizacije svetlobe
- \item Ena izredna os z $n_e$ pravokotne smeri $n_o$
-\end{itemize}
+
+\begin{block}{Konstitutivni zvezi}
+\begin{align*}
+\vec D &= \boldsymbol\varepsilon \varepsilon_0 \vec E \\ 
+\vec B &= \boldsymbol \mu \mu_0 \vec H
+\end{align*}
 \end{block}
 
 \begin{center}
-\includegraphics[width=.8\textwidth]{./Slike/Rays_passing_through_birefringent_material}
+\includegraphics<2->[width=.8\textwidth]{./Slike/Rays_passing_through_birefringent_material}
 \end{center}
 
 \end{columns}
@@ -167,20 +144,16 @@
  \subfigure[$s = -1/2$]{\includegraphics[width=.18\textwidth]{g_defect_-1} \vspace{-2mm}}
  \end{figure}
  
- \vspace{-3mm}
-
- \begin{itemize}
-  \item To"cka z nedefinirano smerjo direktorja ali elektri"cnega polja
-  \item Ovojno "stevilo -- celo za vektorska polja, polcelo za direktor
- \end{itemize}
+ \only<1-1>{\vspace{88pt}}
  
  \begin{center}
- \includegraphics[height=100pt]{./Slike/1_v6} \qquad
+ \includegraphics<2->[height=100pt]{./Slike/1_v6} \qquad
+ \only<2->{
  \begin{overpic}[height=100pt]{./Slike/defekt-kapljica.png}
-  \put(-80,4) {\rotatebox{90}{\tiny Porenta et al., Soft Matter (2012)}}
+  \put(-82,4) {\rotatebox{90}{\tiny Porenta et al., Soft Matter (2012)}}
   \put(10,15) {\tiny Brasselet et al., PRL (2009)}
   \end{overpic}
-
+}
  \end{center}
  
 \end{frame}
@@ -266,49 +239,41 @@
    \item Nefizikalen material -- \\ dodatne prostostne stopnje
   \end{itemize}
  \end{block}
+ 
+ \only<1-1>{\vspace{4.25pt}}
 
 \end{columns}
 \end{frame}
 
 
 \begin{frame}{Primeri uporabe metode}
-\begin{columns}[c]
 
-\begin{column}[T]{.46\textwidth}
 \begin{itemize}[<+->]
  \item "Sirjenje po praznem prostoru
- \includegraphics[width=.6\textwidth]{./Slike/empty}
+ \includegraphics<1>[width=.8\textwidth]{./Slike/empty}
+ \only<1>{\vspace{36pt}}
  
  \item Lom pri Brewsterjevem kotu
- \includegraphics[width=.6\textwidth]{./Slike/refraction}
+ \includegraphics<2>[width=.8\textwidth]{./Slike/refraction}
+ \only<2>{\vspace{18pt}}
  
  
   \item Dvolomni kristal med prekri"zanima polarizatorjema\\
-  \resizebox{.65\textwidth}{!}{\input{g_test_uniform_nocite}}
+  \only<3>{\resizebox{.7\textwidth}{!}{\input{g_test_uniform_nocite}}}
 
-\end{itemize}
-
-\end{column}
-
-\begin{column}[T]{.5\textwidth}
-\begin{itemize}[<+->]
- \item Fotonski prepovedani pas
- \begin{center}
-   \resizebox{.7\textwidth}{!}{\footnotesize \input{./Slike/bandgap.pdf_tex}} \\
-    \hspace{-1cm} \raisebox{5mm}{\includegraphics[width=.3\textwidth]{./Slike/periodic-structure-p}} \;	
-  \resizebox{.6\textwidth}{!}{\input{g_test_periodic}}
-  \end{center}
+ \item Fotonski prepovedani pas \\
+ \only<4>{{\resizebox{.5\textwidth}{!}{\footnotesize \input{./Slike/bandgap.pdf_tex}} \\
+    \raisebox{5mm}{\includegraphics[width=.15\textwidth]{./Slike/periodic-structure-p}} \;	
+  \resizebox{.3\textwidth}{!}{\input{g_test_periodic}}}
+  }
   
- \item Dvolomno vlakno \\
-  \hspace{-0.6cm}
-  \includegraphics[width=.29\textwidth]{./Defekti/g_defect_light_0} \,
-  \includegraphics[width=.29\textwidth]{./Slike/licp_0_68} \,
-  \includegraphics[width=.29\textwidth]{./Slike/licp_0_78}
+ \item Dvolomno vlakno \\[1em]
+  \includegraphics<5>[width=.25\textwidth]{./Defekti/g_defect_light_0} \,
+  \includegraphics<5>[angle=180,origin=c,width=.25\textwidth]{./Slike/licp_0_68} \,
+  \includegraphics<5>[width=.25\textwidth]{./Slike/licp_0_78}
+  
+  \only<5>{\vspace{72pt}}
 \end{itemize}
-
-\end{column}
-
-\end{columns}
 
 \end{frame}
 
@@ -320,22 +285,10 @@
  \begin{overpic}[height=.35\textwidth]{./Slike/tvorjenje2}
      \put(103, 10) {\rotatebox{90}{\tiny Peddireddy et al., Langmuir (2012)}}
 \end{overpic}
+ \\[1em]
+\includegraphics[height=.18\textwidth]{./Slike/radial-cross} \quad
+\includegraphics[height=.18\textwidth]{./Slike/director-profile-radial} 
 \end{center}
-
-\begin{columns}
- \column{.55\textwidth}
- 
-\includegraphics[height=.22\textwidth]{./Slike/radial-cross} \quad
-\includegraphics[height=.22\textwidth]{./Slike/director-profile-radial} 
-
- \column{.3\textwidth}
- 
-\begin{itemize}
- \item Rast vlaken iz 8CB v vodi
- \item Delujejo kot valovodi
-\end{itemize}
-
-\end{columns}
 
 \end{frame}
 
@@ -378,26 +331,12 @@
   \includegraphics[width=\textwidth]{./Slike/licp_m12_78}
   
   \column{.35\textwidth}
-  \begin{block}{Parametri}
   \begin{itemize}
    \item   $\lambda = 480$ nm
     \item $\Delta n = 0,\!16$
     \item Premer vlakna 5 $\mu$m
     \item Pot sunka $\sim 40$ $\mu$m
   \end{itemize}
-    \end{block}
-    
-    \begin{block}{Opa"zanja}
-     
-\begin{itemize}
-    \item 2 stacionarna na"cina
-    \item Enako ovojno "stevilo kot defekt v TK
-    \item Temna pega v osi
-    \item Temne ravnine
-  \end{itemize}
-    \end{block}
-
-
 
   \end{columns}
 \end{frame}
@@ -415,8 +354,6 @@
 
 \begin{frame}{Stalna laserska svetloba}
  \begin{itemize}
-  \item Kombinacija dveh stacionarnih na"cinov, razli"cni hitrosti
-  \item Stacionarno stanje, polje na vsakem mestu niha
   \item Pretvorba v radialno polarizirano svetlobo
   \item Brez temnih ravnin -- obrat polarizacije za 90$^{\circ}$
  \end{itemize}
